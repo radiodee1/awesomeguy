@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Awesomeguy</string>
+    <string name="main_screen">Game Play</string>
+    <string name="splash_screen">Awesomeguy</string>
+</resources>
