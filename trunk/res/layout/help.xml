@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+android:id="@+id/widget32"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:isScrollContainer="true" android:scrollbarAlwaysDrawVerticalTrack="true">
+
+<TextView android:text=" This is where you show 'help' or 'how to play' messages. \n\nTHE STORY: 
+ \nIn the future, evil robot aligators take over the planet. AWESOMEGUY, the hero, must find his way around the world, transporting to different places, collecting points and stopping the alien aligators. Look out for platforms, 
+pyramids, mazes, castles, and flying steaks. \n\nYou're AWESOMEGUY. Run away 
+  from the aligators. Jump on them to kill them. Get the crystal to go to the 
+  next level. The key is a checkpoint and the rings and gold bricks are worth points. There is also a 'life' or two out there and they are green. Have fun.
+\n\nMOVEMENT: Use the arrow keys on the touch screen to move the character in the four basic directions. 'B' is the jump key. On some phones the trackball can also be used for the four directions. You can climb the ladders and jump from the platforms. You can fall any distance without hurting yourself. Monsters
+can kill you unless you jump right on top of them. Green blocks with red dots are extra lives. The white crystal takes you to the next level."
+  
+
+android:id="@+id/TextView01" 
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content" >
+</TextView>
+</RelativeLayout>
