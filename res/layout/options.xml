@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView 
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_height="wrap_content"
+android:layout_width="fill_parent" 
+android:orientation="vertical" 
+android:scrollbars="vertical" 
+android:scrollbarAlwaysDrawVerticalTrack="true"
+>
+
 <LinearLayout
 android:orientation="vertical"
 android:id="@+id/widget32"
@@ -7,21 +17,50 @@ android:layout_height="fill_parent"
 xmlns:android="http://schemas.android.com/apk/res/android"
 >
 
-   
-
 <TextView android:text="This is where you would show any options your game has. The player name should be featured prominently. " 
 android:id="@+id/TextView01" 
 android:layout_width="wrap_content" 
 android:layout_height="wrap_content">
 </TextView>
 
- <CheckBox android:id="@+id/checkbox"
+<TextView android:text="Here you choose the preferred running speed for your game. " 
+android:id="@+id/TextView01" 
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content">
+</TextView>
+
+ <RadioGroup
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+      <RadioButton android:id="@+id/radio_speed_16"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Speed = 16" />
+      <RadioButton android:id="@+id/radio_speed_20"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Speed = 20" />
+      <RadioButton android:id="@+id/radio_speed_24"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Speed = 24" />
+    </RadioGroup>
+
+
+<TextView android:text="This option selects weather or not sound should be played during the game. " 
+android:id="@+id/TextView02" 
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content">
+</TextView>
+
+ <CheckBox android:id="@+id/checkbox_sounds"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Play Game Sounds" />
 
-<TextView android:text="This is where you would show any options your game has. The player name should be featured prominently. " 
-android:id="@+id/TextView01" 
+<TextView android:text="This is where you decide how many High Score entries will be in the High Score table. " 
+android:id="@+id/TextView03" 
 android:layout_width="wrap_content" 
 android:layout_height="wrap_content">
 </TextView>
@@ -44,16 +83,40 @@ android:layout_height="wrap_content">
           android:text="Fifty High Scores" />
     </RadioGroup>
 
-<TextView android:text="This is where you would show any options your game has. The player name should be featured prominently. " 
-android:id="@+id/TextView01" 
+<TextView android:text="This is where you decide weather or not your game will use the jni functions for speed. " 
+android:id="@+id/TextView04" 
 android:layout_width="wrap_content" 
 android:layout_height="wrap_content">
 </TextView>
 
- <CheckBox android:id="@+id/checkbox"
+ <CheckBox android:id="@+id/checkbox_jni"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Play Game Sounds" />
+        android:text="Play Using JNI Functions" />
 
+
+<TextView android:text="Here you decide weather or not your game will have monsters. " 
+android:id="@+id/TextView05" 
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content">
+</TextView>
+
+ <CheckBox android:id="@+id/checkbox_monsters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Monsters" />
+
+<TextView android:text="Here you decide weather monsters in the game can kill you. " 
+android:id="@+id/TextView06" 
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content">
+</TextView>
+
+ <CheckBox android:id="@+id/checkbox_collision"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Monster Collision" />
 
 </LinearLayout>
+
+</ScrollView>

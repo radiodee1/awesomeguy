@@ -20,8 +20,8 @@ public class Options extends Activity {
         setContentView(R.layout.options);      
               
         /** sound effects play **/
-        final CheckBox checkbox = (CheckBox) findViewById(R.id.checkbox);
-        checkbox.setOnClickListener(new OnClickListener() {
+        final CheckBox checkbox_sounds = (CheckBox) findViewById(R.id.checkbox_sounds );
+        checkbox_sounds.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 // Perform action on clicks, depending on whether it's now checked
                 if (((CheckBox) v).isChecked()) {
