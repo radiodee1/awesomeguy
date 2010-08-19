@@ -20,6 +20,12 @@ android:layout_height="wrap_content">
         android:layout_height="wrap_content"
         android:text="Play Game Sounds" />
 
+<TextView android:text="This is where you would show any options your game has. The player name should be featured prominently. " 
+android:id="@+id/TextView01" 
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content">
+</TextView>
+
  <RadioGroup
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
@@ -37,5 +43,17 @@ android:layout_height="wrap_content">
           android:layout_height="wrap_content"
           android:text="Fifty High Scores" />
     </RadioGroup>
+
+<TextView android:text="This is where you would show any options your game has. The player name should be featured prominently. " 
+android:id="@+id/TextView01" 
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content">
+</TextView>
+
+ <CheckBox android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Play Game Sounds" />
+
 
 </LinearLayout>
