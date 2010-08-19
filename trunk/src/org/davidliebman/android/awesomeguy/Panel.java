@@ -82,10 +82,11 @@ public  class Panel  extends SurfaceView  {
 	public static final int MIDDLE = 2;
 	public static final int START = 3;
 
+	/* -- end 'for scrolling' -- */
+
 	/* for monster animation */
 	public static final int ANIM_SPEED = 5;
 
-	/* -- end 'for scrolling' -- */
 
 	/* animation vars */
 	private static int ANIMATE_SPEED = 0;
