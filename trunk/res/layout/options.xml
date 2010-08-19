@@ -1,14 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
+android:orientation="vertical"
 android:id="@+id/widget32"
 android:layout_width="fill_parent"
 android:layout_height="fill_parent"
 xmlns:android="http://schemas.android.com/apk/res/android"
 >
 
-<TextView android:text="This is where you would show any options your game has " 
+   
+
+<TextView android:text="This is where you would show any options your game has. The player name should be featured prominently. " 
 android:id="@+id/TextView01" 
 android:layout_width="wrap_content" 
 android:layout_height="wrap_content">
 </TextView>
-</RelativeLayout>
+
+ <CheckBox android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Play Game Sounds" />
+
+ <RadioGroup
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+      <RadioButton android:id="@+id/radio_players_five"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Five High Scores" />
+      <RadioButton android:id="@+id/radio_players_ten"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Ten High Scores" />
+      <RadioButton android:id="@+id/radio_players_fifty"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Fifty High Scores" />
+    </RadioGroup>
+
+</LinearLayout>
