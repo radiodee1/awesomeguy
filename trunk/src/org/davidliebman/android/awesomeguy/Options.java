@@ -54,6 +54,6 @@ public class Options extends Activity {
         radio_players_ten.setOnClickListener(radio_listener);
         radio_players_fifty.setOnClickListener(radio_listener);
         /* end radio button stuff */
-        
+        //
     }
 }
