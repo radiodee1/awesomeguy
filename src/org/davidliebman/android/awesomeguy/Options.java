@@ -40,7 +40,7 @@ public class Options extends Activity {
                 Toast.makeText(Options.this, rb.getText(), Toast.LENGTH_SHORT).show();
             }
         };
-        
+        /** end number **/
         
         
         SharedPreferences.Editor mCode = this.getSharedPreferences(Options.AWESOME_CODE, 0).edit();
