@@ -1,6 +1,7 @@
 package org.davidliebman.android.awesomeguy;
 
 public class Scores {
+	/*
 	
 	private int mPlayerIndex = 4;
 	
@@ -50,7 +51,10 @@ public class Scores {
 	public void setSave2(int mSave2, int index) {
 		this.rec[index].mSave2 = mSave2;
 	}
+	*/
+	
 	/* Save2 is for cycles */
+	/*
 	public void incrementSave2(int index) {
 		this.rec[index].mSave2 ++;
 	}
@@ -101,14 +105,21 @@ public class Scores {
 		this.rec[index].mSave3 = mG.mSave3;
 		this.rec[index].mName = mG.mName;
 	}
-	
+	*/
 	public static class Record {
 		public int mLevel;
 		public int mScore;
-		public int mSave1;
-		public int mSave2;
-		public int mSave3;
+		public int mLives;//not used much
+		public int mCycles;//not used much
+		public int mSave1;//not used much
 		public String mName = new String();
+		
+		public int mGameSpeed;
+		public int mNumRecords;
+		public boolean mSound;
+		public boolean mEnableJNI;
+		public boolean mEnableMonsters;
+		public boolean mEnableCollision;
 	}
 	
 }

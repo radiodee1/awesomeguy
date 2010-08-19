@@ -241,15 +241,7 @@ public  class Panel  extends SurfaceView  {
 			}
 		}
 
-		if(message == GameStart.MOVEMENTVALUES) {
-			// do special drawing for game values
-			// like scrolling
-
-		}
-		if (message == GameStart.SPLASH) {
-			// draw splash screen on this panel
-
-		}
+		
 
 	}
 

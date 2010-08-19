@@ -483,20 +483,25 @@ public class GameStart extends Activity {
     		    ////////////////////////////////////////////////////////
     		    // PREP FOR GAME PLAY
     		    // set lives
+    		    /*
     		    if (mHighScores.getSave1( mGameV.getUsernum() ) > 3) {
     		    	mGameV.setLives(mHighScores.getSave1(mGameV.getUsernum()));
     		    }
     		    else {
     		    	mGameV.setLives(3);
     		    }
+    		    */
+    		    mGameV.setLives(3);
     		    // set room num
-
+    		    /*
     		    if(mHighScores.getLevel(mGameV.getUsernum())>0) {
     		      mGameV.setRoomNo(mHighScores.getLevel(mGameV.getUsernum()));
     		    }
     		    else {
     		      mGameV.setRoomNo(1);
     		    }
+    		    */
+    		    mGameV.setRoomNo(1);
     		    // put graphic on top panel
     			
     			myPanelUpdateHandler.sendEmptyMessage(GameStart.SPLASH);
@@ -592,11 +597,13 @@ public class GameStart extends Activity {
     		      if( mGameV.getRoomNo() > GameValues.NUM_ROOMS &&  !mGameV.isEndLevel() ) {
     		        
     		    	  mGameV.setRoomNo(1);
-    		    	  mHighScores.incrementSave2(mGameV.getUsernum());
+    		    	  //mHighScores.incrementSave2(mGameV.getUsernum());
     		    	  // used for cycles
     		      }
 
     		      // this basically saves checkpoints and cycles...
+    		      // deal with high scores
+    		      /*
     		      if ( mHighScores.getScore(mGameV.getUsernum())  > mGameV.getScore() && mGameV.getUsernum() < 4 ) {
     		        //writeData(highScores); // or is this needed?
     		      }
@@ -611,7 +618,7 @@ public class GameStart extends Activity {
     		        ranks = false;
     		      }
     		      
-    		      
+    		      */
 
     		    } /////////// while NUM_ROOMS loop
 
