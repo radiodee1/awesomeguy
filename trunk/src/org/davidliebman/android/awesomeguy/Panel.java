@@ -28,7 +28,7 @@ public  class Panel  extends SurfaceView  {
 	private SpriteInfo mGuySprite;
 	private Paint mP;
 	private int mMapcheat = 1;
-	private boolean useJNI = false;
+	private boolean useJNI = true;
 
 	/* for direction checking */
 	private boolean changeX = false;
