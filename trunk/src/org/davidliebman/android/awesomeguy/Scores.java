@@ -1,5 +1,8 @@
 package org.davidliebman.android.awesomeguy;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 public class Scores {
 	/*
 	
@@ -106,20 +109,152 @@ public class Scores {
 		this.rec[index].mName = mG.mName;
 	}
 	*/
-	public static class Record {
-		public int mLevel;
-		public int mScore;
-		public int mLives;//not used much
-		public int mCycles;//not used much
-		public int mSave1;//not used much
-		public String mName = new String();
+	public static class Record implements Parcelable {
+		private int mLevel;
+		private int mScore;
+		private int mLives;//not used much
+		private int mCycles;//not used much
+		private int mSave1;//not used much
+		private String mName = new String();
 		
-		public int mGameSpeed;
-		public int mNumRecords;
-		public boolean mSound;
-		public boolean mEnableJNI;
-		public boolean mEnableMonsters;
-		public boolean mEnableCollision;
+		private int mGameSpeed;
+		private int mNumRecords;
+		private boolean mSound;
+		private boolean mEnableJNI;
+		private boolean mEnableMonsters;
+		private boolean mEnableCollision;
+		
+		/////////// parcelable start
+		@Override
+		public int describeContents() {
+	         return 0;
+	     }
+
+		@Override
+	     public void writeToParcel(Parcel out, int flags) {
+	    	 out.writeString(mName);
+	         out.writeInt(mLevel);
+	         out.writeInt(mScore);
+	         out.writeInt(mLives);
+	         out.writeInt(mCycles);
+	         out.writeInt(mSave1);
+	         out.writeInt(mGameSpeed);
+	         out.writeInt(mNumRecords);
+	         out.writeString(new Boolean(mSound).toString());
+	         out.writeString(new Boolean(mEnableJNI).toString());
+	         out.writeString(new Boolean(mEnableMonsters).toString());
+	         out.writeString(new Boolean(mEnableCollision).toString());
+	         
+	         
+	     }
+
+	     public static final Parcelable.Creator<Record> CREATOR
+	             = new Parcelable.Creator<Record>() {
+	         public Record createFromParcel(Parcel in) {
+	             return new Record(in);
+	         }
+
+	         public Record[] newArray(int size) {
+	             return new Record[size];
+	         }
+	     };
+	     
+	     private Record(Parcel in) {
+	    	 mName = in.readString();
+	         mLevel = in.readInt();
+	         mScore = in.readInt();
+	         mLives = in.readInt();
+	         mCycles = in.readInt();
+	         mSave1 = in.readInt();
+	         mGameSpeed = in.readInt();
+	         mNumRecords= in.readInt();
+	         mSound = new Boolean(in.readString()).booleanValue();
+	         mEnableJNI = new Boolean(in.readString()).booleanValue();
+	         mEnableMonsters = new Boolean(in.readString()).booleanValue();
+	         mEnableCollision = new Boolean(in.readString()).booleanValue();
+	        
+	     }
+
+	     /////  parcelable end
+		
+		public int getLevel() {
+			return mLevel;
+		}
+		public void setLevel(int mLevel) {
+			this.mLevel = mLevel;
+		}
+		public int getScore() {
+			return mScore;
+		}
+		public void setScore(int mScore) {
+			this.mScore = mScore;
+		}
+		public int getLives() {
+			// not used much
+			return mLives;
+		}
+		public void setLives(int mLives) {
+			// not used much
+			this.mLives = mLives;
+		}
+		public int getCycles() {
+			// not used much
+			return mCycles;
+		}
+		public void setCycles(int mCycles) {
+			// not used much
+			this.mCycles = mCycles;
+		}
+		public int getSave1() {
+			// not used much
+			return mSave1;
+		}
+		public void setSave1(int mSave1) {
+			// not used much
+			this.mSave1 = mSave1;
+		}
+		public String getName() {
+			return mName;
+		}
+		public void setName(String mName) {
+			this.mName = mName;
+		}
+		public int getGameSpeed() {
+			return mGameSpeed;
+		}
+		public void setGameSpeed(int mGameSpeed) {
+			this.mGameSpeed = mGameSpeed;
+		}
+		public int getNumRecords() {
+			return mNumRecords;
+		}
+		public void setNumRecords(int mNumRecords) {
+			this.mNumRecords = mNumRecords;
+		}
+		public boolean isSound() {
+			return mSound;
+		}
+		public void setSound(boolean mSound) {
+			this.mSound = mSound;
+		}
+		public boolean isEnableJNI() {
+			return mEnableJNI;
+		}
+		public void setEnableJNI(boolean mEnableJNI) {
+			this.mEnableJNI = mEnableJNI;
+		}
+		public boolean isEnableMonsters() {
+			return mEnableMonsters;
+		}
+		public void setEnableMonsters(boolean mEnableMonsters) {
+			this.mEnableMonsters = mEnableMonsters;
+		}
+		public boolean isEnableCollision() {
+			return mEnableCollision;
+		}
+		public void setEnableCollision(boolean mEnableCollision) {
+			this.mEnableCollision = mEnableCollision;
+		}
 	}
 	
 }
