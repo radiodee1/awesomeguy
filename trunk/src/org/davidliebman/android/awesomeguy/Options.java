@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.*;
 import android.view.*;
 import android.view.View.OnClickListener;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -15,13 +16,20 @@ public class Options extends Activity {
 	public static final String AWESOME_CODE = new String("awesomecode");
 	public static final String AWESOME_NEWNAME = new String("awesomenewname");
 	
-	private Scores.Record mHighScores = new Scores.Record();
+	private Scores.Record mHighScores ;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.options);      
+            
               
+        /** retrieve Record mHighScores **/
+        Bundle r = getIntent().getExtras();
+        
+        mHighScores = r.getParcelable("awesomeguy");
+        
+        setContentView(R.layout.options);  
+        
         /** sound effects play **/
         final CheckBox checkbox_sounds = (CheckBox) findViewById(R.id.checkbox_sounds );
         checkbox_sounds.setOnClickListener(new OnClickListener() {
@@ -130,5 +138,22 @@ public class Options extends Activity {
         radio_speed_20.setOnClickListener(radio_speed);
         radio_speed_24.setOnClickListener(radio_speed);
         /* end radio button stuff */
+    }
+    @Override
+    public void onPause() {
+ 
+    	Bundle r = new Bundle();
+        r.putParcelable("awesomeguy", mHighScores);
+        
+        // Always these three intents together??!!
+        Intent i = new Intent(this, Options.class);
+        i.putExtras(r);
+        
+        Intent j = new Intent(this, Players.class);
+        j.putExtras(r);
+        
+        Intent k = new Intent(this, GameStart.class);
+        k.putExtras(k);
+        
     }
 }
