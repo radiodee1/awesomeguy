@@ -2,6 +2,8 @@ package org.davidliebman.android.awesomeguy;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
+
 
 public class Scores {
 	/*
@@ -110,9 +112,10 @@ public class Scores {
 	}
 	*/
 	public static class Record implements Parcelable {
+		private boolean mNewRecord;
 		private int mLevel;
 		private int mScore;
-		private int mLives;//not used much
+		private int mLives;
 		private int mCycles;//not used much
 		private int mSave1;//not used much
 		private String mName = new String();
@@ -124,6 +127,21 @@ public class Scores {
 		private boolean mEnableMonsters;
 		private boolean mEnableCollision;
 		
+		Record() {
+			mName = new String("none");
+			mNewRecord = true;
+			mLevel = 1;
+			mScore = 10;
+			mLives = 3;
+			mCycles = 0;
+			mSave1 = 0;
+			mGameSpeed = 16;
+			mNumRecords = 5;
+			mSound = true;
+			mEnableJNI = false;
+			mEnableMonsters = true;
+			mEnableCollision = true;
+		}
 		/////////// parcelable start
 		@Override
 		public int describeContents() {
@@ -132,6 +150,7 @@ public class Scores {
 
 		@Override
 	     public void writeToParcel(Parcel out, int flags) {
+			out.writeString(new Boolean(mNewRecord).toString());
 	    	 out.writeString(mName);
 	         out.writeInt(mLevel);
 	         out.writeInt(mScore);
@@ -160,6 +179,7 @@ public class Scores {
 	     };
 	     
 	     private Record(Parcel in) {
+	    	 mNewRecord = new Boolean(in.readString()).booleanValue();
 	    	 mName = in.readString();
 	         mLevel = in.readInt();
 	         mScore = in.readInt();
@@ -172,11 +192,34 @@ public class Scores {
 	         mEnableJNI = new Boolean(in.readString()).booleanValue();
 	         mEnableMonsters = new Boolean(in.readString()).booleanValue();
 	         mEnableCollision = new Boolean(in.readString()).booleanValue();
-	        
+	         mNewRecord = false;
 	     }
 
-	     /////  parcelable end
-		
+	    /////  parcelable stuff end
+
+	     public void listInLog() {
+			Log.i("Record", "Is New Record " + new Boolean(mNewRecord).toString());
+			Log.i("Record", "Player Name " + mName);
+			Log.i("Record", "Player Level "+ mLevel);
+			Log.i("Record", "Player Score " + mScore);
+			Log.i("Record", "Player Lives " + mLives);
+			Log.i("Record", "Player Cycles " + mCycles);
+			Log.i("Record", "Player Save1 " + mSave1);
+			Log.i("Record", "Game Speed " + mGameSpeed);
+			Log.i("Record", "High Score Number " + mNumRecords);
+			Log.i("Record", "Sound Enabled " + new Boolean(mSound).toString());
+			Log.i("Record", "JNI Enabled " + new Boolean(mEnableJNI).toString());
+			Log.i("Record", "Monsters Enabled " + new Boolean(mEnableMonsters).toString());
+			Log.i("Record", "Collision Enabled " + new Boolean(mEnableCollision).toString());
+		}
+	     
+	    
+		public boolean isNewRecord() {
+			return mNewRecord;
+		}
+		public void setNewRecord(boolean mNewRecord) {
+			this.mNewRecord = mNewRecord;
+		}
 		public int getLevel() {
 			return mLevel;
 		}
@@ -189,13 +232,23 @@ public class Scores {
 		public void setScore(int mScore) {
 			this.mScore = mScore;
 		}
+		
+		public int incrementScore(int amount) {
+			this.mScore = this.mScore + amount;
+			return this.mScore;
+		}
 		public int getLives() {
-			// not used much
 			return mLives;
 		}
 		public void setLives(int mLives) {
-			// not used much
 			this.mLives = mLives;
+		}
+		public void incrementLives() {
+			this.mLives ++;
+		}
+
+		public void decrementLives() {
+			this.mLives --;
 		}
 		public int getCycles() {
 			// not used much

@@ -1,6 +1,7 @@
 package org.davidliebman.android.awesomeguy;
 
 import android.app.Activity;
+import android.util.Log;
 import android.widget.*;
 import android.view.*;
 import android.view.View.OnClickListener;
@@ -14,6 +15,8 @@ public class Options extends Activity {
 	public static final String AWESOME_CODE = new String("awesomecode");
 	public static final String AWESOME_NEWNAME = new String("awesomenewname");
 	
+	private Scores.Record mHighScores = new Scores.Record();
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,8 +29,10 @@ public class Options extends Activity {
                 // Perform action on clicks, depending on whether it's now checked
                 if (((CheckBox) v).isChecked()) {
                     Toast.makeText(Options.this, "Sound Selected", Toast.LENGTH_SHORT).show();
+                    mHighScores.setSound(true);
                 } else {
                     Toast.makeText(Options.this, "Sound Not selected", Toast.LENGTH_SHORT).show();
+                    mHighScores.setSound(false);
                 }
             }
         });
@@ -39,8 +44,10 @@ public class Options extends Activity {
                 // Perform action on clicks, depending on whether it's now checked
                 if (((CheckBox) v).isChecked()) {
                     Toast.makeText(Options.this, "JNI Selected", Toast.LENGTH_SHORT).show();
+                    mHighScores.setEnableJNI(true);
                 } else {
                     Toast.makeText(Options.this, "JNI Not Selected", Toast.LENGTH_SHORT).show();
+                    mHighScores.setEnableJNI(false);
                 }
             }
         });
@@ -52,8 +59,10 @@ public class Options extends Activity {
                 // Perform action on clicks, depending on whether it's now checked
                 if (((CheckBox) v).isChecked()) {
                     Toast.makeText(Options.this, "Monsters Included", Toast.LENGTH_SHORT).show();
+                    mHighScores.setEnableMonsters(true);
                 } else {
                     Toast.makeText(Options.this, "Monsters Not Included", Toast.LENGTH_SHORT).show();
+                    mHighScores.setEnableMonsters(false);
                 }
             }
         });
@@ -65,8 +74,10 @@ public class Options extends Activity {
                 // Perform action on clicks, depending on whether it's now checked
                 if (((CheckBox) v).isChecked()) {
                     Toast.makeText(Options.this, "Monster Collision Enabled", Toast.LENGTH_SHORT).show();
+                    mHighScores.setEnableCollision(true);
                 } else {
                     Toast.makeText(Options.this, "Monster Collision Not Enabled", Toast.LENGTH_SHORT).show();
+                    mHighScores.setEnableCollision(false);
                 }
             }
         });
@@ -76,6 +87,10 @@ public class Options extends Activity {
                 // Perform action on clicks
                 RadioButton rb = (RadioButton) v;
                 Toast.makeText(Options.this, rb.getText(), Toast.LENGTH_SHORT).show();
+                
+                if(rb.getId() == R.id.radio_players_ten) mHighScores.setNumRecords(10);
+                if(rb.getId() == R.id.radio_players_five) mHighScores.setNumRecords(5);
+                if(rb.getId() == R.id.radio_players_fifty) mHighScores.setNumRecords(50);
             }
         };
         /** end number **/
@@ -86,6 +101,10 @@ public class Options extends Activity {
                 // Perform action on clicks
                 RadioButton rb = (RadioButton) v;
                 Toast.makeText(Options.this, rb.getText(), Toast.LENGTH_SHORT).show();
+                
+                if(rb.getId() == R.id.radio_speed_16) mHighScores.setGameSpeed(16);
+                if(rb.getId() == R.id.radio_speed_20) mHighScores.setGameSpeed(20);
+                if(rb.getId() == R.id.radio_speed_24) mHighScores.setGameSpeed(24);
             }
         };
         /** end game speed **/

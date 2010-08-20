@@ -125,16 +125,15 @@ public class GameValues {
 		mRoom ++;
 	}
 	public int getScore() {
-		return mGuyScore.mScore;
+		return mGuyScore.getScore();
 	}
 
 	public void setScore(int mScore) {
-		this.mGuyScore.mScore = mScore;
+		this.mGuyScore.setScore(mScore);
 	}
 	
 	public int incrementScore(int amount) {
-		this.mGuyScore.mScore = this.mGuyScore.mScore + amount;
-		return this.mGuyScore.mScore;
+		return mGuyScore.incrementScore(amount);
 	}
 	
 	public boolean isEndLevel() {
@@ -146,19 +145,19 @@ public class GameValues {
 	}
 
 	public int getLives() {
-		return mGuyScore.mSave1;
+		return mGuyScore.getLives();
 	}
 
 	public void setLives(int mLives) {
-		this.mGuyScore.mSave1 = mLives;
+		this.mGuyScore.setLives(mLives);
 	}
 	
 	public void incrementLives() {
-		this.mGuyScore.mSave1 ++;
+		this.mGuyScore.incrementLives();
 	}
 	
 	public void decrementLives() {
-		this.mGuyScore.mSave1 --;
+		this.mGuyScore.decrementLives();
 	}
 	
 	public boolean isEndGame() {

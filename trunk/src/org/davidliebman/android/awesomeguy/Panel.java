@@ -18,6 +18,8 @@ public  class Panel  extends SurfaceView  {
 	private MovementValues mMovementV;
 	private Scores.Record mHighScores;
 
+	private int mScore;
+	private int mLives;
 	private int message = 0;
 	private int scrollX, scrollY;
 	private int baseX, baseY;
@@ -397,9 +399,9 @@ public  class Panel  extends SurfaceView  {
 				canvas.drawBitmap(mBlock, (livesPos + i) * mTiles.getBlockWidth() + scrollX, (2)* mTiles.getBlockHeight() + scrollY, mP);
 			}
 
-			//print numbers:
-			numbersOnBg(canvas, scorePos + 6, mHighScores.mScore  , 7); // score
-			numbersOnBg(canvas, livesPos + 6, mHighScores.mSave1 , 7); // lives
+			//print numbers: 
+			numbersOnBg(canvas, scorePos + 6, mHighScores.getScore()   , 7); // score
+			numbersOnBg(canvas, livesPos + 6, mHighScores.getLives()   , 7); // lives
 		}
 	}
 	private void numbersOnBg(Canvas canvas, int pos, int num, int p) { //'num' is a u32
@@ -1255,9 +1257,10 @@ public  class Panel  extends SurfaceView  {
 	public void setGuySprite(SpriteInfo sprite) {
 		mGuySprite = sprite;
 	}
+	
+	
 
-
-
+	
 	public Scores.Record getHighScores() {
 		return mHighScores;
 	}
@@ -1266,7 +1269,7 @@ public  class Panel  extends SurfaceView  {
 	public void setHighScores(Scores.Record mHighScores) {
 		this.mHighScores = mHighScores;
 	}
-
+	
 
 	public   void readKeys(double num) {
 		mXMultiplier = num;
