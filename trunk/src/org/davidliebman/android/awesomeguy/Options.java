@@ -11,12 +11,9 @@ import android.os.Bundle;
 
 public class Options extends Activity {
 	
-	public static final String AWESOME_NAME = new String("awesomename");
-	public static final String AWESOME_RANK = new String("awesomerank");
-	public static final String AWESOME_CODE = new String("awesomecode");
-	public static final String AWESOME_NEWNAME = new String("awesomenewname");
+	public static final String AWESOME_NAME = new String("org.awesomeguy");
 	
-	private Scores.Record mHighScores ;
+	private Record mHighScores = new Record() ;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,9 +21,10 @@ public class Options extends Activity {
             
               
         /** retrieve Record mHighScores **/
-        Bundle r = getIntent().getExtras();
-        
-        mHighScores = r.getParcelable("awesomeguy");
+        SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+
+        mHighScores.getFromPreferences(preferences);
+        //mHighScores.listInLog();
         
         setContentView(R.layout.options);  
         
@@ -117,7 +115,6 @@ public class Options extends Activity {
         };
         /** end game speed **/
         
-        SharedPreferences.Editor mCode = this.getSharedPreferences(Options.AWESOME_CODE, 0).edit();
         
         /* more radio button stuff - number of players */
         final RadioButton radio_players_five = (RadioButton) findViewById(R.id.radio_players_five);
@@ -141,19 +138,9 @@ public class Options extends Activity {
     }
     @Override
     public void onPause() {
- 
-    	Bundle r = new Bundle();
-        r.putParcelable("awesomeguy", mHighScores);
-        
-        // Always these three intents together??!!
-        Intent i = new Intent(this, Options.class);
-        i.putExtras(r);
-        
-        Intent j = new Intent(this, Players.class);
-        j.putExtras(r);
-        
-        Intent k = new Intent(this, GameStart.class);
-        k.putExtras(k);
+        SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+
+    	mHighScores.addToPreferences(preferences);
         
     }
 }

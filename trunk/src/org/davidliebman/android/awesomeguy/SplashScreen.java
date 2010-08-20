@@ -11,12 +11,15 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.content.Intent;
 import android.os.Bundle;
+import android.content.*;
 
 public class SplashScreen extends Activity {
     protected boolean mActive = true;
     protected int mSplashTime = 20000;
     
-    private Scores.Record mHighScores;
+    public static final String AWESOME_NAME = new String("org.awesomeguy");
+    
+    private Record mHighScores;
     
     /** Called when the activity is first created. */
     @Override
@@ -25,19 +28,12 @@ public class SplashScreen extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.splashscreen);
        
-        mHighScores = new Scores.Record();
-        Bundle r = new Bundle();
-        r.putParcelable("awesomeguy", mHighScores);
+        mHighScores = new Record();
         
-        // Always these three intents together??!!
-        Intent i = new Intent(this, Options.class);
-        i.putExtras(r);
+        SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+        mHighScores.addToPreferences(preferences);
         
-        Intent j = new Intent(this, Players.class);
-        j.putExtras(r);
-        
-        Intent k = new Intent(this, GameStart.class);
-        k.putExtras(k);
+
         
         // thread for displaying the SplashScreen
         Thread splashTread = new Thread() {
