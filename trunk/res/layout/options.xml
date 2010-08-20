@@ -117,6 +117,12 @@ android:layout_height="wrap_content">
         android:layout_height="wrap_content"
         android:text="Monster Collision" />
 
+<TextView android:text="Here should be a button to accept changes and leave 'Options' for the main menu. " 
+android:id="@+id/TextView07" 
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content">
+</TextView>
+
 </LinearLayout>
 
 </ScrollView>
