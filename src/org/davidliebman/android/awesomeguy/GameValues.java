@@ -33,7 +33,7 @@ public class GameValues {
 	public int mPlatform = 437 ; //+ mapCheat;
 	
 	/* game progress */
-	private Scores.Record mGuyScore = new Scores.Record();
+	private Record mGuyScore = new Record();
 	private int mRoom = 1;
 	private boolean mEndLevel = false;
 	private boolean mEndGame = false;
@@ -247,11 +247,11 @@ public class GameValues {
 	}
 	
 	/** Score Record **/
-	public Scores.Record getGuyScore() {
+	public Record getGuyScore() {
 		return mGuyScore;
 	}
 
-	public void setGuyScore(Scores.Record mGuyScore) {
+	public void setGuyScore(Record mGuyScore) {
 		this.mGuyScore = mGuyScore;
 	}
 	

@@ -111,6 +111,7 @@ public class Scores {
 		this.rec[index].mName = mG.mName;
 	}
 	*/
+	/*
 	public static class Record implements Parcelable {
 		private boolean mNewRecord;
 		private int mLevel;
@@ -150,6 +151,7 @@ public class Scores {
 
 		@Override
 	     public void writeToParcel(Parcel out, int flags) {
+			
 			out.writeString(new Boolean(mNewRecord).toString());
 	    	 out.writeString(mName);
 	         out.writeInt(mLevel);
@@ -309,5 +311,5 @@ public class Scores {
 			this.mEnableCollision = mEnableCollision;
 		}
 	}
-	
+	*/
 }

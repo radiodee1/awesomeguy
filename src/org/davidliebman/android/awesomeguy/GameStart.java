@@ -414,7 +414,7 @@ public class GameStart extends Activity {
     		}
     		else if(msg.what == MOVEMENTVALUES) {
     			
-    			mPanelBot.setHighScores((Scores.Record)msg.obj);
+    			mPanelBot.setHighScores((Record)msg.obj);
     			mPanelBot.setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
     			mPanelBot.invalidate();
     		}

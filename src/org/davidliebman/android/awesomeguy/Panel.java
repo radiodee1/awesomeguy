@@ -16,7 +16,7 @@ public  class Panel  extends SurfaceView  {
 
 	private TileCutter mTiles;
 	private MovementValues mMovementV;
-	private Scores.Record mHighScores;
+	private Record mHighScores;
 
 	private int mScore;
 	private int mLives;
@@ -1261,12 +1261,12 @@ public  class Panel  extends SurfaceView  {
 	
 
 	
-	public Scores.Record getHighScores() {
+	public Record getHighScores() {
 		return mHighScores;
 	}
 
 
-	public void setHighScores(Scores.Record mHighScores) {
+	public void setHighScores(Record mHighScores) {
 		this.mHighScores = mHighScores;
 	}
 	
