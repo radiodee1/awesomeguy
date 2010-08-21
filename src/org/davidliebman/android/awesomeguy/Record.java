@@ -6,11 +6,12 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.content.*;
 
-public  class Record implements Parcelable {
+public  class Record  {
 	
 
 	
 	private boolean mNewRecord;
+	private int mRecordIdNum;
 	private int mLevel;
 	private int mScore;
 	private int mLives;
@@ -26,8 +27,12 @@ public  class Record implements Parcelable {
 	private boolean mEnableCollision;
 	
 	Record() {
+		
 		mName = new String("none");
+		
 		mNewRecord = true;
+		mRecordIdNum = 0;
+		
 		mLevel = 1;
 		mScore = 10;
 		mLives = 3;
@@ -40,65 +45,12 @@ public  class Record implements Parcelable {
 		mEnableMonsters = true;
 		mEnableCollision = true;
 	}
-	/////////// parcelable start
-	@Override
-	public int describeContents() {
-         return 0;
-     }
-
-	@Override
-     public void writeToParcel(Parcel out, int flags) {
-		
-		out.writeString(new Boolean(mNewRecord).toString());
-    	 out.writeString(mName);
-         out.writeInt(mLevel);
-         out.writeInt(mScore);
-         out.writeInt(mLives);
-         out.writeInt(mCycles);
-         out.writeInt(mSave1);
-         out.writeInt(mGameSpeed);
-         out.writeInt(mNumRecords);
-         out.writeString(new Boolean(mSound).toString());
-         out.writeString(new Boolean(mEnableJNI).toString());
-         out.writeString(new Boolean(mEnableMonsters).toString());
-         out.writeString(new Boolean(mEnableCollision).toString());
-         
-         
-     }
-
-     public static final Parcelable.Creator CREATOR
-             = new Parcelable.Creator() {
-         public Record createFromParcel(Parcel in) {
-             return new Record(in);
-         }
-
-         public Record[] newArray(int size) {
-             return new Record[size];
-         }
-     };
-     
-     public Record(Parcel in) {
-    	 mNewRecord = new Boolean(in.readString()).booleanValue();
-    	 mName = in.readString();
-         mLevel = in.readInt();
-         mScore = in.readInt();
-         mLives = in.readInt();
-         mCycles = in.readInt();
-         mSave1 = in.readInt();
-         mGameSpeed = in.readInt();
-         mNumRecords= in.readInt();
-         mSound = new Boolean(in.readString()).booleanValue();
-         mEnableJNI = new Boolean(in.readString()).booleanValue();
-         mEnableMonsters = new Boolean(in.readString()).booleanValue();
-         mEnableCollision = new Boolean(in.readString()).booleanValue();
-         mNewRecord = false;
-     }
-
-    /////  parcelable stuff end
+	
 
      public void addToPreferences( SharedPreferences preferences) {
     	 SharedPreferences.Editor out = preferences.edit();
     	 out.putString("mNewRecord",new Boolean(mNewRecord).toString());
+    	 out.putInt("mRecordIdNum", mRecordIdNum);
     	 out.putString("mName",mName);
          out.putInt("mLevel",mLevel);
          out.putInt("mScore",mScore);
@@ -116,6 +68,7 @@ public  class Record implements Parcelable {
      
      public void getFromPreferences(SharedPreferences in) {
     	 mNewRecord = new Boolean(in.getString("mNewRecord","")).booleanValue();
+    	 mRecordIdNum = in.getInt("mRecordIdNum", 0);
     	 mName = in.getString("mName","none");
          mLevel = in.getInt("mLevel",1);
          mScore = in.getInt("mScore",10);
@@ -132,18 +85,19 @@ public  class Record implements Parcelable {
      
      public void listInLog() {
 		Log.i("Record", "Is New Record " + new Boolean(mNewRecord).toString());
-		Log.i("Record", "Player Name " + mName);
-		Log.i("Record", "Player Level "+ mLevel);
-		Log.i("Record", "Player Score " + mScore);
-		Log.i("Record", "Player Lives " + mLives);
-		Log.i("Record", "Player Cycles " + mCycles);
-		Log.i("Record", "Player Save1 " + mSave1);
-		Log.i("Record", "Game Speed " + mGameSpeed);
-		Log.i("Record", "High Score Number " + mNumRecords);
-		Log.i("Record", "Sound Enabled " + new Boolean(mSound).toString());
-		Log.i("Record", "JNI Enabled " + new Boolean(mEnableJNI).toString());
-		Log.i("Record", "Monsters Enabled " + new Boolean(mEnableMonsters).toString());
-		Log.i("Record", "Collision Enabled " + new Boolean(mEnableCollision).toString());
+		Log.i("Record", "Record Database Num : "+ mRecordIdNum);
+		Log.i("Record", "Player Name : " + mName);
+		Log.i("Record", "Player Level : "+ mLevel);
+		Log.i("Record", "Player Score : " + mScore);
+		Log.i("Record", "Player Lives : " + mLives);
+		Log.i("Record", "Player Cycles : " + mCycles);
+		Log.i("Record", "Player Save1 : " + mSave1);
+		Log.i("Record", "Game Speed : " + mGameSpeed);
+		Log.i("Record", "High Score Number : " + mNumRecords);
+		Log.i("Record", "Sound Enabled : " + new Boolean(mSound).toString());
+		Log.i("Record", "JNI Enabled : " + new Boolean(mEnableJNI).toString());
+		Log.i("Record", "Monsters Enabled : " + new Boolean(mEnableMonsters).toString());
+		Log.i("Record", "Collision Enabled : " + new Boolean(mEnableCollision).toString());
 	}
      
     
@@ -241,4 +195,11 @@ public  class Record implements Parcelable {
 	public void setEnableCollision(boolean mEnableCollision) {
 		this.mEnableCollision = mEnableCollision;
 	}
+	public int getRecordIdNum() {
+		return mRecordIdNum;
+	}
+	public void setRecordIdNum(int mRecordIdNum) {
+		this.mRecordIdNum = mRecordIdNum;
+	}
+	
 }
