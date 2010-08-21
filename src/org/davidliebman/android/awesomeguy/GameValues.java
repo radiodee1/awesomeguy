@@ -247,6 +247,7 @@ public class GameValues {
 	}
 	
 	/** Score Record **/
+	/*
 	public Record getGuyScore() {
 		return mGuyScore;
 	}
@@ -254,5 +255,5 @@ public class GameValues {
 	public void setGuyScore(Record mGuyScore) {
 		this.mGuyScore = mGuyScore;
 	}
-	
+	*/
 }
