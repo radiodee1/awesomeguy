@@ -30,6 +30,8 @@ public class Options extends Activity {
         
         /** sound effects play **/
         final CheckBox checkbox_sounds = (CheckBox) findViewById(R.id.checkbox_sounds );
+        checkbox_sounds.setChecked(mHighScores.isSound());
+        
         checkbox_sounds.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 // Perform action on clicks, depending on whether it's now checked
@@ -45,6 +47,7 @@ public class Options extends Activity {
         
         /** JNI usage **/
         final CheckBox checkbox_jni = (CheckBox) findViewById(R.id.checkbox_jni );
+        checkbox_jni.setChecked(mHighScores.isEnableJNI());
         checkbox_jni.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 // Perform action on clicks, depending on whether it's now checked
@@ -60,6 +63,7 @@ public class Options extends Activity {
         
         /** monsters in game **/
         final CheckBox checkbox_monsters = (CheckBox) findViewById(R.id.checkbox_monsters );
+        checkbox_monsters.setChecked(mHighScores.isEnableMonsters());
         checkbox_monsters.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 // Perform action on clicks, depending on whether it's now checked
@@ -75,6 +79,7 @@ public class Options extends Activity {
         
         /** monster collision **/
         final CheckBox checkbox_collision = (CheckBox) findViewById(R.id.checkbox_collision );
+        checkbox_collision.setChecked(mHighScores.isEnableCollision());
         checkbox_collision.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 // Perform action on clicks, depending on whether it's now checked
@@ -118,9 +123,12 @@ public class Options extends Activity {
         
         /* more radio button stuff - number of players */
         final RadioButton radio_players_five = (RadioButton) findViewById(R.id.radio_players_five);
+        if (mHighScores.getNumRecords() == 5) radio_players_five.setChecked(true);
         final RadioButton radio_players_ten = (RadioButton) findViewById(R.id.radio_players_ten);
+        if (mHighScores.getNumRecords() == 10) radio_players_ten.setChecked(true);
         final RadioButton radio_players_fifty = (RadioButton) findViewById(R.id.radio_players_fifty);
-
+        if (mHighScores.getNumRecords() == 50) radio_players_fifty.setChecked(true);
+        
         radio_players_five.setOnClickListener(radio_players);
         radio_players_ten.setOnClickListener(radio_players);
         radio_players_fifty.setOnClickListener(radio_players);
@@ -128,14 +136,18 @@ public class Options extends Activity {
         
         /* more radio button stuff - game speed*/
         final RadioButton radio_speed_16 = (RadioButton) findViewById(R.id.radio_speed_16);
+        if (mHighScores.getGameSpeed() == 16) radio_speed_16.setChecked(true);
         final RadioButton radio_speed_20 = (RadioButton) findViewById(R.id.radio_speed_20);
+        if (mHighScores.getGameSpeed() == 20) radio_speed_20.setChecked(true);
         final RadioButton radio_speed_24 = (RadioButton) findViewById(R.id.radio_speed_24);
-
+        if (mHighScores.getGameSpeed() == 24) radio_speed_24.setChecked(true);
+        
         radio_speed_16.setOnClickListener(radio_speed);
         radio_speed_20.setOnClickListener(radio_speed);
         radio_speed_24.setOnClickListener(radio_speed);
         /* end radio button stuff */
     }
+    
     @Override
     public void onPause() {
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
