@@ -249,7 +249,7 @@ public class GameStart extends Activity {
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.getFromPreferences(preferences);
         //mHighScores.listInLog();    	
-    	mGameV.setGuyScore(mHighScores);
+    	//mGameV.setGuyScore(mHighScores);
     	
     	/* TODO must modify saved high scores for game play */
     	framesPerSec = mHighScores.getGameSpeed();
@@ -581,7 +581,7 @@ public class GameStart extends Activity {
     		    	// ** ALWAYS SEND THIS MESSAGE **	
     		    	Message mM = new Message();
     		    	mM.what = GameStart.MOVEMENTVALUES;
-    		    	mM.obj = mGameV.getGuyScore();
+    		    	mM.obj = mHighScores;
     		    	myPanelUpdateHandler.sendMessageAtFrontOfQueue(mM);
     				
         			
@@ -678,6 +678,17 @@ public class GameStart extends Activity {
     		}
     	}
     };
+
+
+
+	public Record getHighScores() {
+		return mHighScores;
+	}
+
+	public void setHighScores(Record mHighScores) {
+		this.mHighScores = mHighScores;
+	}
+    
     
     
 }
