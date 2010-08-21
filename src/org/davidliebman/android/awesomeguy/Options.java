@@ -141,6 +141,7 @@ public class Options extends Activity {
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
 
     	mHighScores.addToPreferences(preferences);
-        
+	    super.onPause();
+
     }
 }
