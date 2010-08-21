@@ -937,7 +937,7 @@ void collisionWithMonsters() {
 		    int test =  collisionSimple(guyBox, monsterBox);
 		    if (test && sprite[i].active   == TRUE) {
 		    
-		      if (guyBox.bottom  < monsterBox.bottom) {
+		      if (guyBox.bottom  < monsterBox.bottom - 4) {
 		    	//mGameV.getSprite(i).setActive(false);
 		    	//mPanel.inactivateMonster(i );
 		    	sprite[i].active = FALSE;
@@ -1394,6 +1394,7 @@ JNIEXPORT int JNICALL Java_org_davidliebman_android_awesomeguy_Panel_getScore(JN
         mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles1);
         mTiles.getPixels(tiles_a, 0, 224, 0, 0, 224, 128);
         mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles2);
+
         mTiles.getPixels(tiles_b, 0, 224, 0, 0, 224, 128);
         mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles3);
         mTiles.getPixels(tiles_c, 0, 224, 0, 0, 224, 128);
