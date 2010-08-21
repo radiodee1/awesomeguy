@@ -1040,10 +1040,10 @@ public  class Panel  extends SurfaceView  {
 
 							mGameV.setEndLevel(true);
 
-							if(! this.useJNI) {
-								mGameV.setObjectsCell(j, i, 0);
-							}
-							else { 
+							
+							mGameV.setObjectsCell(j, i, 0);
+							
+							if(this.useJNI) { 
 								setObjectsDisplay(j, i, 0);//jni
 							}
 
@@ -1056,10 +1056,10 @@ public  class Panel  extends SurfaceView  {
 						/************* prizes ******************/
 						if (test && mGameV.getObjectsCell(j,i) == mGameV.mPrize ) {
 
-							if (!this.useJNI) {
-								mGameV.setObjectsCell(j, i, 0);
-							}
-							else {
+							
+							mGameV.setObjectsCell(j, i, 0);
+							
+							if(this.useJNI) {
 								setObjectsDisplay(j, i, 0);//jni
 							}
 
@@ -1072,10 +1072,10 @@ public  class Panel  extends SurfaceView  {
 						/************* keys   ******************/
 						if (test && mGameV.getObjectsCell(j,i) == mGameV.mKey ) {
 
-							if(!this.useJNI) {
-								mGameV.setObjectsCell(j, i, 0);
-							}
-							else {
+							
+							mGameV.setObjectsCell(j, i, 0);
+							
+							if (this.useJNI) {
 								setObjectsDisplay(j, i, 0);//jni
 							}
 
@@ -1090,10 +1090,10 @@ public  class Panel  extends SurfaceView  {
 						/**************** oneup ****************/
 						if (test && mGameV.getObjectsCell(j,i) == mGameV.mOneup ) {
 
-							if(!this.useJNI) {
-								mGameV.setObjectsCell(j, i, 0);
-							}
-							else {
+							
+							mGameV.setObjectsCell(j, i, 0);
+							
+							if (this.useJNI) {
 								setObjectsDisplay(j, i, 0);//jni
 							}
 
@@ -1104,10 +1104,10 @@ public  class Panel  extends SurfaceView  {
 						/**************** bigprize ****************/
 						if (test && mGameV.getObjectsCell(j,i) == mGameV.mBigprize ) {
 
-							if(!this.useJNI) {
-								mGameV.setObjectsCell(j, i, 0);
-							}
-							else {
+							
+							mGameV.setObjectsCell(j, i, 0);
+							
+							if (this.useJNI) {
 								setObjectsDisplay(j, i, 0);//jni
 							}
 
