@@ -62,6 +62,9 @@ public class GameStart extends Activity {
     private int mScrollConst = 200;
     private double mTrackballDist = 1.0;
     
+	public static final String AWESOME_NAME = new String("org.awesomeguy");
+
+    
     /* old GameLoop - variables */
     private boolean gameRunning = true;
 	private boolean mLoop = true;
@@ -69,12 +72,12 @@ public class GameStart extends Activity {
 	private boolean mPlayAgain = true;
 	private boolean mMakeName = false;
 	private boolean ranks = false;
-	private Scores mHighScores;
+	private Record mHighScores;
 	private SpriteInfo mGuySprite;
 
 	
 	/* old GameLoop - prepare timer */
-	private static final long framesPerSec = 25;
+	private static long framesPerSec = 25;
 	private static final long skipTicks = 1000 / framesPerSec;
 	private long ticksElapsed; //, startTicks;
 	private long sleepTime = 0;
@@ -240,7 +243,20 @@ public class GameStart extends Activity {
     
     @Override
     public void onResume() {
-    	    	
+    	
+    	/* retrieve Record mHighScores */
+    	mHighScores = new Record();
+        SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+        mHighScores.getFromPreferences(preferences);
+        //mHighScores.listInLog();    	
+    	mGameV.setGuyScore(mHighScores);
+    	
+    	/* TODO must modify saved high scores for game play */
+    	framesPerSec = mHighScores.getGameSpeed();
+    	mPanelBot.setUseJNI(mHighScores.isEnableJNI());
+    	mPanelBot.setEnableSounds(mHighScores.isSound());
+    	
+    	/* init background */
     	mBackground = new InitBackground(mGameV);
     	
     	/* create game loop thread */
@@ -456,7 +472,9 @@ public class GameStart extends Activity {
     		//////////////////////////////////////////////
         	// TODO: GAME LOOP EXPEREMENT
         	//////////////////////////////////////////////
-    		mHighScores = new Scores();
+    		
+            
+    		
     		gameRunning = true;
     		//prepare timer
     		Date startDate = new Date();
