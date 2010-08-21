@@ -97,7 +97,8 @@ public  class Panel  extends SurfaceView  {
 	/* test jni */
 	int [] screen = new int [192 * 256];
 	SoundPoolManager mSounds;
-
+	private boolean mEnableSounds;
+	
 	public Panel(Context context,  GameValues gameValues, GameStart parent, MovementValues movementValues) {
 		super(context);
 		this.setWillNotDraw(false);
@@ -124,9 +125,12 @@ public  class Panel  extends SurfaceView  {
 		newBG = 0;
 		lastBG = 0;
 
-		/* test jni */
+		mHighScores = mGameV.getGuyScore();
 		mSounds = new SoundPoolManager(parent);
 		mSounds.init();
+		//mSounds.setEnabled(mHighScores.isSound());
+		
+		/* test jni */
 
 		int [] a = new int[16*16];
 		int [] b = new int[16*16];
@@ -183,7 +187,7 @@ public  class Panel  extends SurfaceView  {
 
 			physicsAdjustments();
 
-			//mGameFunct.collisionWithMonsters();
+			if(!useJNI && mHighScores.isEnableCollision()) collisionWithMonsters();
 
 			scrollBg(); //always call this last!!
 
@@ -219,7 +223,7 @@ public  class Panel  extends SurfaceView  {
 			}
 			/************** put monsters on screen ***********/
 
-			if (!useJNI) moveMonsters();
+			if (!useJNI && mHighScores.isEnableMonsters()) moveMonsters();
 
 			/************ Put guy on screen **************/
 			if (!useJNI) {
@@ -404,6 +408,7 @@ public  class Panel  extends SurfaceView  {
 			numbersOnBg(canvas, livesPos + 6, mHighScores.getLives()   , 7); // lives
 		}
 	}
+	
 	private void numbersOnBg(Canvas canvas, int pos, int num, int p) { //'num' is a u32
 		int i, a, b, c, placesValue;
 		int places[] = {0,0,0,0,0,0,0,0,0,0};//ten spots
@@ -1270,6 +1275,27 @@ public  class Panel  extends SurfaceView  {
 		this.mHighScores = mHighScores;
 	}
 	
+
+	public boolean isUseJNI() {
+		return useJNI;
+	}
+
+
+	public void setUseJNI(boolean useJNI) {
+		this.useJNI = useJNI;
+	}
+
+
+	public boolean isEnableSounds() {
+		return mEnableSounds;
+	}
+
+
+	public void setEnableSounds(boolean mEnableSounds) {
+		mEnableSounds = mEnableSounds;
+		mSounds.setEnabled(mEnableSounds);
+	}
+
 
 	public   void readKeys(double num) {
 		mXMultiplier = num;

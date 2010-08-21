@@ -12,7 +12,8 @@ public class SoundPoolManager {
     private Context context;
     private SoundPool soundPool;
     private int mSoundOw, mSoundBoom, mSoundGoal, mSoundPrize;
-
+    private boolean mPlaySounds;
+    
     public static final int SOUND_BOOM = 0;
     public static final int SOUND_GOAL = 1;
     public static final int SOUND_OW = 2;
@@ -52,7 +53,7 @@ public class SoundPoolManager {
     }
 
     public void playSound(int sound) {
-            if (soundPool != null) {
+            if (soundPool != null && mPlaySounds) {
                     Log.d(TAG, "Playing Sound " + sound);
                     AudioManager mgr = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
                     int streamVolume = mgr.getStreamVolume(AudioManager.STREAM_MUSIC);
@@ -75,6 +76,7 @@ public class SoundPoolManager {
 
     public void setEnabled(boolean enabled) {
             this.enabled = enabled;
+            this.mPlaySounds = enabled;
     }
 
 } 
