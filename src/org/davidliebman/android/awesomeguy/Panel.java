@@ -172,6 +172,8 @@ public  class Panel  extends SurfaceView  {
 			mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles4);
 			mTiles.getPixels(tiles_d, 0, 224, 0, 0, 224, 128);
 			this.setTileMapData(tiles_a, tiles_b, tiles_c, tiles_d);
+			
+			
 		}
 	}
 
@@ -182,7 +184,14 @@ public  class Panel  extends SurfaceView  {
 
 		if(message != GameStart.SPLASH ) {
 			
-			if (useJNI) this.setScoreLives(mGameV.getScore(), mGameV.getLives());
+			if (useJNI) {
+				this.setScoreLives(mGameV.getScore(), mGameV.getLives());
+				int monsters = 0;
+				int collision = 0;
+				if(mHighScores.isEnableMonsters()) monsters = 1;
+				if(mHighScores.isEnableCollision()) collision = 1;
+				setMonsterPreferences(monsters, collision);
+			}
 
 			checkRegularCollisions();
 
@@ -1407,6 +1416,7 @@ public  class Panel  extends SurfaceView  {
 	public native void addMonster(int map_x, int map_y, int animate_index);
 	public native void setGuyPosition(int x, int y, int scrollx, int scrolly, int animate);
 	public native void setScoreLives(int score, int lives);
+    public native void setMonsterPreferences(int monsters, int collision);
 	public native int[] drawLevel(int num);
 	public native int getSoundBoom();
 	public native int getSoundOw();
