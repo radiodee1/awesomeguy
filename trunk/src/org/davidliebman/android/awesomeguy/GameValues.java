@@ -37,6 +37,7 @@ public class GameValues {
 	private int mRoom = 1;
 	private boolean mEndLevel = false;
 	private boolean mEndGame = false;
+	private boolean mGameDeath = false;
 	private int mUsernum = 4;
 	public static int NUM_ROOMS = 2;
 	
@@ -168,6 +169,12 @@ public class GameValues {
 		this.mEndGame = mEndGame;
 	}
 
+	public boolean isGameDeath() {
+		return mGameDeath;
+	}
+	public void setGameDeath(boolean mGameDeath) {
+		this.mGameDeath = mGameDeath;
+	}
 	public int getUsernum() {
 		return mUsernum;
 	}
