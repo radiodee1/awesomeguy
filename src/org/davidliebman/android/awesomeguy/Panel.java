@@ -181,6 +181,8 @@ public  class Panel  extends SurfaceView  {
 		mCanvas = canvas;
 
 		if(message != GameStart.SPLASH ) {
+			
+			if (useJNI) this.setScoreLives(mGameV.getScore(), mGameV.getLives());
 
 			checkRegularCollisions();
 
@@ -233,7 +235,6 @@ public  class Panel  extends SurfaceView  {
 			}
 			/************** test jni *******************/
 			if (useJNI) {
-				this.setScoreLives(mGameV.getScore(), mGameV.getLives());
 				Bitmap mMap = Bitmap.createBitmap(drawLevel(newBG + 1), 256, 192, Bitmap.Config.RGB_565);
 				canvas.drawBitmap(mMap, 0, 0, null);
 				playSounds();
@@ -437,6 +438,7 @@ public  class Panel  extends SurfaceView  {
 			}
 		}
 	}
+	
 	public void physicsAdjustments() {
 
 
@@ -792,6 +794,7 @@ public  class Panel  extends SurfaceView  {
 				}
 				else {
 					mGameV.setEndLevel(true);
+					mGameV.setGameDeath(true);
 					//level.endLevel = true;
 					mGameV.decrementLives();
 					mSounds.playSound(SoundPoolManager.SOUND_OW);
@@ -1120,7 +1123,7 @@ public  class Panel  extends SurfaceView  {
 						/************ death ****************/
 						if (test && mGameV.getObjectsCell(j,i) == mGameV.mDeath ) {
 
-
+							mGameV.setGameDeath(true);
 							mGameV.setEndLevel(true);
 							mGameV.decrementLives();
 
@@ -1144,7 +1147,18 @@ public  class Panel  extends SurfaceView  {
 			} // i block
 		} // j block
 
-
+		if (this.useJNI) {
+			/* at end of level */
+			if(getEndLevel() == 1) {
+				mGameV.setEndLevel(true);
+				mGameV.decrementLives();
+				mGameV.setGameDeath(true);
+			}
+			
+			/* changes during level */
+			mHighScores.setLives(getLives());
+			mHighScores.setScore(getScore());
+		}
 
 	}
 	public void moveMonsters() {
@@ -1361,7 +1375,7 @@ public  class Panel  extends SurfaceView  {
 
 	}
 
-
+	/* strictly JNI oriented */
 	public void playSounds() {
 		if(getSoundOw() == 1) {
 			mSounds.playSound(SoundPoolManager.SOUND_OW);
@@ -1375,6 +1389,8 @@ public  class Panel  extends SurfaceView  {
 			Log.e("Play-Sound","BOOM");
 		}
 	}
+	
+	
 	public void addMonstersJNI() {
 		for (int i = mGameV.getMonsterOffset(); i < mGameV.getMonsterOffset() + mGameV.getMonsterNum(); i ++) {
 			SpriteInfo temp = mGameV.getSprite(i);

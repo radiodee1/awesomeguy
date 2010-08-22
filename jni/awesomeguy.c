@@ -1329,7 +1329,10 @@ JNIEXPORT int JNICALL Java_org_davidliebman_android_awesomeguy_Panel_getLives(JN
  */
 JNIEXPORT int JNICALL Java_org_davidliebman_android_awesomeguy_Panel_getEndLevel(JNIEnv * env, jobject  obj)
 {
-	return endlevel;	
+	
+	int temp = endlevel;
+  endlevel = FALSE;
+	return temp;	
 
 }
 

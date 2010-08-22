@@ -69,9 +69,8 @@ public class GameStart extends Activity {
     private boolean gameRunning = true;
 	private boolean mLoop = true;
 	private int mOldLives;
+	private boolean mGameDeath = false;
 	private boolean mPlayAgain = true;
-	private boolean mMakeName = false;
-	private boolean ranks = false;
 	private Record mHighScores;
 	private SpriteInfo mGuySprite;
 
@@ -567,7 +566,8 @@ public class GameStart extends Activity {
     		    //mPanelBot.setBackgroundGraphics();
     			
     		    mGameV.setEndLevel(false);
-    		
+    		    mGameV.setGameDeath(false);
+    		    
     			mLoop = true;
     		    while(mLoop && gameRunning && !mGameV.isEndLevel()) { // GAME PLAY LOOP
     		       
@@ -601,7 +601,7 @@ public class GameStart extends Activity {
     		      // * advance the room count if it is
     		      // * necessary.
     		      //
-    		      if (mGameV.getLives() == mOldLives) {
+    		      if (!mGameV.isGameDeath()) {
     		        mGameV.incrementRoomNo();
     		        mGameV.setEndGame(false);
     		        mGameV.setEndLevel(false);
@@ -687,6 +687,14 @@ public class GameStart extends Activity {
 
 	public void setHighScores(Record mHighScores) {
 		this.mHighScores = mHighScores;
+	}
+
+	public boolean isGameDeath() {
+		return mGameDeath;
+	}
+
+	public void setGameDeath(boolean mGameDeath) {
+		this.mGameDeath = mGameDeath;
 	}
     
     
