@@ -107,6 +107,9 @@ static int sound_ow = FALSE;
 static int sound_prize = FALSE;
 static int sound_boom = FALSE;
 
+static int preferences_monsters = FALSE;
+static int preferences_collision = FALSE;
+
 //////////////////////////////////////////////////////
 // function headers
 //////////////////////////////////////////////////////
@@ -1035,9 +1038,13 @@ void drawLevel(int animate_level) {
     drawScoreWords();
     
     /* draw monsters */
-    drawMonsters();
+    if (preferences_monsters == TRUE) {
+        drawMonsters();
+    }
     
-    collisionWithMonsters();
+    if (preferences_monsters == TRUE && preferences_collision == TRUE) {
+        collisionWithMonsters();
+    }
     
     /* draw guy with animation */
     if (guy.animate == 0) {
@@ -1139,6 +1146,7 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_setMonster
  *	@param	monster_mapy	the y map coordinates of the monster's starting
  *							point.
  *	@param	animate_index	starting animation index of monster.
+
  */
 JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_addMonster(JNIEnv * env, jobject  obj, jint monster_mapx, jint monster_mapy,  jint animate_index)
 {
@@ -1190,6 +1198,21 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_setGuyPosi
 JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_setScoreLives(JNIEnv * env, jobject  obj, jint score, jint lives)
 {
 	setScoreLives(score,lives);	
+
+}
+
+/**
+ *	Used to set the 'score' and 'lives' values to be displayed on the screen
+ *
+ *	@param	env		required by all java jni
+ *	@param	obj		required by all java jni
+ *	@param	monsters 	weather monsters will be shown on the level
+ *	@param	collision	weather collision with monsters will affect game play
+ */
+JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_setMonsterPreferences(JNIEnv * env, jobject  obj, jint monsters, jint collision)
+{
+	preferences_monsters = monsters;
+	preferences_collision = collision;
 
 }
 
@@ -1405,6 +1428,12 @@ JNIEXPORT int JNICALL Java_org_davidliebman_android_awesomeguy_Panel_getScore(JN
         mTiles.getPixels(tiles_d, 0, 224, 0, 0, 224, 128);
         this.setTileMapData(tiles_a, tiles_b, tiles_c, tiles_d);
         
+        int monsters = 0;
+		int collision = 0;
+		if(mHighScores.isEnableMonsters()) monsters = 1;
+		if(mHighScores.isEnableCollision()) collision = 1;
+		setMonsterPreferences(monsters, collision);
+        
 ////////////////////////////////////////////////////////////
 // Panel.java inside 'onDraw()'
 
@@ -1452,6 +1481,7 @@ JNIEXPORT int JNICALL Java_org_davidliebman_android_awesomeguy_Panel_getScore(JN
     public native void addMonster(int map_x, int map_y, int animate_index);
 	public native void setGuyPosition(int x, int y, int scrollx, int scrolly, int animate);
     public native void setScoreLives(int score, int lives);
+    public native void setMonsterPreferences(int monsters, int collision);
     public native int[] drawLevel(int num);
     public native int getSoundBoom();
     public native int getSoundOw();
