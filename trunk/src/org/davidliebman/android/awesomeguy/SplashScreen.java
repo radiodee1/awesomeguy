@@ -1,6 +1,7 @@
 package org.davidliebman.android.awesomeguy;
 
 import android.app.Activity;
+import android.database.sqlite.SQLiteDatabase;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -20,6 +21,8 @@ public class SplashScreen extends Activity {
     public static final String AWESOME_NAME = new String("org.awesomeguy");
     
     private Record mHighScores;
+    private Scores.ScoreOpenHelper mScoresHelper;
+    private SQLiteDatabase db;
     
     /** Called when the activity is first created. */
     @Override
@@ -28,6 +31,11 @@ public class SplashScreen extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.splashscreen);
        
+        /* init database if not already done so */
+        mScoresHelper = new Scores.ScoreOpenHelper(this);
+        db = mScoresHelper.getReadableDatabase();
+        
+        /* one highscores record passed around for preferences */
         mHighScores = new Record();
         
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
