@@ -21,8 +21,6 @@ public class Scores {
 	public Scores (Context context) {
 		mContext = context;
 		
-		/* init database if not already done so */
-		//ScoreOpenHelper scoreOpen = new ScoreOpenHelper(mContext);
 		
 	}
 	
@@ -35,7 +33,6 @@ public class Scores {
 		@Override
 		public void onCreate(SQLiteDatabase db) {
 			db.execSQL(getCreateTableString());
-			Log.e("Scores", "trying to create database");
 		}
 		
 		@Override

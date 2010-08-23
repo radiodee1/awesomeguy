@@ -254,6 +254,19 @@ public  class Panel  extends SurfaceView  {
 				if(mGuySprite.getMapPosY() - mGuySprite.getTopBB() > 16) mScoresOnScreen = true;
 				drawScoreOnMain(canvas, mScoresOnScreen);
 			}
+			
+			if (this.useJNI) {
+				/* at end of level */
+				if(getEndLevel() == 1) {
+					mGameV.setEndLevel(true);
+					mGameV.decrementLives();
+					mGameV.setGameDeath(true);
+				}
+				
+				/* changes during level */
+				mHighScores.setLives(getLives());
+				mHighScores.setScore(getScore());
+			}
 		}
 
 		
@@ -305,7 +318,8 @@ public  class Panel  extends SurfaceView  {
 			scrollTo(scrollX, scrollY);//jni test <---
 		}
 		else {
-			setGuyPosition(guyX -mGuySprite.getLeftBB() , guyY - mGuySprite.getTopBB(), scrollX, scrollY, mGuySprite.getAnimIndex());
+			setGuyPosition(guyX  , guyY , scrollX, scrollY, mGuySprite.getAnimIndex());
+
 		}
 
 	}
@@ -1156,18 +1170,7 @@ public  class Panel  extends SurfaceView  {
 			} // i block
 		} // j block
 
-		if (this.useJNI) {
-			/* at end of level */
-			if(getEndLevel() == 1) {
-				mGameV.setEndLevel(true);
-				mGameV.decrementLives();
-				mGameV.setGameDeath(true);
-			}
-			
-			/* changes during level */
-			mHighScores.setLives(getLives());
-			mHighScores.setScore(getScore());
-		}
+		
 
 	}
 	public void moveMonsters() {
