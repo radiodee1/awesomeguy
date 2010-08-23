@@ -1428,6 +1428,8 @@ JNIEXPORT int JNICALL Java_org_davidliebman_android_awesomeguy_Panel_getScore(JN
         mTiles.getPixels(tiles_d, 0, 224, 0, 0, 224, 128);
         this.setTileMapData(tiles_a, tiles_b, tiles_c, tiles_d);
         
+/////////////////////////////////////////////////////////////////
+        
         int monsters = 0;
 		int collision = 0;
 		if(mHighScores.isEnableMonsters()) monsters = 1;

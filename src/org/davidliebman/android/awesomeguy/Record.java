@@ -26,6 +26,7 @@ public  class Record  {
 	private boolean mEnableMonsters;
 	private boolean mEnableCollision;
 	
+	
 	Record() {
 		
 		mName = new String("none");
@@ -201,5 +202,11 @@ public  class Record  {
 	public void setRecordIdNum(int mRecordIdNum) {
 		this.mRecordIdNum = mRecordIdNum;
 	}
+
+
+	
+
+
+	
 	
 }

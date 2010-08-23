@@ -83,7 +83,7 @@ android:layout_height="wrap_content">
           android:text="Fifty High Scores" />
     </RadioGroup>
 
-<TextView android:text="This is where you decide weather or not your game will use the jni functions for speed. " 
+<TextView android:text="This is where you decide weather or not your game will use the jni functions (mostly for speed). " 
 android:id="@+id/TextView04" 
 android:layout_width="wrap_content" 
 android:layout_height="wrap_content">
@@ -106,7 +106,7 @@ android:layout_height="wrap_content">
         android:layout_height="wrap_content"
         android:text="Monsters" />
 
-<TextView android:text="Here you decide weather monsters in the game can kill you. " 
+<TextView android:text="Here you decide weather monsters in the game can kill you. This doesn't matter if monsters are already disabled above." 
 android:id="@+id/TextView06" 
 android:layout_width="wrap_content" 
 android:layout_height="wrap_content">
