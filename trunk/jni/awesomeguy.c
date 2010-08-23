@@ -80,7 +80,7 @@ uint32_t screen [192][256];
 
 typedef struct {
 	int x, y, animate;
-	int facingRight, active;
+	int facingRight, active, visible;
 	int leftBB, rightBB, topBB, bottomBB;
 } Sprite;
  
@@ -368,6 +368,7 @@ void addMonster(int monster_x, int monster_y, int monster_animate) {
     sprite[sprite_num].animate = monster_animate;
     sprite[sprite_num].facingRight = TRUE;
     sprite[sprite_num].active = TRUE;
+    sprite[sprite_num].visible = TRUE;
       
     sprite[sprite_num].topBB = 3; 
 	sprite[sprite_num].bottomBB = 8;
@@ -390,6 +391,17 @@ void inactivateMonster(int num) {
 } 
 
 /* INTERNAL USE ONLY */
+
+/**
+ *	Used by monster code to make monsters at once visible, but not active.
+ *
+ *	@param	number 	index for the monster to make invisible
+ */
+void inactivateMonsterView(int num) {
+	if (num < sprite_num) {
+		sprite[num].visible = FALSE;
+	}
+}
 
 /**
  *	Used for monster collision function
@@ -888,7 +900,7 @@ void drawMonsters() {
 			else z = 0;
 
 			
-			if(sprite[i].active == TRUE && visibility == show) {
+			if(sprite[i].visible == TRUE && visibility == show) {
 				
 	    		if(sprite[i].facingRight == TRUE) {
 					if(z == 0) {
@@ -940,11 +952,16 @@ void collisionWithMonsters() {
 		    int test =  collisionSimple(guyBox, monsterBox);
 		    if (test && sprite[i].active   == TRUE) {
 		    
-		      if (guyBox.bottom  < monsterBox.bottom - 4) {
+		      if (guyBox.bottom  < monsterBox.bottom ) {
 		    	//mGameV.getSprite(i).setActive(false);
 		    	//mPanel.inactivateMonster(i );
-		    	sprite[i].active = FALSE;
+		    	//sprite[i].active = FALSE;
 		    	score = score + 10;
+		    	
+		    	if (preferences_collision == TRUE) {
+		    		inactivateMonsterView(i);
+		    		inactivateMonster(i);
+		    	}
 		    	//mGameV.incrementScore(10);
 				//mSounds.playSound(SoundPoolManager.SOUND_BOOM);
 				setSoundBoom();
@@ -953,6 +970,7 @@ void collisionWithMonsters() {
 		      }
 		      else {
 				endlevel = TRUE;
+				if (preferences_collision == TRUE) inactivateMonster(i);
 		    	//level.endLevel = true;
 		        lives --;
 				//mSounds.playSound(SoundPoolManager.SOUND_OW);
@@ -1354,7 +1372,7 @@ JNIEXPORT int JNICALL Java_org_davidliebman_android_awesomeguy_Panel_getEndLevel
 {
 	
 	int temp = endlevel;
-  endlevel = FALSE;
+  	endlevel = FALSE;
 	return temp;	
 
 }
