@@ -299,6 +299,7 @@ void setLevelData(int a[MAP_HEIGHT * MAP_WIDTH],  int b[MAP_HEIGHT * MAP_WIDTH])
 	}
 	return;
 }
+
  
 /**
  *	Used repeatedly by the Panel to set the position of the guy sprite and to
@@ -1390,166 +1391,15 @@ JNIEXPORT int JNICALL Java_org_davidliebman_android_awesomeguy_Panel_getScore(JN
 
 }
 
-/*
-////////////////////////////////////////////////////
-// Panel.java global declaration
+/**
+ *	Used to increment the score in the JNI variable
+ *
+ *	@param	env				required by all java jni
+ *	@param	obj				required by all java jni
+ *	@param	num 			amount to increase score by
+ */
+JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_incrementJniScore(JNIEnv * env, jobject  obj, jint num)
+{
+	score = score + num;	
 
-	int [] screen = new int [192 * 256];
-	SoundPoolManager mSound;
-////////////////////////////////////////////////////
-// Panel.java constructor
-
-		mSound = new SoundPoolManager(parent);
-		mSound.init();
-		
-
-		int [] a = new int[16*16];
-		int [] b = new int[16*16];
-		int [] c = new int[16*16];
-		int [] d = new int[16*16];
-		
-        Bitmap mSprite;
-		mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy0);
-		mSprite.getPixels(a, 0, 16, 0, 0, 16, 16);
-		mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy1);
-		mSprite.getPixels(b, 0, 16, 0, 0, 16, 16);
-		mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy2);
-		mSprite.getPixels(c, 0, 16, 0, 0, 16, 16);
-		mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy3);
-		mSprite.getPixels(d, 0, 16, 0, 0, 16, 16);
-        setGuyData(a, b, c, d);
-        
-        mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_r0);
-		mSprite.getPixels(a, 0, 16, 0, 0, 16, 16);
-		mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_r1);
-		mSprite.getPixels(b, 0, 16, 0, 0, 16, 16);
-		mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_l0);
-		mSprite.getPixels(c, 0, 16, 0, 0, 16, 16);
-		mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_l1);
-		mSprite.getPixels(d, 0, 16, 0, 0, 16, 16);
-        setMonsterData(a, b, c, d);
-        
-        int [] tiles_a = new int [128 * 224];
-        int [] tiles_b = new int [128 * 224];
-        int [] tiles_c = new int [128 * 224];
-        int [] tiles_d = new int [128 * 224];
-        
-        Bitmap mTiles;
-        mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles1);
-        mTiles.getPixels(tiles_a, 0, 224, 0, 0, 224, 128);
-        mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles2);
-
-        mTiles.getPixels(tiles_b, 0, 224, 0, 0, 224, 128);
-        mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles3);
-        mTiles.getPixels(tiles_c, 0, 224, 0, 0, 224, 128);
-        mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles4);
-        mTiles.getPixels(tiles_d, 0, 224, 0, 0, 224, 128);
-        this.setTileMapData(tiles_a, tiles_b, tiles_c, tiles_d);
-        
-/////////////////////////////////////////////////////////////////
-        
-        int monsters = 0;
-		int collision = 0;
-		if(mHighScores.isEnableMonsters()) monsters = 1;
-		if(mHighScores.isEnableCollision()) collision = 1;
-		setMonsterPreferences(monsters, collision);
-        
-////////////////////////////////////////////////////////////
-// Panel.java inside 'onDraw()'
-
-		this.setScoreLives(mGameV.getScore(), mGameV.getLives());
-    	Bitmap mMap = Bitmap.createBitmap(drawLevel(newBG + 1), 256, 192, Bitmap.Config.RGB_565);
-    	canvas.drawBitmap(mMap, 0, 0, null);
-    		
-////////////////////////////////////////////////////////////
-// Panel.java inside 'setPanelScroll(int x,int y)'
-
-		//scrollTo(scrollX, scrollY);//jni test <---
-		setGuyPosition(guyX -mGuySprite.getLeftBB() , guyY - mGuySprite.getTopBB(), scrollX, scrollY,
-			mGuySprite.getAnimIndex());
-
-        
-////////////////////////////////////////////////////////////
-// Panel.java function declaration
-
-	public void playSounds() {
-    	if(getSoundOw() == 1) {
-    		mSound.playSound(SoundPoolManager.SOUND_OW);
-    	}
-    	if(getSoundPrize() == 1) {
-    		mSound.playSound(SoundPoolManager.SOUND_PRIZE);
-    	}
-    	if(getSoundBoom() == 1) {
-    		mSound.playSound(SoundPoolManager.SOUND_BOOM);
-    	}
-    }
-	public void addMonstersJNI() {
-		for (int i = mGameV.getMonsterOffset();
-				i < mGameV.getMonsterOffset() + mGameV.getMonsterNum();
-				i ++) {
-			SpriteInfo temp = mGameV.getSprite(i);
-			this.addMonster(temp.getMapPosX(), temp.getMapPosY(), temp.getAnimIndex());
-			
-		}
-	}
-    public native void setLevelData( int [] a_map, int [] b_map,int height, int width);
-	public native void setObjectsDisplay(int map_x, int map_y, int value);
-    public native void setGuyData(int [] a, int [] b, int [] c, int [] d);
-    public native void setMonsterData(int [] a, int [] b, int [] c, int [] d);
-    public native void inactivateMonster(int num);
-	public native void setTileMapData( int [] a, int [] b, int [] c, int [] d);
-    public native void addMonster(int map_x, int map_y, int animate_index);
-	public native void setGuyPosition(int x, int y, int scrollx, int scrolly, int animate);
-    public native void setScoreLives(int score, int lives);
-    public native void setMonsterPreferences(int monsters, int collision);
-    public native int[] drawLevel(int num);
-    public native int getSoundBoom();
-    public native int getSoundOw();
-    public native int getSoundPrize();
-    public native int getEndLevel();
-    public native int getScore();
-    public native int getLives();
-    static {
-    	System.loadLibrary("awesomeguy");
-    }
-    
-//////////////////////////////////////////////////////////
-// GameLoopFunctions.java ... add reference to Panel.java in constructor
-
-//////////////////////////////////////////////////////////
-// GameLoopFunctions.java ... in 'checkRegularCollisions()' several times
-
-	mPanel.setObjectsDisplay(j, i, 0);
-
-
-//////////////////////////////////////////////////////////
-// GameValues.java
-
- 	public int[] getLevelArray() {
-		int a[] = new int [96 * 96];
-		for (int i = 0; i < 96; i ++) {
-			for (int j = 0 ; j < 96; j ++) {
-				a[(i * 96 )+ j] = mLevel1[i][j];
-			}
-		}
-		return a;
-	}
-	public int[] getObjectsArray() {
-		int a[] = new int [96 * 96];
-		for (int i = 0; i < 96; i ++) {
-			for (int j = 0 ; j < 96; j ++) {
-				a[(i * 96 )+ j] = mObjects[i][j];
-			}
-		}
-		return a;
-		
-	}
-	
-//////////////////////////////////////////////////
-// GameStart.java inner game loop... after setLevel and initLevel
-
-	mPanelBot.setLevelData(mGameV.getLevelArray(), 
-		mGameV.getObjectsArray(), mGameV.getMapV(), mGameV.getMapH());
-    mPanelBot.addMonstersJNI();
-    		    
-*/
+}

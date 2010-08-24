@@ -266,6 +266,7 @@ public  class Panel  extends SurfaceView  {
 				/* changes during level */
 				mHighScores.setLives(getLives());
 				mHighScores.setScore(getScore());
+				mGameV.setScore(getScore());
 			}
 		}
 
@@ -427,8 +428,14 @@ public  class Panel  extends SurfaceView  {
 			}
 
 			//print numbers: 
-			numbersOnBg(canvas, scorePos + 6, mHighScores.getScore()   , 7); // score
-			numbersOnBg(canvas, livesPos + 6, mHighScores.getLives()   , 7); // lives
+			if (useJNI) {
+				numbersOnBg(canvas, scorePos + 6, mHighScores.getScore()   , 7); // score
+				numbersOnBg(canvas, livesPos + 6, mHighScores.getLives()   , 7); // lives
+			}
+			else {
+				numbersOnBg(canvas, scorePos + 6, mGameV.getScore()   , 7); // score
+				numbersOnBg(canvas, livesPos + 6, mGameV.getLives()   , 7); // lives
+			}
 		}
 	}
 	
@@ -1071,6 +1078,7 @@ public  class Panel  extends SurfaceView  {
 							
 							if(this.useJNI) { 
 								setObjectsDisplay(j, i, 0);//jni
+								this.incrementJniScore(100);
 							}
 
 							mGameV.incrementScore(100);
@@ -1087,6 +1095,7 @@ public  class Panel  extends SurfaceView  {
 							
 							if(this.useJNI) {
 								setObjectsDisplay(j, i, 0);//jni
+								this.incrementJniScore(10);
 							}
 
 							mGameV.incrementScore(10);
@@ -1103,6 +1112,7 @@ public  class Panel  extends SurfaceView  {
 							
 							if (this.useJNI) {
 								setObjectsDisplay(j, i, 0);//jni
+								this.incrementJniScore(50);
 							}
 
 							mGameV.incrementScore(50);
@@ -1135,6 +1145,7 @@ public  class Panel  extends SurfaceView  {
 							
 							if (this.useJNI) {
 								setObjectsDisplay(j, i, 0);//jni
+								this.incrementJniScore(200);
 							}
 
 							mGameV.incrementScore(200);
@@ -1427,6 +1438,7 @@ public  class Panel  extends SurfaceView  {
 	public native int getEndLevel();
 	public native int getScore();
 	public native int getLives();
+	public native void incrementJniScore(int num);
 	static {
 		System.loadLibrary("awesomeguy");
 	}
