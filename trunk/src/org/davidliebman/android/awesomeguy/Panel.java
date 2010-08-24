@@ -99,7 +99,7 @@ public  class Panel  extends SurfaceView  {
 	SoundPoolManager mSounds;
 	private boolean mEnableSounds;
 	
-	public Panel(Context context,  GameValues gameValues, GameStart parent, MovementValues movementValues) {
+	public Panel(Context context,  GameValues gameValues, GameStart parent, MovementValues movementValues, Record highScores) {
 		super(context);
 		this.setWillNotDraw(false);
 
@@ -125,7 +125,7 @@ public  class Panel  extends SurfaceView  {
 		newBG = 0;
 		lastBG = 0;
 
-		mHighScores = parent.getHighScores();//mGameV.getGuyScore();
+		mHighScores = highScores;//parent.getHighScores();//mGameV.getGuyScore();
 		mSounds = new SoundPoolManager(parent);
 		mSounds.init();
 		

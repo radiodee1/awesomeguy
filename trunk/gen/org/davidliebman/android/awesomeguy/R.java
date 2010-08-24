@@ -61,7 +61,7 @@ public final class R {
         public static final int AbsoluteLayout01=0x7f06001d;
         public static final int AbsoluteLayout02=0x7f06001f;
         public static final int Credits=0x7f060009;
-        public static final int GameStart=0x7f060003;
+        public static final int GameStart=0x7f060004;
         public static final int Help=0x7f060005;
         public static final int Options=0x7f060007;
         public static final int Players=0x7f06000b;
@@ -87,7 +87,7 @@ public final class R {
         public static final int radio_speed_24=0x7f06000e;
         public static final int widget28=0x7f060002;
         public static final int widget32=0x7f060000;
-        public static final int widget34=0x7f060004;
+        public static final int widget34=0x7f060003;
         public static final int widget35=0x7f060006;
         public static final int widget38=0x7f060008;
         public static final int widget40=0x7f06000a;

@@ -37,10 +37,11 @@ public class GameStart extends Activity {
     InnerGameLoop mGameLoopBot;
     
     RelativeLayout mRLayout ;
+    TableLayout mTLayoutOuter ;
     TableLayout mTLayout ;
-    FrameLayout mFLayoutTop ;
+    //FrameLayout mFLayoutTop ;
     FrameLayout mFLayoutBot ;
-    Panel mPanelTop ;
+    //Panel mPanelTop ;
     Panel mPanelBot ;
 	
     View mSpaceView;
@@ -95,11 +96,12 @@ public class GameStart extends Activity {
         
         /* generate components for top of screen */
         mRLayout = new RelativeLayout(this) ; 
+        mTLayoutOuter = new TableLayout(this);
         mTLayout = new TableLayout(this);
-        mFLayoutTop = new FrameLayout(this);
+        //mFLayoutTop = new FrameLayout(this);
         mFLayoutBot = new FrameLayout(this);
-        mPanelTop = new Panel(this,  mGameV, this, mMovementV);
-        mPanelBot = new Panel(this,  mGameV, this, mMovementV);
+        //mPanelTop = new Panel(this,  mGameV, this, mMovementV);
+        //mPanelBot = new Panel(this,  mGameV, this, mMovementV);
         
         
         /* assemble components for top of screen */
@@ -110,16 +112,24 @@ public class GameStart extends Activity {
         mRLayout.setLayoutParams(mRLayoutParams);
         mRLayout.setHorizontalGravity(Gravity.CENTER_HORIZONTAL);
         
+        mTLayoutOuter.setBackgroundColor(Color.BLACK);
+        ViewGroup.LayoutParams mTLayoutOuterParams = new 
+    		ViewGroup.LayoutParams(480, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mTLayoutOuter.setLayoutParams(mTLayoutOuterParams);
+        
+        
         mTLayout.setBackgroundColor(Color.BLACK);
         ViewGroup.LayoutParams mTLayoutParams = new 
     		ViewGroup.LayoutParams(256, ViewGroup.LayoutParams.WRAP_CONTENT);
         mTLayout.setLayoutParams(mTLayoutParams);
         
-        mFLayoutTop.setBackgroundColor(Color.RED);
+        /*
+        mFLayoutTop.setBackgroundColor(Color.BLACK);
         ViewGroup.LayoutParams mFLayoutTopParams = new 
 			ViewGroup.LayoutParams(256,192);
         mFLayoutTop.setLayoutParams(mFLayoutTopParams);
-          
+        */
+        
         mFLayoutBot.setBackgroundColor(Color.BLACK);
         ViewGroup.LayoutParams mFLayoutBotParams = new 
 			ViewGroup.LayoutParams(256,192);
@@ -140,12 +150,12 @@ public class GameStart extends Activity {
         mTRowMid = new TableRow(this);
         mTRowBot = new TableRow(this);
         
-        mButtonHeight = 23;
-        mButtonWidth = 23;
+        mButtonHeight = 95;//23
+        mButtonWidth = 95;//23
         
         /* first row buttons */
-        mButtonTop1 = new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
-        mButtonTop2 = new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
+        //mButtonTop1 = new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
+        //mButtonTop2 = new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
         mButtonTop3 = new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
     	mButtonTop4 = new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
     	mButtonTop5 = new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
@@ -153,8 +163,8 @@ public class GameStart extends Activity {
     	mButtonTop7 = new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
         
     	/* middle row buttons */
-        mButtonMid1 = new TouchButton(this, R.drawable.button_a, mButtonWidth, mButtonHeight, 0, "button_a", MovementValues.KEY_A);
-        mButtonMid2 = new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
+        //mButtonMid1 = new TouchButton(this, R.drawable.button_a, mButtonWidth, mButtonHeight, 0, "button_a", MovementValues.KEY_A);
+        //mButtonMid2 = new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
         mButtonMid3 = new TouchButton(this, R.drawable.button_b, mButtonWidth, mButtonHeight, 0, "button_b", MovementValues.KEY_B);
     	mButtonMid4 = new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
     	mButtonMid5 = new TouchButton(this, R.drawable.button_left, mButtonWidth, mButtonHeight, 0, "button_left", MovementValues.KEY_LEFT);
@@ -162,8 +172,8 @@ public class GameStart extends Activity {
     	mButtonMid7 = new TouchButton(this, R.drawable.button_right, mButtonWidth, mButtonHeight, 0, "button_right", MovementValues.KEY_RIGHT);
     	
     	/* bottom row buttons */
-        mButtonBot1 = new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
-        mButtonBot2 = new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
+        //mButtonBot1 = new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
+        //mButtonBot2 = new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
         mButtonBot3 = new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
     	mButtonBot4 = new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
     	mButtonBot5 = new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
@@ -171,24 +181,24 @@ public class GameStart extends Activity {
     	mButtonBot7 = new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
     	
     	/* put buttons in rows */
-    	mTRowTop.addView((View)mButtonTop1);
-    	mTRowTop.addView((View)mButtonTop2);
+    	//mTRowTop.addView((View)mButtonTop1);
+    	//mTRowTop.addView((View)mButtonTop2);
     	mTRowTop.addView((View)mButtonTop3);
     	mTRowTop.addView((View)mButtonTop4);
     	mTRowTop.addView((View)mButtonTop5);
     	mTRowTop.addView((View)mButtonTop6);
     	mTRowTop.addView((View)mButtonTop7);
     	
-    	mTRowMid.addView((View)mButtonMid1);
-    	mTRowMid.addView((View)mButtonMid2);
+    	//mTRowMid.addView((View)mButtonMid1);
+    	//mTRowMid.addView((View)mButtonMid2);
     	mTRowMid.addView((View)mButtonMid3);
     	mTRowMid.addView((View)mButtonMid4);
     	mTRowMid.addView((View)mButtonMid5);
     	mTRowMid.addView((View)mButtonMid6);
     	mTRowMid.addView((View)mButtonMid7);
     	
-    	mTRowBot.addView((View)mButtonBot1);
-    	mTRowBot.addView((View)mButtonBot2);
+    	//mTRowBot.addView((View)mButtonBot1);
+    	//mTRowBot.addView((View)mButtonBot2);
     	mTRowBot.addView((View)mButtonBot3);
     	mTRowBot.addView((View)mButtonBot4);
     	mTRowBot.addView((View)mButtonBot5);
@@ -201,17 +211,19 @@ public class GameStart extends Activity {
     	mGamepad.addView((View)mTRowBot);
     	
         /* assemble top part of screen */
-        mRLayout.addView((View)mTLayout);
-        mTLayout.addView((View)mFLayoutTop);
+    	
+        mRLayout.addView((View)mTLayoutOuter);
+        mTLayoutOuter.addView((View)mTLayout);
+        //mTLayout.addView((View)mFLayoutTop);
         mTLayout.addView((View)mFLayoutBot);
-        mFLayoutTop.addView((View)mPanelTop);
-        mFLayoutBot.addView((View)mPanelBot);
+
+        //mFLayoutBot.addView((View)mPanelBot);
         
         mTLayout.addView(mSpaceView);
         
         /* add gamepad to bottom of screen */
         mRLayoutGamepad.addView((View)mGamepad);
-        mTLayout.addView((View)mRLayoutGamepad);
+        mTLayoutOuter.addView((View)mRLayoutGamepad);
         
         setContentView(mRLayout);
         //mGameFunct = new GameLoop(mGameV, this , mMovementV);
@@ -252,11 +264,15 @@ public class GameStart extends Activity {
     	
     	/* TODO must modify saved high scores for game play */
     	framesPerSec = mHighScores.getGameSpeed();
+    	
+    	/* init background */
+    	mPanelBot = new Panel(this,  mGameV, this, mMovementV, mHighScores);
+    	mBackground = new InitBackground(mGameV);
+    	mFLayoutBot.addView((View)mPanelBot);
+    	
     	mPanelBot.setUseJNI(mHighScores.isEnableJNI());
     	mPanelBot.setEnableSounds(mHighScores.isSound());
     	
-    	/* init background */
-    	mBackground = new InitBackground(mGameV);
     	
     	/* create game loop thread */
     	mGameLoopBot = new InnerGameLoop(this);
@@ -425,7 +441,7 @@ public class GameStart extends Activity {
     			
     		}
     		else if(msg.what == SPLASH) {
-    			mPanelTop.setBackgroundShow(mGameV.getRoomNo());
+    			//mPanelTop.setBackgroundShow(mGameV.getRoomNo());
     		}
     		else if(msg.what == MOVEMENTVALUES) {
     			
