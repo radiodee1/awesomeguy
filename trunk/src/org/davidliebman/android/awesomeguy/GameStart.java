@@ -525,7 +525,7 @@ public class GameStart extends Activity {
     			
     		    // new score ??
     		    
-    		    mGameV.setScore(0);
+    		    mGameV.setScore(10);
     		    
     		    mGameV.setEndGame(false);
     		    
