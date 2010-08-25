@@ -17,7 +17,8 @@ public  class Panel  extends SurfaceView  {
 	private TileCutter mTiles;
 	private MovementValues mMovementV;
 	private Record mHighScores;
-
+	private int mDisplayWidth;
+	
 	private int mScore;
 	private int mLives;
 	private int message = 0;
@@ -99,17 +100,18 @@ public  class Panel  extends SurfaceView  {
 	SoundPoolManager mSounds;
 	private boolean mEnableSounds;
 	
-	public Panel(Context context,  GameValues gameValues, GameStart parent, MovementValues movementValues, Record highScores) {
+	public Panel(Context context,  GameValues gameValues, GameStart parent, MovementValues movementValues, Record highScores, int displayWidth) {
 		super(context);
 		this.setWillNotDraw(false);
-
+		
 		mGameV = gameValues;
 		mMovementV = movementValues;
 
 		mGameV.setSpriteStart();
 		mGuySprite = mGameV.getSpriteStart();
-		//mGameFunct.setGuySprite(mGuySprite);
 
+		mDisplayWidth = displayWidth;
+		
 		mP = new Paint();
 		mP.setAlpha(0xff);
 

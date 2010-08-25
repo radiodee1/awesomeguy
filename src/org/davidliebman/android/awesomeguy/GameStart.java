@@ -104,7 +104,6 @@ public class GameStart extends Activity {
         mTLayout = new TableLayout(this);
         //mFLayoutTop = new FrameLayout(this);
         mFLayoutBot = new FrameLayout(this);
-        //mPanelTop = new Panel(this,  mGameV, this, mMovementV);
         //mPanelBot = new Panel(this,  mGameV, this, mMovementV);
         
         
@@ -112,13 +111,13 @@ public class GameStart extends Activity {
         mRLayout.setBackgroundColor(Color.BLUE);
         mRLayout.setBackgroundResource(R.drawable.background);
         ViewGroup.LayoutParams mRLayoutParams = new 
-        	ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        	ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);//.WRAP_CONTENT);
         mRLayout.setLayoutParams(mRLayoutParams);
         mRLayout.setHorizontalGravity(Gravity.CENTER_HORIZONTAL);
         
         mTLayoutOuter.setBackgroundColor(Color.BLACK);
         ViewGroup.LayoutParams mTLayoutOuterParams = new 
-    		ViewGroup.LayoutParams(480, ViewGroup.LayoutParams.WRAP_CONTENT);
+    		ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);//480,WRAP_CONTENT
         mTLayoutOuter.setLayoutParams(mTLayoutOuterParams);
         
         
@@ -149,9 +148,84 @@ public class GameStart extends Activity {
         mTRowMid = new TableRow(this);
         mTRowBot = new TableRow(this);
         
-        mDimension = mRLayout.getWidth();
-        mButtonHeight = 95;//mDimension/5;//23
-        mButtonWidth = 95;//mDimension/5;//23
+        this.setContentView(mRLayout);
+        
+        mDimension = mTLayoutOuter.getWidth();
+        mButtonHeight = mDimension/5;//95
+        mButtonWidth = mDimension/5;//95
+        /*
+        // first row buttons 
+        mButtonTop3 = new BlankButton(this);//TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
+    	mButtonTop4 = new BlankButton(this);//new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
+    	mButtonTop5 = new BlankButton(this);//new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
+    	mButtonTop6 = new TouchButton(this, R.drawable.button_up, mButtonWidth, mButtonHeight, 0, "button_up", MovementValues.KEY_UP);
+    	mButtonTop7 = new BlankButton(this); //new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
+        
+    	// middle row buttons 
+        mButtonMid3 = new TouchButton(this, R.drawable.button_b, mButtonWidth, mButtonHeight, 0, "button_b", MovementValues.KEY_B);
+    	mButtonMid4 = new BlankButton(this);//new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
+    	mButtonMid5 = new TouchButton(this, R.drawable.button_left, mButtonWidth, mButtonHeight, 0, "button_left", MovementValues.KEY_LEFT);
+    	mButtonMid6 = new TouchButton(this, R.drawable.button_center, mButtonWidth, mButtonHeight, 0, "button_center", 0);
+    	mButtonMid7 = new TouchButton(this, R.drawable.button_right, mButtonWidth, mButtonHeight, 0, "button_right", MovementValues.KEY_RIGHT);
+    	
+    	// bottom row buttons 
+        mButtonBot3 = new BlankButton(this);//new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
+    	mButtonBot4 = new BlankButton(this);//new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
+    	mButtonBot5 = new BlankButton(this);//new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
+    	mButtonBot6 = new TouchButton(this, R.drawable.button_down, mButtonWidth, mButtonHeight, 0, "button_down", MovementValues.KEY_DOWN);
+    	mButtonBot7 = new BlankButton(this);//new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
+    	
+    	// put buttons in rows 
+    	mTRowTop.addView((View)mButtonTop3);
+    	mTRowTop.addView((View)mButtonTop4);
+    	mTRowTop.addView((View)mButtonTop5);
+    	mTRowTop.addView((View)mButtonTop6);
+    	mTRowTop.addView((View)mButtonTop7);
+    	
+    	mTRowMid.addView((View)mButtonMid3);
+    	mTRowMid.addView((View)mButtonMid4);
+    	mTRowMid.addView((View)mButtonMid5);
+    	mTRowMid.addView((View)mButtonMid6);
+    	mTRowMid.addView((View)mButtonMid7);
+    	
+    	mTRowBot.addView((View)mButtonBot3);
+    	mTRowBot.addView((View)mButtonBot4);
+    	mTRowBot.addView((View)mButtonBot5);
+    	mTRowBot.addView((View)mButtonBot6);
+    	mTRowBot.addView((View)mButtonBot7);
+    	
+    	// put rows in table 
+    	mGamepad.addView((View)mTRowTop);
+    	mGamepad.addView((View)mTRowMid);
+    	mGamepad.addView((View)mTRowBot);
+    	*/
+        /* assemble top part of screen */
+    	
+        mRLayout.addView((View)mTLayoutOuter);
+        mTLayoutOuter.addView((View)mTLayout);
+        //mTLayout.addView((View)mFLayoutTop);
+        mTLayout.addView((View)mFLayoutBot);
+
+        //mFLayoutBot.addView((View)mPanelBot);
+        
+        mTLayout.addView(mSpaceView);
+        
+        /* add gamepad to bottom of screen */
+        //TODO : fix gamepad.
+        //mRLayoutGamepad.addView((View)mGamepad);
+        mTLayoutOuter.addView((View)mRLayoutGamepad);
+        
+        //setContentView(mRLayout);
+
+        
+        mGameV.setSpriteStart();
+    }
+    
+    public TableLayout getGamePad(int widthDimension) {
+
+        mDimension = widthDimension;
+        mButtonHeight = mDimension/5;//95
+        mButtonWidth = mDimension/5;//95
         
         /* first row buttons */
         mButtonTop3 = new BlankButton(this);//TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
@@ -197,26 +271,8 @@ public class GameStart extends Activity {
     	mGamepad.addView((View)mTRowTop);
     	mGamepad.addView((View)mTRowMid);
     	mGamepad.addView((View)mTRowBot);
-    	
-        /* assemble top part of screen */
-    	
-        mRLayout.addView((View)mTLayoutOuter);
-        mTLayoutOuter.addView((View)mTLayout);
-        //mTLayout.addView((View)mFLayoutTop);
-        mTLayout.addView((View)mFLayoutBot);
-
-        //mFLayoutBot.addView((View)mPanelBot);
-        
-        mTLayout.addView(mSpaceView);
-        
-        /* add gamepad to bottom of screen */
-        mRLayoutGamepad.addView((View)mGamepad);
-        mTLayoutOuter.addView((View)mRLayoutGamepad);
-        
-        setContentView(mRLayout);
-
-        
-        mGameV.setSpriteStart();
+    
+    	return mGamepad;
     }
     
     @Override
@@ -251,7 +307,10 @@ public class GameStart extends Activity {
     	framesPerSec = mHighScores.getGameSpeed();
     	
     	/* init background */
-    	mPanelBot = new Panel(this,  mGameV, this, mMovementV, mHighScores);
+    	Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();    	
+    	mPanelBot = new Panel(this,  mGameV, this, mMovementV, mHighScores, display.getWidth());
+    	mRLayoutGamepad.addView((View)this.getGamePad(display.getWidth()));
+
     	mBackground = new InitBackground(mGameV);
     	mFLayoutBot.addView((View)mPanelBot);
     	

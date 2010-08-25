@@ -36,6 +36,7 @@ public class Scores {
 					mHighScores.getInsertString(TABLE_NAME));
 
 		}
+		mDatabase.close();
 	}
 	
 	public static class ScoreOpenHelper extends SQLiteOpenHelper {
