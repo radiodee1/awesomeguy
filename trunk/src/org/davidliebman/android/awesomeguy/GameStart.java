@@ -259,10 +259,8 @@ public class GameStart extends Activity {
     	mHighScores = new Record();
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.getFromPreferences(preferences);
-        //mHighScores.listInLog();    	
-    	//mGameV.setGuyScore(mHighScores);
+        //mHighScores.listInLog();    	    	
     	
-    	/* TODO must modify saved high scores for game play */
     	framesPerSec = mHighScores.getGameSpeed();
     	
     	/* init background */
@@ -270,6 +268,8 @@ public class GameStart extends Activity {
     	mBackground = new InitBackground(mGameV);
     	mFLayoutBot.addView((View)mPanelBot);
     	
+    	/* TODO must modify saved high scores for game play */
+    	/* maybe remove this after some testing */
     	mPanelBot.setUseJNI(mHighScores.isEnableJNI());
     	mPanelBot.setEnableSounds(mHighScores.isSound());
     	

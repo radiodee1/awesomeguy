@@ -14,16 +14,29 @@ public class Scores {
 	private static final int DATABASE_VERSION = 2;
 	private static final String TABLE_NAME = "scores";
 	
-	private String mCreateTableString = new String();
-
+	private SQLiteDatabase mDatabase;
+	private ScoreOpenHelper mOpenHelper;
 	public Context mContext;
+	public Record mHighScores;
 	
-	public Scores (Context context) {
+	public Scores (Context context, Record highScores) {
 		mContext = context;
-		
-		
+		mOpenHelper = new ScoreOpenHelper(mContext);
+		mHighScores = highScores;
 	}
-	
+	public void setHighScores(Record highScores) {
+		mHighScores = highScores;
+	}
+	public void test() {
+		
+		mDatabase = mOpenHelper.getWritableDatabase();
+
+		for (int i = 0; i < 5; i ++ ) {
+			mDatabase.execSQL(
+					mHighScores.getInsertString(TABLE_NAME));
+
+		}
+	}
 	
 	public static class ScoreOpenHelper extends SQLiteOpenHelper {
 		ScoreOpenHelper(Context context) {
@@ -63,5 +76,6 @@ public class Scores {
 					" ) "
 					);
 		}
+		
 	}
 }
