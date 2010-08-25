@@ -22,6 +22,7 @@ public class SplashScreen extends Activity {
     
     private Record mHighScores;
     private Scores.ScoreOpenHelper mScoresHelper;
+    private Scores mScores;
     private SQLiteDatabase db;
     
     /** Called when the activity is first created. */
@@ -35,13 +36,18 @@ public class SplashScreen extends Activity {
         mScoresHelper = new Scores.ScoreOpenHelper(this);
         db = mScoresHelper.getReadableDatabase();
         
+        
+        
         /* one highscores record passed around for preferences */
         mHighScores = new Record();
         
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.addToPreferences(preferences);
         
-
+        /* init scores object */
+        mScores = new Scores(this, mHighScores);
+        //mScores.setHighScores(mHighScores);
+        //mScores.test();
         
         // thread for displaying the SplashScreen
         Thread splashTread = new Thread() {
