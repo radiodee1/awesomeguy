@@ -66,6 +66,7 @@ public final class R {
         public static final int Options=0x7f060007;
         public static final int Players=0x7f06000b;
         public static final int TableLayout01=0x7f06001c;
+        public static final int TableLayout02=0x7f060021;
         public static final int TextView01=0x7f060001;
         public static final int TextView02=0x7f06000f;
         public static final int TextView03=0x7f060011;
