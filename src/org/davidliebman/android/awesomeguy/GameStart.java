@@ -52,14 +52,13 @@ public class GameStart extends Activity {
     TableRow mTRowMid;
     TableRow mTRowBot;
     
-    BlankButton  mButtonTop3, 
-    	mButtonTop4, mButtonTop5, mButtonTop7;
+    BlankButton  mButtonTop3, mButtonTop4, mButtonTop5, mButtonTop7;
     TouchButton mButtonTop6;
-    BlankButton mButtonMid4;
-    TouchButton  mButtonMid3, 
-    	mButtonMid5, mButtonMid6, mButtonMid7;
-    BlankButton  mButtonBot3, 
-    	mButtonBot4, mButtonBot5, mButtonBot7;
+    
+    BlankButton mButtonMid4, mButtonMid6;
+    TouchButton  mButtonMid3, mButtonMid5, mButtonMid7;
+    
+    BlankButton  mButtonBot3, mButtonBot4, mButtonBot5, mButtonBot7;
     TouchButton mButtonBot6;    
     
     private int mButtonHeight, mButtonWidth;
@@ -153,52 +152,7 @@ public class GameStart extends Activity {
         mDimension = mTLayoutOuter.getWidth();
         mButtonHeight = mDimension/5;//95
         mButtonWidth = mDimension/5;//95
-        /*
-        // first row buttons 
-        mButtonTop3 = new BlankButton(this);//TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
-    	mButtonTop4 = new BlankButton(this);//new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
-    	mButtonTop5 = new BlankButton(this);//new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
-    	mButtonTop6 = new TouchButton(this, R.drawable.button_up, mButtonWidth, mButtonHeight, 0, "button_up", MovementValues.KEY_UP);
-    	mButtonTop7 = new BlankButton(this); //new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
-        
-    	// middle row buttons 
-        mButtonMid3 = new TouchButton(this, R.drawable.button_b, mButtonWidth, mButtonHeight, 0, "button_b", MovementValues.KEY_B);
-    	mButtonMid4 = new BlankButton(this);//new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
-    	mButtonMid5 = new TouchButton(this, R.drawable.button_left, mButtonWidth, mButtonHeight, 0, "button_left", MovementValues.KEY_LEFT);
-    	mButtonMid6 = new TouchButton(this, R.drawable.button_center, mButtonWidth, mButtonHeight, 0, "button_center", 0);
-    	mButtonMid7 = new TouchButton(this, R.drawable.button_right, mButtonWidth, mButtonHeight, 0, "button_right", MovementValues.KEY_RIGHT);
-    	
-    	// bottom row buttons 
-        mButtonBot3 = new BlankButton(this);//new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
-    	mButtonBot4 = new BlankButton(this);//new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
-    	mButtonBot5 = new BlankButton(this);//new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
-    	mButtonBot6 = new TouchButton(this, R.drawable.button_down, mButtonWidth, mButtonHeight, 0, "button_down", MovementValues.KEY_DOWN);
-    	mButtonBot7 = new BlankButton(this);//new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
-    	
-    	// put buttons in rows 
-    	mTRowTop.addView((View)mButtonTop3);
-    	mTRowTop.addView((View)mButtonTop4);
-    	mTRowTop.addView((View)mButtonTop5);
-    	mTRowTop.addView((View)mButtonTop6);
-    	mTRowTop.addView((View)mButtonTop7);
-    	
-    	mTRowMid.addView((View)mButtonMid3);
-    	mTRowMid.addView((View)mButtonMid4);
-    	mTRowMid.addView((View)mButtonMid5);
-    	mTRowMid.addView((View)mButtonMid6);
-    	mTRowMid.addView((View)mButtonMid7);
-    	
-    	mTRowBot.addView((View)mButtonBot3);
-    	mTRowBot.addView((View)mButtonBot4);
-    	mTRowBot.addView((View)mButtonBot5);
-    	mTRowBot.addView((View)mButtonBot6);
-    	mTRowBot.addView((View)mButtonBot7);
-    	
-    	// put rows in table 
-    	mGamepad.addView((View)mTRowTop);
-    	mGamepad.addView((View)mTRowMid);
-    	mGamepad.addView((View)mTRowBot);
-    	*/
+       
         /* assemble top part of screen */
     	
         mRLayout.addView((View)mTLayoutOuter);
@@ -211,8 +165,6 @@ public class GameStart extends Activity {
         mTLayout.addView(mSpaceView);
         
         /* add gamepad to bottom of screen */
-        //TODO : fix gamepad.
-        //mRLayoutGamepad.addView((View)mGamepad);
         mTLayoutOuter.addView((View)mRLayoutGamepad);
         
         //setContentView(mRLayout);
@@ -223,30 +175,31 @@ public class GameStart extends Activity {
     
     public TableLayout getGamePad(int widthDimension) {
 
-        mDimension = widthDimension;
-        mButtonHeight = mDimension/5;//95
-        mButtonWidth = mDimension/5;//95
+        mButtonHeight = widthDimension/5;//95
+        mButtonWidth = widthDimension/5;//95
         
         /* first row buttons */
-        mButtonTop3 = new BlankButton(this);//TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
-    	mButtonTop4 = new BlankButton(this);//new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
-    	mButtonTop5 = new BlankButton(this);//new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
+        mButtonTop3 = new BlankButton(this);
+    	mButtonTop4 = new BlankButton(this);
+    	mButtonTop5 = new BlankButton(this);
     	mButtonTop6 = new TouchButton(this, R.drawable.button_up, mButtonWidth, mButtonHeight, 0, "button_up", MovementValues.KEY_UP);
-    	mButtonTop7 = new BlankButton(this); //new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
+    	mButtonTop7 = new BlankButton(this);
         
     	/* middle row buttons */
         mButtonMid3 = new TouchButton(this, R.drawable.button_b, mButtonWidth, mButtonHeight, 0, "button_b", MovementValues.KEY_B);
-    	mButtonMid4 = new BlankButton(this);//new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
+    	mButtonMid4 = new BlankButton(this);
     	mButtonMid5 = new TouchButton(this, R.drawable.button_left, mButtonWidth, mButtonHeight, 0, "button_left", MovementValues.KEY_LEFT);
-    	mButtonMid6 = new TouchButton(this, R.drawable.button_center, mButtonWidth, mButtonHeight, 0, "button_center", 0);
+    	mButtonMid6 = new BlankButton(this);
+    	mButtonMid6.setBackgroundResource(R.drawable.button_center);
+    	//mButtonMid6 = new TouchButton(this, R.drawable.button_center, mButtonWidth, mButtonHeight, 0, "button_center", 0);
     	mButtonMid7 = new TouchButton(this, R.drawable.button_right, mButtonWidth, mButtonHeight, 0, "button_right", MovementValues.KEY_RIGHT);
     	
     	/* bottom row buttons */
-        mButtonBot3 = new BlankButton(this);//new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
-    	mButtonBot4 = new BlankButton(this);//new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
-    	mButtonBot5 = new BlankButton(this);//new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
+        mButtonBot3 = new BlankButton(this);
+    	mButtonBot4 = new BlankButton(this);
+    	mButtonBot5 = new BlankButton(this);
     	mButtonBot6 = new TouchButton(this, R.drawable.button_down, mButtonWidth, mButtonHeight, 0, "button_down", MovementValues.KEY_DOWN);
-    	mButtonBot7 = new BlankButton(this);//new TouchButton(this, 0, mButtonWidth, mButtonHeight, 0, "", 0);
+    	mButtonBot7 = new BlankButton(this);
     	
     	/* put buttons in rows */
     	mTRowTop.addView((View)mButtonTop3);
@@ -310,7 +263,9 @@ public class GameStart extends Activity {
     	Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();    	
     	mPanelBot = new Panel(this,  mGameV, this, mMovementV, mHighScores, display.getWidth());
     	mRLayoutGamepad.addView((View)this.getGamePad(display.getWidth()));
+        mDimension = display.getWidth();
 
+    	
     	mBackground = new InitBackground(mGameV);
     	mFLayoutBot.addView((View)mPanelBot);
     	
