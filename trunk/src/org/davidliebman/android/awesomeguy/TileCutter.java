@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.ImageView;
-
+import android.graphics.*;
 
 public class TileCutter {
 	
@@ -18,13 +18,14 @@ public class TileCutter {
 	private int mWidthInTiles = mTilesWidth/ mBlockWidth;
 	private int mHeightInTiles = mTilesHeight/ mBlockHeight;
 	
-	
+	private Matrix mMatrix = new Matrix();
 	private Bitmap mTileMap;
 	
 	
 	public TileCutter() {
 		getNumTiles();
 		updateDimensionsInTiles();
+		mMatrix.postScale(2, 2);
 	}
 	
 	
@@ -33,10 +34,14 @@ public class TileCutter {
 		
 		mWidthInTiles = width;
 		mHeightInTiles = height;
+		mMatrix.postScale(2, 2);
+
 	}
 	
 	public TileCutter (Bitmap tiles) {
 		mTileMap = tiles;
+		mMatrix.postScale(2, 2);
+
 	}
 	
 	public TileCutter (int tilesHeight, int tileWidth, int blockHeight, int blockWidth) {
@@ -46,7 +51,8 @@ public class TileCutter {
 		mBlockWidth = blockWidth;
 		getNumTiles();
 		updateDimensionsInTiles();
-		
+		mMatrix.postScale(2, 2);
+
 	}
 	
 	/* tiles and tile sizes */
@@ -113,7 +119,7 @@ public class TileCutter {
 	public Bitmap getTile(int row, int col) {
 		int height = this.mBlockHeight;
 		int width = this.mBlockWidth;
-		Bitmap temp = Bitmap.createBitmap(mTileMap, col * width,row * height, width , height );// ,null,false);
+		Bitmap temp = Bitmap.createBitmap(mTileMap, col * width,row * height, width , height ,mMatrix,false);
 		return temp;
 	}
 	

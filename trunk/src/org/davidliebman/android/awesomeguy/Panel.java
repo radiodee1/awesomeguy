@@ -18,6 +18,7 @@ public  class Panel  extends SurfaceView  {
 	private MovementValues mMovementV;
 	private Record mHighScores;
 	private int mDisplayWidth;
+	private Matrix mMatrix;
 	
 	private int mScore;
 	private int mLives;
@@ -26,7 +27,7 @@ public  class Panel  extends SurfaceView  {
 	private int baseX, baseY;
 	private int guyX = 0;
 	private int guyY = 0;
-	private Bitmap mBlock, bMap, bMapNum , mGuyBitmap;
+	private Bitmap mBlock, bMap, bMapNum , mGuyBitmap, mTempGuy;
 	private int mTemp;
 	private SpriteInfo mGuySprite;
 	private Paint mP;
@@ -51,7 +52,10 @@ public  class Panel  extends SurfaceView  {
 	private int screenY;
 	private int mapH;
 	private int mapV;
-
+	
+	private int mScreenW;
+	private int mScreenH;
+	
 	private int mapX;
 	private int mapY;
 
@@ -114,6 +118,8 @@ public  class Panel  extends SurfaceView  {
 		
 		mP = new Paint();
 		mP.setAlpha(0xff);
+		mMatrix = new Matrix();
+		mMatrix.postScale(2, 2);
 
 		scrollX = mMovementV.getScrollX();
 		scrollY = mMovementV.getScrollY();
@@ -219,14 +225,14 @@ public  class Panel  extends SurfaceView  {
 							//print visible background
 							mTemp = mGameV.getLevelCell(i, j);
 							mBlock = mTiles.getTile(mTemp);
-							canvas.drawBitmap(mBlock, i * mTiles.getBlockWidth(), j* mTiles.getBlockHeight(), null);
+							canvas.drawBitmap(mBlock,2 *  i * mTiles.getBlockWidth(), 2 * j* mTiles.getBlockHeight(), null);
 						}
 						if (mGameV.getObjectsCell(i, j) != 0) {
 							//print special background objects
 							mTemp = mGameV.getObjectsCell(i, j);
 							if(this.checkPrintableObjects(mTemp)) {
 								mBlock = mTiles.getTile(mTemp - mMapcheat);
-								canvas.drawBitmap(mBlock, i * mTiles.getBlockWidth(), j* mTiles.getBlockHeight(), null);
+								canvas.drawBitmap(mBlock, 2 * i * mTiles.getBlockWidth(), 2 * j* mTiles.getBlockHeight(), null);
 							}
 						}
 
@@ -239,10 +245,10 @@ public  class Panel  extends SurfaceView  {
 
 			/************ Put guy on screen **************/
 			if (!useJNI) {
-				mGuyBitmap = BitmapFactory.decodeResource(getResources(),mGuySprite.getResourceId());
-
-				canvas.drawBitmap(mGuyBitmap, guyX - mGuySprite.getLeftBB(), 
-						guyY - mGuySprite.getTopBB(), mP);
+				mTempGuy = BitmapFactory.decodeResource(getResources(),mGuySprite.getResourceId());
+				mGuyBitmap = Bitmap.createBitmap(this.mTempGuy, 0,0, 16,16, mMatrix, false);
+				canvas.drawBitmap(mGuyBitmap, 2 * ( guyX - mGuySprite.getLeftBB()), 
+						2 * (guyY - mGuySprite.getTopBB()), mP);
 			}
 			/************** test jni *******************/
 			if (useJNI) {
@@ -318,7 +324,7 @@ public  class Panel  extends SurfaceView  {
 		guyY = mGuySprite.getMapPosY();
 		message = GameStart.MOVEMENTVALUES;
 		if(!useJNI) {
-			scrollTo(scrollX, scrollY);//jni test <---
+			scrollTo( 2 * scrollX , 2 * scrollY);//jni test <---
 		}
 		else {
 			setGuyPosition(guyX  , guyY , scrollX, scrollY, mGuySprite.getAnimIndex());
@@ -417,16 +423,16 @@ public  class Panel  extends SurfaceView  {
 			for (i = 0; i < 6; i ++) {
 
 				mBlock = mTiles.getTile(topScore[i]);
-				canvas.drawBitmap(mBlock, (scorePos + i) * mTiles.getBlockWidth() + scrollX, (1)* mTiles.getBlockHeight() + scrollY, mP);
+				canvas.drawBitmap(mBlock,2 * (scorePos + i) * mTiles.getBlockWidth() + (2 * scrollX), 2 * (1)* mTiles.getBlockHeight() + (2 * scrollY), mP);
 				mBlock = mTiles.getTile(topScore[i] + 28);
-				canvas.drawBitmap(mBlock, (scorePos + i) * mTiles.getBlockWidth() + scrollX, (2)* mTiles.getBlockHeight() + scrollY, mP);
+				canvas.drawBitmap(mBlock,2 * (scorePos + i) * mTiles.getBlockWidth() + (2 * scrollX), 2 * (2)* mTiles.getBlockHeight() + (2 * scrollY), mP);
 			}
 			//print LEVEL:
 			for (i = 0; i < 6; i ++) {
 				mBlock = mTiles.getTile(topLives[i]);
-				canvas.drawBitmap(mBlock, (livesPos + i) * mTiles.getBlockWidth() + scrollX, (1)* mTiles.getBlockHeight() + scrollY, mP);
+				canvas.drawBitmap(mBlock,2 * (livesPos + i) * mTiles.getBlockWidth() + (2 * scrollX), 2 * (1)* mTiles.getBlockHeight() + (2 * scrollY), mP);
 				mBlock = mTiles.getTile(topLives[i] + 28);
-				canvas.drawBitmap(mBlock, (livesPos + i) * mTiles.getBlockWidth() + scrollX, (2)* mTiles.getBlockHeight() + scrollY, mP);
+				canvas.drawBitmap(mBlock,2 * (livesPos + i) * mTiles.getBlockWidth() + (2 * scrollX), 2 * (2)* mTiles.getBlockHeight() + (2 * scrollY), mP);
 			}
 
 			//print numbers: 
@@ -464,9 +470,9 @@ public  class Panel  extends SurfaceView  {
 					c = p - i;
 				}
 				mBlock = mTiles.getTile(topNumbers [ placesValue ]);
-				canvas.drawBitmap(mBlock, (pos + i - p + c) * mTiles.getBlockWidth() + scrollX, (1)* mTiles.getBlockHeight() + scrollY, mP);
+				canvas.drawBitmap(mBlock, 2 * (pos + i - p + c) * mTiles.getBlockWidth() + (2 * scrollX), 2 * (1)* mTiles.getBlockHeight() + (2 * scrollY), mP);
 				mBlock = mTiles.getTile(topNumbers [ placesValue ] + 28);
-				canvas.drawBitmap(mBlock, (pos + i - p + c) * mTiles.getBlockWidth() + scrollX, (2)* mTiles.getBlockHeight() + scrollY, mP);
+				canvas.drawBitmap(mBlock, 2 * (pos + i - p + c) * mTiles.getBlockWidth() + (2 * scrollX), 2 *(2)* mTiles.getBlockHeight() + ( 2 * scrollY), mP);
 			}
 		}
 	}
@@ -860,7 +866,8 @@ public  class Panel  extends SurfaceView  {
 		guyWidth = mGuySprite.getRightBB() - mGuySprite.getLeftBB(); // 12 ?
 		guyHeight = mGuySprite.getBottomBB() - mGuySprite.getTopBB();
 
-
+		this.mScreenH = 24 * 8; // not used
+		this.mScreenW = 32 * 8;
 
 		/* 
 		 * determine position of guy on screen and determine position
@@ -1257,11 +1264,12 @@ public  class Panel  extends SurfaceView  {
 
 				Bitmap spriteBitmap = BitmapFactory.decodeResource(this.getResources(),
 						sprites.getResourceId());
+				Bitmap scaledBitmap = Bitmap.createBitmap(spriteBitmap, 0,0, 16,16, mMatrix, false);
 
 				mCanvas.drawBitmap(
-						spriteBitmap, 
-						sprites.getMapPosX(), 
-						sprites.getMapPosY() , mP);
+						scaledBitmap, 
+						2 * sprites.getMapPosX(), 
+						2 * sprites.getMapPosY() , mP);
 
 			}
 
