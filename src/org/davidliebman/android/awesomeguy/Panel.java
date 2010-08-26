@@ -33,6 +33,7 @@ public  class Panel  extends SurfaceView  {
 	private Paint mP;
 	private int mMapcheat = 1;
 	private boolean useJNI = true;
+	private int mScale = 2;
 
 	/* for direction checking */
 	private boolean changeX = false;
@@ -119,7 +120,7 @@ public  class Panel  extends SurfaceView  {
 		mP = new Paint();
 		mP.setAlpha(0xff);
 		mMatrix = new Matrix();
-		mMatrix.postScale(2, 2);
+		mMatrix.postScale(mScale, mScale);
 
 		scrollX = mMovementV.getScrollX();
 		scrollY = mMovementV.getScrollY();
@@ -225,14 +226,14 @@ public  class Panel  extends SurfaceView  {
 							//print visible background
 							mTemp = mGameV.getLevelCell(i, j);
 							mBlock = mTiles.getTile(mTemp);
-							canvas.drawBitmap(mBlock,2 *  i * mTiles.getBlockWidth(), 2 * j* mTiles.getBlockHeight(), null);
+							canvas.drawBitmap(mBlock,mScale *  i * mTiles.getBlockWidth(), mScale * j* mTiles.getBlockHeight(), null);
 						}
 						if (mGameV.getObjectsCell(i, j) != 0) {
 							//print special background objects
 							mTemp = mGameV.getObjectsCell(i, j);
 							if(this.checkPrintableObjects(mTemp)) {
 								mBlock = mTiles.getTile(mTemp - mMapcheat);
-								canvas.drawBitmap(mBlock, 2 * i * mTiles.getBlockWidth(), 2 * j* mTiles.getBlockHeight(), null);
+								canvas.drawBitmap(mBlock, mScale * i * mTiles.getBlockWidth(), mScale * j* mTiles.getBlockHeight(), null);
 							}
 						}
 
@@ -247,8 +248,8 @@ public  class Panel  extends SurfaceView  {
 			if (!useJNI) {
 				mTempGuy = BitmapFactory.decodeResource(getResources(),mGuySprite.getResourceId());
 				mGuyBitmap = Bitmap.createBitmap(this.mTempGuy, 0,0, 16,16, mMatrix, false);
-				canvas.drawBitmap(mGuyBitmap, 2 * ( guyX - mGuySprite.getLeftBB()), 
-						2 * (guyY - mGuySprite.getTopBB()), mP);
+				canvas.drawBitmap(mGuyBitmap, mScale * ( guyX - mGuySprite.getLeftBB()), 
+						mScale * (guyY - mGuySprite.getTopBB()), mP);
 			}
 			/************** test jni *******************/
 			if (useJNI) {
@@ -324,7 +325,7 @@ public  class Panel  extends SurfaceView  {
 		guyY = mGuySprite.getMapPosY();
 		message = GameStart.MOVEMENTVALUES;
 		if(!useJNI) {
-			scrollTo( 2 * scrollX , 2 * scrollY);//jni test <---
+			scrollTo( mScale * scrollX , mScale * scrollY);//jni test <---
 		}
 		else {
 			setGuyPosition(guyX  , guyY , scrollX, scrollY, mGuySprite.getAnimIndex());
@@ -423,16 +424,16 @@ public  class Panel  extends SurfaceView  {
 			for (i = 0; i < 6; i ++) {
 
 				mBlock = mTiles.getTile(topScore[i]);
-				canvas.drawBitmap(mBlock,2 * (scorePos + i) * mTiles.getBlockWidth() + (2 * scrollX), 2 * (1)* mTiles.getBlockHeight() + (2 * scrollY), mP);
+				canvas.drawBitmap(mBlock,mScale * (scorePos + i) * mTiles.getBlockWidth() + (mScale * scrollX), mScale * (1)* mTiles.getBlockHeight() + (mScale * scrollY), mP);
 				mBlock = mTiles.getTile(topScore[i] + 28);
-				canvas.drawBitmap(mBlock,2 * (scorePos + i) * mTiles.getBlockWidth() + (2 * scrollX), 2 * (2)* mTiles.getBlockHeight() + (2 * scrollY), mP);
+				canvas.drawBitmap(mBlock,mScale * (scorePos + i) * mTiles.getBlockWidth() + (mScale * scrollX), mScale * (2)* mTiles.getBlockHeight() + (mScale * scrollY), mP);
 			}
 			//print LEVEL:
 			for (i = 0; i < 6; i ++) {
 				mBlock = mTiles.getTile(topLives[i]);
-				canvas.drawBitmap(mBlock,2 * (livesPos + i) * mTiles.getBlockWidth() + (2 * scrollX), 2 * (1)* mTiles.getBlockHeight() + (2 * scrollY), mP);
+				canvas.drawBitmap(mBlock,mScale * (livesPos + i) * mTiles.getBlockWidth() + (mScale * scrollX), mScale * (1)* mTiles.getBlockHeight() + (mScale * scrollY), mP);
 				mBlock = mTiles.getTile(topLives[i] + 28);
-				canvas.drawBitmap(mBlock,2 * (livesPos + i) * mTiles.getBlockWidth() + (2 * scrollX), 2 * (2)* mTiles.getBlockHeight() + (2 * scrollY), mP);
+				canvas.drawBitmap(mBlock,mScale * (livesPos + i) * mTiles.getBlockWidth() + (mScale * scrollX), mScale * (2)* mTiles.getBlockHeight() + (mScale * scrollY), mP);
 			}
 
 			//print numbers: 
@@ -464,15 +465,15 @@ public  class Panel  extends SurfaceView  {
 		c = 0;
 		for(i = 0; i < p; i ++) {
 			placesValue = places[i + (10 - p)];
-			if (showZeros || placesValue != 0) {
+			if ((showZeros || placesValue != 0) && placesValue >= 0 && placesValue < 10) {
 				if(placesValue != 0) showZeros = true;
 				if(showZeros == true && c == 0) {
 					c = p - i;
 				}
 				mBlock = mTiles.getTile(topNumbers [ placesValue ]);
-				canvas.drawBitmap(mBlock, 2 * (pos + i - p + c) * mTiles.getBlockWidth() + (2 * scrollX), 2 * (1)* mTiles.getBlockHeight() + (2 * scrollY), mP);
+				canvas.drawBitmap(mBlock, mScale * (pos + i - p + c) * mTiles.getBlockWidth() + (mScale * scrollX), mScale * (1)* mTiles.getBlockHeight() + (mScale * scrollY), mP);
 				mBlock = mTiles.getTile(topNumbers [ placesValue ] + 28);
-				canvas.drawBitmap(mBlock, 2 * (pos + i - p + c) * mTiles.getBlockWidth() + (2 * scrollX), 2 *(2)* mTiles.getBlockHeight() + ( 2 * scrollY), mP);
+				canvas.drawBitmap(mBlock, mScale * (pos + i - p + c) * mTiles.getBlockWidth() + (mScale * scrollX), mScale *(2)* mTiles.getBlockHeight() + ( mScale * scrollY), mP);
 			}
 		}
 	}
