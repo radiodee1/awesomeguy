@@ -97,6 +97,10 @@ public class GameStart extends Activity {
         
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         
+    	Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();    	
+        mDimension = display.getWidth();
+
+        
         /* generate components for top of screen */
         mRLayout = new RelativeLayout(this) ; 
         mTLayoutOuter = new TableLayout(this);
@@ -122,21 +126,21 @@ public class GameStart extends Activity {
         
         mTLayout.setBackgroundColor(Color.BLACK);
         ViewGroup.LayoutParams mTLayoutParams = new 
-    		ViewGroup.LayoutParams(256, ViewGroup.LayoutParams.WRAP_CONTENT);
+    		ViewGroup.LayoutParams(mDimension, ViewGroup.LayoutParams.WRAP_CONTENT);
         mTLayout.setLayoutParams(mTLayoutParams);
         
        
         
         mFLayoutBot.setBackgroundColor(Color.BLACK);
         ViewGroup.LayoutParams mFLayoutBotParams = new 
-			ViewGroup.LayoutParams(256,192);
+			ViewGroup.LayoutParams(mDimension,192 * 2);
         mFLayoutBot.setLayoutParams(mFLayoutBotParams);
         
         /* small view to draw line between game pad and screens */
         mSpaceView = new View(this);
         mSpaceView.setBackgroundColor(Color.GRAY);
         ViewGroup.LayoutParams mSpaceLayoutParams = new 
-    		ViewGroup.LayoutParams(256, 2);
+    		ViewGroup.LayoutParams(mDimension, 2);
         mSpaceView.setLayoutParams(mSpaceLayoutParams);
         
         /* generate components for game pad */
@@ -149,7 +153,6 @@ public class GameStart extends Activity {
         
         this.setContentView(mRLayout);
         
-        mDimension = mTLayoutOuter.getWidth();
         mButtonHeight = mDimension/5;//95
         mButtonWidth = mDimension/5;//95
        
@@ -260,10 +263,10 @@ public class GameStart extends Activity {
     	framesPerSec = mHighScores.getGameSpeed();
     	
     	/* init background */
-    	Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();    	
-    	mPanelBot = new Panel(this,  mGameV, this, mMovementV, mHighScores, display.getWidth());
-    	mRLayoutGamepad.addView((View)this.getGamePad(display.getWidth()));
-        mDimension = display.getWidth();
+    	//Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();    	
+    	mPanelBot = new Panel(this,  mGameV, this, mMovementV, mHighScores, this.mDimension);
+    	mRLayoutGamepad.addView((View)this.getGamePad(mDimension));
+        
 
     	
     	mBackground = new InitBackground(mGameV);
