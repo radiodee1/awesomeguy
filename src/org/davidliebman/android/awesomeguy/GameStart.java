@@ -66,13 +66,13 @@ public class GameStart extends Activity {
     private double mTrackballDist = 1.0;
     private int mDimension;
     
+    
 	public static final String AWESOME_NAME = new String("org.awesomeguy");
 
     
     /* old GameLoop - variables */
     private boolean gameRunning = true;
 	private boolean mLoop = true;
-	private int mOldLives;
 	private boolean mGameDeath = false;
 	private boolean mPlayAgain = true;
 	private Record mHighScores;
@@ -99,7 +99,11 @@ public class GameStart extends Activity {
         
     	Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();    	
         mDimension = display.getWidth();
-
+        int screenHeight = display.getHeight();
+        if ( screenHeight - ((192 * 2) + (mDimension/5) * 3) > 0 ) {
+        	mGameV.setDoubleScreen(true);
+        	
+        }
         
         /* generate components for top of screen */
         mRLayout = new RelativeLayout(this) ; 
@@ -602,7 +606,7 @@ public class GameStart extends Activity {
     		    	if (true) gameSpeedRegulator(); //call inside 'game play' loop
     		    	
     		    	//mOldLives = level.lives;
-    		    	mOldLives = mGameV.getLives();
+    		    	//mOldLives = mGameV.getLives();
     		    	//mScoresOnScreen = false;
 
     		    	
