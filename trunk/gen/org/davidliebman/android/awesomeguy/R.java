@@ -55,7 +55,7 @@ public final class R {
         public static final int tiles2=0x7f020029;
         public static final int tiles3=0x7f02002a;
         public static final int tiles4=0x7f02002b;
-        public static final int tiles99alpha=0x7f02002c;
+        public static final int tilesalpha=0x7f02002c;
     }
     public static final class id {
         public static final int AbsoluteLayout01=0x7f06001d;
@@ -107,11 +107,6 @@ public final class R {
         public static final int goal=0x7f040001;
         public static final int ow=0x7f040002;
         public static final int prize=0x7f040003;
-        public static final int tiles1=0x7f040004;
-        public static final int tiles2=0x7f040005;
-        public static final int tiles3=0x7f040006;
-        public static final int tiles4=0x7f040007;
-        public static final int tilesalpha=0x7f040008;
     }
     public static final class string {
         public static final int app_name=0x7f050000;
