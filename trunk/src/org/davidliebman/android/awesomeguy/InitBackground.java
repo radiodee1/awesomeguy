@@ -33,13 +33,13 @@ public class InitBackground {
 					if (GameValues.MONSTER_TOTAL >= num) {
 
 						//put monster object in ArrayList here...
-						SpriteInfo temp = new SpriteInfo();
+						SpriteInfo temp = new SpriteInfo(R.drawable.monster_l0, 3, 8, 0, 16);
 						temp.setMapPosX(j * 8);
 						temp.setMapPosY(i * 8);
 						temp.setActive(true);
 						temp.setVisible(true);
 						temp.setFacingRight(true);
-						temp.setResourceId(R.drawable.monster_l0);
+						//temp.setResourceId(R.drawable.monster_l0);
 						mGameV.addSprite(temp);
 						     
 						num ++;
