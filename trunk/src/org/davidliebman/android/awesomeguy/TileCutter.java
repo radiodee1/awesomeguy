@@ -21,7 +21,7 @@ public class TileCutter {
 	private Matrix mMatrix = new Matrix();
 	private Bitmap mTileMap;
 	
-	private int mTileAdjustment = 3;
+	private int mTileAdjustment = 1;
 	
 	public TileCutter() {
 		getNumTiles();
@@ -110,11 +110,11 @@ public class TileCutter {
 	}
 	
 	public Bitmap getTile(int i) {
-		i = i + mTileAdjustment;
+		//i = i + mTileAdjustment;
 		int row = i / mWidthInTiles;
 		int col = i - (mWidthInTiles * row) ;
 		
-		Bitmap temp = getTile(row, col);
+		Bitmap temp = getTile(row, col);// + mTileAdjustment);
 		return temp;
 		
 	}
