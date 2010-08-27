@@ -55,7 +55,7 @@ public  class Panel  extends SurfaceView  {
 	private int mapV;
 	
 	private int mScreenW;
-	private int mScreenH;
+	//private int mScreenH;
 	
 	private int mapX;
 	private int mapY;
@@ -115,8 +115,18 @@ public  class Panel  extends SurfaceView  {
 		mGameV.setSpriteStart();
 		mGuySprite = mGameV.getSpriteStart();
 
-		mDisplayWidth = displayWidth;
+		// TODO: 
+		if ( displayWidth < 256 * 2 ) {
+			mDisplayWidth = displayWidth;
+		}
+		else {
+			mDisplayWidth = 256 * 2;
+		}
 		
+		if (!mGameV.isDoubleScreen()) {
+			mScale = 1;
+			mDisplayWidth = 256;
+		}
 		mP = new Paint();
 		mP.setAlpha(0xff);
 		mMatrix = new Matrix();
@@ -411,12 +421,15 @@ public  class Panel  extends SurfaceView  {
 
 		int i;
 		int topScore[] = {374,375,376,377,378,383};
-
+		//int topScore[] = {11,12,13,14,15,20};
+		//                S     c  o   r  e   :
 		int topLives[] = {379,380,381,378,382,383};
-
-		int scorePos, livesPos;
+		//int topLives[] = {16,17,18,15,19,20};
+		//                l     i  v   e  s   :
+		int scorePos, livesPos, tilesWidth;
 		scorePos = 2 ;
 		livesPos = 16  ;
+		tilesWidth = 28;
 		mTiles = new TileCutter(bMapNum);
 
 		if (show) {
@@ -425,14 +438,14 @@ public  class Panel  extends SurfaceView  {
 
 				mBlock = mTiles.getTile(topScore[i]);
 				canvas.drawBitmap(mBlock,mScale * (scorePos + i) * mTiles.getBlockWidth() + (mScale * scrollX), mScale * (1)* mTiles.getBlockHeight() + (mScale * scrollY), mP);
-				mBlock = mTiles.getTile(topScore[i] + 28);
+				mBlock = mTiles.getTile(topScore[i] + tilesWidth);//28
 				canvas.drawBitmap(mBlock,mScale * (scorePos + i) * mTiles.getBlockWidth() + (mScale * scrollX), mScale * (2)* mTiles.getBlockHeight() + (mScale * scrollY), mP);
 			}
 			//print LEVEL:
 			for (i = 0; i < 6; i ++) {
 				mBlock = mTiles.getTile(topLives[i]);
 				canvas.drawBitmap(mBlock,mScale * (livesPos + i) * mTiles.getBlockWidth() + (mScale * scrollX), mScale * (1)* mTiles.getBlockHeight() + (mScale * scrollY), mP);
-				mBlock = mTiles.getTile(topLives[i] + 28);
+				mBlock = mTiles.getTile(topLives[i] + tilesWidth);//28
 				canvas.drawBitmap(mBlock,mScale * (livesPos + i) * mTiles.getBlockWidth() + (mScale * scrollX), mScale * (2)* mTiles.getBlockHeight() + (mScale * scrollY), mP);
 			}
 
@@ -452,6 +465,9 @@ public  class Panel  extends SurfaceView  {
 		int i, a, b, c, placesValue;
 		int places[] = {0,0,0,0,0,0,0,0,0,0};//ten spots
 		int topNumbers[] = {364,365,366, 367, 368, 369, 370, 371, 372, 373};
+		//int topNumbers[] = {0,1,2,3,4,5,6,7,8,9};
+		int tilesWidth = 28;
+		
 		boolean showZeros = false;
 
 		mTiles = new TileCutter(bMapNum);
@@ -472,7 +488,7 @@ public  class Panel  extends SurfaceView  {
 				}
 				mBlock = mTiles.getTile(topNumbers [ placesValue ]);
 				canvas.drawBitmap(mBlock, mScale * (pos + i - p + c) * mTiles.getBlockWidth() + (mScale * scrollX), mScale * (1)* mTiles.getBlockHeight() + (mScale * scrollY), mP);
-				mBlock = mTiles.getTile(topNumbers [ placesValue ] + 28);
+				mBlock = mTiles.getTile(topNumbers [ placesValue ] + tilesWidth);//28
 				canvas.drawBitmap(mBlock, mScale * (pos + i - p + c) * mTiles.getBlockWidth() + (mScale * scrollX), mScale *(2)* mTiles.getBlockHeight() + ( mScale * scrollY), mP);
 			}
 		}
@@ -867,9 +883,21 @@ public  class Panel  extends SurfaceView  {
 		guyWidth = mGuySprite.getRightBB() - mGuySprite.getLeftBB(); // 12 ?
 		guyHeight = mGuySprite.getBottomBB() - mGuySprite.getTopBB();
 
-		this.mScreenH = 24 * 8; // not used
-		this.mScreenW = 32 * 8;
+		//this.mScreenH = 24 * 8; // not used
+		//this.mScreenW = 32 * 8; // 256
+		
+		int tilesMeasurement;
 
+		if (mGameV.isDoubleScreen()) {
+			this.mScreenW = this.mDisplayWidth / 2;
+			tilesMeasurement = ((this.mDisplayWidth / 2 ) / 8) ;
+			if (tilesMeasurement * 16 < this.mDisplayWidth) tilesMeasurement ++;
+		}
+		else {
+			this.mScreenW = this.mDisplayWidth;
+			tilesMeasurement = 32;
+		}
+		
 		/* 
 		 * determine position of guy on screen and determine position
 		 * of background on screen also... set scrolling, etc. x and y
@@ -880,12 +908,12 @@ public  class Panel  extends SurfaceView  {
 
 			if (oldX > mapH * 8 ) oldX = -1;
 
-			if (oldX >= ((mapH -32) * 8 - x)  ) canScroll = false;
+			if (oldX >= ((mapH - tilesMeasurement) * 8 - x)  ) canScroll = false;
 			else canScroll = true;
 			//move RIGHT?
-			if ((mGuySprite.getX() + x) >= ((32)  * 8 - guyWidth) || mapX + x >= mapH * 8  - guyWidth) {
+			if ((mGuySprite.getX() + x) >= (mScreenW - guyWidth) || mapX + x >= mapH * 8  - guyWidth) {
 				newMapX = mapH * 8  - guyWidth;
-				newX = 32  * 8 - guyWidth;
+				newX = mScreenW - guyWidth;
 
 			}
 

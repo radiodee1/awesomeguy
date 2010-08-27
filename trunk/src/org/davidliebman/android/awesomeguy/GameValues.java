@@ -32,6 +32,9 @@ public class GameValues {
 	public int mBigprize = 440 ;//+ mapCheat;
 	public int mPlatform = 437 ; //+ mapCheat;
 	
+	/* screen size */
+	private boolean mDoubleScreen = false;
+	
 	/* game progress */
 	private Record mGuyScore = new Record();
 	private int mRoom = 1;
@@ -50,6 +53,12 @@ public class GameValues {
 	
 	
 	
+	public boolean isDoubleScreen() {
+		return mDoubleScreen;
+	}
+	public void setDoubleScreen(boolean mDoubleScreen) {
+		this.mDoubleScreen = mDoubleScreen;
+	}
 	/* mapH and mapV */
 	public void setMapH(int i) {
 		mMapH = i;
