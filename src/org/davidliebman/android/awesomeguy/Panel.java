@@ -127,6 +127,8 @@ public  class Panel  extends SurfaceView  {
 			mScale = 1;
 			mDisplayWidth = 256;
 		}
+		
+		/* paint options */
 		mP = new Paint();
 		mP.setAlpha(0xff);
 		mMatrix = new Matrix();
@@ -843,7 +845,7 @@ public  class Panel  extends SurfaceView  {
 					//sprites[i].active = false;
 					mGameV.incrementScore(10);
 					mSounds.playSound(SoundPoolManager.SOUND_BOOM);
-
+					Log.e("MonsterCollision", "monster dies");
 
 
 				}
