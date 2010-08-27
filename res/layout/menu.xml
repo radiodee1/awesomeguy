@@ -8,13 +8,7 @@ android:scrollbars="vertical"
 android:scrollbarAlwaysDrawVerticalTrack="true"
 >
 
-<RelativeLayout
-android:id="@+id/widget32"
-android:layout_width="fill_parent"
-android:layout_height="fill_parent"
-android:background="@drawable/background"
-xmlns:android="http://schemas.android.com/apk/res/android"
->
+
 <TableLayout
 android:id="@+id/widget28"
 android:layout_width="fill_parent"
@@ -22,6 +16,7 @@ android:layout_height="fill_parent"
 android:orientation="vertical"
 android:layout_centerVertical="true"
 android:layout_centerHorizontal="true"
+android:background="@drawable/background"
 >
 
 <TextView
@@ -94,5 +89,4 @@ android:layout_height="wrap_content"
 android:background="@drawable/players_button">
 </Button>
 </TableLayout>
-</RelativeLayout>
 </ScrollView>

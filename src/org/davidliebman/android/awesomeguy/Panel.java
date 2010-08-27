@@ -27,7 +27,7 @@ public  class Panel  extends SurfaceView  {
 	private int baseX, baseY;
 	private int guyX = 0;
 	private int guyY = 0;
-	private Bitmap mBlock, bMap, bMapNum , mGuyBitmap, mTempGuy;
+	private Bitmap mBlock, bMap, bMapNum , mGuyBitmap, mTempGuy, mMap;
 	private int mTemp;
 	private SpriteInfo mGuySprite;
 	private Paint mP;
@@ -137,7 +137,7 @@ public  class Panel  extends SurfaceView  {
 		scrollX = mMovementV.getScrollX();
 		scrollY = mMovementV.getScrollY();
 		bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles1);
-		bMapNum = BitmapFactory.decodeResource(getResources(), R.drawable.tiles99alpha);
+		bMapNum = BitmapFactory.decodeResource(getResources(), R.drawable.tilesalpha);
 
 		/*animation vars*/
 		animate = 0;
@@ -227,7 +227,7 @@ public  class Panel  extends SurfaceView  {
 
 			/******* draw background tiles  *********/
 			mCanvas.drawColor(Color.BLACK);
-			mTiles = new TileCutter(bMap);
+			mTiles = new TileCutter(bMap, mScale);
 			baseX = scrollX/ mTiles.getBlockWidth();
 			baseY = scrollY/ mTiles.getBlockHeight();
 			if (!useJNI) {// test jni code <--
@@ -265,7 +265,7 @@ public  class Panel  extends SurfaceView  {
 			}
 			/************** test jni *******************/
 			if (useJNI) {
-				Bitmap mMap = Bitmap.createBitmap(drawLevel(newBG + 1), 256, 192, Bitmap.Config.RGB_565);
+				mMap = Bitmap.createBitmap(drawLevel(newBG + 1), 256, 192, Bitmap.Config.RGB_565);
 				canvas.drawBitmap(mMap, 0, 0, null);
 				playSounds();
 			}
@@ -352,16 +352,16 @@ public  class Panel  extends SurfaceView  {
 
 	public void setTilesheet(int i) {
 		if (i == 0 || i == 1 || i == 8) {
-			bMap = BitmapFactory.decodeResource(getResources(),R.raw.tiles1);
+			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles1);
 		}
 		else if (i == 2 || i == 4 || i == 6) {
-			bMap = BitmapFactory.decodeResource(getResources(),R.raw.tiles2);
+			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles2);
 		}
 		else if (i == 3 || i == 7) {
-			bMap = BitmapFactory.decodeResource(getResources(),R.raw.tiles3);
+			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles3);
 		}
 		else if (i == 5) {
-			bMap = BitmapFactory.decodeResource(getResources(),R.raw.tiles4);
+			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles4);
 		}
 	}
 
@@ -422,17 +422,17 @@ public  class Panel  extends SurfaceView  {
 	public void drawScoreOnMain(Canvas canvas, boolean show) {
 
 		int i;
-		int topScore[] = {374,375,376,377,378,383};
-		//int topScore[] = {11,12,13,14,15,20};
+		//int topScore[] = {374,375,376,377,378,383};
+		int topScore[] = {10,11,12,13,14,19};
 		//                S     c  o   r  e   :
-		int topLives[] = {379,380,381,378,382,383};
-		//int topLives[] = {16,17,18,15,19,20};
+		//int topLives[] = {379,380,381,378,382,383};
+		int topLives[] = {15,16,17,14,18,19};
 		//                l     i  v   e  s   :
 		int scorePos, livesPos, tilesWidth;
 		scorePos = 2 ;
 		livesPos = 16  ;
-		tilesWidth = 28;
-		mTiles = new TileCutter(bMapNum);
+		tilesWidth = 20;
+		mTiles = new TileCutter(bMapNum, tilesWidth ,2,mScale);
 
 		if (show) {
 			//print SCORE:
@@ -466,13 +466,13 @@ public  class Panel  extends SurfaceView  {
 	private void numbersOnBg(Canvas canvas, int pos, int num, int p) { //'num' is a u32
 		int i, a, b, c, placesValue;
 		int places[] = {0,0,0,0,0,0,0,0,0,0};//ten spots
-		int topNumbers[] = {364,365,366, 367, 368, 369, 370, 371, 372, 373};
-		//int topNumbers[] = {0,1,2,3,4,5,6,7,8,9};
-		int tilesWidth = 28;
+		//int topNumbers[] = {364,365,366, 367, 368, 369, 370, 371, 372, 373};
+		int topNumbers[] = {0,1,2,3,4,5,6,7,8,9};
+		int tilesWidth = 20;
 		
 		boolean showZeros = false;
 
-		mTiles = new TileCutter(bMapNum);
+		mTiles = new TileCutter(bMapNum, tilesWidth, 2,mScale);
 
 		for (i = 0; i < 10; i ++) {
 			a = num - (num / 10) * 10;
@@ -1299,8 +1299,8 @@ public  class Panel  extends SurfaceView  {
 
 				mCanvas.drawBitmap(
 						scaledBitmap, 
-						2 * sprites.getMapPosX(), 
-						2 * sprites.getMapPosY() , mP);
+						mScale * sprites.getMapPosX(), 
+						mScale * sprites.getMapPosY() , mP);
 
 			}
 

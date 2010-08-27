@@ -39,12 +39,14 @@ public class GameStart extends Activity {
     RelativeLayout mRLayout ;
     TableLayout mTLayoutOuter ;
     TableLayout mTLayout ;
+    //TableRow mTLayout;
     //FrameLayout mFLayoutTop ;
     FrameLayout mFLayoutBot ;
     //Panel mPanelTop ;
     Panel mPanelBot ;
 	
-    View mSpaceView;
+    View mSpaceView, mSepView;
+    TableLayout mGameRow;
     
     RelativeLayout mRLayoutGamepad;
     TableLayout mGamepad;
@@ -99,19 +101,20 @@ public class GameStart extends Activity {
         
     	Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();    	
         mDimension = display.getWidth();
+        int panelH = mDimension;
+        int panelV = 192;
         int screenHeight = display.getHeight();
         if ( screenHeight - ((192 * 2) + (mDimension/5) * 3) > 0 ) {
         	mGameV.setDoubleScreen(true);
-        	
+        	panelV = 192 * 2;
         }
+        if (!mGameV.isDoubleScreen()) panelH = 256;
         
         /* generate components for top of screen */
         mRLayout = new RelativeLayout(this) ; 
         mTLayoutOuter = new TableLayout(this);
         mTLayout = new TableLayout(this);
-        //mFLayoutTop = new FrameLayout(this);
         mFLayoutBot = new FrameLayout(this);
-        //mPanelBot = new Panel(this,  mGameV, this, mMovementV);
         
         
         /* assemble components for top of screen */
@@ -133,11 +136,15 @@ public class GameStart extends Activity {
     		ViewGroup.LayoutParams(mDimension, ViewGroup.LayoutParams.WRAP_CONTENT);
         mTLayout.setLayoutParams(mTLayoutParams);
         
-       
+        mGameRow = new TableLayout(this);
+        mGameRow.setBackgroundColor(Color.GRAY);
+        ViewGroup.LayoutParams mGameRowParams = new 
+			ViewGroup.LayoutParams(mDimension,panelV);
+        mGameRow.setLayoutParams(mGameRowParams);
         
         mFLayoutBot.setBackgroundColor(Color.BLACK);
         ViewGroup.LayoutParams mFLayoutBotParams = new 
-			ViewGroup.LayoutParams(mDimension,192 * 2);
+			ViewGroup.LayoutParams(panelH,panelV);
         mFLayoutBot.setLayoutParams(mFLayoutBotParams);
         
         /* small view to draw line between game pad and screens */
@@ -164,13 +171,23 @@ public class GameStart extends Activity {
     	
         mRLayout.addView((View)mTLayoutOuter);
         mTLayoutOuter.addView((View)mTLayout);
-        //mTLayout.addView((View)mFLayoutTop);
-        mTLayout.addView((View)mFLayoutBot);
+        //mTLayout.addView((View)mFLayoutBot);
+        mTLayout.addView((View)mGameRow	);
 
-        //mFLayoutBot.addView((View)mPanelBot);
+        mGameRow.addView((View)mFLayoutBot);
+        //mTLayout.addView((View) mGameRow);
         
-        mTLayout.addView(mSpaceView);
+        if (!mGameV.isDoubleScreen()) {
+        	
+        	mGameRow.setHorizontalGravity(Gravity.CENTER_HORIZONTAL);
+          
+        }
         
+
+        
+        //test.addView(mSpaceView);
+        mTLayout.addView((View)this.mSpaceView);
+
         /* add gamepad to bottom of screen */
         mTLayoutOuter.addView((View)mRLayoutGamepad);
         

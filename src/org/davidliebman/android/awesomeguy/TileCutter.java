@@ -20,39 +20,45 @@ public class TileCutter {
 	
 	private Matrix mMatrix = new Matrix();
 	private Bitmap mTileMap;
-	
+	private int mScale;
 	private int mTileAdjustment = 1;
 	
-	public TileCutter() {
+	public TileCutter( int scale) {
+		mScale = scale;
 		getNumTiles();
 		updateDimensionsInTiles();
-		mMatrix.postScale(2, 2);
+		//mMatrix.postScale(2, 2);
 	}
 	
 	
-	public TileCutter (Bitmap tiles, int width, int height) {
+	public TileCutter (Bitmap tiles, int width, int height, int scale) {
 		mTileMap = tiles;
 		
 		mWidthInTiles = width;
 		mHeightInTiles = height;
-		mMatrix.postScale(2, 2);
+		this.mBlockHeight = 8;
+		this.mBlockWidth = 8;
+		mScale = scale;
+		//mMatrix.postScale(2, 2);
 
 	}
 	
-	public TileCutter (Bitmap tiles) {
+	public TileCutter (Bitmap tiles, int scale) {
 		mTileMap = tiles;
-		mMatrix.postScale(2, 2);
+		mScale = scale;
+		//mMatrix.postScale(2, 2);
 
 	}
 	
-	public TileCutter (int tilesHeight, int tileWidth, int blockHeight, int blockWidth) {
+	public TileCutter (int tilesHeight, int tileWidth, int blockHeight, int blockWidth, int scale) {
 		mTilesHeight = tilesHeight;
 		mTilesWidth = tileWidth;
 		mBlockHeight = blockHeight;
 		mBlockWidth = blockWidth;
 		getNumTiles();
 		updateDimensionsInTiles();
-		mMatrix.postScale(2, 2);
+		mScale = scale;
+		//mMatrix.postScale(2, 2);
 
 	}
 	
@@ -114,15 +120,24 @@ public class TileCutter {
 		int row = i / mWidthInTiles;
 		int col = i - (mWidthInTiles * row) ;
 		
-		Bitmap temp = getTile(row, col);// + mTileAdjustment);
-		return temp;
+		if (row > this.mHeightInTiles || row < 0) row = 0;
+		if (col > this.mWidthInTiles || col < 0) col = 0;
 		
+		int height = this.mBlockHeight;
+		int width = this.mBlockWidth;
+		//mMatrix.postScale(mScale, mScale);
+		//BitmapFactory.Options options=new BitmapFactory.Options();
+		//options.inSampleSize = 2;
+		
+		return Bitmap.createBitmap(mTileMap, col * width,row * height, width , height ,mMatrix,false);
 	}
+	
 	public Bitmap getTile(int row, int col) {
 		int height = this.mBlockHeight;
 		int width = this.mBlockWidth;
-		Bitmap temp = Bitmap.createBitmap(mTileMap, col * width,row * height, width , height ,mMatrix,false);
-		return temp;
+		mMatrix.postScale(mScale, mScale);
+
+		return Bitmap.createBitmap(mTileMap, col * width,row * height, width , height ,mMatrix,false);
 	}
 	
 	
