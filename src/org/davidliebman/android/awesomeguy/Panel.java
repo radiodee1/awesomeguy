@@ -352,16 +352,16 @@ public  class Panel  extends SurfaceView  {
 
 	public void setTilesheet(int i) {
 		if (i == 0 || i == 1 || i == 8) {
-			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles1);
+			bMap = BitmapFactory.decodeResource(getResources(),R.raw.tiles1);
 		}
 		else if (i == 2 || i == 4 || i == 6) {
-			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles2);
+			bMap = BitmapFactory.decodeResource(getResources(),R.raw.tiles2);
 		}
 		else if (i == 3 || i == 7) {
-			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles3);
+			bMap = BitmapFactory.decodeResource(getResources(),R.raw.tiles3);
 		}
 		else if (i == 5) {
-			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles4);
+			bMap = BitmapFactory.decodeResource(getResources(),R.raw.tiles4);
 		}
 	}
 
