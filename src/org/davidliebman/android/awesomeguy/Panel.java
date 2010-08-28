@@ -139,9 +139,14 @@ public  class Panel  extends SurfaceView  {
 		mOptionsTile.inScaled = false;
 		mOptionsTile.outHeight = 128;
 		mOptionsTile.outWidth = 224;
+		mOptionsTile.inDensity = 0;
+		mOptionsTile.inTargetDensity = 0;
 		mOptionsNum.inScaled = false;
 		mOptionsNum.outHeight = 16;
 		mOptionsNum.outWidth = 160;
+		mOptionsNum.inDensity = 0;
+		mOptionsNum.inTargetDensity = 0;
+		
 		mP = new Paint();
 		mP.setAlpha(0xff);
 		mMatrix = new Matrix();
