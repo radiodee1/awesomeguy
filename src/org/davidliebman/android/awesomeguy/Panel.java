@@ -131,7 +131,7 @@ public  class Panel  extends SurfaceView  {
 			mScale = 1;
 			mDisplayWidth = 256;
 		}
-		
+
 		/* paint options */
 		mOptionsSprite.inScaled = false;
 		mOptionsSprite.outHeight = 16;
