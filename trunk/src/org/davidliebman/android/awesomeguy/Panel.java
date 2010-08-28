@@ -132,7 +132,7 @@ public  class Panel  extends SurfaceView  {
 		mP = new Paint();
 		mP.setAlpha(0xff);
 		mMatrix = new Matrix();
-		mMatrix.postScale(mScale, mScale);
+		mMatrix.setScale(mScale, mScale);
 
 		scrollX = mMovementV.getScrollX();
 		scrollY = mMovementV.getScrollY();

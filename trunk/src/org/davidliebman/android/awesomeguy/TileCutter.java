@@ -125,17 +125,21 @@ public class TileCutter {
 		
 		int height = this.mBlockHeight;
 		int width = this.mBlockWidth;
-		//mMatrix.postScale(mScale, mScale);
-		//BitmapFactory.Options options=new BitmapFactory.Options();
-		//options.inSampleSize = 2;
-		
-		return Bitmap.createBitmap(mTileMap, col * width,row * height, width , height ,mMatrix,false);
+
+		Bitmap temp = Bitmap.createBitmap(mTileMap, col * width,row * height, width , height ,null,false);
+		if (mScale != 1) {
+			mMatrix.setScale(mScale, mScale);
+			return Bitmap.createBitmap(temp, 0,0, width , height ,mMatrix,false);
+		}
+		else {
+			return temp;
+		}
 	}
 	
 	public Bitmap getTile(int row, int col) {
 		int height = this.mBlockHeight;
 		int width = this.mBlockWidth;
-		mMatrix.postScale(mScale, mScale);
+		mMatrix.setScale(mScale, mScale);
 
 		return Bitmap.createBitmap(mTileMap, col * width,row * height, width , height ,mMatrix,false);
 	}
