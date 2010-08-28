@@ -35,7 +35,7 @@ public class SplashScreen extends Activity {
         /* init database if not already done so */
         mScoresHelper = new Scores.ScoreOpenHelper(this);
         db = mScoresHelper.getReadableDatabase();
-        
+        db.close();
         
         
         /* one highscores record passed around for preferences */
