@@ -28,7 +28,10 @@ public  class Panel  extends SurfaceView  {
 	private int guyX = 0;
 	private int guyY = 0;
 	private Bitmap mBlock, bMap, bMapNum , mGuyBitmap, mTempGuy, mMap, mTempJNI;
-	private BitmapFactory.Options mOptions = new BitmapFactory.Options();
+	private BitmapFactory.Options mOptionsSprite = new BitmapFactory.Options();
+	private BitmapFactory.Options mOptionsTile = new BitmapFactory.Options();
+	private BitmapFactory.Options mOptionsNum = new BitmapFactory.Options();
+
 	private int mTemp;
 	private SpriteInfo mGuySprite;
 	private Paint mP;
@@ -130,7 +133,15 @@ public  class Panel  extends SurfaceView  {
 		}
 		
 		/* paint options */
-		mOptions.inScaled = false;
+		mOptionsSprite.inScaled = false;
+		mOptionsSprite.outHeight = 16;
+		mOptionsSprite.outWidth = 16;
+		mOptionsTile.inScaled = false;
+		mOptionsTile.outHeight = 128;
+		mOptionsTile.outWidth = 224;
+		mOptionsNum.inScaled = false;
+		mOptionsNum.outHeight = 16;
+		mOptionsNum.outWidth = 160;
 		mP = new Paint();
 		mP.setAlpha(0xff);
 		mMatrix = new Matrix();
@@ -138,8 +149,8 @@ public  class Panel  extends SurfaceView  {
 
 		scrollX = mMovementV.getScrollX();
 		scrollY = mMovementV.getScrollY();
-		bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles1, mOptions);
-		bMapNum = BitmapFactory.decodeResource(getResources(), R.drawable.tilesalpha, mOptions);
+		bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles1, mOptionsTile);
+		bMapNum = BitmapFactory.decodeResource(getResources(), R.drawable.tilesalpha, mOptionsNum);
 
 		/*animation vars*/
 		animate = 0;
@@ -160,23 +171,23 @@ public  class Panel  extends SurfaceView  {
 			int [] d = new int[16*16];
 	
 			Bitmap mSprite;
-			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy0, mOptions);
+			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy0, mOptionsSprite);
 			mSprite.getPixels(a, 0, 16, 0, 0, 16, 16);
-			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy1, mOptions);
+			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy1, mOptionsSprite);
 			mSprite.getPixels(b, 0, 16, 0, 0, 16, 16);
-			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy2, mOptions);
+			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy2, mOptionsSprite);
 			mSprite.getPixels(c, 0, 16, 0, 0, 16, 16);
-			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy3, mOptions);
+			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy3, mOptionsSprite);
 			mSprite.getPixels(d, 0, 16, 0, 0, 16, 16);
 			setGuyData(a, b, c, d);
 	
-			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_r0, mOptions);
+			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_r0, mOptionsSprite);
 			mSprite.getPixels(a, 0, 16, 0, 0, 16, 16);
-			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_r1, mOptions);
+			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_r1, mOptionsSprite);
 			mSprite.getPixels(b, 0, 16, 0, 0, 16, 16);
-			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_l0, mOptions);
+			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_l0, mOptionsSprite);
 			mSprite.getPixels(c, 0, 16, 0, 0, 16, 16);
-			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_l1, mOptions);
+			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_l1, mOptionsSprite);
 			mSprite.getPixels(d, 0, 16, 0, 0, 16, 16);
 			setMonsterData(a, b, c, d);
 	
@@ -186,13 +197,13 @@ public  class Panel  extends SurfaceView  {
 			int [] tiles_d = new int [128 * 224];
 	
 			Bitmap mTiles;
-			mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles1, mOptions);
+			mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles1, mOptionsTile);
 			mTiles.getPixels(tiles_a, 0, 224, 0, 0, 224, 128);
-			mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles2, mOptions);
+			mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles2, mOptionsTile);
 			mTiles.getPixels(tiles_b, 0, 224, 0, 0, 224, 128);
-			mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles3, mOptions);
+			mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles3, mOptionsTile);
 			mTiles.getPixels(tiles_c, 0, 224, 0, 0, 224, 128);
-			mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles4, mOptions);
+			mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles4, mOptionsTile);
 			mTiles.getPixels(tiles_d, 0, 224, 0, 0, 224, 128);
 			this.setTileMapData(tiles_a, tiles_b, tiles_c, tiles_d);
 			
@@ -261,7 +272,7 @@ public  class Panel  extends SurfaceView  {
 			/************ Put guy on screen **************/
 			if (!useJNI) {
 				
-				mTempGuy = BitmapFactory.decodeResource(getResources(),mGuySprite.getResourceId(),mOptions);
+				mTempGuy = BitmapFactory.decodeResource(getResources(),mGuySprite.getResourceId(),mOptionsSprite);
 				mGuyBitmap = Bitmap.createBitmap(this.mTempGuy, 0,0, 16,16, mMatrix, false);
 				canvas.drawBitmap(mGuyBitmap, mScale * ( guyX - mGuySprite.getLeftBB()), 
 						mScale * (guyY - mGuySprite.getTopBB()), mP);
@@ -357,16 +368,16 @@ public  class Panel  extends SurfaceView  {
 
 	public void setTilesheet(int i) {
 		if (i == 0 || i == 1 || i == 8) {
-			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles1, mOptions);
+			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles1, mOptionsTile);
 		}
 		else if (i == 2 || i == 4 || i == 6) {
-			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles2, mOptions);
+			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles2, mOptionsTile);
 		}
 		else if (i == 3 || i == 7) {
-			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles3, mOptions);
+			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles3, mOptionsTile);
 		}
 		else if (i == 5) {
-			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles4, mOptions);
+			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles4, mOptionsTile);
 		}
 	}
 
