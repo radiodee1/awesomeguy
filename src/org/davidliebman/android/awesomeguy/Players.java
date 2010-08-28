@@ -24,13 +24,17 @@ public class Players extends ListActivity {
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.getFromPreferences(preferences);
         
+        /* create bogus record */
         Record mRec = new Record();
         mRec.setName("dave");
         mRec.setScore(110);
         mRec.setLevel(3);
         mNames.add(mRec);
         
+        mNames.add(mHighScores);
+        
         mScores = new Scores(this, mHighScores);
+        mNames = mScores.getHighScoreList(3);
         
         RecordAdapter mAadapter = new RecordAdapter(this, R.layout.players, mNames);
         

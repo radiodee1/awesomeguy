@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
+import java.util.*;
 
 public class Scores {
 	private static final String DATABASE_NAME = "AwesomeguyScores.db";
@@ -37,6 +38,44 @@ public class Scores {
 
 		}
 		mDatabase.close();
+	}
+	public ArrayList<Record> getHighScoreList(int num) {
+		ArrayList<Record> mList = new ArrayList<Record>();
+		mOpenHelper = new ScoreOpenHelper(mContext);
+		mDatabase = mOpenHelper.getReadableDatabase();
+		Cursor c = mDatabase.rawQuery(this.getSelectNumOfRecordsString(num), null);
+		if (c.getCount() == 0) return mList;
+		c.moveToFirst();
+		for (int i = 0; i < c.getCount(); i ++ ) {
+			//Log.d("Scores","_id" + c.getColumnIndex("_id"));
+			//Log.d("Scores","id" + c.getColumnIndex("id"));
+			Record mTempRec = new Record();
+			mTempRec.setRecordIdNum(c.getInt(c.getColumnIndex("id")));
+			mTempRec.setNewRecord(new Boolean(c.getString(c.getColumnIndex("new_record"))).booleanValue());
+			mTempRec.setName(c.getString(c.getColumnIndex("name")));
+			mTempRec.setLevel(c.getInt(c.getColumnIndex("level")));
+			mTempRec.setScore(c.getInt(c.getColumnIndex("score")));
+			mTempRec.setLives(c.getInt(c.getColumnIndex("lives")));
+			mTempRec.setCycles(c.getInt(c.getColumnIndex("cycles")));
+			mTempRec.setSave1(c.getInt(c.getColumnIndex("save")));
+			mTempRec.setGameSpeed(c.getInt(c.getColumnIndex("game_speed")));
+			mTempRec.setNumRecords(c.getInt(c.getColumnIndex("num_records")));
+			mTempRec.setSound(new Boolean(c.getString(c.getColumnIndex("sound"))).booleanValue());
+			mTempRec.setEnableJNI(new Boolean(c.getString(c.getColumnIndex("enable_jni"))).booleanValue());
+			mTempRec.setEnableMonsters(new Boolean(c.getString(c.getColumnIndex("enable_monsters"))).booleanValue());
+			mTempRec.setEnableCollision(new Boolean(c.getString(c.getColumnIndex("enable_collision"))).booleanValue());
+			mList.add(mTempRec);
+			c.moveToNext();
+			Log.d("Scores","____");
+		}
+		mDatabase.close();
+		return mList;
+	}
+	public String getSelectNumOfRecordsString( int num ) {
+		return new String ("SELECT * FROM " +
+							TABLE_NAME + " " +
+							" ORDER BY score DESC LIMIT " + num +
+							" ");
 	}
 	
 	public static class ScoreOpenHelper extends SQLiteOpenHelper {
