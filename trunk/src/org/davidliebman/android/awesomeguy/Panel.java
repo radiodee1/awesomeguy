@@ -266,7 +266,8 @@ public  class Panel  extends SurfaceView  {
 			/************** test jni *******************/
 			if (useJNI) {
 				mMap = Bitmap.createBitmap(drawLevel(newBG + 1), 256, 192, Bitmap.Config.RGB_565);
-				canvas.drawBitmap(mMap, 0, 0, null);
+				Bitmap temp = Bitmap.createBitmap(mMap, 0, 0, 256, 192, mMatrix, false);
+				canvas.drawBitmap(temp, 0, 0, null);
 				playSounds();
 			}
 			/************ put scores on screen ***********/
