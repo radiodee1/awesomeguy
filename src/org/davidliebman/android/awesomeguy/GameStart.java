@@ -39,10 +39,7 @@ public class GameStart extends Activity {
     RelativeLayout mRLayout ;
     TableLayout mTLayoutOuter ;
     TableLayout mTLayout ;
-    //TableRow mTLayout;
-    //FrameLayout mFLayoutTop ;
     FrameLayout mFLayoutBot ;
-    //Panel mPanelTop ;
     Panel mPanelBot ;
 	
     View mSpaceView, mSepView;
@@ -79,6 +76,7 @@ public class GameStart extends Activity {
 	private boolean mPlayAgain = true;
 	private Record mHighScores;
 	private SpriteInfo mGuySprite;
+    private Scores mScores;
 
 	
 	/* old GameLoop - prepare timer */
@@ -89,7 +87,6 @@ public class GameStart extends Activity {
 	private long nextGameTick = 0;
 	
 	
-    
     
     
     @Override
@@ -280,7 +277,8 @@ public class GameStart extends Activity {
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.getFromPreferences(preferences);
         //mHighScores.listInLog();    	    	
-    	
+    	mScores = new Scores(this, mHighScores);
+        
     	framesPerSec = mHighScores.getGameSpeed();
     	
     	/* init background */
@@ -517,9 +515,6 @@ public class GameStart extends Activity {
     	
     	@Override
     	public void run() {
-    		//////////////////////////////////////////////
-        	// TODO: GAME LOOP EXPEREMENT
-        	//////////////////////////////////////////////
     		
             
     		
@@ -612,7 +607,7 @@ public class GameStart extends Activity {
     			mGuySprite = mGameV.getSpriteStart();
     		    mPanelBot.setGuySprite(mGuySprite);
     	    	
-    		    //mPanelBot.setBackgroundGraphics();
+    		    //
     			
     		    mGameV.setEndLevel(false);
     		    mGameV.setGameDeath(false);
@@ -668,24 +663,11 @@ public class GameStart extends Activity {
     		    	  // used for cycles
     		      }
 
-    		      // this basically saves checkpoints and cycles...
+    		      // this basically saves high scores...
     		      // deal with high scores
-    		      /*
-    		      if ( mHighScores.getScore(mGameV.getUsernum())  > mGameV.getScore() && mGameV.getUsernum() < 4 ) {
-    		        //writeData(highScores); // or is this needed?
-    		      }
-
-    		      // save a high score and decide weather or not it 'ranks'...
-    		      if ( mHighScores.getScore(mGameV.getUsernum())  <= mGameV.getScore() || mGameV.getUsernum() == 4) {
-    		        mHighScores.setScore(mGameV.getScore() ,mGameV.getUsernum()) ;
-    		        //ranks = sortScores(highScores);
-    		        //writeData(highScores);
-    		      }
-    		      else {
-    		        ranks = false;
-    		      }
+    		      mScores.insertRecordIfRanks();
+    		      mHighScores.setNewRecord(false);
     		      
-    		      */
 
     		    } /////////// while NUM_ROOMS loop
 

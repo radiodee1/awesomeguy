@@ -135,6 +135,10 @@ public  class Record  {
 							" ) " ); //enable_collision
     }
     
+    
+	
+	
+    
 	public boolean isNewRecord() {
 		return mNewRecord;
 	}
