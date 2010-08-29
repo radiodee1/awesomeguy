@@ -39,6 +39,7 @@ public class Scores {
 		}
 		mDatabase.close();
 	}
+	
 	public ArrayList<Record> getHighScoreList(int num) {
 		ArrayList<Record> mList = new ArrayList<Record>();
 		mOpenHelper = new ScoreOpenHelper(mContext);
@@ -68,14 +69,48 @@ public class Scores {
 			c.moveToNext();
 			//Log.d("Scores","____");
 		}
+		c.close();
 		mDatabase.close();
 		return mList;
 	}
+	
+	public void insertRecordIfRanks() {
+		Log.d("insertRecordIfRanks", "here");
+		String query = new String();
+		if(mHighScores.isNewRecord()){
+			query = mHighScores.getInsertString(TABLE_NAME);
+		}
+		else {
+			query = this.getUpdateScoreLevelString(mHighScores.getRecordIdNum());
+		}
+		Log.d("insertRecordIfRanks", "-> " + query);
+		ArrayList<Record> test = this.getHighScoreList(mHighScores.getNumRecords());
+		Record mLowestScore = test.get(mHighScores.getNumRecords()-1);
+		Log.d("insertRecordIfRanks", " lowest "+ mLowestScore.getScore());
+		if (mHighScores.getScore() > mLowestScore.getScore()) {
+			mOpenHelper = new ScoreOpenHelper(mContext);
+			SQLiteDatabase mDatabase = mOpenHelper.getWritableDatabase();
+			Cursor c = mDatabase.rawQuery(query, null);
+			int i = c.getCount();
+			Log.d("insertRecordIfRanks", " count from query: "+ i);
+
+			mDatabase.close();
+		}
+		
+	}
+	
 	public String getSelectNumOfRecordsString( int num ) {
 		return new String ("SELECT * FROM " +
 							TABLE_NAME + " " +
 							" ORDER BY score DESC LIMIT " + num +
 							" ");
+	}
+	
+	public String getUpdateScoreLevelString(int id) {
+		return new String("UPDATE " + TABLE_NAME + " " +
+							" SET score=" + mHighScores.getScore() + " " +
+							" level=" + mHighScores.getLevel() + " " + 
+							" WHERE id=" + id);
 	}
 	
 	public static class ScoreOpenHelper extends SQLiteOpenHelper {

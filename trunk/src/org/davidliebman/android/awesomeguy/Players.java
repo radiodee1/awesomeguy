@@ -17,15 +17,16 @@ public class Players extends ListActivity {
     private Scores mScores ;
 	private Record mHighScores;
     private Record mRec = new Record();
-
+    private SharedPreferences mPreferences;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         /* retrieve Record mHighScores */
     	mHighScores = new Record();
-        SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
-        mHighScores.getFromPreferences(preferences);
+        mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+        mHighScores.getFromPreferences(mPreferences);
         
         /* create bogus record */
         //mRec.setName("dave");
@@ -68,6 +69,10 @@ public class Players extends ListActivity {
                   // Perform action on key press
                   Toast.makeText(Players.this, edittext.getText(), Toast.LENGTH_SHORT).show();
                   mRec.setName(edittext.getText().toString());
+                  if ( mHighScores.isNewRecord()) {
+                	  mHighScores.setName(edittext.getText().toString());
+                	  mHighScores.addToPreferences(mPreferences);
+                  }
                   return true;
                 }
                 return false;
