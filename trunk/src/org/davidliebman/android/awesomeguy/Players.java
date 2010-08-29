@@ -28,10 +28,6 @@ public class Players extends ListActivity {
         mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.getFromPreferences(mPreferences);
         
-        /* create bogus record */
-        //mRec.setName("dave");
-        //mRec.setScore(110);
-        //mRec.setLevel(3);
         
         mNames.add(mHighScores);
         

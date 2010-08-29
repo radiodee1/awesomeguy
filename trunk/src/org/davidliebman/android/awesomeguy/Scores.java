@@ -75,7 +75,7 @@ public class Scores {
 	}
 	
 	public void insertRecordIfRanks() {
-		Log.d("insertRecordIfRanks", "here");
+		//Log.d("insertRecordIfRanks", "here");
 		String query = new String();
 		if(mHighScores.isNewRecord()){
 			query = mHighScores.getInsertString(TABLE_NAME);
@@ -83,17 +83,17 @@ public class Scores {
 		else {
 			query = this.getUpdateScoreLevelString(mHighScores.getRecordIdNum());
 		}
-		Log.d("insertRecordIfRanks", "-> " + query);
+		//Log.d("insertRecordIfRanks", "-> " + query);
 		ArrayList<Record> test = this.getHighScoreList(mHighScores.getNumRecords());
 		Record mLowestScore = test.get(mHighScores.getNumRecords()-1);
-		Log.d("insertRecordIfRanks", " lowest "+ mLowestScore.getScore());
+		//Log.d("insertRecordIfRanks", " lowest "+ mLowestScore.getScore());
 		if (mHighScores.getScore() > mLowestScore.getScore()) {
 			mOpenHelper = new ScoreOpenHelper(mContext);
 			SQLiteDatabase mDatabase = mOpenHelper.getWritableDatabase();
 			Cursor c = mDatabase.rawQuery(query, null);
 			int i = c.getCount();
-			Log.d("insertRecordIfRanks", " count from query: "+ i);
-
+			//Log.d("insertRecordIfRanks", " count from query: "+ i);
+			c.close();
 			mDatabase.close();
 		}
 		
