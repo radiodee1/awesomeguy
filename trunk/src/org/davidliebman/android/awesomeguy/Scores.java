@@ -66,7 +66,7 @@ public class Scores {
 			mTempRec.setEnableCollision(new Boolean(c.getString(c.getColumnIndex("enable_collision"))).booleanValue());
 			mList.add(mTempRec);
 			c.moveToNext();
-			Log.d("Scores","____");
+			//Log.d("Scores","____");
 		}
 		mDatabase.close();
 		return mList;

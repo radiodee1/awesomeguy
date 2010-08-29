@@ -904,7 +904,7 @@ public  class Panel  extends SurfaceView  {
 		newX = mGuySprite.getX();
 		newY = mGuySprite.getY();
 
-		guyWidth = mGuySprite.getRightBB() - mGuySprite.getLeftBB(); // 12 ?
+		guyWidth = 5 + (mGuySprite.getRightBB() - mGuySprite.getLeftBB()); // 12 ?
 		guyHeight = mGuySprite.getBottomBB() - mGuySprite.getTopBB();
 
 		//this.mScreenH = 24 * 8; // not used
@@ -913,9 +913,10 @@ public  class Panel  extends SurfaceView  {
 		int tilesMeasurement;
 
 		if (mGameV.isDoubleScreen()) {
-			this.mScreenW = this.mDisplayWidth / 2;
 			tilesMeasurement = ((this.mDisplayWidth / 2 ) / 8) ;
-			if (tilesMeasurement * 16 < this.mDisplayWidth) tilesMeasurement ++;
+			//this.mScreenW = this.mDisplayWidth / 2;
+			this.mScreenW = tilesMeasurement * 8;
+			//if (tilesMeasurement * 16 < this.mDisplayWidth) tilesMeasurement ++;
 		}
 		else {
 			this.mScreenW = this.mDisplayWidth;
@@ -935,7 +936,7 @@ public  class Panel  extends SurfaceView  {
 			if (oldX >= ((mapH - tilesMeasurement) * 8 - x)  ) canScroll = false;
 			else canScroll = true;
 			//move RIGHT?
-			if ((mGuySprite.getX() + x) >= (mScreenW - guyWidth) || mapX + x >= mapH * 8  - guyWidth) {
+			if ((mGuySprite.getX() + x) >= (mScreenW - guyWidth ) || mapX + x >= mapH * 8  - guyWidth) {
 				newMapX = mapH * 8  - guyWidth;
 				newX = mScreenW - guyWidth;
 
