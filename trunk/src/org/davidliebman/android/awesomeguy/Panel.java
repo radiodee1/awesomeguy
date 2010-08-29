@@ -916,7 +916,7 @@ public  class Panel  extends SurfaceView  {
 			tilesMeasurement = ((this.mDisplayWidth / 2 ) / 8) ;
 			//this.mScreenW = this.mDisplayWidth / 2;
 			this.mScreenW = tilesMeasurement * 8;
-			//if (tilesMeasurement * 16 < this.mDisplayWidth) tilesMeasurement ++;
+			if (tilesMeasurement * 16 < this.mDisplayWidth) tilesMeasurement ++;
 		}
 		else {
 			this.mScreenW = this.mDisplayWidth;
