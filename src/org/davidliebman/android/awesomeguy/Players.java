@@ -7,6 +7,8 @@ import android.content.*;
 
 import java.util.ArrayList;
 import android.view.*;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class Players extends ListActivity {
 		
@@ -29,25 +31,39 @@ public class Players extends ListActivity {
         mRec.setName("dave");
         mRec.setScore(110);
         mRec.setLevel(3);
-        mNames.add(mRec);
         
         mNames.add(mHighScores);
         
         mScores = new Scores(this, mHighScores);
-        mNames = mScores.getHighScoreList(3);
+        mNames = mScores.getHighScoreList(mHighScores.getNumRecords());
+        mNames.add(mRec);
+
         
         RecordAdapter mAadapter = new RecordAdapter(this, R.layout.players, mNames);
         
         setContentView(R.layout.players);      
         setListAdapter(mAadapter);
-        getListView().setTextFilterEnabled(true);
-    
+        ListView lv = getListView();
+        lv.setTextFilterEnabled(true);
+        lv.setOnItemClickListener(new OnItemClickListener () {
+        	
+        	@Override
+        	 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        		mHighScores = mNames.get(position);
+        		Toast.makeText(Players.this, "Player Selected: " + mHighScores.getName(), Toast.LENGTH_SHORT).show();
+        		SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+            	mHighScores.addToPreferences(preferences);
+        	 }
+        	
+        });
+        
         
     }
     
     public class RecordAdapter extends ArrayAdapter<Record> {
     	ArrayList<Record> mList;
     	Context mContext;
+    	int mPosition;
     	
     	public RecordAdapter(Context context, int resourceID, ArrayList<Record> list) {
             super(context, resourceID, list);
@@ -61,6 +77,7 @@ public class Players extends ListActivity {
     		LayoutInflater inflater = (LayoutInflater)mContext.getSystemService (Context.LAYOUT_INFLATER_SERVICE);
     		convertView = inflater.inflate(R.layout.data_row, null);
     		Record mRec = mList.get(position);
+    		mPosition = position;
     		
     		TextView mName = (TextView) convertView.findViewById(R.id.text_name);
     		TextView mScore = (TextView) convertView.findViewById(R.id.text_score);
@@ -69,6 +86,8 @@ public class Players extends ListActivity {
     		mName.setText("Name: " + mRec.getName());
     		mScore.setText("Score: "+ mRec.getScore());
     		mLevel.setText("Level: " + mRec.getLevel());
+    		
+    		
     		
     		return convertView;
     	}
