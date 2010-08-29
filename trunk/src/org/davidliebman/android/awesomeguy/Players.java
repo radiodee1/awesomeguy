@@ -69,10 +69,17 @@ public class Players extends ListActivity {
                   // Perform action on key press
                   Toast.makeText(Players.this, edittext.getText(), Toast.LENGTH_SHORT).show();
                   mRec.setName(edittext.getText().toString());
+                  /*
                   if ( mHighScores.isNewRecord()) {
-                	  mHighScores.setName(edittext.getText().toString());
-                	  mHighScores.addToPreferences(mPreferences);
+                	  mHighScores.setName(edittext.getText().toString());              	  
                   }
+                  else {
+                	  
+                  }
+                  */
+                  mHighScores = mRec;
+                  mHighScores.addToPreferences(mPreferences);
+                  
                   return true;
                 }
                 return false;
