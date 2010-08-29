@@ -907,8 +907,6 @@ public  class Panel  extends SurfaceView  {
 		guyWidth = 5 + (mGuySprite.getRightBB() - mGuySprite.getLeftBB()); // 12 ?
 		guyHeight = mGuySprite.getBottomBB() - mGuySprite.getTopBB();
 
-		//this.mScreenH = 24 * 8; // not used
-		//this.mScreenW = 32 * 8; // 256
 		
 		int tilesMeasurement;
 
