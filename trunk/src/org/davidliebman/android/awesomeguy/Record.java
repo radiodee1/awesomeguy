@@ -42,7 +42,7 @@ public  class Record  {
 		mGameSpeed = 16;
 		mNumRecords = 5;
 		mSound = true;
-		mEnableJNI = false;
+		mEnableJNI = true;
 		mEnableMonsters = true;
 		mEnableCollision = true;
 	}

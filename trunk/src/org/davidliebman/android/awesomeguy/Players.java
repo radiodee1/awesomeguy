@@ -4,7 +4,7 @@ import android.app.ListActivity;
 import android.os.Bundle;
 import android.widget.*;
 import android.content.*;
-
+import android.view.View.OnKeyListener;
 import java.util.ArrayList;
 import android.view.*;
 import android.view.View.OnClickListener;
@@ -16,7 +16,8 @@ public class Players extends ListActivity {
     private ArrayList<Record> mNames = new ArrayList<Record>();
     private Scores mScores ;
 	private Record mHighScores;
-    
+    private Record mRec = new Record();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,10 +28,9 @@ public class Players extends ListActivity {
         mHighScores.getFromPreferences(preferences);
         
         /* create bogus record */
-        Record mRec = new Record();
-        mRec.setName("dave");
-        mRec.setScore(110);
-        mRec.setLevel(3);
+        //mRec.setName("dave");
+        //mRec.setScore(110);
+        //mRec.setLevel(3);
         
         mNames.add(mHighScores);
         
@@ -53,8 +53,25 @@ public class Players extends ListActivity {
         		Toast.makeText(Players.this, "Player Selected: " + mHighScores.getName(), Toast.LENGTH_SHORT).show();
         		SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
             	mHighScores.addToPreferences(preferences);
+            	mHighScores.setNewRecord(false);
         	 }
         	
+        });
+        
+        /* edit text field*/
+        final EditText edittext = (EditText) findViewById(R.id.edittext_name);
+        edittext.setOnKeyListener(new OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                    (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                  // Perform action on key press
+                  Toast.makeText(Players.this, edittext.getText(), Toast.LENGTH_SHORT).show();
+                  mRec.setName(edittext.getText().toString());
+                  return true;
+                }
+                return false;
+            }
         });
         
         
