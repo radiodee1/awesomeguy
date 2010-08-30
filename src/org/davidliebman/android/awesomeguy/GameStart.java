@@ -328,7 +328,8 @@ public class GameStart extends Activity {
     				@Override
     				public boolean onKey(View v, int keyCode, KeyEvent event) {
     					if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-    						
+    		    			mPanelBot.setKeyB(true);
+
     					}
     					
     					if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT)
