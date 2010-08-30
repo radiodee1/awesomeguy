@@ -327,7 +327,9 @@ public class GameStart extends Activity {
     				
     				@Override
     				public boolean onKey(View v, int keyCode, KeyEvent event) {
-    					
+    					if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+    						
+    					}
     					
     					if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT)
                         {
@@ -567,8 +569,9 @@ public class GameStart extends Activity {
     			
     			myPanelUpdateHandler.sendEmptyMessage(GameStart.SPLASH);
     			
-    		    // new score ??
-    		    
+    		    // new score ?? SAVE OLD SCORE!!
+    		    mGameV.setOldGuyScore(mHighScores.getScore());
+    			
     		    mGameV.setScore(10);
     		    
     		    mGameV.setEndGame(false);
@@ -664,10 +667,10 @@ public class GameStart extends Activity {
     		      }
 
     		      // this basically saves high scores...
-    		      // deal with high scores
-    		      mScores.insertRecordIfRanks();
-    		      mHighScores.setNewRecord(false);
-    		      
+    		      if(mHighScores.getScore() > mGameV.getOldGuyScore()) {
+    		    	  mScores.insertRecordIfRanks();
+    		    	  mHighScores.setNewRecord(false);
+    		      }
 
     		    } /////////// while NUM_ROOMS loop
 

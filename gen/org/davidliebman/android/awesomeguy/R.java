@@ -58,15 +58,15 @@ public final class R {
         public static final int tilesalpha=0x7f02002c;
     }
     public static final class id {
-        public static final int AbsoluteLayout01=0x7f060023;
-        public static final int AbsoluteLayout02=0x7f060025;
+        public static final int AbsoluteLayout01=0x7f060025;
+        public static final int AbsoluteLayout02=0x7f060027;
         public static final int Credits=0x7f06000d;
         public static final int GameStart=0x7f060008;
         public static final int Help=0x7f060009;
         public static final int Options=0x7f06000b;
         public static final int Players=0x7f06000f;
-        public static final int TableLayout01=0x7f060022;
-        public static final int TableLayout02=0x7f060027;
+        public static final int TableLayout01=0x7f060024;
+        public static final int TableLayout02=0x7f060029;
         public static final int TextView01=0x7f060001;
         public static final int TextView02=0x7f060013;
         public static final int TextView03=0x7f060015;
@@ -74,21 +74,23 @@ public final class R {
         public static final int TextView05=0x7f06001b;
         public static final int TextView06=0x7f06001d;
         public static final int TextView07=0x7f06001f;
+        public static final int button_options=0x7f060020;
+        public static final int button_players=0x7f060023;
         public static final int checkbox_collision=0x7f06001e;
         public static final int checkbox_jni=0x7f06001a;
         public static final int checkbox_monsters=0x7f06001c;
         public static final int checkbox_sounds=0x7f060014;
-        public static final int edittext_name=0x7f060021;
+        public static final int edittext_name=0x7f060022;
         public static final int icon=0x7f060002;
-        public static final int image_bot=0x7f060026;
-        public static final int image_top=0x7f060024;
+        public static final int image_bot=0x7f060028;
+        public static final int image_top=0x7f060026;
         public static final int radio_players_fifty=0x7f060018;
         public static final int radio_players_five=0x7f060016;
         public static final int radio_players_ten=0x7f060017;
         public static final int radio_speed_16=0x7f060010;
         public static final int radio_speed_20=0x7f060011;
         public static final int radio_speed_24=0x7f060012;
-        public static final int text_description=0x7f060020;
+        public static final int text_description=0x7f060021;
         public static final int text_level=0x7f060005;
         public static final int text_name=0x7f060003;
         public static final int text_score=0x7f060004;

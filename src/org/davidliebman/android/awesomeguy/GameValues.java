@@ -43,6 +43,7 @@ public class GameValues {
 	private boolean mGameDeath = false;
 	private int mUsernum = 4;
 	public static int NUM_ROOMS = 2;
+	private int mOldGuyScore;
 	
 	/* sprites */
 	private ArrayList<SpriteInfo> mSprites = new ArrayList<SpriteInfo>();
@@ -191,7 +192,15 @@ public class GameValues {
 	public void setUsernum(int mUsernum) {
 		this.mUsernum = mUsernum;
 	}
-
+	
+	public int getOldGuyScore() {
+		return mOldGuyScore;
+	}
+	public void setOldGuyScore(int mOldGuyScore) {
+		this.mOldGuyScore = mOldGuyScore;
+	}
+	
+	
 	/** work with sprite list **/
 	public void setSpriteStart() {
 		//mSprites = new ArrayList<SpriteInfo>();

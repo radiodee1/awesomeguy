@@ -120,6 +120,16 @@ public class Options extends Activity {
         };
         /** end game speed **/
         
+        /* button at bottom of view */
+        final Button button = (Button) findViewById(R.id.button_options);
+        button.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+            	Intent StartGameIntent = new Intent(Options.this,GameStart.class);
+        		startActivity(StartGameIntent);
+            	//Toast.makeText(Players.this, "And We're Off", Toast.LENGTH_SHORT).show();
+            }
+        });
+        
         
         /* more radio button stuff - number of players */
         final RadioButton radio_players_five = (RadioButton) findViewById(R.id.radio_players_five);

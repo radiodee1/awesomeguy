@@ -63,7 +63,7 @@ public class Players extends ListActivity {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                     (keyCode == KeyEvent.KEYCODE_ENTER)) {
                   // Perform action on key press
-                  Toast.makeText(Players.this, edittext.getText(), Toast.LENGTH_SHORT).show();
+                  Toast.makeText(Players.this, "Player Selected: " + edittext.getText(), Toast.LENGTH_SHORT).show();
                   mRec.setName(edittext.getText().toString());
                   /*
                   if ( mHighScores.isNewRecord()) {
@@ -82,6 +82,15 @@ public class Players extends ListActivity {
             }
         });
         
+        /* button at bottom of view */
+        final Button button = (Button) findViewById(R.id.button_players);
+        button.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+            	Intent StartGameIntent = new Intent(Players.this,GameStart.class);
+        		startActivity(StartGameIntent);
+            	//Toast.makeText(Players.this, "And We're Off", Toast.LENGTH_SHORT).show();
+            }
+        });
         
     }
     
