@@ -3,6 +3,7 @@ package org.davidliebman.android.awesomeguy;
 
 import android.util.Log;
 import android.content.Context;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -75,28 +76,41 @@ public class Scores {
 	}
 	
 	public void insertRecordIfRanks() {
-		//Log.d("insertRecordIfRanks", "here");
 		String query = new String();
+		
+
+		ArrayList<Record> test = this.getHighScoreList(mHighScores.getNumRecords());
+		Record mLowestScore = test.get(test.size() - 1);
+		
 		if(mHighScores.isNewRecord()){
 			query = mHighScores.getInsertString(TABLE_NAME);
 		}
 		else {
 			query = this.getUpdateScoreLevelString(mHighScores.getRecordIdNum());
 		}
-		//Log.d("insertRecordIfRanks", "-> " + query);
-		ArrayList<Record> test = this.getHighScoreList(mHighScores.getNumRecords());
-		Record mLowestScore = test.get(mHighScores.getNumRecords()-1);
-		//Log.d("insertRecordIfRanks", " lowest "+ mLowestScore.getScore());
+		
 		if (mHighScores.getScore() > mLowestScore.getScore()) {
 			mOpenHelper = new ScoreOpenHelper(mContext);
 			SQLiteDatabase mDatabase = mOpenHelper.getWritableDatabase();
-			Cursor c = mDatabase.rawQuery(query, null);
-			int i = c.getCount();
-			//Log.d("insertRecordIfRanks", " count from query: "+ i);
-			c.close();
+			
+			
+		
+			if(mHighScores.isNewRecord()) {
+				//set new record to false
+				//set ID Num
+				long i = mDatabase.insert(TABLE_NAME, null, this.getInsertContentValues());
+				mHighScores.setRecordIdNum((int)i);
+				mHighScores.setNewRecord(false);
+			}
+			else {
+				Cursor c = mDatabase.rawQuery(query, null);
+				int i = c.getCount();
+	
+				c.close();
+				
+			}
 			mDatabase.close();
 		}
-		
 	}
 	
 	public String getSelectNumOfRecordsString( int num ) {
@@ -108,9 +122,28 @@ public class Scores {
 	
 	public String getUpdateScoreLevelString(int id) {
 		return new String("UPDATE " + TABLE_NAME + " " +
-							" SET score=" + mHighScores.getScore() + " " +
+							" SET score=" + mHighScores.getScore() + " , " +
 							" level=" + mHighScores.getLevel() + " " + 
 							" WHERE id=" + id);
+	}
+	
+	public ContentValues getInsertContentValues() {
+		ContentValues mValues = new ContentValues();
+		mValues.put("new_record", new Boolean(mHighScores.isNewRecord()).toString());
+		mValues.put("name", mHighScores.getName());
+		mValues.put("level", mHighScores.getLevel());
+		mValues.put("score", mHighScores.getScore());
+		mValues.put("lives", mHighScores.getLives());
+		mValues.put("cycles", mHighScores.getCycles());
+		mValues.put("save", mHighScores.getSave1());
+		mValues.put("game_speed", mHighScores.getGameSpeed());
+		mValues.put("num_records", mHighScores.getNumRecords());
+		mValues.put("sound", new Boolean(mHighScores.isSound()).toString());
+		mValues.put("enable_jni", new Boolean(mHighScores.isEnableJNI()).toString());
+		mValues.put("enable_monsters", new Boolean(mHighScores.isEnableMonsters()).toString());
+		mValues.put("enable_collision", new Boolean(mHighScores.isEnableCollision()).toString());
+		
+		return mValues;
 	}
 	
 	public static class ScoreOpenHelper extends SQLiteOpenHelper {
