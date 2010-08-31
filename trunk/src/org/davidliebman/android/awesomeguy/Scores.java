@@ -13,7 +13,7 @@ import java.util.*;
 
 public class Scores {
 	private static final String DATABASE_NAME = "AwesomeguyScores.db";
-	private static final int DATABASE_VERSION = 3;
+	private static final int DATABASE_VERSION = 4;
 	private static final String TABLE_NAME = "scores";
 	
 	private SQLiteDatabase mDatabase;
@@ -35,7 +35,7 @@ public class Scores {
 
 		for (int i = 0; i < 5; i ++ ) {
 			mDatabase.execSQL(
-					mHighScores.getInsertString(TABLE_NAME));
+					this.getInsertString(TABLE_NAME));
 
 		}
 		mDatabase.close();
@@ -92,7 +92,7 @@ public class Scores {
 		}
 		
 		if(mHighScores.isNewRecord()){
-			query = mHighScores.getInsertString(TABLE_NAME);
+			query = this.getInsertString(TABLE_NAME);
 		}
 		else {
 			query = this.getUpdateScoreLevelString(mHighScores.getRecordIdNum());
@@ -143,6 +143,41 @@ public class Scores {
 		}
 		mDatabase.close();
 	}
+	
+    public String getInsertString(String tableName) {
+    	return new String("INSERT INTO " +
+    						tableName + " " +		
+    						"( new_record  , " +
+    						" name  , " +
+    						" level  , " +
+    						" score  , " +
+    						" lives  , " +
+    						" cycles  , " +
+    						" save  , " +
+    						" game_speed  , " +
+    						" num_records  , " +
+    						" sound  , " +
+    						" enable_jni  , " +
+    						" enable_monsters  , " +
+    						" enable_collision  ) " +
+							" VALUES ( " +
+							// keep order correct
+							" \"" + false + "\"  , " + //new_record
+							" \"" + mHighScores.getName() + "\"  , " + //name
+							" " + mHighScores.getLevel() + "  , " + //level
+							" " + mHighScores.getScore() + "  , " +  //score
+							" " + mHighScores.getLives() + "  , " +  //lives
+							" " + mHighScores.getCycles() + "  , " +  //cycles
+							" " + mHighScores.getSave1() + "  , " + //save
+							" " + mHighScores.getGameSpeed() + "  , " + //game_speed
+							" " + mHighScores.getNumRecords() + "  , " +  //num_records
+							" \"" + new Boolean(mHighScores.isSound()).toString() + "\"  , " +//sound
+							" \"" + new Boolean(mHighScores.isEnableJNI()).toString() + "\"  , " +//enable_jni
+							" \"" + new Boolean(mHighScores.isEnableMonsters()).toString() + "\"  , " + //enable_monsters
+							" \"" + new Boolean(mHighScores.isEnableCollision()).toString() + "\" " + //enable_collision
+							" ) " ); 
+    }
+    
 	
 	public String getSelectNumOfRecordsString( int num ) {
 		return new String ("SELECT * FROM " +

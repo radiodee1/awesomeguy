@@ -12,6 +12,8 @@ import android.os.Bundle;
 public class Options extends Activity {
 	
 	public static final String AWESOME_NAME = new String("org.awesomeguy");
+	public static final String SAVED_NUM_SCORES = new String("saved_num_scores");
+
 	
 	private Record mHighScores = new Record() ;
 	
@@ -24,6 +26,9 @@ public class Options extends Activity {
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
 
         mHighScores.getFromPreferences(preferences);
+        if (mHighScores.isNewRecord()) {
+        	mHighScores.setNumRecords(preferences.getInt(SAVED_NUM_SCORES, 50));
+        }
         //mHighScores.listInLog();
         
         setContentView(R.layout.options);  
@@ -102,6 +107,10 @@ public class Options extends Activity {
                 if(rb.getId() == R.id.radio_players_ten) mHighScores.setNumRecords(10);
                 if(rb.getId() == R.id.radio_players_five) mHighScores.setNumRecords(5);
                 if(rb.getId() == R.id.radio_players_fifty) mHighScores.setNumRecords(50);
+                SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+                SharedPreferences.Editor out = preferences.edit();
+                out.putInt(SAVED_NUM_SCORES, mHighScores.getNumRecords());
+                out.commit();
             }
         };
         /** end number **/

@@ -101,40 +101,7 @@ public  class Record  {
 		Log.i("Record", "Collision Enabled : " + new Boolean(mEnableCollision).toString());
 	}
      
-    public String getInsertString(String tableName) {
-    	return new String("INSERT INTO " +
-    						tableName + " " +		
-    						"( new_record  , " +
-    						" name  , " +
-    						" level  , " +
-    						" score  , " +
-    						" lives  , " +
-    						" cycles  , " +
-    						" save  , " +
-    						" game_speed  , " +
-    						" num_records  , " +
-    						" sound  , " +
-    						" enable_jni  , " +
-    						" enable_monsters  , " +
-    						" enable_collision  ) " +
-							" VALUES ( " +
-							// keep order correct
-							" \"" + false + "\"  , " + //new_record
-							" \"" + this.mName + "\"  , " + //name
-							" " + this.mLevel + "  , " + //level
-							" " + this.mScore + "  , " +  //score
-							" " + this.mLives + "  , " +  //lives
-							" " + this.mCycles + "  , " +  //cycles
-							" " + this.mSave1 + "  , " + //save
-							" " + this.mGameSpeed + "  , " + //game_speed
-							" " + this.mNumRecords + "  , " +  //num_records
-							" \"" + this.mSound + "\"  , " +//sound
-							" \"" + this.mEnableJNI + "\"  , " +//enable_jni
-							" \"" + this.mEnableMonsters + "\"  , " + //enable_monsters
-							" \"" + this.mEnableCollision + "\" " +
-							" ) " ); //enable_collision
-    }
-    
+
     
 	
 	
