@@ -19,6 +19,7 @@ public class Players extends ListActivity {
     private Record mRec = new Record();
     private SharedPreferences mPreferences;
     private RecordAdapter mAadapter;
+    private TextView mPlayerText;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,8 @@ public class Players extends ListActivity {
         		SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
             	mHighScores.setNewRecord(false);
         		mHighScores.addToPreferences(preferences);
+                mPlayerText.setText("Player Chosen: " +mHighScores.getName());
+
         	 }
         	
         });
@@ -63,19 +66,17 @@ public class Players extends ListActivity {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                     (keyCode == KeyEvent.KEYCODE_ENTER)) {
                   // Perform action on key press
-                  Toast.makeText(Players.this, "Player Selected: " + edittext.getText(), Toast.LENGTH_SHORT).show();
                   mRec.setName(edittext.getText().toString());
-                  /*
-                  if ( mHighScores.isNewRecord()) {
-                	  mHighScores.setName(edittext.getText().toString());              	  
+                  if ( isNameTaken(mNames, mRec.getName())) {
+                      Toast.makeText(Players.this, "This name is already taken: " + edittext.getText(), Toast.LENGTH_SHORT).show();
+
                   }
                   else {
-                	  
+                      Toast.makeText(Players.this, "Player Selected: " + edittext.getText(), Toast.LENGTH_SHORT).show();
+                	  mHighScores = mRec;
+                	  mHighScores.addToPreferences(mPreferences);
+                	  mPlayerText.setText("Player Chosen: " +mHighScores.getName());
                   }
-                  */
-                  mHighScores = mRec;
-                  mHighScores.addToPreferences(mPreferences);
-                  
                   return true;
                 }
                 return false;
@@ -92,6 +93,9 @@ public class Players extends ListActivity {
             }
         });
         
+        mPlayerText = (TextView) findViewById(R.id.text_player_name);
+        mPlayerText.setText("Player Chosen: " +mHighScores.getName());
+        
         mScores.pruneScoresList();
         
     }
@@ -106,6 +110,19 @@ public class Players extends ListActivity {
     	
     	mAadapter.notifyDataSetChanged();
     	
+    }
+    
+    public static boolean isNameTaken(ArrayList<Record> mNames, String test) {
+    	boolean value = false;
+    	if (mNames.size() > 0) {
+    		for (int i = 0; i < mNames.size(); i ++ ) {
+    			if (mNames.get(i).getName().contentEquals(test)) {
+    				value = true;
+    			}
+    		}
+    	}
+    	
+    	return value;
     }
     
     public class RecordAdapter extends ArrayAdapter<Record> {
