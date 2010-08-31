@@ -42,6 +42,7 @@ public class Scores {
 	}
 	
 	public ArrayList<Record> getHighScoreList(int num) {
+		// NOTE: if 'num' is negative, all records are returned
 		ArrayList<Record> mList = new ArrayList<Record>();
 		mOpenHelper = new ScoreOpenHelper(mContext);
 		mDatabase = mOpenHelper.getReadableDatabase();

@@ -119,7 +119,7 @@ public  class Record  {
     						" enable_collision  ) " +
 							" VALUES ( " +
 							// keep order correct
-							" \"" + this.mNewRecord + "\"  , " + //new_record
+							" \"" + false + "\"  , " + //new_record
 							" \"" + this.mName + "\"  , " + //name
 							" " + this.mLevel + "  , " + //level
 							" " + this.mScore + "  , " +  //score

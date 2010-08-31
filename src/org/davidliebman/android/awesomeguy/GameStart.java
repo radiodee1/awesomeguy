@@ -661,8 +661,10 @@ public class GameStart extends Activity {
 
     		      // this basically saves high scores...
     		      if(mHighScores.getScore() > mGameV.getOldGuyScore()) {
+    		    	  
     		    	  mScores.insertRecordIfRanks();
     		    	  mHighScores.setNewRecord(false);
+
     		      }
 
     		    } /////////// while NUM_ROOMS loop
