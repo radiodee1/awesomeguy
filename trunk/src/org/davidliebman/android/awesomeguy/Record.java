@@ -40,7 +40,7 @@ public  class Record  {
 		mCycles = 0;
 		mSave1 = 0;
 		mGameSpeed = 16;
-		mNumRecords = 5;
+		mNumRecords = 50;
 		mSound = true;
 		mEnableJNI = true;
 		mEnableMonsters = true;

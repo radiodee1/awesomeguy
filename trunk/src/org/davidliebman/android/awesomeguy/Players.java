@@ -18,6 +18,7 @@ public class Players extends ListActivity {
 	private Record mHighScores;
     private Record mRec = new Record();
     private SharedPreferences mPreferences;
+    private RecordAdapter mAadapter;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,14 +30,13 @@ public class Players extends ListActivity {
         mHighScores.getFromPreferences(mPreferences);
         
         
-        mNames.add(mHighScores);
         
         mScores = new Scores(this, mHighScores);
         mNames = mScores.getHighScoreList(mHighScores.getNumRecords());
-        mNames.add(mRec);
 
         
-        RecordAdapter mAadapter = new RecordAdapter(this, R.layout.players, mNames);
+        mAadapter = new RecordAdapter(this, R.layout.players, mNames);
+        mAadapter.setNotifyOnChange(true);
         
         setContentView(R.layout.players);      
         setListAdapter(mAadapter);
@@ -49,8 +49,8 @@ public class Players extends ListActivity {
         		mHighScores = mNames.get(position);
         		Toast.makeText(Players.this, "Player Selected: " + mHighScores.getName(), Toast.LENGTH_SHORT).show();
         		SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
-            	mHighScores.addToPreferences(preferences);
             	mHighScores.setNewRecord(false);
+        		mHighScores.addToPreferences(preferences);
         	 }
         	
         });
@@ -92,6 +92,20 @@ public class Players extends ListActivity {
             }
         });
         
+        mScores.pruneScoresList();
+        
+    }
+    
+    @Override
+    public void onResume() {
+    	super.onResume();
+    	ArrayList<Record> temp = mScores.getHighScoreList(mHighScores.getNumRecords());
+        this.mNames.clear();
+        this.mNames.addAll(temp);
+    	//mAadapter = new RecordAdapter(this, R.layout.players, mNames);
+    	
+    	mAadapter.notifyDataSetChanged();
+    	
     }
     
     public class RecordAdapter extends ArrayAdapter<Record> {

@@ -444,16 +444,7 @@ public class GameStart extends Activity {
     	}
     };
     
-    public void clearMessages() {
-    	this.myPanelUpdateHandler.removeMessages(GAMEVALUES);
-    	this.myPanelUpdateHandler.removeMessages(STARTLEVEL);
-    	this.myPanelUpdateHandler.removeMessages(MOVEMENTVALUES);
-    	this.myPanelUpdateHandler.removeMessages(SPLASH);
-    	this.myPanelUpdateHandler.removeMessages(INVALIDATE);
-    	this.myPanelUpdateHandler.removeMessages(GAMESTOP);
-    	this.myPanelUpdateHandler.removeMessages(INPUTVALUES_KEYUP);
-    	this.myPanelUpdateHandler.removeMessages(INPUTVALUES_TRACKUP);
-    }
+    
     
     public Handler myPanelUpdateHandler = new Handler() {
     	public void handleMessage(Message msg) {
@@ -526,6 +517,9 @@ public class GameStart extends Activity {
     		Date startDate = new Date();
     		nextGameTick = startDate.getTime();
     		
+    		// new score ?? SAVE OLD SCORE!!
+			mGameV.setOldGuyScore(mHighScores.getScore());
+		
     		
     		
     		  ///////////////////////////////////////////////////////
@@ -570,9 +564,7 @@ public class GameStart extends Activity {
     			
     			myPanelUpdateHandler.sendEmptyMessage(GameStart.SPLASH);
     			
-    		    // new score ?? SAVE OLD SCORE!!
-    		    mGameV.setOldGuyScore(mHighScores.getScore());
-    			
+    		    
     		    mGameV.setScore(10);
     		    
     		    mGameV.setEndGame(false);

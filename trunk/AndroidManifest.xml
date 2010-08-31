@@ -15,7 +15,8 @@
 		</activity>
 
 		<activity android:name=".Menu" 
-			android:clearTaskOnLaunch="true">
+			android:clearTaskOnLaunch="true"
+			android:screenOrientation="portrait">
 			<intent-filter>
 				<action android:name="org.davidliebman.android.awesomeguy.Menu"></action>
 				<category android:name="android.intent.category.DEFAULT"></category>
@@ -38,7 +39,10 @@
 		</activity>
 
 
-		<activity android:name=".Options">
+		<activity android:name=".Options"
+		android:screenOrientation="portrait"
+		android:clearTaskOnLaunch="true"
+		>
 			<intent-filter>
 				<action android:name="org.davidliebman.android.awesomeguy.Options"></action>
 				<category android:name="android.intent.category.LAUNCHER"></category>
