@@ -44,6 +44,7 @@ public class SplashScreen extends Activity {
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.addToPreferences(preferences);
         
+        
         /* init scores object */
         mScores = new Scores(this, mHighScores);
         //mScores.setHighScores(mHighScores);
