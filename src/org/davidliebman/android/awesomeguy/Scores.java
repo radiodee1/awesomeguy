@@ -13,7 +13,7 @@ import java.util.*;
 
 public class Scores {
 	private static final String DATABASE_NAME = "AwesomeguyScores.db";
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 3;
 	private static final String TABLE_NAME = "scores";
 	
 	private SQLiteDatabase mDatabase;
@@ -45,7 +45,13 @@ public class Scores {
 		ArrayList<Record> mList = new ArrayList<Record>();
 		mOpenHelper = new ScoreOpenHelper(mContext);
 		mDatabase = mOpenHelper.getReadableDatabase();
-		Cursor c = mDatabase.rawQuery(this.getSelectNumOfRecordsString(num), null);
+		Cursor c;
+		if (num < 0 ) {
+			c = mDatabase.rawQuery(this.getSelectAllRecordsString(), null);
+		}
+		else {
+			c = mDatabase.rawQuery(this.getSelectNumOfRecordsString(num), null);
+		}
 		if (c.getCount() == 0) return mList;
 		c.moveToFirst();
 		for (int i = 0; i < c.getCount(); i ++ ) {
@@ -77,10 +83,12 @@ public class Scores {
 	
 	public void insertRecordIfRanks() {
 		String query = new String();
-		
+		Record mLowestScore = new Record();
 
 		ArrayList<Record> test = this.getHighScoreList(mHighScores.getNumRecords());
-		Record mLowestScore = test.get(test.size() - 1);
+		if (test.size() > 0) {
+			mLowestScore = test.get(test.size() - 1);
+		}
 		
 		if(mHighScores.isNewRecord()){
 			query = mHighScores.getInsertString(TABLE_NAME);
@@ -89,7 +97,7 @@ public class Scores {
 			query = this.getUpdateScoreLevelString(mHighScores.getRecordIdNum());
 		}
 		
-		if (mHighScores.getScore() > mLowestScore.getScore()) {
+		if (mHighScores.getScore() > mLowestScore.getScore() || test.size() < mHighScores.getNumRecords()) {
 			mOpenHelper = new ScoreOpenHelper(mContext);
 			SQLiteDatabase mDatabase = mOpenHelper.getWritableDatabase();
 			
@@ -99,10 +107,15 @@ public class Scores {
 				//set new record to false
 				//set ID Num
 				long i = mDatabase.insert(TABLE_NAME, null, this.getInsertContentValues());
+				
+				
 				mHighScores.setRecordIdNum((int)i);
 				mHighScores.setNewRecord(false);
+				Log.d("Scores", "setting new record number <--------------");
+				//mHighScores.listInLog();
+				
 			}
-			else {
+			else  {
 				Cursor c = mDatabase.rawQuery(query, null);
 				int i = c.getCount();
 	
@@ -113,11 +126,32 @@ public class Scores {
 		}
 	}
 	
+	public void pruneScoresList() {
+		ArrayList<Record> mList = this.getHighScoreList(-1);
+		mOpenHelper = new ScoreOpenHelper(mContext);
+		SQLiteDatabase mDatabase = mOpenHelper.getWritableDatabase();
+		if (mHighScores.getNumRecords() < mList.size()) {
+			for (int i = mHighScores.getNumRecords(); i < mList.size(); i ++) {
+				int j = mList.get(i).getRecordIdNum();
+				Cursor c = mDatabase.rawQuery("DELETE FROM "+ TABLE_NAME + " WHERE id=" + j, null);
+				c.getCount();
+				c.close();
+				//Log.d("scores", "REMOVE RECORD " + j + "<--------------");
+				//mList.get(i).listInLog();
+			}
+		}
+		mDatabase.close();
+	}
+	
 	public String getSelectNumOfRecordsString( int num ) {
 		return new String ("SELECT * FROM " +
 							TABLE_NAME + " " +
 							" ORDER BY score DESC LIMIT " + num +
 							" ");
+	}
+	
+	public String getSelectAllRecordsString() {
+		return new String("SELECT * FROM " + TABLE_NAME +" ORDER BY score DESC");
 	}
 	
 	public String getUpdateScoreLevelString(int id) {

@@ -1,6 +1,6 @@
 package org.davidliebman.android.awesomeguy;
 
-import android.util.Log;
+//import android.util.Log;
 
 
 public class MovementValues {
@@ -87,11 +87,11 @@ public class MovementValues {
 		}
 		if(this.directionKeyLeft == 1) {
 			temp = MovementValues.KEY_LEFT;
-			Log.v("MovementValues", "Left");
+			//Log.v("MovementValues", "Left");
 		}
 		else if(this.directionKeyRight == 1) {
 			temp = MovementValues.KEY_RIGHT;
-			Log.v("MovementValues", "Right"	);
+			//Log.v("MovementValues", "Right"	);
 		}
 		return temp;
 	}
@@ -103,11 +103,11 @@ public class MovementValues {
 		}
 		if(this.directionKeyDown == 1) {
 			temp = MovementValues.KEY_DOWN;
-			Log.v("MovementValues", "Down");
+			//Log.v("MovementValues", "Down");
 		}
 		else if(this.directionKeyUp == 1) {
 			temp = MovementValues.KEY_UP;
-			Log.v("MovementValues", "Up");
+			//Log.v("MovementValues", "Up");
 		}
 		return temp;
 	}
