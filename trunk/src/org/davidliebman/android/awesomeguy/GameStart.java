@@ -266,6 +266,14 @@ public class GameStart extends Activity {
     		//
        	}
     	
+    	// save high scores if they rank
+    	if(mHighScores.getScore() > mGameV.getOldGuyScore()) {
+	    	  
+	    	  mScores.insertRecordIfRanks();
+	    	  mHighScores.setNewRecord(false);
+
+	      }
+    	
 	    super.onPause();
     }
     
