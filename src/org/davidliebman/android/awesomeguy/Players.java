@@ -67,6 +67,7 @@ public class Players extends ListActivity {
                     (keyCode == KeyEvent.KEYCODE_ENTER)) {
                   // Perform action on key press
                   mRec.setName(edittext.getText().toString().trim());
+                  mRec.setNumRecords(mHighScores.getNumRecords());
                   if ( isNameTaken(mNames, mRec.getName())) {
                       Toast.makeText(Players.this, "This name is already taken: " + edittext.getText(), Toast.LENGTH_SHORT).show();
 
