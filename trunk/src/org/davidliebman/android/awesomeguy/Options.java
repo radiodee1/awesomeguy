@@ -33,6 +33,10 @@ public class Options extends Activity {
         
         setContentView(R.layout.options);  
         
+        /** player name on screen **/
+        final TextView textview_name = (TextView) this.findViewById(R.id.player_name_options);
+        textview_name.setText("Player Name: " + mHighScores.getName());
+        
         /** sound effects play **/
         final CheckBox checkbox_sounds = (CheckBox) findViewById(R.id.checkbox_sounds );
         checkbox_sounds.setChecked(mHighScores.isSound());

@@ -252,7 +252,7 @@ public class GameStart extends Activity {
     @Override
     public void onPause() {
     	
-    	//mGameLoopBot.setGameRunning(false);
+    	// Stop Game Loop Thread
     	gameRunning = false;
     	Message mEndMessage = new Message();
     	mEndMessage.what = GAMESTOP;
