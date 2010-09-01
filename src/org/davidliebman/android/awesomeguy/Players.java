@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.os.Bundle;
 import android.widget.*;
 import android.content.*;
+import android.text.InputType;
 import android.view.View.OnKeyListener;
 import java.util.ArrayList;
 import android.view.*;
@@ -78,6 +79,7 @@ public class Players extends ListActivity {
                 	  mHighScores.addToPreferences(mPreferences);
                 	  mPlayerText.setText("Player Chosen: " +mHighScores.getName());
                   }
+                  //edittext.setInputType(InputType.TYPE_NULL);
                   return true;
                 }
                 return false;
