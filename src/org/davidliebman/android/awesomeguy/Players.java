@@ -4,7 +4,6 @@ import android.app.ListActivity;
 import android.os.Bundle;
 import android.widget.*;
 import android.content.*;
-import android.text.InputType;
 import android.view.View.OnKeyListener;
 import java.util.ArrayList;
 import android.view.*;
