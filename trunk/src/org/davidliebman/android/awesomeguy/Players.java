@@ -147,7 +147,6 @@ public class Players extends ListActivity {
     	ArrayList<Record> temp = mScores.getHighScoreList(mHighScores.getNumRecords());
         this.mNames.clear();
         this.mNames.addAll(temp);
-    	//mAadapter = new RecordAdapter(this, R.layout.players, mNames);
     	
     	mAadapter.notifyDataSetChanged();
     	
