@@ -8,6 +8,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 import android.content.*;
+import java.util.*;
 
 public class InitBackground {
 	private GameValues mGameV;
@@ -888,6 +889,9 @@ public class InitBackground {
 					int mIndexNum = 0;
 					boolean mHorizontal, mVertical, mTiles, mObjects, mLastLevel;
 					
+					String mOList = new String();
+					String mTList = new String();
+					
 					mHorizontal = false;
 					mVertical = false;
 					mTiles = false;
@@ -923,7 +927,7 @@ public class InitBackground {
 							
 							
 						}
-						if(eventType == XmlPullParser.END_TAG || eventType == XmlPullParser.END_DOCUMENT) {
+						if((eventType == XmlPullParser.END_TAG && xpp.getName().contentEquals(LEVEL)) || eventType == XmlPullParser.END_DOCUMENT) {
 							mReadNum = false;
 							mStopParse = true;
 						}
@@ -961,17 +965,20 @@ public class InitBackground {
 									mObjects = false;
 								} else if(eventType == XmlPullParser.TEXT && mObjects == true) {
 									System.out.println("Objects Text "+xpp.getText());
+									mOList = xpp.getText();
 								}
 								//mTiles
-								/*
-								if(eventType == XmlPullParser.START_TAG) {
+								if(eventType == XmlPullParser.START_TAG && xpp.getName().contentEquals(TILES)) {
 									System.out.println("Start tag "+xpp.getName());
-								} else if(eventType == XmlPullParser.END_TAG) {
+									mTiles = true;
+								} else if(eventType == XmlPullParser.END_TAG && xpp.getName().contentEquals(TILES)) {
 									System.out.println("End tag "+xpp.getName());
-								} else if(eventType == XmlPullParser.TEXT) {
+									mTiles = false;
+								} else if(eventType == XmlPullParser.TEXT && mTiles == true) {
 									System.out.println("Text "+xpp.getText());
+									mTList = xpp.getText();
 								}
-								*/
+								
 								eventType = xpp.next();
 
 							}
@@ -980,7 +987,15 @@ public class InitBackground {
 						
 						eventType = xpp.next();
 					}
-
+					//parse strings here...
+					StringTokenizer mTileToken = new StringTokenizer(mOList,",");
+					Log.e("XML", "all tokens "+mTileToken.countTokens());
+					int mTotalTokens = mTileToken.countTokens();
+					for (int i = 0; i < mTotalTokens; i ++) {
+						String temp = mTileToken.nextToken().trim();
+						if (!temp.contentEquals("}") && !temp.contentEquals("{"))
+						Log.e("XML", " tokens "+ temp);
+					}
 				}
 
 			}
