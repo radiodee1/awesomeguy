@@ -1,7 +1,6 @@
 <?xml version="1.0" ?>
 <game>
-<level>
-<number>1</number>
+<level number="1">
 <horizontal>5</horizontal>
 <vertical>2</vertical>
 <tiles_level>
@@ -15,8 +14,7 @@
 <last_level>false</last_level>
 </level>
 
-<level>
-<number>2</number>
+<level number="2">
 <horizontal>5</horizontal>
 <vertical>2</vertical>
 <tiles_level>

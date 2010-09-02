@@ -18,7 +18,7 @@ public class InitBackground {
 	public InitBackground(GameValues gV, Context context) {
 		mGameV = gV;
 		mContext = context;
-		mParser = new ParseXML(mContext);
+		mParser = new ParseXML(mContext, mGameV);
 	}
 	
 	public void initLevel(MovementValues mMovementV) {
@@ -26,7 +26,7 @@ public class InitBackground {
 		int num = 0;
 		
 		try {
-			mParser.testParse();
+			mParser.testParse(1);
 		}
 		catch (Exception e) {
 			Log.e("INIT LEVEL",e.getMessage());
@@ -865,31 +865,121 @@ public class InitBackground {
 
 			public static class ParseXML {
 				private Context mContext;
+				private GameValues mGameV;
+				private boolean mStopParse;
 				
-				public ParseXML(Context context) {
+				final String NUMBER = new String("number");
+				final String VERTICAL = new String("vertical");
+				final String HORIZONTAL = new String("horizontal");
+				final String LEVEL = new String("level");
+				final String TILES = new String("tiles_level");
+				final String OBJECTS = new String("tiles_objects");
+				final String LAST = new String("last_level");
+				final String GAME = new String("game");
+				
+				public ParseXML(Context context, GameValues mGameV) {
 					mContext = context;
+					this.mGameV = mGameV;
 				}
 				
-				public void testParse() throws XmlPullParserException, IOException {
+				public void testParse(int num) throws XmlPullParserException, IOException {
+					mStopParse = false;
+					boolean mReadNum = false;
+					int mIndexNum = 0;
+					boolean mHorizontal, mVertical, mTiles, mObjects, mLastLevel;
+					
+					mHorizontal = false;
+					mVertical = false;
+					mTiles = false;
+					mObjects = false;
+					mLastLevel = false;
+					
 					XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-			         factory.setNamespaceAware(true);
-			         XmlPullParser xpp = mContext.getResources().getXml(R.xml.awesomeguy);//factory.newPullParser();
-			         
-			         int eventType = xpp.getEventType();
-			         while (eventType != XmlPullParser.END_DOCUMENT) {
-			          if(eventType == XmlPullParser.START_DOCUMENT) {
-			              System.out.println("Start document");
-			          } else if(eventType == XmlPullParser.END_DOCUMENT) {
-			              System.out.println("End document");
-			          } else if(eventType == XmlPullParser.START_TAG) {
-			              System.out.println("Start tag "+xpp.getName());
-			          } else if(eventType == XmlPullParser.END_TAG) {
-			              System.out.println("End tag "+xpp.getName());
-			          } else if(eventType == XmlPullParser.TEXT) {
-			              System.out.println("Text "+xpp.getText());
-			          }
-			          eventType = xpp.next();
-			         }
+					factory.setNamespaceAware(true);
+					XmlPullParser xpp = mContext.getResources().getXml(R.xml.awesomeguy);//factory.newPullParser();
+
+					int eventType = xpp.getEventType();
+					while (eventType != XmlPullParser.END_DOCUMENT && !mStopParse) {
+						/*
+						if(eventType == XmlPullParser.START_DOCUMENT) {
+							System.out.println("Start document");
+						} else if(eventType == XmlPullParser.END_DOCUMENT) {
+							System.out.println("End document");
+						} else if(eventType == XmlPullParser.START_TAG) {
+							System.out.println("Start tag "+xpp.getName());
+						} else if(eventType == XmlPullParser.END_TAG) {
+							System.out.println("End tag "+xpp.getName());
+						} else if(eventType == XmlPullParser.TEXT) {
+							System.out.println("Text "+xpp.getText());
+						}
+						*/
+						if(eventType == XmlPullParser.START_TAG && xpp.getName().contentEquals(LEVEL) ) {
+							if (xpp.getAttributeCount() == 1 && xpp.getAttributeName(0).contentEquals( NUMBER)) {
+								mIndexNum = new Integer(xpp.getAttributeValue(0)).intValue();
+								mReadNum = true;
+
+							}
+							else Log.e("XML", xpp.getAttributeName(0) + " " + xpp.getAttributeCount());
+							
+							
+						}
+						if(eventType == XmlPullParser.END_TAG || eventType == XmlPullParser.END_DOCUMENT) {
+							mReadNum = false;
+							mStopParse = true;
+						}
+						if( mReadNum == true && mIndexNum == num) {
+							/* found right level entry !!*/
+							while (!(eventType == XmlPullParser.END_TAG && xpp.getName().contentEquals(LEVEL))) {
+								//mHorizontal
+								if(eventType == XmlPullParser.START_TAG && xpp.getName().contentEquals(HORIZONTAL)) {
+									System.out.println("Start tag "+xpp.getName() + " number " + mIndexNum);
+									mHorizontal = true;
+								} else if(eventType == XmlPullParser.END_TAG && xpp.getName().contentEquals(HORIZONTAL)) {
+									System.out.println("End tag "+xpp.getName());
+									mHorizontal = false;
+								} else if(eventType == XmlPullParser.TEXT && mHorizontal == true) {
+									System.out.println("Horizontal Text "+xpp.getText());
+									//mGameV.setMapH(new Integer(xpp.getText()).intValue());
+								}
+								//mVertical
+								if(eventType == XmlPullParser.START_TAG && xpp.getName().contentEquals(VERTICAL)) {
+									System.out.println("Start tag "+xpp.getName());
+									mVertical = true;
+								} else if(eventType == XmlPullParser.END_TAG && xpp.getName().contentEquals(VERTICAL)) {
+									System.out.println("End tag "+xpp.getName());
+									mVertical = false;
+								} else if(eventType == XmlPullParser.TEXT && mVertical == true) {
+									System.out.println("Vertical Text "+xpp.getText());
+									//mGameV.setMapV(new Integer(xpp.getText()).intValue());
+								}
+								//mObjects
+								if(eventType == XmlPullParser.START_TAG && xpp.getName().contentEquals(OBJECTS)) {
+									System.out.println("Start tag "+xpp.getName());
+									mObjects = true;
+								} else if(eventType == XmlPullParser.END_TAG && xpp.getName().contentEquals(OBJECTS)) {
+									System.out.println("End tag "+xpp.getName());
+									mObjects = false;
+								} else if(eventType == XmlPullParser.TEXT && mObjects == true) {
+									System.out.println("Objects Text "+xpp.getText());
+								}
+								//mTiles
+								/*
+								if(eventType == XmlPullParser.START_TAG) {
+									System.out.println("Start tag "+xpp.getName());
+								} else if(eventType == XmlPullParser.END_TAG) {
+									System.out.println("End tag "+xpp.getName());
+								} else if(eventType == XmlPullParser.TEXT) {
+									System.out.println("Text "+xpp.getText());
+								}
+								*/
+								eventType = xpp.next();
+
+							}
+						}
+						
+						
+						eventType = xpp.next();
+					}
 
 				}
 
