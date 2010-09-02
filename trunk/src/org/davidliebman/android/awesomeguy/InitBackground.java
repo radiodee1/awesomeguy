@@ -12,7 +12,6 @@ import java.util.*;
 
 public class InitBackground {
 	private GameValues mGameV;
-	private static final String DEFAULT_XML_PATH = "res/xml/awesomeguy.xml";
 	private Context mContext;
 	private ParseXML mParser;
 	
