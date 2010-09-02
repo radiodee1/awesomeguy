@@ -115,6 +115,7 @@ public class Options extends Activity {
                 SharedPreferences.Editor out = preferences.edit();
                 out.putInt(SAVED_NUM_SCORES, mHighScores.getNumRecords());
                 out.commit();
+                
             }
         };
         /** end number **/

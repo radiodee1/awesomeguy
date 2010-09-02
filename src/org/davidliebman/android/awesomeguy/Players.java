@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.app.AlertDialog;
+import android.util.Log;
 
 public class Players extends ListActivity {
 		
@@ -21,6 +24,7 @@ public class Players extends ListActivity {
     private SharedPreferences mPreferences;
     private RecordAdapter mAadapter;
     private TextView mPlayerText;
+    private int mPreferredNumRecords;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,7 +34,7 @@ public class Players extends ListActivity {
     	mHighScores = new Record();
         mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.getFromPreferences(mPreferences);
-        
+        this.mPreferredNumRecords = this.mPreferences.getInt(Options.SAVED_NUM_SCORES, 50);
         
         
         mScores = new Scores(this, mHighScores);
@@ -48,16 +52,38 @@ public class Players extends ListActivity {
         	
         	@Override
         	 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        		mHighScores = mNames.get(position);
+        		mRec = mNames.get(position);
+
+        		AlertNumRecords mAlert = new AlertNumRecords(Players.this,mHighScores,mRec);
+        		mAlert.alertUser();
+        		//mHighScores = mNames.get(position);
         		Toast.makeText(Players.this, "Player Selected: " + mHighScores.getName(), Toast.LENGTH_SHORT).show();
         		SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
             	mHighScores.setNewRecord(false);
         		mHighScores.addToPreferences(preferences);
                 mPlayerText.setText("Player Chosen: " +mHighScores.getName());
+                
+                /* save num of high scores */
+                SharedPreferences.Editor mSave = mPreferences.edit();
+                mSave.putInt(Options.SAVED_NUM_SCORES, mHighScores.getRecordIdNum());
+                mSave.commit();
 
         	 }
         	
+        	
         });
+        
+        /* long click code */
+        lv.setLongClickable(true);
+        lv.setOnItemLongClickListener(new OnItemLongClickListener () {
+        	
+        	public boolean onItemLongClick (AdapterView<?> parent, View view, int position, long id) {
+        		Toast.makeText(Players.this, "Player Num Records: " + mHighScores.getNumRecords(), Toast.LENGTH_SHORT).show();
+
+        		return true;
+        	}
+        });
+        
         
         /* edit text field*/
         final EditText edittext = (EditText) findViewById(R.id.edittext_name);
@@ -67,6 +93,7 @@ public class Players extends ListActivity {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                     (keyCode == KeyEvent.KEYCODE_ENTER)) {
                   // Perform action on key press
+                  mRec = new Record();
                   mRec.setName(edittext.getText().toString().trim());
                   mRec.setNumRecords(mHighScores.getNumRecords());
                   if ( isNameTaken(mNames, mRec.getName())) {
@@ -76,14 +103,16 @@ public class Players extends ListActivity {
                   else {
                       Toast.makeText(Players.this, "Player Selected: " + edittext.getText(), Toast.LENGTH_SHORT).show();
                 	  mHighScores = mRec;
+                      //this.alertNumRecords();
                 	  mHighScores.addToPreferences(mPreferences);
                 	  mPlayerText.setText("Player Chosen: " +mHighScores.getName());
                   }
-                  //edittext.setInputType(InputType.TYPE_NULL);
                   return true;
                 }
                 return false;
             }
+            
+            
         });
         
         /* button at bottom of view */
@@ -103,6 +132,7 @@ public class Players extends ListActivity {
         
     }
     
+    /* when the activity is resumed, re-display a new list */
     @Override
     public void onResume() {
     	super.onResume();
@@ -115,6 +145,7 @@ public class Players extends ListActivity {
     	
     }
     
+    /* determine if a name is already taken */
     public static boolean isNameTaken(ArrayList<Record> mNames, String test) {
     	boolean value = false;
     	if (mNames.size() > 0) {
@@ -128,6 +159,8 @@ public class Players extends ListActivity {
     	return value;
     }
     
+    
+    /* special adapter for displaying list from ArrayList */
     public class RecordAdapter extends ArrayAdapter<Record> {
     	ArrayList<Record> mList;
     	Context mContext;
@@ -161,7 +194,51 @@ public class Players extends ListActivity {
     	}
     };
     
-   
+   /* Inner class for making alert message about number of high scores */
+   public static class AlertNumRecords {
+	   
+	   Record mRec = new Record();
+	   Record mHighScores = new Record();
+	   int mPreferredNumRecords;
+	   Context mParent;
+	   
+	   public AlertNumRecords(Context parent, Record mHighScores, Record mRec) {
+		   this.mHighScores = mHighScores;
+		   this.mRec = mRec;
+		   this.mPreferredNumRecords = mHighScores.getNumRecords();
+		   mParent = parent;
+	   }
+	   
+	   public int alertUser() {
+	       	if ( mPreferredNumRecords != mRec.getNumRecords() ) {
+	   	    	AlertDialog.Builder builder = new AlertDialog.Builder(mParent);
+	   	    	String mAMessage = new String("Your old preference for 'Number of High Score Records' is " + mHighScores.getNumRecords());
+	   	    	String mPositive = new String("Choose " + mHighScores.getNumRecords() + " records.");
+	   	    	String mNegative = new String("Choose " + mRec.getNumRecords() + " records.");
+	   	    	builder.setMessage(mAMessage)
+	   	    	       .setCancelable(false)
+	   	    	       .setPositiveButton(mPositive, new DialogInterface.OnClickListener() {
+	   	    	           public void onClick(DialogInterface dialog, int id) {
+	   	    	                //Players.this.finish();
+	   	    	        	   mRec.setNumRecords(mHighScores.getNumRecords());
+	   	    	        	   dialog.cancel();
+	   	    	        	   
+	   	    	           }
+	   	    	       })
+	   	    	       .setNegativeButton(mNegative, new DialogInterface.OnClickListener() {
+	   	    	           public void onClick(DialogInterface dialog, int id) {
+	   	    	        	   	
+	   	    	                dialog.cancel();
+	   	    	           }
+	   	    	       });
+	   	    	AlertDialog alert = builder.create();
+	   	    	alert.show();
+	       	}
+       /* regardless which the user chooses, copy mRec */
+       mHighScores = mRec;
+       return mHighScores.getNumRecords() ;
+       }
+   }
 
 }
 
