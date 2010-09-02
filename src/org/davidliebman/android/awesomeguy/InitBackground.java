@@ -1,20 +1,37 @@
 package org.davidliebman.android.awesomeguy;
 
 //import java.util.ArrayList;
+import android.os.Environment;
 import android.util.Log;
-
+import java.io.*;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+import android.content.*;
 
 public class InitBackground {
 	private GameValues mGameV;
-
-
-	public InitBackground(GameValues gV) {
+	private static final String DEFAULT_XML_PATH = "res/xml/awesomeguy.xml";
+	private Context mContext;
+	private ParseXML mParser;
+	
+	public InitBackground(GameValues gV, Context context) {
 		mGameV = gV;
+		mContext = context;
+		mParser = new ParseXML(mContext);
 	}
 	
 	public void initLevel(MovementValues mMovementV) {
 		int i,j;
 		int num = 0;
+		
+		try {
+			mParser.testParse();
+		}
+		catch (Exception e) {
+			Log.e("INIT LEVEL",e.getMessage());
+		}
+		
 		mGameV.clearSpriteList();
 		mGameV.setSpriteStart();
 		mGameV.setMonsterOffset(1);
@@ -846,4 +863,35 @@ public class InitBackground {
 			};
 
 
+			public static class ParseXML {
+				private Context mContext;
+				
+				public ParseXML(Context context) {
+					mContext = context;
+				}
+				
+				public void testParse() throws XmlPullParserException, IOException {
+					XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+			         factory.setNamespaceAware(true);
+			         XmlPullParser xpp = mContext.getResources().getXml(R.xml.awesomeguy);//factory.newPullParser();
+			         
+			         int eventType = xpp.getEventType();
+			         while (eventType != XmlPullParser.END_DOCUMENT) {
+			          if(eventType == XmlPullParser.START_DOCUMENT) {
+			              System.out.println("Start document");
+			          } else if(eventType == XmlPullParser.END_DOCUMENT) {
+			              System.out.println("End document");
+			          } else if(eventType == XmlPullParser.START_TAG) {
+			              System.out.println("Start tag "+xpp.getName());
+			          } else if(eventType == XmlPullParser.END_TAG) {
+			              System.out.println("End tag "+xpp.getName());
+			          } else if(eventType == XmlPullParser.TEXT) {
+			              System.out.println("Text "+xpp.getText());
+			          }
+			          eventType = xpp.next();
+			         }
+
+				}
+
+			}
 }

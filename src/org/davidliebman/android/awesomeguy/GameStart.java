@@ -296,7 +296,7 @@ public class GameStart extends Activity {
         
 
     	
-    	mBackground = new InitBackground(mGameV);
+    	mBackground = new InitBackground(mGameV, this);
     	mFLayoutBot.addView((View)mPanelBot);
     	
     	/* TODO must modify saved high scores for game play */
