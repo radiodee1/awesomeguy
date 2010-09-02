@@ -23,6 +23,7 @@ public class Players extends ListActivity {
     private SharedPreferences mPreferences;
     private RecordAdapter mAadapter;
     private TextView mPlayerText;
+    private TextView mNumPlayers;
     private int mPreferredNumRecords;
     
     @Override
@@ -54,8 +55,9 @@ public class Players extends ListActivity {
         		mRec = mNames.get(position);
 
         		AlertNumRecords mAlert = new AlertNumRecords(Players.this,mHighScores,mRec);
-        		mAlert.alertUser();
-        		//mHighScores = mNames.get(position);
+        		mRec.setNumRecords(mAlert.alertUser());
+        		mHighScores = mRec;
+
         		Toast.makeText(Players.this, "Player Selected: " + mHighScores.getName(), Toast.LENGTH_SHORT).show();
         		SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
             	mHighScores.setNewRecord(false);
@@ -66,6 +68,8 @@ public class Players extends ListActivity {
                 SharedPreferences.Editor mSave = mPreferences.edit();
                 mSave.putInt(Options.SAVED_NUM_SCORES, mHighScores.getRecordIdNum());
                 mSave.commit();
+                mNumPlayers.setText("This is where you choose from a list of " + mHighScores.getNumRecords() + " high scores.");
+
 
         	 }
         	
@@ -105,6 +109,8 @@ public class Players extends ListActivity {
                       //this.alertNumRecords();
                 	  mHighScores.addToPreferences(mPreferences);
                 	  mPlayerText.setText("Player Chosen: " +mHighScores.getName());
+                      mNumPlayers.setText("This is where you choose from a list of " + mHighScores.getNumRecords() + " high scores.");
+
                   }
                   return true;
                 }
@@ -123,6 +129,9 @@ public class Players extends ListActivity {
             	//Toast.makeText(Players.this, "And We're Off", Toast.LENGTH_SHORT).show();
             }
         });
+        
+        mNumPlayers = (TextView) findViewById(R.id.text_num_message);
+        mNumPlayers.setText("This is where you choose from a list of " + mHighScores.getNumRecords() + " high scores.");
         
         mPlayerText = (TextView) findViewById(R.id.text_player_name);
         mPlayerText.setText("Player Chosen: " +mHighScores.getName());
