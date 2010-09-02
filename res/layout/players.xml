@@ -4,7 +4,7 @@
 	android:layout_width="wrap_content" android:layout_height="wrap_content">
 	<TextView android:text=" This is where you choose from a list of high scores."
 
-		android:id="@+id/TextView01" android:layout_width="wrap_content"
+		android:id="@+id/text_num_message" android:layout_width="wrap_content"
 		android:layout_height="wrap_content">
 	</TextView>
 	<TextView android:text=" Player Chosen: "
