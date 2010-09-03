@@ -3,6 +3,8 @@ package org.davidliebman.android.awesomeguy;
 //import java.util.ArrayList;
 import android.os.Environment;
 import android.util.Log;
+import android.util.Xml;
+import android.util.AttributeSet;
 import java.io.*;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -25,12 +27,13 @@ public class InitBackground {
 		int i,j;
 		int num = 0;
 		
-		try {
+		/*try {
 			mParser.testParse(1);
 		}
 		catch (Exception e) {
 			Log.e("INIT LEVEL",e.getMessage());
 		}
+		*/
 		
 		mGameV.clearSpriteList();
 		mGameV.setSpriteStart();
@@ -105,7 +108,13 @@ public class InitBackground {
 	/* set level map info */
 	public void setLevel(int num) {
 
-
+		try {
+			mParser.testParse(num);
+		}
+		catch (Exception e) {
+			Log.e("INIT LEVEL",e.getMessage());
+		}
+		/*
 		if(num == 1) {
 			mGameV.setMapH(64);
 			mGameV.setMapV(32);
@@ -136,7 +145,7 @@ public class InitBackground {
 
 
 		}
-		
+		*/
 
 	}
 
@@ -897,39 +906,38 @@ public class InitBackground {
 					mObjects = false;
 					mLastLevel = false;
 					
+					int mHorDimensions = 0;
+					int mVerDimensions = 0;
+					
 					XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
 					factory.setNamespaceAware(true);
 					XmlPullParser xpp = mContext.getResources().getXml(R.xml.awesomeguy);//factory.newPullParser();
 
+					AttributeSet attr = Xml.asAttributeSet(xpp);
+					
 					int eventType = xpp.getEventType();
 					while (eventType != XmlPullParser.END_DOCUMENT && !mStopParse) {
-						/*
-						if(eventType == XmlPullParser.START_DOCUMENT) {
-							System.out.println("Start document");
-						} else if(eventType == XmlPullParser.END_DOCUMENT) {
-							System.out.println("End document");
-						} else if(eventType == XmlPullParser.START_TAG) {
-							System.out.println("Start tag "+xpp.getName());
-						} else if(eventType == XmlPullParser.END_TAG) {
-							System.out.println("End tag "+xpp.getName());
-						} else if(eventType == XmlPullParser.TEXT) {
-							System.out.println("Text "+xpp.getText());
-						}
-						*/
-						if(eventType == XmlPullParser.START_TAG && xpp.getName().contentEquals(LEVEL) ) {
+						
+						System.out.println("name: " + xpp.getName());
+						
+						if(eventType == XmlPullParser.START_TAG && xpp.getName().equalsIgnoreCase(LEVEL) ) {
+						
+							/* get 'number' attribute from xml tag 'level' */
 							if (xpp.getAttributeCount() == 1 && xpp.getAttributeName(0).contentEquals( NUMBER)) {
 								mIndexNum = new Integer(xpp.getAttributeValue(0)).intValue();
 								mReadNum = true;
 
 							}
 							else Log.e("XML", xpp.getAttributeName(0) + " " + xpp.getAttributeCount());
-							
+						
 							
 						}
+						
 						if((eventType == XmlPullParser.END_TAG && xpp.getName().contentEquals(LEVEL)) || eventType == XmlPullParser.END_DOCUMENT) {
 							mReadNum = false;
 							mStopParse = true;
 						}
+						
 						if( mReadNum == true && mIndexNum == num) {
 							/* found right level entry !!*/
 							while (!(eventType == XmlPullParser.END_TAG && xpp.getName().contentEquals(LEVEL))) {
@@ -941,7 +949,7 @@ public class InitBackground {
 									System.out.println("End tag "+xpp.getName());
 									mHorizontal = false;
 								} else if(eventType == XmlPullParser.TEXT && mHorizontal == true) {
-									System.out.println("Horizontal Text "+xpp.getText());
+									mHorDimensions = new Integer(xpp.getText()).intValue();
 									//mGameV.setMapH(new Integer(xpp.getText()).intValue());
 								}
 								//mVertical
@@ -952,7 +960,7 @@ public class InitBackground {
 									System.out.println("End tag "+xpp.getName());
 									mVertical = false;
 								} else if(eventType == XmlPullParser.TEXT && mVertical == true) {
-									System.out.println("Vertical Text "+xpp.getText());
+									mVerDimensions = new Integer(xpp.getText()).intValue();
 									//mGameV.setMapV(new Integer(xpp.getText()).intValue());
 								}
 								//mObjects
@@ -963,7 +971,6 @@ public class InitBackground {
 									System.out.println("End tag "+xpp.getName());
 									mObjects = false;
 								} else if(eventType == XmlPullParser.TEXT && mObjects == true) {
-									System.out.println("Objects Text "+xpp.getText());
 									mOList = xpp.getText();
 								}
 								//mTiles
@@ -974,7 +981,6 @@ public class InitBackground {
 									System.out.println("End tag "+xpp.getName());
 									mTiles = false;
 								} else if(eventType == XmlPullParser.TEXT && mTiles == true) {
-									System.out.println("Text "+xpp.getText());
 									mTList = xpp.getText();
 								}
 								
@@ -982,18 +988,45 @@ public class InitBackground {
 
 							}
 						}
-						
+						else {
+							//don't do this...
+							//Log.e("XML", " no level number match");
+							//return;
+						}
 						
 						eventType = xpp.next();
 					}
 					//parse strings here...
-					StringTokenizer mTileToken = new StringTokenizer(mOList,",");
-					Log.e("XML", "all tokens "+mTileToken.countTokens());
-					int mTotalTokens = mTileToken.countTokens();
-					for (int i = 0; i < mTotalTokens; i ++) {
-						String temp = mTileToken.nextToken().trim();
-						if (!temp.contentEquals("}") && !temp.contentEquals("{"))
-						Log.e("XML", " tokens "+ temp);
+					StringTokenizer mTileToken = new StringTokenizer(mTList,",");
+					int mTotalTileTokens = mTileToken.countTokens();
+					
+					StringTokenizer mObjectToken = new StringTokenizer(mOList,",");
+					int mTotalObjectTokens = mObjectToken.countTokens();
+					
+					mGameV.setMapH(mHorDimensions);
+					mGameV.setMapV(mVerDimensions);
+
+					
+					if(mTotalTileTokens == mHorDimensions * mVerDimensions && 
+							mTotalObjectTokens == mHorDimensions * mVerDimensions) {
+						
+						
+						for(int i = 0; i < mGameV.getMapV(); i ++) { // 32 y
+							for(int j =0; j < mGameV.getMapH(); j ++) { // 64 x
+
+								mGameV.setLevelCell(j, i,  new Integer(mTileToken.nextToken().trim()).intValue());
+								mGameV.setObjectsCell(j, i, new Integer(mObjectToken.nextToken().trim()).intValue());
+
+							} //j block                        
+						} // i block
+						
+						
+					
+					}
+					else {
+						/* throw hairy fit */
+						Log.e("XML"," 'tokens' doesn't match 'dimensions'!!!");
+						return;
 					}
 				}
 
