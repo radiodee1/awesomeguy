@@ -153,6 +153,7 @@ public class InitBackground {
 	 * 'int' not 'const int' -- also must remove index numbers from
 	 *  declaration */
 
+	/*
 	//int level1_map0[40][75];
 	int level1_map0[][] = {
 			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
@@ -870,6 +871,7 @@ public class InitBackground {
 																																					439, 439, 439, 439, 439, 439, 439, 439, 439, 439, 439, 439, 439, 439, 439, 439, 
 																																					439, 439, 439, 439, 439, 439, 439, 439, 439, 439, 439, 439, 439, 439 }
 			};
+			*/
 
 
 			public static class ParseXML {
@@ -909,11 +911,7 @@ public class InitBackground {
 					int mHorDimensions = 0;
 					int mVerDimensions = 0;
 					
-					XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-					factory.setNamespaceAware(true);
 					XmlPullParser xpp = mContext.getResources().getXml(R.xml.awesomeguy);//factory.newPullParser();
-
-					AttributeSet attr = Xml.asAttributeSet(xpp);
 					
 					int eventType = xpp.getEventType();
 					while (eventType != XmlPullParser.END_DOCUMENT && !mStopParse) {
@@ -924,21 +922,22 @@ public class InitBackground {
 						
 							/* get 'number' attribute from xml tag 'level' */
 							if (xpp.getAttributeCount() == 1 && xpp.getAttributeName(0).contentEquals( NUMBER)) {
+								
 								mIndexNum = new Integer(xpp.getAttributeValue(0)).intValue();
 								mReadNum = true;
-
+								Log.e("XML", " attribute number " + mIndexNum);
 							}
 							else Log.e("XML", xpp.getAttributeName(0) + " " + xpp.getAttributeCount());
 						
 							
 						}
-						
+						/*
 						if((eventType == XmlPullParser.END_TAG && xpp.getName().contentEquals(LEVEL)) || eventType == XmlPullParser.END_DOCUMENT) {
 							mReadNum = false;
 							mStopParse = true;
 						}
-						
-						if( mReadNum == true && mIndexNum == num) {
+						*/
+						if(  mIndexNum == num) {
 							/* found right level entry !!*/
 							while (!(eventType == XmlPullParser.END_TAG && xpp.getName().contentEquals(LEVEL))) {
 								//mHorizontal
