@@ -42,7 +42,7 @@ public class GameValues {
 	private boolean mEndGame = false;
 	private boolean mGameDeath = false;
 	private int mUsernum = 4;
-	public static int NUM_ROOMS = 2;
+	public static int NUM_ROOMS = 10;
 	private int mOldGuyScore;
 	
 	/* sprites */
