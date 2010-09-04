@@ -567,7 +567,7 @@ public class GameStart extends Activity {
     		      mGameV.setRoomNo(1);
     		    }
     		    */
-    		    mGameV.setRoomNo(1);
+    		    mGameV.setRoomNo(3);//TODO: supposed to be '1' !!
     		    // put graphic on top panel
     			
     			myPanelUpdateHandler.sendEmptyMessage(GameStart.SPLASH);
