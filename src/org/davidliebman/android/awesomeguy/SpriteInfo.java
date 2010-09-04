@@ -10,11 +10,7 @@ public class SpriteInfo {
 	 * This is the x and y on the screen
      * if no scrolling were considered, 0 <= x <= 256, 0 <= y <= 192
      */
-    private int mX,mY;    
-    /* the following are for initializing the actual sprite
-     * object in hardware. They are the dimensions of the 
-     * bitmap.
-     */
+    
     private int mWidth;
     private int mHeight;
     /* the following are for keeping track of the guy sprite in the
@@ -92,8 +88,6 @@ public class SpriteInfo {
     	this.mIsJumping = false;
     	this.mResourceId = 0;
     	this.mVisible = false;
-    	this.mX = 0;
-    	this.mY = 0;
     	
     }
     
@@ -105,18 +99,7 @@ public class SpriteInfo {
 	public void setResourceId(int mResourceId) {
 		this.mResourceId = mResourceId;
 	}
-	public int getX() {
-		return mX;
-	}
-	public void setX(int mX) {
-		this.mX = mX;
-	}
-	public int getY() {
-		return mY;
-	}
-	public void setY(int mY) {
-		this.mY = mY;
-	}
+	
 	public int getWidth() {
 		return mWidth;
 	}

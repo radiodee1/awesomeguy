@@ -9,8 +9,6 @@ public class MovementValues {
 	
 	private int scrollX;
 	private int scrollY;
-	private int characterX;
-	private int characterY;
 	
 	private int directionKeyUp;
 	private int directionKeyDown;
@@ -32,8 +30,7 @@ public class MovementValues {
 	public MovementValues() {
 		scrollX = 0;
 		scrollY = 0;
-		characterX = 0;
-		characterY = 0;
+		
 		clearKeys();
 	}
 	
@@ -64,19 +61,7 @@ public class MovementValues {
 		this.scrollY = this.scrollY + num;
 	}
 	
-	/* unused ? */
-	public int getCharacterX() {
-		return characterX;
-	}
-	public void setCharacterX(int characterX) {
-		this.characterX = characterX;
-	}
-	public int getCharacterY() {
-		return characterY;
-	}
-	public void setCharacterY(int characterY) {
-		this.characterY = characterY;
-	}
+	
 	
 	/* key presses and navigation */
 	public   int getDirectionLR() {

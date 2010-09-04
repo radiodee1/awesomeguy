@@ -72,7 +72,17 @@ public class InitBackground {
 			}
 		}
 
+		this.setStartingScrollPosition(mMovementV);
+		
+		
+
+	}
+
+	public void setStartingScrollPosition(MovementValues mMovementV) {
 		//set starting scroll position
+		
+		int i,j;
+		
 		mMovementV.setScrollX(0);
 		mMovementV.setScrollY(0);
 
@@ -102,9 +112,8 @@ public class InitBackground {
 			}
 			else flag = true;
 		}
-
 	}
-
+	
 	/* set level map info */
 	public void setLevel(int num) {
 

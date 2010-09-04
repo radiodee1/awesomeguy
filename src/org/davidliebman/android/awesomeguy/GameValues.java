@@ -250,6 +250,7 @@ public class GameValues {
 	}
 	
 	public SpriteInfo getSpriteStart() {
+		if(mSprites.size() < 1) Log.e("GameValues", "no 'first' sprite yet");
 		return mSprites.get(0);
 	}
 	

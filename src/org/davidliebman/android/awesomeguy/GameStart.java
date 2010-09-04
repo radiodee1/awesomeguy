@@ -475,9 +475,11 @@ public class GameStart extends Activity {
     			mPanelBot.invalidate();
     			
     		}
+    		/*
     		else if(msg.what == SPLASH) {
     			//mPanelTop.setBackgroundShow(mGameV.getRoomNo());
     		}
+    		*/
     		else if(msg.what == MOVEMENTVALUES) {
     			
     			mPanelBot.setHighScores((Record)msg.obj);
@@ -572,7 +574,7 @@ public class GameStart extends Activity {
     		    mGameV.setRoomNo(3);//TODO: supposed to be '1' !!
     		    // put graphic on top panel
     			
-    			myPanelUpdateHandler.sendEmptyMessage(GameStart.SPLASH);
+    			//myPanelUpdateHandler.sendEmptyMessage(GameStart.SPLASH);
     			
     		    
     		    mGameV.setScore(10);
@@ -597,7 +599,7 @@ public class GameStart extends Activity {
     			
     			// put graphic on top panel
     			
-    			myPanelUpdateHandler.sendEmptyMessage(GameStart.SPLASH);
+    			//myPanelUpdateHandler.sendEmptyMessage(GameStart.SPLASH);
     			
     			
     		    

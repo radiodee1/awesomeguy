@@ -354,15 +354,15 @@ public  class Panel  extends SurfaceView  {
 		scrollX = x;
 		scrollY = y;
 		mGuySprite = mGameV.getSpriteStart();
-		guyX = mGuySprite.getMapPosX();
-		guyY = mGuySprite.getMapPosY();
+		int mGuyX = mGuySprite.getMapPosX();
+		int mGuyY = mGuySprite.getMapPosY();
 		message = GameStart.MOVEMENTVALUES;
 		if(!useJNI) {
 			scrollTo( mScale * scrollX , mScale * scrollY);//jni test <---
 		}
 		else {
-			setGuyPosition(guyX  , guyY , scrollX, scrollY, mGuySprite.getAnimIndex());
-
+			setGuyPosition(mGuyX  , mGuyY , scrollX, scrollY, mGuySprite.getAnimIndex());
+			Log.e("Panel", "guyX "+ mGuyX + " guyY " + mGuyY);
 		}
 
 	}
@@ -901,8 +901,8 @@ public  class Panel  extends SurfaceView  {
 		newMapX = mapX;
 		newMapY = mapY;
 
-		newX = mGuySprite.getX();
-		newY = mGuySprite.getY();
+		//newX = mGuySprite.getX();
+		//newY = mGuySprite.getY();
 
 		guyWidth = 5 + (mGuySprite.getRightBB() - mGuySprite.getLeftBB()); // 12 ?
 		guyHeight = mGuySprite.getBottomBB() - mGuySprite.getTopBB();
@@ -934,11 +934,13 @@ public  class Panel  extends SurfaceView  {
 			if (oldX >= ((mapH - tilesMeasurement) * 8 - x)  ) canScroll = false;
 			else canScroll = true;
 			//move RIGHT?
-			if ((mGuySprite.getX() + x) >= (mScreenW - guyWidth ) || mapX + x >= mapH * 8  - guyWidth) {
+			
+			if ( mapX + x >= mapH * 8  - guyWidth) {
 				newMapX = mapH * 8  - guyWidth;
 				newX = mScreenW - guyWidth;
 
 			}
+			
 
 			if ((mapX + x) >= (oldX + LR_MARGIN) ) {        
 
@@ -970,13 +972,13 @@ public  class Panel  extends SurfaceView  {
 			if (oldX <= 0 - x) canScroll = false;
 			else canScroll = true;
 			//move LEFT?
-			if ((mGuySprite.getX() + x) <= (0) || mapX + x <= 0) {
+			if ( mapX + x <= 0) {
 				newMapX = 1;
 				newX = 1;
 
 			}
 
-			if ((mapX + x) <= (oldX +( (32) * 8 ) - LR_MARGIN) ) {   //32 * 8     
+			if ((mapX + x) <= (oldX +( (tilesMeasurement) * 8 ) - LR_MARGIN) ) {   //32 * 8     
 
 
 				if (canScroll) {
@@ -991,7 +993,7 @@ public  class Panel  extends SurfaceView  {
 				}
 
 			}
-			else if ((mapX + x) >= (oldX + ( (32) * 8) - LR_MARGIN) &&  canScroll) { // 32 * 8
+			else if ((mapX + x) >= (oldX + ( (tilesMeasurement) * 8) - LR_MARGIN) &&  canScroll) { // 32 * 8
 				//move sprite?
 				newX += x;
 				newMapX += x;
@@ -1007,7 +1009,7 @@ public  class Panel  extends SurfaceView  {
 			if (oldY >= ((mapV - 24) * 8 - y) ) canScroll = false;
 			else canScroll = true;
 			//move DOWN?
-			if ((this.mGuySprite.getY() + y) >= (24 * 8 - guyHeight) || mapY + y >= mapV * 8  - guyHeight) {
+			if (mapY + y >= mapV * 8  - guyHeight) {
 				newMapY = mapV * 8  - guyHeight;
 				newY = 24 * 8 - guyHeight;
 
@@ -1041,7 +1043,7 @@ public  class Panel  extends SurfaceView  {
 			if (oldY < ( 0 - y) ) canScroll = false;
 			else canScroll = true;
 			//move UP?
-			if ((this.mGuySprite.getY() + y) <= (0) || mapY + y <= 0) {
+			if ( mapY + y <= 0) {
 				newMapY = 1;
 				newY = 1;
 
@@ -1074,8 +1076,7 @@ public  class Panel  extends SurfaceView  {
 
 		mGuySprite.setMapPosX(newMapX);
 		mGuySprite.setMapPosY(newMapY);
-		mGuySprite.setX(newX);
-		mGuySprite.setY(newY);
+		
 
 		mMovementV.setScrollX(screenX);
 		mMovementV.setScrollY(screenY);
@@ -1405,7 +1406,7 @@ public  class Panel  extends SurfaceView  {
 
 
 	public void setEnableSounds(boolean mEnableSounds) {
-		mEnableSounds = mEnableSounds;
+		this.mEnableSounds = mEnableSounds;
 		mSounds.setEnabled(mEnableSounds);
 	}
 
