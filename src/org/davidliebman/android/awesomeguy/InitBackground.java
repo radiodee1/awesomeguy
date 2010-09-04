@@ -83,9 +83,9 @@ public class InitBackground {
 		j = mGameV.getSprite(0).getMapPosY();
 
 		//scroll screen to starting location of guy...
-		while(i >  (GameValues.SCREEN_TILES_H /2 )* 8 && flag == false) {
+		while(i >  (mGameV.getScreenTilesHMod()  /2 )* 8 && flag == false) {
 
-			if ( mMovementV.getScrollX() + ((GameValues.SCREEN_TILES_H  ) * 8) < mGameV.getMapH()  * 8) {
+			if ( mMovementV.getScrollX() + ((mGameV.getScreenTilesHMod()  ) * 8) < mGameV.getMapH()  * 8) {
 				mMovementV.incrementScrollX(8);
 				i = i - 8; // X
 			}
