@@ -107,6 +107,8 @@ public class GameStart extends Activity {
         }
         if (!mGameV.isDoubleScreen()) panelH = 256;
         
+        mGameV.setDisplayWidth(mDimension);
+        
         /* generate components for top of screen */
         mRLayout = new RelativeLayout(this) ; 
         mTLayoutOuter = new TableLayout(this);
