@@ -124,7 +124,7 @@ public class InitBackground {
 			public static class ParseXML {
 				private Context mContext;
 				private GameValues mGameV;
-				private boolean mStopParse;
+				//private boolean mStopParse;
 				
 				final String NUMBER = new String("number");
 				final String VERTICAL = new String("vertical");
@@ -141,7 +141,7 @@ public class InitBackground {
 				}
 				
 				public void testParse(int num) throws XmlPullParserException, IOException {
-					mStopParse = false;
+					boolean mStopParse = false;
 					boolean mReadNum = false;
 					int mIndexNum = 0;
 					boolean mHorizontal, mVertical, mTiles, mObjects, mLastLevel;
@@ -158,7 +158,7 @@ public class InitBackground {
 					int mHorDimensions = 0;
 					int mVerDimensions = 0;
 					
-					XmlPullParser xpp = mContext.getResources().getXml(R.xml.awesomeguy);//factory.newPullParser();
+					XmlPullParser xpp = mContext.getResources().getXml(R.xml.awesomeguy);
 					
 					int eventType = xpp.getEventType();
 					while (eventType != XmlPullParser.END_DOCUMENT && !mStopParse) {
@@ -170,73 +170,71 @@ public class InitBackground {
 							/* get 'number' attribute from xml tag 'level' */
 							if (xpp.getAttributeCount() == 1 && xpp.getAttributeName(0).contentEquals( NUMBER)) {
 								
-								mIndexNum = new Integer(xpp.getAttributeValue(0)).intValue();
-								mReadNum = true;
+								mIndexNum = new Integer(xpp.getAttributeValue(0).toString().trim()).intValue();
+								//mReadNum = true;
+								if (mIndexNum == num) mStopParse = true;
 								Log.e("XML", " attribute number " + mIndexNum);
 							}
 							else Log.e("XML", xpp.getAttributeName(0) + " " + xpp.getAttributeCount());
 						
 							
 						}
-						
-						if(  mIndexNum == num) {
-							/* found right level entry !!*/
-							while (!(eventType == XmlPullParser.END_TAG && xpp.getName().contentEquals(LEVEL))) {
-								//mHorizontal
-								if(eventType == XmlPullParser.START_TAG && xpp.getName().contentEquals(HORIZONTAL)) {
-									System.out.println("Start tag "+xpp.getName() + " number " + mIndexNum);
-									mHorizontal = true;
-								} else if(eventType == XmlPullParser.END_TAG && xpp.getName().contentEquals(HORIZONTAL)) {
-									System.out.println("End tag "+xpp.getName());
-									mHorizontal = false;
-								} else if(eventType == XmlPullParser.TEXT && mHorizontal == true) {
-									mHorDimensions = new Integer(xpp.getText()).intValue();
-									//mGameV.setMapH(new Integer(xpp.getText()).intValue());
-								}
-								//mVertical
-								if(eventType == XmlPullParser.START_TAG && xpp.getName().contentEquals(VERTICAL)) {
-									System.out.println("Start tag "+xpp.getName());
-									mVertical = true;
-								} else if(eventType == XmlPullParser.END_TAG && xpp.getName().contentEquals(VERTICAL)) {
-									System.out.println("End tag "+xpp.getName());
-									mVertical = false;
-								} else if(eventType == XmlPullParser.TEXT && mVertical == true) {
-									mVerDimensions = new Integer(xpp.getText()).intValue();
-									//mGameV.setMapV(new Integer(xpp.getText()).intValue());
-								}
-								//mObjects
-								if(eventType == XmlPullParser.START_TAG && xpp.getName().contentEquals(OBJECTS)) {
-									System.out.println("Start tag "+xpp.getName());
-									mObjects = true;
-								} else if(eventType == XmlPullParser.END_TAG && xpp.getName().contentEquals(OBJECTS)) {
-									System.out.println("End tag "+xpp.getName());
-									mObjects = false;
-								} else if(eventType == XmlPullParser.TEXT && mObjects == true) {
-									mOList = xpp.getText();
-								}
-								//mTiles
-								if(eventType == XmlPullParser.START_TAG && xpp.getName().contentEquals(TILES)) {
-									System.out.println("Start tag "+xpp.getName());
-									mTiles = true;
-								} else if(eventType == XmlPullParser.END_TAG && xpp.getName().contentEquals(TILES)) {
-									System.out.println("End tag "+xpp.getName());
-									mTiles = false;
-								} else if(eventType == XmlPullParser.TEXT && mTiles == true) {
-									mTList = xpp.getText();
-								}
-								
-								eventType = xpp.next();
-
-							}
-						}
-						else {
-							//don't do this...
-							//Log.e("XML", " no level number match");
-							//return;
-						}
-						
 						eventType = xpp.next();
 					}
+						
+					if(  mIndexNum == num) {
+						/* found right level entry !!*/
+						while (!(eventType == XmlPullParser.END_TAG && xpp.getName().contentEquals(LEVEL))) {
+							//mHorizontal
+							if(eventType == XmlPullParser.START_TAG && xpp.getName().contentEquals(HORIZONTAL)) {
+								System.out.println("Start tag "+xpp.getName() + " number " + mIndexNum);
+								mHorizontal = true;
+							} else if(eventType == XmlPullParser.END_TAG && xpp.getName().contentEquals(HORIZONTAL)) {
+								System.out.println("End tag "+xpp.getName());
+								mHorizontal = false;
+							} else if(eventType == XmlPullParser.TEXT && mHorizontal == true) {
+								mHorDimensions = new Integer(xpp.getText()).intValue();
+								//mGameV.setMapH(new Integer(xpp.getText()).intValue());
+							}
+							//mVertical
+							if(eventType == XmlPullParser.START_TAG && xpp.getName().contentEquals(VERTICAL)) {
+								System.out.println("Start tag "+xpp.getName());
+								mVertical = true;
+							} else if(eventType == XmlPullParser.END_TAG && xpp.getName().contentEquals(VERTICAL)) {
+								System.out.println("End tag "+xpp.getName());
+								mVertical = false;
+							} else if(eventType == XmlPullParser.TEXT && mVertical == true) {
+								mVerDimensions = new Integer(xpp.getText()).intValue();
+								//mGameV.setMapV(new Integer(xpp.getText()).intValue());
+							}
+							//mObjects
+							if(eventType == XmlPullParser.START_TAG && xpp.getName().contentEquals(OBJECTS)) {
+								System.out.println("Start tag "+xpp.getName());
+								mObjects = true;
+							} else if(eventType == XmlPullParser.END_TAG && xpp.getName().contentEquals(OBJECTS)) {
+								System.out.println("End tag "+xpp.getName());
+								mObjects = false;
+							} else if(eventType == XmlPullParser.TEXT && mObjects == true) {
+								mOList = xpp.getText();
+							}
+							//mTiles
+							if(eventType == XmlPullParser.START_TAG && xpp.getName().contentEquals(TILES)) {
+								System.out.println("Start tag "+xpp.getName());
+								mTiles = true;
+							} else if(eventType == XmlPullParser.END_TAG && xpp.getName().contentEquals(TILES)) {
+								System.out.println("End tag "+xpp.getName());
+								mTiles = false;
+							} else if(eventType == XmlPullParser.TEXT && mTiles == true) {
+								mTList = xpp.getText();
+							}
+							
+							eventType = xpp.next();
+
+						}
+					}
+						
+						
+						
 					//parse strings here...
 					StringTokenizer mTileToken = new StringTokenizer(mTList,",");
 					int mTotalTileTokens = mTileToken.countTokens();
