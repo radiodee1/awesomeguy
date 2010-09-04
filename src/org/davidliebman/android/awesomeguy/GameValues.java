@@ -34,6 +34,8 @@ public class GameValues {
 	
 	/* screen size */
 	private boolean mDoubleScreen = false;
+	private int mScreenTilesHMod = this.SCREEN_TILES_H;
+	private int mDisplayWidth;
 	
 	/* game progress */
 	private Record mGuyScore = new Record();
@@ -60,6 +62,30 @@ public class GameValues {
 	public void setDoubleScreen(boolean mDoubleScreen) {
 		this.mDoubleScreen = mDoubleScreen;
 	}
+	
+	public int getDisplayWidth() {
+		return mDisplayWidth;
+	}
+	public void setDisplayWidth(int mDisplayWidth) {
+		this.mDisplayWidth = mDisplayWidth;
+	}
+	public int getScreenTilesHMod() {
+		if (isDoubleScreen()) {
+			this.mScreenTilesHMod = ((this.mDisplayWidth / 2 ) / 8) ;
+
+			if (this.mScreenTilesHMod * 16 < this.mDisplayWidth) this.mScreenTilesHMod ++;
+		}
+		else {
+			this.mScreenTilesHMod = 32;
+		}
+		return mScreenTilesHMod;
+	}
+	
+	public void setScreenTilesHMod(int mScreenTilesHMod) {
+		this.mScreenTilesHMod = mScreenTilesHMod;
+	}
+	
+	
 	/* mapH and mapV */
 	public void setMapH(int i) {
 		mMapH = i;
