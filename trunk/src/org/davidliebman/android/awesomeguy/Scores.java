@@ -78,6 +78,7 @@ public class Scores {
 			//Log.d("Scores","____");
 		}
 		c.close();
+		mOpenHelper.close();
 		mDatabase.close();
 		return mList;
 	}
