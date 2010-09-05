@@ -104,14 +104,15 @@ public final class R {
         public static final int widget40=0x7f07000e;
     }
     public static final class layout {
-        public static final int credits=0x7f030000;
-        public static final int data_row=0x7f030001;
-        public static final int help=0x7f030002;
-        public static final int main=0x7f030003;
-        public static final int menu=0x7f030004;
-        public static final int options=0x7f030005;
-        public static final int players=0x7f030006;
-        public static final int splashscreen=0x7f030007;
+        public static final int congrats=0x7f030000;
+        public static final int credits=0x7f030001;
+        public static final int data_row=0x7f030002;
+        public static final int help=0x7f030003;
+        public static final int main=0x7f030004;
+        public static final int menu=0x7f030005;
+        public static final int options=0x7f030006;
+        public static final int players=0x7f030007;
+        public static final int splashscreen=0x7f030008;
     }
     public static final class raw {
         public static final int boom=0x7f050000;
