@@ -475,11 +475,7 @@ public class GameStart extends Activity {
     			mPanelBot.invalidate();
     			
     		}
-    		/*
-    		else if(msg.what == SPLASH) {
-    			//mPanelTop.setBackgroundShow(mGameV.getRoomNo());
-    		}
-    		*/
+    		
     		else if(msg.what == MOVEMENTVALUES) {
     			
     			mPanelBot.setHighScores((Record)msg.obj);

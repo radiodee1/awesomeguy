@@ -58,13 +58,23 @@
 			</intent-filter>
 		</activity>
 
-		<activity android:name=".Players">
+		<activity android:name=".Players"
+		android:screenOrientation="portrait">
 			<intent-filter>
 				<action android:name="org.davidliebman.android.awesomeguy.Players"></action>
 				<category android:name="android.intent.category.LAUNCHER"></category>
 
 			</intent-filter>
 		</activity>
+
+        <activity android:name=".Congrats" android:label="@string/app_name"
+            android:clearTaskOnLaunch="true" android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
 	</application>
 	<uses-sdk android:minSdkVersion="7" />
