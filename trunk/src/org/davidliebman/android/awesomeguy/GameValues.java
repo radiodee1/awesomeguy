@@ -1,6 +1,8 @@
 package org.davidliebman.android.awesomeguy;
 
 import java.util.ArrayList;
+import java.lang.*;
+import android.content.*;
 import android.util.Log;
 
 
@@ -161,6 +163,8 @@ public class GameValues {
 	public void incrementRoomNo() {
 		mRoom ++;
 	}
+	
+	
 	public int getScore() {
 		return mGuyScore.getScore();
 	}

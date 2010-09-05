@@ -506,6 +506,8 @@ public class GameStart extends Activity {
     
     };
     
+    
+    
     class InnerGameLoop extends Thread {
     	//private SoundPoolManager mSounds;
 
@@ -567,11 +569,8 @@ public class GameStart extends Activity {
     		      mGameV.setRoomNo(1);
     		    }
     		    */
-    		    mGameV.setRoomNo(3);//TODO: supposed to be '1' !!
-    		    // put graphic on top panel
-    			
-    			//myPanelUpdateHandler.sendEmptyMessage(GameStart.SPLASH);
-    			
+    		    //mGameV.setRoomNo(3);//TODO: supposed to be '1' !!
+    		    this.getSavedRoom();
     		    
     		    mGameV.setScore(10);
     		    
@@ -600,6 +599,7 @@ public class GameStart extends Activity {
     			
     		    
     		    //init room
+    		    this.getSavedRoom();
     		    mBackground.setLevel(mGameV.getRoomNo());
     	    	mBackground.initLevel(mMovementV);
     	    	
@@ -663,6 +663,7 @@ public class GameStart extends Activity {
     		      if( mGameV.getRoomNo() > GameValues.NUM_ROOMS &&  !mGameV.isEndLevel() ) {
     		        
     		    	  mGameV.setRoomNo(1);
+    		    	  this.saveRoomNo();
     		    	  //mHighScores.incrementSave2(mGameV.getUsernum());
     		    	  // used for cycles
     		      }
@@ -675,16 +676,30 @@ public class GameStart extends Activity {
 
     		      }
 
+    		      Intent mStartCongrats = new Intent(GameStart.this,Congrats.class);
+          		  startActivity(mStartCongrats);
     		    } /////////// while NUM_ROOMS loop
 
-    		  
-    		    
-    		    mPlayAgain = true;
+
+    		    mPlayAgain = false;
+    		    //mPlayAgain = true;
 
     		  } // playAgain
 
     		
 
+    	}
+    	
+    	public void saveRoomNo() {
+            SharedPreferences preferences = getSharedPreferences(SplashScreen.AWESOME_NAME, 0);
+            SharedPreferences.Editor mPrefEdit = preferences.edit();
+            mPrefEdit.putInt("room", mGameV.getRoomNo());
+            mPrefEdit.commit();
+    	}
+    	
+    	public void getSavedRoom() {
+    		SharedPreferences preferences = getSharedPreferences(SplashScreen.AWESOME_NAME, 0);
+    		mGameV.setRoomNo(preferences.getInt("room", 1));
     	}
     	
     	public void setGameRunning(boolean isRunning) {

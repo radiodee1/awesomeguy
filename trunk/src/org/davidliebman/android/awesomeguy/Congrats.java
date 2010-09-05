@@ -17,7 +17,8 @@ public class Congrats extends Activity {
 	@Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-        	startActivity(new Intent("org.davidliebman.android.awesomeguy.GameStart"));        }
+        	startActivity(new Intent("org.davidliebman.android.awesomeguy.GameStart"));        
+        }
         return true;
     }
 }
