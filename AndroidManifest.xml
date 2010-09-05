@@ -71,8 +71,8 @@
             android:clearTaskOnLaunch="true" android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="org.davidliebman.android.awesomeguy.Congrats" />
+                <category android:name="android.intent.category.DEFAULT"></category>
             </intent-filter>
         </activity>
 
