@@ -33,6 +33,20 @@ android:textSize="16sp"
 android:textStyle="bold">
 </TextView>
 
+<TextView android:text="Here is where you choose the level that you want to start your game at. " 
+android:id="@+id/TextView01" 
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content">
+</TextView>
+
+    <Spinner 
+        android:id="@+id/room_spinner"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:drawSelectorOnTop = "true"
+        android:prompt = "@string/room_prompt">
+    </Spinner>
+
 <TextView android:text="Here you choose the preferred running speed for your game. " 
 android:id="@+id/TextView01" 
 android:layout_width="wrap_content" 
