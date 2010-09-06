@@ -110,7 +110,9 @@ public class Players extends ListActivity {
                 	  mHighScores.addToPreferences(mPreferences);
                 	  mPlayerText.setText("Player Chosen: " +mHighScores.getName());
                       mNumPlayers.setText("This is where you choose from a list of " + mHighScores.getNumRecords() + " high scores.");
-
+                      SharedPreferences.Editor edit = mPreferences.edit();
+                      edit.putInt(Options.SAVED_ROOM_NUM, mHighScores.getLevel());
+                      edit.commit();
                   }
                   return true;
                 }
