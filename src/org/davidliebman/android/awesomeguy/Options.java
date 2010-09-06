@@ -8,19 +8,23 @@ import android.view.View.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.AdapterView.OnItemSelectedListener;
+
 
 public class Options extends Activity {
 	
 	public static final String AWESOME_NAME = new String("org.awesomeguy");
 	public static final String SAVED_NUM_SCORES = new String("saved_num_scores");
-
+	public static final String SAVED_ROOM_NUM = new String("room");
 	
+	private int mRoomNumSelected = 1;
+
 	private Record mHighScores = new Record() ;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-            
+        
               
         /** retrieve Record mHighScores **/
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
@@ -37,6 +41,27 @@ public class Options extends Activity {
         final TextView textview_name = (TextView) this.findViewById(R.id.player_name_options);
         textview_name.setText("Player Name: " + mHighScores.getName());
         
+        /** spinner for picking starting level **/
+        Spinner spinner = (Spinner) findViewById(R.id.room_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, R.array.room_names, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(
+                new OnItemSelectedListener() {
+                    public void onItemSelected(
+                            AdapterView<?> parent, View view, int position, long id) {
+                    	Toast.makeText(Options.this, "Level " +( position + 1) + " selected", Toast.LENGTH_SHORT).show();
+                    	mRoomNumSelected = position + 1;
+                    }
+
+                    public void onNothingSelected(AdapterView<?> parent) {
+                    	Toast.makeText(Options.this, "Default level selected", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        
+
         /** sound effects play **/
         final CheckBox checkbox_sounds = (CheckBox) findViewById(R.id.checkbox_sounds );
         checkbox_sounds.setChecked(mHighScores.isSound());
@@ -177,6 +202,10 @@ public class Options extends Activity {
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
 
     	mHighScores.addToPreferences(preferences);
+    	
+    	SharedPreferences.Editor edit = preferences.edit();
+        edit.putInt(SAVED_ROOM_NUM, mRoomNumSelected);
+        edit.commit();
 	    super.onPause();
 
     }

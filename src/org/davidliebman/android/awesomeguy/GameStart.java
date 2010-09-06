@@ -538,12 +538,10 @@ public class GameStart extends Activity {
     		    mPlayAgain = false;
     		
     		  //do something here.
-    		    //myPanelUpdateHandler.removeMessages(GameStart.MOVEMENTVALUES);
-    			//myPanelUpdateHandler.removeMessages(GameStart.GAMEVALUES);
+    		    
     		    mMovementV.setScrollX(0);
     		    mMovementV.setScrollY(0);
     			
-    		    //myPanelUpdateHandler.sendEmptyMessage(GameStart.STARTLEVEL);
     			
     			
     		    
@@ -551,24 +549,10 @@ public class GameStart extends Activity {
     		    ////////////////////////////////////////////////////////
     		    // PREP FOR GAME PLAY
     		    // set lives
-    		    /*
-    		    if (mHighScores.getSave1( mGameV.getUsernum() ) > 3) {
-    		    	mGameV.setLives(mHighScores.getSave1(mGameV.getUsernum()));
-    		    }
-    		    else {
-    		    	mGameV.setLives(3);
-    		    }
-    		    */
+    		    
     		    mGameV.setLives(3);
     		    // set room num
-    		    /*
-    		    if(mHighScores.getLevel(mGameV.getUsernum())>0) {
-    		      mGameV.setRoomNo(mHighScores.getLevel(mGameV.getUsernum()));
-    		    }
-    		    else {
-    		      mGameV.setRoomNo(1);
-    		    }
-    		    */
+    		    
     		    //mGameV.setRoomNo(3);//TODO: supposed to be '1' !!
     		    this.getSavedRoom();
     		    
@@ -591,10 +575,6 @@ public class GameStart extends Activity {
     		    mMovementV.setScrollX(0);
     		    mMovementV.setScrollY(0);
     			
-    			
-    			// put graphic on top panel
-    			
-    			//myPanelUpdateHandler.sendEmptyMessage(GameStart.SPLASH);
     			
     			
     		    
@@ -621,10 +601,7 @@ public class GameStart extends Activity {
     		       
     		    	if (true) gameSpeedRegulator(); //call inside 'game play' loop
     		    	
-    		    	//mOldLives = level.lives;
-    		    	//mOldLives = mGameV.getLives();
-    		    	//mScoresOnScreen = false;
-
+    		    
     		    	
     		    	// ** ALWAYS SEND THIS MESSAGE **	
     		    	Message mM = new Message();
@@ -651,6 +628,7 @@ public class GameStart extends Activity {
     		      //
     		      if (!mGameV.isGameDeath()) {
     		        mGameV.incrementRoomNo();
+    		        this.saveRoomNo();
     		        mGameV.setEndGame(false);
     		        mGameV.setEndLevel(false);
     		      }
@@ -675,9 +653,11 @@ public class GameStart extends Activity {
     		    	  mHighScores.setNewRecord(false);
 
     		      }
-
-    		      Intent mStartCongrats = new Intent(GameStart.this,Congrats.class);
-          		  startActivity(mStartCongrats);
+    		      if (!mGameV.isGameDeath()) {
+    		    	  Intent mStartCongrats = new Intent(GameStart.this,Congrats.class);
+    		    	  startActivity(mStartCongrats);
+    		      }
+    		      
     		    } /////////// while NUM_ROOMS loop
 
 
@@ -691,15 +671,15 @@ public class GameStart extends Activity {
     	}
     	
     	public void saveRoomNo() {
-            SharedPreferences preferences = getSharedPreferences(SplashScreen.AWESOME_NAME, 0);
+            SharedPreferences preferences = getSharedPreferences(SplashScreen.AWESOME_NAME, MODE_PRIVATE);
             SharedPreferences.Editor mPrefEdit = preferences.edit();
-            mPrefEdit.putInt("room", mGameV.getRoomNo());
+            mPrefEdit.putInt(Options.SAVED_ROOM_NUM, mGameV.getRoomNo());
             mPrefEdit.commit();
     	}
     	
     	public void getSavedRoom() {
-    		SharedPreferences preferences = getSharedPreferences(SplashScreen.AWESOME_NAME, 0);
-    		mGameV.setRoomNo(preferences.getInt("room", 1));
+    		SharedPreferences preferences = getSharedPreferences(SplashScreen.AWESOME_NAME, MODE_PRIVATE);
+    		mGameV.setRoomNo(preferences.getInt(Options.SAVED_ROOM_NUM, 1));
     	}
     	
     	public void setGameRunning(boolean isRunning) {

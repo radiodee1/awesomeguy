@@ -3,4 +3,19 @@
     <string name="app_name">Awesomeguy</string>
     <string name="main_screen">Game Play</string>
     <string name="splash_screen">Awesomeguy</string>
+    <string name="room_prompt">Select a starting level</string>
+    
+    <string-array name="room_names">
+        <item>Room 1</item>
+        <item>Room 2</item>
+        <item>Room 3</item>
+        <item>Room 4</item>
+        <item>Room 5</item>
+        <item>Room 6</item>
+        <item>Room 7</item>
+        <item>Room 8</item>
+        <item>Room 9</item>
+        <item>Room 10</item>
+    </string-array>
+    
 </resources>
