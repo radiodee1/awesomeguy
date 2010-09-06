@@ -29,7 +29,7 @@ public  class Record  {
 	
 	Record() {
 		
-		mName = new String("none");
+		mName = new String("anonymous");
 		
 		mNewRecord = true;
 		mRecordIdNum = 0;

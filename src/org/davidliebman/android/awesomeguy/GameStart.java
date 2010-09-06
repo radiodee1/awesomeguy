@@ -652,7 +652,7 @@ public class GameStart extends Activity {
     		    	  mHighScores.setNewRecord(false);
 
     		      }
-    		      if (!mGameV.isGameDeath() && gameRunning) {
+    		      if (!mGameV.isGameDeath() && gameRunning && false) {
     		    	  Intent mStartCongrats = new Intent(GameStart.this,Congrats.class);
     		    	  startActivity(mStartCongrats);
     		      }

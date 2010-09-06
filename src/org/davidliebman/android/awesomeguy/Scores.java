@@ -13,7 +13,7 @@ import java.util.*;
 
 public class Scores {
 	private static final String DATABASE_NAME = "AwesomeguyScores.db";
-	private static final int DATABASE_VERSION = 5;
+	private static final int DATABASE_VERSION = 6;
 	private static final String TABLE_NAME = "scores";
 	
 	private SQLiteDatabase mDatabase;
