@@ -76,6 +76,9 @@ static int map_objects[96][96];
  
 uint32_t screen [192][256];
  
+static int tilesWidthMeasurement = 32;
+static int tilesHeightMeasurement = 32;
+
 ////////////////////////////////////
 
 typedef struct {
@@ -299,6 +302,7 @@ void setLevelData(int a[MAP_HEIGHT * MAP_WIDTH],  int b[MAP_HEIGHT * MAP_WIDTH])
 	}
 	return;
 }
+
 
  
 /**
@@ -1009,7 +1013,7 @@ void drawLevel(int animate_level) {
     baseX = scrollx / TILE_WIDTH;
     baseY = scrolly / TILE_HEIGHT;
     
-	for ( j = baseX - 1; j <  baseX + 32 + 3; j++) { //32
+	for ( j = baseX - 1; j <  baseX + tilesWidthMeasurement + 3; j++) { //32
     	for ( i = baseY - 1 ; i < baseY + 32 + 3; i ++ ) { //24
     		
     		
@@ -1232,6 +1236,21 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_setMonster
 {
 	preferences_monsters = monsters;
 	preferences_collision = collision;
+
+}
+
+/**
+ *	Used to set the useable screen size for the program
+ *
+ *	@param	env			required by all java jni
+ *	@param	obj			required by all java jni
+ *	@param	screenH 	screen horizontal tile measurement
+ *	@param	screenV		screen vertical tile measurement
+ */
+JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_setScreenData(JNIEnv * env, jobject  obj, jint screenH, jint screenV)
+{
+	tilesWidthMeasurement = screenH;
+	//tilesHeightMeasurement = screenV;
 
 }
 

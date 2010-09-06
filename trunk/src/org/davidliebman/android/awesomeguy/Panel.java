@@ -212,6 +212,9 @@ public  class Panel  extends SurfaceView  {
 			mTiles.getPixels(tiles_d, 0, 224, 0, 0, 224, 128);
 			this.setTileMapData(tiles_a, tiles_b, tiles_c, tiles_d);
 			
+			mGameV.setDisplayWidth(mDisplayWidth);
+			setScreenData(mGameV.getScreenTilesHMod(), 32);
+			
 			
 		}
 	}
@@ -276,11 +279,10 @@ public  class Panel  extends SurfaceView  {
 
 			/************ Put guy on screen **************/
 			if (!useJNI) {
-				
 				mTempGuy = BitmapFactory.decodeResource(getResources(),mGuySprite.getResourceId(),mOptionsSprite);
 				mGuyBitmap = Bitmap.createBitmap(this.mTempGuy, 0,0, 16,16, mMatrix, false);
-				canvas.drawBitmap(mGuyBitmap, mScale * ( guyX - mGuySprite.getLeftBB()), 
-						mScale * (guyY - mGuySprite.getTopBB()), mP);
+				canvas.drawBitmap(mGuyBitmap, mScale * (  mGuySprite.getMapPosX()  - mGuySprite.getLeftBB()), 
+						mScale * (  mGuySprite.getMapPosY()  - mGuySprite.getTopBB()), mP);
 			}
 			/************** test jni *******************/
 			if (useJNI) {
@@ -362,7 +364,7 @@ public  class Panel  extends SurfaceView  {
 		}
 		else {
 			setGuyPosition(mGuyX  , mGuyY , scrollX, scrollY, mGuySprite.getAnimIndex());
-			Log.e("Panel", "guyX "+ mGuyX + " guyY " + mGuyY);
+			Log.e("Panel", "guyX "+ mGuyX + " guyY " + mGuyY + " animIndex " + mGuySprite.getAnimIndex());
 		}
 
 	}
@@ -912,9 +914,8 @@ public  class Panel  extends SurfaceView  {
 
 		if (mGameV.isDoubleScreen()) {
 			tilesMeasurement = ((this.mDisplayWidth / 2 ) / 8) ;
-			//this.mScreenW = this.mDisplayWidth / 2;
 			this.mScreenW = tilesMeasurement * 8;
-			if (tilesMeasurement * 16 < this.mDisplayWidth) tilesMeasurement ++;
+			//if (tilesMeasurement * 16 < this.mDisplayWidth) tilesMeasurement ++;
 		}
 		else {
 			this.mScreenW = this.mDisplayWidth;
@@ -1077,7 +1078,6 @@ public  class Panel  extends SurfaceView  {
 		mGuySprite.setMapPosX(newMapX);
 		mGuySprite.setMapPosY(newMapY);
 		
-
 		mMovementV.setScrollX(screenX);
 		mMovementV.setScrollY(screenY);
 	}
@@ -1494,6 +1494,7 @@ public  class Panel  extends SurfaceView  {
 	public native void setGuyPosition(int x, int y, int scrollx, int scrolly, int animate);
 	public native void setScoreLives(int score, int lives);
     public native void setMonsterPreferences(int monsters, int collision);
+    public native void setScreenData(int screenH, int screenV);
 	public native int[] drawLevel(int num);
 	public native int getSoundBoom();
 	public native int getSoundOw();

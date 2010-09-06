@@ -571,7 +571,7 @@ public class GameStart extends Activity {
     		    myPanelUpdateHandler.sendEmptyMessage(GameStart.STARTLEVEL);
 
         		myPanelUpdateHandler.removeMessages(GameStart.MOVEMENTVALUES);
-    			//myPanelUpdateHandler.removeMessages(GameStart.GAMEVALUES);
+
     		    mMovementV.setScrollX(0);
     		    mMovementV.setScrollY(0);
     			
@@ -642,8 +642,7 @@ public class GameStart extends Activity {
     		        
     		    	  mGameV.setRoomNo(1);
     		    	  this.saveRoomNo();
-    		    	  //mHighScores.incrementSave2(mGameV.getUsernum());
-    		    	  // used for cycles
+    		    	  
     		      }
 
     		      // this basically saves high scores...
@@ -653,7 +652,7 @@ public class GameStart extends Activity {
     		    	  mHighScores.setNewRecord(false);
 
     		      }
-    		      if (!mGameV.isGameDeath()) {
+    		      if (!mGameV.isGameDeath() && gameRunning) {
     		    	  Intent mStartCongrats = new Intent(GameStart.this,Congrats.class);
     		    	  startActivity(mStartCongrats);
     		      }
