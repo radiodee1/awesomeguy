@@ -193,7 +193,7 @@ public class Scores {
 	public String getUpdateScoreLevelString(int id) {
 		return new String("UPDATE " + TABLE_NAME + " " +
 							" SET score=" + mHighScores.getScore() + " , " +
-							" level=" + mHighScores.getLevel() + " " + 
+							" level=" + mHighScores.getLevel() + " " + // note: level is used for checkpoints
 							" WHERE id=" + id);
 	}
 	

@@ -763,7 +763,7 @@ public class GameStart extends Activity {
 	    	text.setText("congratulations you've finished the level!! Touch the screen to continue.");
 	    	ImageView image = (ImageView) layout.findViewById(R.id.image);
 	    	image.setImageResource(R.drawable.icon);
-	    	String mPositive = new String("Play next level.");
+	    	String mPositive = new String("Play level " + mGameV.getRoomNo());
    	    	String mNegative = new String("Stop game now.");
 	    	builder = new AlertDialog.Builder(this);
 	    	builder.setView(layout);
