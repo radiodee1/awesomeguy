@@ -364,7 +364,7 @@ public  class Panel  extends SurfaceView  {
 		}
 		else {
 			setGuyPosition(mGuyX  , mGuyY , scrollX, scrollY, mGuySprite.getAnimIndex());
-			Log.e("Panel", "guyX "+ mGuyX + " guyY " + mGuyY + " animIndex " + mGuySprite.getAnimIndex());
+			//Log.e("Panel", "guyX "+ mGuyX + " guyY " + mGuyY + " animIndex " + mGuySprite.getAnimIndex());
 		}
 
 	}
