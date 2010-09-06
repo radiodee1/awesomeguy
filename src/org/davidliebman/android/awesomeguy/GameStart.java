@@ -2,7 +2,7 @@ package org.davidliebman.android.awesomeguy;
 
 import java.util.Date;
 
-import android.app.Activity;
+import android.app.*;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -28,6 +28,12 @@ public class GameStart extends Activity {
 	public static final int INPUTVALUES_KEYUP = 6;
 	public static final int GAMESTOP = 7;
 	public static final int INPUTVALUES_TRACKUP = 8;
+	public static final int CONGRATS = 9;
+	
+	static final int DIALOG_PAUSED_ID = 0;
+	static final int DIALOG_GAMEOVER_ID = 1;
+	static final int DIALOG_CONGRATS_ID = 2;
+	
 	
 	GameValues mGameV = new GameValues();
 	MovementValues mMovementV = new MovementValues();
@@ -46,19 +52,19 @@ public class GameStart extends Activity {
     TableLayout mGameRow;
     
     RelativeLayout mRLayoutGamepad;
-    TableLayout mGamepad;
-    TableRow mTRowTop;
-    TableRow mTRowMid;
-    TableRow mTRowBot;
+    //TableLayout mGamepad;
+    //TableRow mTRowTop;
+    //TableRow mTRowMid;
+    //TableRow mTRowBot;
     
-    BlankButton  mButtonTop3, mButtonTop4, mButtonTop5, mButtonTop7;
-    TouchButton mButtonTop6;
+    //BlankButton  mButtonTop3, mButtonTop4, mButtonTop5, mButtonTop7;
+    //TouchButton mButtonTop6;
     
-    BlankButton mButtonMid4, mButtonMid6;
-    TouchButton  mButtonMid3, mButtonMid5, mButtonMid7;
+    //BlankButton mButtonMid4, mButtonMid6;
+    //TouchButton  mButtonMid3, mButtonMid5, mButtonMid7;
     
-    BlankButton  mButtonBot3, mButtonBot4, mButtonBot5, mButtonBot7;
-    TouchButton mButtonBot6;    
+    //BlankButton  mButtonBot3, mButtonBot4, mButtonBot5, mButtonBot7;
+    //TouchButton mButtonBot6;    
     
     private int mButtonHeight, mButtonWidth;
     private int mScrollConst = 200;
@@ -156,10 +162,10 @@ public class GameStart extends Activity {
         /* generate components for game pad */
         mRLayoutGamepad = new RelativeLayout(this);
         mRLayoutGamepad.setHorizontalGravity(Gravity.CENTER_HORIZONTAL);
-        mGamepad = new TableLayout(this);
-        mTRowTop = new TableRow(this);
-        mTRowMid = new TableRow(this);
-        mTRowBot = new TableRow(this);
+        //mGamepad = new TableLayout(this);
+        //mTRowTop = new TableRow(this);
+        //mTRowMid = new TableRow(this);
+        //mTRowBot = new TableRow(this);
         
         this.setContentView(mRLayout);
         
@@ -202,41 +208,44 @@ public class GameStart extends Activity {
         mButtonWidth = widthDimension/5;//95
         
         /* first row buttons */
-        mButtonTop3 = new BlankButton(this);
-    	mButtonTop4 = new BlankButton(this);
-    	mButtonTop5 = new BlankButton(this);
-    	mButtonTop6 = new TouchButton(this, R.drawable.button_up, mButtonWidth, mButtonHeight, 0, "button_up", MovementValues.KEY_UP);
-    	mButtonTop7 = new BlankButton(this);
+        BlankButton mButtonTop3 = new BlankButton(this);
+        BlankButton mButtonTop4 = new BlankButton(this);
+        BlankButton mButtonTop5 = new BlankButton(this);
+    	TouchButton mButtonTop6 = new TouchButton(this, R.drawable.button_up, mButtonWidth, mButtonHeight, 0, "button_up", MovementValues.KEY_UP);
+    	BlankButton mButtonTop7 = new BlankButton(this);
         
     	/* middle row buttons */
-        mButtonMid3 = new TouchButton(this, R.drawable.button_b, mButtonWidth, mButtonHeight, 0, "button_b", MovementValues.KEY_B);
-    	mButtonMid4 = new BlankButton(this);
-    	mButtonMid5 = new TouchButton(this, R.drawable.button_left, mButtonWidth, mButtonHeight, 0, "button_left", MovementValues.KEY_LEFT);
-    	mButtonMid6 = new BlankButton(this);
+    	TouchButton mButtonMid3 = new TouchButton(this, R.drawable.button_b, mButtonWidth, mButtonHeight, 0, "button_b", MovementValues.KEY_B);
+        BlankButton mButtonMid4 = new BlankButton(this);
+        TouchButton mButtonMid5 = new TouchButton(this, R.drawable.button_left, mButtonWidth, mButtonHeight, 0, "button_left", MovementValues.KEY_LEFT);
+    	BlankButton mButtonMid6 = new BlankButton(this);
     	mButtonMid6.setBackgroundResource(R.drawable.button_center);
     	//mButtonMid6 = new TouchButton(this, R.drawable.button_center, mButtonWidth, mButtonHeight, 0, "button_center", 0);
-    	mButtonMid7 = new TouchButton(this, R.drawable.button_right, mButtonWidth, mButtonHeight, 0, "button_right", MovementValues.KEY_RIGHT);
+    	TouchButton mButtonMid7 = new TouchButton(this, R.drawable.button_right, mButtonWidth, mButtonHeight, 0, "button_right", MovementValues.KEY_RIGHT);
     	
     	/* bottom row buttons */
-        mButtonBot3 = new BlankButton(this);
-    	mButtonBot4 = new BlankButton(this);
-    	mButtonBot5 = new BlankButton(this);
-    	mButtonBot6 = new TouchButton(this, R.drawable.button_down, mButtonWidth, mButtonHeight, 0, "button_down", MovementValues.KEY_DOWN);
-    	mButtonBot7 = new BlankButton(this);
+    	BlankButton mButtonBot3 = new BlankButton(this);
+    	BlankButton mButtonBot4 = new BlankButton(this);
+    	BlankButton mButtonBot5 = new BlankButton(this);
+    	TouchButton mButtonBot6 = new TouchButton(this, R.drawable.button_down, mButtonWidth, mButtonHeight, 0, "button_down", MovementValues.KEY_DOWN);
+    	BlankButton mButtonBot7 = new BlankButton(this);
     	
     	/* put buttons in rows */
+    	TableRow mTRowTop = new TableRow(this);
     	mTRowTop.addView((View)mButtonTop3);
     	mTRowTop.addView((View)mButtonTop4);
     	mTRowTop.addView((View)mButtonTop5);
     	mTRowTop.addView((View)mButtonTop6);
     	mTRowTop.addView((View)mButtonTop7);
     	
+    	TableRow mTRowMid = new TableRow(this);
     	mTRowMid.addView((View)mButtonMid3);
     	mTRowMid.addView((View)mButtonMid4);
     	mTRowMid.addView((View)mButtonMid5);
     	mTRowMid.addView((View)mButtonMid6);
     	mTRowMid.addView((View)mButtonMid7);
     	
+    	TableRow mTRowBot = new TableRow(this);
     	mTRowBot.addView((View)mButtonBot3);
     	mTRowBot.addView((View)mButtonBot4);
     	mTRowBot.addView((View)mButtonBot5);
@@ -244,6 +253,7 @@ public class GameStart extends Activity {
     	mTRowBot.addView((View)mButtonBot7);
     	
     	/* put rows in table */
+    	TableLayout mGamepad = new TableLayout(this);
     	mGamepad.addView((View)mTRowTop);
     	mGamepad.addView((View)mTRowMid);
     	mGamepad.addView((View)mTRowBot);
@@ -499,7 +509,12 @@ public class GameStart extends Activity {
     			mMovementV.clearKeys();
     			
     		}
-    	
+    		else if (msg.what == CONGRATS) {
+    			//do something here?
+    			showDialog(GameStart.DIALOG_CONGRATS_ID);
+    			
+    		}
+    		
     		else super.handleMessage(msg);
     		
     	}
@@ -652,9 +667,9 @@ public class GameStart extends Activity {
     		    	  mHighScores.setNewRecord(false);
 
     		      }
-    		      if (!mGameV.isGameDeath() && gameRunning && false) {
-    		    	  Intent mStartCongrats = new Intent(GameStart.this,Congrats.class);
-    		    	  startActivity(mStartCongrats);
+    		      if (!mGameV.isGameDeath() && gameRunning ) {
+    		    	  myPanelUpdateHandler.sendEmptyMessage(GameStart.CONGRATS);
+    		    	  
     		      }
     		      
     		    } /////////// while NUM_ROOMS loop
@@ -708,6 +723,10 @@ public class GameStart extends Activity {
     			//ticksElapsed = newDate.getTime();
     		}
     	}
+    	
+    	
+    	
+    	
     };
 
 
@@ -728,6 +747,60 @@ public class GameStart extends Activity {
 		this.mGameDeath = mGameDeath;
 	}
     
-    
+	protected Dialog onCreateDialog(int id) {
+	    Dialog dialog;
+	    switch(id) {
+	    case DIALOG_CONGRATS_ID:
+	    	AlertDialog.Builder builder;
+	    	AlertDialog alertDialog;
+
+	    	Context mContext = getApplicationContext();
+	    	LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
+	    	View layout = inflater.inflate(R.layout.congrats,
+	    	                               (ViewGroup) findViewById(R.id.layout_root));
+
+	    	TextView text = (TextView) layout.findViewById(R.id.congrats_text);
+	    	text.setText("congratulations you've finished the level!! Touch the screen to continue.");
+	    	ImageView image = (ImageView) layout.findViewById(R.id.image);
+	    	image.setImageResource(R.drawable.icon);
+	    	String mPositive = new String("Play next level.");
+   	    	String mNegative = new String("Stop game now.");
+	    	builder = new AlertDialog.Builder(this);
+	    	builder.setView(layout);
+	    	builder.setCancelable(false)
+    	       .setPositiveButton(mPositive, new DialogInterface.OnClickListener() {
+    	           public void onClick(DialogInterface dialog, int id) {
+    	                //Players.this.finish();
+    	        	   dialog.cancel();
+    	        	   
+    	           }
+    	       })
+    	       .setNegativeButton(mNegative, new DialogInterface.OnClickListener() {
+    	           public void onClick(DialogInterface dialog, int id) {
+    	        	   	Intent MenuIntent = new Intent(GameStart.this,Menu.class);
+    	        		startActivity(MenuIntent);
+    	                dialog.cancel();
+    	           }
+    	       });
+	    	
+	    	alertDialog = builder.create();
+	    	
+	    	dialog = (Dialog) alertDialog;
+	    	//////////////////////////////
+	    	
+	    	break;
+	    case DIALOG_PAUSED_ID:
+	        // do the work to define the pause Dialog
+	    	dialog = null;
+	        break;
+	    case DIALOG_GAMEOVER_ID:
+	        // do the work to define the game over Dialog
+	    	dialog = null;
+	        break;
+	    default:
+	        dialog = null;
+	    }
+	    return dialog;
+	}
     
 }
