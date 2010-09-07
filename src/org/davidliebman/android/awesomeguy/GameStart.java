@@ -542,9 +542,8 @@ public class GameStart extends Activity {
     		Date startDate = new Date();
     		nextGameTick = startDate.getTime();
     		
-    		// new score ?? SAVE OLD SCORE!!
-			mGameV.setOldGuyScore(mHighScores.getScore());
-		
+    		
+			
     		
     		
     		  ///////////////////////////////////////////////////////
@@ -558,8 +557,8 @@ public class GameStart extends Activity {
     		    mMovementV.setScrollY(0);
     			
     			
-    			
-    		    
+    			// new score ?? SAVE OLD SCORE!!
+    		    mGameV.setOldGuyScore(mHighScores.getScore());
     			
     		    ////////////////////////////////////////////////////////
     		    // PREP FOR GAME PLAY
