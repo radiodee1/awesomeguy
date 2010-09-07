@@ -18,20 +18,20 @@ When the game starts the user is presented with a splash screen that dismisses i
 
 The AndroidManifest.xml file has entries for each of the game's activities. In the xml entry for the SplashScreen activity, the values for 'clearTaskOnLaunch' are set to 'true', and the values for 'launchMode' are set to 'singleTask'. This arrangement is shown in the following snippet. The 'clearTaskOnLaunch' option is what allows the game to always restart with the Splash Screen regardless of what state it was in when it was stopped. This option was used in each of the activities in the xml file.
 
-
+{{{
 <activity android:name=".SplashScreen"
 android:label="@string/app_name"
 android:clearTaskOnLaunch="true"
 android:launchMode="singleTask">
-
+}}}
 
 For each of the activities of the application I put 'clearTaskOnLaunch' as one of the xml parameters (as noted above).
 
-
+{{{
 <activity android:name=".Menu"
 
 android:clearTaskOnLaunch="true">
-
+}}}
 
 *GameStart.java*
 
