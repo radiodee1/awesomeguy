@@ -3,7 +3,7 @@
 	android:versionCode="1" android:versionName="1.0"
 	package="org.davidliebman.android.awesomeguy">
 
-	<application android:icon="@drawable/icon" android:label="@string/app_name"
+	<application android:icon="@drawable/guy_icon" android:label="@string/app_name"
 		android:debuggable="true" >
 
 		<activity android:name=".SplashScreen" android:label="@string/app_name"
