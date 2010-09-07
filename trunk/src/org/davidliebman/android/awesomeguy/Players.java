@@ -86,7 +86,8 @@ public class Players extends ListActivity {
         lv.setOnItemLongClickListener(new OnItemLongClickListener () {
         	
         	public boolean onItemLongClick (AdapterView<?> parent, View view, int position, long id) {
-        		Toast.makeText(Players.this, "Player Num Records: " + mHighScores.getNumRecords(), Toast.LENGTH_SHORT).show();
+        		Toast.makeText(Players.this, "Player - Num Records: " + mNames.get(position).getNumRecords() + 
+        				" Record ID: " + mNames.get(position).getRecordIdNum(), Toast.LENGTH_SHORT).show();
 
         		return true;
         	}
@@ -198,7 +199,7 @@ public class Players extends ListActivity {
     		TextView mScore = (TextView) convertView.findViewById(R.id.text_score);
     		TextView mLevel = (TextView) convertView.findViewById(R.id.text_level);
     		
-    		mName.setText("Name: " + mRec.getName());
+    		mName.setText("Name: " + mRec.getName() );//+ " id " + mRec.getRecordIdNum());
     		mScore.setText("Score: "+ mRec.getScore());
     		mLevel.setText("Last Checkpoint: Level " + mRec.getLevel());
     		

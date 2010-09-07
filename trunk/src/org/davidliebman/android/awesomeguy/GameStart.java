@@ -658,12 +658,15 @@ public class GameStart extends Activity {
     		      }
 
     		      // this basically saves high scores...
+    		      // duplicated in 'onPause()'
+    		      /*
     		      if(mHighScores.getScore() > mGameV.getOldGuyScore()) {
     		    	  
     		    	  mScores.insertRecordIfRanks();
     		    	  mHighScores.setNewRecord(false);
 
     		      }
+    		      */
     		      if (!mGameV.isGameDeath() && gameRunning ) {
     		    	  myPanelUpdateHandler.sendEmptyMessage(GameStart.CONGRATS);
     		    	  
