@@ -9,12 +9,12 @@ Awesomeguy is a computer game originally developed for the Nintendo DS game syst
 The format of the Awesomeguy game is that of a simple platform game, in some ways like the original “Donkey Kong” or “Super Mario Brothers”. The Nintendo DS version has two screens of 192x256 pixels each, so the android version required two separate SurfaceView objects during regular game play. The game also makes use of four directional keys and two special keys -- one of which is the 'jump' key. This arrangement was emulated using TouchButtons on the touch screen and also an alternative where movement instructions were taken from the trackball. The DS version of the game uses several large int arrays for keeping track of the appearance of each level in the game. In order to port the levels to the android version, the same sort of array was used in the android code. In this way the android version can use the exact same level definition info. The android version also uses an ArrayList to keep track of sprite data, though sprites are not hardware supported in java. One ArrayList is used for all types of sprites. The DS version makes use of a set of four tiles that are used to paint the levels from the predefined level array on the game screen. The same tile set was used in the android version, but software was used to emulate the DS's hardware tiling system. For these reasons the android version of the game is slower to play than the homebrew DS version.
 
 
-=SplashScreen.java=
+=!SplashScreen.java=
 
 When the game starts the user is presented with a splash screen that dismisses itself when the user presses the screen or when a certain amount of time has passed. The next thing that the user sees is a menu. This menu allows the user to view a 'help' file, enter 'options' that effect game play and the way scores are saved, or simply 'play game' which forwards the user to the actual game. Each of the options on the menu launches another android Activity. The AndroidManifest.xml file is set up to ensure that the game starts over at the splash screen whenever it exits normally.
 
 
-=AndroidManifest.xml=
+=!AndroidManifest.xml=
 
 The AndroidManifest.xml file has entries for each of the game's activities. In the xml entry for the SplashScreen activity, the values for 'clearTaskOnLaunch' are set to 'true', and the values for 'launchMode' are set to 'singleTask'. This arrangement is shown in the following snippet. The 'clearTaskOnLaunch' option is what allows the game to always restart with the Splash Screen regardless of what state it was in when it was stopped. This option was used in each of the activities in the xml file.
 
@@ -32,7 +32,7 @@ For each of the activities of the application I put 'clearTaskOnLaunch' as one o
 android:clearTaskOnLaunch="true">
 }}}
 
-=GameStart.java=
+=!GameStart.java=
 
 Game play is handled by the GameStart.java activity. The first thing that happens in the activity is that the screen is drawn. Layout of the screen is handled using code and not an xml file. The screen is roughly devided into three sections. There is a top panel for the game's various splash screens, there is a bottom screen for the actual display of the game while the user is playing, and there is the area below the bottom screen which is where buttons appear for controlling the movement of the game's main character. The top and bottom screens are instantiations of a Panel.java class, which is a SurfaceView. Layout elements are all assembled in the 'onCreate()' method of the GameStart activity.
 
@@ -59,7 +59,7 @@ After the two inner loops exit, the program determines weather or not a player's
 
 The InnerGameLoop class has two other methods. One is a public method called 'setGameRunning()' which sets the boolean described above that allows the various loops in the thread to exit. The other method is called 'gameSpeedRegualtor()' which is used to make sure that the periodic invalidate messages from the 'game play' loop are not issued too frequently.
 
-=InitBackground.java=
+=!InitBackground.java=
 
 This class contains all the information needed to make a map that the Panel.java class uses to display the successive levels. The levels consist of a set of two dimensional arrays of 96x96 elements each.  One array is called the 'level' array and the other array is called the 'objects' array. The 'level' array defines the appearance of the background while the 'objects' array defines the how the game interprets solid objects and other objects like 'goals' and 'prizes'. The 'objects' array also describes the starting position of the player and all of the monsters.
 
@@ -71,19 +71,19 @@ The constructor takes a 'GameValues' object as a parameter. The second method is
 
 The next method in the class is called 'setLevel()' and it takes an int as a parameter. Basically this method takes the contents of the two arrays that are defined in the body of the class and copies them to the area in the 'GameValues' object where all other parts of the program will look for that info during actual game play. The method uses 'if()' statements and 'for()' loops. The 'if()' statements check what level is being requested by the int that's passed into the method, and the 'for()' loop copies the contents of the two arrays to the proper central array in 'GameValues'. There is a 'if()' block for each level. When a new level is added to the game a new block has to be added to this method along with the corresponding 'level' and 'object' arrays. This is the last method in the file. What follows is a set of two large 2D arrays for each level, which takes up lots of space.
 
-=GameValues.java=
+=!GameValues.java=
 
 This class is mostly for holding variables that are used throughout the program that need to be in a central place and somewhat organized. It contains the two 2D arrays, 'level' and 'objects'. It also contains two variables that allow the game to function if the 2D arrays are smaller than 96x96. It contains constants for every kind of object that could be defined in the 'objects' array. It contains game progress variables, like 'room' for current room number, and booleans for weather the level is over or the game is over. It also contains the ArrayList for sprites, like the monsters in the game. Most of the rest of the class is filled with setters and getters for these variables.
 
-=MovementValues.java=
+=!MovementValues.java=
 
 This class contains variables used for determining the movement of the main character from the input collected from the user. This input could be in the form of button presses on the screen or in some cases movement of the android trackball. It also holds the values of the scrollx and scrolly variables. Most of the class is made up of setters and getters, but there are two methods worth explaining. The 'getDirectionLR()' method returns a value for the user's input that eliminates the possibility that the 'left' and 'right' keys could be pressed at the same time. When the two keys are pressed together they cancel each other out. The method 'getDirectionUD()' works the same way for 'up' and 'down' keys. The class is also supposed to make it easier for the programmer to increase the distance that the player's character moves after a single button press. The default is three pixels, but conceivably this could be changed to another number easily. Trial and error would determine the final value.
 
-=SpriteInfo.java=
+=!SpriteInfo.java=
 
 The array list in the GameValues class that stores sprite information is populated with SpriteInfo objects. The SpriteInfo class contains information that might be useful to any part of the game that might want to display a sprite. Some of the info that's available in this class isn't used by all the sprites. The class is mostly filled with private int and boolean members and the setters and getters that are used to access them. The only special methods in the class are those that not only set the sprite info, but also increment or decrement it as well. The data members include resource ID, x and y position, width and height (not to be confused with BoundingBox), position on the screen, the sprite's true bounding box info, variables for weather or not the sprite is jumping and/or is animated. Also weather the sprite is 'facing right', weather it's visible, weather it's 'active' and what it's animation index is.
 
-=BoundingBox.java=
+=!BoundingBox.java=
 
 BoundingBox.java has data and variables that help the game display and work with sprites. It contains private variables for the x and y location of the sprite in question, as well as variables called 'left', 'right', 'top', and 'bottom'. These values are ints and they define the portion of the printed sprite that's considered when the sprite is checked for collision with an object on the screen. This would be important when the player comes into contact with a ladder or a platform, for example. The bounding box of the sprite is defined by these four variables.
 
@@ -95,7 +95,7 @@ This is followed by another BoundingBox factory called 'makeBlockBox()'. It only
 
 The last function of substance in the BoundingBox file is one called 'getCenterBlock(BoundingBox a)'. This function returns the int that is associated with the block that is directly in the center of the BoundingBox specified. It is used to find the block directly below the player during game play. The screen coordinates and the map coordinates are not the same, and the difference between the two needs to be addressed. The player's coordinates are 8 times bigger than the player's position on the map. The player also has dimensions that are stored in it's bounding box, and these have to be considered when you try to determine weather the player is standing on a block, for example. The rest of the file is filled with setters and getters for the various private integers in the class.
 
-=Panel.java=
+=!Panel.java=
 
 When the game is being played, two instances of the Panel.java class are displayed on the android screen. The top screen always displays a splash screen type image, and the bottom screen always displays the level of the game that is being played. This mirrors the game play experience on the Nintendo DS. The Panel.java class is a SurfaceView, and a SurfaceView is an extended View. Views are the basic building blocks of user interfaces in android apps. They are used to hold text, buttons, and other user interface items but they also have an 'onDraw(...)' method for drawing 2D graphics in their borders. SurfaceViews have the same 'onDraw(...)' method. In the SurfaceView 'onDraw(...)' method is a Canvas object, which is important for doing this drawing. In this game when graphics are being displayed by Java we use the Canvas 'drawBitmap(...)' function repeatedly. Each of the tiles we put on the screen and also each of the sprite images uses the 'drawBitmap(...)' function. A View also has a 'scrollTo(...)' method that allows the drawing being done to be scrolled inside the boundaries of the View. This is inherited by the SurfaceView and is used by the game's Panel class. When we are using JNI functions to display the game's graphics, the program uses 'drawBitmap(...)' and 'scrollTo(...)' much less frequently. In this section we'll discuss the Java code, and in another section we'll discuss the JNI code.
 
