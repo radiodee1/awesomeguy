@@ -311,8 +311,6 @@ public class GameStart extends Activity {
     	mBackground = new InitBackground(mGameV, this);
     	mFLayoutBot.addView((View)mPanelBot);
     	
-    	/* TODO must modify saved high scores for game play */
-    	/* maybe remove this after some testing */
     	mPanelBot.setUseJNI(mHighScores.isEnableJNI());
     	mPanelBot.setEnableSounds(mHighScores.isSound());
     	
@@ -510,7 +508,7 @@ public class GameStart extends Activity {
     			
     		}
     		else if (msg.what == CONGRATS) {
-    			//do something here?
+    			//This displays the end-of-level dialog box.
     			showDialog(GameStart.DIALOG_CONGRATS_ID);
     			
     		}
@@ -567,7 +565,7 @@ public class GameStart extends Activity {
     		    mGameV.setLives(3);
     		    // set room num
     		    
-    		    //mGameV.setRoomNo(3);//TODO: supposed to be '1' !!
+    		    // this sets mGameV.setRoomNo(num);
     		    this.getSavedRoom();
     		    
     		    mGameV.setScore(10);
@@ -761,7 +759,7 @@ public class GameStart extends Activity {
 	    	TextView text = (TextView) layout.findViewById(R.id.congrats_text);
 	    	text.setText("congratulations you've finished the level!! Touch the screen to continue.");
 	    	ImageView image = (ImageView) layout.findViewById(R.id.image);
-	    	image.setImageResource(R.drawable.icon);
+	    	image.setImageResource(R.drawable.guy_icon);
 	    	String mPositive = new String("Play level " + mGameV.getRoomNo());
    	    	String mNegative = new String("Stop game now.");
 	    	builder = new AlertDialog.Builder(this);
