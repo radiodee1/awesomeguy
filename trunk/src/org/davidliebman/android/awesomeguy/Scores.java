@@ -127,6 +127,15 @@ public class Scores {
 		}
 	}
 	
+	public void updateNumOfRecords(int idnum) {
+		mOpenHelper = new ScoreOpenHelper(mContext);
+		SQLiteDatabase mDatabase = mOpenHelper.getWritableDatabase();
+		Cursor c = mDatabase.rawQuery(this.getUpdateNumOfRecordsString(idnum), null);
+		c.getCount();
+		c.close();
+		mDatabase.close();
+	}
+	
 	public void pruneScoresList() {
 		ArrayList<Record> mList = this.getHighScoreList(-1);
 		mOpenHelper = new ScoreOpenHelper(mContext);
@@ -194,6 +203,12 @@ public class Scores {
 		return new String("UPDATE " + TABLE_NAME + " " +
 							" SET score=" + mHighScores.getScore() + " , " +
 							" level=" + mHighScores.getLevel() + " " + // note: level is used for checkpoints
+							" WHERE id=" + id);
+	}
+	
+	public String getUpdateNumOfRecordsString(int id) {
+		return new String("UPDATE " + TABLE_NAME + " " +
+							" SET num_records=" + mHighScores.getNumRecords() +
 							" WHERE id=" + id);
 	}
 	

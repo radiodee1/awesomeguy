@@ -69,7 +69,12 @@ public class Players extends ListActivity {
                 mSave.putInt(Options.SAVED_NUM_SCORES, mHighScores.getRecordIdNum());
                 mSave.commit();
                 mNumPlayers.setText("This is where you choose from a list of " + mHighScores.getNumRecords() + " high scores.");
-
+                
+                /* save num of high scores for player */
+                //TODO: TEST ME!!
+                mScores.updateNumOfRecords(mHighScores.getRecordIdNum());
+                
+                /* adjust number of high scores shown */
                 mScores.pruneScoresList();
         	 }
         	
