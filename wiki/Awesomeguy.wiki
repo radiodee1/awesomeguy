@@ -1,4 +1,4 @@
-#Awesomeguy is a computer game for the Android phone.
+#summary Awesomeguy is a computer game for the Android 2.2 phone.
 
 = Introduction =
 
