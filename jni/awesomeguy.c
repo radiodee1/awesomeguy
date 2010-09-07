@@ -1014,10 +1014,10 @@ void drawLevel(int animate_level) {
     baseY = scrolly / TILE_HEIGHT;
     
 	for ( j = baseX - 1; j <  baseX + tilesWidthMeasurement + 3; j++) { //32
-    	for ( i = baseY - 1 ; i < baseY + 32 + 3; i ++ ) { //24
+    	for ( i = baseY - 1 ; i < baseY + tilesHeightMeasurement + 3; i ++ ) { //24
     		
     		
-    		if (i >= 0 && j >= 0 ) { 
+    		if (i >= 0 && j >= 0  && i < MAP_HEIGHT && j < MAP_WIDTH) { 
     			if(  map_level[j][i] != 0 ) { //is tile blank??
     				cutTile(tiles_a, square, map_level[j][i]);
     				drawTile_8(square, j * TILE_WIDTH, i * TILE_HEIGHT , 
@@ -1250,7 +1250,7 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_setMonster
 JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_setScreenData(JNIEnv * env, jobject  obj, jint screenH, jint screenV)
 {
 	tilesWidthMeasurement = screenH;
-	//tilesHeightMeasurement = screenV;
+	tilesHeightMeasurement = screenV;
 
 }
 

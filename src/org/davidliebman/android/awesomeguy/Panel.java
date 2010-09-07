@@ -213,7 +213,7 @@ public  class Panel  extends SurfaceView  {
 			this.setTileMapData(tiles_a, tiles_b, tiles_c, tiles_d);
 			
 			mGameV.setDisplayWidth(mDisplayWidth);
-			setScreenData(mGameV.getScreenTilesHMod(), 32);
+			setScreenData(mGameV.getScreenTilesHMod(), 24);
 			
 			
 		}

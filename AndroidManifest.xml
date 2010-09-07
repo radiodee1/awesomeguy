@@ -59,7 +59,9 @@
 		</activity>
 
 		<activity android:name=".Players"
-		android:screenOrientation="portrait">
+		android:screenOrientation="portrait"
+		android:clearTaskOnLaunch="true">
+		
 			<intent-filter>
 				<action android:name="org.davidliebman.android.awesomeguy.Players"></action>
 				<category android:name="android.intent.category.LAUNCHER"></category>
