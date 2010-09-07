@@ -70,7 +70,7 @@ public class Players extends ListActivity {
                 mSave.commit();
                 mNumPlayers.setText("This is where you choose from a list of " + mHighScores.getNumRecords() + " high scores.");
 
-
+                mScores.pruneScoresList();
         	 }
         	
         	
@@ -195,7 +195,7 @@ public class Players extends ListActivity {
     		
     		mName.setText("Name: " + mRec.getName());
     		mScore.setText("Score: "+ mRec.getScore());
-    		mLevel.setText("Level: " + mRec.getLevel());
+    		mLevel.setText("Last Checkpoint: Level " + mRec.getLevel());
     		
     		
     		

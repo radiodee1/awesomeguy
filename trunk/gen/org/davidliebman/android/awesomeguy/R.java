@@ -62,14 +62,14 @@ public final class R {
         public static final int tilesalpha=0x7f02002d;
     }
     public static final class id {
-        public static final int AbsoluteLayout01=0x7f08002c;
-        public static final int AbsoluteLayout02=0x7f08002e;
+        public static final int AbsoluteLayout01=0x7f08002d;
+        public static final int AbsoluteLayout02=0x7f08002f;
         public static final int Credits=0x7f080010;
         public static final int GameStart=0x7f08000b;
         public static final int Help=0x7f08000c;
         public static final int Options=0x7f08000e;
         public static final int Players=0x7f080012;
-        public static final int TableLayout01=0x7f08002b;
+        public static final int TableLayout01=0x7f08002c;
         public static final int TextView01=0x7f080004;
         public static final int TextView02=0x7f080018;
         public static final int TextView03=0x7f08001a;
@@ -78,17 +78,18 @@ public final class R {
         public static final int TextView06=0x7f080022;
         public static final int TextView07=0x7f080024;
         public static final int button_options=0x7f080025;
-        public static final int button_players=0x7f08002a;
+        public static final int button_players=0x7f08002b;
         public static final int checkbox_collision=0x7f080023;
         public static final int checkbox_jni=0x7f08001f;
         public static final int checkbox_monsters=0x7f080021;
         public static final int checkbox_sounds=0x7f080019;
         public static final int congrats_text=0x7f080002;
-        public static final int edittext_name=0x7f080029;
+        public static final int edittext_name=0x7f08002a;
+        public static final int guy_icon=0x7f080028;
         public static final int icon=0x7f080005;
         public static final int image=0x7f080001;
-        public static final int image_bot=0x7f08002f;
-        public static final int image_top=0x7f08002d;
+        public static final int image_bot=0x7f080030;
+        public static final int image_top=0x7f08002e;
         public static final int layout_root=0x7f080000;
         public static final int player_name_options=0x7f080013;
         public static final int radio_players_fifty=0x7f08001d;
@@ -98,7 +99,7 @@ public final class R {
         public static final int radio_speed_20=0x7f080016;
         public static final int radio_speed_24=0x7f080017;
         public static final int room_spinner=0x7f080014;
-        public static final int text_description=0x7f080028;
+        public static final int text_description=0x7f080029;
         public static final int text_level=0x7f080008;
         public static final int text_name=0x7f080006;
         public static final int text_num_message=0x7f080026;
