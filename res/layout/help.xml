@@ -15,7 +15,7 @@ android:layout_height="fill_parent"
 xmlns:android="http://schemas.android.com/apk/res/android"
 android:isScrollContainer="true" android:scrollbarAlwaysDrawVerticalTrack="true">
 
-<TextView android:text=" This is where you show 'help' or 'how to play' messages. \n\nTHE STORY: 
+<TextView android:text="THE STORY: 
  \nIn the future, evil robot aligators take over the planet. AWESOMEGUY, the hero, must find his way around the world, transporting to different places, collecting points and stopping the alien aligators. Look out for platforms, 
 pyramids, mazes, castles, and flying steaks. \n\nYou're AWESOMEGUY. Run away 
   from the aligators. Jump on them to kill them. Get the crystal to go to the 
