@@ -23,7 +23,10 @@ pyramids, mazes, castles, and flying steaks. \n\nYou're AWESOMEGUY. Run away
 \n\nMOVEMENT: Use the arrow keys on the touch screen to move the character in the four basic directions. 'B' is the jump key. On some phones the trackball can also be used for the four directions. You can climb the ladders and jump from the platforms. You can fall any distance without hurting yourself. Monsters
 can kill you unless you jump right on top of them. Green blocks with red dots are extra lives. The white crystal takes you to the next level."
   
-
+android:background="@drawable/background"
+android:textColor="#000000"
+android:textSize="16sp"
+android:textStyle="bold"
 android:id="@+id/TextView01" 
 android:layout_width="wrap_content" 
 android:layout_height="wrap_content" >
