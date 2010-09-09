@@ -6,7 +6,14 @@ android:layout_height="fill_parent"
 xmlns:android="http://schemas.android.com/apk/res/android"
 >
 
-<TextView android:text="This is where you would show the game credits" 
+<TextView android:text="The game 'Awesomeguy' was created by David Liebman. The character 'Awesomeguy' was created 
+by Monty Stewart and Griffin Stewart. All the artwork in the game was created by one of the three persons mentioned
+above. \n\n'Awesomeguy' for the android phone is based on the 'Awesomeguy' homebrew game programmed for the Nintendo DS." 
+
+android:background="@drawable/background"
+android:textColor="#000000"
+android:textSize="16sp"
+android:textStyle="bold"
 android:id="@+id/TextView01" 
 android:layout_width="wrap_content" 
 android:layout_height="wrap_content">
