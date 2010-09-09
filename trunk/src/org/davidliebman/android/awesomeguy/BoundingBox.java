@@ -107,12 +107,12 @@ public class BoundingBox {
 						/////////////////////////
 			}
 		}
-		if (!test) return collisionSimple2(boxA, boxB);
+		if (!test) return collisionHelper(boxA, boxB);
 		else return true;
 	}
 
 
-	private boolean collisionSimple2(BoundingBox boxA, BoundingBox boxB) {
+	private boolean collisionHelper(BoundingBox boxA, BoundingBox boxB) {
 		int x[] = new int [4];
 		int y[] = new int [4];
 		int i,j;
