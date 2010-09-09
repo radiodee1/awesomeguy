@@ -89,7 +89,8 @@ public  class Panel  extends SurfaceView  {
 	private boolean boundaryRight = false;
 	private boolean canFall = false;
 	private boolean canJump = false;
-
+	private boolean mStuck = false;
+	
 	public static final int END = 1;
 	public static final int MIDDLE = 2;
 	public static final int START = 3;
@@ -717,6 +718,7 @@ public  class Panel  extends SurfaceView  {
 				centerBlockI == mGameV.mBlock) {     // block to the right // j + 2
 			x = 0;
 		}
+		
 		// wall at LEFT
 		if (keyLeft && boundaryTest == START && 
 				centerBlockIp2 != mGameV.mBlock && 
@@ -849,7 +851,9 @@ public  class Panel  extends SurfaceView  {
 		if (!keyDown && ladderTest) {
 			if(y > 0) y = 0;
 		}
-
+		
+		
+		
 		return canFall;
 	}
 	public void collisionWithMonsters() {
@@ -906,7 +910,7 @@ public  class Panel  extends SurfaceView  {
 		//newX = mGuySprite.getX();
 		//newY = mGuySprite.getY();
 
-		guyWidth = 5 + (mGuySprite.getRightBB() - mGuySprite.getLeftBB()); // 12 ?
+		guyWidth = (mGuySprite.getRightBB() - mGuySprite.getLeftBB()) + 5; // 12 ?
 		guyHeight = mGuySprite.getBottomBB() - mGuySprite.getTopBB();
 
 		
@@ -1098,6 +1102,7 @@ public  class Panel  extends SurfaceView  {
 		boundaryLeft = false;
 		boundaryRight = false;
 		canFall = true;
+		mStuck = false;
 
 		int i,j;
 
@@ -1122,7 +1127,7 @@ public  class Panel  extends SurfaceView  {
 						/*********  block ***************/
 						if (test && mGameV.getObjectsCell(j, i) == mGameV.mBlock) {
 							blockTest = true;
-
+							mStuck = true;//TODO: get unstuck.
 
 						}
 						/******** ladder **********/
