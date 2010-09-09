@@ -37,6 +37,7 @@ public  class Panel  extends SurfaceView  {
 	private Paint mP;
 	private int mMapcheat = 1;
 	private boolean useJNI = true;
+	private boolean useSpecialCollision = true;
 	private int mScale = 2;
 
 	/* for direction checking */
@@ -242,6 +243,8 @@ public  class Panel  extends SurfaceView  {
 
 			if(!useJNI && mHighScores.isEnableCollision()) collisionWithMonsters();
 
+			checkMoveToCollisions();
+			
 			scrollBg(); //always call this last!!
 
 			/** animate items **/
@@ -1089,7 +1092,8 @@ public  class Panel  extends SurfaceView  {
 
 		/*
 		 * Here we create a BoundingBox for the guy character. Then
-		 * we check the level for collisions.
+		 * we check the level for collisions. The object is to record when the 
+		 * character comes into contact with various objects.
 		 */
 
 		//BoundingBox guyBoxNext = makeSpriteBox(guy, x, y);
@@ -1251,6 +1255,180 @@ public  class Panel  extends SurfaceView  {
 		
 
 	}
+	
+	public void checkMoveToCollisions() {
+
+		/*
+		 * Here we create a BoundingBox for the guy character. Then
+		 * we check the level for collisions. The object is to avoid
+		 * having the character get stuck.
+		 */
+
+		BoundingBox guyBox = BoundingBox.makeSpriteBox(mGuySprite, 0, 0 );
+
+		// set ladderTest to false
+		ladderTest = false;
+		blockTest = false;
+		boundaryTest = false;
+		boundaryLeft = false;
+		boundaryRight = false;
+		canFall = true;
+		mStuck = false;
+
+		int i,j;
+
+		for (j =  mGuySprite.getMapPosX() / 8 -1; j <  mGuySprite.getMapPosX() / 8 + 3; j ++ ) { // x coordinates
+			for (i = mGuySprite.getMapPosY() / 8 - 1; i < mGuySprite.getMapPosY() / 8 + 3; i ++ ) { // y coordinates
+				if(j >= 0 && j < mGameV.getMapH()  && i >= 0 && i < mGameV.getMapV()) {// indexes OK?
+
+					if (mGameV.getObjectsCell(j,i)  != 0 ) { // I/J or J/I... which one???
+
+						/* save time here by checking the bounding 
+						 * box only in the squares immediately surrounding
+						 * the character...
+						 * Instead of checking the whole field of play.
+						 */
+
+						BoundingBox testMe = BoundingBox.makeBlockBox(j,i);
+
+						boolean test = guyBox.collisionSimple( testMe);
+
+						/****** tests here ******/
+
+						/*********  block ***************/
+						if (test && mGameV.getObjectsCell(j, i) == mGameV.mBlock) {
+				            canFall = moveToCollision( testMe, mGameV.mBlock);
+						}
+						/******** ladder **********/
+						if (test && mGameV.getObjectsCell(j,i) == mGameV.mLadder) {
+				            canFall = moveToCollision( testMe, mGameV.mLadder);
+						}
+
+						
+						/****** end tests  ******/
+
+
+					}//if block
+				} // indexes OK?
+				else {
+
+					boundaryTest = true;
+					if(j >= mGameV.getMapH() -1) boundaryRight = true;
+					if(j <= 1) boundaryLeft = true;
+				}
+			} // i block
+		} // j block
+
+		
+
+	}
+	
+	private boolean moveToCollision(  BoundingBox still, int blockType) {
+		  int cheat = 0;
+		  if (blockType == mGameV.mBlock ) cheat = -1;
+		  BoundingBox moveable = BoundingBox.makeSpriteBox(mGuySprite,x,y + cheat);
+		  boolean canFall = true;
+		  /// special collision
+		  if (blockType == mGameV.mLadder) canFall = false;
+		  
+		  
+		  if (blockType == mGameV.mLadder && y > 0 && (mMovementV.getDirectionLR() == MovementValues.KEY_RIGHT  || mMovementV.getDirectionLR() == MovementValues.KEY_LEFT)) {
+		    while(moveable.collisionSimple(moveable, still) && y > 0) {
+		      y --;
+		      y --; // added so guy doesn't stick to platforms.
+		      moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
+		      canFall = false;
+		    }
+		  }
+		  
+		  if (blockType == mGameV.mLadder  && (mMovementV.getDirectionUD() == MovementValues.KEY_UP  ) ) {
+		    //keys.y = V_MOVE;
+
+		    y --;
+		    canFall = false;
+		    return canFall;
+		  }
+		  
+		  if (blockType == mGameV.mLadder  && (mMovementV.getDirectionUD() == MovementValues.KEY_DOWN  ) ) {
+		    y = mMovementV.getVMove() ;
+		    canFall = false;
+		    return canFall;
+		  }
+		  
+		  /// horizontal and vertical
+		  if (blockType == mGameV.mBlock) {
+		    /*
+		    BoundingBox startingTest = makeSpriteBox(&sprites[0], 0, 0);
+		    if(collisionSimple(startingTest, still)) {
+		      canFall = false;
+		      return canFall;
+		    }
+		    */
+		    if (x > 0 && y == 0) {
+		     while(moveable.collisionSimple(moveable, still) && x > 0) {
+		       x --;
+		       moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
+		      }
+		   }
+		   if (y > 0 ) {//&& keys.x == 0) {
+		     while(moveable.collisionSimple(moveable, still) && y > 0) {
+		       y --;
+		       y --; // added so guy doesn't stick to platforms.
+		       moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y + cheat);
+		       canFall = false;
+		      }
+		    }
+		    if (x < 0 && y == 0) {
+		      while(moveable.collisionSimple(moveable, still) && x < 0) {
+		        x ++;
+		        moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
+		      }
+		    }
+		    if (y < 0 && x == 0) {
+		      while(moveable.collisionSimple(moveable, still) && y < 0) {
+		        y ++;
+		        moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
+		      }
+		    }
+		    ///// diagonals
+		    if (false) // guy seems to get stuck if this diagonal is included...
+		    if (x > 0 && y > 0) {
+		      while(moveable.collisionSimple(moveable, still) && ( x > 0 && y > 0)) {
+		        x --;
+		        y --;
+		        moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
+		      }
+		    }
+		    if (y > 0 && x < 0) {
+		      while(moveable.collisionSimple(moveable, still) && x <  0 && y > 0) {
+		        y --;
+		        x ++;
+		        moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
+		        canFall = false;
+		      }
+		    }
+		    if (x < 0 && y < 0) {
+		      while(moveable.collisionSimple(moveable, still) && x < 0 && y < 0) {
+		        x ++;
+		        y ++;
+		        moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
+		      }
+		    }
+
+		    if (y < 0 && x > 0) {
+		      while(moveable.collisionSimple(moveable, still) && x > 0 && y < 0) {
+		        y ++;
+		        x --;
+		        moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
+		      }
+		    }
+		  	
+		  }// if level.block
+		  
+		  
+		  return canFall;
+		}
+	
 	public void moveMonsters() {
 		int i;
 		int x,y,z;
