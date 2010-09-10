@@ -30,41 +30,29 @@ public class GameStart extends Activity {
 	public static final int INPUTVALUES_TRACKUP = 8;
 	public static final int CONGRATS = 9;
 	
-	static final int DIALOG_PAUSED_ID = 0;
-	static final int DIALOG_GAMEOVER_ID = 1;
-	static final int DIALOG_CONGRATS_ID = 2;
+	public static final int DIALOG_PAUSED_ID = 0;
+	public static final int DIALOG_GAMEOVER_ID = 1;
+	public static final int DIALOG_CONGRATS_ID = 2;
 	
 	
-	GameValues mGameV = new GameValues();
-	MovementValues mMovementV = new MovementValues();
-	InitBackground mBackground ;
-    Canvas mCanvas;
-    FrameLayout mBotFrame;
-    InnerGameLoop mGameLoopBot;
+	private GameValues mGameV = new GameValues();
+	private MovementValues mMovementV = new MovementValues();
+	private InitBackground mBackground ;
+    private Canvas mCanvas;
+    private FrameLayout mBotFrame;
+    private InnerGameLoop mGameLoopBot;
     
-    RelativeLayout mRLayout ;
-    TableLayout mTLayoutOuter ;
-    TableLayout mTLayout ;
-    FrameLayout mFLayoutBot ;
-    Panel mPanelBot ;
+    private RelativeLayout mRLayout ;
+    private TableLayout mTLayoutOuter ;
+    private TableLayout mTLayout ;
+    private FrameLayout mFLayoutBot ;
+    private Panel mPanelBot ;
 	
-    View mSpaceView, mSepView;
-    TableLayout mGameRow;
+    private View mSpaceView, mSepView;
+    private TableLayout mGameRow;
     
-    RelativeLayout mRLayoutGamepad;
-    //TableLayout mGamepad;
-    //TableRow mTRowTop;
-    //TableRow mTRowMid;
-    //TableRow mTRowBot;
+    private RelativeLayout mRLayoutGamepad;
     
-    //BlankButton  mButtonTop3, mButtonTop4, mButtonTop5, mButtonTop7;
-    //TouchButton mButtonTop6;
-    
-    //BlankButton mButtonMid4, mButtonMid6;
-    //TouchButton  mButtonMid3, mButtonMid5, mButtonMid7;
-    
-    //BlankButton  mButtonBot3, mButtonBot4, mButtonBot5, mButtonBot7;
-    //TouchButton mButtonBot6;    
     
     private int mButtonHeight, mButtonWidth;
     private int mScrollConst = 200;
