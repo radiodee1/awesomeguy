@@ -90,7 +90,6 @@ public  class Panel  extends SurfaceView  {
 	private boolean boundaryRight = false;
 	private boolean canFall = false;
 	private boolean canJump = false;
-	private boolean mStuck = false;
 	
 	public static final int END = 1;
 	public static final int MIDDLE = 2;
@@ -134,20 +133,23 @@ public  class Panel  extends SurfaceView  {
 			mDisplayWidth = 256;
 		}
 
-		/* paint options */
+		/* paint options BitmapFactory.Options */
 		mOptionsSprite.inScaled = false;
 		mOptionsSprite.outHeight = 16;
 		mOptionsSprite.outWidth = 16;
+		
 		mOptionsTile.inScaled = false;
 		mOptionsTile.outHeight = 128;
 		mOptionsTile.outWidth = 224;
 		mOptionsTile.inDensity = 0;
 		mOptionsTile.inTargetDensity = 0;
+		
 		mOptionsNum.inScaled = false;
-		mOptionsNum.outHeight = 16;
-		mOptionsNum.outWidth = 160;
-		mOptionsNum.inDensity = 0;
-		mOptionsNum.inTargetDensity = 0;
+		mOptionsNum.outHeight = 16;//16
+		mOptionsNum.outWidth = 160;// 160
+		mOptionsNum.inDensity = 0;//0
+		mOptionsNum.inTargetDensity = 0;//0
+		
 		
 		mP = new Paint();
 		mP.setAlpha(0xff);
@@ -236,7 +238,9 @@ public  class Panel  extends SurfaceView  {
 				if(mHighScores.isEnableCollision()) collision = 1;
 				setMonsterPreferences(monsters, collision);
 			}
-
+			
+			if(this.useSpecialCollision || true) readKeys();
+			
 			checkRegularCollisions();
 
 			physicsAdjustments();
@@ -345,17 +349,8 @@ public  class Panel  extends SurfaceView  {
 		mGameV = g;
 
 	}
-
-	public void setBackgroundShow(int num) {
-		message = GameStart.SPLASH;
-		int temp = num & 1;
-
-		if(temp == 1)
-			this.setBackgroundResource(R.drawable.splash2);
-		if(temp == 0)
-			this.setBackgroundResource(R.drawable.splash3);
-	}
-
+	
+	
 	public void setPanelScroll(int x, int y) {
 		scrollX = x;
 		scrollY = y;
@@ -586,6 +581,9 @@ public  class Panel  extends SurfaceView  {
 			}
 		}
 
+		/* PLATFORMS */
+		//canJump = collisionWithPlatforms( keys, canFall);
+		
 		/* JUMP */
 		if (keyB) {
 
@@ -620,11 +618,7 @@ public  class Panel  extends SurfaceView  {
 		}
 
 
-
-
 		
-		/* PLATFORMS */
-		//canJump = collisionWithPlatforms( keys, canFall);
 
 		/* 
 		 * Here we implement the gravity.
@@ -646,7 +640,10 @@ public  class Panel  extends SurfaceView  {
 			Log.v("functions","jumping");
 		}
 
+		
 		if (this.useSpecialCollision) checkMoveToCollisions();
+
+		
 		
 		
 		
@@ -977,7 +974,7 @@ public  class Panel  extends SurfaceView  {
 		/*** CHECK MONSTERS FOR COLLISION WITH CHARACTER ***/
 		for (i = mGameV.getMonsterOffset()  ; i < mGameV.getMonsterOffset() + mGameV.getMonsterNum() ; i++) {   
 			BoundingBox monsterBox = BoundingBox.makeSpriteBox(mGameV.getSprite(i) , 0, 0 );
-			boolean test = guyBox.collisionSimple(monsterBox);// collisionSimple(guyBox, monsterBox);
+			boolean test = BoundingBox.collisionSimple(guyBox,monsterBox);// collisionSimple(guyBox, monsterBox);
 			if (test && mGameV.getSprite(i).getActive()  == true) {
 
 				if (guyBox.getBottom()  < monsterBox.getBottom()) {
@@ -1206,7 +1203,8 @@ public  class Panel  extends SurfaceView  {
 		 */
 
 		//BoundingBox guyBoxNext = makeSpriteBox(guy, x, y);
-		BoundingBox guyBox = BoundingBox.makeSpriteBox(mGuySprite, 0, 0 );
+		BoundingBox guyBox = BoundingBox.makeSpriteBox(mGuySprite, x, y );
+		//TODO: change back to mGuySprite, 0, 0 ??
 
 		// set ladderTest to false
 		ladderTest = false;
@@ -1214,8 +1212,7 @@ public  class Panel  extends SurfaceView  {
 		boundaryTest = false;
 		boundaryLeft = false;
 		boundaryRight = false;
-		//canFall = true;
-		mStuck = false;
+		canFall = true;
 
 		
 		
@@ -1235,19 +1232,19 @@ public  class Panel  extends SurfaceView  {
 
 						BoundingBox testMe = BoundingBox.makeBlockBox(j,i);
 						//bool testNext = collisionSimple(guyBoxNext, testMe);
-						boolean test = guyBox.collisionSimple( testMe);
+						boolean test = BoundingBox.collisionSimple(guyBox, testMe);
 
 						/****** tests here ******/
 
 						/*********  block ***************/
 						if (test && mGameV.getObjectsCell(j, i) == mGameV.mBlock) {
 							blockTest = true;
-							mStuck = true;//TODO: get unstuck.
 
 						}
 						/******** ladder **********/
 						if (test && mGameV.getObjectsCell(j,i) == mGameV.mLadder) {
 							ladderTest = true;
+							//canFall = false;
 						}
 
 						/************ GOAL ****************/
@@ -1394,7 +1391,7 @@ public  class Panel  extends SurfaceView  {
 						 * Instead of checking the whole field of play.
 						 */
 
-						boolean test = guyBox.collisionSimple(guyBox, testMe);
+						boolean test = BoundingBox.collisionSimple(guyBox, testMe);
 
 						/****** tests here ******/
 
@@ -1436,7 +1433,7 @@ public  class Panel  extends SurfaceView  {
 		  
 		  
 		  if (blockType == mGameV.mLadder && y > 0 && (mMovementV.getDirectionLR() == MovementValues.KEY_RIGHT  || mMovementV.getDirectionLR() == MovementValues.KEY_LEFT)) {
-		    while(moveable.collisionSimple(moveable, still) && y > 0) {
+		    while(BoundingBox.collisionSimple(moveable, still) && y > 0) {
 		      y --;
 		      y --; 
 		      // added so guy doesn't stick to platforms.
@@ -1469,13 +1466,13 @@ public  class Panel  extends SurfaceView  {
 		    }
 		    */
 		    if (x > 0 && y == 0) {
-		     while(moveable.collisionSimple(moveable, still) && x > 0) {
+		     while(BoundingBox.collisionSimple(moveable, still) && x > 0) {
 		       x --;
 		       moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
 		      }
 		   }
 		   if (y > 0 ) {//&& keys.x == 0) {
-		     while(moveable.collisionSimple(moveable, still) && y > 0) {
+		     while(BoundingBox.collisionSimple(moveable, still) && y > 0) {
 		       y --;
 		       y --; // added so guy doesn't stick to platforms.
 		       moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y + cheat);
@@ -1483,13 +1480,13 @@ public  class Panel  extends SurfaceView  {
 		      }
 		    }
 		    if (x < 0 && y == 0) {
-		      while(moveable.collisionSimple(moveable, still) && x < 0) {
+		      while(BoundingBox.collisionSimple(moveable, still) && x < 0) {
 		        x ++;
 		        moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
 		      }
 		    }
 		    if (y < 0 && x == 0) {
-		      while(moveable.collisionSimple(moveable, still) && y < 0) {
+		      while(BoundingBox.collisionSimple(moveable, still) && y < 0) {
 		        y ++;
 		        moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
 		      }
@@ -1497,14 +1494,14 @@ public  class Panel  extends SurfaceView  {
 		    ///// diagonals
 		    if (false) {// guy seems to get stuck if this diagonal is included...
 		    if (x > 0 && y > 0) {
-		      while(moveable.collisionSimple(moveable, still) && ( x > 0 && y > 0)) {
+		      while(BoundingBox.collisionSimple(moveable, still) && ( x > 0 && y > 0)) {
 		        x --;
 		        y --;
 		        moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
 		      }
 		    }
 		    if (y > 0 && x < 0) {
-		      while(moveable.collisionSimple(moveable, still) && x <  0 && y > 0) {
+		      while(BoundingBox.collisionSimple(moveable, still) && x <  0 && y > 0) {
 		        y --;
 		        x ++;
 		        moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
@@ -1512,7 +1509,7 @@ public  class Panel  extends SurfaceView  {
 		      }
 		    }
 		    if (x < 0 && y < 0) {
-		      while(moveable.collisionSimple(moveable, still) && x < 0 && y < 0) {
+		      while(BoundingBox.collisionSimple(moveable, still) && x < 0 && y < 0) {
 		        x ++;
 		        y ++;
 		        moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
@@ -1520,7 +1517,7 @@ public  class Panel  extends SurfaceView  {
 		    }
 
 		    if (y < 0 && x > 0) {
-		      while(moveable.collisionSimple(moveable, still) && x > 0 && y < 0) {
+		      while(BoundingBox.collisionSimple(moveable, still) && x > 0 && y < 0) {
 		        y ++;
 		        x --;
 		        moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
