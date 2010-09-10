@@ -43,6 +43,8 @@ public class SplashScreen extends Activity {
         
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.addToPreferences(preferences);
+        
+        /* reset preferences so that game starts with room 1 */
         SharedPreferences.Editor e = preferences.edit();
         e.putInt(Options.SAVED_ROOM_NUM, 1);
         e.commit();
