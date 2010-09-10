@@ -150,10 +150,6 @@ public class GameStart extends Activity {
         /* generate components for game pad */
         mRLayoutGamepad = new RelativeLayout(this);
         mRLayoutGamepad.setHorizontalGravity(Gravity.CENTER_HORIZONTAL);
-        //mGamepad = new TableLayout(this);
-        //mTRowTop = new TableRow(this);
-        //mTRowMid = new TableRow(this);
-        //mTRowBot = new TableRow(this);
         
         this.setContentView(mRLayout);
         
