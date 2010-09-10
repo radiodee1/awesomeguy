@@ -29,8 +29,6 @@ public class GameStart extends Activity {
 	public static final int GAMESTOP = 7;
 	public static final int INPUTVALUES_TRACKUP = 8;
 	public static final int CONGRATS = 9;
-	//public static final int SAVE_ROOM = 10;
-	//public static final int GET_ROOM = 11;
 
 	
 	public static final int DIALOG_PAUSED_ID = 0;
@@ -426,13 +424,11 @@ public class GameStart extends Activity {
 
 		    	
 		    	mMovementV.setKeyInput(mKeyValue);
-		    	mPanelBot.readKeys();
     		
     		}
     		if(m.getAction() == MotionEvent.ACTION_UP) {
     			
     			mMovementV.clearKeys(); 
-    			mPanelBot.readKeys();
     		}
     		
     		

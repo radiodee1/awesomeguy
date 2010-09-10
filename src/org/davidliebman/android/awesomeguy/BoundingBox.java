@@ -53,7 +53,7 @@ public class BoundingBox {
 		return collisionSimple(this, other);
 	}
 	
-	public boolean collisionSimple(BoundingBox boxA, BoundingBox boxB) {
+	public static boolean collisionSimple(BoundingBox boxA, BoundingBox boxB) {
 		int x[] = new int[4];
 		int y[] = new int[4];
 		int i, j;
@@ -112,7 +112,7 @@ public class BoundingBox {
 	}
 
 
-	private boolean collisionHelper(BoundingBox boxA, BoundingBox boxB) {
+	private static boolean collisionHelper(BoundingBox boxA, BoundingBox boxB) {
 		int x[] = new int [4];
 		int y[] = new int [4];
 		int i,j;

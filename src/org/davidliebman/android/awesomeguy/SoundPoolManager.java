@@ -58,6 +58,7 @@ public class SoundPoolManager {
                     AudioManager mgr = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
                     int streamVolume = mgr.getStreamVolume(AudioManager.STREAM_MUSIC);
                     
+                    
                     if (sound == SOUND_BOOM) {
                     	soundPool.play(this.mSoundBoom, streamVolume, streamVolume, 1, 0, 1f);
                     }
