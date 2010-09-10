@@ -1204,7 +1204,6 @@ public  class Panel  extends SurfaceView  {
 
 		//BoundingBox guyBoxNext = makeSpriteBox(guy, x, y);
 		BoundingBox guyBox = BoundingBox.makeSpriteBox(mGuySprite, x, y );
-		//TODO: change back to mGuySprite, 0, 0 ??
 
 		// set ladderTest to false
 		ladderTest = false;
@@ -1723,7 +1722,7 @@ public  class Panel  extends SurfaceView  {
 			//keyB = false;
 		}
 		if(mMovementV.getDirectionLR() == MovementValues.KEY_LEFT) {
-			x =  (int) - (mMovementV.getHMove() * mXMultiplier);
+			x =   (int) - (mMovementV.getHMove() * mXMultiplier);
 			changeX = true;
 			//keyB = false;
 		}
