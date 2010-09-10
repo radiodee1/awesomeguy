@@ -43,7 +43,9 @@ public class SplashScreen extends Activity {
         
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.addToPreferences(preferences);
-        
+        SharedPreferences.Editor e = preferences.edit();
+        e.putInt(Options.SAVED_ROOM_NUM, 1);
+        e.commit();
         
         /* init scores object */
         mScores = new Scores(this, mHighScores);
