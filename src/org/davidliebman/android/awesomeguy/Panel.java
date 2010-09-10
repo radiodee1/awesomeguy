@@ -1190,8 +1190,7 @@ public  class Panel  extends SurfaceView  {
 
 		}
 		////////////////////////
-
-
+		
 		mGuySprite.setMapPosX(newMapX);
 		mGuySprite.setMapPosY(newMapY);
 		

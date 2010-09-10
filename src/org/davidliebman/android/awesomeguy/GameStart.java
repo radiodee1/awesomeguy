@@ -29,6 +29,9 @@ public class GameStart extends Activity {
 	public static final int GAMESTOP = 7;
 	public static final int INPUTVALUES_TRACKUP = 8;
 	public static final int CONGRATS = 9;
+	//public static final int SAVE_ROOM = 10;
+	//public static final int GET_ROOM = 11;
+
 	
 	public static final int DIALOG_PAUSED_ID = 0;
 	public static final int DIALOG_GAMEOVER_ID = 1;
@@ -269,6 +272,7 @@ public class GameStart extends Activity {
 	    	  mHighScores.setNewRecord(false);
 
 	      }
+    	this.saveRoomNo();
     	
 	    super.onPause();
     }
@@ -305,6 +309,8 @@ public class GameStart extends Activity {
     	/* set loop to 'endless' */
     	//mGameFunct.setGameRunning(true);
     	mGameLoopBot.setGameRunning(true);
+    	
+    	this.getSavedRoom();
     	
     	/* start game loop thread */
     	mGameLoopBot.start();
@@ -496,7 +502,17 @@ public class GameStart extends Activity {
     			showDialog(GameStart.DIALOG_CONGRATS_ID);
     			
     		}
-    		
+    		/*
+    		else if (msg.what == SAVE_ROOM) {
+    			//This displays the end-of-level dialog box.
+    			saveRoomNo();
+    			
+    		}
+    		else if (msg.what == GET_ROOM) {
+    			//This displays the end-of-level dialog box.
+    			getSavedRoom();
+    		}
+    		*/
     		else super.handleMessage(msg);
     		
     	}
@@ -550,7 +566,8 @@ public class GameStart extends Activity {
     		    // set room num
     		    
     		    // this sets mGameV.setRoomNo(num);
-    		    this.getSavedRoom();
+    		    getSavedRoom();
+
     		    
     		    mGameV.setScore(10);
     		    
@@ -575,7 +592,8 @@ public class GameStart extends Activity {
     			
     		    
     		    //init room
-    		    this.getSavedRoom();
+    		    getSavedRoom();
+
     		    mBackground.setLevel(mGameV.getRoomNo());
     	    	mBackground.initLevel(mMovementV);
     	    	
@@ -624,7 +642,9 @@ public class GameStart extends Activity {
     		      //
     		      if (!mGameV.isGameDeath()) {
     		        mGameV.incrementRoomNo();
-    		        this.saveRoomNo();
+    		        
+    		        saveRoomNo();
+
     		        mGameV.setEndGame(false);
     		        mGameV.setEndLevel(false);
     		      }
@@ -637,8 +657,8 @@ public class GameStart extends Activity {
     		      if( mGameV.getRoomNo() > GameValues.NUM_ROOMS &&  !mGameV.isEndLevel() ) {
     		        
     		    	  mGameV.setRoomNo(1);
-    		    	  this.saveRoomNo();
-    		    	  
+    		    	  saveRoomNo();
+
     		      }
 
     		      // this basically saves high scores...
@@ -666,18 +686,6 @@ public class GameStart extends Activity {
 
     		
 
-    	}
-    	
-    	public void saveRoomNo() {
-            SharedPreferences preferences = getSharedPreferences(SplashScreen.AWESOME_NAME, MODE_PRIVATE);
-            SharedPreferences.Editor mPrefEdit = preferences.edit();
-            mPrefEdit.putInt(Options.SAVED_ROOM_NUM, mGameV.getRoomNo());
-            mPrefEdit.commit();
-    	}
-    	
-    	public void getSavedRoom() {
-    		SharedPreferences preferences = getSharedPreferences(SplashScreen.AWESOME_NAME, MODE_PRIVATE);
-    		mGameV.setRoomNo(preferences.getInt(Options.SAVED_ROOM_NUM, 1));
     	}
     	
     	public void setGameRunning(boolean isRunning) {
@@ -713,7 +721,17 @@ public class GameStart extends Activity {
     	
     };
 
-
+    public void saveRoomNo() {
+        SharedPreferences preferences = getSharedPreferences(SplashScreen.AWESOME_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor mPrefEdit = preferences.edit();
+        mPrefEdit.putInt(Options.SAVED_ROOM_NUM, mGameV.getRoomNo());
+        mPrefEdit.commit();
+	}
+	
+	public void getSavedRoom() {
+		SharedPreferences preferences = getSharedPreferences(SplashScreen.AWESOME_NAME, MODE_PRIVATE);
+		mGameV.setRoomNo(preferences.getInt(Options.SAVED_ROOM_NUM, 1));
+	}
 
 	public Record getHighScores() {
 		return mHighScores;
@@ -744,17 +762,17 @@ public class GameStart extends Activity {
 	    	                               (ViewGroup) findViewById(R.id.layout_root));
 
 	    	TextView text = (TextView) layout.findViewById(R.id.congrats_text);
-	    	text.setText("congratulations you've finished the level!! Touch the screen to continue.");
+	    	text.setText("congratulations you've finished the level!!");
 	    	ImageView image = (ImageView) layout.findViewById(R.id.image);
 	    	image.setImageResource(R.drawable.guy_icon);
-	    	String mPositive = new String("Play level " + mGameV.getRoomNo());
+	    	String mPositive = new String("Play next level.");
    	    	String mNegative = new String("Stop game now.");
 	    	builder = new AlertDialog.Builder(this);
 	    	builder.setView(layout);
 	    	builder.setCancelable(false)
     	       .setPositiveButton(mPositive, new DialogInterface.OnClickListener() {
     	           public void onClick(DialogInterface dialog, int id) {
-    	                //Players.this.finish();
+    	        	  
     	        	   dialog.cancel();
     	        	   
     	           }
