@@ -37,7 +37,7 @@ public  class Panel  extends SurfaceView  {
 	private Paint mP;
 	private int mMapcheat = 1;
 	private boolean useJNI = true;
-	private boolean useSpecialCollision = true;
+	private boolean useSpecialCollision = false;
 	private int mScale = 2;
 
 	/* for direction checking */
@@ -243,7 +243,7 @@ public  class Panel  extends SurfaceView  {
 
 			if(!useJNI && mHighScores.isEnableCollision()) collisionWithMonsters();
 
-			checkMoveToCollisions();
+			
 			
 			scrollBg(); //always call this last!!
 
@@ -409,7 +409,7 @@ public  class Panel  extends SurfaceView  {
 		mGuySprite.setAnimIndex(num);
 	}
 
-	public void animateItems() {
+	private void animateItems() {
 
 		if (ANIMATE_SPEED != 0) animate ++;
 		if (this.mGuySprite.getAnimate() == true) {
@@ -435,7 +435,7 @@ public  class Panel  extends SurfaceView  {
 
 
 	}
-	public boolean checkPrintableObjects(int num) {
+	private boolean checkPrintableObjects(int num) {
 		boolean temp = false;
 
 		/* these are blocks that are not printed on the screen */
@@ -447,7 +447,7 @@ public  class Panel  extends SurfaceView  {
 
 		return temp;
 	}
-	public void drawScoreOnMain(Canvas canvas, boolean show) {
+	private void drawScoreOnMain(Canvas canvas, boolean show) {
 
 		int i;
 		//int topScore[] = {374,375,376,377,378,383};
@@ -524,23 +524,19 @@ public  class Panel  extends SurfaceView  {
 		}
 	}
 	
-	public void physicsAdjustments() {
+	private void physicsAdjustments() {
 
 
 
 		/* All sorts of adjustments go here. ladder, jump, gravity, 
 		 * the ground, and solid objects in general.
 		 */
-		BoundingBox guyBox = BoundingBox.makeSpriteBox(mGuySprite,0,0);
+		BoundingBox guyBox = BoundingBox.makeSpriteBox(mGuySprite,x,y);//mGuySprite,0,0
 
 
 		int jumpHeight = 15;
 
-		int center = ((guyBox.getLeft() + guyBox.getRight() ) / 2) /8; 
-		int actual = ((guyBox.getLeft() + guyBox.getRight() ) / 2) - (center *8);
-		int centerBlock = BoundingBox.getCenterBlock(guyBox);
-		//if (center == centerBlock) centerTest = true;
-
+		
 
 		/* LADDER TEST */
 		if (ladderTest) {
@@ -554,9 +550,41 @@ public  class Panel  extends SurfaceView  {
 			canFall = true;
 		}
 
+		int center = ((guyBox.getLeft() + guyBox.getRight() ) / 2) /8; 
+		int actual = ((guyBox.getLeft() + guyBox.getRight() ) / 2) - (center *8);
+		int centerBlock = BoundingBox.getCenterBlock(guyBox);
+		//if (center == centerBlock) centerTest = true;
 
 
-
+		/* BLOCK TEST */
+		if (!this.useSpecialCollision) {
+			if (actual > 6) {
+				if(!boundaryRight) center ++;
+				collisionWithBlocks(   center , END);
+			}
+			else if (actual < 2) {
+				if(!boundaryLeft) center --;
+				collisionWithBlocks(   center , START);
+			}
+			else {
+				collisionWithBlocks(   center , MIDDLE);
+			}
+		}
+		
+		if(this.useSpecialCollision) {
+			//limited version of 'collision w/ blocks'
+			if (actual > 6) {
+				if(!boundaryRight) center ++;
+				collisionWithBlocksSpecial(   center , END);
+			}
+			else if (actual < 2) {
+				if(!boundaryLeft) center --;
+				collisionWithBlocksSpecial(   center , START);
+			}
+			else {
+				collisionWithBlocksSpecial(   center , MIDDLE);
+			}
+		}
 
 		/* JUMP */
 		if (keyB) {
@@ -594,23 +622,19 @@ public  class Panel  extends SurfaceView  {
 
 
 
-		/* BLOCK TEST */
-
-		if (actual > 6) {
-			if(!boundaryRight) center ++;
-			collisionWithBlocks(   center , END);
-		}
-		else if (actual < 2) {
-			if(!boundaryLeft) center --;
-			collisionWithBlocks(   center , START);
-		}
-		else {
-			collisionWithBlocks(   center , MIDDLE);
-		}
-
+		
 		/* PLATFORMS */
 		//canJump = collisionWithPlatforms( keys, canFall);
 
+		/* 
+		 * Here we implement the gravity.
+		 */
+		if(canFall && !ladderTest) {
+			y = y + mMovementV.getVMove() ;
+		
+		}
+		
+		
 		/*
 		 * handle jumps.
 		 */
@@ -622,14 +646,10 @@ public  class Panel  extends SurfaceView  {
 			Log.v("functions","jumping");
 		}
 
-		/* 
-		 * Here we implement the gravity.
-		 */
-		if(canFall && !ladderTest) {
-			y = y + mMovementV.getVMove() ;
-
-		}
-
+		if (this.useSpecialCollision) checkMoveToCollisions();
+		
+		
+		
 
 
 
@@ -859,7 +879,97 @@ public  class Panel  extends SurfaceView  {
 		
 		return canFall;
 	}
-	public void collisionWithMonsters() {
+	
+	private boolean collisionWithBlocksSpecial(  int centerBlock , int boundaryTest) {
+		int i;
+		int below = 2;
+		int mapY = mGuySprite.getMapPosY();
+		i = mapY / 8;
+		if (mapY - (i *8) > 4) below --;
+		boolean keyLeft = false;
+		boolean keyRight = false;
+		//boolean keyUp = false;
+		boolean keyDown = false;
+
+		/* these are shortcuts for commonly used values in this function */
+		int centerBlockIm1 = mGameV.getObjectsCellReversed(i-1, centerBlock); // i minus 1
+		int centerBlockI = mGameV.getObjectsCellReversed(i, centerBlock);     // i
+		int centerBlockIp1 = mGameV.getObjectsCellReversed(i+1, centerBlock); // i plus 1
+		int centerBlockIp2 = mGameV.getObjectsCellReversed(i+2, centerBlock); // i plus 2
+		int centerBlockIpBelow = mGameV.getObjectsCellReversed(i+below, centerBlock); // i plus below
+
+		if (mMovementV.getDirectionLR() == MovementValues.KEY_LEFT) keyLeft = true;
+		if (mMovementV.getDirectionLR() == MovementValues.KEY_RIGHT) keyRight = true;
+		if (mMovementV.getDirectionUD() == MovementValues.KEY_DOWN) keyDown = true;
+		//if (mMovementV.getDirectionUD() == MovementValues.KEY_UP) keyUp = true;
+
+
+
+		//what if centerBlock is on the boundary??
+		if(centerBlock == mGameV.getMapH()) {
+			//y = 0;
+			canFall = false;
+			return false;
+		}
+
+		if (jumptime > 0 && 
+				centerBlockI == mGameV.mBlock ){    // hit block from below
+			//y = V_MOVE * 2;
+			y = 0;
+			canFall = true;
+			jumptime =0;
+		}
+
+		// skip RIGHT
+		if(keyRight  && 
+				centerBlockIp1 == mGameV.mBlock && 
+				centerBlockI != mGameV.mBlock && 
+				centerBlockIm1 != mGameV.mBlock ) { //y,x
+			canFall = false;
+			y = - (8 +  mMovementV.getVMove());
+		}
+		
+
+		// skip LEFT
+		if(keyLeft && 
+				centerBlockIp1 == mGameV.mBlock && 
+				centerBlockI != mGameV.mBlock &&
+				centerBlockIm1 != mGameV.mBlock) {// j-1 j-1
+			canFall = false;
+			y = - (8 + mMovementV.getVMove());
+		}
+		
+
+		// no hanging
+		if( 
+				centerBlockIp1 != mGameV.mBlock && 
+				centerBlockIp2 != mGameV.mBlock && 
+				centerBlockIm1== mGameV.mBlock && !ladderTest) { 
+			// no hanging from
+			// blocks by accident
+			Log.v("functions","no hanging");
+
+			y = mMovementV.getVMove() ;//crucial?
+
+			canFall = true;
+			jumptime =0;
+		}
+
+		//ladders should work - no sliding at top of ladder
+		if (ladderTest) {
+			canFall = false;
+		}
+		// if you start to fall, and there's a ladder below you
+		// you should stop falling
+		if (!keyDown && ladderTest) {
+			if(y > 0) y = 0;
+		}
+		
+		
+		
+		return canFall;
+	}
+	private void collisionWithMonsters() {
 
 		int i;
 		BoundingBox guyBox = BoundingBox.makeSpriteBox( mGameV.getSpriteStart() , 0, 0 );
@@ -893,7 +1003,7 @@ public  class Panel  extends SurfaceView  {
 	}
 
 
-	public void scrollBg() {
+	private void scrollBg() {
 		/* scroll registers for background */
 
 		canScroll = true;
@@ -1088,7 +1198,7 @@ public  class Panel  extends SurfaceView  {
 		mMovementV.setScrollX(screenX);
 		mMovementV.setScrollY(screenY);
 	}
-	public void checkRegularCollisions() {
+	private void checkRegularCollisions() {
 
 		/*
 		 * Here we create a BoundingBox for the guy character. Then
@@ -1105,9 +1215,11 @@ public  class Panel  extends SurfaceView  {
 		boundaryTest = false;
 		boundaryLeft = false;
 		boundaryRight = false;
-		canFall = true;
+		//canFall = true;
 		mStuck = false;
 
+		
+		
 		int i,j;
 
 		for (j =  mGuySprite.getMapPosX() / 8 -1; j <  mGuySprite.getMapPosX() / 8 + 3; j ++ ) { // x coordinates
@@ -1256,7 +1368,7 @@ public  class Panel  extends SurfaceView  {
 
 	}
 	
-	public void checkMoveToCollisions() {
+	private void checkMoveToCollisions() {
 
 		/*
 		 * Here we create a BoundingBox for the guy character. Then
@@ -1264,24 +1376,18 @@ public  class Panel  extends SurfaceView  {
 		 * having the character get stuck.
 		 */
 
-		BoundingBox guyBox = BoundingBox.makeSpriteBox(mGuySprite, 0, 0 );
+		BoundingBox guyBox = BoundingBox.makeSpriteBox(mGuySprite, x, y );
 
-		// set ladderTest to false
-		ladderTest = false;
-		blockTest = false;
-		boundaryTest = false;
-		boundaryLeft = false;
-		boundaryRight = false;
-		canFall = true;
-		mStuck = false;
-
+		
 		int i,j;
 
 		for (j =  mGuySprite.getMapPosX() / 8 -1; j <  mGuySprite.getMapPosX() / 8 + 3; j ++ ) { // x coordinates
 			for (i = mGuySprite.getMapPosY() / 8 - 1; i < mGuySprite.getMapPosY() / 8 + 3; i ++ ) { // y coordinates
+				BoundingBox testMe = BoundingBox.makeBlockBox(j,i);
+
 				if(j >= 0 && j < mGameV.getMapH()  && i >= 0 && i < mGameV.getMapV()) {// indexes OK?
 
-					if (mGameV.getObjectsCell(j,i)  != 0 ) { // I/J or J/I... which one???
+					if (mGameV.getObjectsCell(j,i)  != 0 || mGameV.getObjectsCell(j, i) != mGameV.mStart) { // I/J or J/I... which one???
 
 						/* save time here by checking the bounding 
 						 * box only in the squares immediately surrounding
@@ -1289,9 +1395,7 @@ public  class Panel  extends SurfaceView  {
 						 * Instead of checking the whole field of play.
 						 */
 
-						BoundingBox testMe = BoundingBox.makeBlockBox(j,i);
-
-						boolean test = guyBox.collisionSimple( testMe);
+						boolean test = guyBox.collisionSimple(guyBox, testMe);
 
 						/****** tests here ******/
 
@@ -1311,7 +1415,7 @@ public  class Panel  extends SurfaceView  {
 					}//if block
 				} // indexes OK?
 				else {
-
+					canFall = moveToCollision(testMe, mGameV.mBlock);
 					boundaryTest = true;
 					if(j >= mGameV.getMapH() -1) boundaryRight = true;
 					if(j <= 1) boundaryLeft = true;
@@ -1335,7 +1439,8 @@ public  class Panel  extends SurfaceView  {
 		  if (blockType == mGameV.mLadder && y > 0 && (mMovementV.getDirectionLR() == MovementValues.KEY_RIGHT  || mMovementV.getDirectionLR() == MovementValues.KEY_LEFT)) {
 		    while(moveable.collisionSimple(moveable, still) && y > 0) {
 		      y --;
-		      y --; // added so guy doesn't stick to platforms.
+		      y --; 
+		      // added so guy doesn't stick to platforms.
 		      moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
 		      canFall = false;
 		    }
@@ -1391,7 +1496,7 @@ public  class Panel  extends SurfaceView  {
 		      }
 		    }
 		    ///// diagonals
-		    if (false) // guy seems to get stuck if this diagonal is included...
+		    if (false) {// guy seems to get stuck if this diagonal is included...
 		    if (x > 0 && y > 0) {
 		      while(moveable.collisionSimple(moveable, still) && ( x > 0 && y > 0)) {
 		        x --;
@@ -1422,14 +1527,14 @@ public  class Panel  extends SurfaceView  {
 		        moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
 		      }
 		    }
-		  	
+		    }// if(false)
 		  }// if level.block
 		  
 		  
 		  return canFall;
 		}
 	
-	public void moveMonsters() {
+	private void moveMonsters() {
 		int i;
 		int x,y,z;
 		boolean markerTest = false;
@@ -1522,7 +1627,7 @@ public  class Panel  extends SurfaceView  {
 		return;
 	}
 
-	public void swapMonster(SpriteInfo sprites, int animationIndex) {
+	private void swapMonster(SpriteInfo sprites, int animationIndex) {
 
 		boolean facingRight = sprites.getFacingRight();
 
