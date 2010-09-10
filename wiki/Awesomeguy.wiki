@@ -13,7 +13,11 @@ The android phone that the game was developed for had no "D-pad". For the androi
 
 =!SplashScreen.java=
 
-When the game starts the user is presented with a splash screen that dismisses itself when the user presses the screen or when a certain amount of time has passed. The next thing that the user sees is a menu. This menu allows the user to view a 'help' file, enter 'options' that effect game play and the way scores are saved, go to a 'players' selection screen, or simply 'play game' which forwards the user to the actual game. Each of the options on the menu launches another android Activity. The AndroidManifest.xml file is set up to ensure that the game starts over at the splash screen whenever it exits normally.
+When the game starts the user is presented with a splash screen that dismisses itself when the user presses the screen or when a certain amount of time has passed. The splash screen activity performs certain tasks when it displays. One thing that it does is initializing the database that holds the player scores. It also creates a new blank player record for storing high scores and user preferences. (It doesn't give this new record a user name -- that's saved for if the user decides to do so). Then it sets the default starting level to '1'. This way if the game is started without the user expressing their preference, the starting room number will be '1'.
+
+=!Menu.java=
+
+The next thing that the user sees is a menu. This menu allows the user to view a 'help' or 'credits' file, enter 'options' that effect game play and the way scores are saved, go to a 'players' selection screen, or simply 'play game'.  The last option forwards the user to the actual game. Each of the options on the menu launches another android Activity. The AndroidManifest.xml file is set up to ensure that the game starts over at the splash screen whenever it exits normally.
 
 
 =!AndroidManifest.xml=
