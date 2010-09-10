@@ -424,11 +424,12 @@ public class GameStart extends Activity {
 
 		    	
 		    	mMovementV.setKeyInput(mKeyValue);
-    		
+		    	//mPanelBot.readKeys();
     		}
     		if(m.getAction() == MotionEvent.ACTION_UP) {
     			
     			mMovementV.clearKeys(); 
+    			//mPanelBot.readKeys();
     		}
     		
     		
