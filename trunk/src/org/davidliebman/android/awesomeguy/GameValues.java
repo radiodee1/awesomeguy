@@ -164,7 +164,6 @@ public class GameValues {
 		mRoom ++;
 	}
 	
-	
 	public int getScore() {
 		return mGuyScore.getScore();
 	}
