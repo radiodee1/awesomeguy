@@ -60,7 +60,7 @@ public class Scores {
 			//Log.d("Scores","id" + c.getColumnIndex("id"));
 			Record mTempRec = new Record();
 			mTempRec.setRecordIdNum(c.getInt(c.getColumnIndex("id")));
-			mTempRec.setNewRecord(new Boolean(c.getString(c.getColumnIndex("new_record"))).booleanValue());
+			mTempRec.setNewRecord(new Boolean(c.getString(c.getColumnIndex("new_record"))).booleanValue());//TODO: should I change this to 'false'??
 			mTempRec.setName(c.getString(c.getColumnIndex("name")));
 			mTempRec.setLevel(c.getInt(c.getColumnIndex("level")));
 			mTempRec.setScore(c.getInt(c.getColumnIndex("score")));
@@ -137,6 +137,25 @@ public class Scores {
 		mDatabase.close();
 	}
 	
+	public void updateOptions(int idnum) {
+		ArrayList<Record> mList = this.getHighScoreList(-1);
+		boolean found = false;
+		if(mList.size() > 0 ) {
+			for (int i = 0; i < mList.size(); i ++ ) {
+				if (idnum == mList.get(i).getRecordIdNum()) found = true;
+			}
+		}
+		if (found) {
+			mOpenHelper = new ScoreOpenHelper(mContext);
+			SQLiteDatabase mDatabase = mOpenHelper.getWritableDatabase();
+			Cursor c = mDatabase.rawQuery(this.getUpdateOptionsString(idnum), null);
+			c.getCount();
+			c.close();
+			mDatabase.close();
+		}
+		Log.e("Scores", "at Options save");
+	}
+	
 	public void pruneScoresList() {
 		ArrayList<Record> mList = this.getHighScoreList(-1);
 		mOpenHelper = new ScoreOpenHelper(mContext);
@@ -210,6 +229,18 @@ public class Scores {
 	public String getUpdateNumOfRecordsString(int id) {
 		return new String("UPDATE " + TABLE_NAME + " " +
 							" SET num_records=" + mHighScores.getNumRecords() +
+							" WHERE id=" + id);
+	}
+	
+	public String getUpdateOptionsString(int id) {
+		return new String("UPDATE " + TABLE_NAME + " " +
+							" SET  " +
+							" game_speed=" + mHighScores.getGameSpeed() + " , " +
+							" num_records=" + mHighScores.getNumRecords() + " , " +
+							" sound='" + new Boolean(mHighScores.isSound()).toString() + "' , " +
+							" enable_jni='" + new Boolean(mHighScores.isEnableJNI()).toString() + "' , " +
+							" enable_monsters='" + new Boolean(mHighScores.isEnableMonsters()).toString() + "' , " +
+							" enable_collision='" + new Boolean(mHighScores.isEnableCollision()).toString() + "' " +
 							" WHERE id=" + id);
 	}
 	

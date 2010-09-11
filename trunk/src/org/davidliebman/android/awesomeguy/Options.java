@@ -20,11 +20,13 @@ public class Options extends Activity {
 	private int mRoomNumSelected = 1;
 
 	private Record mHighScores = new Record() ;
+	private Scores mScores ;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+        mScores = new Scores(this, mHighScores);
               
         /** retrieve Record mHighScores **/
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
@@ -200,12 +202,18 @@ public class Options extends Activity {
     @Override
     public void onPause() {
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
-
+        
+        /* save mHighScores so other activities can see it */
     	mHighScores.addToPreferences(preferences);
     	
+    	/* save desired starting room num */
     	SharedPreferences.Editor edit = preferences.edit();
         edit.putInt(SAVED_ROOM_NUM, mRoomNumSelected);
         edit.commit();
+        
+        /* save all other options to player's personal record if it's not 'anonymous' */
+        if (!mHighScores.isNewRecord()) mScores.updateOptions(mHighScores.getRecordIdNum());
+        
 	    super.onPause();
 
     }
