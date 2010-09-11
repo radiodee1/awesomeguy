@@ -72,7 +72,7 @@ public class Players extends ListActivity {
                 
                 /* save num of high scores for player */
                 //TODO: TEST ME!!
-                mScores.updateNumOfRecords(mHighScores.getRecordIdNum());
+                mScores.updateNumOfRecords(mHighScores.getNumRecords());
                 
                 /* adjust number of high scores shown */
                 mScores.pruneScoresList();
@@ -87,7 +87,7 @@ public class Players extends ListActivity {
         	
         	public boolean onItemLongClick (AdapterView<?> parent, View view, int position, long id) {
         		Toast.makeText(Players.this, "Player - Num Records: " + mNames.get(position).getNumRecords() + 
-        				" Record ID: " + mNames.get(position).getRecordIdNum(), Toast.LENGTH_SHORT).show();
+        				" Record ID: " + mNames.get(position).getRecordIdNum(), Toast.LENGTH_LONG).show();
 
         		return true;
         	}
@@ -106,7 +106,7 @@ public class Players extends ListActivity {
                   mRec.setName(edittext.getText().toString().trim());
                   mRec.setNumRecords(mHighScores.getNumRecords());
                   if ( isNameTaken(mNames, mRec.getName())) {
-                      Toast.makeText(Players.this, "This name is already taken: " + edittext.getText(), Toast.LENGTH_SHORT).show();
+                      Toast.makeText(Players.this, "This name is already taken: " + edittext.getText(), Toast.LENGTH_LONG).show();
 
                   }
                   else {
@@ -158,6 +158,10 @@ public class Players extends ListActivity {
     	
     	mAadapter.notifyDataSetChanged();
     	
+    	int num = mScores.pruneScoresList();
+    	if (num > 0) {
+    		Toast.makeText(Players.this, num + " scores were removed from High Score List!!", Toast.LENGTH_LONG).show();
+    	}
     }
     
     /* determine if a name is already taken */
