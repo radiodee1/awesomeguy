@@ -77,7 +77,7 @@ public  class Record  {
          mCycles = in.getInt("mCycles",0);
          mSave1 = in.getInt("mSave1",0);
          mGameSpeed = in.getInt("mGameSpeed",16);
-         mNumRecords= in.getInt("mNumRecords",5);
+         mNumRecords= in.getInt("mNumRecords",50);
          mSound = new Boolean(in.getString("mSound","")).booleanValue();
          mEnableJNI = new Boolean(in.getString("mEnableJNI","")).booleanValue();
          mEnableMonsters = new Boolean(in.getString("mEnableMonsters","")).booleanValue();
@@ -200,12 +200,14 @@ public  class Record  {
 	public void setEnableCollision(boolean mEnableCollision) {
 		this.mEnableCollision = mEnableCollision;
 	}
+	
 	public int getRecordIdNum() {
 		return mRecordIdNum;
 	}
 	public void setRecordIdNum(int mRecordIdNum) {
 		this.mRecordIdNum = mRecordIdNum;
 	}
+	
 
 
 	

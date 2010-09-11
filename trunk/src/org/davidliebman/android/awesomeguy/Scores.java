@@ -156,11 +156,13 @@ public class Scores {
 		Log.e("Scores", "at Options save");
 	}
 	
-	public void pruneScoresList() {
+	public int pruneScoresList() {
 		ArrayList<Record> mList = this.getHighScoreList(-1);
 		mOpenHelper = new ScoreOpenHelper(mContext);
 		SQLiteDatabase mDatabase = mOpenHelper.getWritableDatabase();
+		int num = 0;
 		if (mHighScores.getNumRecords() < mList.size()) {
+			num = mList.size() - mHighScores.getNumRecords();
 			for (int i = mHighScores.getNumRecords(); i < mList.size(); i ++) {
 				int j = mList.get(i).getRecordIdNum();
 				Cursor c = mDatabase.rawQuery("DELETE FROM "+ TABLE_NAME + " WHERE id=" + j, null);
@@ -171,6 +173,7 @@ public class Scores {
 			}
 		}
 		mDatabase.close();
+		return num;
 	}
 	
     public String getInsertString(String tableName) {
