@@ -25,7 +25,8 @@
 		</activity>
 
 
-		<activity android:name=".Help">
+		<activity android:name=".Help"
+		android:screenOrientation="portrait">
 			<intent-filter></intent-filter>
 		</activity>
 
@@ -51,7 +52,8 @@
 		</activity>
 
 
-		<activity android:name=".Credits">
+		<activity android:name=".Credits"
+		android:screenOrientation="portrait">
 			<intent-filter>
 				<action android:name="org.davidliebman.android.awesomeguy.Credits"></action>
 				<category android:name="android.intent.category.LAUNCHER"></category>
