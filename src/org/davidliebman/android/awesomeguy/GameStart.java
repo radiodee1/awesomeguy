@@ -255,7 +255,7 @@ public class GameStart extends Activity {
     	gameRunning = false;
     	Message mEndMessage = new Message();
     	mEndMessage.what = GAMESTOP;
-    	myPanelUpdateHandler.sendMessageAtFrontOfQueue(mEndMessage);
+    	mHandler.sendMessageAtFrontOfQueue(mEndMessage);
     	
     	try {
     		mGameLoopBot.join(1000);
@@ -346,7 +346,7 @@ public class GameStart extends Activity {
     				    	
     				    	Message mEnd = new Message();
     				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
-    				    	myPanelUpdateHandler.sendMessageDelayed(mEnd, mScrollConst);
+    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
     				    	
     						
     						//Log.v("button factory", "trackball??? left");
@@ -359,7 +359,7 @@ public class GameStart extends Activity {
             		    	
             		    	Message mEnd = new Message();
     				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
-    				    	myPanelUpdateHandler.sendMessageDelayed(mEnd, mScrollConst);
+    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
     				    	
     				    	
     						//Log.v("button factory", "trackball??? right");
@@ -372,7 +372,7 @@ public class GameStart extends Activity {
     				    	
     				    	Message mEnd = new Message();
     				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
-    				    	myPanelUpdateHandler.sendMessageDelayed(mEnd, mScrollConst);
+    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
     				    	
     						
     						//Log.v("button factory", "trackball??? up");
@@ -386,7 +386,7 @@ public class GameStart extends Activity {
             		    	
             		    	Message mEnd = new Message();
     				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
-    				    	myPanelUpdateHandler.sendMessageDelayed(mEnd, mScrollConst);
+    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
     				    	
                         	
     						//Log.v("button factory", "trackball??? down");
@@ -451,7 +451,7 @@ public class GameStart extends Activity {
     
     
     
-    public Handler myPanelUpdateHandler = new Handler() {
+    public Handler mHandler = new Handler() {
     	public void handleMessage(Message msg) {
     		if(msg.what == GAMEVALUES) {
     		
@@ -577,9 +577,9 @@ public class GameStart extends Activity {
     		      // Zero out lower screen. Could use another method. Maybe print picture on
     		       // main engine...
     		       //
-    		    myPanelUpdateHandler.sendEmptyMessage(GameStart.STARTLEVEL);
+    		    mHandler.sendEmptyMessage(GameStart.STARTLEVEL);
 
-        		myPanelUpdateHandler.removeMessages(GameStart.MOVEMENTVALUES);
+        		mHandler.removeMessages(GameStart.MOVEMENTVALUES);
 
     		    mMovementV.setScrollX(0);
     		    mMovementV.setScrollY(0);
@@ -617,14 +617,14 @@ public class GameStart extends Activity {
     		    	Message mM = new Message();
     		    	mM.what = GameStart.MOVEMENTVALUES;
     		    	mM.obj = mHighScores;
-    		    	myPanelUpdateHandler.sendMessageAtFrontOfQueue(mM);
+    		    	mHandler.sendMessageAtFrontOfQueue(mM);
     				
         			
     		    } // end of gameplay loop
 
     		   
     		    
-    	    	myPanelUpdateHandler.sendEmptyMessage(GameStart.GAMESTOP);
+    	    	mHandler.sendEmptyMessage(GameStart.GAMESTOP);
     		    // *** ANIMATE SPINNING GUY ***
     		    try {
     		    	Thread.sleep(1000);
@@ -668,14 +668,14 @@ public class GameStart extends Activity {
     		      }
     		      */
     		      if (!mGameV.isGameDeath() && gameRunning ) {
-    		    	  myPanelUpdateHandler.sendEmptyMessage(GameStart.CONGRATS);
+    		    	  mHandler.sendEmptyMessage(GameStart.CONGRATS);
     		    	  
     		      }
     		      
     		    } /////////// while NUM_ROOMS loop
 
     		    if (gameRunning) {
-    		    	myPanelUpdateHandler.sendEmptyMessage(GameStart.PLAYAGAIN);
+    		    	mHandler.sendEmptyMessage(GameStart.PLAYAGAIN);
     		    }
     		    
     		    
