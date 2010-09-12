@@ -596,7 +596,8 @@ public class GameStart extends Activity {
     	    	//jni test !!
     		    mPanelBot.setLevelData(mGameV.getLevelArray(), mGameV.getObjectsArray(), mGameV.getMapV(), mGameV.getMapH());
     	    	mPanelBot.addMonstersJNI();
-    		    
+    		    mPanelBot.addPlatformsJNI();
+    	    	
     		    //get guy sprite reference 
     			mGuySprite = mGameV.getSpriteStart();
     		    mPanelBot.setGuySprite(mGuySprite);

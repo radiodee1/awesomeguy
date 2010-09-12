@@ -216,6 +216,12 @@ public  class Panel  extends SurfaceView  {
 			mTiles.getPixels(tiles_d, 0, 224, 0, 0, 224, 128);
 			this.setTileMapData(tiles_a, tiles_b, tiles_c, tiles_d);
 			
+			int [] platform_a = new int [8 * 40];
+			Bitmap mPlatform;
+			mPlatform = BitmapFactory.decodeResource(getResources(), R.drawable.concrete, mOptionsTile);
+			mPlatform.getPixels(platform_a, 0, 40, 0, 0, 40, 8);
+			this.setMovingPlatformData(platform_a);
+			
 			mGameV.setDisplayWidth(mDisplayWidth);
 			setScreenData(mGameV.getScreenTilesHMod(), 24);
 			
@@ -1765,13 +1771,24 @@ public  class Panel  extends SurfaceView  {
 
 		}
 	}
+	
+	public void addPlatformsJNI() {
+		if (mGameV.getPlatformNum() == -1) return;
+		for (int i = mGameV.getPlatformOffset(); i <=  mGameV.getPlatformNum() ; i ++) {
+			SpriteInfo temp = mGameV.getSprite(i);
+			addPlatform(temp.getMapPosX(), temp.getMapPosY());
+
+		}
+	}
 	public native void setLevelData( int [] a_map, int [] b_map,int height, int width);
 	public native void setObjectsDisplay(int map_x, int map_y, int value);
 	public native void setGuyData(int [] a, int [] b, int [] c, int [] d);
 	public native void setMonsterData(int [] a, int [] b, int [] c, int [] d);
+	public native void setMovingPlatformData(int []a);
 	public native void inactivateMonster(int num);
 	public native void setTileMapData( int [] a, int [] b, int [] c, int [] d);
 	public native void addMonster(int map_x, int map_y, int animate_index);
+	public native void addPlatform(int map_x, int map_y);
 	public native void setGuyPosition(int x, int y, int scrollx, int scrolly, int animate);
 	public native void setScoreLives(int score, int lives);
     public native void setMonsterPreferences(int monsters, int collision);

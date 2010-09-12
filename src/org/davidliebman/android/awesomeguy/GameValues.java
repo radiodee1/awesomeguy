@@ -301,14 +301,5 @@ public class GameValues {
 		this.mPlatformOffset = mPlatformOffset;
 	}
 	
-	/** Score Record **/
-	/*
-	public Record getGuyScore() {
-		return mGuyScore;
-	}
-
-	public void setGuyScore(Record mGuyScore) {
-		this.mGuyScore = mGuyScore;
-	}
-	*/
+	
 }
