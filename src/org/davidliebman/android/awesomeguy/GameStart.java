@@ -594,7 +594,7 @@ public class GameStart extends Activity {
     	    	mBackground.initLevel(mMovementV);
     	    	
     	    	//jni test !!
-    		    mPanelBot.setLevelData(mGameV.getLevelArray(), mGameV.getObjectsArray(), mGameV.getMapV(), mGameV.getMapH());
+    		    mPanelBot.setLevelData(mGameV.getLevelArray(), mGameV.getObjectsArray(), mGameV.getMapH(), mGameV.getMapV());
     	    	mPanelBot.addMonstersJNI();
     		    mPanelBot.addPlatformsJNI();
     	    	

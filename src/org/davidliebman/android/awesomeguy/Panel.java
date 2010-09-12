@@ -31,7 +31,9 @@ public  class Panel  extends SurfaceView  {
 	private BitmapFactory.Options mOptionsSprite = new BitmapFactory.Options();
 	private BitmapFactory.Options mOptionsTile = new BitmapFactory.Options();
 	private BitmapFactory.Options mOptionsNum = new BitmapFactory.Options();
+	private BitmapFactory.Options mOptionsPlat = new BitmapFactory.Options();
 
+	
 	private int mTemp;
 	private SpriteInfo mGuySprite;
 	private Paint mP;
@@ -150,6 +152,11 @@ public  class Panel  extends SurfaceView  {
 		mOptionsNum.inDensity = 0;//0
 		mOptionsNum.inTargetDensity = 0;//0
 		
+		mOptionsPlat.inScaled = false;
+		mOptionsPlat.outHeight = 16;//16
+		mOptionsPlat.outWidth = 160;// 160
+		mOptionsPlat.inDensity = 0;//0
+		mOptionsPlat.inTargetDensity = 0;//0
 		
 		mP = new Paint();
 		mP.setAlpha(0xff);
@@ -218,7 +225,7 @@ public  class Panel  extends SurfaceView  {
 			
 			int [] platform_a = new int [8 * 40];
 			Bitmap mPlatform;
-			mPlatform = BitmapFactory.decodeResource(getResources(), R.drawable.concrete, mOptionsTile);
+			mPlatform = BitmapFactory.decodeResource(getResources(), R.drawable.concrete, mOptionsPlat);
 			mPlatform.getPixels(platform_a, 0, 40, 0, 0, 40, 8);
 			this.setMovingPlatformData(platform_a);
 			
@@ -1765,7 +1772,7 @@ public  class Panel  extends SurfaceView  {
 	
 	
 	public void addMonstersJNI() {
-		for (int i = mGameV.getMonsterOffset(); i < mGameV.getMonsterOffset() + mGameV.getMonsterNum(); i ++) {
+		for (int i = mGameV.getMonsterOffset(); i <= mGameV.getMonsterNum()  ; i ++) {
 			SpriteInfo temp = mGameV.getSprite(i);
 			addMonster(temp.getMapPosX(), temp.getMapPosY(), temp.getAnimIndex());
 
@@ -1774,13 +1781,13 @@ public  class Panel  extends SurfaceView  {
 	
 	public void addPlatformsJNI() {
 		if (mGameV.getPlatformNum() == -1) return;
-		for (int i = mGameV.getPlatformOffset(); i <=  mGameV.getPlatformNum() ; i ++) {
+		for (int i = mGameV.getPlatformOffset() ; i <=  mGameV.getPlatformNum() ; i ++) {
 			SpriteInfo temp = mGameV.getSprite(i);
 			addPlatform(temp.getMapPosX(), temp.getMapPosY());
 
 		}
 	}
-	public native void setLevelData( int [] a_map, int [] b_map,int height, int width);
+	public native void setLevelData( int [] a_map, int [] b_map,int width, int height);
 	public native void setObjectsDisplay(int map_x, int map_y, int value);
 	public native void setGuyData(int [] a, int [] b, int [] c, int [] d);
 	public native void setMonsterData(int [] a, int [] b, int [] c, int [] d);

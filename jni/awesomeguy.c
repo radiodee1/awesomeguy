@@ -360,6 +360,10 @@ void setLevelData(int a[MAP_HEIGHT * MAP_WIDTH],  int b[MAP_HEIGHT * MAP_WIDTH])
 			//LOGE("level data %i ", map_level[i][j]);
 		}
 	}
+	monster_num = 0;
+	sprite_num = 0;
+	platform_num = -1;
+	
 	return;
 }
 
@@ -443,6 +447,7 @@ void addMonster(int monster_x, int monster_y, int monster_animate) {
       
     sprite_num ++;
     monster_num = sprite_num;
+    platform_num = 0;
 }
  
  
@@ -795,7 +800,7 @@ void drawSprite_40_8(uint32_t from[PLATFORM_WIDTH][PLATFORM_HEIGHT], int x, int 
     			}
     			else {
 	    			screen[i + l][j + k] = from[i][j];
-
+					//screen[j + l][i + k] = from[j][i];
 	    		}
 
     		}
@@ -991,10 +996,14 @@ void drawMonsters() {
 	int hide = TRUE;
 	int show = FALSE;
 	int visibility = FALSE;
-
+	//int index_num = 0;
+	
+	//if (sprite_num >= monster_num) index_num = sprite_num;
+	//else index_num = monster_num;
+	
 	//for each monster...
-	if(sprite_num > 0) {
-		for (i =  0 ; i < sprite_num   ; i++) {   
+	if(monster_num > 0) {
+		for (i =  0 ; i < monster_num   ; i++) {   
 			markerTest = FALSE; 
 
 			
@@ -1012,7 +1021,7 @@ void drawMonsters() {
 					if( map_objects[x+2][y] == B_MARKER ) markerTest = TRUE;
 					if( map_objects[ x+2][y+1] == 0) markerTest = TRUE;
 					// turn monster
-					if (sprite[i].x > level_h * 8  - 16 || markerTest == TRUE) {
+					if (sprite[i].x > level_w * 8  - 16 || markerTest == TRUE) {
 
 						sprite[i].facingRight=FALSE;
 					}
@@ -1104,6 +1113,7 @@ void drawMovingPlatform() {
 	int i;
   int x,y;
   int width = 5;
+  int cheat = 5;
   int markerTest = FALSE;
   int hide = TRUE;
   int show = FALSE;
@@ -1120,22 +1130,22 @@ void drawMovingPlatform() {
       /* Must move and stop platforms when they hit bricks or
        * markers or the end of the screen/room/level.
        */
-      if(sprite[i].facingRight) {
+      if(sprite[i].facingRight == TRUE) {
         sprite[i].x += 1;
         // marker test
-        if(map_objects[y][x+width] == B_BLOCK) markerTest = TRUE;
-        if(map_objects[y][x+width] == B_MARKER) markerTest = TRUE;
+        if(map_objects[y][x+width - cheat] == B_BLOCK) markerTest = TRUE;
+        if(map_objects[y][x+width - cheat] == B_MARKER) markerTest = TRUE;
 
         // turn platform
-        if (sprite[i].x > level_w * 8  - (5 * 8) || markerTest == TRUE) {
+        if (sprite[i].x > level_w   * 8   - PLATFORM_WIDTH || markerTest == TRUE) {
           sprite[i].facingRight = FALSE;
         }
       }
       else {
         sprite[i].x -= 1;
         // marker test
-        if(map_objects[y][x] == B_BLOCK) markerTest = TRUE;
-        if(map_objects[y][x] == B_MARKER) markerTest = TRUE;
+        if(map_objects[y][x + cheat] == B_BLOCK) markerTest = TRUE;
+        if(map_objects[y][x + cheat] == B_MARKER) markerTest = TRUE;
 
         // turn platform
         if (sprite[i].x < 0 || markerTest == TRUE) {
@@ -1144,14 +1154,14 @@ void drawMovingPlatform() {
       } 
     
       visibility = show;
-      //hide monster
+      //hide platform
       if(sprite[i].x > scrollx + 32 * 8 + (8 * width) ) {
         visibility = hide;
       }
       if (sprite[i].x < scrollx - (8 * width)) {
         visibility = hide;
       }
-      //hide monster
+      //hide platform
       if(sprite[i].y > scrolly + 24 * 8 + (8 * width)) {
         visibility = hide;
       }
@@ -1174,10 +1184,16 @@ void drawMovingPlatform() {
 void collisionWithMonsters() {
 
 	int i;
+	//int index_num = 0;
+	
+	//if (sprite_num > monster_num) index_num = sprite_num;
+	//else index_num = monster_num;
+	
+	
 		  BoundingBox guyBox = makeSpriteBox( guy , 0, 0 );
 
 		  
-		  for (i = 0  ; i < sprite_num ; i++) {   
+		  for (i = 0  ; i < monster_num ; i++) {   
 		    BoundingBox monsterBox = makeSpriteBox(sprite[i] , 0, 0 );
 		    int test =  collisionSimple(guyBox, monsterBox);
 		    if (test && sprite[i].active   == TRUE) {
