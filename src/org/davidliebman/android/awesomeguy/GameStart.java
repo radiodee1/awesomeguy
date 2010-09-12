@@ -677,6 +677,8 @@ public class GameStart extends Activity {
     		    if (gameRunning) {
     		    	myPanelUpdateHandler.sendEmptyMessage(GameStart.PLAYAGAIN);
     		    }
+    		    
+    		    
     		    mPlayAgain = true;
 
     		  } // playAgain
