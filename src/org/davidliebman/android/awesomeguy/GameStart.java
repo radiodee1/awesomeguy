@@ -24,13 +24,12 @@ public class GameStart extends Activity {
 	public static final int GAMEVALUES = 1;
 	public static final int STARTLEVEL = 2;
 	public static final int MOVEMENTVALUES = 3;
-	public static final int SPLASH = 4;
-	public static final int INVALIDATE = 5;
-	public static final int INPUTVALUES_KEYUP = 6;
-	public static final int GAMESTOP = 7;
-	public static final int INPUTVALUES_TRACKUP = 8;
-	public static final int CONGRATS = 9;
-	public static final int PLAYAGAIN = 10;
+	public static final int INVALIDATE = 4;
+	public static final int INPUTVALUES_KEYUP = 5;
+	public static final int GAMESTOP = 6;
+	public static final int INPUTVALUES_TRACKUP = 7;
+	public static final int CONGRATS = 8;
+	public static final int PLAYAGAIN = 9;
 
 
 	
@@ -309,7 +308,6 @@ public class GameStart extends Activity {
     	mGameLoopBot.setGameRunning(true);
     	
     	this.getSavedRoom();
-		mGameV.setSavedRoomFlag(false);
 
     	
     	/* start game loop thread */
@@ -536,7 +534,7 @@ public class GameStart extends Activity {
     		Date startDate = new Date();
     		nextGameTick = startDate.getTime();
     		
-    		
+    		boolean mSavedRoomFlag = false;
 			
     		
     		
@@ -561,8 +559,8 @@ public class GameStart extends Activity {
     		    mGameV.setLives(3);
     		    // set room num
     		    
-    		    //if (mGameV.isSavedRoomFlag() == true) mGameV.setRoomNo(1);
-    		    //mGameV.setSavedRoomFlag(true);
+    		    if (mSavedRoomFlag == true) mGameV.setRoomNo(1);
+    		    mSavedRoomFlag = true;
     		    
     		    //getSavedRoom();
 
@@ -590,7 +588,7 @@ public class GameStart extends Activity {
     			
     		    
     		    //init room
-    		    getSavedRoom();
+    		    //getSavedRoom();
 
     		    mBackground.setLevel(mGameV.getRoomNo());
     	    	mBackground.initLevel(mMovementV);
@@ -641,7 +639,7 @@ public class GameStart extends Activity {
     		      if (!mGameV.isGameDeath()) {
     		        mGameV.incrementRoomNo();
     		        
-    		        saveRoomNo();
+    		        //saveRoomNo();
 
     		        mGameV.setEndGame(false);
     		        mGameV.setEndLevel(false);
@@ -655,7 +653,7 @@ public class GameStart extends Activity {
     		      if( mGameV.getRoomNo() > GameValues.NUM_ROOMS &&  !mGameV.isEndLevel() ) {
     		        
     		    	  mGameV.setRoomNo(1);
-    		    	  saveRoomNo();
+    		    	  //saveRoomNo();
 
     		      }
 
@@ -719,6 +717,8 @@ public class GameStart extends Activity {
     };
 
     public void saveRoomNo() {
+    	// this function doesn't seem to work from inside the 'InnerGameLoop'
+    	// because it's a separate thread.
         SharedPreferences preferences = getSharedPreferences(SplashScreen.AWESOME_NAME, MODE_PRIVATE);
         SharedPreferences.Editor mPrefEdit = preferences.edit();
         mPrefEdit.putInt(Options.SAVED_ROOM_NUM, mGameV.getRoomNo());
@@ -728,7 +728,6 @@ public class GameStart extends Activity {
 	public void getSavedRoom() {
 		SharedPreferences preferences = getSharedPreferences(SplashScreen.AWESOME_NAME, MODE_PRIVATE);
 		mGameV.setRoomNo(preferences.getInt(Options.SAVED_ROOM_NUM, 1));
-		mGameV.setSavedRoomFlag(false);
 	}
 
 	public Record getHighScores() {
@@ -761,24 +760,14 @@ public class GameStart extends Activity {
     	
 	    switch(id) {
 	    case DIALOG_CONGRATS_ID:
-	    	//AlertDialog.Builder builder;
-	    	//AlertDialog alertDialog;
-
-	    	//Context mContext = getApplicationContext();
-	    	//LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
-	    	//View 
+	    	
 	    	layout = inflater.inflate(R.layout.congrats,
 	    	                               (ViewGroup) findViewById(R.id.layout_root));
-
-	    	//TextView 
 	    	text = (TextView) layout.findViewById(R.id.congrats_text);
 	    	text.setText("congratulations you've finished the level!!");
-	    	//ImageView 
 	    	image = (ImageView) layout.findViewById(R.id.image);
 	    	image.setImageResource(R.drawable.guy_icon);
-	    	//String 
 	    	mPositive = new String("Play next level.");
-   	    	//String 
    	    	mNegative = new String("Stop game now.");
 	    	builder = new AlertDialog.Builder(this);
 	    	builder.setView(layout);

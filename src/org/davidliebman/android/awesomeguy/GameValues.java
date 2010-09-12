@@ -48,7 +48,6 @@ public class GameValues {
 	private int mUsernum = 4;
 	public static int NUM_ROOMS = 10;
 	private int mOldGuyScore;
-	private boolean mSavedRoomFlag;
 	
 	/* sprites */
 	private ArrayList<SpriteInfo> mSprites = new ArrayList<SpriteInfo>();
@@ -230,12 +229,7 @@ public class GameValues {
 		this.mOldGuyScore = mOldGuyScore;
 	}
 	
-	public boolean isSavedRoomFlag() {
-		return mSavedRoomFlag;
-	}
-	public void setSavedRoomFlag(boolean mSavedRoomFlag) {
-		this.mSavedRoomFlag = mSavedRoomFlag;
-	}
+	
 	/** work with sprite list **/
 	public void setSpriteStart() {
 		//mSprites = new ArrayList<SpriteInfo>();
