@@ -228,101 +228,99 @@ public  class Panel  extends SurfaceView  {
 	public void onDraw(Canvas canvas) {
 		mCanvas = canvas;
 
-		if(message != GameStart.SPLASH ) {
-			
-			if (useJNI) {
-				this.setScoreLives(mGameV.getScore(), mGameV.getLives());
-				int monsters = 0;
-				int collision = 0;
-				if(mHighScores.isEnableMonsters()) monsters = 1;
-				if(mHighScores.isEnableCollision()) collision = 1;
-				setMonsterPreferences(monsters, collision);
-			}
-			
-			if(this.useSpecialCollision || true) readKeys();
-			
-			checkRegularCollisions();
-
-			physicsAdjustments();
-
-			if(!useJNI && mHighScores.isEnableCollision()) collisionWithMonsters();
-
-			
-			
-			scrollBg(); //always call this last!!
-
-			/** animate items **/
-			animateItems();
-
-			/******* draw background tiles  *********/
-			mCanvas.drawColor(Color.BLACK);
-			mTiles = new TileCutter(bMap, mScale);
-			baseX = scrollX/ mTiles.getBlockWidth();
-			baseY = scrollY/ mTiles.getBlockHeight();
-			if (!useJNI) {// test jni code <--
-				for ( int i = baseX; i < baseX + 32 + 1; i ++ ) { //24
-
-					for (int j = baseY; j < baseY + 24 + 1; j ++) { //32
-						if (mGameV.getLevelCell(i, j) != 0 ) {
-							//print visible background
-							mTemp = mGameV.getLevelCell(i, j);
-							mBlock = mTiles.getTile(mTemp);
-							canvas.drawBitmap(mBlock,mScale *  i * mTiles.getBlockWidth(), mScale * j* mTiles.getBlockHeight(), null);
-						}
-						if (mGameV.getObjectsCell(i, j) != 0) {
-							//print special background objects
-							mTemp = mGameV.getObjectsCell(i, j);
-							if(this.checkPrintableObjects(mTemp)) {
-								mBlock = mTiles.getTile(mTemp - mMapcheat);
-								canvas.drawBitmap(mBlock, mScale * i * mTiles.getBlockWidth(), mScale * j* mTiles.getBlockHeight(), null);
-							}
-						}
-
-					}
-				}
-			}
-			/************** put monsters on screen ***********/
-
-			if (!useJNI && mHighScores.isEnableMonsters()) moveMonsters();
-
-			/************ Put guy on screen **************/
-			if (!useJNI) {
-				mTempGuy = BitmapFactory.decodeResource(getResources(),mGuySprite.getResourceId(),mOptionsSprite);
-				mGuyBitmap = Bitmap.createBitmap(this.mTempGuy, 0,0, 16,16, mMatrix, false);
-				canvas.drawBitmap(mGuyBitmap, mScale * (  mGuySprite.getMapPosX()  - mGuySprite.getLeftBB()), 
-						mScale * (  mGuySprite.getMapPosY()  - mGuySprite.getTopBB()), mP);
-			}
-			/************** test jni *******************/
-			if (useJNI) {
-				
-				mMap = Bitmap.createBitmap(drawLevel(newBG + 1), 256, 192, Bitmap.Config.RGB_565);
-				mTempJNI = Bitmap.createBitmap(mMap, 0, 0, 256, 192, mMatrix, false);
-				canvas.drawBitmap(mTempJNI, 0, 0, null);
-				playSounds();
-			}
-			/************ put scores on screen ***********/
-			if (!useJNI) {
-				boolean mScoresOnScreen = false;
-				if(mGuySprite.getMapPosY() - mGuySprite.getTopBB() > 16) mScoresOnScreen = true;
-				drawScoreOnMain(canvas, mScoresOnScreen);
-			}
-			
-			if (this.useJNI) {
-				/* at end of level */
-				if(getEndLevel() == 1) {
-					mGameV.setEndLevel(true);
-					mGameV.decrementLives();
-					mGameV.setGameDeath(true);
-				}
-				
-				/* changes during level */
-				mHighScores.setLives(getLives());
-				mHighScores.setScore(getScore());
-				mGameV.setScore(getScore());
-			}
+		
+		if (useJNI) {
+			this.setScoreLives(mGameV.getScore(), mGameV.getLives());
+			int monsters = 0;
+			int collision = 0;
+			if(mHighScores.isEnableMonsters()) monsters = 1;
+			if(mHighScores.isEnableCollision()) collision = 1;
+			setMonsterPreferences(monsters, collision);
 		}
+		
+		if(this.useSpecialCollision || true) readKeys();
+		
+		checkRegularCollisions();
+
+		physicsAdjustments();
+
+		if(!useJNI && mHighScores.isEnableCollision()) collisionWithMonsters();
 
 		
+		
+		scrollBg(); //always call this last!!
+
+		/** animate items **/
+		animateItems();
+
+		/******* draw background tiles  *********/
+		mCanvas.drawColor(Color.BLACK);
+		mTiles = new TileCutter(bMap, mScale);
+		baseX = scrollX/ mTiles.getBlockWidth();
+		baseY = scrollY/ mTiles.getBlockHeight();
+		if (!useJNI) {// test jni code <--
+			for ( int i = baseX; i < baseX + 32 + 1; i ++ ) { //24
+
+				for (int j = baseY; j < baseY + 24 + 1; j ++) { //32
+					if (mGameV.getLevelCell(i, j) != 0 ) {
+						//print visible background
+						mTemp = mGameV.getLevelCell(i, j);
+						mBlock = mTiles.getTile(mTemp);
+						canvas.drawBitmap(mBlock,mScale *  i * mTiles.getBlockWidth(), mScale * j* mTiles.getBlockHeight(), null);
+					}
+					if (mGameV.getObjectsCell(i, j) != 0) {
+						//print special background objects
+						mTemp = mGameV.getObjectsCell(i, j);
+						if(this.checkPrintableObjects(mTemp)) {
+							mBlock = mTiles.getTile(mTemp - mMapcheat);
+							canvas.drawBitmap(mBlock, mScale * i * mTiles.getBlockWidth(), mScale * j* mTiles.getBlockHeight(), null);
+						}
+					}
+
+				}
+			}
+		}
+		/************** put monsters on screen ***********/
+
+		if (!useJNI && mHighScores.isEnableMonsters()) moveMonsters();
+
+		/************ Put guy on screen **************/
+		if (!useJNI) {
+			mTempGuy = BitmapFactory.decodeResource(getResources(),mGuySprite.getResourceId(),mOptionsSprite);
+			mGuyBitmap = Bitmap.createBitmap(this.mTempGuy, 0,0, 16,16, mMatrix, false);
+			canvas.drawBitmap(mGuyBitmap, mScale * (  mGuySprite.getMapPosX()  - mGuySprite.getLeftBB()), 
+					mScale * (  mGuySprite.getMapPosY()  - mGuySprite.getTopBB()), mP);
+		}
+		/************** test jni *******************/
+		if (useJNI) {
+			
+			mMap = Bitmap.createBitmap(drawLevel(newBG + 1), 256, 192, Bitmap.Config.RGB_565);
+			mTempJNI = Bitmap.createBitmap(mMap, 0, 0, 256, 192, mMatrix, false);
+			canvas.drawBitmap(mTempJNI, 0, 0, null);
+			playSounds();
+		}
+		/************ put scores on screen ***********/
+		if (!useJNI) {
+			boolean mScoresOnScreen = false;
+			if(mGuySprite.getMapPosY() - mGuySprite.getTopBB() > 16) mScoresOnScreen = true;
+			drawScoreOnMain(canvas, mScoresOnScreen);
+		}
+		
+		if (this.useJNI) {
+			/* at end of level */
+			if(getEndLevel() == 1) {
+				mGameV.setEndLevel(true);
+				mGameV.decrementLives();
+				mGameV.setGameDeath(true);
+			}
+			
+			/* changes during level */
+			mHighScores.setLives(getLives());
+			mHighScores.setScore(getScore());
+			mGameV.setScore(getScore());
+		}
+	
+	
 
 	}
 

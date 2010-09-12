@@ -674,7 +674,9 @@ public class GameStart extends Activity {
     		      
     		    } /////////// while NUM_ROOMS loop
 
-    		    myPanelUpdateHandler.sendEmptyMessage(GameStart.PLAYAGAIN);
+    		    if (gameRunning) {
+    		    	myPanelUpdateHandler.sendEmptyMessage(GameStart.PLAYAGAIN);
+    		    }
     		    mPlayAgain = true;
 
     		  } // playAgain
