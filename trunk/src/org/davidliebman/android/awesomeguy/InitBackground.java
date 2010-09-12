@@ -26,7 +26,7 @@ public class InitBackground {
 	public void initLevel(MovementValues mMovementV) {
 		int i,j;
 		int num = 0;
-		mGameV.setPlatformNum(-1);
+
 		/*try {
 			mParser.testParse(1);
 		}
@@ -37,7 +37,11 @@ public class InitBackground {
 		
 		mGameV.clearSpriteList();
 		mGameV.setSpriteStart();
+		
 		mGameV.setMonsterOffset(1);
+		mGameV.setMonsterNum(0);
+		mGameV.setPlatformNum(-1);
+		mGameV.setPlatformOffset(0);
 		//find starting guy position
 		for(i = 0; i< mGameV.getMapV(); i ++) { //y
 			for (j = 0; j <  mGameV.getMapH(); j ++) { //x
@@ -47,7 +51,6 @@ public class InitBackground {
 					mGameV.getSprite(0).setMapPosY(i*8);
 
 				}
-				mGameV.setMonsterOffset(1);
 				//add monster here
 				if(mGameV.getObjectsCell(j, i) == mGameV.mMonster ) { //32,64
 					if (GameValues.MONSTER_TOTAL >= num) {
@@ -71,26 +74,27 @@ public class InitBackground {
 
 			}
 		}
-		mGameV.setPlatformOffset(num + 1);
+		
+		mGameV.setPlatformOffset(num );
 		
 		for(i = 0; i< mGameV.getMapV(); i ++) { //y
 			for (j = 0; j <  mGameV.getMapH(); j ++) { //x
 				if( mGameV.getObjectsCell(j, i) == mGameV.mPlatform ) { //32,64
-
-					//put monster object in ArrayList here...
-					SpriteInfo temp = new SpriteInfo(R.drawable.concrete, 0, 8, 0, 40);
-					temp.setMapPosX(j * 8);
-					temp.setMapPosY(i * 8);
-					temp.setActive(true);
-					temp.setVisible(true);
-					temp.setFacingRight(true);
-					//temp.setResourceId(R.drawable.monster_l0);
-					mGameV.addSprite(temp);
-					     
-					num ++;
-
-					mGameV.setPlatformNum(num);
-
+					if(GameValues.PLATFORM_TOTAL > num - mGameV.getPlatformOffset()) {
+						//put platform object in ArrayList here...
+						SpriteInfo temp = new SpriteInfo(R.drawable.concrete, 0, 8, 0, 40);
+						temp.setMapPosX(j * 8);
+						temp.setMapPosY(i * 8);
+						temp.setActive(true);
+						temp.setVisible(true);
+						temp.setFacingRight(true);
+	
+						mGameV.addSprite(temp);
+						     
+						num ++;
+	
+						mGameV.setPlatformNum(num);
+					}
 				}
 				
 			}
