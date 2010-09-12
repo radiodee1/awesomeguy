@@ -47,6 +47,9 @@ static int GUY_CHEAT = 3;
 static int MONSTER_WIDTH = 16;
 static int MONSTER_HEIGHT = 16;
  
+static int PLATFORM_WIDTH = 40;
+static int PLATFORM_HEIGHT = 8;
+ 
 static int MAP_WIDTH = 96;
 static int MAP_HEIGHT = 96;
  
@@ -71,6 +74,8 @@ static uint32_t monster_b[16][16];
 static uint32_t monster_c[16][16];
 static uint32_t monster_d[16][16];
  
+static uint32_t platform_a[40][8];
+ 
 static int map_level [96][96];
 static int map_objects[96][96];
  
@@ -87,9 +92,11 @@ typedef struct {
 	int leftBB, rightBB, topBB, bottomBB;
 } Sprite;
  
-Sprite sprite[30];
+Sprite sprite[100];
 int sprite_num = 0;
- 
+int monster_num = 0;
+int platform_num = -1;
+
 Sprite guy;
 
 
@@ -135,6 +142,8 @@ void setGuyData(jint a[], jint b[], jint c[], jint d[] ) ;
 
 void setMonsterData(jint a[], jint b[], jint c[], jint d[] ) ;
 
+void setMovingPlatformData(jint a[]);
+
 void setLevelData(int a[MAP_WIDTH * MAP_HEIGHT],  int b[MAP_WIDTH * MAP_HEIGHT]) ;
 
 void setGuyPosition(int guy_x, int guy_y, int scroll_x, int scroll_y, int guy_animate) ;
@@ -147,17 +156,23 @@ void addMonster(int monster_x, int monster_y, int monster_animate) ;
 
 void inactivateMonster(int num) ;
 
+void addPlatform(int platform_x, int platform_y) ;
+
 int collisionSimple(BoundingBox boxA, BoundingBox boxB) ;
 
 int collisionSimple2(BoundingBox boxA, BoundingBox boxB) ;
 
 void copyScreenCompress(uint32_t from[SCREEN_WIDTH][SCREEN_HEIGHT],  uint32_t to[]) ;
 
-void copyArraysExpand_16(jint from[], int size_l,  uint32_t[GUY_WIDTH][GUY_HEIGHT]) ;
+void copyArraysExpand_16(jint from[], int size_l,  uint32_t to[GUY_WIDTH][GUY_HEIGHT]) ;
+
+void copyArraysExpand_40_8(jint from[], int size_l, uint32_t to[PLATFORM_WIDTH][PLATFORM_HEIGHT]);
 
 void copyArraysExpand_tileset (jint from[], int size_l, uint32_t to[TILEMAP_HEIGHT][TILEMAP_WIDTH]) ;
 
 void drawSprite_16(uint32_t from[GUY_WIDTH][GUY_HEIGHT], int x, int y, int scroll_x, int scroll_y, int paint_all, uint32_t extra) ;
+
+void drawSprite_40_8(uint32_t from[PLATFORM_WIDTH][PLATFORM_HEIGHT], int x, int y, int scroll_x, int scroll_y, int paint_all, uint32_t extra) ;
 
 void drawTile_8(uint32_t tile[TILE_WIDTH][TILE_HEIGHT], int x, int y, int scroll_x, int scroll_y, int paint_all, uint32_t extra) ;
 
@@ -168,6 +183,8 @@ void drawScoreWords() ;
 void drawScoreNumbers() ;
 
 void drawMonsters() ;
+
+void drawMovingPlatform() ;
 
 void collisionWithMonsters() ;
 
@@ -181,30 +198,60 @@ void drawLevel(int animate_level) ;
 
 /* SOUND MANAGEMENT */
 
+/**
+ *	Sets a flag that is responsible for reporting to the Java code that the
+ *	'ow' sound needs to be played.
+ */
 void setSoundOw() {
 	sound_ow = TRUE;
 }
 
+/**
+ *	Sets a flag that is responsible for reporting to the Java code that the
+ *	'prize' sound needs to be played.
+ */
 void setSoundPrize() {
 	sound_prize = TRUE;
 }
 
+/**
+ *	Sets a flag that is responsible for reporting to the Java code that the
+ *	'boom' sound needs to be played.
+ */
 void setSoundBoom() {
 	sound_boom = TRUE;
 }
 
+/**
+ *	Returns the flag that is responsible for reporting to the Java code that the
+ *	'ow' sound needs to be played.
+ *
+ *	@return		int ow sound flag
+ */
 int getSoundOw() {
 	int temp = sound_ow;
 	sound_ow = FALSE;
 	return temp;
 }
 
+/**
+ *	Returns the flag that is responsible for reporting to the Java code that the
+ *	'prize' sound needs to be played.
+ *
+ *	@return		int prize sound flag
+ */
 int getSoundPrize() {
 	int temp = sound_prize;
 	sound_prize = FALSE;
 	return temp;
 }
 
+/**
+ *	Returns the flag that is responsible for reporting to the Java code that the
+ *	'boom' sound needs to be played.
+ *
+ *	@return		int boom sound flag
+ */
 int getSoundBoom() {
 	int temp = sound_boom;
 	sound_boom = FALSE;
@@ -279,6 +326,19 @@ void setMonsterData(jint a[], jint b[], jint c[], jint d[] ) {
 	copyArraysExpand_16(d, MONSTER_WIDTH * MONSTER_HEIGHT, monster_d);
 }
  
+ 
+/**
+ *	Collects 1D array representing the floating platform sprite and passes it 
+ *	individually to the function that stores it in 2D arrays for the later
+ *	use of the library. Used to basically initialize platform sprite arrays 
+ *	when Panel is created.
+ *
+ *	@param	a	1D integer array of monster sprite data
+ */ 
+void setMovingPlatformData(jint a[]) {
+	copyArraysExpand_40_8( a, PLATFORM_WIDTH * PLATFORM_HEIGHT, platform_a);
+}
+
 /**
  *	Collects 1D arrays representing the two level definition arrays and converts 
  *	them individually to 2D arrays for the later use of the library. Used to 
@@ -358,7 +418,8 @@ void setObjectsDisplay(int map_x, int map_y, int value) {
 
 /**
  *	Used by the Panel to initialize a monster's sprite object in a list
- *	of sprites at the beginning of each level.
+ *	of sprites at the beginning of each level. All sprites for monsters 
+ *	must be added together before sprites for moving platforms.
  *
  *	@param	monster_x		x position of the monster sprite in pixels
  *	@param	monster_y		y position of the monster sprite in pixels
@@ -380,7 +441,8 @@ void addMonster(int monster_x, int monster_y, int monster_animate) {
 	sprite[sprite_num].leftBB = 0;
 	sprite[sprite_num].rightBB = 16;
       
-      sprite_num ++;
+    sprite_num ++;
+    monster_num = sprite_num;
 }
  
  
@@ -394,6 +456,35 @@ void inactivateMonster(int num) {
 		sprite[num].active = FALSE;
 	}
 } 
+
+/**
+
+ *	Used by the Panel to initialize a platform's sprite object in a list
+ *	of sprites at the beginning of each level. All sprites for monsters 
+ *	must be added together before sprites for moving platforms.
+ *
+ *	@param	platform_x		x position of the monster sprite in pixels
+ *	@param	platform_y		y position of the monster sprite in pixels
+ */ 
+void addPlatform(int platform_x, int platform_y) {
+
+
+
+    sprite[sprite_num].x = platform_x ;
+    sprite[sprite_num].y = platform_y ;
+    sprite[sprite_num].animate = 0;
+    sprite[sprite_num].facingRight = TRUE;
+    sprite[sprite_num].active = TRUE;
+    sprite[sprite_num].visible = TRUE;
+      
+    sprite[sprite_num].topBB = 0; 
+	sprite[sprite_num].bottomBB = 8;
+	sprite[sprite_num].leftBB = 0;
+	sprite[sprite_num].rightBB = 40;
+      
+    sprite_num ++;
+    platform_num = sprite_num;
+}
 
 /* INTERNAL USE ONLY */
 
@@ -478,12 +569,12 @@ int collisionSimple(BoundingBox boxA, BoundingBox boxB) {
       /////////////////////////
     }
   }
-  if (!test) return collisionSimple2(boxA, boxB);
+  if (!test) return collisionHelper(boxA, boxB);
   else return TRUE;
 }
 
 
-int collisionSimple2(BoundingBox boxA, BoundingBox boxB) {
+int collisionHelper(BoundingBox boxA, BoundingBox boxB) {
   int x[4], y[4];
   int i,j;
   int test = FALSE;
@@ -587,6 +678,31 @@ void copyArraysExpand_16(jint from[], int size_l, uint32_t to[GUY_WIDTH][GUY_HEI
 }
 
 /**
+ *	Used to copy 40x8 pixel sprite information from the 1D representation that
+ *	is used by the java app to the 2D representation that is used by this 
+ *	library
+ *
+ *	@param	from	1D array of sprite data pixels
+ *	@param	size_l	size in pixels of 'from' array
+ *	@param	to		2D array of sprite data used by library
+ */
+void copyArraysExpand_40_8(jint from[], int size_l, uint32_t to[PLATFORM_WIDTH][PLATFORM_HEIGHT]) {
+
+	int i,j, k;
+	for (i = 0; i< PLATFORM_HEIGHT; i ++ ) {
+		for (j = 0; j < PLATFORM_WIDTH; j ++ ) {
+			k =( i * PLATFORM_WIDTH ) + j;
+			if ( k < size_l ) {
+				to[i][j] = (uint32_t) from[k];
+				//LOGE("many assignments here %i", from[k]);
+			}
+		}
+	}
+	return;
+
+}
+
+/**
  *	Used to copy tilesheet pixel information from the 1D representation that
  *	is used by the java app to the 2D representation that is used by this 
  *	library
@@ -634,6 +750,44 @@ void drawSprite_16(uint32_t from[GUY_WIDTH][GUY_HEIGHT], int x, int y, int scrol
     l = y - scroll_y;
     for (i = 0; i < GUY_HEIGHT; i ++ ) {
     	for (j = 0; j < GUY_WIDTH; j ++) {
+    		if ( (i + l) >= 0 && (j + k) >= 0 && (j+k) < SCREEN_WIDTH && (i+l) < SCREEN_HEIGHT ) {
+    			
+    			if (paint_all == PAINT_TRANSPARENT && from[i][j] == extra ) {
+    				
+    			}
+    			else {
+	    			screen[i + l][j + k] = from[i][j];
+
+	    		}
+
+    		}
+    	}
+    }
+    return;
+}
+ 
+ 
+/**
+ *	Used to draw a 40x8 sprite on the library's 2D screen array at a certian
+ *	position, given a certian scroll adjustment. If 'paint_all' is used, the 
+ *	color in 'extra' is skipped during drawing.
+ *
+ *	@param	from		40x8, 2D sprite pixel data to be drawn
+ *	@param	x			x position of the 2D sprite on the screen array
+ *	@param	y			y position of the 2D sprite on the screen array
+ *	@param	scroll_x	x scroll adjustment for the 2D screen array
+ *	@param	scroll_y	y scroll adjustment for the 2D screen array
+ *	@param	paint_all	integer constant to determine if entire sprite should be
+ *						painted
+ *	@param	extra		color value to skip if 'paint_all' function is used
+ */
+void drawSprite_40_8(uint32_t from[PLATFORM_WIDTH][PLATFORM_HEIGHT], int x, int y, int scroll_x, int scroll_y, int paint_all, uint32_t extra) {
+	
+	int i,j,k,l;
+    k = x - scroll_x;
+    l = y - scroll_y;
+    for (i = 0; i < PLATFORM_HEIGHT; i ++ ) {
+    	for (j = 0; j < PLATFORM_WIDTH; j ++) {
     		if ( (i + l) >= 0 && (j + k) >= 0 && (j+k) < SCREEN_WIDTH && (i+l) < SCREEN_HEIGHT ) {
     			
     			if (paint_all == PAINT_TRANSPARENT && from[i][j] == extra ) {
@@ -944,6 +1098,77 @@ void drawMonsters() {
 }
 
 /**
+ *	Used to draw moving platforms on screen
+ */
+void drawMovingPlatform() {
+	int i;
+  int x,y;
+  int width = 5;
+  int markerTest = FALSE;
+  int hide = TRUE;
+  int show = FALSE;
+  int visibility = FALSE;
+  
+    
+  if(platform_num == -1) return;
+    
+  for (i = monster_num + 1 ; i < platform_num + 1; i++) {
+    markerTest = FALSE; 
+
+      x = sprite[i].x / 8;
+      y = sprite[i].y / 8;
+      /* Must move and stop platforms when they hit bricks or
+       * markers or the end of the screen/room/level.
+       */
+      if(sprite[i].facingRight) {
+        sprite[i].x += 1;
+        // marker test
+        if(map_objects[y][x+width] == B_BLOCK) markerTest = TRUE;
+        if(map_objects[y][x+width] == B_MARKER) markerTest = TRUE;
+
+        // turn platform
+        if (sprite[i].x > level_w * 8  - (5 * 8) || markerTest == TRUE) {
+          sprite[i].facingRight = FALSE;
+        }
+      }
+      else {
+        sprite[i].x -= 1;
+        // marker test
+        if(map_objects[y][x] == B_BLOCK) markerTest = TRUE;
+        if(map_objects[y][x] == B_MARKER) markerTest = TRUE;
+
+        // turn platform
+        if (sprite[i].x < 0 || markerTest == TRUE) {
+          sprite[i].facingRight = TRUE;
+        }
+      } 
+    
+      visibility = show;
+      //hide monster
+      if(sprite[i].x > scrollx + 32 * 8 + (8 * width) ) {
+        visibility = hide;
+      }
+      if (sprite[i].x < scrollx - (8 * width)) {
+        visibility = hide;
+      }
+      //hide monster
+      if(sprite[i].y > scrolly + 24 * 8 + (8 * width)) {
+        visibility = hide;
+      }
+      if ( sprite[i].y < scrolly - (8 * width)) {
+        visibility = hide;
+      }
+    
+      if(visibility == show) {
+      		drawSprite_40_8(platform_a, sprite[i].x, sprite[i].y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+	  }
+    
+  }
+
+  return;
+}
+
+/**
  *	Used to detect collision with monsters
  */
 void collisionWithMonsters() {
@@ -1060,6 +1285,9 @@ void drawLevel(int animate_level) {
     /* draw score and level */
     drawScoreWords();
     
+    /* draw moving platform */
+    drawMovingPlatform();
+    
     /* draw monsters */
     if (preferences_monsters == TRUE) {
         drawMonsters();
@@ -1160,6 +1388,22 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_setMonster
 }
 
 /**
+ *	Used to establish the platform sprite array at the time of instatiation of 
+ *	the Panel constructor.
+ *
+ *	@param	env			required by all java jni
+ *	@param	obj			required by all java jni
+ *	@param	a_bitmap	1D platform pixel array
+ */
+JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_setMovingPlatformData(JNIEnv * env, jobject  obj, jintArray a_bitmap) 
+{
+
+	jint *a = (*env)->GetIntArrayElements(env, a_bitmap, 0);
+	
+	setMovingPlatformData(a) ;
+
+}
+/**
  *	used to add a monster's sprite record to the list of monster sprite records
  *
  *	@param	env				required by all java jni
@@ -1177,6 +1421,21 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_addMonster
 
 }
 
+/**
+ *	used to add a platform's sprite record to the list of sprite records
+ *
+ *	@param	env				required by all java jni
+ *	@param	obj				required by all java jni
+ *	@param	platform_mapx	the x map coordinates of the platform's starting 
+ *							point.
+ *	@param	platform_mapy	the y map coordinates of the platform's starting
+ *							point.
+ */
+JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_addPlatform(JNIEnv * env, jobject  obj, jint platform_mapx, jint platform_mapy)
+{
+	addPlatform(platform_mapx, platform_mapy);	
+
+}
 
 /**
  *	used to inactivate a monster's sprite record in the list of monster sprite 
