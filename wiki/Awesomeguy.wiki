@@ -240,7 +240,7 @@ public void setTilesheet(int i) {
 
 ===setSwapGuy(int num)===
 
-The Awesomeguy character is animated. This function implements that animation. This function is also called in 'animateItems()'.
+The Awesomeguy character is animated. This function implements that animation. This function is also called by 'animateItems()'.
 
 {{{
 	public void setSwapGuy(int num) {
