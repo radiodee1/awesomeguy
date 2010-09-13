@@ -10,6 +10,6 @@
     * [Awesomeguy#Menu_java Menu java]
     * [Awesomeguy#GameStart_java GameStart java]
       * [Awesomeguy#onPause() onPause()]
-      * [Awesomeguy#SplashScreen_java SplashScreen java]
-      * [Awesomeguy#SplashScreen_java SplashScreen java]
+      * [Awesomeguy#onResume() onResume()]
+      * [Awesomeguy#TouchButton TouchButton]
       * [Awesomeguy#SplashScreen_java SplashScreen java]
