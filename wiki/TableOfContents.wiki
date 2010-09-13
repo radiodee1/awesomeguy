@@ -12,4 +12,5 @@
       * [Awesomeguy#onPause() onPause()]
       * [Awesomeguy#onResume() onResume()]
       * [Awesomeguy#TouchButton TouchButton]
-      * [Awesomeguy#SplashScreen_java SplashScreen java]
+      * [Awesomeguy#BlankButton BlankButton]
+      * [Awesomeguy#mHandler mHandler]
