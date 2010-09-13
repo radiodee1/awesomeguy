@@ -17,3 +17,8 @@
       * [Awesomeguy#InnerGameLoop InnerGameLoop]
       * [Awesomeguy#getSavedRoom()_/_saveRoom() getSavedRoom() / saveRoom()]
       * [Awesomeguy#onCreateDialog() onCreateDialog()]
+    * [Awesomeguy#InitBackground_java InitBackground java]
+      * [Awesomeguy#GameStart_java GameStart java]
+      * [Awesomeguy#GameStart_java GameStart java]
+      * [Awesomeguy#GameStart_java GameStart java]
+      * [Awesomeguy#GameStart_java GameStart java]
