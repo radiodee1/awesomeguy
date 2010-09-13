@@ -51,7 +51,7 @@ The next thing that the user sees is a menu. This menu allows the user to view a
 
 
 
-=!GameStart.java=
+=!GameStart java=
 
 Game play is handled by the GameStart.java activity. The first thing that happens in the activity is that the screen is drawn. Layout of the screen is handled using code and not an xml file. The screen is roughly divided into two sections. There is a top panel for the actual display of the game while the user is playing, and there is the area below the top screen which is where buttons appear for controlling the movement of the game's main character. The top screen is an instantiation of a Panel.java class, which is a SurfaceView. Layout elements are all assembled in the 'onCreate()' method of the GameStart activity. One of the first things that's done when assembling the Views on the screen is to measure the size of the display. This is done with code like this:
 
