@@ -262,3 +262,30 @@ The Awesomeguy character is animated. This function implements that animation. T
 
 }}}
 Each SpriteInfo object has a field called 'mResourceId' and another called 'mAnimIndex'. This code sets both. When the 'mAnimIndex' is set in this function it is used later by the JNI code if it is enabled. Unlike the 'setTilesheet()' function, 'setSwapGuy()' doesn't actually load a Bitmap image. [Awesomeguy#Awesomeguy top]
+
+===animateItems()===
+
+This function keeps track of two indexes for animating the character sprite and also the tilesheet animation. It calls both 'setSwapGuy(int num)' and 'setTilesheet(int num)'. There are eight possible values for the tilesheets and four for the main character.
+
+===checkPrintableObjects()===
+
+The 'checkPrintableObjects(int num)' function is called by the 'onDraw()' method when it is drawing tiles on the screen for the non-JNI version of the game. At some point the 'onDraw()' method goes through a series of loops to paint the tiles on the screen. It checks the first tile map, the 'level' tile map, and prints all the information from the 'level' map. Then in the same series of loops it goes through the 'objects' map. Here it calls the 'checkPrintableObjects(int num) function with every element in the 'objects' array. It checks to see if the number in the 'objects' array is the same as one of the few that it prints to the screen. For example, the 'objects' array holds the location of the starting position for the Awesomeguy sprite, but it never prints this character to the screen. Instead the info is used by an entirely different function to place the character at the beginning of the game. As another example, the 'objects' table holds the location of every coin and prize. These objects can be printed to the screen. The 'checkPrintableObjects(int num)' function is a simple way to determine which elements of the 'objects' array are printable, and which are not. This function is used once on every element of the 'objects' array, and it returns a boolean value. The code for the function is:
+
+{{{
+	private boolean checkPrintableObjects(int num) {
+		boolean temp = false;
+
+		/* these are blocks that are not printed on the screen */
+		if(num != mGameV.mStart && num != mGameV.mMonster && num != mGameV.mDeath
+				&& num != mGameV.mPlatform && num != mGameV.mMarker && num != mGameV.mBlock
+				&& num != mGameV.mLadder) {
+			temp = true;
+		}
+
+		return temp;
+	}
+}}}
+
+===drawScoreOnMain()===
+
+This function is called by the Java graphics methods in 'onDraw()' to draw the score and number of lives on the main screen during game play.
