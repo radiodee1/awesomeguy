@@ -74,7 +74,7 @@ static uint32_t monster_b[16][16];
 static uint32_t monster_c[16][16];
 static uint32_t monster_d[16][16];
  
-static uint32_t platform_a[40][8];
+static uint32_t platform_a[8][40];
  
 static int map_level [96][96];
 static int map_objects[96][96];
@@ -166,7 +166,7 @@ void copyScreenCompress(uint32_t from[SCREEN_WIDTH][SCREEN_HEIGHT],  uint32_t to
 
 void copyArraysExpand_16(jint from[], int size_l,  uint32_t to[GUY_WIDTH][GUY_HEIGHT]) ;
 
-void copyArraysExpand_40_8(jint from[], int size_l, uint32_t to[PLATFORM_WIDTH][PLATFORM_HEIGHT]);
+void copyArraysExpand_8_40(jint from[], int size_l, uint32_t to[PLATFORM_WIDTH][PLATFORM_HEIGHT]);
 
 void copyArraysExpand_tileset (jint from[], int size_l, uint32_t to[TILEMAP_HEIGHT][TILEMAP_WIDTH]) ;
 
@@ -336,7 +336,7 @@ void setMonsterData(jint a[], jint b[], jint c[], jint d[] ) {
  *	@param	a	1D integer array of monster sprite data
  */ 
 void setMovingPlatformData(jint a[]) {
-	copyArraysExpand_40_8( a, PLATFORM_WIDTH * PLATFORM_HEIGHT, platform_a);
+	copyArraysExpand_8_40( a, PLATFORM_WIDTH * PLATFORM_HEIGHT, platform_a);
 }
 
 /**
@@ -691,15 +691,14 @@ void copyArraysExpand_16(jint from[], int size_l, uint32_t to[GUY_WIDTH][GUY_HEI
  *	@param	size_l	size in pixels of 'from' array
  *	@param	to		2D array of sprite data used by library
  */
-void copyArraysExpand_40_8(jint from[], int size_l, uint32_t to[PLATFORM_WIDTH][PLATFORM_HEIGHT]) {
+void copyArraysExpand_8_40(jint from[], int size_l, uint32_t to[PLATFORM_HEIGHT][PLATFORM_WIDTH]) {
 
 	int i,j, k;
 	for (i = 0; i< PLATFORM_HEIGHT; i ++ ) {
 		for (j = 0; j < PLATFORM_WIDTH; j ++ ) {
 			k =( i * PLATFORM_WIDTH ) + j;
 			if ( k < size_l ) {
-				to[i][j] = (uint32_t) from[k];
-				//LOGE("many assignments here %i", from[k]);
+				to[i][j] = from[k];
 			}
 		}
 	}
@@ -786,7 +785,7 @@ void drawSprite_16(uint32_t from[GUY_WIDTH][GUY_HEIGHT], int x, int y, int scrol
  *						painted
  *	@param	extra		color value to skip if 'paint_all' function is used
  */
-void drawSprite_40_8(uint32_t from[PLATFORM_WIDTH][PLATFORM_HEIGHT], int x, int y, int scroll_x, int scroll_y, int paint_all, uint32_t extra) {
+void drawSprite_40_8(uint32_t from[PLATFORM_HEIGHT][PLATFORM_WIDTH], int x, int y, int scroll_x, int scroll_y, int paint_all, uint32_t extra) {
 	
 	int i,j,k,l;
     k = x - scroll_x;
@@ -800,7 +799,7 @@ void drawSprite_40_8(uint32_t from[PLATFORM_WIDTH][PLATFORM_HEIGHT], int x, int 
     			}
     			else {
 	    			screen[i + l][j + k] = from[i][j];
-					//screen[j + l][i + k] = from[j][i];
+					//screen[i + k][j + l] = from[i][j];
 	    		}
 
     		}
@@ -1420,6 +1419,7 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_setMovingP
 
 }
 /**
+
  *	used to add a monster's sprite record to the list of monster sprite records
  *
  *	@param	env				required by all java jni
