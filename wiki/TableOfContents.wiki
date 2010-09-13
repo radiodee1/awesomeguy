@@ -38,4 +38,4 @@
       * [Awesomeguy#setGameValues()_/_getGameValues() setGameValues() / getGameValues()]
       * [Awesomeguy#setPanelScroll() setPanelScroll()]
       * [Awesomeguy#setTilesheet() setTilesheet()]
-      * [Awesomeguy# ]
+      * [Awesomeguy#setSwapGuy() setSwapGuy()]
