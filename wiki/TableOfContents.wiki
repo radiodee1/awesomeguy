@@ -29,6 +29,4 @@
       * [Awesomeguy#makeSpriteBox() makeSpriteBox()]
       * [Awesomeguy#makeBlockBox() makeBlockBox()]
       * [Awesomeguy#collisionSimple() collisionSimple()]
-
-
-
+      * [Awesomeguy#getCenterBlock() getCenterBlock()]
