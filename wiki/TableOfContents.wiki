@@ -37,3 +37,5 @@
       * [Awesomeguy#setBackgroundGraphics() setBackgroundGraphics()]
       * [Awesomeguy#setGameValues()_/_getGameValues() setGameValues() / getGameValues()]
       * [Awesomeguy#setPanelScroll() setPanelScroll()]
+      * [Awesomeguy#setTilesheet() setTilesheet()]
+      * [Awesomeguy# ]
