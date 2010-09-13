@@ -209,7 +209,7 @@ Lastly in the onDraw() method, if JNI is enabled, a group of statements check to
 
 This function is called by the Handler in GameStart.java when the level is starting. It sets the scrollX and scrollY variables, which dictate the scroll position of the game screen during play. This basically sets the scroll position that the background is set to if the awesomeguy sprite is not in the upper left hand corner when the game starts. The function also initializes the awesomeguy character's sprite. This entails clearing out the ArrayList that the sprites are stored in and saving the character as the very first entry in a new list. Then the character's sprite is adjusted for it's proper starting position, and the global Panel.java variables for the character's x and y position are set. These two variables are called guyX and guyY.
 
-===setGameValues(!GameValues g) / getGameValues()===
+===setGameValues() / getGameValues()===
 
 This simple setter/getter pair is used to reset the Panel.java global 'mGameV', or return a pointer to the one that the Panel.java class is already using. A reference to a GameValues class is also passed to the Panel.java class in the constructor.
 
