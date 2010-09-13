@@ -22,7 +22,7 @@ public  class Panel  extends SurfaceView  {
 	
 	private int mScore;
 	private int mLives;
-	private int message = 0;
+	//private int message = 0;
 	private int scrollX, scrollY;
 	private int baseX, baseY;
 	private int guyX = 0;
@@ -340,7 +340,6 @@ public  class Panel  extends SurfaceView  {
 	public void setBackgroundGraphics() {
 		/*** Load background graphics array ***/
 
-		message = GameStart.STARTLEVEL;
 		scrollX = mMovementV.getScrollX();
 		scrollY = mMovementV.getScrollY();
 
@@ -356,11 +355,12 @@ public  class Panel  extends SurfaceView  {
 
 
 	public void setGameValues(GameValues g) {
-		message = GameStart.GAMEVALUES;
 		mGameV = g;
 
 	}
-	
+	public GameValues getGameValues() {
+		return mGameV;
+	}
 	
 	public void setPanelScroll(int x, int y) {
 		scrollX = x;
@@ -368,7 +368,6 @@ public  class Panel  extends SurfaceView  {
 		mGuySprite = mGameV.getSpriteStart();
 		int mGuyX = mGuySprite.getMapPosX();
 		int mGuyY = mGuySprite.getMapPosY();
-		message = GameStart.MOVEMENTVALUES;
 		if(!useJNI) {
 			scrollTo( mScale * scrollX , mScale * scrollY);//jni test <---
 		}
@@ -379,9 +378,7 @@ public  class Panel  extends SurfaceView  {
 
 	}
 
-	public GameValues getGameValues() {
-		return mGameV;
-	}
+	
 
 	public void setTilesheet(int i) {
 		if (i == 0 || i == 1 || i == 8) {
@@ -419,7 +416,7 @@ public  class Panel  extends SurfaceView  {
 
 		if (ANIMATE_SPEED != 0) animate ++;
 		if (this.mGuySprite.getAnimate() == true) {
-			//Log.v("Animation", "a " + animate);
+
 			if (animate == ANIMATE_SPEED) {
 				newGuy ++;
 				newBG ++;
