@@ -35,3 +35,4 @@
       * [Awesomeguy#Panel()_Constructor Panel() Constructor]
       * [Awesomeguy#onDraw() onDraw()]
       * [Awesomeguy#setBackgroundGraphics() setBackgroundGraphics()]
+      * [Awesomeguy#setGameValues(GameValues_g)_/_getGameValues() setGameValues(GameValues g) / getGameValues()]
