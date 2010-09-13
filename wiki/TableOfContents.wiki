@@ -21,4 +21,4 @@
       * [Awesomeguy#initLevel() initLevel()]
       * [Awesomeguy#setStartingScrollPosition() setStartingScrollPosition()]
       * [Awesomeguy#setLevel() setLevel()]
-      * [Awesomeguy#GameStart_java GameStart java]
+      * [Awesomeguy#testParse(int_num) testParse(int num)]
