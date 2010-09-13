@@ -7,7 +7,7 @@
   * [Awesomeguy#AndroidManifest_xml Components]
     * [Awesomeguy#AndroidManifest_xml AndroidManifest xml]
     * [Awesomeguy#SplashScreen_java SplashScreen java]
-    * [Awesomeguy#SplashScreen_java SplashScreen java]
+    * [Awesomeguy#Menu_java Menu java]
     * [Awesomeguy#SplashScreen_java SplashScreen java]
     * [Awesomeguy#SplashScreen_java SplashScreen java]
     * [Awesomeguy#SplashScreen_java SplashScreen java]
