@@ -147,7 +147,7 @@ This class contains variables used for determining the movement of the main char
 
 The array list in the GameValues class that stores sprite information is populated with SpriteInfo objects. The SpriteInfo class contains information that might be useful to any part of the game that might want to display a sprite. Some of the info that's available in this class isn't used by all the sprites. The class is mostly filled with private int and boolean members and the setters and getters that are used to access them. The only special methods in the class are those that not only set the sprite info, but also increment or decrement it as well. The data members include resource ID, x and y position, width and height (not to be confused with BoundingBox), position on the screen, the sprite's true bounding box info, variables for weather or not the sprite is jumping and/or is animated. Also weather the sprite is 'facing right', weather it's visible, weather it's 'active' and what it's animation index is.
 
-=!BoundingBox.java=
+=!BoundingBox java=
 
 BoundingBox.java has data and variables that help the game display and work with sprites. It contains private variables for the x and y location of the sprite in question, as well as variables called 'left', 'right', 'top', and 'bottom'. These values are ints and they define the portion of the printed sprite that's considered when the sprite is checked for collision with an object on the screen. This would be important when the player comes into contact with a ladder or a platform, for example. The bounding box of the sprite is defined by these four variables.
 
@@ -169,7 +169,7 @@ The next three methods are used to check weather one bounding box is actually in
 
 The last function of substance in the BoundingBox file is one called 'getCenterBlock(BoundingBox a)'. This function returns the int that is associated with the block that is directly in the center of the BoundingBox specified. It is used to find the block directly below the player during game play. The screen coordinates and the map coordinates are not the same, and the difference between the two needs to be addressed. The player's coordinates are 8 times bigger than the player's position on the map. The player also has dimensions that are stored in it's bounding box, and these have to be considered when you try to determine weather the player is standing on a block, for example. The rest of the file is filled with setters and getters for the various private integers in the class.
 
-=Panel.java=
+=Panel java=
 
 When the game is being played, one instance of the Panel.java class is displayed on the android screen. The top screen always displays the level of the game that is being played. The Panel.java class is a SurfaceView, and a SurfaceView is an extended View. Views are the basic building blocks of user interfaces in android apps. They are used to hold text, buttons, and other user interface items but they also have an 'onDraw(...)' method for drawing 2D graphics in their borders. SurfaceViews have the same 'onDraw(...)' method. In the SurfaceView 'onDraw(...)' method is a Canvas object, which is important for doing this drawing. 
 
