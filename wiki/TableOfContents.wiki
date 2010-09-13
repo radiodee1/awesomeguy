@@ -9,7 +9,7 @@
     * [Awesomeguy#SplashScreen_java SplashScreen java]
     * [Awesomeguy#Menu_java Menu java]
     * [Awesomeguy#GameStart_java GameStart java]
-      * [Awesomeguy#SplashScreen_java SplashScreen java]
+      * [Awesomeguy#onPause() onPause()]
       * [Awesomeguy#SplashScreen_java SplashScreen java]
       * [Awesomeguy#SplashScreen_java SplashScreen java]
       * [Awesomeguy#SplashScreen_java SplashScreen java]
