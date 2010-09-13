@@ -1112,7 +1112,7 @@ void drawMovingPlatform() {
 	int i;
   int x,y;
   int width = 5;
-  int cheat = 5;
+  int cheat = -5;
   int markerTest = FALSE;
   int hide = TRUE;
   int show = FALSE;
@@ -1130,10 +1130,10 @@ void drawMovingPlatform() {
        * markers or the end of the screen/room/level.
        */
       if(sprite[i].facingRight == TRUE) {
-        sprite[i].x += 1;
+        sprite[i].x ++;
         // marker test
-        if(map_objects[y][x+width - cheat] == B_BLOCK) markerTest = TRUE;
-        if(map_objects[y][x+width - cheat] == B_MARKER) markerTest = TRUE;
+        if(map_objects[y][x+width + cheat + 1] == B_BLOCK) markerTest = TRUE;
+        if(map_objects[y][x+width + cheat + 1] == B_MARKER) markerTest = TRUE;
 
         // turn platform
         if (sprite[i].x > level_w   * 8   - PLATFORM_WIDTH || markerTest == TRUE) {
@@ -1141,13 +1141,13 @@ void drawMovingPlatform() {
         }
       }
       else {
-        sprite[i].x -= 1;
+        sprite[i].x --;
         // marker test
-        if(map_objects[y][x + cheat] == B_BLOCK) markerTest = TRUE;
-        if(map_objects[y][x + cheat] == B_MARKER) markerTest = TRUE;
+        if(map_objects[y][x + cheat ] == B_BLOCK) markerTest = TRUE;
+        if(map_objects[y][x + cheat ] == B_MARKER) markerTest = TRUE;
 
         // turn platform
-        if (sprite[i].x < 0 || markerTest == TRUE) {
+        if (sprite[i].x <= 0 || markerTest == TRUE) {
           sprite[i].facingRight = TRUE;
         }
       } 
