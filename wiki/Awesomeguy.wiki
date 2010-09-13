@@ -105,7 +105,7 @@ Two methods in the GameStart.java file which are used by the 'onPause()' and 'on
 
 The last part of GameStart.java, aside from some simple setters and getters, is the 'onCreateDialog(int id)' function. This is where the AlertDialog that asks the user if they want to continue playing the game is.
 
-=!InitBackground.java=
+=!InitBackground java=
 
 This class contains all the information needed to make a map that the Panel.java class uses to display the successive levels. The levels consist of a set of two dimensional arrays of 96x96 elements each.  One array is called the 'level' array and the other array is called the 'objects' array. The 'level' array defines the appearance of the background while the 'objects' array defines the how the game interprets solid objects and other objects like 'goals' and 'prizes'. The 'objects' array also describes the starting position of the player and all of the monsters.
 
