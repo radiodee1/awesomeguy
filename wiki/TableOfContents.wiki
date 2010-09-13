@@ -19,6 +19,6 @@
       * [Awesomeguy#onCreateDialog() onCreateDialog()]
     * [Awesomeguy#InitBackground_java InitBackground java]
       * [Awesomeguy#initLevel() initLevel()]
-      * [Awesomeguy#GameStart_java GameStart java]
-      * [Awesomeguy#GameStart_java GameStart java]
+      * [Awesomeguy#setStartingScrollPosition() setStartingScrollPosition()]
+      * [Awesomeguy#setLevel() setLevel()]
       * [Awesomeguy#GameStart_java GameStart java]
