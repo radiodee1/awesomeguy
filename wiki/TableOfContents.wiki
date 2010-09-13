@@ -33,5 +33,5 @@
     * [Awesomeguy#Panel_java Panel java]
       * [Awesomeguy#Drawing Drawing]
       * [Awesomeguy#Panel()_Constructor Panel() Constructor]
-      * [Awesomeguy#GameStart_java GameStart java]
+      * [Awesomeguy#onDraw() onDraw()]
       * [Awesomeguy#GameStart_java GameStart java]
