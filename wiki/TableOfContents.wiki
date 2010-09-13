@@ -34,4 +34,4 @@
       * [Awesomeguy#Drawing Drawing]
       * [Awesomeguy#Panel()_Constructor Panel() Constructor]
       * [Awesomeguy#onDraw() onDraw()]
-      * [Awesomeguy#GameStart_java GameStart java]
+      * [Awesomeguy#setBackgroundGraphics() setBackgroundGraphics()]
