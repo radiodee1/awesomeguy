@@ -1121,7 +1121,7 @@ void drawMovingPlatform() {
     
   if(platform_num == -1) return;
     
-  for (i = monster_num + 1 ; i < platform_num + 1; i++) {
+  for (i = monster_num + 1 ; i < platform_num ; i++) {
     markerTest = FALSE; 
 
       x = sprite[i].x / 8;
