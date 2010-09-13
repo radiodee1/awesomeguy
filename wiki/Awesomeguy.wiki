@@ -217,8 +217,7 @@ This simple setter/getter pair is used to reset the Panel.java global 'mGameV', 
 
 This function is used repeatedly to set the scrollX and scrollY variables during game play. Since it's called with every refresh of the Panel SurfaceView, it is also used for other purposes. If the JNI code is enabled, the setGuyPosition() function called here, with parameters that include the character's x and y position, the screen's scrollX and scrollY, and the animation index for the main character. If the JNI code is not enabled, the 'setPanelScroll(int x, int y)' function calls the Panel's built in 'scrollTo(int x, int y)' function. This is built in to every SurfaceView, but we only need to use it if the JNI is disabled.
 
-#setTilesheet
-===setTilesheet(int i)===
+#setTilesheet ===setTilesheet(int i)===
 
 For the Java powered implementation of the Awesomeguy game the Bitmap bMap needs to be swapped every so often so that it appears that the rings on the level are moving. This code is shown below. The int 'i' is the animation index. This function is called in 'animateItems()' where the proper index number is generated.
 
