@@ -31,3 +31,7 @@
       * [Awesomeguy#collisionSimple() collisionSimple()]
       * [Awesomeguy#getCenterBlock() getCenterBlock()]
     * [Awesomeguy#Panel_java Panel java]
+      * [Awesomeguy#GameStart_java GameStart java]
+      * [Awesomeguy#GameStart_java GameStart java]
+      * [Awesomeguy#GameStart_java GameStart java]
+      * [Awesomeguy#GameStart_java GameStart java]
