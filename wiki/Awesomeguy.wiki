@@ -135,7 +135,7 @@ The xml parser method -- testParse(int num) -- takes the contents of the two arr
 
 Then the xml parsing program uses a java StringTokenizer to convert the comma separated values to the arrays used by the game.
 
-=!GameValues.java=
+=!GameValues java=
 
 This class is mostly for holding variables that are used throughout the program that need to be in a central place and somewhat organized. It contains the two 2D arrays, 'level' and 'objects'. It also contains two variables that allow the game to function if the 2D arrays are smaller than 96x96. It contains constants for every kind of object that could be defined in the 'objects' array. It contains game progress variables, like 'room' for current room number, and booleans for weather the level is over or the game is over. It also contains the ArrayList for sprites, like the monsters, in the game. Most of the rest of the class is filled with setters and getters for these variables.
 
