@@ -16,4 +16,4 @@
       * [Awesomeguy#mHandler mHandler]
       * [Awesomeguy#InnerGameLoop InnerGameLoop]
       * [Awesomeguy#getSavedRoom()_/_saveRoom() getSavedRoom() / saveRoom()]
-      * [Awesomeguy#mHandler mHandler]
+      * [Awesomeguy#onCreateDialog() onCreateDialog()]
