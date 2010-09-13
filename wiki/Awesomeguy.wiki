@@ -219,10 +219,45 @@ This function is used repeatedly to set the scrollX and scrollY variables during
 
 ===setTilesheet(int i)===
 
-Tilesheets are very important to the Awesomeguy game. Tilesheets do not exist natively in the Java language, so they must be simulated for the Android phone using code. The basic concept behind tilesheets is complex. A tilesheet is made up of many 8x8 squares. Each square is referred to as a tile. The tilesheet itself can contain many hundreds of tiles. The game uses the tilesheet to draw the background that the user sees as they play the game. Rather than paint a different background for each level, a map is used. The map is a matrix, and each number in this 2D matrix represents an 8x8 tile from the tilesheet. This cuts down on memory usage. Rather than save to a file the entire drawing of the background of some level, the programmer saves the matrix, or map, which is smaller but represents the same picture. The programmer then creates the game background by building one of these maps, which is much smaller than the complete drawing of the background might be. The game system on which the Awesomeguy game was developed used a tilesheet/map system similar to the one described, only it was implemented on the hardware level. In order to make Awesomeguy look exactly like the original, the tilesheets from the original game were copied and imported to the Android app, and the tiling system was emulated in software.
+For the Java powered implementation of the Awesomeguy game the Bitmap bMap needs to be swapped every so often so that it appears that the rings on the level are moving. This code is shown below. The int 'i' is the animation index. This function is called in 'animateItems()' where the proper index number is generated.
 
-Awesomeguy uses two map arrays for each level, and it uses four tile sheets. The tilesheets are shared by all levels of the game, and they are nearly identical. 
+{{{
+public void setTilesheet(int i) {
+		if (i == 0 || i == 1 || i == 8) {
+			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles1, mOptionsTile);
+		}
+		else if (i == 2 || i == 4 || i == 6) {
+			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles2, mOptionsTile);
+		}
+		else if (i == 3 || i == 7) {
+			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles3, mOptionsTile);
+		}
+		else if (i == 5) {
+			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles4, mOptionsTile);
+		}
+	}
+}}}
 
-The first map array holds a definition for the background of the level that is much the same as the one discussed above. This is a map of the visible background of the level that's being played. The second map array is identical in size to the first one. It holds information about what each picture in the other map means to the program and the character. Where the first map shows a solid wall, the second map holds a number that tells the program that the character may not pass through it. Walls in the first array can be many colors and patterns as chosen from the tilesheet, but in the second array, just one number corresponds to all wall objects. The first array is visible while the second array is never seen. The first array is referred to as the 'level' or 'tile' array, and the second array is referred to as the 'objects' array. Remember, the two arrays are always the same size.
+===setSwapGuy(int num)===
 
-The way the four tilesheets work is relatively simple. They are identical in size and content except for the images imbedded in the tilesheet of the rings. The rings are prizes in the game and when you get one you get points. There are four tilesheets so that the rings can be animated and made to look like they are turning. The difference in the ring images is the only difference in the four tilesheets. To make the rings look like they are moving the tilesheets are swapped during game play. This swapping happens in the  'setTilesheet(int i)' function.
+The Awesomeguy character is animated. This function implements that animation. This function is also called in 'animateItems()'.
+
+{{{
+	public void setSwapGuy(int num) {
+		
+		if(num == 0) {
+			this.mGuySprite.setResourceId(R.drawable.guy0);
+		}
+		else if (num == 1) {
+			this.mGuySprite.setResourceId(R.drawable.guy1);
+		}
+		else if (num == 2) {
+			this.mGuySprite.setResourceId(R.drawable.guy2);
+		}
+		else if (num == 3) {
+			this.mGuySprite.setResourceId(R.drawable.guy3);
+		}
+		mGuySprite.setAnimIndex(num);
+	}
+
+}}}
