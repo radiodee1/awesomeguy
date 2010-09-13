@@ -26,6 +26,9 @@
     * [Awesomeguy#MovementValues_java MovementValues java]
     * [Awesomeguy#SpriteInfo_java SpriteInfo java]
     * [Awesomeguy#BoundingBox_java BoundingBox java]
-      * [Awesomeguy#GameStart_java GameStart java]
-      * [Awesomeguy#GameStart_java GameStart java]
-      * [Awesomeguy#GameStart_java GameStart java]
+      * [Awesomeguy#makeSpriteBox() makeSpriteBox()]
+      * [Awesomeguy#makeBlockBox() makeBlockBox()]
+      * [Awesomeguy#collisionSimple() collisionSimple()]
+
+
+
