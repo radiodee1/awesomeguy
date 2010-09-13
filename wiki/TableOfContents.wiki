@@ -24,7 +24,7 @@
       * [Awesomeguy#testParse(int_num) testParse(int num)]
     * [Awesomeguy#GameValues_java GameValues java]
     * [Awesomeguy#MovementValues_java MovementValues java]
-    * [Awesomeguy#GameStart_java GameStart java]
+    * [Awesomeguy#SpriteInfo_java SpriteInfo java]
     * [Awesomeguy#GameStart_java GameStart java]
     * [Awesomeguy#GameStart_java GameStart java]
     * [Awesomeguy#GameStart_java GameStart java]
