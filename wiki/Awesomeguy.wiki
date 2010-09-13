@@ -18,7 +18,7 @@ Awesomeguy uses two map arrays for each level, and it uses four tile sheets. The
 
 The first map array holds a definition for the background of the level that is much the same as the one discussed above. This is a map of the visible background of the level that's being played. The second map array is identical in size to the first one. It holds information about what each picture in the other map means to the program and the character. Where the first map shows a solid wall, the second map holds a number that tells the program that the character may not pass through it. Walls in the first array can be many colors and patterns as chosen from the tilesheet, but in the second array, just one number corresponds to all wall objects. The first array is visible while the second array is never seen. The first array is referred to as the 'level' or 'tile' array, and the second array is referred to as the 'objects' array. Remember, the two arrays are always the same size.
 
-The way the four tilesheets work is relatively simple. They are identical in size and content except for the images imbedded in the tilesheet of the rings. The rings are prizes in the game and when you get one you get points. There are four tilesheets so that the rings can be animated and made to look like they are turning. The difference in the ring images is the only difference in the four tilesheets. To make the rings look like they are moving the tilesheets are swapped during game play. This swapping happens in the  'setTilesheet(int i)' function.
+The way the four tilesheets work is relatively simple. They are identical in size and content except for the images imbedded in the tilesheet of the rings. The rings are prizes in the game and when you get one you get points. There are four tilesheets so that the rings can be animated and made to look like they are turning. The difference in the ring images is the only difference in the four tilesheets. To make the rings look like they are moving the tilesheets are swapped during game play. This swapping happens in the  'setTilesheet(int i)' function. [[#setTilesheet]['setTilesheet(int i)']]
 
 ----
 
@@ -217,6 +217,7 @@ This simple setter/getter pair is used to reset the Panel.java global 'mGameV', 
 
 This function is used repeatedly to set the scrollX and scrollY variables during game play. Since it's called with every refresh of the Panel SurfaceView, it is also used for other purposes. If the JNI code is enabled, the setGuyPosition() function called here, with parameters that include the character's x and y position, the screen's scrollX and scrollY, and the animation index for the main character. If the JNI code is not enabled, the 'setPanelScroll(int x, int y)' function calls the Panel's built in 'scrollTo(int x, int y)' function. This is built in to every SurfaceView, but we only need to use it if the JNI is disabled.
 
+#setTilesheet
 ===setTilesheet(int i)===
 
 For the Java powered implementation of the Awesomeguy game the Bitmap bMap needs to be swapped every so often so that it appears that the rings on the level are moving. This code is shown below. The int 'i' is the animation index. This function is called in 'animateItems()' where the proper index number is generated.
