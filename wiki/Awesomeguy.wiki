@@ -194,3 +194,17 @@ Then the bulk of the JNI code is situated in the 'onDraw()' method. It is only e
 Then, if JNI is not enabled, the onDraw() function draws the scores on the screen. 
 
 Lastly in the onDraw() method, if JNI is enabled, a group of statements check to see if the game is over and if the 'score' and 'lives' have changed. Since the JNI code keeps track of these things separately this code is necessary.
+
+===setBackgroundGraphics()===
+
+This function is called by the Handler in GameStart.java when the level is starting. It sets the scrollX and scrollY variables, which dictate the scroll position of the game screen during play. This basically sets the scroll position that the background is set to if the awesomeguy sprite is not in the upper left hand corner when the game starts. The function also initializes the awesomeguy character's sprite. This entails clearing out the ArrayList that the sprites are stored in and saving the character as the very first entry in a new list. Then the character's sprite is adjusted for it's proper starting position, and the global Panel.java variables for the character's x and y position are set. These two variables are called guyX and guyY.
+
+===setGameValues(GameValues g) / getGameValues() ===
+
+This simple setter/getter pair is used to reset the Panel.java global 'mGameV', or return a pointer to the one that the Panel.java class is already using. A reference to a GameValues class is also passed to the Panel.java class in the constructor.
+
+===setPanelScroll(int x, int y)===
+
+This function is used repeatedly to set the scrollX and scrollY variables during game play. Since it's called with every refresh of the Panel SurfaceView, it is also used for other purposes. If the JNI code is enabled, the setGuyPosition() function called here, with parameters that include the character's x and y position, the screen's scrollX and scrollY, and the animation index for the main character. If the JNI code is not enabled, the 'setPanelScroll(int x, int y)' function calls the Panel's built in 'scrollTo(int x, int y)' function. This is built in to every SurfaceView, but we only need to use it if the JNI is disabled.
+
+===setTilesheet(int i)===
