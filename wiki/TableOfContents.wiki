@@ -36,3 +36,4 @@
       * [Awesomeguy#onDraw() onDraw()]
       * [Awesomeguy#setBackgroundGraphics() setBackgroundGraphics()]
       * [Awesomeguy#setGameValues()_/_getGameValues() setGameValues() / getGameValues()]
+      * [Awesomeguy#setPanelScroll() setPanelScroll()]
