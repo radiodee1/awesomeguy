@@ -1,6 +1,6 @@
 #summary Awesomeguy table of contents
 
-* [Awesomeguy HOWTO articles]
+  * [Awesomeguy HOWTO articles]
     * [Awesomeguy Web security]
     * [Awesomeguy DOM manipulation]
     * [Awesomeguy CSS and style]
