@@ -261,3 +261,4 @@ The Awesomeguy character is animated. This function implements that animation. T
 	}
 
 }}}
+Each SpriteInfo object has a field called 'mResourceId' and another called 'mAnimIndex'. This code sets both. When the 'mAnimIndex' is set in this function it is used later by the JNI code if it is enabled. Unlike the 'setTilesheet()' function, 'setSwapGuy()' doesn't actually load a Bitmap image.
