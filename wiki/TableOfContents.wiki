@@ -14,3 +14,6 @@
       * [Awesomeguy#TouchButton TouchButton]
       * [Awesomeguy#BlankButton BlankButton]
       * [Awesomeguy#mHandler mHandler]
+      * [Awesomeguy#InnerGameLoop InnerGameLoop]
+      * [Awesomeguy#mHandler mHandler]
+      * [Awesomeguy#mHandler mHandler]
