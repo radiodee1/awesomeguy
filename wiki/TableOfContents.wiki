@@ -1,10 +1,8 @@
 #summary Awesomeguy table of contents
 
-  * [Awesomeguy HOWTO articles]
-    * [Awesomeguy Web security]
-    * [Awesomeguy DOM manipulation]
-    * [Awesomeguy CSS and style]
-    * [Awesomeguy Tips and tricks]
+  * [Awesomeguy#Details Details]
+    * [Awesomeguy#Introduction Introduction]
+    * [Awesomeguy#Tilesheets Tilesheets]
   * [Awesomeguy DOM reference]
   * [Awesomeguy HTML reference]
   * [Awesomeguy CSS reference]
