@@ -1,5 +1,6 @@
 #summary Awesomeguy table of contents
 
+  * [Awesomeguy Awesomeguy]
   * [Awesomeguy#Details Details]
     * [Awesomeguy#Introduction Introduction]
     * [Awesomeguy#Tilesheets Tilesheets]
