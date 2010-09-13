@@ -4,6 +4,7 @@
   * [Awesomeguy#Details Details]
     * [Awesomeguy#Introduction Introduction]
     * [Awesomeguy#Tilesheets Tilesheets]
+    * [Awesomeguy#Tilemaps Tilemaps]
   * Components
     * [Awesomeguy#AndroidManifest_xml AndroidManifest xml]
     * [Awesomeguy#SplashScreen_java SplashScreen java]
