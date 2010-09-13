@@ -4,6 +4,6 @@
   * [Awesomeguy#Details Details]
     * [Awesomeguy#Introduction Introduction]
     * [Awesomeguy#Tilesheets Tilesheets]
-  * [Awesomeguy#AndroidManifest.xml Components]
-    * [Awesomeguy#AndroidManifest.xml AndroidManifest.xml]
+  * [Awesomeguy#AndroidManifest Components]
+    * [Awesomeguy#AndroidManifest AndroidManifest.xml]
     * [Awesomeguy CSS reference]
