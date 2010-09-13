@@ -22,7 +22,7 @@ The way the four tilesheets work is relatively simple. They are identical in siz
 
 ----
 
-=!AndroidManifest.xml=
+=AndroidManifest.xml=
 
 The AndroidManifest.xml file has entries for each of the game's activities. In the xml entry for the SplashScreen activity, the values for 'clearTaskOnLaunch' are set to 'true', and the values for 'launchMode' are set to 'singleTask'. This arrangement is shown in the following snippet. The 'clearTaskOnLaunch' option is what allows the game to always restart with the Splash Screen regardless of what state it was in when it was stopped. This option was used in each of the activities in the xml file.
 
