@@ -222,7 +222,7 @@ This function is used repeatedly to set the scrollX and scrollY variables during
 For the Java powered implementation of the Awesomeguy game the Bitmap bMap needs to be swapped every so often so that it appears that the rings on the level are moving. This code is shown below. The int 'i' is the animation index. This function is called in 'animateItems()' where the proper index number is generated.
 
 {{{
-public void setTilesheet(int i) {
+	public void setTilesheet(int i) {
 		if (i == 0 || i == 1 || i == 8) {
 			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles1, mOptionsTile);
 		}
