@@ -305,6 +305,6 @@ The 'checkPrintableObjects(int num)' function is called by the 'onDraw()' method
 	}
 }}}
 
-===drawScoreOnMain()===
+===drawScoreOnMain() / numbersOnBg()===
 
-This function is called by the Java graphics methods in 'onDraw()' to draw the score and number of lives on the main screen during game play.
+The 'drawScoreOnMain()' function is called by the Java graphics methods in 'onDraw()' to draw the score and number of lives on the main screen during game play. It is assisted by 'numbersOnBg()' which only prints the number portion of the 'score' or 'lives' display.
