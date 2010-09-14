@@ -30,6 +30,14 @@ For Awesomeguy there are two identical tilemaps. One holds all the information m
 
 The reason for two maps is so that one map, the 'level' map, can be responsible for drawing the image of the background, while the other map, the 'object' map, is responsible for telling the program how to treat that particular set of elements. Only some of the 'object' map elements result in an actual object being drawn on the screen. Rings, for example, are drawn on the screen until the player gets them. Similarly, not all 'level' objects are solid objects. Some, like some of the pillars, are only for outward appearances.
 
+===Sprites===
+
+Aside from the tilesheets and tilemaps described above, the game uses several sprite images. For these images small 'png' files were used. There are four images of the main character and two images of the monster for each direction. That means four monster images in total, two left and two right. The multiple images are used to animate the main character and the monsters. Each of the 'png' images has an alpha channel (a transparent area) and is indexed to a 256 color palette. The size of the images is unimportant on the android phone, but for the Nintendo DS it was dictated by the hardware. For this reason the monster sprite uses only the top half of the png image, which is 16 pixels by 16 pixels. The main character is also 16 x 16, but it uses the space more evenly.
+
+===Software Tools===
+
+Several pieces of software were used when making Awesomeguy. Awesomeguy was programmed on a Linux computer. The graphic images in the game were all edited on Gimp, the Gnome Image Manipulation Program. The source code for Awesomeguy was edited using the Eclipse IDE for java. The C library used for the Awesomeguy Java Native Interface (JNI) was edited using Gedit, another Gnome program. The tilemaps, the large arrays that define the appearance of each level, were edited first using a Windows program called 'Mappy', and then further edited using Gedit and the command line tool 'sed'. The Wine (Wine Is Not An Emulator) program loader was employed to allow Mappy to work on a Linux platform. Instructions for using Mappy to create level definitions will accompany this document.
+
 ----
 
 =!AndroidManifest xml=
