@@ -51,3 +51,9 @@ Since the file that we are trying to create is an xml file, it has a somewhat st
 
 </game>
 }}}
+
+The data that's stored in the xml file in the spaces between the tiles_level tags and between the tiles_objects tags is in the form of comma separated values. These tables of comma separated values are large and are not shown in the listing above.
+
+Note that the original awesomeguy.xml file holds ten levels, and at this time your xml file must hold ten levels also. For this reason someone looking to experiment with a single level might have better luck editing the original xml file with a text editor rather than try to create all ten required levels all at once.
+
+Also note that there is a place in each level definition block for the horizontal and vertical dimensions of the level. It is important to fill these tags with the correct info from the Mappy program. They cannot be left blank and they cannot have the wrong value. Also note that the number of entries in the tiles_level tags must be the same as the number of entries in the tiles_objects tags.
