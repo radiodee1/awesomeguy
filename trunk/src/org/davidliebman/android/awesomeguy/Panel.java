@@ -429,7 +429,7 @@ public  class Panel  extends SurfaceView  {
 			}
 			//animate tiles
 			if (newBG != lastBG) {
-				setTilesheet(newBG + 1);
+				if (!useJNI) setTilesheet(newBG + 1);
 				lastBG = newBG;
 				if(newBG > 7) newBG = -1;
 			}
@@ -1007,6 +1007,46 @@ public  class Panel  extends SurfaceView  {
 		}
 	}
 
+	private boolean collisionWithPlatforms(boolean canFall) {
+		int i;
+		  
+		  BoundingBox guyBox, platformBox;
+		  boolean temp = false;
+		  guyBox = BoundingBox.makeSpriteBox( mGuySprite,0,0);
+		  
+		  /*
+		  for (i = level.platformOffset ; i < level.platformOffset + level.platformNum ; i++) {
+		    
+		    SpriteInfo mTempSprite = mGameV.getSprite(i - 1 );
+		  	mTempSprite.setMapPosX(mapPosX);
+		  	mTempSprite.setMapPosY(mapPosY);
+		  	mTempSprite.setFacingRight(mFacingRight);
+		  
+		    platformBox = BoundingBox.makeSpriteBox( mTempSprite,0,0);
+		    boolean test = BoundingBox.collisionSimple(guyBox, platformBox);
+		    if (test) {
+		      temp = test;
+		      //iprintf("collision");
+		      if ( mGuySprite.getMapPosY() < sprites[i].mapPosY) { // stand on platforms
+		        canFall = false;
+		        if (keys.y > 0) keys.y = 0;
+		        if(sprites[i].facingRight) {
+		          x ++;
+		        }
+		        else {
+		          x --;
+		        }
+		      }
+		      if ( mGuySprite.getMapPosY() > sprites[i].mapPosY) { // below platforms
+		        canFall = true;
+		        keys.y = V_MOVE;
+		      }
+		    }
+		  }
+		  */
+		  return temp;
+		  
+	}
 
 	private void scrollBg() {
 		/* scroll registers for background */
@@ -1805,6 +1845,9 @@ public  class Panel  extends SurfaceView  {
 	public native int getScore();
 	public native int getLives();
 	public native void incrementJniScore(int num);
+	public native int getSpriteX(int num);
+	public native int getSpriteY(int num);
+	public native int getSpriteFacingRight(int num);
 	static {
 		System.loadLibrary("awesomeguy");
 	}

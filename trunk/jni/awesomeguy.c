@@ -1683,6 +1683,7 @@ JNIEXPORT int JNICALL Java_org_davidliebman_android_awesomeguy_Panel_getScore(JN
 {
 	return score;	
 
+
 }
 
 /**
@@ -1695,5 +1696,47 @@ JNIEXPORT int JNICALL Java_org_davidliebman_android_awesomeguy_Panel_getScore(JN
 JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_incrementJniScore(JNIEnv * env, jobject  obj, jint num)
 {
 	score = score + num;	
+
+}
+
+/**
+ *	Used to tell the java program the x coordinates of a sprite
+ *
+ *	@param	env				required by all java jni
+ *	@param	obj				required by all java jni
+ *	@param	num 			index of desired sprite
+ *	@return					X coordinate
+ */
+JNIEXPORT int JNICALL Java_org_davidliebman_android_awesomeguy_Panel_getSpriteX(JNIEnv * env, jobject  obj, jint num)
+{
+	return sprite[num].x;	
+
+}
+
+/**
+ *	Used to tell the java program the y coordinates of a sprite
+ *
+ *	@param	env				required by all java jni
+ *	@param	obj				required by all java jni
+ *	@param	num 			index of desired sprite
+ *	@return					Y coordinate
+ */
+JNIEXPORT int JNICALL Java_org_davidliebman_android_awesomeguy_Panel_getSpriteY(JNIEnv * env, jobject  obj, jint num)
+{
+	return sprite[num].y;	
+
+}
+
+/**
+ *	Used to tell the java program the 'facingRight' status of a sprite
+ *
+ *	@param	env				required by all java jni
+ *	@param	obj				required by all java jni
+ *	@param	num 			index of desired sprite
+ *	@return					facingRight
+ */
+JNIEXPORT int JNICALL Java_org_davidliebman_android_awesomeguy_Panel_getSpriteFacingRight(JNIEnv * env, jobject  obj, jint num)
+{
+	return sprite[num].facingRight;	
 
 }
