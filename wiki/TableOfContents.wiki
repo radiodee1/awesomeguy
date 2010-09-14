@@ -44,7 +44,7 @@
       * [Awesomeguy#setSwapGuy() setSwapGuy()]
       * [Awesomeguy#animateItems() animateItems()]
       * [Awesomeguy#checkPrintableObjects() checkPrintableObjects()]
-      * [Awesomeguy#setSwapGuy() setSwapGuy()]
+      * [Awesomeguy#drawScoreOnMain() drawScoreOnMain()]
 
 
   * [ConstructingLevels#ConstructingLevels Constructing Levels]
