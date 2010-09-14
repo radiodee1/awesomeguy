@@ -553,6 +553,10 @@ public  class Panel  extends SurfaceView  {
 			canFall = true;
 		}
 
+		
+		
+		
+		
 		int center = ((guyBox.getLeft() + guyBox.getRight() ) / 2) /8; 
 		int actual = ((guyBox.getLeft() + guyBox.getRight() ) / 2) - (center *8);
 		int centerBlock = BoundingBox.getCenterBlock(guyBox);
@@ -589,8 +593,10 @@ public  class Panel  extends SurfaceView  {
 			}
 		}
 
+		
 		/* PLATFORMS */
-		//canJump = collisionWithPlatforms( keys, canFall);
+		canJump = collisionWithPlatforms( canFall);
+		
 		
 		/* JUMP */
 		if (keyB) {
@@ -626,15 +632,15 @@ public  class Panel  extends SurfaceView  {
 		}
 
 
-		
-
 		/* 
 		 * Here we implement the gravity.
 		 */
-		if(canFall && !ladderTest) {
+		if(canFall && !ladderTest && !canJump) {
 			y = y + mMovementV.getVMove() ;
 		
 		}
+
+		
 		
 		
 		/*
@@ -1009,41 +1015,51 @@ public  class Panel  extends SurfaceView  {
 
 	private boolean collisionWithPlatforms(boolean canFall) {
 		int i;
-		  
+
 		  BoundingBox guyBox, platformBox;
 		  boolean temp = false;
 		  guyBox = BoundingBox.makeSpriteBox( mGuySprite,0,0);
+		  boolean mFacingRight = true;
 		  
-		  /*
-		  for (i = level.platformOffset ; i < level.platformOffset + level.platformNum ; i++) {
+		  if (mGameV.getPlatformNum() == -1) return canJump;
+		  
+		  for (i = mGameV.getPlatformOffset() ; i <=  mGameV.getPlatformNum() ; i ++) {
 		    
-		    SpriteInfo mTempSprite = mGameV.getSprite(i - 1 );
-		  	mTempSprite.setMapPosX(mapPosX);
-		  	mTempSprite.setMapPosY(mapPosY);
+			/* get info from JNI on platform position */
+		    SpriteInfo mTempSprite = new SpriteInfo(R.drawable.concrete, 0, 8, 0, 40);
+		    
+		  	mTempSprite.setMapPosX(this.getSpriteX(i-1));
+		  	mTempSprite.setMapPosY(this.getSpriteY(i-1));
+		  	if(this.getSpriteFacingRight(i - 1) == 1) mFacingRight = true;
+		  	else mFacingRight = false;
 		  	mTempSprite.setFacingRight(mFacingRight);
-		  
+		  	Log.e("Platforms", "x="+mTempSprite.getMapPosX() + " y=" + mTempSprite.getMapPosY()	);
+		  	
+		  	
+		  	/* check platform */
 		    platformBox = BoundingBox.makeSpriteBox( mTempSprite,0,0);
 		    boolean test = BoundingBox.collisionSimple(guyBox, platformBox);
+		    
 		    if (test) {
 		      temp = test;
-		      //iprintf("collision");
-		      if ( mGuySprite.getMapPosY() < sprites[i].mapPosY) { // stand on platforms
+		      Log.e("Platforms", "Collision!!");
+		      if ( mGuySprite.getMapPosY() < mTempSprite.getMapPosY()) { // stand on platforms
 		        canFall = false;
-		        if (keys.y > 0) keys.y = 0;
-		        if(sprites[i].facingRight) {
+		        if (y > 0) y = 0;
+		        if(mTempSprite.getFacingRight()) {
 		          x ++;
 		        }
 		        else {
 		          x --;
 		        }
 		      }
-		      if ( mGuySprite.getMapPosY() > sprites[i].mapPosY) { // below platforms
+		      if ( mGuySprite.getMapPosY() > mTempSprite.getMapPosY()) { // below platforms
 		        canFall = true;
-		        keys.y = V_MOVE;
+		        y =  mMovementV.getVMove();
 		      }
 		    }
 		  }
-		  */
+		  
 		  return temp;
 		  
 	}
