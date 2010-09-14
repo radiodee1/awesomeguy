@@ -43,7 +43,7 @@
       * [Awesomeguy#setTilesheet() setTilesheet()]
       * [Awesomeguy#setSwapGuy() setSwapGuy()]
       * [Awesomeguy#animateItems() animateItems()]
-      * [Awesomeguy#setSwapGuy() setSwapGuy()]
+      * [Awesomeguy#checkPrintableObjects() checkPrintableObjects()]
       * [Awesomeguy#setSwapGuy() setSwapGuy()]
 
 
