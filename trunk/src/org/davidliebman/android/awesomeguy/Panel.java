@@ -255,7 +255,7 @@ public  class Panel  extends SurfaceView  {
 		
 		checkRegularCollisions();
 
-		physicsAdjustments();
+		checkPhysicsAdjustments();
 
 		if(!useJNI && mHighScores.isEnableCollision()) collisionWithMonsters();
 
@@ -527,7 +527,7 @@ public  class Panel  extends SurfaceView  {
 		}
 	}
 	
-	private void physicsAdjustments() {
+	private void checkPhysicsAdjustments() {
 
 
 
