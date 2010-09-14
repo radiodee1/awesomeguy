@@ -42,6 +42,10 @@
       * [Awesomeguy#setPanelScroll() setPanelScroll()]
       * [Awesomeguy#setTilesheet() setTilesheet()]
       * [Awesomeguy#setSwapGuy() setSwapGuy()]
+      * [Awesomeguy#animateItems() animateItems()]
+      * [Awesomeguy#setSwapGuy() setSwapGuy()]
+      * [Awesomeguy#setSwapGuy() setSwapGuy()]
+
 
   * [ConstructingLevels#ConstructingLevels Constructing Levels]
     * [ConstructingLevels#Tools_and_Programs Tools and Programs]
