@@ -307,4 +307,6 @@ The 'checkPrintableObjects(int num)' function is called by the 'onDraw()' method
 
 ===drawScoreOnMain() / numbersOnBg()===
 
-The 'drawScoreOnMain()' function is called by the Java graphics methods in 'onDraw()' to draw the score and number of lives on the main screen during game play. It is assisted by 'numbersOnBg()' which only prints the number portion of the 'score' or 'lives' display.
+The 'drawScoreOnMain()' function is called by the Java graphics methods in 'onDraw()' to draw the score and number of lives on the main screen during game play. It is assisted by 'numbersOnBg()' which only prints the number portion of the 'score' or 'lives' display. This function is used by Java when it is printing the game screen. When the JNI library is being used to display the screen the function is not used and a C version of the function is called by the JNI code in its place.
+
+===checkPhysicsAdjustments()===
