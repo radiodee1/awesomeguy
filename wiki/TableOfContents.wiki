@@ -7,7 +7,7 @@
     * [Awesomeguy#Tilemaps Tilemaps]
     * [Awesomeguy#Sprites Sprites]
     * [Awesomeguy#Software_Tools Software Tools]
-  * Components
+  * Methods and Classes
     * [Awesomeguy#AndroidManifest_xml AndroidManifest xml]
     * [Awesomeguy#SplashScreen_java SplashScreen java]
     * [Awesomeguy#Menu_java Menu java]
