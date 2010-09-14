@@ -13,3 +13,41 @@ A copy of the Awesomeguy tilesheet is needed. This can be found in the SVN repos
 A good text editor is required for the editing of the output of the Mappy program. It is also required for the constructing of the basic awesomeguy xml file before the Mappy data is added to it.
 
 The 'sed' command was used to edit the Mappy data. The 'sed' command may not be available on all systems. On Windows systems it may be necessary to install cygwin or mingw to use 'sed'.
+
+===Basic Structure===
+
+Since the file that we are trying to create is an xml file, it has a somewhat strict structure. Below is an example of the structure of the file if only two levels were added.
+
+{{{
+<?xml version="1.0" ?>
+<game>
+<level number="1">
+<horizontal>64</horizontal>
+<vertical>32</vertical>
+<tiles_level>
+	... this is where your mappy data
+	goes for level 1 ...
+</tiles_level>
+<tiles_objects>
+	... this is where your mappy data
+	goes for level 1 ...
+</tiles_objects>
+<last_level>false</last_level>
+</level>
+
+<level number="2">
+<horizontal>64</horizontal>
+<vertical>32</vertical>
+<tiles_level>
+	... this is where your mappy data
+	goes for level 2 ...
+</tiles_level>
+<tiles_objects>
+	... this is where your mappy data
+	goes for level 2 ...
+</tiles_objects>
+<last_level>true</last_level>
+</level>
+
+</game>
+}}}
