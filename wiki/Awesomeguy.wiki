@@ -1,10 +1,10 @@
 #summary Awesomeguy is a computer game for the Android 2.1/2.2 phone.
 #sidebar TableOfContents
-<wiki:toc max_depth="5" />
+
 = Introduction =
 
 Awesomeguy is a computer game originally developed for another hand held game system that I am attempting to port to the Android platform. 
-
+<wiki:toc max_depth="5" />
 = Details =
 
 The format of the Awesomeguy game is that of a simple platform game, in some ways like the original “Donkey Kong” or “Super Mario Brothers”. The Nintendo DS version has two screens of 192x256 pixels each. During gameplay one of the screens was generally used as a splash screen. The game also makes use of four directional keys and two special keys -- one of which is the 'jump' key. [Awesomeguy#Awesomeguy top]
