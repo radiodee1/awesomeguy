@@ -8,7 +8,7 @@ I plan to outline how to create new Awesomeguy levels here. Awesomeguy levels ar
 
 The process requires that you have a working version of the 'Mappy' program. This program works well under Windows and in Linux under WINE. It can be found at [http://www.tilemap.co.uk/ www.tilemap.co.uk]. Mappy is free.
 
-A copy of the Awesomeguy tilesheet is needed. This can be found in the SVN repository of the program, in the folder awesomeguy/res/drawable. The file to use is any one of the 'png' files that start with the 'tiles' prefix. It may be necessary to check out the entire project in order to download this file.
+A copy of the Awesomeguy tilesheet is needed. This can be found in the SVN repository of the program, in the folder awesomeguy/res/drawable. The file to use is any one of the 'png' files that start with the 'tiles' prefix. It may be necessary to check out the entire project in order to download this file. The tile may also be available on the Awesomeguy download page. See: [http://code.google.com/p/awesomeguy/downloads/list http://code.google.com/p/awesomeguy/downloads/list]
 
 A good text editor is required for the editing of the output of the Mappy program. It is also required for the constructing of the basic awesomeguy xml file before the Mappy data is added to it.
 
