@@ -310,3 +310,13 @@ The 'checkPrintableObjects(int num)' function is called by the 'onDraw()' method
 The 'drawScoreOnMain()' function is called by the Java graphics methods in 'onDraw()' to draw the score and number of lives on the main screen during game play. It is assisted by 'numbersOnBg()' which only prints the number portion of the 'score' or 'lives' display. This function is used by Java when it is printing the game screen. When the JNI library is being used to display the screen the function is not used and a C version of the function is called by the JNI code in its place.
 
 ===checkPhysicsAdjustments()===
+
+This code is used by both the Java and the JNI versions of the program. The lines in this function check weather or not the main character is falling, jumping, running, climbing, etc., and they are only concerned with the contents of the 'objects' tilemap table. The code takes the user input and figures out weather the character can move in the direction desired. Gravity is implemented here, so that the character has a tendency to move twords the bottom of the screen (if that movement is not impeded by obstacles). It's probably because gravity is implemented here that the method has the name that it does.
+
+Other methods are called in this code, and the order they're called in is sometimes important. Methods that check collision with blocks are called here. This way the character can stand on platforms. Jumping is also handled here, as is climbing on ladders.
+
+===collisionWithBlocks()===
+
+This method is called by the 'checkPhysicsAdjustments()' function. It attempts to anticipate every possible interaction the main character can have with blocks and define an action to take to address that contact. For this reason the method is long, and contains lines that duplicate the basic principle of the lines above them, differing only in the direction the character is traveling in when it comes in contact with these blocks. Also found here are the lines of code that allow the character to 'hop' or 'skip' over a single block if it is alone in their path. This way the character can climb a gradual increase in height without jumping.
+
+Blocks, in the context of this function, are defined in the 'objects' tilemap table only. Here, as in the 'checkPhysicsAdjustments()' method, the 'level' tilemap table is unimportant.
