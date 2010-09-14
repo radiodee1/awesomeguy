@@ -45,7 +45,9 @@
       * [Awesomeguy#animateItems() animateItems()]
       * [Awesomeguy#checkPrintableObjects() checkPrintableObjects()]
       * [Awesomeguy#drawScoreOnMain()_/_numbersOnBg() drawScoreOnMain() / numbersOnBg()]
+      * [Awesomeguy#checkPhysicsAdjustments() checkPhysicsAdjustments()]
 
+----
 
   * [ConstructingLevels#ConstructingLevels Constructing Levels]
     * [ConstructingLevels#Tools_and_Programs Tools and Programs]
