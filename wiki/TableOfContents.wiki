@@ -46,6 +46,7 @@
       * [Awesomeguy#checkPrintableObjects() checkPrintableObjects()]
       * [Awesomeguy#drawScoreOnMain()_/_numbersOnBg() drawScoreOnMain() / numbersOnBg()]
       * [Awesomeguy#checkPhysicsAdjustments() checkPhysicsAdjustments()]
+      * [Awesomeguy#collisionWithBlocks() collisionWithBlocks()]
 
 ----
 
