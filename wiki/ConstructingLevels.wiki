@@ -63,12 +63,26 @@ Also note that there is a place in each level definition block for the horizonta
 
 The first step to making a level is to know what your finished level will be like before you start. Make a sketch or diagram to work from, or develop a detailed plan in your head. One consideration is the size of the level. The level cannot be larger than 96 x 96 tiles, but it cannot be smaller than 32 tiles horizontal and 24 tiles vertical. If your map is smaller than this it will not display correctly on the screen and the game may crash.
 
-===Mappy===
+===The Tilesheet===
+
+The tilesheet that has been created for Awesomeguy is very simple. There are three kinds of tiles. Firstly there are the colorful tiles that represent blocks and platforms and ladders. These are the vast majority of the tiles. 
+
+Then there are the blocks that are used strictly on the 'objects' array. These have special meaning for the game. There are approximately 12 of them. Eleven of them are located at the very bottom-right of the tilesheet. Their meanings will be discussed below. The twelfth one is located at tile nuber 5, and it represents the starting point for the main character. It's only separated from the other 11 because the tilesheet has evolved slightly over time and the tile in question was the first _special_ tile. It was given index number 5 and then that index number was not changed over time. The other special tiles were added later.
+
+The third group of tiles is the number tiles. These tiles have all the info needed to print the numbers 0 through 9 and the two words 'level' and 'score'. Some versions of the program use this info to print the score on the screen. When creating levels for Awesomeguy you should generally avoid these tiles.
+
+===Setting Up Mappy===
 
 Mappy is a complicated program and we only use a small portion of its functionality when we edit our levels. To start the editing process the first step is to start Mappy and go to the 'file' pull-down menu. Choose the 'New Map' option. The program displays a dialog window at this point. The window says 'Mappy: New Map (easy)'. Values in this dialog must be changed. The dialog says: 'Each tile is 32 pixels wide and 32 pixels high.' This must be changed so that the numbers '32' are replaced with the numbers '8'. Remember that each of our tiles is 8x8. 
 
-Do not dismiss the 'New Map' dialog yet. We must enter the ultimate size of our map in the spaces provided before we move on. The default says 'I want my map to be 100 tiles wide and 100 tiles high'. If we leave these values at their default the game will not run. The values must be lowered to at least 96, but you may decide to make them much lower than that.
+Do not dismiss the 'New Map' dialog yet. We must enter the ultimate size of our map in the spaces provided before we move on. The default says 'I want my map to be 100 tiles wide and 100 tiles high'. If we leave these values at their default the game will not run. The values must be lowered to at least 96, but you may decide to make them much lower than that. Remember these values because you need to use them in the xml file inside the 'horizontal' and 'vertical' tags.
 
 The 'New Map' dialog also has settings for Colors, which are in the form of radio buttons for 'True Color' or 'Paletted (8 bit)' color. For our purposes the default works fine. Click 'OK'. Another dialog pops up to remind you to load the tilesheet. That's the next step.
 
-Go to the 'File' pull-down menu again and select the 'Import...' option. A box opens that allows you to specify which file to use as your tilesheet. Use the 'tiles1.png' file that you download from the Awesomeguy Downloads site. See: http://code.google.com/p/awesomeguy/downloads/list . If you are having trouble using ping files with Mappy, go to the Mappy site and follow instructions there for adding ping support to your Mappy install. See: http://www.tilemap.co.uk/pngfiles.html .
+Go to the 'File' pull-down menu again and select the 'Import...' option. A box opens that allows you to specify which file to use as your tilesheet. Use the 'tiles1.png' file that you download from the Awesomeguy Downloads site. See: http://code.google.com/p/awesomeguy/downloads/list . If you are having trouble using ping files with Mappy, go to the Mappy site and follow instructions there for adding ping support to your Mappy installation. See: http://www.tilemap.co.uk/pngfiles.html .
+
+===Using Mappy===
+
+At this point we start editing the actual layers that will become our game arrays. When we get to this step the Mappy program automatically creates one blank map layer for us. It is called 'Layer 0' in the 'Layer' menu. We can use this layer for the 'level' array that we need for our game. Later we'll add another layer for the 'objects' array. Before we do anything else, though, this might be a good time to save the Mappy file that we've created so far. This gives us a chance to name the file. Simple names are best, but it really doesn't matter what you name it. Mappy files have the '.fmp' filename extension. 
+
+The object of our editing right now is to add all the blocks that go into how the level looks _without_ rings or prizes or goals. Essentially you have to imagine that you are adding colorful bricks that we will later turn into hard surfaces. You can add ladders at this stage also. Do not add any monsters or special characters. These blocks are going to be what the player sees. They do not effect what actually happens in the game, so if you use blocks that are designed for special purposes the player will be confused. They will not work properly.
