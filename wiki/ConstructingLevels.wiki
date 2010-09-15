@@ -91,4 +91,19 @@ To place a block on layer 0, select the block from the right-hand panel of the M
 
 ===Adding A Layer===
 
-Go to the 'Layer' menu and select the 'Add Layer' option. You are now working with two layers. By default the new layer is called 'New layer'. To switch between layers, go to the 'Layer' menu and select the layer that you are interested in. The active layers should be printed in bold type, and the one that you are editing should have a check mark next to it. You should have two layers now called 'layer 0' and 'New layer'.
+Go to the 'Layer' menu and select the 'Add Layer' option. The editor screen on the left may seem to go blank at this point. You are now working with two layers. By default the new layer is called 'New layer'. To switch between layers, go to the 'Layer' menu and select the layer that you are interested in. The active layers should be printed in bold type, and the one that you are editing should have a check mark next to it. You should have two layers now called 'layer 0' and 'New layer'. The second layer is for editing the 'objects' array.
+
+Your goal at this point is to place blocks on the screen from the tilesheet that will tell the game how to represent the visual information that you placed on 'layer 0'. This is a short description of the meaning of each block.
+
+  * The starting position of the main character. This block looks like an 'x' and is in position 5.
+  * The starting position for floating platforms. This block looks like a 'p' and is in position 437.
+  * The symbol for an extra life. This block is green with a red dot and is in position 438.
+  * The symbol for instant death. This block looks like a bunch of vertical black lines and is in position 439.
+  * The symbol for a gold brick. This block looks like a gold square with a tan dot and is in position 440.
+  * The special marker block. This block looks like a 'M' and is in position 441.
+  * The 'solid object' marker. This block looks like a number of black and white squares and is in position 442.
+  * The start position for a monster. This block looks like a red and white swirl and is in position 443.
+  * The ladder block. This block looks like several horizontal black lines and is in position 444.
+  * The checkpoint block. This block looks like a golden key and is in position 445.
+  * The goal block. This block looks like a white diamond shape and is in position 446.
+  * The ring block. This block looks like a red circle and is in position 447.
