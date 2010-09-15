@@ -58,3 +58,11 @@ The data that's stored in the xml file in the spaces between the tiles_level tag
 Note that the original awesomeguy.xml file holds ten levels, and at this time your xml file must hold ten levels also. For this reason someone looking to experiment with a single level might have better luck editing the original xml file with a text editor rather than try to create all ten required levels all at once.
 
 Also note that there is a place in each level definition block for the horizontal and vertical dimensions of the level. It is important to fill these tags with the correct info from the Mappy program. They cannot be left blank and they cannot have the wrong value. Also note that the number of entries in the tiles_level tags must be the same as the number of entries in the tiles_objects tags. The Awesomeguy program uses the 'horizontal' and 'vertical' attributes in the xml file to turn the comma separated values into two identically sized tables. These tables are used by the game to draw the background of each level.
+
+=Editing Your Level=
+
+The first step to making a level is to know what your finished level will be like before you start. Make a sketch or diagram to work from, or develop a detailed plan in your head. One consideration is the size of the level. The level cannot be larger than 96 x 96 tiles, but it cannot be smaller than 32 tiles horizontal and 24 tiles vertical. If your map is smaller than this it will not display correctly on the screen and the game may crash.
+
+===Mappy===
+
+Mappy is a complicated program and we only use a small portion of its functionality when we edit our levels. To start the editing process the first step is to start Mappy and go to the 'file' pull-down menu. Choose the 'New Map' option. The program displays a dialog window at this point. The window says 'Mappy: New Map (easy)'. Values in this dialog must be changed. The dialog says: 'Each tile is 32 pixels high and 32 pixels wide.' This must be changed so that the numbers '32' are replaced with the numbers '8'. Remember that each of our tiles is 8x8.
