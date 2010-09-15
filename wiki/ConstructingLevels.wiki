@@ -65,4 +65,10 @@ The first step to making a level is to know what your finished level will be lik
 
 ===Mappy===
 
-Mappy is a complicated program and we only use a small portion of its functionality when we edit our levels. To start the editing process the first step is to start Mappy and go to the 'file' pull-down menu. Choose the 'New Map' option. The program displays a dialog window at this point. The window says 'Mappy: New Map (easy)'. Values in this dialog must be changed. The dialog says: 'Each tile is 32 pixels high and 32 pixels wide.' This must be changed so that the numbers '32' are replaced with the numbers '8'. Remember that each of our tiles is 8x8.
+Mappy is a complicated program and we only use a small portion of its functionality when we edit our levels. To start the editing process the first step is to start Mappy and go to the 'file' pull-down menu. Choose the 'New Map' option. The program displays a dialog window at this point. The window says 'Mappy: New Map (easy)'. Values in this dialog must be changed. The dialog says: 'Each tile is 32 pixels wide and 32 pixels high.' This must be changed so that the numbers '32' are replaced with the numbers '8'. Remember that each of our tiles is 8x8. 
+
+Do not dismiss the 'New Map' dialog yet. We must enter the ultimate size of our map in the spaces provided before we move on. The default says 'I want my map to be 100 tiles wide and 100 tiles high'. If we leave these values at their default the game will not run. The values must be lowered to at least 96, but you may decide to make them much lower than that.
+
+The 'New Map' dialog also has settings for Colors, which are in the form of radio buttons for 'True Color' or 'Paletted (8 bit)' color. For our purposes the default works fine. Click 'OK'. Another dialog pops up to remind you to load the tilesheet. That's the next step.
+
+Go to the 'File' pull-down menu again and select the 'Import...' option. A box opens that allows you to specify which file to use as your tilesheet. Use the 'tiles1.png' file that you download from the Awesomeguy Downloads site. See: http://code.google.com/p/awesomeguy/downloads/list . If you are having trouble using ping files with Mappy, go to the Mappy site and follow instructions there for adding ping support to your Mappy install. See: 
