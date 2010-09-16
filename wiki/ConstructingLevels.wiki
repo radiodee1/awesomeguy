@@ -239,7 +239,7 @@ The xml file, therefore, would look like this:
 
 We also changed the 'horizontal' and 'vertical' tags to hold sensible values. You must edit each level you create and add it to your xml file in the same way.
 
-===sed===
+===Sed===
 
 If you decide to 'Export As Text' using the '2D format' your arrays will look like this:
 
