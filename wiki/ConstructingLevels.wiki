@@ -152,15 +152,10 @@ For this explanation a small level will be created in Mappy of the size of 5x5 n
 
 {{{
 const short test_map0[25] = {
-
 0, 0, 0, 0, 0,
-
 0, 0, 0, 0, 0,
-
 113, 113, 113, 113, 113,
-
 0, 0, 0, 0, 0,
-
 0, 0, 0, 0, 0
 
 };
@@ -170,16 +165,78 @@ const short test_map0[25] = {
 const short test_map1[25] = {
 
 0, 5, 0, 0, 0,
-
 0, 0, 0, 0, 446,
-
 442, 442, 442, 442, 442,
-
 0, 0, 0, 0, 0,
-
 0, 0, 0, 0, 0
 
 };
 }}}
 
-This is the total contents of the file.
+This is the total contents of the file. The file has to be edited and the edited parts need to be placed in the xml file.
+
+===Text Editor===
+
+The Mappy program puts the two arrays that we're interested in in C style arrays. The array labeled 'test_map0' is going to be used as the 'level' array in Awesomeguy, and the array labeled 'test_map1' is going to be used as the 'objects' array in Awesomeguy. The xml file uses comma separated values, so we use a text editor to copy and paste the numbers from the text file into the xml file in a large block. The game ignores white space but doesn't ignore curly braces, semicolons or letters. For example, for the level array we edit the file down to the following block:
+
+{{{
+0, 0, 0, 0, 0,
+0, 0, 0, 0, 0,
+113, 113, 113, 113, 113,
+0, 0, 0, 0, 0,
+0, 0, 0, 0, 0
+}}} 
+
+Then we edit the objects data down to the following block:
+
+{{{
+0, 5, 0, 0, 0,
+0, 0, 0, 0, 446,
+442, 442, 442, 442, 442,
+0, 0, 0, 0, 0,
+0, 0, 0, 0, 0
+}}}
+
+The xml file, therefore, would look like this:
+
+{{{
+<?xml version="1.0" ?>
+<game>
+<level number="1">
+<horizontal>64</horizontal>
+<vertical>32</vertical>
+<tiles_level>
+0, 0, 0, 0, 0,
+0, 0, 0, 0, 0,
+113, 113, 113, 113, 113,
+0, 0, 0, 0, 0,
+0, 0, 0, 0, 0
+</tiles_level>
+<tiles_objects>
+0, 5, 0, 0, 0,
+0, 0, 0, 0, 446,
+442, 442, 442, 442, 442,
+0, 0, 0, 0, 0,
+0, 0, 0, 0, 0
+</tiles_objects>
+<last_level>false</last_level>
+</level>
+
+<level number="2">
+<horizontal>64</horizontal>
+<vertical>32</vertical>
+<tiles_level>
+	... this is where your mappy data
+	goes for level 2 ...
+</tiles_level>
+<tiles_objects>
+	... this is where your mappy data
+	goes for level 2 ...
+</tiles_objects>
+<last_level>true</last_level>
+</level>
+
+</game>
+}}}
+
+You must edit each level you create and add it to your xml file in the same way.
