@@ -1,6 +1,6 @@
 #summary How to use software tools to construct Awesomeguy levels
 #sidebar TableOfContents
-<wiki:toc max_depth="3" />
+<wiki:toc max_depth="4" />
 = Introduction =
 
 I plan to outline how to create new Awesomeguy levels here. Awesomeguy levels are incorporated in an 'awesomeguy.xml' file, and currently to use custom levels you need to build your own xml file and then include it in the Eclipse Java project (which can be downloaded from this site. See: [http://code.google.com/p/awesomeguy/source/checkout http://code.google.com/p/awesomeguy/source/checkout]) and then make your own version of Awesomeguy from that. Soon a way will be made for the awesomeguy.xml file that you create to be loaded automatically from the android phone's sdcard. When that change has been made to the program this file will be updated. It is obvious that building the entire Eclipse Java project for Awesomeguy yourself just to incorporate your own levels in the game is a bit much for most readers, but for programmers the process wouldn't bee so difficult, and in any case the technical reader might find description of the process gives some incite into how the Awesomeguy game works in general.
