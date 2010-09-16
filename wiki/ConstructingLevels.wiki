@@ -319,17 +319,17 @@ Then you can insert the text block into the xml file like this:
 Since the xml file does not contain any other curly braces, you can run the entire xml file through a program like 'sed' to remove all the curly braces from the arrays. Here the file 'raw.xml' represents the listing above. The commands look like this:
 
 {{{
-sed s/{// raw.xml > awesomeguy2.xml
-sed s/}// awesomeguy2.xml > awesomeguy3.xml
+sed s/{// raw.xml > raw2.xml
+sed s/}// raw2.xml > awesomeguy.xml
 }}}
 
-Then, when you're certain that the changes have been made properly, you can change awesomeguy3.xml to awesomeguy.xml:
+Then, when you're certain that the changes have been made properly, you can delete raw.xml and raw2.xml :
 
 {{{
-cp awesomeguy3.xml awesomeguy.xml
+rm raw.xml raw2.xml
 }}}
 
-Finally, if you want you can use the search and replace functions of your favorite text editor to erase the curly braces if you find that easier.
+Finally, if you want you can use the search and replace functions of your favorite text editor to erase the curly braces instead of sed if you find that easier.
 
 =Finished Level=
 
