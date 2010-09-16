@@ -240,3 +240,99 @@ The xml file, therefore, would look like this:
 }}}
 
 You must edit each level you create and add it to your xml file in the same way.
+
+===sed===
+
+If you decide to 'Export As Text' using the '2D format' your arrays will look like this:
+
+{{{
+const short test_map0[5][5] = {
+
+{ 0, 0, 0, 0, 0 },
+
+{ 0, 0, 0, 0, 0 },
+
+{ 113, 113, 113, 113, 113 },
+
+{ 0, 0, 0, 0, 0 },
+
+{ 0, 0, 0, 0, 0 }
+
+};
+}}}
+
+You can use a text editor to edit the array down to a text block that looks like this:
+
+{{{
+{ 0, 0, 0, 0, 0 },
+
+{ 0, 0, 0, 0, 0 },
+
+{ 113, 113, 113, 113, 113 },
+
+{ 0, 0, 0, 0, 0 },
+
+{ 0, 0, 0, 0, 0 }
+
+}}}
+
+Then you can insert the text block into the xml file like this:
+
+{{{
+<?xml version="1.0" ?>
+<game>
+<level number="1">
+<horizontal>64</horizontal>
+<vertical>32</vertical>
+<tiles_level>
+{ 0, 0, 0, 0, 0 },
+{ 0, 0, 0, 0, 0 },
+{ 113, 113, 113, 113, 113 },
+{ 0, 0, 0, 0, 0 },
+{ 0, 0, 0, 0, 0 }
+</tiles_level>
+<tiles_objects>
+{ 0, 5, 0, 0, 0 },
+
+{ 0, 0, 0, 0, 446 },
+
+{ 442, 442, 442, 442, 442 },
+
+{ 0, 0, 0, 0, 0 },
+
+{ 0, 0, 0, 0, 0 }
+</tiles_objects>
+<last_level>false</last_level>
+</level>
+
+<level number="2">
+<horizontal>64</horizontal>
+<vertical>32</vertical>
+<tiles_level>
+	... this is where your mappy data
+	goes for level 2 ...
+</tiles_level>
+<tiles_objects>
+	... this is where your mappy data
+	goes for level 2 ...
+</tiles_objects>
+<last_level>true</last_level>
+</level>
+
+</game>
+}}}
+
+Since the xml file does not contain any other curly braces, you can run the entire xml file through a program like 'sed' to remove all the curly braces from the arrays. Here the file 'raw.xml' represents the listing above. The commands look like this:
+
+{{{
+sed s/{// raw.xml > awesomeguy2.xml
+sed s/}// awesomeguy2.xml > awesomeguy3.xml
+}}}
+
+Then, when you're certain that the changes have been made properly, you can change awesomeguy3.xml to awesomeguy.xml:
+
+{{{
+cp awesomeguy3.xml awesomeguy.xml
+}}}
+
+Finally, if you want you can use the search and replace functions of your favorite text editor to erase the curly braces if you find that easier.
