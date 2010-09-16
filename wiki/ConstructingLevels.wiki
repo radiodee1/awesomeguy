@@ -139,3 +139,17 @@ Monsters can be placed on a level by simply putting the 'monster' block on the o
 ====Floating Platforms====
 
 Floating platforms are like monsters in many ways except they're supposed to be placed in the air. When their tile is placed on the 'objects' layer a moving platform will appear in the game. The tile will slowly move to the right until it encounters a solid object and then it moves to the left in the same way. The invisible marker block -- with an M in it -- can also be used with floating platforms. The marker serves as an instruction to the platform to stop moving in one direction and start moving in the other.
+
+===Text Files===
+
+The Mappy program is then used to convert the images on the screen to text files representing the maps for the two layers. The tilesheet is already incorporated into Awesomeguy, so we are not concerned with saving this material. Go to the 'File' menu and select the 'Export As Text...' option. A dialog box will open up for this purpose.
+
+The text file that we are trying to produce is essentially composed of three major parts. There will be a C type array for the 'Layer 0' layer, there will be another C type array for the 'New Layer' layer, and optionally there will be a colormap. The colormap is unimportant to us, so we either edit it out using a text editor, or we disable it entirely in the 'Export As Text...' dialog box.
+
+The settings on this dialog box can be left the same, for the most part. You might want to uncheck the checkbox labled 'Colour Map'. This will disable the printing of the color map to your text file. You might want to make sure that the radio button for 'All Layers' is selected, as well as the radio button for '2D format'. The '1D format' radio button can be experemented with as well.
+
+For this explanation a small level will be created in Mappy of the size of 5x5 named 'test.fmp'. Remember that for the actual game the horizontal tile measurement must be at least 32 and the vertical tile measurement must be at least 24. The resulting text file will be named 'test.TXT' by the Mappy program. See the listing below.
+
+{{{
+
+}}}
