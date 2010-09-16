@@ -197,14 +197,14 @@ Then we edit the objects data down to the following block:
 0, 0, 0, 0, 0
 }}}
 
-The xml file, therefore, would look like this:
+We also changed the 'horizontal' and 'vertical' tags to hold sensible values. The xml file, therefore, would look like this:
 
 {{{
 <?xml version="1.0" ?>
 <game>
 <level number="1">
-<horizontal>64</horizontal>
-<vertical>32</vertical>
+<horizontal>5</horizontal>
+<vertical>5</vertical>
 <tiles_level>
 0, 0, 0, 0, 0,
 0, 0, 0, 0, 0,
@@ -332,3 +332,15 @@ cp awesomeguy3.xml awesomeguy.xml
 }}}
 
 Finally, if you want you can use the search and replace functions of your favorite text editor to erase the curly braces if you find that easier.
+
+=Finished Level=
+
+At this point you have a finished awesomeguy.xml file. To use it download the Awesomeguy project from code.google.com and set it up in your Android ready Eclipse IDE. Replace the awesomeguy.xml file that is packaged in the /res/xml folder. 
+
+Change the number of levels that the game recognizes to the number in your xml file. This can be done by going to the GameValues Class and editing the line that reads like this at the beginning of the file. The declaration can be found under the commented line `/* game progress */`.
+
+{{{
+	public static int NUM_ROOMS = 10;
+}}}
+
+Build the project and run it on your android device.
