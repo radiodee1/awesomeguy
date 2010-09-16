@@ -120,22 +120,22 @@ With Mappy set up in this way you can edit the 'Layer 0' layer for visual elemen
 
 There are only a few things that are strictly necessary for a level to be complete. There must be an entry in the 'objects' array for the character's start position. This is tile number 5. There must be an entry in the 'objects' array for the level's goal, the object that, when encountered, brings the character to the next level. If just these two things are placed on the 'New Layer' layer the game will play.
 
-*Solid Objects*
+====Solid Objects====
 
 You will want to add other elements. Adding solid walls and floors is a two step process. First you draw the wall on 'Layer 0' and then you cover the exact same boxes -- with the solid object tile -- on the 'New Layer' layer.
 
-*Rings*
+====Rings====
 
 Rings, the objects that you gather to accumulate points, go on the 'objects' layer. They are automatically printed on the Awesomeguy screen by the program. Extra lives and gold bricks are the same way, as are checkpoints.
 
-*Ladders*
+====Ladders====
 
 Ladders are like solid objects. You must first copy a symbol on the 'Layer 0' layer for the ladder, and then you copy the ladder object tile to the 'New Layer' layer in the same exact place. The ladder tile can be any tile at all, but tile 257 is used commonly. The ladder objects tile looks like a set of horizontal black and white lines.
 
-*Monsters*
+====Monsters====
 
 Monsters can be placed on a level by simply putting the 'monster' block on the objects level, but they have a special behavior. The monster block defines the starting location of the monster sprite. The monster sprite travels to the right until it comes to the end of the platform it's on or until it comes to an obstacle. Then it turns around. For this reason you want to make sure you place your monsters on a platform, not floating in the air. If you put them floating in the air they think that they must turn around constantly and as a result they don't go anywhere, they just constantly switch from left-facing image to right-facing image without stopping. If you place a monster on a solid platform and you want to impede it's movement you can place a marker on the 'objects' layer that tells the monster sprite to turn around when it is encountered. This marker looks like a white box with an M in it and is located at tile position 441. Marker tiles do not appear on the screen.
 
-*Floating Platforms*
+====Floating Platforms====
 
 Floating platforms are like monsters in many ways except they're supposed to be placed in the air. When their tile is placed on the 'objects' layer a moving platform will appear in the game. The tile will slowly move to the right until it encounters a solid object and then it moves to the left in the same way. The invisible marker block -- with an M in it -- can also be used with floating platforms. The marker serves as an instruction to the platform to stop moving in one direction and start moving in the other.
