@@ -81,6 +81,8 @@ static int map_objects[96][96];
  
 uint32_t screen [192][256];
  
+uint32_t number_alpha = 0;
+ 
 static int tilesWidthMeasurement = 32;
 static int tilesHeightMeasurement = 32;
 
@@ -717,7 +719,7 @@ void copyArraysExpand_8_40(jint from[], int size_l, uint32_t to[PLATFORM_HEIGHT]
  */
 void copyArraysExpand_tileset (jint from[], int size_l, uint32_t to[TILEMAP_HEIGHT][TILEMAP_WIDTH]) {
 
-
+	int num, n, l;
 	int i,j, k;
 	for (i = 0; i< TILEMAP_HEIGHT; i ++ ) {
 		for (j = 0; j < TILEMAP_WIDTH; j ++ ) {
@@ -727,6 +729,11 @@ void copyArraysExpand_tileset (jint from[], int size_l, uint32_t to[TILEMAP_HEIG
 			}
 		}
 	}
+	n = TILEMAP_WIDTH / TILE_HEIGHT; // 224/8 = 28
+	num = 374;
+	k = (num / n); // y pos 
+    l = num - (k * n); // x pos
+	number_alpha = to[k * 8][l * 8];
 	return;
 }
 
@@ -894,19 +901,20 @@ void drawScoreWords() {
     	livesPos = 16  ;
         uint32_t square[TILE_HEIGHT][TILE_WIDTH];
     	//mTiles = new TileCutter(bMapNum);
-
+		
+		
     	if (guy.y > 16) {
     			//print SCORE:
     			for (i = 0; i < 6; i ++) {
        				cutTile(tiles_a, square, topScore[i]);
 
     				drawTile_8(square, (scorePos + i) * TILE_WIDTH + scrollx, (1) * TILE_HEIGHT + scrolly, 
-    					scrollx , scrolly, PAINT_TRANSPARENT, 0);
+    					scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
 
        				cutTile(tiles_a, square, topScore[i] +28);
 
     				drawTile_8(square, (scorePos + i) * TILE_WIDTH  + scrollx, (2) * TILE_HEIGHT + scrolly, 
-    					scrollx , scrolly, PAINT_TRANSPARENT, 0);
+    					scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
     				
 
     			}
@@ -916,12 +924,12 @@ void drawScoreWords() {
     				cutTile(tiles_a, square, topLives[i]);
 
     				drawTile_8(square, (livesPos + i) * TILE_WIDTH + scrollx, (1) * TILE_HEIGHT + scrolly, 
-    					scrollx , scrolly, PAINT_TRANSPARENT, 0x000000);
+    					scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
 
        				cutTile(tiles_a, square, topLives[i] +28);
 
     				drawTile_8(square, (livesPos + i) * TILE_WIDTH +scrollx , (2) * TILE_HEIGHT + scrolly , 
-    					scrollx , scrolly, PAINT_TRANSPARENT, 0x000000);
+    					scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
     				
     				
     			}
@@ -970,12 +978,12 @@ void drawScoreNumbers( int pos, int num, int p) {
 					cutTile(tiles_a, square, topNumbers[placesValue]);
 
     				drawTile_8(square, (pos + i - p + c) * TILE_WIDTH + scrollx, (1) * TILE_HEIGHT +
-    					scrolly, scrollx , scrolly, PAINT_TRANSPARENT, 0x000000);
+    					scrolly, scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
 
        				cutTile(tiles_a, square, topNumbers[placesValue] +28);
 
     				drawTile_8(square, (pos + i - p + c) * TILE_WIDTH +scrollx , (2) * TILE_HEIGHT +
-    					scrolly , scrollx , scrolly, PAINT_TRANSPARENT, 0x000000);
+    					scrolly , scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
     				
     		}
 
@@ -1297,11 +1305,11 @@ void drawLevel(int animate_level) {
     	}
     }
     
-    /* draw score and level */
-    drawScoreWords();
-    
     /* draw moving platform */
     drawMovingPlatform();
+    
+    /* draw score and level */
+    drawScoreWords();
     
     /* draw monsters */
     if (preferences_monsters == TRUE) {
@@ -1682,6 +1690,7 @@ JNIEXPORT int JNICALL Java_org_davidliebman_android_awesomeguy_Panel_getEndLevel
 JNIEXPORT int JNICALL Java_org_davidliebman_android_awesomeguy_Panel_getScore(JNIEnv * env, jobject  obj)
 {
 	return score;	
+
 
 
 }
