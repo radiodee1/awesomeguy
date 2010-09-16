@@ -160,8 +160,6 @@ const short test_map0[25] = {
 
 };
 
-
-
 const short test_map1[25] = {
 
 0, 5, 0, 0, 0,
@@ -197,7 +195,7 @@ Then we edit the objects data down to the following block:
 0, 0, 0, 0, 0
 }}}
 
-We also changed the 'horizontal' and 'vertical' tags to hold sensible values. The xml file, therefore, would look like this:
+The xml file, therefore, would look like this:
 
 {{{
 <?xml version="1.0" ?>
@@ -239,7 +237,7 @@ We also changed the 'horizontal' and 'vertical' tags to hold sensible values. Th
 </game>
 }}}
 
-You must edit each level you create and add it to your xml file in the same way.
+We also changed the 'horizontal' and 'vertical' tags to hold sensible values. You must edit each level you create and add it to your xml file in the same way.
 
 ===sed===
 
