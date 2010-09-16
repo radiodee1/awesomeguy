@@ -293,13 +293,9 @@ Then you can insert the text block into the xml file like this:
 </tiles_level>
 <tiles_objects>
 { 0, 5, 0, 0, 0 },
-
 { 0, 0, 0, 0, 446 },
-
 { 442, 442, 442, 442, 442 },
-
 { 0, 0, 0, 0, 0 },
-
 { 0, 0, 0, 0, 0 }
 </tiles_objects>
 <last_level>false</last_level>
