@@ -148,8 +148,38 @@ The text file that we are trying to produce is essentially composed of three maj
 
 The settings on this dialog box can be left the same, for the most part. You might want to uncheck the checkbox labled 'Colour Map'. This will disable the printing of the color map to your text file. You might want to make sure that the radio button for 'All Layers' is selected, as well as the radio button for '2D format'. The '1D format' radio button can be experemented with as well.
 
-For this explanation a small level will be created in Mappy of the size of 5x5 named 'test.fmp'. Remember that for the actual game the horizontal tile measurement must be at least 32 and the vertical tile measurement must be at least 24. The resulting text file will be named 'test.TXT' by the Mappy program. See the listing below.
+For this explanation a small level will be created in Mappy of the size of 5x5 named 'test.fmp'. Remember that for the actual game the horizontal tile measurement must be at least 32 and the vertical tile measurement must be at least 24. Also the '1D format' radio button is checked and the 'Colour Map' checkbox is unchecked. The resulting text file will be named 'test.TXT' by the Mappy program. See the listing below.
 
 {{{
+const short test_map0[25] = {
 
+0, 0, 0, 0, 0,
+
+0, 0, 0, 0, 0,
+
+113, 113, 113, 113, 113,
+
+0, 0, 0, 0, 0,
+
+0, 0, 0, 0, 0
+
+};
+
+
+
+const short test_map1[25] = {
+
+0, 5, 0, 0, 0,
+
+0, 0, 0, 0, 446,
+
+442, 442, 442, 442, 442,
+
+0, 0, 0, 0, 0,
+
+0, 0, 0, 0, 0
+
+};
 }}}
+
+This is the total contents of the file.
