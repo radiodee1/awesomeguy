@@ -107,3 +107,21 @@ Your goal at this point is to place blocks on the screen from the tilesheet that
   * The checkpoint block. This block looks like a golden key and is in position 445.
   * The goal block. This block looks like a white diamond shape and is in position 446.
   * The ring block. This block looks like a red circle and is in position 447.
+
+===Onion Skin===
+
+The most common task when working on the 'objects' layer is the placement of the 'solid' block. This is the one that looks like a bunch of nested black squares. The goal is to place on of these blocks in every location that needs to be interpreted as a solid wall or floor. This is difficult because when you go to the 'Layer' menu and select 'Layer 0' you can see the drawings of all these floors and walls, but you cannot see them when you select 'New Layer' from the same menu. The solution is to select 'New Layer' (the layer that is to represent the 'objects' array) and then to enable the 'Onion Skin' function. This function is located at the bottom of the same 'Layer' menu in Mappy.
+
+Go to the 'Layer' menu and select 'Onion Skin'. A small dialog box comes up with two checkboxes and a field for a number. The first checkbox is 'Enable Onion Skin'. This is the option we're interested in. Check this checkbox. The other checkbox is 'Edit layer in front' and this should remain checked. The numeric input field has the number 0 in it and it should remain the same. After you click OK you should be able to see the tiles that you placed on the 'Layer 0' layer, and at the same time place new tiles on the 'New Layer' layer.
+
+With Mappy set up in this way you can edit the 'Layer 0' layer for visual elements, and then switch to the 'New Layer' layer for structural elements. When editing the 'New Layer' layer you will be able to see what you added for visual display, and therefore you'll be able to place your 'New Layer' blocks correctly. Be careful, though, as in this setup the 'New Layer' and 'Layer 0' look very much like each other. Remember there is a bold check mark next to the name of the level that you are working on if you pull down the 'Layer' menu. Also the layer name is printed above the left hand panel, along with information about what block the cursor is hovering above.
+
+===Finish Editing===
+
+There are only a few things that are strictly necessary for a level to be complete. There must be an entry in the 'objects' array for the character's start position. This is tile number 5. There must be an entry in the 'objects' array for the level's goal, the object that, when encountered, brings the character to the next level. If just these two things are placed on the 'New Layer' layer the game will play.
+
+You will want to add other elements. Adding solid walls and floors is a two step process. First you draw the wall on 'Layer 0' and then you cover the exact same boxes -- with the solid object tile -- on the 'New Layer' layer.
+
+Rings, the objects that you gather to accumulate points, go on the 'objects' layer. They are automatically printed on the Awesomeguy screen by the program. Extra lives and gold bricks are the same way.
+
+Ladders are like solid objects. You must first copy a symbol on the 'Layer 0' layer for the ladder, and then you copy the ladder object tile to the 'New Layer' layer in the same exact place. The ladder tile can be any tile at all, but tile 257 is used commonly. The ladder objects tile looks like a set of horizontal black and white lines.
