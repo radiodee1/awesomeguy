@@ -330,6 +330,7 @@ public  class Panel  extends SurfaceView  {
 			}
 			if (newGuy != lastGuy) {
 				//setSwapGuy(newGuy);
+				mGuySprite.setAnimIndex(newGuy);
 				lastGuy = newGuy;
 				if(newGuy > 3) newGuy = -1;
 			}
