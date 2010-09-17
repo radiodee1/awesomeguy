@@ -202,7 +202,7 @@ public class Options extends Activity {
     @Override
     public void onPause() {
     	
-        mHighScores.setEnableJNI(true);
+        //mHighScores.setEnableJNI(true);
 
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         
