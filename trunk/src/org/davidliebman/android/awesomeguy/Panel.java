@@ -179,65 +179,66 @@ public  class Panel  extends SurfaceView  {
 		mSounds = new SoundPoolManager(parent);
 		mSounds.init();
 		
-		/* test jni */
-		if (this.useJNI) {
-			int [] a = new int[16*16];
-			int [] b = new int[16*16];
-			int [] c = new int[16*16];
-			int [] d = new int[16*16];
-	
-			Bitmap mSprite;
-			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy0, mOptionsSprite);
-			mSprite.getPixels(a, 0, 16, 0, 0, 16, 16);
-			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy1, mOptionsSprite);
-			mSprite.getPixels(b, 0, 16, 0, 0, 16, 16);
-			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy2, mOptionsSprite);
-			mSprite.getPixels(c, 0, 16, 0, 0, 16, 16);
-			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy3, mOptionsSprite);
-			mSprite.getPixels(d, 0, 16, 0, 0, 16, 16);
-			setGuyData(a, b, c, d);
-	
-			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_r0, mOptionsSprite);
-			mSprite.getPixels(a, 0, 16, 0, 0, 16, 16);
-			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_r1, mOptionsSprite);
-			mSprite.getPixels(b, 0, 16, 0, 0, 16, 16);
-			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_l0, mOptionsSprite);
-			mSprite.getPixels(c, 0, 16, 0, 0, 16, 16);
-			mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_l1, mOptionsSprite);
-			mSprite.getPixels(d, 0, 16, 0, 0, 16, 16);
-			setMonsterData(a, b, c, d);
-	
-			int [] tiles_a = new int [128 * 224];
-			int [] tiles_b = new int [128 * 224];
-			int [] tiles_c = new int [128 * 224];
-			int [] tiles_d = new int [128 * 224];
-	
-			Bitmap mTiles;
-			mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles1, mOptionsTile);
-			mTiles.getPixels(tiles_a, 0, 224, 0, 0, 224, 128);
-			mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles2, mOptionsTile);
-			mTiles.getPixels(tiles_b, 0, 224, 0, 0, 224, 128);
-			mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles3, mOptionsTile);
-			mTiles.getPixels(tiles_c, 0, 224, 0, 0, 224, 128);
-			mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles4, mOptionsTile);
-			mTiles.getPixels(tiles_d, 0, 224, 0, 0, 224, 128);
-			this.setTileMapData(tiles_a, tiles_b, tiles_c, tiles_d);
-			
-			int [] platform_a = new int [8 * 40];
-			Bitmap mPlatform;
-			mPlatform = BitmapFactory.decodeResource(getResources(), R.drawable.concrete, mOptionsPlat);
-			mPlatform.getPixels(platform_a, 0, 40, 0, 0, 40, 8);
-			this.setMovingPlatformData(platform_a);
-			
-			mGameV.setDisplayWidth(mDisplayWidth);
-			setScreenData(mGameV.getScreenTilesHMod(), 24);
-			
-			int monsters = 0;
-			int collision = 0;
-			if(mHighScores.isEnableMonsters()) monsters = 1;
-			if(mHighScores.isEnableCollision()) collision = 1;
-			setMonsterPreferences(monsters, collision);
-		}
+		/* prepare jni -- load all images into library */
+		int [] a = new int[16*16];
+		int [] b = new int[16*16];
+		int [] c = new int[16*16];
+		int [] d = new int[16*16];
+
+		Bitmap mSprite;
+		mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy0, mOptionsSprite);
+		mSprite.getPixels(a, 0, 16, 0, 0, 16, 16);
+		mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy1, mOptionsSprite);
+		mSprite.getPixels(b, 0, 16, 0, 0, 16, 16);
+		mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy2, mOptionsSprite);
+		mSprite.getPixels(c, 0, 16, 0, 0, 16, 16);
+		mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy3, mOptionsSprite);
+		mSprite.getPixels(d, 0, 16, 0, 0, 16, 16);
+		setGuyData(a, b, c, d);
+
+		mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_r0, mOptionsSprite);
+		mSprite.getPixels(a, 0, 16, 0, 0, 16, 16);
+		mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_r1, mOptionsSprite);
+		mSprite.getPixels(b, 0, 16, 0, 0, 16, 16);
+		mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_l0, mOptionsSprite);
+		mSprite.getPixels(c, 0, 16, 0, 0, 16, 16);
+		mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_l1, mOptionsSprite);
+		mSprite.getPixels(d, 0, 16, 0, 0, 16, 16);
+		setMonsterData(a, b, c, d);
+
+		int [] tiles_a = new int [128 * 224];
+		int [] tiles_b = new int [128 * 224];
+		int [] tiles_c = new int [128 * 224];
+		int [] tiles_d = new int [128 * 224];
+
+		Bitmap mTiles;
+		mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles1, mOptionsTile);
+		mTiles.getPixels(tiles_a, 0, 224, 0, 0, 224, 128);
+		mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles2, mOptionsTile);
+		mTiles.getPixels(tiles_b, 0, 224, 0, 0, 224, 128);
+		mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles3, mOptionsTile);
+		mTiles.getPixels(tiles_c, 0, 224, 0, 0, 224, 128);
+		mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles4, mOptionsTile);
+		mTiles.getPixels(tiles_d, 0, 224, 0, 0, 224, 128);
+		this.setTileMapData(tiles_a, tiles_b, tiles_c, tiles_d);
+		
+		int [] platform_a = new int [8 * 40];
+		Bitmap mPlatform;
+		mPlatform = BitmapFactory.decodeResource(getResources(), R.drawable.concrete, mOptionsPlat);
+		mPlatform.getPixels(platform_a, 0, 40, 0, 0, 40, 8);
+		this.setMovingPlatformData(platform_a);
+		
+		/* JNI display size setting */
+		mGameV.setDisplayWidth(mDisplayWidth);
+		setScreenData(mGameV.getScreenTilesHMod(), 24);
+		
+		/* JNI Monster Collision setting */
+		int monsters = 0;
+		int collision = 0;
+		if(mHighScores.isEnableMonsters()) monsters = 1;
+		if(mHighScores.isEnableCollision()) collision = 1;
+		setMonsterPreferences(monsters, collision);
+		
 	}
 
 
@@ -286,7 +287,7 @@ public  class Panel  extends SurfaceView  {
 
 	}
 
-	public void setBackgroundGraphics() {
+	public void setInitialBackgroundGraphics() {
 		/*** Load background graphics array ***/
 
 		scrollX = mMovementV.getScrollX();
@@ -365,8 +366,6 @@ public  class Panel  extends SurfaceView  {
 
 
 		int jumpHeight = 15;
-
-		
 
 		/* LADDER TEST */
 		if (ladderTest) {
@@ -454,9 +453,6 @@ public  class Panel  extends SurfaceView  {
 		
 		}
 
-		
-		
-		
 		/*
 		 * handle jumps.
 		 */
@@ -1004,10 +1000,10 @@ public  class Panel  extends SurfaceView  {
 							
 							mGameV.setObjectsCell(j, i, 0);
 							
-							if(this.useJNI) { 
-								setObjectsDisplay(j, i, 0);//jni
-								this.incrementJniScore(100);
-							}
+							
+							setObjectsDisplay(j, i, 0);//jni
+							this.incrementJniScore(100);
+							
 
 							mGameV.incrementScore(100);
 							//mmEffect(SFX_GOAL);
@@ -1021,10 +1017,9 @@ public  class Panel  extends SurfaceView  {
 							
 							mGameV.setObjectsCell(j, i, 0);
 							
-							if(this.useJNI) {
-								setObjectsDisplay(j, i, 0);//jni
-								this.incrementJniScore(10);
-							}
+							setObjectsDisplay(j, i, 0);//jni
+							this.incrementJniScore(10);
+							
 
 							mGameV.incrementScore(10);
 							//mmEffect(SFX_PRIZE);
@@ -1038,10 +1033,9 @@ public  class Panel  extends SurfaceView  {
 							
 							mGameV.setObjectsCell(j, i, 0);
 							
-							if (this.useJNI) {
-								setObjectsDisplay(j, i, 0);//jni
-								this.incrementJniScore(50);
-							}
+							setObjectsDisplay(j, i, 0);//jni
+							this.incrementJniScore(50);
+							
 
 							mGameV.incrementScore(50);
 							//mmEffect(SFX_PRIZE);
@@ -1057,9 +1051,8 @@ public  class Panel  extends SurfaceView  {
 							
 							mGameV.setObjectsCell(j, i, 0);
 							
-							if (this.useJNI) {
-								setObjectsDisplay(j, i, 0);//jni
-							}
+							setObjectsDisplay(j, i, 0);//jni
+							
 
 							mSounds.playSound(SoundPoolManager.SOUND_GOAL);
 							mGameV.incrementLives();
@@ -1071,10 +1064,9 @@ public  class Panel  extends SurfaceView  {
 							
 							mGameV.setObjectsCell(j, i, 0);
 							
-							if (this.useJNI) {
-								setObjectsDisplay(j, i, 0);//jni
-								this.incrementJniScore(200);
-							}
+							setObjectsDisplay(j, i, 0);//jni
+							this.incrementJniScore(200);
+							
 
 							mGameV.incrementScore(200);
 							//mmEffect(SFX_PRIZE);
@@ -1137,17 +1129,6 @@ public  class Panel  extends SurfaceView  {
 		this.mHighScores = mHighScores;
 	}
 	
-
-	public boolean isUseJNI() {
-		return useJNI;
-	}
-
-
-	public void setUseJNI(boolean useJNI) {
-		//this.useJNI = useJNI;
-		this.useJNI = true;
-	}
-
 
 	public boolean isEnableSounds() {
 		return mEnableSounds;
