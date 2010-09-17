@@ -1,4 +1,7 @@
 #summary Awesomeguy table of contents
+=Table Of Contents=
+
+----
 
   * [Awesomeguy Awesomeguy]
     * [Awesomeguy#Introduction Introduction]
