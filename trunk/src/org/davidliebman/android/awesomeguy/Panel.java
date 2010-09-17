@@ -259,8 +259,6 @@ public  class Panel  extends SurfaceView  {
 		mCanvas.drawColor(Color.BLACK);
 		
 		/************** test jni *******************/
-		
-			
 		mMap = Bitmap.createBitmap(drawLevel(newBG + 1), 256, 192, Bitmap.Config.RGB_565);
 		mTempJNI = Bitmap.createBitmap(mMap, 0, 0, 256, 192, mMatrix, false);
 		canvas.drawBitmap(mTempJNI, 0, 0, null);
@@ -280,13 +278,10 @@ public  class Panel  extends SurfaceView  {
 		mHighScores.setScore(getScore());
 		mGameV.setScore(getScore());
 		
-	
-	
-
 	}
 
 	public void setInitialBackgroundGraphics() {
-		/*** Load background graphics array ***/
+		/*** set initial scroll positions ***/
 
 		scrollX = mMovementV.getScrollX();
 		scrollY = mMovementV.getScrollY();
@@ -693,7 +688,7 @@ public  class Panel  extends SurfaceView  {
 	
 	private boolean collisionWithPlatforms(boolean canFall) {
 		int i, j;
-
+		//
 		  BoundingBox guyBox, platformBox;
 		  boolean temp = this.canJump;
 		  guyBox = BoundingBox.makeSpriteBox( mGuySprite,0,0);
