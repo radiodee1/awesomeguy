@@ -465,7 +465,7 @@ public  class Panel  extends SurfaceView  {
 			y =  - mMovementV.getVMove();// * 2 / 3);
 			//if(jumptime >  mMovementV.getVMove() * 3) x = 0;
 			canFall = false;
-			Log.v("functions","jumping");
+			//Log.v("functions","jumping");
 		}
 
 		
@@ -701,7 +701,7 @@ public  class Panel  extends SurfaceView  {
 		int i;
 
 		  BoundingBox guyBox, platformBox;
-		  boolean temp = false;
+		  boolean temp = this.canJump;
 		  guyBox = BoundingBox.makeSpriteBox( mGuySprite,0,0);
 		  boolean mFacingRight = true;
 		  
