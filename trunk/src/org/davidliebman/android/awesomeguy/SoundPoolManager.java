@@ -32,7 +32,7 @@ public class SoundPoolManager {
                     Log.d(TAG, "Initializing new SoundPool");
                     //re-init sound pool to work around bugs
                     release();
-                    soundPool = new SoundPool(2,AudioManager.STREAM_MUSIC, 0);
+                    soundPool = new SoundPool(2,AudioManager.STREAM_NOTIFICATION, 0);
                     this.mSoundOw = soundPool.load(context, R.raw.ow, 1);
                     this.mSoundBoom = soundPool.load(context, R.raw.boom, 1);
                     this.mSoundGoal = soundPool.load(context, R.raw.goal, 1);
