@@ -66,6 +66,6 @@
         * [ConstructingLevels#Monsters Monsters]
         * [ConstructingLevels#Floating_Platforms Floating Platforms]
       * [ConstructingLevels#Text_Files Text Files]
-      * [ConstructingLevels#Finish_Editing Finish Editing]
+      * [ConstructingLevels#Text_Editor Text Editor]
       * [ConstructingLevels#Finish_Editing Finish Editing]
       * [ConstructingLevels#Finish_Editing Finish Editing]
