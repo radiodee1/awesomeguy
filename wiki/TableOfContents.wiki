@@ -54,6 +54,6 @@
     * [ConstructingLevels#Tools_and_Programs Tools and Programs]
     * [ConstructingLevels#Basic_Structure Basic Structure]
     * [ConstructingLevels#Editing_Your_Level Editing Your Level]
-    * [ConstructingLevels#Basic_Structure Basic Structure]
+      * [ConstructingLevels#The_Tilesheet The Tilesheet]
     * [ConstructingLevels#Basic_Structure Basic Structure]
     * [ConstructingLevels#Basic_Structure Basic Structure]
