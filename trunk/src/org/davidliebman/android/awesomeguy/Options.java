@@ -16,11 +16,13 @@ public class Options extends Activity {
 	public static final String AWESOME_NAME = new String("org.awesomeguy");
 	public static final String SAVED_NUM_SCORES = new String("saved_num_scores");
 	public static final String SAVED_ROOM_NUM = new String("room");
+	public static final String SAVED_LOOK_FOR_XML = new String("look_for_xml");
 	
 	private int mRoomNumSelected = 1;
 
 	private Record mHighScores = new Record() ;
 	private Scores mScores ;
+	private boolean mLookForXml = false;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,7 @@ public class Options extends Activity {
         if (mHighScores.isNewRecord()) {
         	mHighScores.setNumRecords(preferences.getInt(SAVED_NUM_SCORES, 50));
         }
-        //mHighScores.listInLog();
+        mLookForXml = preferences.getBoolean(SAVED_LOOK_FOR_XML, false);
         
         setContentView(R.layout.options);  
         
@@ -83,16 +85,16 @@ public class Options extends Activity {
         
         /** Search for XML **/
         final CheckBox checkbox_xml = (CheckBox) findViewById(R.id.checkbox_xml );
-        checkbox_xml.setChecked(false); // hard code 'false'...
+        checkbox_xml.setChecked(mLookForXml); // hard code 'false'...
         checkbox_xml.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 // Perform action on clicks, depending on whether it's now checked
                 if (((CheckBox) v).isChecked()) {
                     Toast.makeText(Options.this, "Searching For XML", Toast.LENGTH_SHORT).show();
-                    //mHighScores.setEnableJNI(true);
+                    mLookForXml = true;
                 } else {
                     Toast.makeText(Options.this, "Not Searching For XML", Toast.LENGTH_SHORT).show();
-                    //mHighScores.setEnableJNI(false);
+                    mLookForXml = false;
                 }
             }
         });
@@ -212,6 +214,7 @@ public class Options extends Activity {
     	/* save desired starting room num */
     	SharedPreferences.Editor edit = preferences.edit();
         edit.putInt(SAVED_ROOM_NUM, mRoomNumSelected);
+        edit.putBoolean(SAVED_LOOK_FOR_XML, mLookForXml);
         edit.commit();
         
         /* save all other options to player's personal record if it's not 'anonymous' */
