@@ -1,14 +1,10 @@
 package org.davidliebman.android.awesomeguy;
 
 //import java.util.ArrayList;
-import android.os.Environment;
 import android.util.Log;
-import android.util.Xml;
-import android.util.AttributeSet;
 import java.io.*;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
 import android.content.*;
 import java.util.*;
 
@@ -144,15 +140,27 @@ public class InitBackground {
 	
 	/* set level map info */
 	public void setLevel(int num) {
-
+		boolean test = false;
 		try {
-			mParser.setXmlPullParser();
-			mParser.parseLevelXml(num);
+			test = mParser.setXmlPullParser(mGameV.isLookForXml());
+			if (test ) test = mParser.parseLevelXml(num);
 		}
 		catch (Exception e) {
 			Log.e("INIT LEVEL",e.getMessage());
+			
 		}
-		
+		//try again without sdcard.
+		if (test == false ) {
+			try {
+				mParser.setXmlPullParser(false);
+				mParser.parseLevelXml(num);
+			}
+			catch (Exception e) {
+				Log.e("INIT LEVEL",e.getMessage());
+				
+			}
+			
+		}
 
 	}
 
@@ -163,6 +171,9 @@ public class InitBackground {
 		private Context mContext;
 		private GameValues mGameV;
 		private XmlPullParser mXpp;
+		
+		public static final String SDCARD_FILE = new String ("sdcard/awesomeguy.xml");
+
 		
 		final String NUMBER = new String("number");
 		final String VERTICAL = new String("vertical");
@@ -178,12 +189,52 @@ public class InitBackground {
 			this.mGameV = mGameV;
 		}
 		
-		public void setXmlPullParser() {
-			mXpp = mContext.getResources().getXml(R.xml.awesomeguy);
+		public boolean setXmlPullParser(boolean mLookForXml) throws XmlPullParserException, FileNotFoundException{
+			if (!mLookForXml) {
+				mXpp = mContext.getResources().getXml(R.xml.awesomeguy);
+			}
+			else {
+				
+				
+			   FileInputStream fis = mContext.openFileInput(SDCARD_FILE);
+		       mXpp.setInput(fis, null);
 
+			}
+			return true;
 		}
 		
-		public void parseLevelXml(int num) throws XmlPullParserException, IOException {
+		public ArrayList<Integer> getXmlList() throws XmlPullParserException, IOException{
+			ArrayList<Integer> mList = new ArrayList<Integer>();
+
+			int mIndexNum = 0;
+
+			
+			int eventType = mXpp.getEventType();
+			while (eventType != XmlPullParser.END_DOCUMENT ) {
+				
+				System.out.println("name: " + mXpp.getName());
+				
+				if(eventType == XmlPullParser.START_TAG && mXpp.getName().equalsIgnoreCase(LEVEL) ) {
+				
+					/* get 'number' attribute from xml tag 'level' */
+					if (mXpp.getAttributeCount() == 1 && mXpp.getAttributeName(0).contentEquals( NUMBER)) {
+						
+						mIndexNum = new Integer(mXpp.getAttributeValue(0).toString().trim()).intValue();
+
+						Log.e("XML", " attribute number " + mIndexNum);
+						mList.add(mIndexNum);
+					}
+					else Log.e("XML", mXpp.getAttributeName(0) + " " + mXpp.getAttributeCount());
+				
+					
+				}
+				eventType = mXpp.next();
+			}
+			
+			return mList;
+		}
+		
+		public boolean parseLevelXml(int num) throws XmlPullParserException, IOException {
 			boolean mStopParse = false;
 			boolean mReadNum = false;
 			int mIndexNum = 0;
@@ -308,8 +359,9 @@ public class InitBackground {
 			else {
 				/* throw hairy fit */
 				Log.e("XML"," 'tokens' doesn't match 'dimensions'!!!");
-				return;
+				return false;
 			}
+			return true;
 		}
 
 	}
