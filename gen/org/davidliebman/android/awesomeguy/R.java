@@ -81,9 +81,9 @@ public final class R {
         public static final int button_options=0x7f080025;
         public static final int button_players=0x7f08002b;
         public static final int checkbox_collision=0x7f080023;
-        public static final int checkbox_jni=0x7f08001f;
         public static final int checkbox_monsters=0x7f080021;
         public static final int checkbox_sounds=0x7f080019;
+        public static final int checkbox_xml=0x7f08001f;
         public static final int congrats_text=0x7f080002;
         public static final int edittext_name=0x7f08002a;
         public static final int guy_icon=0x7f080028;

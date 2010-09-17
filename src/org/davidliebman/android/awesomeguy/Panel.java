@@ -256,9 +256,8 @@ public  class Panel  extends SurfaceView  {
 
 		checkPhysicsAdjustments();
 
-		if(!useJNI && mHighScores.isEnableCollision()) collisionWithMonsters();
+		//if(!useJNI && mHighScores.isEnableCollision()) collisionWithMonsters();
 
-		
 		
 		scrollBg(); //always call this last!!
 
@@ -267,9 +266,11 @@ public  class Panel  extends SurfaceView  {
 
 		/******* draw background tiles  *********/
 		mCanvas.drawColor(Color.BLACK);
+		/*
 		mTiles = new TileCutter(bMap, mScale);
 		baseX = scrollX/ mTiles.getBlockWidth();
 		baseY = scrollY/ mTiles.getBlockHeight();
+		
 		if (!useJNI) {// test jni code <--
 			for ( int i = baseX; i < baseX + 32 + 1; i ++ ) { //24
 
@@ -292,17 +293,20 @@ public  class Panel  extends SurfaceView  {
 				}
 			}
 		}
+		*/
 		/************** put monsters on screen ***********/
 
-		if (!useJNI && mHighScores.isEnableMonsters()) moveMonsters();
+		//if (!useJNI && mHighScores.isEnableMonsters()) moveMonsters();
 
 		/************ Put guy on screen **************/
+		/*
 		if (!useJNI) {
 			mTempGuy = BitmapFactory.decodeResource(getResources(),mGuySprite.getResourceId(),mOptionsSprite);
 			mGuyBitmap = Bitmap.createBitmap(this.mTempGuy, 0,0, 16,16, mMatrix, false);
 			canvas.drawBitmap(mGuyBitmap, mScale * (  mGuySprite.getMapPosX()  - mGuySprite.getLeftBB()), 
 					mScale * (  mGuySprite.getMapPosY()  - mGuySprite.getTopBB()), mP);
 		}
+		*/
 		/************** test jni *******************/
 		if (useJNI) {
 			
@@ -312,11 +316,13 @@ public  class Panel  extends SurfaceView  {
 			playSounds();
 		}
 		/************ put scores on screen ***********/
+		/*
 		if (!useJNI) {
 			boolean mScoresOnScreen = false;
 			if(mGuySprite.getMapPosY() - mGuySprite.getTopBB() > 16) mScoresOnScreen = true;
 			drawScoreOnMain(canvas, mScoresOnScreen);
 		}
+		*/
 		
 		if (this.useJNI) {
 			/* at end of level */
@@ -367,13 +373,13 @@ public  class Panel  extends SurfaceView  {
 		mGuySprite = mGameV.getSpriteStart();
 		int mGuyX = mGuySprite.getMapPosX();
 		int mGuyY = mGuySprite.getMapPosY();
-		if(!useJNI) {
-			scrollTo( mScale * scrollX , mScale * scrollY);//jni test <---
-		}
-		else {
+		//if(!useJNI) {
+		//	scrollTo( mScale * scrollX , mScale * scrollY);//jni test <---
+		//}
+		//else {
 			setGuyPosition(mGuyX  , mGuyY , scrollX, scrollY, mGuySprite.getAnimIndex());
 			//Log.e("Panel", "guyX "+ mGuyX + " guyY " + mGuyY + " animIndex " + mGuySprite.getAnimIndex());
-		}
+		//}
 
 	}
 
@@ -437,10 +443,11 @@ public  class Panel  extends SurfaceView  {
 
 
 	}
+	/*
 	private boolean checkPrintableObjects(int num) {
 		boolean temp = false;
 
-		/* these are blocks that are not printed on the screen */
+		// these are blocks that are not printed on the screen 
 		if(num != mGameV.mStart && num != mGameV.mMonster && num != mGameV.mDeath
 				&& num != mGameV.mPlatform && num != mGameV.mMarker && num != mGameV.mBlock
 				&& num != mGameV.mLadder) {
@@ -449,6 +456,9 @@ public  class Panel  extends SurfaceView  {
 
 		return temp;
 	}
+	*/
+	
+	/*
 	private void drawScoreOnMain(Canvas canvas, boolean show) {
 
 		int i;
@@ -492,7 +502,9 @@ public  class Panel  extends SurfaceView  {
 			}
 		}
 	}
+	*/
 	
+	/*
 	private void numbersOnBg(Canvas canvas, int pos, int num, int p) { //'num' is a u32
 		int i, a, b, c, placesValue;
 		int places[] = {0,0,0,0,0,0,0,0,0,0};//ten spots
@@ -525,10 +537,10 @@ public  class Panel  extends SurfaceView  {
 			}
 		}
 	}
-	
+	*/
 	private void checkPhysicsAdjustments() {
 
-
+		this.readKeys();
 
 		/* All sorts of adjustments go here. ladder, jump, gravity, 
 		 * the ground, and solid objects in general.
@@ -641,14 +653,6 @@ public  class Panel  extends SurfaceView  {
 		}
 
 		
-
-		
-		
-		
-		
-
-
-
 	}
 
 	private boolean collisionWithBlocks(  int centerBlock , int boundaryTest) {
@@ -939,7 +943,7 @@ public  class Panel  extends SurfaceView  {
 		    
 		    if (test) {
 		      temp = test;
-		      Log.e("Platforms", "Collision!!");
+		      //Log.e("Platforms", "Collision!!");
 		      if ( mGuySprite.getMapPosY() < mTempSprite.getMapPosY()) { // stand on platforms
 		        canFall = false;
 		        if (y > 0) y = 0;
@@ -1325,7 +1329,7 @@ public  class Panel  extends SurfaceView  {
 	}
 	
 	
-	
+	/*
 	private void moveMonsters() {
 		int i;
 		int x,y,z;
@@ -1418,7 +1422,7 @@ public  class Panel  extends SurfaceView  {
 
 		return;
 	}
-
+	*/
 	private void swapMonster(SpriteInfo sprites, int animationIndex) {
 
 		boolean facingRight = sprites.getFacingRight();
@@ -1476,7 +1480,8 @@ public  class Panel  extends SurfaceView  {
 
 
 	public void setUseJNI(boolean useJNI) {
-		this.useJNI = useJNI;
+		//this.useJNI = useJNI;
+		this.useJNI = true;
 	}
 
 
