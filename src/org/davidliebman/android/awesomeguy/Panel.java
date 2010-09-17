@@ -27,7 +27,7 @@ public  class Panel  extends SurfaceView  {
 	private int baseX, baseY;
 	private int guyX = 0;
 	private int guyY = 0;
-	private Bitmap mBlock, bMap, bMapNum , mGuyBitmap, mTempGuy, mMap, mTempJNI;
+	private Bitmap  mMap, mTempJNI;
 	private BitmapFactory.Options mOptionsSprite = new BitmapFactory.Options();
 	private BitmapFactory.Options mOptionsTile = new BitmapFactory.Options();
 	private BitmapFactory.Options mOptionsNum = new BitmapFactory.Options();
@@ -165,9 +165,7 @@ public  class Panel  extends SurfaceView  {
 
 		scrollX = mMovementV.getScrollX();
 		scrollY = mMovementV.getScrollY();
-		bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles1, mOptionsTile);
-		bMapNum = BitmapFactory.decodeResource(getResources(), R.drawable.tilesalpha, mOptionsNum);
-
+		
 		/*animation vars*/
 		animate = 0;
 		newGuy = 0;
@@ -708,7 +706,7 @@ public  class Panel  extends SurfaceView  {
 		  for (i = mGameV.getPlatformOffset() + 1 ; i <=  mGameV.getPlatformNum() ; i ++) {
 		    j = i ; // i - 1;
 			/* get info from JNI on platform position */
-		    SpriteInfo mTempSprite = new SpriteInfo(R.drawable.concrete, 0, 8, 0, 40);
+		    SpriteInfo mTempSprite = new SpriteInfo( 0, 8, 0, 40);
 		    
 		  	mTempSprite.setMapPosX(this.getSpriteX(j));
 		  	mTempSprite.setMapPosY(this.getSpriteY(j));

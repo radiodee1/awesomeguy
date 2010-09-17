@@ -66,6 +66,19 @@ public class SpriteInfo {
     	//this.mAnimate = true;
     }
     
+    public SpriteInfo( int top, int bot, int left, int right) {
+    	clearInfo();
+    	this.mResourceId = 0;
+    	this.mTopBB = top;
+    	this.mBottomBB = bot;
+    	this.mLeftBB = left;
+    	this.mRightBB = right;
+    	
+    	this.mVisible = true;
+    	this.mActive = true;
+    	//this.mAnimate = true;
+    }
+    
     public SpriteInfo() {
     	clearInfo();
     }
