@@ -2,7 +2,7 @@
 
   * [Awesomeguy Awesomeguy]
     * [Awesomeguy#Introduction Introduction]
-      * [Awesomeguy#Details Details]
+    * [Awesomeguy#Details Details]
       * [Awesomeguy#Tilesheets Tilesheets]
       * [Awesomeguy#Tilemaps Tilemaps]
       * [Awesomeguy#Sprites Sprites]
