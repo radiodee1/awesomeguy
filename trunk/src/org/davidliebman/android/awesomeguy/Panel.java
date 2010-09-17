@@ -698,7 +698,7 @@ public  class Panel  extends SurfaceView  {
 	
 	
 	private boolean collisionWithPlatforms(boolean canFall) {
-		int i;
+		int i, j;
 
 		  BoundingBox guyBox, platformBox;
 		  boolean temp = this.canJump;
@@ -707,17 +707,19 @@ public  class Panel  extends SurfaceView  {
 		  
 		  if (mGameV.getPlatformNum() == -1) return canJump;
 		  
-		  for (i = mGameV.getPlatformOffset() ; i <=  mGameV.getPlatformNum() ; i ++) {
-		    
+		  temp = false;
+		  
+		  for (i = mGameV.getPlatformOffset() + 1 ; i <=  mGameV.getPlatformNum() ; i ++) {
+		    j = i ; // i - 1;
 			/* get info from JNI on platform position */
 		    SpriteInfo mTempSprite = new SpriteInfo(R.drawable.concrete, 0, 8, 0, 40);
 		    
-		  	mTempSprite.setMapPosX(this.getSpriteX(i-1));
-		  	mTempSprite.setMapPosY(this.getSpriteY(i-1));
-		  	if(this.getSpriteFacingRight(i - 1) == 1) mFacingRight = true;
+		  	mTempSprite.setMapPosX(this.getSpriteX(j));
+		  	mTempSprite.setMapPosY(this.getSpriteY(j));
+		  	if(this.getSpriteFacingRight(j) == 1) mFacingRight = true;
 		  	else mFacingRight = false;
 		  	mTempSprite.setFacingRight(mFacingRight);
-		  	Log.e("Platforms", "x="+mTempSprite.getMapPosX() + " y=" + mTempSprite.getMapPosY()	);
+		  	//Log.e("Platforms", "x="+mTempSprite.getMapPosX() + " y=" + mTempSprite.getMapPosY()	);
 		  	
 		  	
 		  	/* check platform */
