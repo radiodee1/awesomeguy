@@ -46,7 +46,7 @@ public class GameValues {
 	private boolean mEndGame = false;
 	private boolean mGameDeath = false;
 	private int mUsernum = 4;
-	public static int NUM_ROOMS = 10;
+	//public static int NUM_ROOMS = 10;
 	private int mOldGuyScore;
 	
 	/* sprites */
@@ -56,6 +56,10 @@ public class GameValues {
 	public static final int MONSTER_TOTAL = 15;
 	public static final int PLATFORM_TOTAL = 15;
 	
+	/* xml stuff */
+	private boolean mLookForXml = false;
+	private int mTotNumRooms = 10;
+	private ArrayList<Integer> mXmlLevel = new ArrayList<Integer>();
 	
 	
 	public boolean isDoubleScreen() {
@@ -301,5 +305,26 @@ public class GameValues {
 		this.mPlatformOffset = mPlatformOffset;
 	}
 	
+	/* xml stuff */
+	public boolean isLookForXml() {
+		return mLookForXml;
+	}
+	public void setLookForXml(boolean mLookForXml) {
+		this.mLookForXml = mLookForXml;
+	}
+	public int getTotNumRooms() {
+		return mTotNumRooms;
+	}
+	public void setTotNumRooms(int mTotNumRooms) {
+		this.mTotNumRooms = mTotNumRooms;
+	}
+	/*
+	public ArrayList<Integer> getXmlLevel() {
+		return mXmlLevel;
+	}
+	public void setXmlLevel(ArrayList<Integer> mXmlLevel) {
+		this.mXmlLevel = mXmlLevel;
+	}
+	*/
 	
 }

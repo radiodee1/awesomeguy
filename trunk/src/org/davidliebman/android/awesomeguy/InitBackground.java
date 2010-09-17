@@ -147,7 +147,7 @@ public class InitBackground {
 
 		try {
 			mParser.setXmlPullParser();
-			mParser.testParse(num);
+			mParser.parseLevelXml(num);
 		}
 		catch (Exception e) {
 			Log.e("INIT LEVEL",e.getMessage());
@@ -183,7 +183,7 @@ public class InitBackground {
 
 		}
 		
-		public void testParse(int num) throws XmlPullParserException, IOException {
+		public void parseLevelXml(int num) throws XmlPullParserException, IOException {
 			boolean mStopParse = false;
 			boolean mReadNum = false;
 			int mIndexNum = 0;

@@ -568,7 +568,7 @@ public class GameStart extends Activity {
     		    
     		    mGameV.setEndGame(false);
     		    
-    		    while(mGameV.getRoomNo() <= GameValues.NUM_ROOMS && !mGameV.isEndGame() && gameRunning && mGameV.getLives() > 0) {
+    		    while(mGameV.getRoomNo() <=  mGameV.getTotNumRooms() && !mGameV.isEndGame() && gameRunning && mGameV.getLives() > 0) {
 
        
     		     // advance through rooms
@@ -650,7 +650,7 @@ public class GameStart extends Activity {
     		      
     		     
     		      // increment cycle count and set room to 1...
-    		      if( mGameV.getRoomNo() > GameValues.NUM_ROOMS &&  !mGameV.isEndLevel() ) {
+    		      if( mGameV.getRoomNo() > mGameV.getTotNumRooms() &&  !mGameV.isEndLevel() ) {
     		        
     		    	  mGameV.setRoomNo(1);
     		    	  //saveRoomNo();
