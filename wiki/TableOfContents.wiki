@@ -57,7 +57,7 @@
       * [ConstructingLevels#The_Tilesheet The Tilesheet]
       * [ConstructingLevels#Setting_Up_Mappy Setting Up Mappy]
       * [ConstructingLevels#Using_Mappy Using Mappy]
-      * [ConstructingLevels#Using_Mappy Using Mappy]
+      * [ConstructingLevels#Adding_A_Layer Adding A Layer]
       * [ConstructingLevels#Using_Mappy Using Mappy]
       * [ConstructingLevels#Using_Mappy Using Mappy]
       * [ConstructingLevels#Using_Mappy Using Mappy]
