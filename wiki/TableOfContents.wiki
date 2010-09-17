@@ -55,5 +55,5 @@
     * [ConstructingLevels#Basic_Structure Basic Structure]
     * [ConstructingLevels#Editing_Your_Level Editing Your Level]
       * [ConstructingLevels#The_Tilesheet The Tilesheet]
-    * [ConstructingLevels#Basic_Structure Basic Structure]
-    * [ConstructingLevels#Basic_Structure Basic Structure]
+      * [ConstructingLevels#Setting_Up_Mappy Setting Up Mappy]
+      * [ConstructingLevels#Basic_Structure Basic Structure]
