@@ -251,7 +251,6 @@ public  class Panel  extends SurfaceView  {
 			setMonsterPreferences(monsters, collision);
 		}
 		
-		if(this.useSpecialCollision || true) readKeys();
 		
 		checkRegularCollisions();
 
@@ -578,20 +577,7 @@ public  class Panel  extends SurfaceView  {
 			}
 		}
 		
-		if(this.useSpecialCollision) {
-			//limited version of 'collision w/ blocks'
-			if (actual > 6) {
-				if(!boundaryRight) center ++;
-				collisionWithBlocksSpecial(   center , END);
-			}
-			else if (actual < 2) {
-				if(!boundaryLeft) center --;
-				collisionWithBlocksSpecial(   center , START);
-			}
-			else {
-				collisionWithBlocksSpecial(   center , MIDDLE);
-			}
-		}
+		
 
 		
 		/* PLATFORMS */
@@ -655,7 +641,6 @@ public  class Panel  extends SurfaceView  {
 		}
 
 		
-		if (this.useSpecialCollision) checkMoveToCollisions();
 
 		
 		
@@ -891,95 +876,7 @@ public  class Panel  extends SurfaceView  {
 		return canFall;
 	}
 	
-	private boolean collisionWithBlocksSpecial(  int centerBlock , int boundaryTest) {
-		int i;
-		int below = 2;
-		int mapY = mGuySprite.getMapPosY();
-		i = mapY / 8;
-		if (mapY - (i *8) > 4) below --;
-		boolean keyLeft = false;
-		boolean keyRight = false;
-		//boolean keyUp = false;
-		boolean keyDown = false;
-
-		/* these are shortcuts for commonly used values in this function */
-		int centerBlockIm1 = mGameV.getObjectsCellReversed(i-1, centerBlock); // i minus 1
-		int centerBlockI = mGameV.getObjectsCellReversed(i, centerBlock);     // i
-		int centerBlockIp1 = mGameV.getObjectsCellReversed(i+1, centerBlock); // i plus 1
-		int centerBlockIp2 = mGameV.getObjectsCellReversed(i+2, centerBlock); // i plus 2
-		int centerBlockIpBelow = mGameV.getObjectsCellReversed(i+below, centerBlock); // i plus below
-
-		if (mMovementV.getDirectionLR() == MovementValues.KEY_LEFT) keyLeft = true;
-		if (mMovementV.getDirectionLR() == MovementValues.KEY_RIGHT) keyRight = true;
-		if (mMovementV.getDirectionUD() == MovementValues.KEY_DOWN) keyDown = true;
-		//if (mMovementV.getDirectionUD() == MovementValues.KEY_UP) keyUp = true;
-
-
-
-		//what if centerBlock is on the boundary??
-		if(centerBlock == mGameV.getMapH()) {
-			//y = 0;
-			canFall = false;
-			return false;
-		}
-
-		if (jumptime > 0 && 
-				centerBlockI == mGameV.mBlock ){    // hit block from below
-			//y = V_MOVE * 2;
-			y = 0;
-			canFall = true;
-			jumptime =0;
-		}
-
-		// skip RIGHT
-		if(keyRight  && 
-				centerBlockIp1 == mGameV.mBlock && 
-				centerBlockI != mGameV.mBlock && 
-				centerBlockIm1 != mGameV.mBlock ) { //y,x
-			canFall = false;
-			y = - (8 +  mMovementV.getVMove());
-		}
-		
-
-		// skip LEFT
-		if(keyLeft && 
-				centerBlockIp1 == mGameV.mBlock && 
-				centerBlockI != mGameV.mBlock &&
-				centerBlockIm1 != mGameV.mBlock) {// j-1 j-1
-			canFall = false;
-			y = - (8 + mMovementV.getVMove());
-		}
-		
-
-		// no hanging
-		if( 
-				centerBlockIp1 != mGameV.mBlock && 
-				centerBlockIp2 != mGameV.mBlock && 
-				centerBlockIm1== mGameV.mBlock && !ladderTest) { 
-			// no hanging from
-			// blocks by accident
-			Log.v("functions","no hanging");
-
-			y = mMovementV.getVMove() ;//crucial?
-
-			canFall = true;
-			jumptime =0;
-		}
-
-		//ladders should work - no sliding at top of ladder
-		if (ladderTest) {
-			canFall = false;
-		}
-		// if you start to fall, and there's a ladder below you
-		// you should stop falling
-		if (!keyDown && ladderTest) {
-			if(y > 0) y = 0;
-		}
-		
-		
-		
-		return canFall;
-	}
+	
 	private void collisionWithMonsters() {
 
 		int i;
@@ -1427,171 +1324,7 @@ public  class Panel  extends SurfaceView  {
 
 	}
 	
-	private void checkMoveToCollisions() {
-
-		/*
-		 * Here we create a BoundingBox for the guy character. Then
-		 * we check the level for collisions. The object is to avoid
-		 * having the character get stuck.
-		 */
-
-		BoundingBox guyBox = BoundingBox.makeSpriteBox(mGuySprite, x, y );
-
-		
-		int i,j;
-
-		for (j =  mGuySprite.getMapPosX() / 8 -1; j <  mGuySprite.getMapPosX() / 8 + 3; j ++ ) { // x coordinates
-			for (i = mGuySprite.getMapPosY() / 8 - 1; i < mGuySprite.getMapPosY() / 8 + 3; i ++ ) { // y coordinates
-				BoundingBox testMe = BoundingBox.makeBlockBox(j,i);
-
-				if(j >= 0 && j < mGameV.getMapH()  && i >= 0 && i < mGameV.getMapV()) {// indexes OK?
-
-					if (mGameV.getObjectsCell(j,i)  != 0 || mGameV.getObjectsCell(j, i) != mGameV.mStart) { // I/J or J/I... which one???
-
-						/* save time here by checking the bounding 
-						 * box only in the squares immediately surrounding
-						 * the character...
-						 * Instead of checking the whole field of play.
-						 */
-
-						boolean test = BoundingBox.collisionSimple(guyBox, testMe);
-
-						/****** tests here ******/
-
-						/*********  block ***************/
-						if (test && mGameV.getObjectsCell(j, i) == mGameV.mBlock) {
-				            canFall = moveToCollision( testMe, mGameV.mBlock);
-						}
-						/******** ladder **********/
-						if (test && mGameV.getObjectsCell(j,i) == mGameV.mLadder) {
-				            canFall = moveToCollision( testMe, mGameV.mLadder);
-						}
-
-						
-						/****** end tests  ******/
-
-
-					}//if block
-				} // indexes OK?
-				else {
-					canFall = moveToCollision(testMe, mGameV.mBlock);
-					boundaryTest = true;
-					if(j >= mGameV.getMapH() -1) boundaryRight = true;
-					if(j <= 1) boundaryLeft = true;
-				}
-			} // i block
-		} // j block
-
-		
-
-	}
 	
-	private boolean moveToCollision(  BoundingBox still, int blockType) {
-		  int cheat = 0;
-		  if (blockType == mGameV.mBlock ) cheat = -1;
-		  BoundingBox moveable = BoundingBox.makeSpriteBox(mGuySprite,x,y + cheat);
-		  boolean canFall = true;
-		  /// special collision
-		  if (blockType == mGameV.mLadder) canFall = false;
-		  
-		  
-		  if (blockType == mGameV.mLadder && y > 0 && (mMovementV.getDirectionLR() == MovementValues.KEY_RIGHT  || mMovementV.getDirectionLR() == MovementValues.KEY_LEFT)) {
-		    while(BoundingBox.collisionSimple(moveable, still) && y > 0) {
-		      y --;
-		      y --; 
-		      // added so guy doesn't stick to platforms.
-		      moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
-		      canFall = false;
-		    }
-		  }
-		  
-		  if (blockType == mGameV.mLadder  && (mMovementV.getDirectionUD() == MovementValues.KEY_UP  ) ) {
-		    //keys.y = V_MOVE;
-
-		    y --;
-		    canFall = false;
-		    return canFall;
-		  }
-		  
-		  if (blockType == mGameV.mLadder  && (mMovementV.getDirectionUD() == MovementValues.KEY_DOWN  ) ) {
-		    y = mMovementV.getVMove() ;
-		    canFall = false;
-		    return canFall;
-		  }
-		  
-		  /// horizontal and vertical
-		  if (blockType == mGameV.mBlock) {
-		    /*
-		    BoundingBox startingTest = makeSpriteBox(&sprites[0], 0, 0);
-		    if(collisionSimple(startingTest, still)) {
-		      canFall = false;
-		      return canFall;
-		    }
-		    */
-		    if (x > 0 && y == 0) {
-		     while(BoundingBox.collisionSimple(moveable, still) && x > 0) {
-		       x --;
-		       moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
-		      }
-		   }
-		   if (y > 0 ) {//&& keys.x == 0) {
-		     while(BoundingBox.collisionSimple(moveable, still) && y > 0) {
-		       y --;
-		       y --; // added so guy doesn't stick to platforms.
-		       moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y + cheat);
-		       canFall = false;
-		      }
-		    }
-		    if (x < 0 && y == 0) {
-		      while(BoundingBox.collisionSimple(moveable, still) && x < 0) {
-		        x ++;
-		        moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
-		      }
-		    }
-		    if (y < 0 && x == 0) {
-		      while(BoundingBox.collisionSimple(moveable, still) && y < 0) {
-		        y ++;
-		        moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
-		      }
-		    }
-		    ///// diagonals
-		    if (false) {// guy seems to get stuck if this diagonal is included...
-		    if (x > 0 && y > 0) {
-		      while(BoundingBox.collisionSimple(moveable, still) && ( x > 0 && y > 0)) {
-		        x --;
-		        y --;
-		        moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
-		      }
-		    }
-		    if (y > 0 && x < 0) {
-		      while(BoundingBox.collisionSimple(moveable, still) && x <  0 && y > 0) {
-		        y --;
-		        x ++;
-		        moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
-		        canFall = false;
-		      }
-		    }
-		    if (x < 0 && y < 0) {
-		      while(BoundingBox.collisionSimple(moveable, still) && x < 0 && y < 0) {
-		        x ++;
-		        y ++;
-		        moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
-		      }
-		    }
-
-		    if (y < 0 && x > 0) {
-		      while(BoundingBox.collisionSimple(moveable, still) && x > 0 && y < 0) {
-		        y ++;
-		        x --;
-		        moveable = BoundingBox.makeSpriteBox(mGuySprite, x, y);
-		      }
-		    }
-		    }// if(false)
-		  }// if level.block
-		  
-		  
-		  return canFall;
-		}
 	
 	private void moveMonsters() {
 		int i;
