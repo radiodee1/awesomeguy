@@ -1,8 +1,8 @@
 #summary Awesomeguy table of contents
 
   * [Awesomeguy Awesomeguy]
-  * [Awesomeguy#Details Details]
-    * [Awesomeguy#Introduction Introduction]
+  * [Awesomeguy#Introduction Introduction]
+    * [Awesomeguy#Details Details]
     * [Awesomeguy#Tilesheets Tilesheets]
     * [Awesomeguy#Tilemaps Tilemaps]
     * [Awesomeguy#Sprites Sprites]
@@ -52,4 +52,8 @@
 
   * [ConstructingLevels#ConstructingLevels Constructing Levels]
     * [ConstructingLevels#Tools_and_Programs Tools and Programs]
+    * [ConstructingLevels#Basic_Structure Basic Structure]
+    * [ConstructingLevels#Basic_Structure Basic Structure]
+    * [ConstructingLevels#Basic_Structure Basic Structure]
+    * [ConstructingLevels#Basic_Structure Basic Structure]
     * [ConstructingLevels#Basic_Structure Basic Structure]
