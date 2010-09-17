@@ -296,7 +296,6 @@ public class GameStart extends Activity {
     	mBackground = new InitBackground(mGameV, this);
     	mFLayoutBot.addView((View)mPanelBot);
     	
-    	mPanelBot.setUseJNI(mHighScores.isEnableJNI());
     	mPanelBot.setEnableSounds(mHighScores.isSound());
     	
     	
@@ -464,7 +463,7 @@ public class GameStart extends Activity {
     			this.removeMessages(GAMEVALUES);
     			this.removeMessages(INPUTVALUES_KEYUP);
     			
-    			mPanelBot.setBackgroundGraphics();
+    			mPanelBot.setInitialBackgroundGraphics();
     			mPanelBot.setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
     			mPanelBot.setGuySprite(mGameV.getSpriteStart()); //must refresh reference to guySprite
     			mPanelBot.invalidate();
