@@ -68,4 +68,4 @@
       * [ConstructingLevels#Text_Files Text Files]
       * [ConstructingLevels#Text_Editor Text Editor]
       * [ConstructingLevels#Sed Sed]
-      * [ConstructingLevels#Finish_Editing Finish Editing]
+      * [ConstructingLevels#Finished_Level Finished Level]
