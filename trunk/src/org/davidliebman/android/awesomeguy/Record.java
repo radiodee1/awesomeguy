@@ -183,10 +183,12 @@ public  class Record  {
 		this.mSound = mSound;
 	}
 	public boolean isEnableJNI() {
-		return mEnableJNI;
+		//return mEnableJNI;
+		return true;
 	}
 	public void setEnableJNI(boolean mEnableJNI) {
-		this.mEnableJNI = mEnableJNI;
+		//this.mEnableJNI = mEnableJNI;
+		this.mEnableJNI = true;
 	}
 	public boolean isEnableMonsters() {
 		return mEnableMonsters;

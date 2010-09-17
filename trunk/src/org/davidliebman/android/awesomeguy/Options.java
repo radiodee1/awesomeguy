@@ -81,18 +81,18 @@ public class Options extends Activity {
             }
         });
         
-        /** JNI usage **/
-        final CheckBox checkbox_jni = (CheckBox) findViewById(R.id.checkbox_jni );
-        checkbox_jni.setChecked(mHighScores.isEnableJNI());
-        checkbox_jni.setOnClickListener(new OnClickListener() {
+        /** Search for XML **/
+        final CheckBox checkbox_xml = (CheckBox) findViewById(R.id.checkbox_xml );
+        checkbox_xml.setChecked(false); // hard code 'false'...
+        checkbox_xml.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 // Perform action on clicks, depending on whether it's now checked
                 if (((CheckBox) v).isChecked()) {
-                    Toast.makeText(Options.this, "JNI Selected", Toast.LENGTH_SHORT).show();
-                    mHighScores.setEnableJNI(true);
+                    Toast.makeText(Options.this, "Searching For XML", Toast.LENGTH_SHORT).show();
+                    //mHighScores.setEnableJNI(true);
                 } else {
-                    Toast.makeText(Options.this, "JNI Not Selected", Toast.LENGTH_SHORT).show();
-                    mHighScores.setEnableJNI(false);
+                    Toast.makeText(Options.this, "Not Searching For XML", Toast.LENGTH_SHORT).show();
+                    //mHighScores.setEnableJNI(false);
                 }
             }
         });
@@ -201,6 +201,9 @@ public class Options extends Activity {
     
     @Override
     public void onPause() {
+    	
+        mHighScores.setEnableJNI(true);
+
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         
         /* save mHighScores so other activities can see it */
