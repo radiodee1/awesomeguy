@@ -312,7 +312,7 @@ public  class Panel  extends SurfaceView  {
 		int mGuyX = mGuySprite.getMapPosX();
 		int mGuyY = mGuySprite.getMapPosY();
 		
-		setGuyPosition(mGuyX  , mGuyY , scrollX, scrollY, mGuySprite.getAnimIndex());
+		setGuyPosition(mGuyX  , mGuyY , scrollX, scrollY, newGuy);
 		
 
 	}
@@ -330,7 +330,6 @@ public  class Panel  extends SurfaceView  {
 			}
 			if (newGuy != lastGuy) {
 				//setSwapGuy(newGuy);
-				mGuySprite.setAnimIndex(newGuy);
 				lastGuy = newGuy;
 				if(newGuy > 3) newGuy = -1;
 			}

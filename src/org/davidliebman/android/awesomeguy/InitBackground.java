@@ -1,8 +1,10 @@
 package org.davidliebman.android.awesomeguy;
 
 //import java.util.ArrayList;
+import android.os.Environment;
 import android.util.Log;
 import java.io.*;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import android.content.*;
@@ -16,7 +18,7 @@ public class InitBackground {
 	public InitBackground(GameValues gV, Context context) {
 		mGameV = gV;
 		mContext = context;
-		mParser = new ParseXML(mContext, mGameV);
+		mParser = new ParseXML(mContext);
 	}
 	
 	public void initLevel(MovementValues mMovementV) {
@@ -143,7 +145,7 @@ public class InitBackground {
 		boolean test = false;
 		try {
 			test = mParser.setXmlPullParser(mGameV.isLookForXml());
-			if (test ) test = mParser.parseLevelXml(num);
+			if (test ) test = mParser.parseLevelXml(num, mGameV);
 		}
 		catch (Exception e) {
 			Log.e("INIT LEVEL",e.getMessage());
@@ -153,7 +155,7 @@ public class InitBackground {
 		if (test == false ) {
 			try {
 				mParser.setXmlPullParser(false);
-				mParser.parseLevelXml(num);
+				mParser.parseLevelXml(num, mGameV);
 			}
 			catch (Exception e) {
 				Log.e("INIT LEVEL",e.getMessage());
@@ -172,7 +174,7 @@ public class InitBackground {
 		private GameValues mGameV;
 		private XmlPullParser mXpp;
 		
-		public static final String SDCARD_FILE = new String ("sdcard/awesomeguy.xml");
+		public static final String SDCARD_FILE = new String ("awesomeguy.xml");
 
 		
 		final String NUMBER = new String("number");
@@ -184,27 +186,36 @@ public class InitBackground {
 		final String LAST = new String("last_level");
 		final String GAME = new String("game");
 		
-		public ParseXML(Context context, GameValues mGameV) {
+		public ParseXML(Context context) {
 			mContext = context;
-			this.mGameV = mGameV;
+			this.mGameV = new GameValues();
 		}
 		
-		public boolean setXmlPullParser(boolean mLookForXml) throws XmlPullParserException, FileNotFoundException{
+		public boolean setXmlPullParser(boolean mLookForXml) throws XmlPullParserException, IOException{
 			if (!mLookForXml) {
 				mXpp = mContext.getResources().getXml(R.xml.awesomeguy);
 			}
 			else {
 				
-				
-			   FileInputStream fis = mContext.openFileInput(SDCARD_FILE);
-		       mXpp.setInput(fis, null);
-
+			   File sdcard = Environment.getExternalStorageDirectory();
+			   Log.e("XML", sdcard.getAbsolutePath());
+			   if(sdcard.canRead()) {
+				   Log.e("XML", "sdcard.canRead()");
+				   File mFileInput = new File(sdcard, SDCARD_FILE);
+				   Log.e("XML",mFileInput.getPath());
+				   FileReader mReader = new FileReader(mFileInput);
+				   Log.e("XML" ,mReader.toString());
+				   BufferedReader in = new BufferedReader(mReader);
+				   Log.e("XML", in.toString());
+				   mXpp.setInput(in);
+			   }
 			}
 			return true;
 		}
 		
-		public ArrayList<Integer> getXmlList() throws XmlPullParserException, IOException{
-			ArrayList<Integer> mList = new ArrayList<Integer>();
+		public LevelList getXmlList(GameValues mGameV) throws XmlPullParserException, IOException{
+
+			LevelList mList = new LevelList();
 
 			int mIndexNum = 0;
 
@@ -222,7 +233,13 @@ public class InitBackground {
 						mIndexNum = new Integer(mXpp.getAttributeValue(0).toString().trim()).intValue();
 
 						Log.e("XML", " attribute number " + mIndexNum);
-						mList.add(mIndexNum);
+						if(mIndexNum - 1 == mList.size()) {
+							mList.add(new String("Room Num "+mIndexNum),mIndexNum);
+						}
+						else {
+							mList.add(new String("Room Num "+mList.size()+" ID:"+mIndexNum),mIndexNum);
+						}
+						//mList.add(mIndexNum);
 					}
 					else Log.e("XML", mXpp.getAttributeName(0) + " " + mXpp.getAttributeCount());
 				
@@ -230,11 +247,13 @@ public class InitBackground {
 				}
 				eventType = mXpp.next();
 			}
-			
+			if (mGameV != null) {
+				mGameV.setTotNumRooms(mList.size());
+			}
 			return mList;
 		}
 		
-		public boolean parseLevelXml(int num) throws XmlPullParserException, IOException {
+		public boolean parseLevelXml(int num, GameValues mGameV) throws XmlPullParserException, IOException {
 			boolean mStopParse = false;
 			boolean mReadNum = false;
 			int mIndexNum = 0;
@@ -364,5 +383,32 @@ public class InitBackground {
 			return true;
 		}
 
+	}
+	
+	public static class LevelList  {
+		private ArrayList<LevelData> mList = new ArrayList<LevelData>();
+		
+		public void add(String text, Integer i) {
+			LevelData temp = new LevelData();
+			temp.mNum = i;
+			temp.mText = text;
+			mList.add(temp);
+		}
+		public int size() {
+			return mList.size();
+		}
+		
+		public ArrayList<String> getStrings() {
+			ArrayList<String> temp = new ArrayList<String>();
+			for(int i = 0; i < mList.size(); i ++) {
+				temp.add(mList.get(i).mText);
+			}
+			return temp;
+		}
+	}
+	
+	public static class LevelData {
+		public String mText = new String("blank");
+		public Integer mNum = 1;
 	}
 }

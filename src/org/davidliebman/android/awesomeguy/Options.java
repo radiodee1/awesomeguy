@@ -1,10 +1,17 @@
 package org.davidliebman.android.awesomeguy;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.xmlpull.v1.XmlPullParserException;
+
 import android.app.Activity;
 import android.util.Log;
 import android.widget.*;
 import android.view.*;
 import android.view.View.OnClickListener;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,6 +29,10 @@ public class Options extends Activity {
 
 	private Record mHighScores = new Record() ;
 	private Scores mScores ;
+	
+	/* NOTE: game values instance is bogus!! */
+	private InitBackground.ParseXML mParser = new InitBackground.ParseXML(this);
+	
 	private boolean mLookForXml = false;
 	
     @Override
@@ -46,16 +57,20 @@ public class Options extends Activity {
         textview_name.setText("Player Name: " + mHighScores.getName());
         
         /** spinner for picking starting level **/
+        InitBackground.LevelList mList = new InitBackground.LevelList();
         Spinner spinner = (Spinner) findViewById(R.id.room_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this, R.array.room_names, android.R.layout.simple_spinner_item);
+        mList = setLevelList(mList);
+        
+        
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, mList.getStrings().toArray());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(
                 new OnItemSelectedListener() {
                     public void onItemSelected(
                             AdapterView<?> parent, View view, int position, long id) {
-                    	Toast.makeText(Options.this, "Level " +( position + 1) + " selected", Toast.LENGTH_SHORT).show();
+                    	Toast.makeText(Options.this, "Level " +(position + 1) + " selected", Toast.LENGTH_SHORT).show();
                     	mRoomNumSelected = position + 1;
                     }
 
@@ -63,7 +78,8 @@ public class Options extends Activity {
                     	Toast.makeText(Options.this, "Default level selected", Toast.LENGTH_SHORT).show();
                     }
                 });
-
+        //adapter.notifyDataSetChanged();
+        
         
 
         /** sound effects play **/
@@ -201,6 +217,40 @@ public class Options extends Activity {
         /* end radio button stuff */
     }
     
+    public InitBackground.LevelList setLevelList(InitBackground.LevelList mList) {
+    	boolean test = true;
+    	try {
+			test = mParser.setXmlPullParser(this.mLookForXml);
+        	mList = this.mParser.getXmlList(null);
+		}
+		
+		catch (XmlPullParserException e) {
+			Log.e("INIT LEVEL","XmlPullParserException -- " + e.getMessage());
+		}
+		catch (IOException e) {
+			Log.e("INIT LEVEL","IO exception " + e.getMessage());
+		}
+		catch (Exception e) {
+			Log.e("INIT LEVEL", "exception " + e.getMessage());
+		}
+		
+		//try again without sdcard.
+		if (mList.size() == 0 ) {
+			try {
+				Log.e("INIT LEVEL","failed mLookForXml -- " + test);
+
+				mParser.setXmlPullParser(false);
+	        	mList = this.mParser.getXmlList(null);
+			}
+			catch (Exception e) {
+				//Log.e("INIT LEVEL",e.getMessage());
+				
+			}
+			
+		}
+		return mList;
+	}
+    
     @Override
     public void onPause() {
     	
@@ -223,4 +273,5 @@ public class Options extends Activity {
 	    super.onPause();
 
     }
+   
 }
