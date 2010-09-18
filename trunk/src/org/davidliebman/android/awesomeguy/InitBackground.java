@@ -412,6 +412,9 @@ public class InitBackground {
 			}
 			return temp;
 		}
+		public int getNum(int num) {
+			return mList.get(num).mNum;
+		}
 	}
 	
 	public static class LevelData {

@@ -59,7 +59,7 @@ public class Options extends Activity {
         /** spinner for picking starting level **/
         InitBackground.LevelList mList = new InitBackground.LevelList();
         Spinner spinner = (Spinner) findViewById(R.id.room_spinner);
-        mList = setLevelList(mList);
+        mList = getLevelList(mList);
         
         
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, mList.getStrings().toArray());
@@ -217,7 +217,7 @@ public class Options extends Activity {
         /* end radio button stuff */
     }
     
-    public InitBackground.LevelList setLevelList(InitBackground.LevelList mList) {
+    public  InitBackground.LevelList getLevelList(InitBackground.LevelList mList) {
     	boolean test = true;
     	try {
 			test = mParser.setXmlPullParser(this.mLookForXml);

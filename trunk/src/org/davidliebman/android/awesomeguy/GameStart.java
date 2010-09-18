@@ -1,6 +1,9 @@
 package org.davidliebman.android.awesomeguy;
 
+import java.io.IOException;
 import java.util.Date;
+
+import org.xmlpull.v1.XmlPullParserException;
 
 import android.app.*;
 import android.graphics.Canvas;
@@ -45,6 +48,8 @@ public class GameStart extends Activity {
     private FrameLayout mBotFrame;
     private InnerGameLoop mGameLoopBot;
     private InitBackground.LevelList mLevelList;
+	private InitBackground.ParseXML mParser = new InitBackground.ParseXML(this);
+
     
     private RelativeLayout mRLayout ;
     private TableLayout mTLayoutOuter ;
@@ -76,6 +81,7 @@ public class GameStart extends Activity {
 	private SpriteInfo mGuySprite;
     private Scores mScores;
     private boolean mUsedSavedRoom;
+    private boolean mLookForXml;
 	
 	/* old GameLoop - prepare timer */
 	private static long framesPerSec = 25;
@@ -284,7 +290,14 @@ public class GameStart extends Activity {
     	mHighScores = new Record();
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.getFromPreferences(preferences);
-        //mHighScores.listInLog();    	    	
+        
+        /* retrieve other saved preferences */	    	
+        mLookForXml = preferences.getBoolean(Options.SAVED_LOOK_FOR_XML, false);
+        mGameV.setRoomNo(preferences.getInt(Options.SAVED_ROOM_NUM, 1));
+        mGameV.setLookForXml(mLookForXml);
+        mLevelList = this.getLevelList(mLevelList);
+        
+        
     	mScores = new Scores(this, mHighScores);
         
     	framesPerSec = mHighScores.getGameSpeed();
@@ -589,8 +602,8 @@ public class GameStart extends Activity {
     		    
     		    //init room
     		    //getSavedRoom();
-
-    		    mBackground.setLevel(mGameV.getRoomNo());
+    		    mBackground.setLevel(mLevelList.getNum(mGameV.getRoomNo()-1));
+    		    //mBackground.setLevel(mGameV.getRoomNo());
     	    	mBackground.initLevel(mMovementV);
     	    	
     	    	//jni test !!
@@ -735,6 +748,40 @@ public class GameStart extends Activity {
 		mGameV.setRoomNo(preferences.getInt(Options.SAVED_ROOM_NUM, 1));
 	}
 
+	public  InitBackground.LevelList getLevelList(InitBackground.LevelList mList) {
+    	boolean test = true;
+    	try {
+			test = mParser.setXmlPullParser(this.mLookForXml);
+        	mList = this.mParser.getXmlList(null);
+		}
+		
+		catch (XmlPullParserException e) {
+			Log.e("INIT LEVEL","XmlPullParserException -- " + e.getMessage());
+		}
+		catch (IOException e) {
+			Log.e("INIT LEVEL","IO exception " + e.getMessage());
+		}
+		catch (Exception e) {
+			Log.e("INIT LEVEL", "exception " + e.getMessage());
+		}
+		
+		//try again without sdcard.
+		if (mList.size() == 0 ) {
+			try {
+				Log.e("INIT LEVEL","failed mLookForXml -- " + test);
+
+				mParser.setXmlPullParser(false);
+	        	mList = this.mParser.getXmlList(null);
+			}
+			catch (Exception e) {
+				//Log.e("INIT LEVEL",e.getMessage());
+				
+			}
+			
+		}
+		return mList;
+	}
+	
 	public Record getHighScores() {
 		return mHighScores;
 	}
