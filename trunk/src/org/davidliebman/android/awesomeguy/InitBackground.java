@@ -7,6 +7,7 @@ import java.io.*;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 import android.content.*;
 import java.util.*;
 
@@ -197,17 +198,23 @@ public class InitBackground {
 			}
 			else {
 				
+			   XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+			   factory.setNamespaceAware(true);
+			   mXpp = factory.newPullParser(); 	
 			   File sdcard = Environment.getExternalStorageDirectory();
 			   Log.e("XML", sdcard.getAbsolutePath());
+			   int BUFFER_SIZE = 8192;
+
 			   if(sdcard.canRead()) {
 				   Log.e("XML", "sdcard.canRead()");
 				   File mFileInput = new File(sdcard, SDCARD_FILE);
-				   Log.e("XML",mFileInput.getPath());
+				   
 				   FileReader mReader = new FileReader(mFileInput);
-				   Log.e("XML" ,mReader.toString());
-				   BufferedReader in = new BufferedReader(mReader);
-				   Log.e("XML", in.toString());
+				   
+				   BufferedReader in = new BufferedReader(mReader,BUFFER_SIZE);
+
 				   mXpp.setInput(in);
+				   
 			   }
 			}
 			return true;
@@ -237,7 +244,7 @@ public class InitBackground {
 							mList.add(new String("Room Num "+mIndexNum),mIndexNum);
 						}
 						else {
-							mList.add(new String("Room Num "+mList.size()+" ID:"+mIndexNum),mIndexNum);
+							mList.add(new String("Room Num "+ ( mList.size() + 1 )+" ID:"+mIndexNum),mIndexNum);
 						}
 						//mList.add(mIndexNum);
 					}

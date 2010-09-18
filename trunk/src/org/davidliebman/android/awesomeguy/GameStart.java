@@ -44,6 +44,7 @@ public class GameStart extends Activity {
     private Canvas mCanvas;
     private FrameLayout mBotFrame;
     private InnerGameLoop mGameLoopBot;
+    private InitBackground.LevelList mLevelList;
     
     private RelativeLayout mRLayout ;
     private TableLayout mTLayoutOuter ;
