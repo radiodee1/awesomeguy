@@ -29,7 +29,8 @@ public class Options extends Activity {
 
 	private Record mHighScores = new Record() ;
 	private Scores mScores ;
-	
+	private InitBackground.LevelList mList;
+	private ArrayAdapter<CharSequence> adapter;
 	/* NOTE: game values instance is bogus!! */
 	private InitBackground.ParseXML mParser = new InitBackground.ParseXML(this);
 	
@@ -57,12 +58,12 @@ public class Options extends Activity {
         textview_name.setText("Player Name: " + mHighScores.getName());
         
         /** spinner for picking starting level **/
-        InitBackground.LevelList mList = new InitBackground.LevelList();
-        Spinner spinner = (Spinner) findViewById(R.id.room_spinner);
+        mList = new InitBackground.LevelList();
+        final Spinner spinner = (Spinner) findViewById(R.id.room_spinner);
         mList = getLevelList(mList);
         
         
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, mList.getStrings().toArray());
+        adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, mList.getStrings().toArray());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         
         spinner.setAdapter(adapter);
@@ -79,7 +80,7 @@ public class Options extends Activity {
                     }
                 });
         //adapter.notifyDataSetChanged();
-        
+        //adapter.setNotifyOnChange(true);
         
 
         /** sound effects play **/
@@ -108,10 +109,17 @@ public class Options extends Activity {
                 if (((CheckBox) v).isChecked()) {
                     Toast.makeText(Options.this, "Searching For XML", Toast.LENGTH_SHORT).show();
                     mLookForXml = true;
+                    
                 } else {
                     Toast.makeText(Options.this, "Not Searching For XML", Toast.LENGTH_SHORT).show();
                     mLookForXml = false;
+                    
                 }
+                mList = getLevelList(null);
+                
+                adapter = new ArrayAdapter(Options.this, android.R.layout.simple_spinner_item, mList.getStrings().toArray());
+                spinner.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
         });
         
@@ -217,8 +225,9 @@ public class Options extends Activity {
         /* end radio button stuff */
     }
     
-    public  InitBackground.LevelList getLevelList(InitBackground.LevelList mList) {
+    public  InitBackground.LevelList getLevelList(InitBackground.LevelList mList2) {
     	boolean test = true;
+    	InitBackground.LevelList mList = new InitBackground.LevelList();
     	try {
 			test = mParser.setXmlPullParser(this.mLookForXml);
         	mList = this.mParser.getXmlList(null);
