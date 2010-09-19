@@ -212,17 +212,17 @@ The last function of substance in the BoundingBox file is one called 'getCenterB
 
 When the game is being played, one instance of the Panel.java class is displayed on the android screen. The top screen always displays the level of the game that is being played. The Panel.java class is a SurfaceView, and a SurfaceView is an extended View. Views are the basic building blocks of user interfaces in android apps. They are used to hold text, buttons, and other user interface items but they also have an 'onDraw(...)' method for drawing 2D graphics in their borders. SurfaceViews have the same 'onDraw(...)' method. In the SurfaceView 'onDraw(...)' method is a Canvas object, which is important for doing this drawing. 
 
-Awesomeguy originally used two separate methods for drawing the game's graphics on the screen. With one method the game used pure Java to draw it's components. With the other method the game used a special C library, called a JNI library. JNI stands for "Java Native Interface". The JNI code will be discussed later. Because of speed considerations the purely Java graphics engine for Awesomeguy was removed and only the JNI version was retained. [Awesomeguy#Awesomeguy top]
+Awesomeguy originally used two separate methods for drawing the game's graphics on the screen. With one method the game used pure Java to draw it's components. With the other method the game used a special C library, called a JNI library. JNI stands for "Java Native Interface". The JNI code will be discussed later. Because of speed considerations the purely Java graphics engine for Awesomeguy was removed and only the JNI version was retained.  [Awesomeguy#Introduction top]
 
 ===Drawing===
 
 In this game when graphics were being displayed by Java we used the Canvas 'drawBitmap(...)' function repeatedly inside the 'onDraw()' method. Each of the tiles we put on the screen and also each of the sprite images uses the 'drawBitmap(...)' function. This was very slow. A View also has a 'scrollTo(...)' method that allows the drawing being done to be scrolled inside the boundaries of the View. This is inherited by the SurfaceView and is used by the game's Panel class. When we are using JNI functions to display the game's graphics, the program uses 'drawBitmap(...)' and 'scrollTo(...)' much less. It uses 'drawBitmap(...)' once for every time the screen is refreshed. The JNI code loads the game's graphics when the Panel class is instantiating, not during game play. In the JNI the graphic images, in the form of arrays, are copied to an area of memory that represents the game screen. Then, once in every refresh, the screen array is converted to a bitmap and printed in it's entirety to the game screen where the player can see it. This is an improvement over the Java version that drew to the screen hundreds of small bitmaps to make the final visible game screen. The JNI code will be discussed in detail later. 
 
-During the GameStart Activity there is always a Panel on the screen that is displaying the game's graphics. When the panel is invalidated by the GameStart code, the screen is re-drawn and the game takes into account all the changes that have happened during the period of inactivity. One of the main roles of the GameStart code is just to invalidate the Panel class. If this loop of invalidation happens quickly enough the game's elements seem to be animated. Invalidating the Panel cannot be done from a thread that did not start the Panel - android will return an error on the debugger console and the program will quit. This is why the GameStart Activity contains a 'mHandler'. This is a device provided by the android operating system for updating the Panel without being in it's thread. It is a queue. [Awesomeguy#Awesomeguy top]
+During the GameStart Activity there is always a Panel on the screen that is displaying the game's graphics. When the panel is invalidated by the GameStart code, the screen is re-drawn and the game takes into account all the changes that have happened during the period of inactivity. One of the main roles of the GameStart code is just to invalidate the Panel class. If this loop of invalidation happens quickly enough the game's elements seem to be animated. Invalidating the Panel cannot be done from a thread that did not start the Panel - android will return an error on the debugger console and the program will quit. This is why the GameStart Activity contains a 'mHandler'. This is a device provided by the android operating system for updating the Panel without being in it's thread. It is a queue.  [Awesomeguy#Introduction top]
 
 ===Panel() Constructor===
 
-The first method in the Panel class is the constructor. In the constructor we pass six items. The first is a Context object, which we immediately 'super' to the default constructor with the line 'super(context);'. The next item passed in the constructor is a reference to the GameValues object, which stores the 'level' and 'object' arrays, as well as the ArrayList for the SpriteInfo objects. The next thing in the constructor signature is a reference to the GameStart object, which is the Panel's parent. The next thing in the constructor signature is the MovementValues object, which holds all info collected from the user about where he or she would like the game's character to move. Finally the Record of the current user (their high scores, etc.) and the screen display width are passed in the constructor. Inside the constructor several variables are initialized, including several Bitmap objects, a Paint object, and the initial values of the scroll variables. The arrays for the JNI code that hold the data from the various bitmaps are loaded here. The array data is also passed to the JNI library here. [Awesomeguy#Awesomeguy top]
+The first method in the Panel class is the constructor. In the constructor we pass six items. The first is a Context object, which we immediately 'super' to the default constructor with the line 'super(context);'. The next item passed in the constructor is a reference to the GameValues object, which stores the 'level' and 'object' arrays, as well as the ArrayList for the SpriteInfo objects. The next thing in the constructor signature is a reference to the GameStart object, which is the Panel's parent. The next thing in the constructor signature is the MovementValues object, which holds all info collected from the user about where he or she would like the game's character to move. Finally the Record of the current user (their high scores, etc.) and the screen display width are passed in the constructor. Inside the constructor several variables are initialized, including several Bitmap objects, a Paint object, and the initial values of the scroll variables. The arrays for the JNI code that hold the data from the various bitmaps are loaded here. The array data is also passed to the JNI library here.  [Awesomeguy#Introduction top]
 
 ===onDraw()===
 
@@ -247,11 +247,11 @@ The second line takes the mMap bitmap and doubles it's size so that it fits bett
 The last line, 'canvas.drawBitmap(mTempJNI, 0, 0, null)' prints the new Bitmap on the screen. This is how we get our JNI array to show on the screen. The crucial line is the 'createBitmap(...)' function that takes a java array as one of it's parameters. 
 
 
-Lastly in the onDraw() method a group of statements checks to see if the game is over and if the 'score' and 'lives' have changed. Since the JNI code keeps track of these things separately this code is necessary.  [Awesomeguy#Awesomeguy top]
+Lastly in the onDraw() method a group of statements checks to see if the game is over and if the 'score' and 'lives' have changed. Since the JNI code keeps track of these things separately this code is necessary.  [Awesomeguy#Introduction top]
 
 ===setInitialBackgroundGraphics()===
 
-This function is called by the Handler in GameStart.java when the level is starting. It sets the scrollX and scrollY variables, which dictate the scroll position of the game screen during play. This basically sets the scroll position that the background is set to if the awesomeguy sprite is not in the upper left hand corner when the game starts. The function also initializes the awesomeguy character's sprite. This entails clearing out the ArrayList that the sprites are stored in and saving the character as the very first entry in a new list. Then the character's sprite is adjusted for it's proper starting position, and the global Panel.java variables for the character's x and y position are set. These two variables are called guyX and guyY. [Awesomeguy#Awesomeguy top]
+This function is called by the Handler in GameStart.java when the level is starting. It sets the scrollX and scrollY variables, which dictate the scroll position of the game screen during play. This basically sets the scroll position that the background is set to if the awesomeguy sprite is not in the upper left hand corner when the game starts. The function also initializes the awesomeguy character's sprite. This entails clearing out the ArrayList that the sprites are stored in and saving the character as the very first entry in a new list. Then the character's sprite is adjusted for it's proper starting position, and the global Panel.java variables for the character's x and y position are set. These two variables are called guyX and guyY.  [Awesomeguy#Introduction top]
 
 ===setGameValues() / getGameValues()===
 
@@ -259,7 +259,7 @@ This simple setter/getter pair is used to reset the Panel.java global 'mGameV', 
 
 ===setPanelScroll()===
 
-This function is used repeatedly to set the scrollX and scrollY variables during game play. Since it's called with every refresh of the Panel SurfaceView, it is also used for other purposes. The setGuyPosition() function called here, with parameters that include the character's x and y position, the screen's scrollX and scrollY, and the animation index for the main character. [Awesomeguy#Awesomeguy top]
+This function is used repeatedly to set the scrollX and scrollY variables during game play. Since it's called with every refresh of the Panel SurfaceView, it is also used for other purposes. The setGuyPosition() function called here, with parameters that include the character's x and y position, the screen's scrollX and scrollY, and the animation index for the main character.  [Awesomeguy#Introduction top]
 
 ===animateItems()===
 
@@ -270,13 +270,13 @@ This function keeps track of two indexes for animating the character sprite and 
 
 This code is used by both the Java and the JNI versions of the program. The lines in this function check weather or not the main character is falling, jumping, running, climbing, etc., and they are only concerned with the contents of the 'objects' tilemap table. The code takes the user input and figures out weather the character can move in the direction desired. Gravity is implemented here, so that the character has a tendency to move twords the bottom of the screen (if that movement is not impeded by obstacles). It's probably because gravity is implemented here that the method has the name that it does.
 
-Other methods are called in this code, and the order they're called in is sometimes important. Methods that check collision with blocks are called here. This way the character can stand on platforms. Jumping is also handled here, as is climbing on ladders.
+Other methods are called in this code, and the order they're called in is sometimes important. Methods that check collision with blocks are called here. This way the character can stand on platforms. Jumping is also handled here, as is climbing on ladders. [Awesomeguy#Introduction top]
 
 ===collisionWithBlocks()===
 
 This method is called by the 'checkPhysicsAdjustments()' function. It attempts to anticipate every possible interaction the main character can have with blocks and define an action to take to address that contact. For this reason the method is long, and contains lines that duplicate the basic principle of the lines above them, differing only in the direction the character is traveling in when it comes in contact with these blocks. Also found here are the lines of code that allow the character to 'hop' or 'skip' over a single block if it is alone in their path. This way the character can climb a gradual increase in height without jumping.
 
-Blocks, in the context of this function, are defined in the 'objects' tilemap table only. Here, as in the 'checkPhysicsAdjustments()' method, the 'level' tilemap table is unimportant.
+Blocks, in the context of this function, are defined in the 'objects' tilemap table only. Here, as in the 'checkPhysicsAdjustments()' method, the 'level' tilemap table is unimportant. [Awesomeguy#Introduction top]
 
 ===collisionWithPlatforms()===
 
@@ -306,13 +306,13 @@ The methods 'getSpriteX()', 'getSpriteY()', and 'getSpriteFacingRight()' all ret
 
 Because the Java ArrayList of SpriteInfo objects contains sprites for the main character as well as the monsters that might be visible on a level, the for(...) loop uses mGameV.getPlatformOffset() and mGameV.getPlatformNum() to help define the index numbers that the function focuses on. These two variables are set when the level is initialized and the platform SpriteInfo objects are placed in the ArrayList. 
 
-In the ArrayList for sprites in the Java code the first record is the main character's sprite. The second record starts a list of all the monsters on the level. The last monster is followed by all the moving platforms on the level. The GameValues Object includes variables for the start and end of the monster portion of the list, and also variables for the start and end of the platform portion of the list. In the JNI code, the sprite struct is stored in an array. The contents of this array are similar to the ArrayList in the Java code, except the main character doesn't appear in the list. It holds just monsters and platforms, and the main character's sprite is kept in a separate struct all on it's own. When querying the JNI for sprite info we have to be aware of the difference between the two lists and that is why the 'j' variable is included in the listing above.
+In the ArrayList for sprites in the Java code the first record is the main character's sprite. The second record starts a list of all the monsters on the level. The last monster is followed by all the moving platforms on the level. The GameValues Object includes variables for the start and end of the monster portion of the list, and also variables for the start and end of the platform portion of the list. In the JNI code, the sprite struct is stored in an array. The contents of this array are similar to the ArrayList in the Java code, except the main character doesn't appear in the list. It holds just monsters and platforms, and the main character's sprite is kept in a separate struct all on it's own. When querying the JNI for sprite info we have to be aware of the difference between the two lists and that is why the 'j' variable is included in the listing above. [Awesomeguy#Introduction top]
 
 ===scrollBg()===
 
 This method takes into account the size of the level and the size of the actual screen, as well as the position of the character and which direction he intends to move, and produces the scroll position of the background and the new position of the character.
 
-It has if() blocks for movement in each of the four dimensions. Inside the if() blocks it is determined weather or not the character moves (when traveling near the edges of the screen) or if the background moves, giving the character the _appearance_ of movement. In the latter case, the background can be moved only if it is bigger than the screen that's displayed, and only if the edge of the background is not aligned with the edge of the screen alreay.
+It has if() blocks for movement in each of the four dimensions. Inside the if() blocks it is determined weather or not the character moves (when traveling near the edges of the screen) or if the background moves, giving the character the _appearance_ of movement. In the latter case, the background can be moved only if it is bigger than the screen that's displayed, and only if the edge of the background is not aligned with the edge of the screen alreay. [Awesomeguy#Introduction top]
 
 ===checkRegularCollisions()===
 
@@ -365,7 +365,7 @@ for (j =  mGuySprite.getMapPosX() / 8 -1; j <  mGuySprite.getMapPosX() / 8 + 3; 
 
 ===Panel java Setters and Getters===
 
-In this group of methods are 'setKeyB()', 'setGuySprite()', 'getHighScore()', 'setHighScores()', 'isEnableSounds()', and 'setEnableSounds()'. Their use is somewhat obvious, though it might be good to note that 'KeyB' is the jump key.
+In this group of methods are 'setKeyB()', 'setGuySprite()', 'getHighScore()', 'setHighScores()', 'isEnableSounds()', and 'setEnableSounds()'. Their use is somewhat obvious, though it might be good to note that 'KeyB' is the jump key. [Awesomeguy#Introduction top]
 
 ===readKeys()===
 
@@ -410,19 +410,19 @@ There are two functions called 'readKeys()' with slightly different signatures. 
 
 The idea is to take the MovementValues direction information and translate it into x and y, where x and y are not the x and y value of the  character on the screen, but instead x and y are the direction and amount that the character would like to move _in_addition_to_ their current position. This is the meaning of the global values for x and y in the Panel.java object. Most importantly, this is the meaning of x an y to the 'checkPhysicsAdjustments()' and 'scrollBg()' functions.
 
-The readKeys function also utilizes two variables called mYMultiplier and mXMultiplier. These variables can be set to numbers higher than one if the mode of input, like the trackball, is less sensitive than the touchbuttons on the screen. This is exactly what the second 'readKeys()' method does. It takes an input and uses it to set the mXMultiplier and mYMultiplier values.
+The readKeys function also utilizes two variables called mYMultiplier and mXMultiplier. These variables can be set to numbers higher than one if the mode of input, like the trackball, is less sensitive than the touchbuttons on the screen. This is exactly what the second 'readKeys()' method does. It takes an input and uses it to set the mXMultiplier and mYMultiplier values. [Awesomeguy#Introduction top]
 
 ===playSounds()===
 
-This function is called every time the screen refreshes. It calls the three JNI functions 'getSoundOw()', 'getSoundPrize()', and 'getSoundBoom()'. These functions return a value of 1 if the JNI has come across a situation where a sound must be played. The sounds are called 'ow', 'prize', and 'boom' respectively. This way the JNI can figure out what sounds need to be played while the Java is responsible for actually playing the sounds.
+This function is called every time the screen refreshes. It calls the three JNI functions 'getSoundOw()', 'getSoundPrize()', and 'getSoundBoom()'. These functions return a value of 1 if the JNI has come across a situation where a sound must be played. The sounds are called 'ow', 'prize', and 'boom' respectively. This way the JNI can figure out what sounds need to be played while the Java is responsible for actually playing the sounds. [Awesomeguy#Introduction top]
 
 ===addMonstersJNI()===
 
-This function is called before the level is actually played, when the various arrays are being populated. It is used to go through the ArrayList of SpriteInfo objects and pass that info on to the JNI library. Once the JNI library has the info it reconstructs the list as an array of structs. Three pieces of info are passed to the JNI, the object's x and y coordinates and the starting animation index for the object. This is done using the JNI function 'addMonster(...)'. The function is actually called from the GameStart.java InnerGameLoop.
+This function is called before the level is actually played, when the various arrays are being populated. It is used to go through the ArrayList of SpriteInfo objects and pass that info on to the JNI library. Once the JNI library has the info it reconstructs the list as an array of structs. Three pieces of info are passed to the JNI, the object's x and y coordinates and the starting animation index for the object. This is done using the JNI function 'addMonster(...)'. The function is actually called from the GameStart.java InnerGameLoop. [Awesomeguy#Introduction top]
 
 ===addPlatformsJNI()===
 
-This function does for floating platforms what the 'addMonsterJNI()' function does for monsters. This function is also only called from the GameStart.java InnerGameLoop.
+This function does for floating platforms what the 'addMonsterJNI()' function does for monsters. This function is also only called from the GameStart.java InnerGameLoop. [Awesomeguy#Introduction top]
 
 ===JNI Declarations===
 
@@ -458,4 +458,4 @@ Here in the Panel.java class we find declarations for all the JNI functions used
 	}
 }}}
 
-Of special interest we note the last entry in the list, the line `System.loadLibrary("awesomeguy");` which actually loads the library for us, and the line about half way through that actually returns an array of ints: `public native int[] drawLevel(int num);`.
+Of special interest we note the last entry in the list, the line `System.loadLibrary("awesomeguy");` which actually loads the library for us, and the line about half way through that actually returns an array of ints: `public native int[] drawLevel(int num);`. [Awesomeguy#Introduction top]
