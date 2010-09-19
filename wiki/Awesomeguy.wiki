@@ -438,4 +438,4 @@ Here in the Panel.java class we find declarations for all the JNI functions used
 	}
 }}}
 
-of special interest we note the last entry in the list, the line `System.loadLibrary("awesomeguy");` which actually loads the library for us, and the line about half way through that actually returns an array of ints: `public native int[] drawLevel(int num);`.
+Of special interest we note the last entry in the list, the line `System.loadLibrary("awesomeguy");` which actually loads the library for us, and the line about half way through that actually returns an array of ints: `public native int[] drawLevel(int num);`.
