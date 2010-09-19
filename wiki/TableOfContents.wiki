@@ -54,7 +54,7 @@
         * [Awesomeguy#playSounds() playSounds()]
         * [Awesomeguy#addMonstersJNI() addMonstersJNI()]
         * [Awesomeguy#addPlatformsJNI() addPlatformsJNI()]
-        * [Awesomeguy#JNI_Declarations() JNI Declarations()]
+        * [Awesomeguy#JNI_Declarations JNI Declarations]
 
 ----
 
