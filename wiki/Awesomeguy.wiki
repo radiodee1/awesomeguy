@@ -420,7 +420,7 @@ This function is called every time the screen refreshes. It calls the three JNI 
 
 This function is called before the level is actually played, when the various arrays are being populated. It is used to go through the ArrayList of SpriteInfo objects and pass that info on to the JNI library. Once the JNI library has the info it reconstructs the list as an array of structs. Three pieces of info are passed to the JNI, the object's x and y coordinates and the starting animation index for the object. This is done using the JNI function 'addMonster(...)'. The function is actually called from the GameStart.java InnerGameLoop.
 
-===addPlatformsJNI===
+===addPlatformsJNI()===
 
 This function does for floating platforms what the 'addMonsterJNI()' function does for monsters. This function is also only called from the GameStart.java InnerGameLoop.
 
