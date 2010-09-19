@@ -14,7 +14,6 @@ public  class Panel  extends SurfaceView  {
 	private GameValues mGameV;
 	private Canvas mCanvas;
 
-	private TileCutter mTiles;
 	private MovementValues mMovementV;
 	private Record mHighScores;
 	private int mDisplayWidth;
