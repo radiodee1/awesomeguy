@@ -318,7 +318,7 @@ for (j =  mGuySprite.getMapPosX() / 8 -1; j <  mGuySprite.getMapPosX() / 8 + 3; 
 
 
 
-				/*********  block ***************/
+				/********  solid block *****/
 				if (test && mGameV.getObjectsCell(j, i) == mGameV.mBlock) {
 					blockTest = true;
 
