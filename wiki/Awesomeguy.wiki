@@ -293,3 +293,52 @@ In the ArrayList for sprites in the Java code the first record is the main chara
 This method takes into account the size of the level and the size of the actual screen, as well as the position of the character and which direction he intends to move, and produces the scroll position of the background and the new position of the character.
 
 It has if() blocks for movement in each of the four dimensions. Inside the if() blocks it is determined weather or not the character moves (when traveling near the edges of the screen) or if the background moves, giving the character the _appearance_ of movement. In the latter case, the background can be moved only if it is bigger than the screen that's displayed, and only if the edge of the background is not aligned with the edge of the screen alreay.
+
+===checkRegularCollisions()===
+
+Here we create a BoundingBox for the guy character. Then we loop through the 'objects' array and make a BoundingBox for each cell in the array. We check to see if the character is in collision with any of the squares in the array. If it is we see what kind of object it is and then act accordingly.
+
+For a ring, we give the character a certain amount of points and then we erase the ring's object number from the array, making it disappear. If it is the goal we end the level and play a sound.
+
+To make the code more efficient, we don't check the whole array every time the screen refreshes. Instead we check the array elements that immediately surround the character.
+
+{{{
+int i,j;
+
+for (j =  mGuySprite.getMapPosX() / 8 -1; j <  mGuySprite.getMapPosX() / 8 + 3; j ++ ) { // x coordinates
+	for (i = mGuySprite.getMapPosY() / 8 - 1; i < mGuySprite.getMapPosY() / 8 + 3; i ++ ) { // y coordinates
+		if(j >= 0 && j < mGameV.getMapH()  && i >= 0 && i < mGameV.getMapV()) {
+
+			if (mGameV.getObjectsCell(j,i)  != 0 ) { 
+
+
+				BoundingBox testMe = BoundingBox.makeBlockBox(j,i);
+
+				boolean test = BoundingBox.collisionSimple(guyBox, testMe);
+
+
+
+				/*********  block ***************/
+				if (test && mGameV.getObjectsCell(j, i) == mGameV.mBlock) {
+					blockTest = true;
+
+				}
+				/******** ladder **********/
+				if (test && mGameV.getObjectsCell(j,i) == mGameV.mLadder) {
+					ladderTest = true;
+
+				}
+				/****** more tests here ******/
+
+		} // indexes OK?
+		else {
+
+			boundaryTest = true;
+			if(j >= mGameV.getMapH() -1) boundaryRight = true;
+			if(j <= 1) boundaryLeft = true;
+		}
+	} // i block
+} // j block
+
+
+}}}
