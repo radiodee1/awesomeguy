@@ -220,13 +220,14 @@ Next the canvas is used to draw the black background on the entire contents of t
 	canvas.drawBitmap(mTempJNI, 0, 0, null);
 }}}
 
-Then, if the player has enabled monsters in their game and the JNI is disabled, the monsters are painted on the canvas. Lastly, if JNI is disabled, the main character is painted on the screen on top of everything else.
+The first line takes the output of the code `drawLevel(newBG + 1)` and turns it into a bitmap called mMap. The function 'drawLevel(...)' is part of the JNI library. It returns an array of java int data. 'Bitmap.createBitmap(...)' turns this data array into a proper Bitmap.
 
-Then the bulk of the JNI code is situated in the 'onDraw()' method. It is only executed if JNI is enabled. It uses a Bitmap.createBitmap(...) statement to turn an array from the JNI code into a Bitmap that can be displayed on the screen. Then it resizes the new Bitmap, doubling it's vertical and horizontal measurements. Then it draws the Bitmap to the screen using Canvas.drawBitmap(...).
+The second line takes the mMap bitmap and doubles it's size so that it fits better on larger screens. The mMatrix object is where you specify the size you want the resulting bitmap to be. We choose to double the size.
 
-Then, if JNI is not enabled, the onDraw() function draws the scores on the screen. 
+The last line, 'canvas.drawBitmap(mTempJNI, 0, 0, null)' prints the new Bitmap on the screen. This is how we get our JNI array to show on the screen. The crucial line is the 'createBitmap(...)' function that takes a java array as one of it's parameters. 
 
-Lastly in the onDraw() method, if JNI is enabled, a group of statements check to see if the game is over and if the 'score' and 'lives' have changed. Since the JNI code keeps track of these things separately this code is necessary.  [Awesomeguy#Awesomeguy top]
+
+Lastly in the onDraw() method a group of statements checks to see if the game is over and if the 'score' and 'lives' have changed. Since the JNI code keeps track of these things separately this code is necessary.  [Awesomeguy#Awesomeguy top]
 
 ===setBackgroundGraphics()===
 
