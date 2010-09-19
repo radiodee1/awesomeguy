@@ -281,3 +281,11 @@ The interesting thing to note here is that the JNI has a separate list of sprite
 
 	}
 }}}
+
+The methods 'getSpriteX()', 'getSpriteY()', and 'getSpriteFacingRight()' all return info on a given sprite. The methods are passed an index number, the index number of the sprite for which we want information, and they return from the JNI the integer value that corresponds to the requested values for the sprite struct from the JNI's sprite list array (as opposed to the Java ArrayList of SpriteInfo objects).
+
+Because the Java ArrayList of SpriteInfo objects contains sprites for the main character as well as the monsters that might be visible on a level, the for(...) loop uses mGameV.getPlatformOffset() and mGameV.getPlatformNum() to help define the index numbers that the function focuses on. These two variables are set when the level is initialized and the platform SpriteInfo objects are placed in the ArrayList. 
+
+In the ArrayList for sprites in the Java code the first record is the main character's sprite. The second record starts a list of all the monsters on the level. The last monster is followed by all the moving platforms on the level. The GameValues Object includes variables for the start and end of the monster portion of the list, and also variables for the start and end of the platform portion of the list.
+
+===scrollBg()===
