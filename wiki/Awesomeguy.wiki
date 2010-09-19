@@ -257,3 +257,27 @@ Other methods are called in this code, and the order they're called in is someti
 This method is called by the 'checkPhysicsAdjustments()' function. It attempts to anticipate every possible interaction the main character can have with blocks and define an action to take to address that contact. For this reason the method is long, and contains lines that duplicate the basic principle of the lines above them, differing only in the direction the character is traveling in when it comes in contact with these blocks. Also found here are the lines of code that allow the character to 'hop' or 'skip' over a single block if it is alone in their path. This way the character can climb a gradual increase in height without jumping.
 
 Blocks, in the context of this function, are defined in the 'objects' tilemap table only. Here, as in the 'checkPhysicsAdjustments()' method, the 'level' tilemap table is unimportant.
+
+===collisionWithPlatforms()===
+
+This method is also called by the 'checkPhysicsAdjustments()' function. It concerns itself with what happens when the main character comes into contact with a floating platform. The function looks at the list of sprites and determines which sprites in the list represent floating platforms. Then it goes through this portion of the sprite list checking the position of the sprite with respect to the position of the character. Specifically, if the BoundingBox of the main character intersects the bounding box of the platform, the 'canFall' variable is set to false, and the character is moved, by adjusting it's x variable, in the same direction as the platform.
+
+The interesting thing to note here is that the JNI has a separate list of sprites, and the JNI is responsible for putting these sprites on the screen. Therefore the list of platform sprites that the JNI has must be synchronized somehow with the list that the Java 'collisionWithPlatforms()' function uses. This is done with a series of JNI methods that appear in the code like this:
+
+{{{
+	/* loop through platform sprite records */
+	for (i = mGameV.getPlatformOffset() + 1 ; i <=  mGameV.getPlatformNum() ; i ++) {
+		j = i ; //j could be adjusted here
+		/* get info from JNI on platform position */
+		SpriteInfo mTempSprite = new SpriteInfo( 0, 8, 0, 40);
+		    
+		mTempSprite.setMapPosX(this.getSpriteX(j));
+		mTempSprite.setMapPosY(this.getSpriteY(j));
+		if(this.getSpriteFacingRight(j) == 1) mFacingRight = true;
+		else mFacingRight = false;
+		mTempSprite.setFacingRight(mFacingRight);
+
+		/* code skipped here for brevity */
+
+	}
+}}}
