@@ -342,3 +342,52 @@ for (j =  mGuySprite.getMapPosX() / 8 -1; j <  mGuySprite.getMapPosX() / 8 + 3; 
 
 
 }}}
+
+===Panel java Setters and Getters===
+
+In this group of methods are 'setKeyB()', 'setGuySprite()', 'getHighScore()', 'setHighScores()', 'isEnableSounds()', and 'setEnableSounds()'. Their use is somewhat obvious.
+
+===readKeys()===
+
+There are two functions called 'readKeys()' with slightly different signatures. The simpler of the two is also the longer function. It looks like this:
+
+{{{
+	public  void readKeys() {		
+
+
+		/* set x and y as determined by game pad input */
+		x=0;
+		y=0;
+
+		changeX = false;
+		changeY = false;
+
+		if(mMovementV.getDirectionLR() == MovementValues.KEY_RIGHT) {
+
+			x =  (int) + (mMovementV.getHMove() * mXMultiplier);
+			changeX = true;
+			//keyB = false;
+		}
+		if(mMovementV.getDirectionLR() == MovementValues.KEY_LEFT) {
+			x =   (int) - (mMovementV.getHMove() * mXMultiplier);
+			changeX = true;
+			//keyB = false;
+		}
+		if(mMovementV.getDirectionUD() == MovementValues.KEY_UP) {
+			y =  (int) - (mMovementV.getVMove() * mYMultiplier);
+			changeY = true;
+			//keyB = false;
+		}
+		if(mMovementV.getDirectionUD() == MovementValues.KEY_DOWN) {
+			y =  (int) + (mMovementV.getVMove() * mYMultiplier);
+			changeY = true;
+			//keyB = false;
+		}
+		
+
+	}
+}}}
+
+The idea is to take the MovementValues direction information and translate it into x and y, where x and y are not the x and y value of the  character on the screen, but instead x and y are the direction and amount that the character would like to move _in_addition_to_ their current position. This is the meaning of the global values for x and y in the Panel.java object. Most importantly, this is the meaning of x an y to the 'checkPhysicsAdjustments()' and 'scrollBg()' functions.
+
+The readKeys function also utilizes two variables called mYMultiplier and mXMultiplier. These variables can be set to numbers higher than one if the mode of input, like the trackball, is less sensitive than the touchbuttons on the screen. This is exactly what the second 'readKeys()' method does. It takes an input and uses it to set the mXMultiplier and mYMultiplier values.
