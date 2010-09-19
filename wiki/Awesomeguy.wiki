@@ -305,8 +305,8 @@ To make the code more efficient, we don't check the whole array every time the s
 {{{
 int i,j;
 
-for (j =  mGuySprite.getMapPosX() / 8 -1; j <  mGuySprite.getMapPosX() / 8 + 3; j ++ ) { // x coordinates
-	for (i = mGuySprite.getMapPosY() / 8 - 1; i < mGuySprite.getMapPosY() / 8 + 3; i ++ ) { // y coordinates
+for (j =  mGuySprite.getMapPosX() / 8 -1; j <  mGuySprite.getMapPosX() / 8 + 3; j ++ ) { 
+	for (i = mGuySprite.getMapPosY() / 8 - 1; i < mGuySprite.getMapPosY() / 8 + 3; i ++ ) { 
 		if(j >= 0 && j < mGameV.getMapH()  && i >= 0 && i < mGameV.getMapV()) {
 
 			if (mGameV.getObjectsCell(j,i)  != 0 ) { 
@@ -333,9 +333,8 @@ for (j =  mGuySprite.getMapPosX() / 8 -1; j <  mGuySprite.getMapPosX() / 8 + 3; 
 		} // indexes OK?
 		else {
 
-			boundaryTest = true;
-			if(j >= mGameV.getMapH() -1) boundaryRight = true;
-			if(j <= 1) boundaryLeft = true;
+			/* some boundary checking tests here */
+
 		}
 	} // i block
 } // j block
