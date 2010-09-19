@@ -345,7 +345,7 @@ for (j =  mGuySprite.getMapPosX() / 8 -1; j <  mGuySprite.getMapPosX() / 8 + 3; 
 
 ===Panel java Setters and Getters===
 
-In this group of methods are 'setKeyB()', 'setGuySprite()', 'getHighScore()', 'setHighScores()', 'isEnableSounds()', and 'setEnableSounds()'. Their use is somewhat obvious.
+In this group of methods are 'setKeyB()', 'setGuySprite()', 'getHighScore()', 'setHighScores()', 'isEnableSounds()', and 'setEnableSounds()'. Their use is somewhat obvious, though it might be good to note that 'KeyB' is the jump key.
 
 ===readKeys()===
 
