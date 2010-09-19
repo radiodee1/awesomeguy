@@ -220,7 +220,7 @@ Next the canvas is used to draw the black background on the entire contents of t
 	canvas.drawBitmap(mTempJNI, 0, 0, null);
 }}}
 
-The first line takes the output of the code `drawLevel(newBG + 1)` and turns it into a bitmap called mMap. The function 'drawLevel(...)' is part of the JNI library. It returns an array of java int data. 'Bitmap.createBitmap(...)' turns this data array into a proper Bitmap.
+The first line takes the output of the code `drawLevel(newBG + 1)` and turns it into a bitmap called mMap. The function 'drawLevel(...)' is part of the JNI library. It returns an array of java int data. 'Bitmap.createBitmap(...)' turns this data array into a proper bitmap.
 
 The second line takes the mMap bitmap and doubles it's size so that it fits better on larger screens. The mMatrix object is where you specify the size you want the resulting bitmap to be. We choose to double the size.
 
@@ -229,7 +229,7 @@ The last line, 'canvas.drawBitmap(mTempJNI, 0, 0, null)' prints the new Bitmap o
 
 Lastly in the onDraw() method a group of statements checks to see if the game is over and if the 'score' and 'lives' have changed. Since the JNI code keeps track of these things separately this code is necessary.  [Awesomeguy#Awesomeguy top]
 
-===setBackgroundGraphics()===
+===setInitialBackgroundGraphics()===
 
 This function is called by the Handler in GameStart.java when the level is starting. It sets the scrollX and scrollY variables, which dictate the scroll position of the game screen during play. This basically sets the scroll position that the background is set to if the awesomeguy sprite is not in the upper left hand corner when the game starts. The function also initializes the awesomeguy character's sprite. This entails clearing out the ArrayList that the sprites are stored in and saving the character as the very first entry in a new list. Then the character's sprite is adjusted for it's proper starting position, and the global Panel.java variables for the character's x and y position are set. These two variables are called guyX and guyY. [Awesomeguy#Awesomeguy top]
 
@@ -239,80 +239,12 @@ This simple setter/getter pair is used to reset the Panel.java global 'mGameV', 
 
 ===setPanelScroll()===
 
-This function is used repeatedly to set the scrollX and scrollY variables during game play. Since it's called with every refresh of the Panel SurfaceView, it is also used for other purposes. If the JNI code is enabled, the setGuyPosition() function called here, with parameters that include the character's x and y position, the screen's scrollX and scrollY, and the animation index for the main character. If the JNI code is not enabled, the 'setPanelScroll(int x, int y)' function calls the Panel's built in 'scrollTo(int x, int y)' function. This is built in to every SurfaceView, but we only need to use it if the JNI is disabled. [Awesomeguy#Awesomeguy top]
-
-===setTilesheet()===
-
-For the Java powered implementation of the Awesomeguy game the Bitmap bMap needs to be swapped every so often so that it appears that the rings on the level are moving. This code is shown below. The int 'i' is the animation index. This function is called in 'animateItems()' where the proper index number is generated.
-
-{{{
-	public void setTilesheet(int i) {
-		if (i == 0 || i == 1 || i == 8) {
-			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles1, mOptionsTile);
-		}
-		else if (i == 2 || i == 4 || i == 6) {
-			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles2, mOptionsTile);
-		}
-		else if (i == 3 || i == 7) {
-			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles3, mOptionsTile);
-		}
-		else if (i == 5) {
-			bMap = BitmapFactory.decodeResource(getResources(),R.drawable.tiles4, mOptionsTile);
-		}
-	}
-}}}
-
-===setSwapGuy()===
-
-The Awesomeguy character is animated. This function implements that animation. This function is also called by 'animateItems()'.
-
-{{{
-	public void setSwapGuy(int num) {
-		
-		if(num == 0) {
-			this.mGuySprite.setResourceId(R.drawable.guy0);
-		}
-		else if (num == 1) {
-			this.mGuySprite.setResourceId(R.drawable.guy1);
-		}
-		else if (num == 2) {
-			this.mGuySprite.setResourceId(R.drawable.guy2);
-		}
-		else if (num == 3) {
-			this.mGuySprite.setResourceId(R.drawable.guy3);
-		}
-		mGuySprite.setAnimIndex(num);
-	}
-
-}}}
-Each SpriteInfo object has a field called 'mResourceId' and another called 'mAnimIndex'. This code sets both. When the 'mAnimIndex' is set in this function it is used later by the JNI code if it is enabled. Unlike the 'setTilesheet()' function, 'setSwapGuy()' doesn't actually load a Bitmap image. [Awesomeguy#Awesomeguy top]
+This function is used repeatedly to set the scrollX and scrollY variables during game play. Since it's called with every refresh of the Panel SurfaceView, it is also used for other purposes. The setGuyPosition() function called here, with parameters that include the character's x and y position, the screen's scrollX and scrollY, and the animation index for the main character. [Awesomeguy#Awesomeguy top]
 
 ===animateItems()===
 
-This function keeps track of two indexes for animating the character sprite and also the tilesheet animation. It calls both 'setSwapGuy(int num)' and 'setTilesheet(int num)'. There are eight possible values for the tilesheets and four for the main character.
+This function keeps track of two indexes for animating the character sprite and also the tilesheet animation. There are eight possible values for the tilesheets and four for the main character.
 
-===checkPrintableObjects()===
-
-The 'checkPrintableObjects(int num)' function is called by the 'onDraw()' method when it is drawing tiles on the screen for the non-JNI version of the game. At some point the 'onDraw()' method goes through a series of loops to paint the tiles on the screen. It checks the first tile map, the 'level' tile map, and prints all the information from the 'level' map. Then in the same series of loops it goes through the 'objects' map. Here it calls the 'checkPrintableObjects(int num) function with every element in the 'objects' array. It checks to see if the number in the 'objects' array is the same as one of the few that it prints to the screen. For example, the 'objects' array holds the location of the starting position for the Awesomeguy sprite, but it never prints this character to the screen. Instead the info is used by an entirely different function to place the character at the beginning of the game. As another example, the 'objects' table holds the location of every coin and prize. These objects can be printed to the screen. The 'checkPrintableObjects(int num)' function is a simple way to determine which elements of the 'objects' array are printable, and which are not. This function is used once on every element of the 'objects' array, and it returns a boolean value. The code for the function is:
-
-{{{
-	private boolean checkPrintableObjects(int num) {
-		boolean temp = false;
-
-		/* these are blocks that are not printed on the screen */
-		if(num != mGameV.mStart && num != mGameV.mMonster && num != mGameV.mDeath
-				&& num != mGameV.mPlatform && num != mGameV.mMarker && num != mGameV.mBlock
-				&& num != mGameV.mLadder) {
-			temp = true;
-		}
-
-		return temp;
-	}
-}}}
-
-===drawScoreOnMain() / numbersOnBg()===
-
-The 'drawScoreOnMain()' function is called by the Java graphics methods in 'onDraw()' to draw the score and number of lives on the main screen during game play. It is assisted by 'numbersOnBg()' which only prints the number portion of the 'score' or 'lives' display. This function is used by Java when it is printing the game screen. When the JNI library is being used to display the screen the function is not used and a C version of the function is called by the JNI code in its place.
 
 ===checkPhysicsAdjustments()===
 
