@@ -391,3 +391,51 @@ There are two functions called 'readKeys()' with slightly different signatures. 
 The idea is to take the MovementValues direction information and translate it into x and y, where x and y are not the x and y value of the  character on the screen, but instead x and y are the direction and amount that the character would like to move _in_addition_to_ their current position. This is the meaning of the global values for x and y in the Panel.java object. Most importantly, this is the meaning of x an y to the 'checkPhysicsAdjustments()' and 'scrollBg()' functions.
 
 The readKeys function also utilizes two variables called mYMultiplier and mXMultiplier. These variables can be set to numbers higher than one if the mode of input, like the trackball, is less sensitive than the touchbuttons on the screen. This is exactly what the second 'readKeys()' method does. It takes an input and uses it to set the mXMultiplier and mYMultiplier values.
+
+===playSounds()===
+
+This function is called every time the screen refreshes. It calls the three JNI functions 'getSoundOw()', 'getSoundPrize()', and 'getSoundBoom()'. These functions return a value of 1 if the JNI has come across a situation where a sound must be played. The sounds are called 'ow', 'prize', and 'boom' respectively. This way the JNI can figure out what sounds need to be played while the Java is responsible for actually playing the sounds.
+
+===addMonstersJNI()===
+
+This function is called before the level is actually played, when the various arrays are being populated. It is used to go through the ArrayList of SpriteInfo objects and pass that info on to the JNI library. Once the JNI library has the info it reconstructs the list as an array of structs. Three pieces of info are passed to the JNI, the object's x and y coordinates and the starting animation index for the object. This is done using the JNI function 'addMonster(...)'. The function is actually called from the GameStart.java InnerGameLoop.
+
+===addPlatformsJNI===
+
+This function does for floating platforms what the 'addMonsterJNI()' function does for monsters. This function is also only called from the GameStart.java InnerGameLoop.
+
+===JNI Declarations===
+
+Here in the Panel.java class we find declarations for all the JNI functions used in the program. These declarations basically provide a mechanism for communicating with the JNI. We will go into the JNI later in this document.
+
+{{{
+	public native void setLevelData( int [] a_map, int [] b_map,int width, int height);
+	public native void setObjectsDisplay(int map_x, int map_y, int value);
+	public native void setGuyData(int [] a, int [] b, int [] c, int [] d);
+	public native void setMonsterData(int [] a, int [] b, int [] c, int [] d);
+	public native void setMovingPlatformData(int []a);
+	public native void inactivateMonster(int num);
+	public native void setTileMapData( int [] a, int [] b, int [] c, int [] d);
+	public native void addMonster(int map_x, int map_y, int animate_index);
+	public native void addPlatform(int map_x, int map_y);
+	public native void setGuyPosition(int x, int y, int scrollx, int scrolly, int animate);
+	public native void setScoreLives(int score, int lives);
+    public native void setMonsterPreferences(int monsters, int collision);
+    public native void setScreenData(int screenH, int screenV);
+	public native int[] drawLevel(int num);
+	public native int getSoundBoom();
+	public native int getSoundOw();
+	public native int getSoundPrize();
+	public native int getEndLevel();
+	public native int getScore();
+	public native int getLives();
+	public native void incrementJniScore(int num);
+	public native int getSpriteX(int num);
+	public native int getSpriteY(int num);
+	public native int getSpriteFacingRight(int num);
+	static {
+		System.loadLibrary("awesomeguy");
+	}
+}}}
+
+of special interest we note the last entry in the list, the line `System.loadLibrary("awesomeguy");` which actually loads the library for us, and the line about half way through that actually returns an array of ints: `public native int[] drawLevel(int num);`.
