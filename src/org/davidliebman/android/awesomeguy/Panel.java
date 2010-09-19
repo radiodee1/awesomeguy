@@ -19,32 +19,18 @@ public  class Panel  extends SurfaceView  {
 	private int mDisplayWidth;
 	private Matrix mMatrix;
 	
-	private int mScore;
-	private int mLives;
-	//private int message = 0;
 	private int scrollX, scrollY;
-	private int baseX, baseY;
-	private int guyX = 0;
-	private int guyY = 0;
 	private Bitmap  mMap, mTempJNI;
 	private BitmapFactory.Options mOptionsSprite = new BitmapFactory.Options();
 	private BitmapFactory.Options mOptionsTile = new BitmapFactory.Options();
 	private BitmapFactory.Options mOptionsNum = new BitmapFactory.Options();
 	private BitmapFactory.Options mOptionsPlat = new BitmapFactory.Options();
 
-	
-	private int mTemp;
 	private SpriteInfo mGuySprite;
 	private Paint mP;
-	private int mMapcheat = 1;
-	private boolean useJNI = true;
-	private boolean useSpecialCollision = false;
 	private int mScale = 2;
 
-	/* for direction checking */
-	private boolean changeX = false;
-	private boolean changeY = false;
-
+	
 	/* -- start 'for scrolling' -- */
 	/* for scrolling */
 	private final int LR_MARGIN = 80;
@@ -289,8 +275,8 @@ public  class Panel  extends SurfaceView  {
 		mGameV.setSpriteStart();
 		mGuySprite = mGameV.getSpriteStart();
 		mGameV.adjustSpriteStartPos();
-		guyX = mGuySprite.getMapPosX();
-		guyY = mGuySprite.getMapPosY();
+		//guyX = mGuySprite.getMapPosX();
+		//guyY = mGuySprite.getMapPosY();
 	}
 
 
@@ -382,7 +368,6 @@ public  class Panel  extends SurfaceView  {
 
 
 		/* BLOCK TEST */
-		if (!this.useSpecialCollision) {
 			if (actual > 6) {
 				if(!boundaryRight) center ++;
 				collisionWithBlocks(   center , END);
@@ -394,7 +379,7 @@ public  class Panel  extends SurfaceView  {
 			else {
 				collisionWithBlocks(   center , MIDDLE);
 			}
-		}
+		
 		
 		
 
@@ -1151,35 +1136,31 @@ public  class Panel  extends SurfaceView  {
 
 		//keyB = false;
 
-		changeX = false;
-		changeY = false;
+		//changeX = false;
+		//changeY = false;
 
 		if(mMovementV.getDirectionLR() == MovementValues.KEY_RIGHT) {
 
 			x =  (int) + (mMovementV.getHMove() * mXMultiplier);
-			changeX = true;
+			//changeX = true;
 			//keyB = false;
 		}
 		if(mMovementV.getDirectionLR() == MovementValues.KEY_LEFT) {
 			x =   (int) - (mMovementV.getHMove() * mXMultiplier);
-			changeX = true;
+			//changeX = true;
 			//keyB = false;
 		}
 		if(mMovementV.getDirectionUD() == MovementValues.KEY_UP) {
 			y =  (int) - (mMovementV.getVMove() * mYMultiplier);
-			changeY = true;
+			//changeY = true;
 			//keyB = false;
 		}
 		if(mMovementV.getDirectionUD() == MovementValues.KEY_DOWN) {
 			y =  (int) + (mMovementV.getVMove() * mYMultiplier);
-			changeY = true;
+			//changeY = true;
 			//keyB = false;
 		}
-		/*
-    	if(mMovementV.getLetterKeyB() == MovementValues.KEY_B) {
-    		keyB = true;
-    	}
-		 */
+		
 
 	}
 
