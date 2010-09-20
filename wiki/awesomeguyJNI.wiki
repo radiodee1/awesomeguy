@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary Method by method explanation of the awesomeguy.c file.
 
 = Introduction =
 
