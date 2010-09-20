@@ -46,8 +46,9 @@ public class Options extends Activity {
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
 
         mHighScores.getFromPreferences(preferences);
+        
         if (mHighScores.isNewRecord()) {
-        	mHighScores.setNumRecords(preferences.getInt(SAVED_NUM_SCORES, 50));
+        	mHighScores.setNumRecords(preferences.getInt(SAVED_NUM_SCORES, Record.RADIO_PLAYERS_FIFTY));
         }
         mLookForXml = preferences.getBoolean(SAVED_LOOK_FOR_XML, false);
         
@@ -79,9 +80,7 @@ public class Options extends Activity {
                     	Toast.makeText(Options.this, "Default level selected", Toast.LENGTH_SHORT).show();
                     }
                 });
-        //adapter.notifyDataSetChanged();
-        //adapter.setNotifyOnChange(true);
-        
+       
 
         /** sound effects play **/
         final CheckBox checkbox_sounds = (CheckBox) findViewById(R.id.checkbox_sounds );
@@ -163,9 +162,9 @@ public class Options extends Activity {
                 RadioButton rb = (RadioButton) v;
                 Toast.makeText(Options.this, rb.getText(), Toast.LENGTH_SHORT).show();
                 
-                if(rb.getId() == R.id.radio_players_ten) mHighScores.setNumRecords(10);
-                if(rb.getId() == R.id.radio_players_five) mHighScores.setNumRecords(5);
-                if(rb.getId() == R.id.radio_players_fifty) mHighScores.setNumRecords(50);
+                if(rb.getId() == R.id.radio_players_ten) mHighScores.setNumRecords(Record.RADIO_PLAYERS_TEN);
+                if(rb.getId() == R.id.radio_players_five) mHighScores.setNumRecords(Record.RADIO_PLAYERS_FIVE);
+                if(rb.getId() == R.id.radio_players_fifty) mHighScores.setNumRecords(Record.RADIO_PLAYERS_FIFTY);
                 SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
                 SharedPreferences.Editor out = preferences.edit();
                 out.putInt(SAVED_NUM_SCORES, mHighScores.getNumRecords());
@@ -202,11 +201,11 @@ public class Options extends Activity {
         
         /* more radio button stuff - number of players */
         final RadioButton radio_players_five = (RadioButton) findViewById(R.id.radio_players_five);
-        if (mHighScores.getNumRecords() == 5) radio_players_five.setChecked(true);
+        if (mHighScores.getNumRecords() == Record.RADIO_PLAYERS_FIVE) radio_players_five.setChecked(true);
         final RadioButton radio_players_ten = (RadioButton) findViewById(R.id.radio_players_ten);
-        if (mHighScores.getNumRecords() == 10) radio_players_ten.setChecked(true);
+        if (mHighScores.getNumRecords() == Record.RADIO_PLAYERS_TEN) radio_players_ten.setChecked(true);
         final RadioButton radio_players_fifty = (RadioButton) findViewById(R.id.radio_players_fifty);
-        if (mHighScores.getNumRecords() == 50) radio_players_fifty.setChecked(true);
+        if (mHighScores.getNumRecords() == Record.RADIO_PLAYERS_FIFTY) radio_players_fifty.setChecked(true);
         
         radio_players_five.setOnClickListener(radio_players);
         radio_players_ten.setOnClickListener(radio_players);
@@ -250,6 +249,14 @@ public class Options extends Activity {
         
 	    super.onPause();
 
+    }
+    
+    @Override
+    public void onResume() {
+    	SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+
+        mHighScores.getFromPreferences(preferences);
+    	super.onResume();
     }
    
 }

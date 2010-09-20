@@ -8,7 +8,9 @@ import android.content.*;
 
 public  class Record  {
 	
-
+	public static int RADIO_PLAYERS_TEN = 10;
+	public static int RADIO_PLAYERS_FIVE = 5;
+	public static int RADIO_PLAYERS_FIFTY = 50;
 	
 	private boolean mNewRecord;
 	private int mRecordIdNum;
@@ -31,7 +33,7 @@ public  class Record  {
 		
 		mName = new String("anonymous");
 		
-		mNewRecord = true;
+		mNewRecord = false;
 		mRecordIdNum = 0;
 		
 		mLevel = 1;
@@ -40,7 +42,7 @@ public  class Record  {
 		mCycles = 0;
 		mSave1 = 0;
 		mGameSpeed = 16;
-		mNumRecords = 50;
+		mNumRecords = RADIO_PLAYERS_FIFTY;
 		mSound = true;
 		mEnableJNI = true;
 		mEnableMonsters = true;
@@ -65,19 +67,21 @@ public  class Record  {
          out.putString("mEnableMonsters",new Boolean(mEnableMonsters).toString());
          out.putString("mEnableCollision",new Boolean(mEnableCollision).toString());
          out.commit();
+         
+         Log.e("addToPreferences()", "--------------here");
      }
      
      public void getFromPreferences(SharedPreferences in) {
-    	 mNewRecord = new Boolean(in.getString("mNewRecord","")).booleanValue();
+    	 mNewRecord = new Boolean(in.getString("mNewRecord","false")).booleanValue();
     	 mRecordIdNum = in.getInt("mRecordIdNum", 0);
-    	 mName = in.getString("mName","none");
+    	 mName = in.getString("mName","anonymous");
          mLevel = in.getInt("mLevel",1);
          mScore = in.getInt("mScore",10);
          mLives = in.getInt("mLives",3);
          mCycles = in.getInt("mCycles",0);
          mSave1 = in.getInt("mSave1",0);
          mGameSpeed = in.getInt("mGameSpeed",16);
-         mNumRecords= in.getInt("mNumRecords",50);
+         mNumRecords= in.getInt("mNumRecords",RADIO_PLAYERS_FIFTY);
          mSound = new Boolean(in.getString("mSound","")).booleanValue();
          mEnableJNI = new Boolean(in.getString("mEnableJNI","")).booleanValue();
          mEnableMonsters = new Boolean(in.getString("mEnableMonsters","")).booleanValue();
@@ -85,7 +89,7 @@ public  class Record  {
      }
      
      public void listInLog() {
-		Log.i("Record", "Is New Record " + new Boolean(mNewRecord).toString());
+		Log.i("Record", "Is New Record : " + new Boolean(mNewRecord).toString());
 		Log.i("Record", "Record Database Num : "+ mRecordIdNum);
 		Log.i("Record", "Player Name : " + mName);
 		Log.i("Record", "Player Level : "+ mLevel);

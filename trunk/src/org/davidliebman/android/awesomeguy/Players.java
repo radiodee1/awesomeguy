@@ -34,7 +34,7 @@ public class Players extends ListActivity {
     	mHighScores = new Record();
         mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.getFromPreferences(mPreferences);
-        this.mPreferredNumRecords = this.mPreferences.getInt(Options.SAVED_NUM_SCORES, 50);
+        this.mPreferredNumRecords = this.mPreferences.getInt(Options.SAVED_NUM_SCORES, Record.RADIO_PLAYERS_FIFTY);
         
         
         mScores = new Scores(this, mHighScores);
@@ -66,7 +66,7 @@ public class Players extends ListActivity {
                 
                 /* save num of high scores */
                 SharedPreferences.Editor mSave = mPreferences.edit();
-                mSave.putInt(Options.SAVED_NUM_SCORES, mHighScores.getRecordIdNum());
+                mSave.putInt(Options.SAVED_NUM_SCORES, mHighScores.getNumRecords());
                 mSave.commit();
                 mNumPlayers.setText("This is where you choose from a list of " + mHighScores.getNumRecords() + " high scores.");
                 
@@ -112,7 +112,8 @@ public class Players extends ListActivity {
                   else {
                       Toast.makeText(Players.this, "Player Selected: " + edittext.getText(), Toast.LENGTH_SHORT).show();
                 	  mHighScores = mRec;
-                      //this.alertNumRecords();
+                	  mHighScores.setNewRecord(true);
+                	  
                 	  mHighScores.addToPreferences(mPreferences);
                 	  mPlayerText.setText("Player Chosen: " +mHighScores.getName());
                       mNumPlayers.setText("This is where you choose from a list of " + mHighScores.getNumRecords() + " high scores.");
@@ -152,6 +153,16 @@ public class Players extends ListActivity {
     @Override
     public void onResume() {
     	super.onResume();
+    	
+    	/* retrieve Record mHighScores */
+    	mHighScores = new Record();
+        mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+        mHighScores.getFromPreferences(mPreferences);
+        this.mPreferredNumRecords = this.mPreferences.getInt(Options.SAVED_NUM_SCORES, Record.RADIO_PLAYERS_FIFTY);
+        
+        mScores = new Scores(this, mHighScores);
+
+    	
     	ArrayList<Record> temp = mScores.getHighScoreList(mHighScores.getNumRecords());
         this.mNames.clear();
         this.mNames.addAll(temp);

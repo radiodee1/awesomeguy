@@ -4,6 +4,7 @@ package org.davidliebman.android.awesomeguy;
 import android.util.Log;
 import android.content.Context;
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -13,7 +14,7 @@ import java.util.*;
 
 public class Scores {
 	private static final String DATABASE_NAME = "AwesomeguyScores.db";
-	private static final int DATABASE_VERSION = 6;
+	private static final int DATABASE_VERSION = 13;
 	private static final String TABLE_NAME = "scores";
 	
 	private SQLiteDatabase mDatabase;
@@ -29,17 +30,7 @@ public class Scores {
 	public void setHighScores(Record highScores) {
 		mHighScores = highScores;
 	}
-	public void test() {
-		
-		mDatabase = mOpenHelper.getWritableDatabase();
-
-		for (int i = 0; i < 5; i ++ ) {
-			mDatabase.execSQL(
-					this.getInsertString(TABLE_NAME));
-
-		}
-		mDatabase.close();
-	}
+	
 	
 	public ArrayList<Record> getHighScoreList(int num) {
 		// NOTE: if 'num' is negative, all records are returned
@@ -83,44 +74,48 @@ public class Scores {
 		return mList;
 	}
 	
-	public void insertRecordIfRanks() {
+	public void insertRecordIfRanks(Record mHighScores) {
 		String query = new String();
 		Record mLowestScore = new Record();
-
+		//SharedPreferences preferences = mContext.getSharedPreferences(Options.AWESOME_NAME, Context.MODE_PRIVATE);
+		
+		/* first check if record is 'anonymous' -- if so, exit !! */
+		if(mHighScores.getName().contentEquals(mLowestScore.getName())) return;
+		
+		
 		ArrayList<Record> test = this.getHighScoreList(mHighScores.getNumRecords());
 		if (test.size() > 0) {
 			mLowestScore = test.get(test.size() - 1);
-		}
-		
-		if(mHighScores.isNewRecord()){
-			query = this.getInsertString(TABLE_NAME);
-		}
-		else {
-			query = this.getUpdateScoreLevelString(mHighScores.getRecordIdNum());
 		}
 		
 		if (mHighScores.getScore() > mLowestScore.getScore() || test.size() < mHighScores.getNumRecords()) {
 			mOpenHelper = new ScoreOpenHelper(mContext);
 			SQLiteDatabase mDatabase = mOpenHelper.getWritableDatabase();
 			
+			mHighScores.listInLog();
 			
-		
 			if(mHighScores.isNewRecord()) {
 				//set new record to false
 				//set ID Num
+				
 				long i = mDatabase.insert(TABLE_NAME, null, this.getInsertContentValues());
 				
 				
 				mHighScores.setRecordIdNum((int)i);
 				mHighScores.setNewRecord(false);
-				Log.d("Scores", "setting new record number <--------------");
-				//mHighScores.listInLog();
+				
+				/* the record id and 'new_record' fields have changed, so we put them in shared preferences */
+				//mHighScores.addToPreferences(preferences);
+				
+				Log.e("Scores", "setting new record number <-------------- "+ i);
+				mHighScores.listInLog();
 				
 			}
 			else  {
+				query = this.getUpdateScoreLevelString(mHighScores.getRecordIdNum());
 				Cursor c = mDatabase.rawQuery(query, null);
 				int i = c.getCount();
-	
+				Log.e("Scores","setting old score number <----------------" + mHighScores.getRecordIdNum())	;
 				c.close();
 				
 			}
@@ -168,7 +163,7 @@ public class Scores {
 				Cursor c = mDatabase.rawQuery("DELETE FROM "+ TABLE_NAME + " WHERE id=" + j, null);
 				c.getCount();
 				c.close();
-				//Log.d("scores", "REMOVE RECORD " + j + "<--------------");
+				Log.e("scores", "REMOVE RECORD " + j + "<--------------");
 				//mList.get(i).listInLog();
 			}
 		}
@@ -194,7 +189,7 @@ public class Scores {
     						" enable_collision  ) " +
 							" VALUES ( " +
 							// keep order correct
-							" \"" + false + "\"  , " + //new_record
+							" \"" + "false" + "\"  , " + //new_record
 							" \"" + mHighScores.getName() + "\"  , " + //name
 							" " + mHighScores.getLevel() + "  , " + //level
 							" " + mHighScores.getScore() + "  , " +  //score
@@ -249,7 +244,7 @@ public class Scores {
 	
 	public ContentValues getInsertContentValues() {
 		ContentValues mValues = new ContentValues();
-		mValues.put("new_record", new Boolean(mHighScores.isNewRecord()).toString());
+		mValues.put("new_record", "false");
 		mValues.put("name", mHighScores.getName());
 		mValues.put("level", mHighScores.getLevel());
 		mValues.put("score", mHighScores.getScore());

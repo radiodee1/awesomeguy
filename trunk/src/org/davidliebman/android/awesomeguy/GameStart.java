@@ -275,11 +275,13 @@ public class GameStart extends Activity {
     	// save high scores if they rank
     	if(mHighScores.getScore() > mGameV.getOldGuyScore()) {
 	    	  
-	    	  mScores.insertRecordIfRanks();
+	    	  mScores.insertRecordIfRanks(mHighScores);
 	    	  mHighScores.setNewRecord(false);
 
 	      }
-    	
+		SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+
+    	mHighScores.addToPreferences(preferences);
 	    super.onPause();
     }
     
@@ -290,6 +292,7 @@ public class GameStart extends Activity {
     	mHighScores = new Record();
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.getFromPreferences(preferences);
+        
         
         /* retrieve other saved preferences */	    	
         mLookForXml = preferences.getBoolean(Options.SAVED_LOOK_FOR_XML, false);
