@@ -39,7 +39,7 @@ Aside from the tilesheets and tilemaps described above, the game uses several sp
 
 ===Software Tools===
 
-Several pieces of software were used when making Awesomeguy. Awesomeguy was programmed on a Linux computer. The graphic images in the game were all edited on Gimp, the Gnome Image Manipulation Program. The source code for Awesomeguy was edited using the Eclipse IDE for java. The C library used for the Awesomeguy Java Native Interface (JNI) was edited using Gedit, another Gnome program. The tilemaps, the large arrays that define the appearance of each level, were edited first using a Windows program called 'Mappy', and then further edited using Gedit and the command line tool 'sed'. The Wine (Wine Is Not An Emulator) program loader was employed to allow Mappy to work on a Linux platform. Instructions for using Mappy to create level definitions will accompany this document. [Awesomeguy#Introduction top]
+Several pieces of software were used when making Awesomeguy. Awesomeguy was programmed on a Linux computer. The graphic images in the game were all edited on Gimp, the Gnome Image Manipulation Program. The source code for Awesomeguy was edited using the Eclipse IDE for java. The C library used for the Awesomeguy Java Native Interface (JNI) was edited using Gedit, a Gnome text editor. The tilemaps, the large arrays that define the appearance of each level, were edited first using a Windows program called 'Mappy', and then further edited using Gedit and the command line tool 'sed'. The Wine (Wine Is Not An Emulator) program loader was employed to allow Mappy to work on a Linux platform. Instructions for using Mappy to create level definitions will accompany this document. [Awesomeguy#Introduction top]
 
 ----
 
