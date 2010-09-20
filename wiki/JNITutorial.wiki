@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary A simple tutorial for writing and compiling JNI code for the Android platform
 
 = Introduction =
 
