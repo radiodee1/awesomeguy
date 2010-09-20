@@ -389,7 +389,41 @@ public class InitBackground {
 			}
 			return true;
 		}
+		
+		public  InitBackground.LevelList getLevelList(boolean mLookForXml) {
+	    	boolean test = true;
+	    	InitBackground.LevelList mList = new InitBackground.LevelList();
+	    	try {
+				test = setXmlPullParser(mLookForXml);
+	        	mList = getXmlList(null);
+			}
+			
+			catch (XmlPullParserException e) {
+				Log.e("INIT LEVEL","XmlPullParserException -- " + e.getMessage());
+			}
+			catch (IOException e) {
+				Log.e("INIT LEVEL","IO exception " + e.getMessage());
+			}
+			catch (Exception e) {
+				Log.e("INIT LEVEL", "exception " + e.getMessage());
+			}
+			
+			//try again without sdcard.
+			if (mList.size() == 0 ) {
+				try {
+					Log.e("INIT LEVEL","failed mLookForXml -- " + test);
 
+					setXmlPullParser(false);
+		        	mList = getXmlList(null);
+				}
+				catch (Exception e) {
+					//Log.e("INIT LEVEL",e.getMessage());
+					
+				}
+				
+			}
+			return mList;
+		}
 	}
 	
 	public static class LevelList  {
