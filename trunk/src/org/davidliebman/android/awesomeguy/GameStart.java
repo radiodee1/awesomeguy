@@ -295,7 +295,7 @@ public class GameStart extends Activity {
         mLookForXml = preferences.getBoolean(Options.SAVED_LOOK_FOR_XML, false);
         mGameV.setRoomNo(preferences.getInt(Options.SAVED_ROOM_NUM, 1));
         mGameV.setLookForXml(mLookForXml);
-        mLevelList = this.getLevelList(mLevelList);
+        mLevelList = mParser.getLevelList(mLookForXml);
         
         
     	mScores = new Scores(this, mHighScores);
@@ -748,39 +748,7 @@ public class GameStart extends Activity {
 		mGameV.setRoomNo(preferences.getInt(Options.SAVED_ROOM_NUM, 1));
 	}
 
-	public  InitBackground.LevelList getLevelList(InitBackground.LevelList mList) {
-    	boolean test = true;
-    	try {
-			test = mParser.setXmlPullParser(this.mLookForXml);
-        	mList = this.mParser.getXmlList(null);
-		}
-		
-		catch (XmlPullParserException e) {
-			Log.e("INIT LEVEL","XmlPullParserException -- " + e.getMessage());
-		}
-		catch (IOException e) {
-			Log.e("INIT LEVEL","IO exception " + e.getMessage());
-		}
-		catch (Exception e) {
-			Log.e("INIT LEVEL", "exception " + e.getMessage());
-		}
-		
-		//try again without sdcard.
-		if (mList.size() == 0 ) {
-			try {
-				Log.e("INIT LEVEL","failed mLookForXml -- " + test);
-
-				mParser.setXmlPullParser(false);
-	        	mList = this.mParser.getXmlList(null);
-			}
-			catch (Exception e) {
-				//Log.e("INIT LEVEL",e.getMessage());
-				
-			}
-			
-		}
-		return mList;
-	}
+	
 	
 	public Record getHighScores() {
 		return mHighScores;

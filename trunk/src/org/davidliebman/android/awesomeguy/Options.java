@@ -60,7 +60,7 @@ public class Options extends Activity {
         /** spinner for picking starting level **/
         mList = new InitBackground.LevelList();
         final Spinner spinner = (Spinner) findViewById(R.id.room_spinner);
-        mList = getLevelList(mList);
+        mList = mParser.getLevelList(mLookForXml);
         
         
         adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, mList.getStrings().toArray());
@@ -115,9 +115,11 @@ public class Options extends Activity {
                     mLookForXml = false;
                     
                 }
-                mList = getLevelList(null);
+                mList = mParser.getLevelList(mLookForXml);
                 
                 adapter = new ArrayAdapter(Options.this, android.R.layout.simple_spinner_item, mList.getStrings().toArray());
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
                 spinner.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
@@ -225,40 +227,7 @@ public class Options extends Activity {
         /* end radio button stuff */
     }
     
-    public  InitBackground.LevelList getLevelList(InitBackground.LevelList mList2) {
-    	boolean test = true;
-    	InitBackground.LevelList mList = new InitBackground.LevelList();
-    	try {
-			test = mParser.setXmlPullParser(this.mLookForXml);
-        	mList = this.mParser.getXmlList(null);
-		}
-		
-		catch (XmlPullParserException e) {
-			Log.e("INIT LEVEL","XmlPullParserException -- " + e.getMessage());
-		}
-		catch (IOException e) {
-			Log.e("INIT LEVEL","IO exception " + e.getMessage());
-		}
-		catch (Exception e) {
-			Log.e("INIT LEVEL", "exception " + e.getMessage());
-		}
-		
-		//try again without sdcard.
-		if (mList.size() == 0 ) {
-			try {
-				Log.e("INIT LEVEL","failed mLookForXml -- " + test);
-
-				mParser.setXmlPullParser(false);
-	        	mList = this.mParser.getXmlList(null);
-			}
-			catch (Exception e) {
-				//Log.e("INIT LEVEL",e.getMessage());
-				
-			}
-			
-		}
-		return mList;
-	}
+    
     
     @Override
     public void onPause() {
