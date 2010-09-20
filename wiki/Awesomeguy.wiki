@@ -122,6 +122,10 @@ The InnerGameLoop class has two other methods. One is a public method called 'se
 
 Two methods in the GameStart.java file which are used by the 'onPause()' and 'onResume()' methods are 'saveRoomNo()' and 'getSavedRoom()'. These methods use the SharedPreferences android class to save the last room/level played by the user. They also load the room/level value from SharedPreferences for use in game play. As mentioned above, the desired starting level can be set in the Options activity. These two methods are not part of the InnerGameLoop class.
 
+===getLevelList()===
+
+This method uses the ParseXML class from the InitBackground.java file to create an ArrayList of the levels in the awesomeguy.xml file. It calls setXmlPullParser() and then getXmlList() in succession. It returns the ArrayList that contains the ID numbers of the levels in the order that they must be used to advance through the game. It is nearly identical to the function of the same name found in the Options.java file.
+
 ===onCreateDialog()===
 
 The last part of GameStart.java, aside from some simple setters and getters, is the 'onCreateDialog(int id)' function. This is where the AlertDialog that asks the user if they want to continue playing the game is.
