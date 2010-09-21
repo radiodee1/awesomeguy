@@ -536,3 +536,72 @@ The next thing we do is instantiate a class that sends the user a special alert.
 Then we send a Toast message that says we have changed the selected player to the new player's name.
 
 Then we save the player's record to preferences. This way other activities in the program know what the player's name is, etc. Then we change the text message on the Players.java screen that says what the current player's name is. This is accomplished with the line `mPlayerText.setText("Player Chosen: " +mHighScores.getName());`
+
+Then we save the number of high scores that the game puts in the database again. This second operation saves the number to the Awesomeguy SharedPreferences, not the Awesomeguy database. This is so that the number of high scores is persistent when you stop and restart the entire app. Immediately after that we set the text that prints to the screen a user readable rendition of how many high scores are being saved. This is accomplished with a line that reads `mNumPlayers.setText("This is where you choose from a list of " + mHighScores.getNumRecords() + " high scores.");`.
+
+Then we pass the nuber of high scores saved to the Scores.java object. Finally, since the number of scores has possibly changed, we make sure the number of scores in the database is the same as the number in preferences with a function called 'pruneScoresList()'.
+
+The following code makes the items in the list respond to a long click.
+
+{{{
+        /* long click code */
+        lv.setLongClickable(true);
+        lv.setOnItemLongClickListener(new OnItemLongClickListener () {
+        	
+        	public boolean onItemLongClick (AdapterView<?> parent, View view, int position, long id) {
+        		Toast.makeText(Players.this, "Player - Num Records: " + mNames.get(position).getNumRecords() + 
+        				" Record ID: " + mNames.get(position).getRecordIdNum(), Toast.LENGTH_LONG).show();
+
+        		return true;
+        	}
+        });
+}}}
+
+This code first turns on long clicks, then it calls 'setOnItemLongClickListener()' which takes an anonymous inner class as its parameter. 'OnItemLongClickListener' has a method which you must override to use long clicks. The method is called 'onItemLongClick(...)' and in this case it just sets up a Toast message used for debugging. The message shows the database ID number along with the number of records that that user would have the Awesomeguy program save in it's database. The idea is that every user can have a preference as to how many records are saved to the database while they are playing the game.
+
+===EditText===
+
+There is a single EditText field in the xml sheet for this activity.
+
+{{{
+        /* edit text field*/
+        final EditText edittext = (EditText) findViewById(R.id.edittext_name);
+        edittext.setOnKeyListener(new OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                    (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                  // Perform action on key press
+                  mRec = new Record();
+                  mRec.setName(edittext.getText().toString().trim());
+                  mRec.setNumRecords(mHighScores.getNumRecords());
+                  if ( isNameTaken(mNames, mRec.getName())) {
+                      Toast.makeText(Players.this, "This name is already taken: " + edittext.getText(), Toast.LENGTH_LONG).show();
+
+                  }
+                  else {
+                      Toast.makeText(Players.this, "Player Selected: " + edittext.getText(), Toast.LENGTH_SHORT).show();
+                	  mHighScores = mRec;
+                	  mHighScores.setNewRecord(true);
+                	  
+                	  mHighScores.addToPreferences(mPreferences);
+                	  mPlayerText.setText("Player Chosen: " +mHighScores.getName());
+                      mNumPlayers.setText("This is where you choose from a list of " + mHighScores.getNumRecords() + " high scores.");
+                      SharedPreferences.Editor edit = mPreferences.edit();
+                      edit.putInt(Options.SAVED_ROOM_NUM, mHighScores.getLevel());
+                      edit.commit();
+                  }
+                  return true;
+                }
+                return false;
+            }
+            
+            
+        });
+}}}
+This is the part of the players.xml file that is responsible for putting the EditText object on the screen. It's very simple.
+{{{
+	<EditText android:id="@+id/edittext_name" android:textSize="16sp"
+	android:textStyle="bold" android:layout_width="fill_parent"
+	android:layout_height="wrap_content" />
+}}}
