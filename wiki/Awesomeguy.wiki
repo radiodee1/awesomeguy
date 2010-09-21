@@ -1,4 +1,4 @@
-#summary Awesomeguy is a computer game for the Android 2.1/2.2 phone. This is a method-by-method description of the project.
+#summary A computer game for the Android 2.1/2.2 phone. This is a method-by-method description of the project.
 #sidebar TableOfContents
 
 = Introduction =
