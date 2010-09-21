@@ -474,12 +474,12 @@ The Players.java file is an activity, and appears on the screen when an appropri
 
 The first method in the Players.java file loads the mHighScores object from SharedPreferences. This is really the current score record for the current player. It does not necessarily get saved to the high score table. Then it loads an int from shared preferences that represents the current value for the number of high score records awesomeguy should keep in it's sqlite database. Then the RecordAdapter is instantiated. The RecordAdapter is an inner class that extends the Android class 'ArrayAdapter'. It is used to display the list of current high scores. It's described later. 
 
-===ListView===
+===!ListView===
 
 Next we need to discuss the ListView and the RecordAdapter. The block of code associated with the ListView is below.
 
 {{{
-setListAdapter(mAadapter);
+        setListAdapter(mAadapter);
         ListView lv = getListView();
         lv.setTextFilterEnabled(true);
         lv.setOnItemClickListener(new OnItemClickListener () {
