@@ -465,3 +465,62 @@ Here in the Panel.java class we find declarations for all the JNI functions used
 }}}
 
 Of special interest we note the last entry in the list, the line `System.loadLibrary("awesomeguy");` which actually loads the library for us, and the line about half way through that actually returns an array of ints: `public native int[] drawLevel(int num);`. [Awesomeguy#Introduction top]
+
+=Players java=
+
+The Players.java file is an activity, and appears on the screen when an appropriately named button is selected from the Menu.java screen. It has an associated xml file, called 'players.xml'. 
+
+===onCreate(...)===
+
+The first method in the Players.java file loads the mHighScores object from SharedPreferences. This is really the current score record for the current player. It does not necessarily get saved to the high score table. Then it loads an int from shared preferences that represents the current value for the number of high score records awesomeguy should keep in it's sqlite database. Then the RecordAdapter is instantiated. The RecordAdapter is an inner class that extends the Android class 'ArrayAdapter'. It is used to display the list of current high scores. It's described later. 
+
+===ListView===
+
+Next we need to discuss the ListView and the RecordAdapter. The block of code associated with the ListView is below.
+
+{{{
+setListAdapter(mAadapter);
+        ListView lv = getListView();
+        lv.setTextFilterEnabled(true);
+        lv.setOnItemClickListener(new OnItemClickListener () {
+        	
+        	@Override
+        	 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        		mRec = mNames.get(position);
+
+        		AlertNumRecords mAlert = new AlertNumRecords(Players.this,mHighScores,mRec);
+        		mRec.setNumRecords(mAlert.alertUser());
+        		mHighScores = mRec;
+
+        		Toast.makeText(Players.this, "Player Selected: " + mHighScores.getName(), Toast.LENGTH_SHORT).show();
+        		SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+            	mHighScores.setNewRecord(false);
+        		mHighScores.addToPreferences(preferences);
+                mPlayerText.setText("Player Chosen: " +mHighScores.getName());
+                
+                /* save num of high scores */
+                SharedPreferences.Editor mSave = mPreferences.edit();
+                mSave.putInt(Options.SAVED_NUM_SCORES, mHighScores.getNumRecords());
+                mSave.commit();
+                mNumPlayers.setText("This is where you choose from a list of " + mHighScores.getNumRecords() + " high scores.");
+                
+                /* save num of high scores for player */
+
+                mScores.updateNumOfRecords(mHighScores.getNumRecords());
+                
+                /* adjust number of high scores shown */
+                mScores.pruneScoresList();
+        	 }
+        	
+        	
+        });
+}}}
+
+The xml entry for this code in the players.xml file is below. It's very simple.
+
+{{{
+	<ListView android:id="@id/android:list" android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:background="#000000"
+		android:layout_weight="1" android:drawSelectorOnTop="false" />
+
+}}}
