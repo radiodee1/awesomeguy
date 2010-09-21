@@ -605,3 +605,40 @@ This is the part of the players.xml file that is responsible for putting the Edi
 	android:textStyle="bold" android:layout_width="fill_parent"
 	android:layout_height="wrap_content" />
 }}}
+The first part of the java code creates an EditText object and assigns it to the 'edittext_name' object that is found in the xml. This allows us to listen for changes to the EditText object and react to them. The next part takes the new 'edittext' object and sets an 'OnKeyListener' for it. 'OnKeyListener' is an anonymous inner class. In the 'OnKeyListener' class we override the 'onKey(...)' method. This is where the bulk of our work is done.
+
+First we have an if() statement that allows our code to respond only when the enter key is pressed. This is accomplished with the 'getAction()' method and the two constants 'KeyEvent.ACTION_DOWN' and 'KeyEvent.KEYCODE_ENTER'. 
+
+Then we create an empty score Record called 'mRec'. We set the name of 'mRec' to the string that the user typed at the EditText prompt. This is done with the code 'edittext.getText().toString().trim()'. Then we set the number of records that the Record object uses to the current number of records. (This is the number of records that the database holds.) 
+
+Then we have a test where we determine if the name that the user just specified is already taken. If it is the user is notified. If not the temporary 'mRec' Record is transferred to the permanent mHighScores record, and the 'mNewRecord' boolean flag is set to true.
+
+The mHighScores object is then saved to SharedPreferences, and the 'mPlayerText' and 'mNumPlayers' text is set using 'setText(...)' methods. These two TextViews will be discussed below.
+
+Lastly in the EditText code, we make sure that the room that the game starts on is also the room that is specified by the 'mHighScores.getLevel()' code. This is almost always the case as the 'mHighScores' object is a new object. In any case we save it using the SharedPreferences mechanism.
+
+===Button===
+
+This is the code for the button that appears at the bottom of the list of players on the players.xml file.
+
+{{{
+        /* button at bottom of view */
+        final Button button = (Button) findViewById(R.id.button_players);
+        button.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+            	Intent StartGameIntent = new Intent(Players.this,GameStart.class);
+        		startActivity(StartGameIntent);
+
+            }
+        });
+}}}
+
+The xml from the players.xml file is below. Since there can be more than one button on a page the ID for the button is important.
+
+{{{
+	<Button android:layout_width="fill_parent"
+		android:layout_height="wrap_content" xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/button_players" android:text="Go To Game" />
+}}}
+
+First we associate the Button object with the xml code found on the players.xml sheet. Then we assign the button an 'OnClickListener'. The 'OnClickListener' is an anonymous inner class. Inside the 'OnClickListener' we override the 'onClick(...)' method. What we want to have happen here is for program control to pass from the activity we're in to the 'GameStart' activity. The activity is mentioned in our AndroidManifest.xml file, so all we have to do is create an Intent and then call the 'startActivity(Intent)' method on that Intent.
