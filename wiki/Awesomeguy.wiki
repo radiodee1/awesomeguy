@@ -526,3 +526,13 @@ The xml entry for this code in the players.xml file is below. It's very simple.
 		android:layout_weight="1" android:drawSelectorOnTop="false" />
 
 }}}
+
+The start of the Players.java listing shows the adapter being instantiated. This takes as parameters a list of the high scores that's retrieved from the database and the Android ID for the players.xml resource. Then the file addresses the ListView. There is only one list view per activity. This is why 'setListAdapter()' and 'getListView()' do not refer to the list's resource number. A reference for the ListView is gotten in the line `ListView lv = getListView();` and it's 'OnItemClickListener' is set. The OnItemClickListener is an anonymous class that listens for clicks on items in the list that is displayed on the screen. To  make the class do what you want you must override the 'onItemClick(...)' method. This overriding of the 'onItemClick(...)' method is the bulk of the listing above.
+
+'mNames', the array of high scores from the instantiation of the RecordAdapter, is visible inside the 'onItemClick(...)' code block. The first thing we do is use the 'position' variable to get the record that the user clicked on. This is the most important line in the 'onItemClick(...)' method.
+
+The next thing we do is instantiate a class that sends the user a special alert. We want the user to know when the number of records that the game saves (the number of high scores) changes, and when it does we want the user to specifically OK that change. This is what the AlertNumRecords class does. After this alert we change the temporary 'mRec' object into the permanent 'mHighScores' object.
+
+Then we send a Toast message that says we have changed the selected player to the new player's name.
+
+Then we save the player's record to preferences. This way other activities in the program know what the player's name is, etc. Then we change the text message on the Players.java screen that says what the current player's name is. This is accomplished with the line `mPlayerText.setText("Player Chosen: " +mHighScores.getName());`
