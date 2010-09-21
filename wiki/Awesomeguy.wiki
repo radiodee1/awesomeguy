@@ -738,7 +738,7 @@ What you have to do is create a small layout file for your ArrayAdapter. This xm
     		TextView mScore = (TextView) convertView.findViewById(R.id.text_score);
     		TextView mLevel = (TextView) convertView.findViewById(R.id.text_level);
     		
-    		mName.setText("Name: " + mRec.getName() );//+ " id " + mRec.getRecordIdNum());
+    		mName.setText("Name: " + mRec.getName() );
     		mScore.setText("Score: "+ mRec.getScore());
     		mLevel.setText("Last Checkpoint: Level " + mRec.getLevel());
     		
