@@ -714,6 +714,79 @@ Lastly in the 'onResume()' method we prune the database. If there were any items
 
 ===isNameTaken()===
 
-This method is not listed here. It checks an ArrayList to see if any member's name String matches the String's value given in the method's invocation.
+This method is not listed here. It checks an ArrayList to see if any member's name String matches the name String given in the method's invocation. It returns a true or false.
 
 ===!RecordAdapter===
+
+This inner class extends ArrayAdapter. It is used by the ListView described above and is instantiated in the 'onCreate(...)' method with the line below. 'mAadapter' is a global variable.
+{{{
+        mAadapter = new RecordAdapter(this, R.layout.players, mNames);
+}}}
+The RecordAdapter itself is used so that we can customize the layout of the individual items in the ListView. In our case, we didn't want a single String in the ListView, we wanted three, and we also wanted the ability to format the three strings separately.
+
+What you have to do is create a small layout file for your ArrayAdapter. This xml file is then inflated by a 'LayoutInflater', after which you may manipulate it as any other xml file. One of these xml instances is placed in the ListView layout for each row or element in the list. The code for all of this specialization is found in the RecordAdapter's overridden 'getView(...)' method. Our 'getView(...)' method is listed here.
+{{{
+    	@Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+    		
+    		LayoutInflater inflater = (LayoutInflater)mContext.getSystemService (Context.LAYOUT_INFLATER_SERVICE);
+    		convertView = inflater.inflate(R.layout.data_row, null);
+    		Record mRec = mList.get(position);
+    		mPosition = position;
+    		
+    		TextView mName = (TextView) convertView.findViewById(R.id.text_name);
+    		TextView mScore = (TextView) convertView.findViewById(R.id.text_score);
+    		TextView mLevel = (TextView) convertView.findViewById(R.id.text_level);
+    		
+    		mName.setText("Name: " + mRec.getName() );//+ " id " + mRec.getRecordIdNum());
+    		mScore.setText("Score: "+ mRec.getScore());
+    		mLevel.setText("Last Checkpoint: Level " + mRec.getLevel());
+    		
+    		
+    		
+    		return convertView;
+    	}
+}}}
+The RecordAdapter's 'getView(...)' method returns the view that is to become one of the elements in the list that the user sees.
+
+The first thing we do in the method is create a 'LayoutInflater'. Then we use the inflater to inflate the mini xml file and pass the pointer for the newly inflated file to the View that we are going to return at the end of the method. In our case the xml file is called 'data_row'. Our job then is to modify this View to contain the info we want. Then we return the View.
+
+The elements in 'data_row' are called 'text_name', 'text_score', and 'text_level'. The full xml file is below.
+
+{{{
+<?xml version="1.0" encoding="utf-8"?>
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_height="?android:attr/listPreferredItemHeight"
+     android:layout_width="fill_parent"
+     >
+     <ImageView
+        android:id="@+id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_marginRight="6dip"
+        android:src="@drawable/guy_icon" />
+          <LinearLayout
+     
+ xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_height="wrap_content"
+     android:layout_width="fill_parent"
+     android:orientation="vertical">
+
+     <TextView android:id="@+id/text_name"
+         android:textSize="16sp"
+         android:textStyle="bold"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/text_score"
+         android:textSize="16sp"
+         android:textStyle="bold"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/text_level"
+         android:textSize="16sp"
+         android:textStyle="bold"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"/>
+ </LinearLayout>
+ </LinearLayout> 
+}}}
