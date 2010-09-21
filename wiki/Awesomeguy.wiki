@@ -559,7 +559,7 @@ The following code makes the items in the list respond to a long click.
 
 This code first turns on long clicks, then it calls 'setOnItemLongClickListener()' which takes an anonymous inner class as its parameter. 'OnItemLongClickListener' has a method which you must override to use long clicks. The method is called 'onItemLongClick(...)' and in this case it just sets up a Toast message used for debugging. The message shows the database ID number along with the number of records that that user would have the Awesomeguy program save in it's database. The idea is that every user can have a preference as to how many records are saved to the database while they are playing the game.
 
-===EditText===
+===!EditText===
 
 There is a single EditText field in the xml sheet for this activity.
 
@@ -599,7 +599,7 @@ There is a single EditText field in the xml sheet for this activity.
             
         });
 }}}
-This is the part of the players.xml file that is responsible for putting the EditText object on the screen. It's very simple.
+This is the part of the players.xml file that is responsible for putting the EditText object on the screen. It's very simple. Since there can be more than one EditText item on the screen at a time, the android id parameter is very important. In the java code from Players.java this EditText item is called 'edittext_name'.
 {{{
 	<EditText android:id="@+id/edittext_name" android:textSize="16sp"
 	android:textStyle="bold" android:layout_width="fill_parent"
