@@ -496,22 +496,22 @@ Next we need to discuss the ListView and the RecordAdapter. The block of code as
 
         		Toast.makeText(Players.this, "Player Selected: " + mHighScores.getName(), Toast.LENGTH_SHORT).show();
         		SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
-            	mHighScores.setNewRecord(false);
+            		mHighScores.setNewRecord(false);
         		mHighScores.addToPreferences(preferences);
-                mPlayerText.setText("Player Chosen: " +mHighScores.getName());
+               		mPlayerText.setText("Player Chosen: " +mHighScores.getName());
                 
-                /* save num of high scores */
-                SharedPreferences.Editor mSave = mPreferences.edit();
-                mSave.putInt(Options.SAVED_NUM_SCORES, mHighScores.getNumRecords());
-                mSave.commit();
-                mNumPlayers.setText("This is where you choose from a list of " + mHighScores.getNumRecords() + " high scores.");
+                	/* save num of high scores */
+                	SharedPreferences.Editor mSave = mPreferences.edit();
+                	mSave.putInt(Options.SAVED_NUM_SCORES, mHighScores.getNumRecords());
+                	mSave.commit();
+                	mNumPlayers.setText("This is where you choose from a list of " + mHighScores.getNumRecords() + " high scores.");
                 
-                /* save num of high scores for player */
+                	/* save num of high scores for player */
 
-                mScores.updateNumOfRecords(mHighScores.getNumRecords());
+                	mScores.updateNumOfRecords(mHighScores.getNumRecords());
                 
-                /* adjust number of high scores shown */
-                mScores.pruneScoresList();
+                	/* adjust number of high scores shown */
+                	mScores.pruneScoresList();
         	 }
         	
         	
