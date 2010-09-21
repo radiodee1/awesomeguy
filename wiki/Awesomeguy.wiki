@@ -642,3 +642,78 @@ The xml from the players.xml file is below. Since there can be more than one but
 }}}
 
 First we associate the Button object with the xml code found on the players.xml sheet. Then we assign the button an 'OnClickListener'. The 'OnClickListener' is an anonymous inner class. Inside the 'OnClickListener' we override the 'onClick(...)' method. What we want to have happen here is for program control to pass from the activity we're in to the 'GameStart' activity. The activity is mentioned in our AndroidManifest.xml file, so all we have to do is create an Intent and then call the 'startActivity(Intent)' method on that Intent.
+
+===!TextViews===
+
+There are two TextViews in the players.xml file.
+
+{{{
+        mNumPlayers = (TextView) findViewById(R.id.text_num_message);
+        mNumPlayers.setText("This is where you choose from a list of " + mHighScores.getNumRecords() + " high scores.");
+        
+        mPlayerText = (TextView) findViewById(R.id.text_player_name);
+        mPlayerText.setText("Player Chosen: " +mHighScores.getName());
+}}}
+
+The xml for these elements is also straightforward. The ID strings for these elements are important, and also it should be noted that the formatting for the text is found in the xml, not in the java code.
+{{{
+	<TextView android:text=" This is where you choose from a list of high scores."
+
+		android:id="@+id/text_num_message" android:layout_width="wrap_content"
+		android:layout_height="wrap_content">
+	</TextView>
+	<TextView android:text=" Player Chosen: "
+        android:textSize="16sp"
+         android:textStyle="bold"
+        android:id="@+id/text_player_name" android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </TextView>
+}}}
+
+In the code, the first thing we do is associate the TextView objects, which are global, with the Android ID for each of them. The IDs are 'text_num_message' and 'text_player_name'. As you can see the 'text_num_message' is used to show how many database objects are being maintained by the game, and 'text_player_name' is used to show the name of the player that has either been selected from the high score list, or has been typed in using the EditText element.
+
+===pruneScoresList()===
+
+This is a call to the code in the Scores.java file that goes about ensuring that the database holds no more than the allotted number of high score records. It is called at various times in the Players.java file.
+{{{
+        mScores.pruneScoresList();
+}}}
+
+This ends the 'onCreate(...)' outline.
+
+===onResume()===
+
+Here we use the SharedPreferences mechanism to load the current score Record into the 'mHighScores' object. We also load the 'mPreferredNumRecords' int from SharedPreferences in a similar way. Then we create a new Scores object and pass it the newly retrieved 'mHighScores' Record. This code is listed below.
+
+{{{
+    	/* retrieve Record mHighScores */
+    	mHighScores = new Record();
+        mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+        mHighScores.getFromPreferences(mPreferences);
+        this.mPreferredNumRecords = this.mPreferences.getInt(Options.SAVED_NUM_SCORES, Record.RADIO_PLAYERS_FIFTY);
+        
+        mScores = new Scores(this, mHighScores);
+}}}
+
+Then we retrieve all the high scores and populate the 'mNames' ArrayList with the new information. After that we let the ArrayAdapter know that the dataset has changed so that it can redraw the list. This way if the list has changed, due to a high score being saved or due to pruning by the 'pruneScoresList()' method, the Players.java activity will display the right information.
+{{{
+    	ArrayList<Record> temp = mScores.getHighScoreList(mHighScores.getNumRecords());
+        this.mNames.clear();
+        this.mNames.addAll(temp);
+    	
+    	mAadapter.notifyDataSetChanged();
+}}}
+
+Lastly in the 'onResume()' method we prune the database. If there were any items removed we notify the user.
+{{{
+    int num = mScores.pruneScoresList();
+    if (num > 0) {
+    	Toast.makeText(Players.this, num + " scores were removed from High Score List!!", Toast.LENGTH_LONG).show();
+    }
+}}}
+
+===isNameTaken()===
+
+This method is not listed here. It checks an ArrayList to see if any member's name String matches the String's value given in the method's invocation.
+
+===!RecordAdapter===
