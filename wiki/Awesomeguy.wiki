@@ -790,3 +790,6 @@ The elements in 'data_row' are called 'text_name', 'text_score', and 'text_level
  </LinearLayout>
  </LinearLayout> 
 }}}
+It's good to note when you go to the Players.java page and look at the list of high scores, there is an icon next to every name. This icon is specified in this file. The rest of the file is for formatting and used to specify the three text views that are used in 'getView(...)' to print the name, score, and last checkpoint level on the screen.
+
+===AlertNumRecords===
