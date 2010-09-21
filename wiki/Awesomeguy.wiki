@@ -479,6 +479,8 @@ The first method in the Players.java file loads the mHighScores object from Shar
 Next we need to discuss the ListView and the RecordAdapter. The block of code associated with the ListView is below.
 
 {{{
+        mAadapter = new RecordAdapter(this, R.layout.players, mNames);
+        /* ... skip ... */
         setListAdapter(mAadapter);
         ListView lv = getListView();
         lv.setTextFilterEnabled(true);
