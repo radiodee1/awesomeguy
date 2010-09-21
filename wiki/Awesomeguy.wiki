@@ -599,7 +599,7 @@ There is a single EditText field in the xml sheet for this activity.
             
         });
 }}}
-This is the part of the players.xml file that is responsible for putting the EditText object on the screen. It's very simple. Since there can be more than one EditText item on the screen at a time, the android id parameter is very important. In the java code from Players.java this EditText item is called 'edittext_name'.
+This is the part of the players.xml file that is responsible for putting the EditText object on the screen. It's very simple. Since there can be more than one EditText item on the screen at a time, the android ID parameter is very important. In the java code from Players.java this EditText item is called 'edittext_name'.
 {{{
 	<EditText android:id="@+id/edittext_name" android:textSize="16sp"
 	android:textStyle="bold" android:layout_width="fill_parent"
