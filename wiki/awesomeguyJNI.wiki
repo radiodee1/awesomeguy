@@ -1,4 +1,4 @@
-#summary Method by method explanation of the awesomeguy.c file.
+#summary Method by method explanation of the 'awesomeguy.c' file.
 
 = Introduction =
 
