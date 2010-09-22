@@ -822,7 +822,7 @@ This class defines a method that displays an alert dialog to the screen. The dia
 	   	    	       .setCancelable(false)
 	   	    	       .setPositiveButton(mPositive, new DialogInterface.OnClickListener() {
 	   	    	           public void onClick(DialogInterface dialog, int id) {
-	   	    	                //Players.this.finish();
+
 	   	    	        	   mRec.setNumRecords(mHighScores.getNumRecords());
 	   	    	        	   dialog.cancel();
 	   	    	        	   
