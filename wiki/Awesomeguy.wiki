@@ -856,3 +856,19 @@ AlertDialog alert = builder.create();
 alert.show();
 }}}
 ... much of the rest of the 'alertUser()' method is taken up by statements that inform the builder what to put into the actual alert dialog that is going to be created.
+
+=Options java=
+
+This activity is meant to allow the user to set all sorts of variables that are used when playing the game. Most often the results of changes that the user makes are saved as part of the user's high score record, and they are reset when the user chooses a different high score record to play as. The class uses 'SharedPreferences' to save values to be used by other activities in the program. There are three methods in the Options.java class, which are the overridden 'onCreate(...)', 'onPause()', and 'onResume()'. The first thing in the 'onCreate(...)' method is the retrieval from SharedPreferences of the current score record and the retrieval of the number of records to store in the database. Also retrieved at this point is a boolean value representing weather or not to look for an alternate 'awesomeguy.xml' file on the sdcard. This boolean is called 'mLookForXml' in the Options.java activity. The Options activity's contents are also set to the 'options.xml' layout file with the 'setContentView(...)' statement. This code is shown below.
+{{{
+        SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+
+        mHighScores.getFromPreferences(preferences);
+        
+        if (mHighScores.isNewRecord()) {
+        	mHighScores.setNumRecords(preferences.getInt(SAVED_NUM_SCORES, Record.RADIO_PLAYERS_FIFTY));
+        }
+        mLookForXml = preferences.getBoolean(SAVED_LOOK_FOR_XML, false);
+        
+        setContentView(R.layout.options);
+}}}
