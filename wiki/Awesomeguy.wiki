@@ -920,9 +920,7 @@ One of the first things we do with the CheckBox is instantiate a CheckBox object
 
 {{{
 	<CheckBox android:id="@+id/checkbox_sounds"
-
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
-
 		android:text="Play Game Sounds" />
 }}}
 In the java code, we set the CheckBox to the value that the high score Record holds with the code 'checkbox_sounds.setChecked(mHighScores.isSound());'. This makes it so that the visual representation of the CheckBox matches the coded value. Then we listen for changes from the user using an 'OnClickListener' anonymous inner class. Inside the inner class we set the 'mHighScores' boolean for sound playback to a value that corresponds to the user's input. Then we show a Toast message as feedback that the preference was actually stored.
@@ -934,27 +932,16 @@ There are other CheckBoxes on the Options.java page, which include settings for 
 For the Options.java file there are three core parts to the RadioButton. They are the xml code, the OnClickListener, and the supporting code where the OnClickListener is associated with the xml. The xml listing is here.
 {{{
 	<RadioGroup android:layout_width="fill_parent"
-
 		android:layout_height="wrap_content" android:orientation="vertical">
-
 		<RadioButton android:id="@+id/radio_players_five"
-
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
-
 			android:text="Five High Scores" />
-
 		<RadioButton android:id="@+id/radio_players_ten"
-
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
-
 			android:text="Ten High Scores" />
-
 		<RadioButton android:id="@+id/radio_players_fifty"
-
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
-
 			android:text="Fifty High Scores" />
-
 	</RadioGroup>
 }}}
 Note that each RadioButton in the RadioGroup has a separate ID. For this example they are 'radio_players_five', 'radio_players_ten', and 'radio_players_fifty'. The 'OnClickListener' section is below.
