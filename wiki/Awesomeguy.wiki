@@ -872,3 +872,25 @@ This activity is meant to allow the user to set all sorts of variables that are 
         
         setContentView(R.layout.options);
 }}}
+
+===!TextView===
+
+The java code for setting a TextView that is a part of the activity's xml follows. Basically we have to use 'findViewById(...)' to attach the TextView object that we instantiate to the segment of the xml that actually displays something for the user to read.
+{{{
+        final TextView textview_name = (TextView) this.findViewById(R.id.player_name_options);
+        textview_name.setText("Player Name: " + mHighScores.getName());
+}}}
+In this example we print the current user's high score name on the screen so that they can see what user they're playing as. The xml element ID is important. It's called 'player_name_options'. In the xml, the text for the TextView is unimportant, as it's replaced when the activity is started.
+{{{
+			<TextView
+
+				android:text="This is where you would show the player name. "
+
+				android:id="@+id/player_name_options" android:layout_width="wrap_content"
+
+				android:layout_height="wrap_content" android:textSize="16sp"
+
+				android:textStyle="bold">
+
+			</TextView>
+}}}
