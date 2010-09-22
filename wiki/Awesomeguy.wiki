@@ -1049,3 +1049,39 @@ There is a CheckBox on the Options.java page that lets the user specify if Aweso
 }}}
 
 Inside the 'onClick()' method is placed code that repopulates 'mList', and instantiates a new 'adapter' and 'spinner'. Then it calls the method 'adapter.notifyDataSetChanged();' which tells the spinner to redraw itself. This code is executed regardless of which CheckBox option is chosen.
+
+===onPause()===
+
+This is the code for the 'onPause()' method.
+{{{
+    @Override
+    public void onPause() {
+
+        SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+        
+        /* save mHighScores so other activities can see it */
+    	mHighScores.addToPreferences(preferences);
+    	
+    	/* save desired starting room num */
+    	SharedPreferences.Editor edit = preferences.edit();
+        edit.putInt(SAVED_ROOM_NUM, mRoomNumSelected);
+        edit.putBoolean(SAVED_LOOK_FOR_XML, mLookForXml);
+        edit.commit();
+        
+        /* save all other options to player's personal record if it's not 'anonymous' */
+        if (!mHighScores.isNewRecord()) mScores.updateOptions(mHighScores.getRecordIdNum());
+        
+	    super.onPause();
+    }
+}}}
+First we establish the SharedPrefernces object, then we use it to save the 'mHighScores' record and the preferences for what room number we want to start with, and weather or not we're looking on the sdcard for the alternate xml file.
+
+Then, if the current score record, 'mHighScores', is not an anonymous record we use the database to save all the info that could have been changed on the Options page that's not strictly speaking the score. This would be the various options like 'Enable Monster Collision' and 'Play Game Sound', etc.
+
+===onResume()===
+
+Here we use SharedPreferences to load the 'mHighScores' record. The code to do this is 
+{{{
+    	SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+        mHighScores.getFromPreferences(preferences);
+}}}
