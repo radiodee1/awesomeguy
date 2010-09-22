@@ -1010,10 +1010,7 @@ A spinner is included on the Options page that lets you specify what level (or r
 The xml for the spinner object from the Options.xml follows.
 {{{
 	<Spinner android:id="@+id/room_spinner"
-
 		android:layout_height="wrap_content" android:layout_width="fill_parent"
-
 		android:drawSelectorOnTop="true" android:prompt="@string/room_prompt">
-
 	</Spinner>
 }}}
