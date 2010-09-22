@@ -894,3 +894,39 @@ In this example we print the current user's high score name on the screen so tha
 
 	</TextView>
 }}}
+
+===!CheckBox===
+
+There are several CheckBoxes in the Options.java file. We will discuss one here in detail. This is the code for the Checkbox that enables and disables sound playback.
+{{{
+        final CheckBox checkbox_sounds = (CheckBox) findViewById(R.id.checkbox_sounds );
+        checkbox_sounds.setChecked(mHighScores.isSound());
+        
+        checkbox_sounds.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on clicks, depending on whether it's now checked
+                if (((CheckBox) v).isChecked()) {
+                    Toast.makeText(Options.this, "Sound Selected", Toast.LENGTH_SHORT).show();
+                    mHighScores.setSound(true);
+                } else {
+                    Toast.makeText(Options.this, "Sound Not selected", Toast.LENGTH_SHORT).show();
+                    mHighScores.setSound(false);
+                }
+            }
+        });
+}}}
+
+One of the first things we do with the CheckBox is instantiate a CheckBox object and associate it with the xml element. In this case the xml ID is 'checkbox_sounds'. The xml itself is pretty simple. This is the listing.
+
+{{{
+	<CheckBox android:id="@+id/checkbox_sounds"
+
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+
+		android:text="Play Game Sounds" />
+}}}
+In the java code, we set the CheckBox to the value that the high score Record holds with the code 'checkbox_sounds.setChecked(mHighScores.isSound());'. This makes it so that the visual representation of the CheckBox matches the coded value. Then we listen for changes from the user using an 'OnClickListener' anonymous inner class. Inside the inner class we set the 'mHighScores' boolean for sound playback to a value that corresponds to the user's input. Then we show a Toast message as feedback that the preference was actually stored.
+
+There are other CheckBoxes on the Options.java page, which include settings for weather the XML Parser will search for XML on the sdcard, weather the monster images are displayed on the screen, and weather the main character can be affected by those monsters when he comes in contact with them. These other CheckBoxes are very similar to the 'checkbox_sounds' CheckBox, except for the one that concerns the XML Parser. That one will be discussed in a little more detail below.
+
+===!RadioButton===
