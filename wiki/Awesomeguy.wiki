@@ -1014,3 +1014,8 @@ The xml for the spinner object from the Options.xml follows.
 		android:drawSelectorOnTop="true" android:prompt="@string/room_prompt">
 	</Spinner>
 }}}
+In the Spinner code we use an ArrayAdapter, similar to the one that was used on the Players.java page. On the Players.java page we used a specially designed ArrayAdapter that we called a RecordAdapter. In the RecordAdapter we used our own xml to format the data that was to appear in the list. Here we don't do that. We use a stock spinner DropDownViewResource ('simple_spiner_dropdown_item') and a stock ArrayAdapter 'simple_spinner_item' for the format of the spinner as it appears when it's not dropped down. The adapter and spinner are separate items that have separate properties that must be set by the Spinner code. Then the adapter is passed to the spinner. The adapter also takes an array as one of it's parameters. This array is an array of Strings, and represents the text that is to be printed on each row of the drop down array.
+
+The code also shows an 'OnItemSelectedListener' which has a 'onItemSelected(...)' method. This is where we place our code to respond to one of the drop down items being selected. We show a Toast message and then we set a global variable to the index number of the chosen item.
+
+There is also a method 'onNothingSelecte(...)' which only shows a Toast message.
