@@ -882,15 +882,15 @@ The java code for setting a TextView that is a part of the activity's xml follow
 }}}
 In this example we print the current user's high score name on the screen so that they can see what user they're playing as. The xml element ID is important. It's called 'player_name_options'. In the xml, the text for the TextView is unimportant, as it's replaced when the activity is started.
 {{{
-			<TextView
+	<TextView
 
-				android:text="This is where you would show the player name. "
+		android:text="This is where you would show the player name. "
 
-				android:id="@+id/player_name_options" android:layout_width="wrap_content"
+		android:id="@+id/player_name_options" android:layout_width="wrap_content"
 
-				android:layout_height="wrap_content" android:textSize="16sp"
+		android:layout_height="wrap_content" android:textSize="16sp"
 
-				android:textStyle="bold">
+		android:textStyle="bold">
 
-			</TextView>
+	</TextView>
 }}}
