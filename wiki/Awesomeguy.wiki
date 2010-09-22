@@ -843,3 +843,16 @@ This class defines a method that displays an alert dialog to the screen. The dia
        }
    }
 }}}
+Important to the process of creating an alert dialog are the 'AlertDialog.Builder' class, 
+{{{
+AlertDialog.Builder builder = new AlertDialog.Builder(mParent);
+}}}
+... the 'AlertDialog' that is created using the line:
+{{{
+AlertDialog alert = builder.create();
+}}}
+... and the line that actually shows the dialog on the screen:
+{{{
+alert.show();
+}}}
+... much of the rest of the 'alertUser()' method is taken up by statements that inform the builder what to put into the actual alert dialog that is going to be created.
