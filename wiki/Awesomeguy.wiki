@@ -1133,3 +1133,24 @@ This function adds the contents of the given Record to SharedPreferences. For it
 The function converts booleans to text values using the Boolean wrapper class.
 
 ===getFromPreferences()===
+
+This function is used to extract values from SharedPreferences. Again, for it to work a SharedPreferences object must be created and then passed to the function when it is called. Internally the function saves booleans as Strings, so it uses the Boolean wrapper class  to convert the saved value to a regular boolean. Getting values from preferences is slightly easier than putting them to preferences since no Editor object is needed and there is no 'commit();' line.
+
+{{{
+     public void getFromPreferences(SharedPreferences in) {
+    	 mNewRecord = new Boolean(in.getString("mNewRecord","false")).booleanValue();
+    	 mRecordIdNum = in.getInt("mRecordIdNum", 0);
+    	 mName = in.getString("mName","anonymous");
+         mLevel = in.getInt("mLevel",1);
+         mScore = in.getInt("mScore",10);
+         mLives = in.getInt("mLives",3);
+         mCycles = in.getInt("mCycles",0);
+         mSave1 = in.getInt("mSave1",0);
+         mGameSpeed = in.getInt("mGameSpeed",16);
+         mNumRecords= in.getInt("mNumRecords",RADIO_PLAYERS_FIFTY);
+         mSound = new Boolean(in.getString("mSound","")).booleanValue();
+         mEnableJNI = new Boolean(in.getString("mEnableJNI","")).booleanValue();
+         mEnableMonsters = new Boolean(in.getString("mEnableMonsters","")).booleanValue();
+         mEnableCollision = new Boolean(in.getString("mEnableCollision","")).booleanValue();
+     }
+}}}
