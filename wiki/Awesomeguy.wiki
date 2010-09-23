@@ -1087,3 +1087,49 @@ Here we use SharedPreferences to load the 'mHighScores' record. The code to do t
     	SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.getFromPreferences(preferences);
 }}}
+
+=Record java=
+
+The Record.java class is the class that represents a single high score in the database. It also represents the various preferences of the current user. When saving this information the preferences and high score are saved together. This way when a player picks a high score from the Player's page they are also picking a profile of the preferences that they want to use when playing the game. The following preferences are part of the Record object.
+
+  * boolean NewRecord - used by Scores.java to tell if this is an anonymous player
+  * int RecordIdNum - corresponds to the database ID number for this record
+  * int Level - highest checkpoint achieved
+  * int Score - actual high score
+  * int Lives (not used much)
+  * int Cycles (not used much)
+  * String Name - player name
+  * int GameSpeed - player's game speed preference
+  * int NumRecords - number of records the player prefers in the high score table
+  * boolean Sound - weather or not player wants sound playback enabled or disabled
+  * boolean EnableMonsters - weather or not the player wants monsters in the game
+  * boolean EnableCollision - weather or not collision with monsters can kill the player
+
+The class is mostly made up of setters and getters, but there are three functions which could use explanation.
+
+===addToPreferences()===
+
+This function adds the contents of the given Record to SharedPreferences. For it to work a SharedPrefernces object must be created and then passed to the function.
+{{{
+     public void addToPreferences( SharedPreferences preferences) {
+    	 SharedPreferences.Editor out = preferences.edit();
+    	 out.putString("mNewRecord",new Boolean(mNewRecord).toString());
+    	 out.putInt("mRecordIdNum", mRecordIdNum);
+    	 out.putString("mName",mName);
+         out.putInt("mLevel",mLevel);
+         out.putInt("mScore",mScore);
+         out.putInt("mLives",mLives);
+         out.putInt("mCycles",mCycles);
+         out.putInt("mSave1",mSave1);
+         out.putInt("mGameSpeed",mGameSpeed);
+         out.putInt("mNumRecords",mNumRecords);
+         out.putString("mSound",new Boolean(mSound).toString());
+         out.putString("mEnableJNI",new Boolean(mEnableJNI).toString());
+         out.putString("mEnableMonsters",new Boolean(mEnableMonsters).toString());
+         out.putString("mEnableCollision",new Boolean(mEnableCollision).toString());
+         out.commit();
+     }
+}}}
+The function converts booleans to text values using the Boolean wrapper class.
+
+===getFromPreferences()===
