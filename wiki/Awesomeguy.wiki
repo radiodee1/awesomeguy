@@ -176,9 +176,11 @@ Then the xml parsing program uses a java StringTokenizer to convert the comma se
 
 ===!LevelList and !LevelData===
 
-LevelList is an inner class used to construct an ArrayList of objects for the xml parsing function 'getXmlList()' to return. It has a method to add an object to the list, to return an array of Strings from the list, to return the size of the list and to return the number portion of a given indexed entry on the list.
+LevelList is an inner class used to construct an ArrayList of objects for the xml parsing function 'getXmlList()' to return. It has a method to add an object to the list, to return an ArrayList of Strings from the list, to return the size of the list and to return the number portion of a given indexed entry on the list.
 
 The object that the LevelList class is meant to work with is the LevelData class. It too is an inner class in InitBackground, and it is composed of two public data members. One member is a String called mText, and one member is an Ineger called mNum.
+
+The ArrayList of String elements returned by LevelList is used in the Options.java page. There it is converted to a regular array, and is passed to the ArrayAdapter in it's constructor. There it is used as the text that goes on the Spinner's dropdown menu. The method that converts the ArrayList of Strings to a regular array is part of the standard ArrayList, called 'toArray()'.
 
 =!GameValues java=
 
