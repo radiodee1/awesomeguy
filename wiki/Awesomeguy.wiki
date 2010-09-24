@@ -1410,4 +1410,163 @@ This function returns a string that establishes the structure of the database ta
 
 =!SoundPoolManager java=
 
-This class is used to manage the playback of sound effects used in the game. Its most important component is the 'SoundPool'. 
+This class is used to manage the playback of sound effects used in the game. Its most important component is the 'SoundPool' object. The manager class defines several int constants, one for each of the sounds that comes up in the game.
+{{{
+    public static final int SOUND_BOOM = 0;
+    public static final int SOUND_GOAL = 1;
+    public static final int SOUND_OW = 2;
+    public static final int SOUND_PRIZE = 3;
+}}} 
+The constructor only has one parameter, which is used to pass the current context from the activity that calls the SoundPoolManager to the SoundPool, where it's used in the 'load()' and 'play' methods. 
+
+===init()===
+
+The init method of the SoundPoolManager is listed below.
+{{{
+    public void init() {
+            if (enabled) {
+                    Log.d(TAG, "Initializing new SoundPool");
+
+                    release();
+                    soundPool = new SoundPool(2,AudioManager.STREAM_NOTIFICATION, 0);
+                    this.mSoundOw = soundPool.load(context, R.raw.ow, 1);
+                    this.mSoundBoom = soundPool.load(context, R.raw.boom, 1);
+                    this.mSoundGoal = soundPool.load(context, R.raw.goal, 1);
+                    this.mSoundPrize = soundPool.load(context, R.raw.prize, 1);
+                    
+                    Log.d(TAG, "SoundPool initialized");
+            }
+    }
+}}}
+This method initializes a new SoundPool (for what would seem the second time) then it assigns the result of the code segment 'soundPool.load( context, R.raw.ow, 1)' to the variable 'mSoundOw'. This variable 'mSoundOw' is used later to actually play the sound. This is the process that is followed as each sound is loaded into the SoundPool.
+
+===release()===
+
+The code for the 'release()' method is below.
+{{{
+    public void release() {
+            if (soundPool != null) {
+                    Log.d(TAG, "Closing SoundPool");
+                    soundPool.release();
+                    soundPool = null;
+                    Log.d(TAG, "SoundPool closed");
+                    return;
+            }
+    }
+}}}
+
+===playSound()===
+
+The 'playSound()' method is used to play whatever sound the game requires. The function takes an int as a parameter, which should match one of the constants defined at the start of the class. 
+
+{{{
+    public void playSound(int sound) {
+            if (soundPool != null && mPlaySounds) {
+                    Log.d(TAG, "Playing Sound " + sound);
+                    AudioManager mgr = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+                    int streamVolume = mgr.getStreamVolume(AudioManager.STREAM_MUSIC);
+                    
+                    
+                    if (sound == SOUND_BOOM) {
+                    	soundPool.play(this.mSoundBoom, streamVolume, streamVolume, 1, 0, 1f);
+                    }
+                    if (sound == SOUND_GOAL) {
+                    	soundPool.play(this.mSoundGoal, streamVolume, streamVolume, 1, 0, 1f);
+                    }
+                    if (sound == SOUND_OW) {
+                    	soundPool.play(this.mSoundOw, streamVolume, streamVolume, 1, 0, 1f);
+                    }
+                    if (sound == SOUND_PRIZE) {
+                    	soundPool.play(this.mSoundPrize, streamVolume, streamVolume, 1, 0, 1f);
+                    }
+                    
+            }
+    }
+}}}
+In the code, if() statements are used to determine which sound effect is being specified by the calling function, and then the 'SoundPool' play(...) method is called.
+
+===setEnabled()===
+
+The 'setEnabled(boolean enabled)' method is a simple setter method that passes a boolean value to the SoundPoolManager class. The method sets two global variables. One global that it sets is called 'mPlaySounds', and the other is called 'enabled'.
+
+=Help java and Credits java=
+
+These classes are almost identical and not very lengthy. The Help.java code is included here in it's entirety. 
+{{{
+package org.davidliebman.android.awesomeguy;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+public class Help extends Activity {
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.help);      
+              
+    }
+}
+}}}
+Basically all the interesting material from these activities is included in their xml files. This is an example of the help.xml file.
+{{{
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView 
+
+xmlns:android="http://schemas.android.com/apk/res/android"
+
+android:layout_height="wrap_content"
+
+android:layout_width="fill_parent" 
+
+android:orientation="vertical" 
+
+android:scrollbars="vertical" 
+
+android:scrollbarAlwaysDrawVerticalTrack="true"
+
+>
+
+
+
+<RelativeLayout
+
+android:id="@+id/widget32"
+
+android:layout_width="fill_parent"
+
+android:layout_height="fill_parent"
+
+xmlns:android="http://schemas.android.com/apk/res/android"
+
+android:isScrollContainer="true" android:scrollbarAlwaysDrawVerticalTrack="true">
+
+
+
+<TextView android:text="THE STORY: 
+..."
+
+  
+
+android:background="@drawable/background"
+
+android:textColor="#000000"
+
+android:textSize="16sp"
+
+android:textStyle="bold"
+
+android:id="@+id/TextView01" 
+
+android:layout_width="wrap_content" 
+
+android:layout_height="wrap_content" >
+
+</TextView>
+
+</RelativeLayout>
+
+</ScrollView>
+}}}
+In this listing the text from the TextView has been shortened. Most important after the text itself is probably the ScrollView element. It allows the text to scroll on the screen.
