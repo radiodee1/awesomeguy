@@ -1511,62 +1511,34 @@ public class Help extends Activity {
 Basically all the interesting material from these activities is included in their xml files. This is an example of the help.xml file.
 {{{
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView 
-
 xmlns:android="http://schemas.android.com/apk/res/android"
-
 android:layout_height="wrap_content"
-
 android:layout_width="fill_parent" 
-
 android:orientation="vertical" 
-
 android:scrollbars="vertical" 
-
 android:scrollbarAlwaysDrawVerticalTrack="true"
-
 >
 
-
-
 <RelativeLayout
-
 android:id="@+id/widget32"
-
 android:layout_width="fill_parent"
-
 android:layout_height="fill_parent"
-
 xmlns:android="http://schemas.android.com/apk/res/android"
-
 android:isScrollContainer="true" android:scrollbarAlwaysDrawVerticalTrack="true">
-
-
 
 <TextView android:text="THE STORY: 
 ..."
 
-  
-
 android:background="@drawable/background"
-
 android:textColor="#000000"
-
 android:textSize="16sp"
-
 android:textStyle="bold"
-
 android:id="@+id/TextView01" 
-
 android:layout_width="wrap_content" 
-
 android:layout_height="wrap_content" >
-
 </TextView>
-
 </RelativeLayout>
-
 </ScrollView>
 }}}
 In this listing the text from the TextView has been shortened. Most important after the text itself is probably the ScrollView element. It allows the text to scroll on the screen.
