@@ -1290,3 +1290,120 @@ In the case of a new record we take the writeable database and perform an insert
 Adding the proper 'mRecordIdNum' and 'mNewRecord' values allows the program to treat the record as an old record in the future. This way if the player gets a score on the high score table, and then proceeds to play the game again, they can beat their previous score and have their new score recorded.
 
 If the 'mHighScores' record is not a new record, then we want to update the database values using the raw query 'getUpdateScoreLevelString(int num)'. This function takes the 'mRecordIdNum' as its parameter. As it's name implies, it updates the score and the level values of an already existing database entry.
+
+===updateNumberOfRecords()===
+
+This method acts on the current 'mHighScores' record and updates it's 'mNumOfRecords' field in the SQLite database. It uses the 'getUpdateNumOfRecords(...)' String and a 'rawQuery(...)'. It does not alter any other data.
+
+===updateOptions()===
+
+This method updates all the various options that are associated with a high score Record without actually changing the high score or the checkpoint level. It uses the method 'getUpdateOptionsString(...)'.
+
+===pruneScoreList()===
+
+This method is used to keep the high score list the right size. It does this by getting a copy of the table in the form of an ArrayList, and then using a for() loop to go through the list where it exceeds the proper number of records, and deleting the records using their ID numbers to identify them.
+
+{{{
+	public int pruneScoresList() {
+		ArrayList<Record> mList = this.getHighScoreList(-1);
+		mOpenHelper = new ScoreOpenHelper(mContext);
+		SQLiteDatabase mDatabase = mOpenHelper.getWritableDatabase();
+		int num = 0;
+		if (mHighScores.getNumRecords() < mList.size()) {
+			num = mList.size() - mHighScores.getNumRecords();
+			for (int i = mHighScores.getNumRecords(); i < mList.size(); i ++) {
+				int j = mList.get(i).getRecordIdNum();
+				Cursor c = mDatabase.rawQuery("DELETE FROM "+ TABLE_NAME + " WHERE id=" + j, null);
+				c.getCount();
+				c.close();
+
+			}
+		}
+		mDatabase.close();
+		return num;
+	}
+}}}
+
+The methos uses a raw query, but instead of calling another function to define the String that the query uses, it is contained in the raw query itself.
+
+===getInsertString()===
+
+This method is not used, except for testing. It returns a String used for inserting an entire record into the database using a raw query. The reason it's not used it that the raw query mechanism does not return the index number of the record that was just inserted.
+
+===getSelectNumOfRecordsString()===
+
+As it's name implies, this method returns a String which contains the sql to request that a list of records be returned not exceeding a certain number. The records are sorted by score.
+
+===getSelectAllRecordsString()===
+
+This method returns a String. This String contains the sql to query the database for all records in the table. The records are arranged in descending order by score.
+
+===getUpdateScoreLevelString()===
+
+This method returns a String which contains the sql to update the score and level information for a particular row in the database. The row in question is identified by its ID number.
+
+===getUpdateNumberOfRecordsString()===
+
+This method returns a String that contains the sql to update the 'mNumRecords' field in the game's database for a particular ID.
+
+===getUpdateOptionsString()===
+
+This method returns a String that contains the sql to update the various options that the game allows you to set for a particular row in the database, given the ID of the row. It does not change the level or high score values.
+
+===getInsertContentValues()===
+
+This method creates a ContentValues object and fills it with the info needed to create a new record in the database using a 'insert()' function (not a raw query function). 
+
+===ScoreOpenHelper===
+
+This class extends the class SQLiteOpenHelper. It's constructor takes a reference to a Context object and calls the 'super(...)' constructor, passing it the Context, the database name, and the database version number. These are all defined at the beginning of Scored.java. (the super constructor also takes a null parameter).
+
+The remainder of the class is shown here.
+
+{{{
+		@Override
+		public void onCreate(SQLiteDatabase db) {
+			db.execSQL(getCreateTableString());
+		}
+		
+		@Override
+		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+			Log.w("Scores", "Upgrading database, this will drop tables and recreate.");
+			db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+			onCreate(db);
+		}
+		
+		public String getCreateTableString() {
+			return new String(
+					" CREATE TABLE " +
+					TABLE_NAME + " " +
+					" ( id INTEGER PRIMARY KEY , " +
+					" new_record TEXT , " +
+					" name TEXT , " +
+					" level INTEGER , " +
+					" score INTEGER , " +
+					" lives INTEGER , " +
+					" cycles INTEGER , " +
+					" save INTEGER , " +
+					" game_speed INTEGER , " +
+					" num_records INTEGER , " +
+					" sound TEXT , " +
+					" enable_jni TEXT , " +
+					" enable_monsters TEXT , " +
+					" enable_collision TEXT  " +
+					" ) "
+					);
+		}
+}}}
+
+===onCreate()===
+
+This method is called if the 'ScoreOpenHelper' class ever has to create the  database from scratch. It does this automatically if it has to. The method is overridden and takes a SQLiteDatabase as it's parameter. When overriding this function do not change it's signature. The sole contents of the method is the line 'db.execSQL(getCreateTableString());' . The string in question is part of the 'ScoreOpenHelper' class and is described below.
+
+===onUpgrade()===
+
+This feature attempts to determine when the database structure has been changed. When it has it drops the table and creates a new empty table in it's place. It presupposes that the programmer change the variable 'DATABASE_VERSION' whenever the table needs to be refreshed.
+
+===getCreateTableString()===
+
+This function returns a string that establishes the structure of the database table when it is created or changed. SQLite databases do not have a boolean data type, so either a String (TEXT) or an Integer (INTEGER) must be used. In this program a TEXT field is used for boolean data.
