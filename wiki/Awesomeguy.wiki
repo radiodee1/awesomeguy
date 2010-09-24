@@ -1354,7 +1354,7 @@ This method returns a String that contains the sql to update the various options
 
 This method creates a ContentValues object and fills it with the info needed to create a new record in the database using a 'insert()' function (not a raw query function). 
 
-===ScoreOpenHelper===
+===!ScoreOpenHelper===
 
 This class extends the class SQLiteOpenHelper. It's constructor takes a reference to a Context object and calls the 'super(...)' constructor, passing it the Context, the database name, and the database version number. These are all defined at the beginning of Scored.java. (the super constructor also takes a null parameter).
 
