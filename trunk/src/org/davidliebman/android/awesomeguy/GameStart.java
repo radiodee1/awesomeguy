@@ -674,16 +674,7 @@ public class GameStart extends Activity {
 
     		      }
 
-    		      // this basically saves high scores...
-    		      // duplicated in 'onPause()'
-    		      /*
-    		      if(mHighScores.getScore() > mGameV.getOldGuyScore()) {
-    		    	  
-    		    	  mScores.insertRecordIfRanks();
-    		    	  mHighScores.setNewRecord(false);
-
-    		      }
-    		      */
+    		      
     		      if (!mGameV.isGameDeath() && gameRunning ) {
     		    	  mHandler.sendEmptyMessage(GameStart.CONGRATS);
     		    	  
@@ -693,6 +684,19 @@ public class GameStart extends Activity {
 
     		    if (gameRunning) {
     		    	mHandler.sendEmptyMessage(GameStart.PLAYAGAIN);
+    		    	
+    		    	// this basically saves high scores...
+      		      	// duplicated in 'onPause()'
+      		      
+	      		      if(mHighScores.getScore() > mGameV.getOldGuyScore()) {
+	      		    	  
+	      		    	  mScores.insertRecordIfRanks(mHighScores);
+	      		    	  mHighScores.setNewRecord(false);
+	      		    	  mGameV.setOldGuyScore(mHighScores.getScore());
+	
+	      		      }
+      		      
+    		    	
     		    }
     		    
     		    
