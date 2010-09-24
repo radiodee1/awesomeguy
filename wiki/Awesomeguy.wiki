@@ -1209,3 +1209,7 @@ This method returns an ArrayList of Records, and has the job of querying the dat
 		return mList;
 	}
 }}}
+
+The first thing we do in 'getHighScoreList(...)' is create a number of objects. We create an ArrayList of Records, a 'ScoreOpenHelper', a Cursor, and a readable database object, called 'mDatabase'. Notice how we use the 'ScoreOpenHelper' to create the readable database object. 
+
+Then we use an if() statement to check what the calling method specified in the method's parameters for the integer 'num'. If 'num' is negative, then we want to return the entire database table, and if 'num' is positive we want to return the top of the table limiting the result set to 'num' results.
