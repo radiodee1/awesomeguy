@@ -1232,7 +1232,7 @@ This method is used by the GameStart.java class, when the 'onPause()' method is 
 	public void insertRecordIfRanks(Record mHighScores) {
 		String query = new String();
 		Record mLowestScore = new Record();
-		//SharedPreferences preferences = mContext.getSharedPreferences(Options.AWESOME_NAME, Context.MODE_PRIVATE);
+
 		
 		/* first check if record is 'anonymous' -- if so, exit !! */
 		if(mHighScores.getName().contentEquals(mLowestScore.getName())) return;
@@ -1258,9 +1258,6 @@ This method is used by the GameStart.java class, when the 'onPause()' method is 
 				
 				mHighScores.setRecordIdNum((int)i);
 				mHighScores.setNewRecord(false);
-				
-				/* the record id and 'new_record' fields have changed, so we put them in shared preferences */
-				//mHighScores.addToPreferences(preferences);
 				
 				mHighScores.listInLog();
 				
