@@ -1165,6 +1165,8 @@ This is the java class where we handle all the database activity. It's composed 
 
 The first methods in the Scores.java class are the constructor and a setter that allows you to set the 'mHighScores' record currently in use in the Scores object. The constructor takes an activities context as a parameter. This is important to the 'ScoreOpenHelper'.
 
+Several of the methods in Scores.java simply return a String which can easily be read as an sql statement. Most times in the class when a database query is required a raw query is used. These Strings are fed into the raw query.
+
 ===getHighScoreList()===
 
 This method returns an ArrayList of Records, and has the job of querying the database and creating a Cursor, iterating through the result set one row at time. At each row the Cursor is used to extract values which are placed in a temporary record. The temporary record is ultimately added to the ArrayList before the list is returned at the end of the function.
@@ -1213,3 +1215,65 @@ This method returns an ArrayList of Records, and has the job of querying the dat
 The first thing we do in 'getHighScoreList(...)' is create a number of objects. We create an ArrayList of Records, a 'ScoreOpenHelper', a Cursor, and a readable database object, called 'mDatabase'. Notice how we use the 'ScoreOpenHelper' to create the readable database object. 
 
 Then we use an if() statement to check what the calling method specified in the method's parameters for the integer 'num'. If 'num' is negative, then we want to return the entire database table, and if 'num' is positive we want to return the top of the table limiting the result set to 'num' results.
+
+To do this we use two separate queries. Both are defined later in the class. One specifies all the rows in the table, and the other specifies only a certain number of entries. The both return data in order sorted by the high score field. This allows them to be displayed with the highest score at the top of the list. Raw queries are used at this point, so the queries look like regular sql statements. 
+
+The names of the two functions that return the sql statements for these raw queries are 'getSelectAllRecordsString()' and 'getSelectNumOfRecordsString(int num)'. They are explained below. Performing the raw query on the database returns a cursor object. The cursor object is manipulated to obtain the values from the database rows.
+
+The next thing we do is move to the beginning of the cursor ('c.moveToFirst()') and then we go through the cursor using a for() loop to populate a temporary Record with data from the database. We add the record to the ArrayList at the end of each loop. After the loop is over we close the Cursor and the readable database and return the ArrayList of Records.
+
+It should be noted that SQLite, the database we're using, doesn't handle booleans as a data type. Boolean values must be stored as a String or an integer. I chose to store them as Strings, so when I read from the database a boolean value I use a Boolean wrapper class to determine weather the stored value is positive or negative.
+
+===insertRecordIfRanks()===
+
+This method is used by the GameStart.java class, when the 'onPause()' method is called, to store the current player's high score. It only does this under certain conditions, like weather or not the player is anonymous and weather or not the score is higher than the lowest score in the table.
+
+{{{
+	public void insertRecordIfRanks(Record mHighScores) {
+		String query = new String();
+		Record mLowestScore = new Record();
+		//SharedPreferences preferences = mContext.getSharedPreferences(Options.AWESOME_NAME, Context.MODE_PRIVATE);
+		
+		/* first check if record is 'anonymous' -- if so, exit !! */
+		if(mHighScores.getName().contentEquals(mLowestScore.getName())) return;
+		
+		
+		ArrayList<Record> test = this.getHighScoreList(mHighScores.getNumRecords());
+		if (test.size() > 0) {
+			mLowestScore = test.get(test.size() - 1);
+		}
+		
+		if (mHighScores.getScore() > mLowestScore.getScore() || test.size() < mHighScores.getNumRecords()) {
+			mOpenHelper = new ScoreOpenHelper(mContext);
+			SQLiteDatabase mDatabase = mOpenHelper.getWritableDatabase();
+			
+			mHighScores.listInLog();
+			
+			if(mHighScores.isNewRecord()) {
+				//set new record to false
+				//set ID Num
+				
+				long i = mDatabase.insert(TABLE_NAME, null, this.getInsertContentValues());
+				
+				
+				mHighScores.setRecordIdNum((int)i);
+				mHighScores.setNewRecord(false);
+				
+				/* the record id and 'new_record' fields have changed, so we put them in shared preferences */
+				//mHighScores.addToPreferences(preferences);
+				
+				mHighScores.listInLog();
+				
+			}
+			else  {
+				query = this.getUpdateScoreLevelString(mHighScores.getRecordIdNum());
+				Cursor c = mDatabase.rawQuery(query, null);
+				int i = c.getCount();
+
+				c.close();
+				
+			}
+			mDatabase.close();
+		}
+	}
+}}}
