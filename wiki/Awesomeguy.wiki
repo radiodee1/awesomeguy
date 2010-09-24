@@ -1154,3 +1154,58 @@ This function is used to extract values from SharedPreferences. Again, for it to
          mEnableCollision = new Boolean(in.getString("mEnableCollision","")).booleanValue();
      }
 }}}
+
+===listInLog()===
+
+This method prints the entire contents of the 'mHighScores' record to the debugger log.
+
+=Scores java=
+
+This is the java class where we handle all the database activity. It's composed of the Scores.java class and an inner class called 'ScoreOpenHelper'. 'ScoreOpenHelper' is an 'SQLiteOpenHelper' class. It's used to establish an empty database on the android phone if needed. It's also used to return a readable or writeable database, depending on which is called for.
+
+The first methods in the Scores.java class are the constructor and a setter that allows you to set the 'mHighScores' record currently in use in the Scores object. The constructor takes an activities context as a parameter. This is important to the 'ScoreOpenHelper'.
+
+===getHighScoreList()===
+
+This method returns an ArrayList of Records, and has the job of querying the database and creating a Cursor, iterating through the result set one row at time. At each row the Cursor is used to extract values which are placed in a temporary record. The temporary record is ultimately added to the ArrayList before the list is returned at the end of the function.
+
+{{{
+	public ArrayList<Record> getHighScoreList(int num) {
+		// NOTE: if 'num' is negative, all records are returned
+		ArrayList<Record> mList = new ArrayList<Record>();
+		mOpenHelper = new ScoreOpenHelper(mContext);
+		mDatabase = mOpenHelper.getReadableDatabase();
+		Cursor c;
+		if (num < 0 ) {
+			c = mDatabase.rawQuery(this.getSelectAllRecordsString(), null);
+		}
+		else {
+			c = mDatabase.rawQuery(this.getSelectNumOfRecordsString(num), null);
+		}
+		if (c.getCount() == 0) return mList;
+		c.moveToFirst();
+		for (int i = 0; i < c.getCount(); i ++ ) {
+			Record mTempRec = new Record();
+			mTempRec.setRecordIdNum(c.getInt(c.getColumnIndex("id")));
+			mTempRec.setNewRecord(new Boolean(c.getString(c.getColumnIndex("new_record"))).booleanValue());//TODO: should I change this to 'false'??
+			mTempRec.setName(c.getString(c.getColumnIndex("name")));
+			mTempRec.setLevel(c.getInt(c.getColumnIndex("level")));
+			mTempRec.setScore(c.getInt(c.getColumnIndex("score")));
+			mTempRec.setLives(c.getInt(c.getColumnIndex("lives")));
+			mTempRec.setCycles(c.getInt(c.getColumnIndex("cycles")));
+			mTempRec.setSave1(c.getInt(c.getColumnIndex("save")));
+			mTempRec.setGameSpeed(c.getInt(c.getColumnIndex("game_speed")));
+			mTempRec.setNumRecords(c.getInt(c.getColumnIndex("num_records")));
+			mTempRec.setSound(new Boolean(c.getString(c.getColumnIndex("sound"))).booleanValue());
+			mTempRec.setEnableJNI(new Boolean(c.getString(c.getColumnIndex("enable_jni"))).booleanValue());
+			mTempRec.setEnableMonsters(new Boolean(c.getString(c.getColumnIndex("enable_monsters"))).booleanValue());
+			mTempRec.setEnableCollision(new Boolean(c.getString(c.getColumnIndex("enable_collision"))).booleanValue());
+			mList.add(mTempRec);
+			c.moveToNext();
+			
+		}
+		c.close();
+		mDatabase.close();
+		return mList;
+	}
+}}}
