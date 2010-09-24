@@ -1274,3 +1274,19 @@ This method is used by the GameStart.java class, when the 'onPause()' method is 
 		}
 	}
 }}}
+
+In the first part of the method the String for the query is instantiated, along with a blank score Record called 'mLowestScore'. This Record is used for comparison in the next segment where we use an if() statement to check if the 'mHighScores' record has had it's name changed. If it hasn't then we assume the user doesn't want to save their high score.
+
+Next the 'test' ArrayList is created, and it is populated with data from the Scores method 'getHighScoreList(...)'. When we populate the ArrayList we ask for the number of records that the user has specified that it wants in the database. This number is returned by the code 'mHighScores.getNumRecords()'.
+
+Next we see if the size of the returned ArrayList is greater than zero. If it is greater, then the 'mLowestScore' Record is set to the value of the last element in this list. That will now be the lowest score.
+
+Next we have a complicated if() statement that actually determines if the 'mHighScores' object belongs in the database. It tests weather the score to be saved is greater than the lowest score, or if the size of the database table is smaller than the number of records that the program currently allows. If either of these is true we want to save something to the database. Exactly how we do that is determined in the next set of if-else statements. In preparation for this code we use the 'ScoreOpenHelper' to get a writeable database.
+
+The inner if-else statements in this portion of 'insertRecordIfRanks(...)' tests to see if the Record is a new record, or if it is an old Record. A new record has never been saved to the database, while an old record already has an entry in the database. A new record needs an 'insert' statement, while an old record needs an 'update' statement.
+
+In the case of a new record we take the writeable database and perform an insert on it. This insert is not a raw query. The advantage of not using a raw query at this stage is that the 'mDatabase.insert(...)' command returns the row ID number for the data we just inserted in the database table. We need this ID number so that we can update data to this database record in the future. After we've performed the 'insert()' method we change the values in 'mHighScores' so that this Record object has a proper 'mRecordIdNum' and so that 'mNewRecord' is set to false.
+
+Adding the proper 'mRecordIdNum' and 'mNewRecord' values allows the program to treat the record as an old record in the future. This way if the player gets a score on the high score table, and then proceeds to play the game again, they can beat their previous score and have their new score recorded.
+
+If the 'mHighScores' record is not a new record, then we want to update the database values using the raw query 'getUpdateScoreLevelString(int num)'. This function takes the 'mRecordIdNum' as its parameter. As it's name implies, it updates the score and the level values of an already existing database entry.
