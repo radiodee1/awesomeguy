@@ -1407,3 +1407,7 @@ This feature attempts to determine when the database structure has been changed.
 ===getCreateTableString()===
 
 This function returns a string that establishes the structure of the database table when it is created or changed. SQLite databases do not have a boolean data type, so either a String (TEXT) or an Integer (INTEGER) must be used. In this program a TEXT field is used for boolean data.
+
+=!SoundPoolManager java=
+
+This class is used to manage the playback of sound effects used in the game. Its most important component is the 'SoundPool'. 
