@@ -1187,7 +1187,7 @@ This method returns an ArrayList of Records, and has the job of querying the dat
 		for (int i = 0; i < c.getCount(); i ++ ) {
 			Record mTempRec = new Record();
 			mTempRec.setRecordIdNum(c.getInt(c.getColumnIndex("id")));
-			mTempRec.setNewRecord(new Boolean(c.getString(c.getColumnIndex("new_record"))).booleanValue());//TODO: should I change this to 'false'??
+			mTempRec.setNewRecord(new Boolean(c.getString(c.getColumnIndex("new_record"))).booleanValue());
 			mTempRec.setName(c.getString(c.getColumnIndex("name")));
 			mTempRec.setLevel(c.getInt(c.getColumnIndex("level")));
 			mTempRec.setScore(c.getInt(c.getColumnIndex("score")));
