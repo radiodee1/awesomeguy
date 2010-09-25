@@ -48,4 +48,49 @@ The game was actually programmed somewhat successfully in java before a JNI libr
 
 ===Tilesheets===
 
-Tilesheets are not supported by java. In order to implement them in java a special class was added to the android project. The Tilecutter class took the raw tilesheet and cut the image into smaller pieces that were applied to the screen one at a time as tiles.
+Tilesheets are not supported by java. In order to implement them in java a special class was added to the android project. The TileCutter class took the raw tilesheet and cut the image into smaller pieces that were applied to the screen one at a time as tiles.
+
+===TileCutter java===
+
+The first thing we do in TileCutter is define some variables.
+{{{
+	private int mTilesHeight = 128;
+	private int mTilesWidth = 224;
+	private int mBlockHeight = 8;
+	private int mBlockWidth = 8;
+	private int mNumTiles = 0;
+	private int mWidthInTiles = mTilesWidth/ mBlockWidth;
+	private int mHeightInTiles = mTilesHeight/ mBlockHeight;
+	
+	private Matrix mMatrix = new Matrix();
+	private Bitmap mTileMap;
+	private int mScale;
+	private int mTileAdjustment = 1;
+}}}
+The variables 'mTilesHeight' and 'mTilesWidth' are constants that describe the dimensions of the tilesheet image. There are four tilesheet images, but they're almost identical. Their dimensions have to be the same. The four sheets are 128 pixels high and 224 pixels wide. Also, a block or tile is 8 pixels high and 8 pixels wide. The variables 'mWidthInTiles' and 'mHeightInTiles' are easily computed. 
+
+The ultimate goal is for us to be able to pass a method in the class a number that is associated with an individual tile, and for the method to return the tile that we specify. We achieve this goal by ultimately using simple calculations. We take one parameter and do some simple math, and feed the results into the 'Bitmap.createBitmap(...)' method, returning the Bitmap of the tile that we're interested in. Below are listings.
+
+{{{
+	public Bitmap getTile(int i) {
+		//i = i + mTileAdjustment;
+		int row = i / mWidthInTiles;
+		int col = i - (mWidthInTiles * row) ;
+		
+		if (row > this.mHeightInTiles || row < 0) row = 0;
+		if (col > this.mWidthInTiles || col < 0) col = 0;
+		
+		int height = this.mBlockHeight;
+		int width = this.mBlockWidth;
+
+		Bitmap temp = Bitmap.createBitmap(mTileMap, col * width,row * height, width , height ,null,false);
+		if (mScale != 1) {
+			mMatrix.setScale(mScale, mScale);
+			return Bitmap.createBitmap(temp, 0,0, width , height ,mMatrix,false);
+		}
+		else {
+			return temp;
+		}
+	}
+}}}
+Essentially we need the row and column values, and we get those by manipulating the 'mWidthInTiles' variable. Extra code is added for scaling the images. If we want to double the images size for larger screens we can do this with the 'mMatrix' object. The value of 'mScale' is set using a regular java setter method.
