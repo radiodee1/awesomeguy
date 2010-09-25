@@ -126,9 +126,13 @@ Then we need to use the TileCutter in the 'onDraw(...)' method of the Panel.java
 	    		}
     		
 }}}
-The indexes for these two loops are the most complicated part. We know that we are going to scroll the screen, and that the level graphics themselves are bigger than the area that is being shown on the screen. What we want to do is paint tiles where the screen is going to be, and not concerning ourselves with other parts of the screen. The variables scrollX and scrollY represent the top left of the screen that is going to be displayed. They are pixel values, so we translate them to multiples of 8. This is what baseX and baseY represent, and they are the starting points for the two loops. Then we set the ending point of the loops as the size in tiles of the screen that's being shown. For the original game this was 32 tiles wide and 24 tiles high. (Note that a single tile is added to the 32 and 24 so that there was no chance that the screen would be blank at any point)
+The indexes for these two loops are the most complicated part. We know that we are going to scroll the screen, and that the level graphics themselves are bigger than the area that is being shown on the screen. What we want to do is paint tiles where the screen is going to be, and not concern ourselves with other parts of the screen. The variables scrollX and scrollY represent the top left of the screen that is going to be displayed. They are pixel values, so we translate them to multiples of 8. This is what baseX and baseY represent, and they are the starting points for the two loops. Then we set the ending point of the loops as the size in tiles of the screen that's being shown. For the original game this was 32 tiles wide and 24 tiles high. (Note that a single tile is added to the 32 and 24 so that there was no chance that the screen would be blank at any point)
 
-We accomplish drawing the background on the screen this way using tiles instead of, for example, a large bitmap that fills the whole screen. What we have to do then is use the built in scroll function of the View class (remember the Panel.java class extends the android View). Every View has a scrolling mechanism, and it's simple to use.
+The indexes of the two loops are used by the method calls 'mGameV.getLevelCell(i,j)' and 'mGameV.getObjectsCell(i,j)'. These functions return tile numbers, which are used by the TileCutter class and various other parts of the program.
+
+In the 'canvas.drawBitmap(...)' function the indexes from the loops (i and j) are multiplied by 8 to translate the tile position into actual pixels.
+
+We accomplish drawing the background on the screen this way using tiles instead of, for example, a large bitmap that fills the whole screen. What we have to do then is use the built in scroll function of the View class (remember the Panel.java class extends the android View). Every View has a scrolling mechanism, and it's simple to use. We scroll the upper left hand corner of the window that the user sees to the coordinates of scrollX and scrollY.
 {{{
 scrollTo(scrollX, scrollY);
 }}}
