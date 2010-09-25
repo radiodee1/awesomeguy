@@ -41,3 +41,11 @@ Aside from the tilesheets and tilemaps described above, the game uses several sp
 ===Software Tools===
 
 Several pieces of software were used when making Awesomeguy. Awesomeguy was programmed on a Linux computer. The graphic images in the game were all edited on Gimp, the Gnome Image Manipulation Program. The source code for Awesomeguy was edited using the Eclipse IDE for java. The C library used for the Awesomeguy Java Native Interface (JNI) was edited using Gedit, a Gnome text editor. The tilemaps, the large arrays that define the appearance of each level, were edited first using a Windows program called 'Mappy', and then further edited using Gedit and the command line tool 'sed'. The Wine (Wine Is Not An Emulator) program loader was employed to allow Mappy to work on a Linux platform. Instructions for using Mappy to create level definitions will accompany this document. 
+
+=Java=
+
+The game was actually programmed somewhat successfully in java before a JNI library was added. The graphics for the game all appeared in its correct position on the screen in a version that ran on the emulator. The main problem was that the java version of the game was slow. The other problem was that the images for the game were resized by the android operating system for the larger screen found on devices like the nexus one.
+
+===Tilesheets===
+
+Tilesheets are not supported by java. In order to implement them in java a special class was added to the android project. The Tilecutter class took the raw tilesheet and cut the image into smaller pieces that were applied to the screen one at a time as tiles.
