@@ -85,7 +85,7 @@
 
 ----
 
-  * awesomeguyJNI
+  * [awesomeguyJNI#awesomeguyJNI awesomeguyJNI]
     * [awesomeguyJNI#Overview Overview]
       * [awesomeguyJNI#Tilesheets Tilesheets]
       * [awesomeguyJNI#Tilemaps Tilemaps]
