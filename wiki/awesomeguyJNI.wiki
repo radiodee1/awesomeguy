@@ -50,7 +50,7 @@ The game was actually programmed somewhat successfully in java before a JNI libr
 
 Tilesheets are not supported by java. In order to implement them in java a special class was added to the android project. The TileCutter class took the raw tilesheet and cut the image into smaller pieces that were applied to the screen one at a time as tiles.
 
-===TileCutter java===
+===!TileCutter java===
 
 The first thing we do in TileCutter is define some variables.
 {{{
@@ -94,3 +94,7 @@ public Bitmap getTile(int i) {
 }
 }}}
 Essentially we need the row and column values, and we get those by manipulating the 'mWidthInTiles' variable. Extra code is added for scaling the images. If we want to double the images size for larger screens we can do this with the 'mMatrix' object. The value of 'mScale' is set using a regular java setter method.
+
+===Panel java===
+
+Then we need to use the TileCutter in the 'onDraw(...)' method of the Panel.java class.
