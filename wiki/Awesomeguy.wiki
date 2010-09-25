@@ -1542,3 +1542,7 @@ android:layout_height="wrap_content" >
 </ScrollView>
 }}}
 In this listing the text from the TextView has been shortened. Most important after the text itself is probably the ScrollView element. It allows the text to scroll on the screen.
+----
+=In Closing=
+
+Awesomeguy is a first attempt at programming an app for the Android phone. It is programmed in Java and uses the Eclipse IDE and Google Code's SVN repositories for version control. It also uses a JNI library to render it's graphical display.
