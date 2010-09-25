@@ -82,3 +82,12 @@
       * [ConstructingLevels#Text_Editor Text Editor]
       * [ConstructingLevels#Sed Sed]
       * [ConstructingLevels#Finished_Level Finished Level]
+
+----
+
+  * awesomeguyJNI
+    * [awesomeguyJNI#Overview Overview]
+      * [awesomeguyJNI#Tilesheets Tilesheets]
+      * [awesomeguyJNI#Tilemaps Tilemaps]
+      * [awesomeguyJNI#Sprites Sprites]
+      * [awesomeguyJNI#Software_Tools Software Tools]
