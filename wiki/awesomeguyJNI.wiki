@@ -1,13 +1,8 @@
 #summary Method by method explanation of the 'awesomeguy.c' file.
-
+#sidebar TableOfContents
 = Introduction =
 
-Here we'll go through a method by method explanation of the 'awesomeguy.c' file, as well as talk a little about what kind of graphics Awesomeguy requires, and how we might have implemented those graphics in java.
+Here we'll go through a method by method explanation of the 'awesomeguy.c' file, as well as talk a little about what kind of graphics Awesomeguy requires, and how we might have implemented those graphics in java. First, though, we'll repeat some information from another wiki that describes Awesomeguy's graphics.
 
 <wiki:toc max_depth="5" />
 = Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
