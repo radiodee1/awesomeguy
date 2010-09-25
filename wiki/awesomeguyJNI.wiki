@@ -98,3 +98,31 @@ Essentially we need the row and column values, and we get those by manipulating 
 ===Panel java===
 
 Then we need to use the TileCutter in the 'onDraw(...)' method of the Panel.java class.
+{{{
+	    	mCanvas.drawColor(Color.BLACK);
+	    	mTiles = new TileCutter(bMap);
+	        baseX = scrollX/ mTiles.getBlockWidth();
+	        baseY = scrollY/ mTiles.getBlockHeight();
+    		if (false) {// test jni code <--
+	    		for ( int i = baseX; i < baseX + 32 + 1; i ++ ) { //24
+	
+	    			for (int j = baseY; j < baseY + 24 + 1; j ++) { //32
+	    				if (mGameV.getLevelCell(i, j) != 0 ) {
+	    					//print visible background
+	    					mTemp = mGameV.getLevelCell(i, j);
+	    					mBlock = mTiles.getTile(mTemp);
+	    					canvas.drawBitmap(mBlock, i * mTiles.getBlockWidth(), j* mTiles.getBlockHeight(), null);
+	    				}
+	    				if (mGameV.getObjectsCell(i, j) != 0) {
+	    					//print special background objects
+	    					mTemp = mGameV.getObjectsCell(i, j);
+	    					if(this.checkPrintableObjects(mTemp)) {
+	    						mBlock = mTiles.getTile(mTemp - mMapcheat);
+	    						canvas.drawBitmap(mBlock, i * mTiles.getBlockWidth(), j* mTiles.getBlockHeight(), null);
+	    					}
+	    				}
+	    				
+	    			}
+	    		}
+    		}
+}}}
