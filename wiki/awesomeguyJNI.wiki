@@ -4,7 +4,7 @@
 
 Here we'll go through a method by method explanation of the 'awesomeguy.c' file, as well as talk a little about what kind of graphics Awesomeguy requires, and how we might have implemented those graphics in java.
 
-
+<wiki:toc max_depth="5" />
 = Details =
 
 Add your content here.  Format your content with:
