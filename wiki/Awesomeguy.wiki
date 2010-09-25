@@ -1545,4 +1545,4 @@ In this listing the text from the TextView has been shortened. Most important af
 ----
 =In Closing=
 
-Awesomeguy is a first attempt at programming an app for the Android phone. It is programmed in Java and uses the Eclipse IDE and Google Code's SVN repositories for version control. It also uses a JNI library to render it's graphical display.
+Awesomeguy is a first attempt at programming an app for the Android phone. It is programmed in Java and uses the Eclipse IDE and Google Code's SVN repositories for version control. It also uses a JNI library to render it's graphical display. Information about this JNI library should be available from this wiki when it is completed.
