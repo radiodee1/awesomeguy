@@ -44,7 +44,7 @@ Several pieces of software were used when making Awesomeguy. Awesomeguy was prog
 
 =Java=
 
-The game was actually programmed somewhat successfully in java before a JNI library was added. The graphics for the game all appeared in its correct position on the screen in a version that ran on the emulator. The main problem was that the java version of the game was slow. The other problem was that the images for the game were resized by the android operating system for the larger screen found on devices like the nexus one.
+The game was actually programmed somewhat successfully in java before a JNI library was added. The graphics for the game all appeared in its correct position on the screen in a version that ran on the emulator. The main problem was that the java version of the game was slow. 
 
 ===Tilesheets===
 
