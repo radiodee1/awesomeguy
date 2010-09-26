@@ -138,3 +138,9 @@ scrollTo(scrollX, scrollY);
 }}}
 
 The process of using the TileCutter and the loops described above is time consuming, so a JNI library was used.
+
+=JNI=
+
+The name of the file that's compiled into the awesomeguy JNI library is 'awesomeguy.c', and the actual compiled library is called 'libawesomeguy.so'. The Android NDK package takes care of naming the actual library for us, so we only have to concern ourselves with writing the awesomeguy.c file. To compile a Android JNI library, we create a folder in the Eclipse project called 'jni'. We place the c file in this folder. There is a non trivial step of creating the android 'Android.mk' file, which is the library's 'make' file. Then we use tools from the Android NDK package to compile the file. 
+
+The NDK tools create the actual library for us and place the library in a specially created folder in the Eclipse project. When Eclipse creates the app file it includes the library automatically. We have to 'Refresh' the project manually every time we re-compile the library, but that's the only tricky part. To refresh the project, press the F5 button.
