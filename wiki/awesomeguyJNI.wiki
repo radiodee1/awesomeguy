@@ -260,3 +260,72 @@ static uint32_t monster_d[16][16];
  
 static uint32_t platform_a[8][40];
 }}}
+
+===Map Arrays===
+
+These are the two arrays that the JNI use as maps for the background elements. Elsewhere in this documentation the maps were called 'tilemaps'. Each element is a number representing an 8x8 square. In the Java code these arrays are located in the GameValues class, and are called the 'level' and 'objects' arrays. They are duplicated in the JNI because JNI functions are responsible for drawing the screen just as the Java was. The 'map_level' array holds just visual information, and the 'map_objects' array holds info on (usually) non visible information.
+
+{{{
+static int map_level [96][96];
+
+static int map_objects[96][96];
+}}}
+
+===Screen===
+
+There is an array in the variable definition section of the JNI file that represents the information that will ultimately be displayed on the screen. It is intended to hold graphical information, pixels, and it is the size of the maximum that the screen is allowed to be, (192x256). This is the array that is returned to the java code by the 'drawLevel()' function. This may be the most important array in the program.
+{{{
+uint32_t screen [192][256];
+}}}
+
+===Alpha===
+
+A single graphic pixel is created to hold the value that is used by the JNI library as the 'transparent' color. In ping images this would be the 'alpha' color. It is set when the library is loading the tilesheet images. It's used in the 'drawScoreWords()' and 'drawScoreNumbers()' methods.
+
+{{{
+uint32_t number_alpha = 0;
+}}}
+
+===Tile Loops===
+
+The next two variables are used by the loop mechanism that prints tiles on the 'screen' array. Their definition is mostly unimportant to the operation of the game, but should be mentioned at this point. The two variables value refers to the number of tiles that could be printed on the screen.
+
+{{{
+static int tilesWidthMeasurement = 32;
+static int tilesHeightMeasurement = 32;
+}}}
+
+===Sprite Structs===
+
+This code defines the struct that is used to hold sprite info. Because Sprites themselves are not supported in hardware on the Android phone, The Sprite mechanism is emulated here in software.
+
+{{{
+typedef struct {
+	int x, y, animate;
+	int facingRight, active, visible;
+	int leftBB, rightBB, topBB, bottomBB;
+} Sprite;
+ 
+}}}
+The listing above defines the sprite Struct. Then below, the first line `Sprite sprite[100]` defines an array of 100 of the previously mentioned structs. After that we have three variables that help us keep track of the various sprites that we store on the list. 
+
+First on the list are monster sprites. They are all on the list together. The `monster_num` variable keeps track of how many monster sprites we have. Then the platforms are placed on the list, if there are any. The `platform_num` variable keeps track of how many platforms are on the list (and therefore on the level). The variable `sprite_num` keeps track of how many sprites are on the list all together.
+{{{
+Sprite sprite[100];
+int sprite_num = 0;
+int monster_num = 0;
+int platform_num = -1;
+
+Sprite guy;
+}}}
+There is also one sprite that we keep track of that's not on the list. This is the sprite for the main character. This sprite we call 'guy'. In the java version of the graphical display code there is one list and the guy sprite is always on the list at position '0'. Because of the slight difference between the java and the JNI, the indexes of sprite objects on the list are not the same between the two parts of the program. Special care has to be taken when referring to the sprite objects.
+
+===Bounding Box===
+
+Another object used by the program is the bounding box. The struct for the bounding box is next in the variable declaration section of the JNI and is listed below:
+
+{{{
+typedef struct {
+	int left, right, top, bottom;
+} BoundingBox;
+}}}
