@@ -176,9 +176,7 @@ The first set of `#define` statements is used to set up logging. The lines of co
 
 {{{
 #define  LOG_TAG              "awesomeguy-jni"
-
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
-
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
 }}}
 
@@ -186,7 +184,6 @@ Next the constants for 'TRUE' and 'FALSE' are defined.
 
 {{{
 #define TRUE 1
-
 #define FALSE 0 
 }}}
 
@@ -195,74 +192,42 @@ Next the constants for 'TRUE' and 'FALSE' are defined.
 The next thing we do is define some constants that will be used by the program. First among these variables is the definition of various tile numbers. For example throughout the game solid objects are represented by the number 442. Each different kind of object that can be placed on the screen is represented by a different number.
 {{{
 static int B_START = 5;
-
 static int B_SPACE = 0;
-
 static int B_LADDER = 444;
-
 static int B_BLOCK = 442;
-
 static int B_GOAL = 446;
-
 static int B_KEY = 445; 
-
 static int B_PRIZE =  447;
-
 static int B_MONSTER = 443;
-
 static int B_MARKER = 441; 
-
 static int B_DEATH = 439 ;
-
 static int B_ONEUP = 438 ;
-
 static int B_BIBPRIZE = 440 ;
-
 static int B_PLATFORM = 437 ; 
 }}}
 
 Then there are various other constants, some of which are self explanatory.
 {{{
 static int TILEMAP_WIDTH = 224;
-
 static int TILEMAP_HEIGHT = 128;
-
  
-
 static int TILE_WIDTH = 8;
-
 static int TILE_HEIGHT = 8;
-
  
-
 static int GUY_WIDTH = 16;
-
 static int GUY_HEIGHT = 16;
-
 static int GUY_CHEAT = 3;
-
  
-
 static int MONSTER_WIDTH = 16;
-
 static int MONSTER_HEIGHT = 16;
-
  
-
 static int PLATFORM_WIDTH = 40;
-
 static int PLATFORM_HEIGHT = 8;
-
  
-
 static int MAP_WIDTH = 96;
-
 static int MAP_HEIGHT = 96;
-
  
-
 static int SCREEN_WIDTH = 256;
-
 static int SCREEN_HEIGHT = 192;
 }}}
 
@@ -271,41 +236,25 @@ TILEMAP_WIDTH and TILEMAP_HEIGHT refer to the pixel dimensions of the tilesheet.
 This section is followed by more variables that are used by the library. These two variables are used by the functions that copy sprites and tiles to the screen array. They are flags and will be discussed later.
 {{{
 static int PAINT_SOLID = 0;
-
 static int PAINT_TRANSPARENT = 1;
 }}}
 
 The thirteen arrays below are used to hold the data that makes up several Bitmap images. These images are loaded when the Panel.java file is initialized. They are not loaded and reloaded every time the Panel.java file draws an image to the screen. Arrays in c are really made of two things. Firstly the memory for the array is allocated, and secondly a pointer is created to the beginning of the array. 
 {{{
 static uint32_t tiles_a[128][224];
-
 static uint32_t tiles_b[128][224];
-
 static uint32_t tiles_c[128][224];
-
 static uint32_t tiles_d[128][224];
-
  
-
 static uint32_t guy_a[16][16];
-
 static uint32_t guy_b[16][16];
-
 static uint32_t guy_c[16][16];
-
 static uint32_t guy_d[16][16];
-
  
-
 static uint32_t monster_a[16][16];
-
 static uint32_t monster_b[16][16];
-
 static uint32_t monster_c[16][16];
-
 static uint32_t monster_d[16][16];
-
  
-
 static uint32_t platform_a[8][40];
 }}}
