@@ -307,6 +307,8 @@ typedef struct {
 } Sprite;
  
 }}}
+The variables 'facingRight', 'active', and 'visible' are all true/false values, and are treated like bool values.
+
 The listing above defines the sprite Struct. Then below, the first line `Sprite sprite[100]` defines an array of 100 of the previously mentioned structs. After that we have three variables that help us keep track of the various sprites that we store on the list. 
 
 First on the list are monster sprites. They are all on the list together. The `monster_num` variable keeps track of how many monster sprites we have. Then the platforms are placed on the list, if there are any. The `platform_num` variable keeps track of how many platforms are on the list (and therefore on the level). The variable `sprite_num` keeps track of how many sprites are on the list all together.
