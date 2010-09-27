@@ -162,11 +162,8 @@ The awesomeguy JNI library is meant to operate within the context of the Panel.j
 There are four `#include` statements at the beginning of the awesomeguy.c file.
 {{{
 #include <jni.h>
-
 #include <android/log.h>
-
 #include <stdio.h> 
-
 #include <stdlib.h>
 }}}
 The first two are specific to android JNI programming. They allow the project to interface with the java code, and allow our program to print log messages to the Dalvik Debugger. This is important for development and debugging. Once the c library is working correctly the line `#include <android/log.h>` could be removed.
