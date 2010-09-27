@@ -1297,7 +1297,7 @@ void drawLevel(int animate_level) {
     				
 
     				drawTile_8(square, j * TILE_WIDTH, i * TILE_HEIGHT , 
-    					scrollx , scrolly, PAINT_TRANSPARENT, 0);
+    					scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
     			
     			}
 			}
