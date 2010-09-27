@@ -151,7 +151,7 @@ The NDK tools create the actual library for us and place the library in a specia
 
 ===Awesomeguy in c===
 
-Both c and c++ can be used for Android JNI. Awesomeguy uses c. The c programming language is very complex, and is not explained in any depth here. Some c concepts are touched upon, though. The Awesomeguy JNI library is somewhat lengthy, but relatively simple in concept. It's important to remember that with awesomeguy.c we are building a library, not a running program, so there is no 'main()' method. Another thing to remember is that for the JNI in Awesomeguy we want a single source file (awesomeguy.c) and a single library file (libawesomeguy.so). This requirement is so that the program remains simple enough to be easily maintained.
+Both c and c++ can be used for Android JNI. Awesomeguy uses c. The c programming language is very complex, and is not explained in any depth here. Some c concepts are touched upon, though. The Awesomeguy JNI library is somewhat lengthy, but relatively simple in concept. It's important to remember that with awesomeguy.c we are building a library, not a running program, so there is no 'main()' method. Another thing to remember is that for the JNI in Awesomeguy we want a single source file (awesomeguy.c) and a single library file (libawesomeguy.so). This requirement is so that the program remains simple enough to be easily maintained. It also means that there are no separate header files for the library. If your library is complex enough, header files might be necessary.
 
 There is no boolean data type in c. Instead you must use integers. Awesomeguy uses a pair of `#define` statements to create 'TRUE' and 'FALSE' values that correspond to integer values of '1' and '0'. For this reason when the awesomeguy library is asked by the java code to return a true or false it returns an integer which must be translated somehow for the java code. Java does use a separate boolean data type.
 
@@ -169,3 +169,143 @@ There are four `#include` statements at the beginning of the awesomeguy.c file.
 The first two are specific to android JNI programming. They allow the project to interface with the java code, and allow our program to print log messages to the Dalvik Debugger. This is important for development and debugging. Once the c library is working correctly the line `#include <android/log.h>` could be removed.
 
 The second two `#include` statements are standard c libraries that any c programmer might use in their program. You can `#include` many c libraries, and also several libraries that are provided by google for programming the Android device.
+
+===define===
+
+The first set of `#define` statements is used to set up logging. The lines of code here set up methods or macros that can be used to print messages to the debugger's log. These are not strictly necessary for the operation of the awesomeguy JNI library.
+
+{{{
+#define  LOG_TAG              "awesomeguy-jni"
+
+#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
+
+#define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
+}}}
+
+Next the constants for 'TRUE' and 'FALSE' are defined.
+
+{{{
+#define TRUE 1
+
+#define FALSE 0 
+}}}
+
+===constants===
+
+The next thing we do is define some constants that will be used by the program. First among these variables is the definition of various tile numbers. For example throughout the game solid objects are represented by the number 442. Each different kind of object that can be placed on the screen is represented by a different number.
+{{{
+static int B_START = 5;
+
+static int B_SPACE = 0;
+
+static int B_LADDER = 444;
+
+static int B_BLOCK = 442;
+
+static int B_GOAL = 446;
+
+static int B_KEY = 445; 
+
+static int B_PRIZE =  447;
+
+static int B_MONSTER = 443;
+
+static int B_MARKER = 441; 
+
+static int B_DEATH = 439 ;
+
+static int B_ONEUP = 438 ;
+
+static int B_BIBPRIZE = 440 ;
+
+static int B_PLATFORM = 437 ; 
+}}}
+
+Then there are various other constants, some of which are self explanatory.
+{{{
+static int TILEMAP_WIDTH = 224;
+
+static int TILEMAP_HEIGHT = 128;
+
+ 
+
+static int TILE_WIDTH = 8;
+
+static int TILE_HEIGHT = 8;
+
+ 
+
+static int GUY_WIDTH = 16;
+
+static int GUY_HEIGHT = 16;
+
+static int GUY_CHEAT = 3;
+
+ 
+
+static int MONSTER_WIDTH = 16;
+
+static int MONSTER_HEIGHT = 16;
+
+ 
+
+static int PLATFORM_WIDTH = 40;
+
+static int PLATFORM_HEIGHT = 8;
+
+ 
+
+static int MAP_WIDTH = 96;
+
+static int MAP_HEIGHT = 96;
+
+ 
+
+static int SCREEN_WIDTH = 256;
+
+static int SCREEN_HEIGHT = 192;
+}}}
+
+TILEMAP_WIDTH and TILEMAP_HEIGHT refer to the pixel dimensions of the tilesheet. MAP_WIDTH and MAP_HEIGHT refer to the array that represents the way the background should be drawn. This is slightly misleading, as in this documentation (up till now) TILEMAP would refer to the 96x96 object, and TILESHEET would be the appropriate term for the graphics that are cut apart and used as individual tiles. Unfortunately the awesomeguy.c file was written without regard to these conventions, so discussion of the variables may remain somewhat ambiguous.
+
+This section is followed by more variables that are used by the library. These two variables are used by the functions that copy sprites and tiles to the screen array. They are flags and will be discussed later.
+{{{
+static int PAINT_SOLID = 0;
+
+static int PAINT_TRANSPARENT = 1;
+}}}
+
+The thirteen arrays below are used to hold the data that makes up several Bitmap images. These images are loaded when the Panel.java file is initialized. They are not loaded and reloaded every time the Panel.java file draws an image to the screen. Arrays in c are really made of two things. Firstly the memory for the array is allocated, and secondly a pointer is created to the beginning of the array. 
+{{{
+static uint32_t tiles_a[128][224];
+
+static uint32_t tiles_b[128][224];
+
+static uint32_t tiles_c[128][224];
+
+static uint32_t tiles_d[128][224];
+
+ 
+
+static uint32_t guy_a[16][16];
+
+static uint32_t guy_b[16][16];
+
+static uint32_t guy_c[16][16];
+
+static uint32_t guy_d[16][16];
+
+ 
+
+static uint32_t monster_a[16][16];
+
+static uint32_t monster_b[16][16];
+
+static uint32_t monster_c[16][16];
+
+static uint32_t monster_d[16][16];
+
+ 
+
+static uint32_t platform_a[8][40];
+}}}
