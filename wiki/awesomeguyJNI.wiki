@@ -141,10 +141,16 @@ The process of using the TileCutter and the loops described above is time consum
 
 =JNI=
 
-JNI stands for 'Java Native Interface' and NDK stands for 'Native Development Kit'. To program JNI for the android platform you must download and configure the 'android-ndk-r4' package, which can be found on the Android developers site at the following address. See: http://developer.android.com/sdk/ndk/index.html . Download and install the package that is appropriate for your operating system.
+JNI stands for 'Java Native Interface' and NDK stands for 'Native Development Kit'. To program JNI for the android platform you must download and configure the 'android-ndk-r4' package, which can be found on the Android developers site at the following address. See: http://developer.android.com/sdk/ndk/index.html . Download and install the package that is appropriate for your operating system. Installing this software is beyond the scope of this wiki. The documentation that accompanies the ndk software is very helpful. 
 
 ===Names===
 
 The name of the file that's compiled into the awesomeguy JNI library is 'awesomeguy.c', and the actual compiled library is called 'libawesomeguy.so'. The Android NDK package takes care of naming the actual library for us, so we only have to concern ourselves with writing the awesomeguy.c file. To compile a Android JNI library, we create a folder in the Eclipse project called 'jni'. We place the c file in this folder. There is a non trivial step of creating the android 'Android.mk' file, which is the library's 'make' file. Then we use tools from the Android NDK package to compile the file. 
 
 The NDK tools create the actual library for us and place the library in a specially created folder in the Eclipse project. When Eclipse creates the app file it includes the library automatically. We have to 'Refresh' the project manually every time we re-compile the library, but that's the only tricky part. To refresh the project, press the F5 button.
+
+===Awesomeguy in c===
+
+Both c and c++ can be used for Android JNI. Awesomeguy uses c. The c programming language is very complex, and is not explained in any depth here. Some c concepts are touched upon, though. The Awesomeguy JNI library is somewhat lengthy, but relatively simple in concept. It's important to remember that with awesomeguy.c we are building a library, not a running program, so there is no 'main()' method. Another thing to remember is that for the JNI in Awesomeguy we want a single source file (awesomeguy.c) and a single library file (libawesomeguy.so). This requirement is so that the program remains simple enough to be easily maintained.
+
+
