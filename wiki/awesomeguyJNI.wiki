@@ -153,4 +153,22 @@ The NDK tools create the actual library for us and place the library in a specia
 
 Both c and c++ can be used for Android JNI. Awesomeguy uses c. The c programming language is very complex, and is not explained in any depth here. Some c concepts are touched upon, though. The Awesomeguy JNI library is somewhat lengthy, but relatively simple in concept. It's important to remember that with awesomeguy.c we are building a library, not a running program, so there is no 'main()' method. Another thing to remember is that for the JNI in Awesomeguy we want a single source file (awesomeguy.c) and a single library file (libawesomeguy.so). This requirement is so that the program remains simple enough to be easily maintained.
 
+There is no boolean data type in c. Instead you must use integers. Awesomeguy uses a pair of `#define` statements to create 'TRUE' and 'FALSE' values that correspond to integer values of '1' and '0'. For this reason when the awesomeguy library is asked by the java code to return a true or false it returns an integer which must be translated somehow for the java code. Java does use a separate boolean data type.
 
+The awesomeguy JNI library is meant to operate within the context of the Panel.java class. JNI code will only be called from that class. This simplifies the awesomeguy.c file slightly.
+
+===include===
+
+There are four `#include` statements at the beginning of the awesomeguy.c file.
+{{{
+#include <jni.h>
+
+#include <android/log.h>
+
+#include <stdio.h> 
+
+#include <stdlib.h>
+}}}
+The first two are specific to android JNI programming. They allow the project to interface with the java code, and allow our program to print log messages to the Dalvik Debugger. This is important for development and debugging. Once the c library is working correctly the line `#include <android/log.h>` could be removed.
+
+The second two `#include` statements are standard c libraries that any c programmer might use in their program. You can `#include` many c libraries, and also several libraries that are provided by google for programming the Android device.
