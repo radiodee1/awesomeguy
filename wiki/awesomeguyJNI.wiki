@@ -239,7 +239,7 @@ static int PAINT_SOLID = 0;
 static int PAINT_TRANSPARENT = 1;
 }}}
 
-===`unit32_t`===
+===Unsigned Integers===
 
 The thirteen arrays below are used to hold the data that makes up several Bitmap images. These images are loaded when the Panel.java file is initialized. They are not loaded and reloaded every time the Panel.java file draws an image to the screen. Arrays in c are really made of two things. Firstly the memory for the array is allocated, and secondly a pointer is created to the beginning of the array. The data type used here is `uint32_t`, which is an unsigned integer of 32 bits. This is the data type I use for all graphical information. Graphical elements, or pixels, are going to be stored in these arrays.
 {{{
