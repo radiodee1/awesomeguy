@@ -1318,7 +1318,7 @@ void drawLevel(int animate_level) {
         drawMonsters();
     }
     
-    if (preferences_monsters == TRUE && preferences_collision == TRUE) {
+    if (preferences_monsters == TRUE && preferences_collision == TRUE && animate_only == FALSE) {
         collisionWithMonsters();
     }
     

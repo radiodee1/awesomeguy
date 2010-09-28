@@ -1067,7 +1067,7 @@ public  class Panel  extends SurfaceView  {
 						}
 						/*****************end bigprize *************/
 						/************ death ****************/
-						if (test && mGameV.getObjectsCell(j,i) == mGameV.mDeath ) {
+						if (test && mGameV.getObjectsCell(j,i) == mGameV.mDeath && mGameV.isGameDeath() == false) {
 
 							mGameV.setGameDeath(true);
 							mGameV.setEndLevel(true);
