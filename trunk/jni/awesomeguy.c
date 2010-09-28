@@ -1122,7 +1122,7 @@ void drawMovingPlatform() {
 	int i;
   int x,y;
   int width = 5;
-  int cheat = -5;
+  int cheat = -5;// - 5
   int markerTest = FALSE;
   int hide = TRUE;
   int show = FALSE;
@@ -1134,13 +1134,14 @@ void drawMovingPlatform() {
   for (i = monster_num + 1 ; i < platform_num ; i++) {
     markerTest = FALSE; 
 
-      x = sprite[i].x / 8;
+      //x = sprite[i].x / 8;
       y = sprite[i].y / 8;
       /* Must move and stop platforms when they hit bricks or
        * markers or the end of the screen/room/level.
        */
       if(sprite[i].facingRight == TRUE) {
         sprite[i].x ++;
+        x = sprite[i].x / 8;
         // marker test
         if(map_objects[y][x+width + cheat + 1] == B_BLOCK) markerTest = TRUE;
         if(map_objects[y][x+width + cheat + 1] == B_MARKER) markerTest = TRUE;
@@ -1152,6 +1153,7 @@ void drawMovingPlatform() {
       }
       else {
         sprite[i].x --;
+        x = sprite[i].x / 8;
         // marker test
         if(map_objects[y][x + cheat ] == B_BLOCK) markerTest = TRUE;
         if(map_objects[y][x + cheat ] == B_MARKER) markerTest = TRUE;
