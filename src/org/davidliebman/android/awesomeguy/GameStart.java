@@ -480,6 +480,8 @@ public class GameStart extends Activity {
     			this.removeMessages(GAMEVALUES);
     			this.removeMessages(INPUTVALUES_KEYUP);
     			
+    			mGameV.setLevelLoading(true);
+    			
     		    mPanelBot.setAnimationOnly(false);
     		    mPanelBot.setJNIAnimateOnly(0); // '0' is false for JNI
     		    

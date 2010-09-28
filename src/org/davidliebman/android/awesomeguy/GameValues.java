@@ -48,6 +48,7 @@ public class GameValues {
 	private int mUsernum = 4;
 	//public static int NUM_ROOMS = 10;
 	private int mOldGuyScore;
+	private boolean mLevelLoading;
 	
 	/* sprites */
 	private ArrayList<SpriteInfo> mSprites = new ArrayList<SpriteInfo>();
@@ -233,6 +234,13 @@ public class GameValues {
 		this.mOldGuyScore = mOldGuyScore;
 	}
 	
+	public boolean isLevelLoading() {
+		return mLevelLoading;
+	}
+	public void setLevelLoading(boolean mLevelLoading) {
+		this.mLevelLoading = mLevelLoading;
+	}
+	
 	
 	/** work with sprite list **/
 	public void setSpriteStart() {
@@ -318,13 +326,6 @@ public class GameValues {
 	public void setTotNumRooms(int mTotNumRooms) {
 		this.mTotNumRooms = mTotNumRooms;
 	}
-	/*
-	public ArrayList<Integer> getXmlLevel() {
-		return mXmlLevel;
-	}
-	public void setXmlLevel(ArrayList<Integer> mXmlLevel) {
-		this.mXmlLevel = mXmlLevel;
-	}
-	*/
+	
 	
 }
