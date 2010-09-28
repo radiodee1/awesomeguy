@@ -205,17 +205,15 @@ public class InitBackground {
 			   Log.e("XML", sdcard.getAbsolutePath());
 			   int BUFFER_SIZE = 8192;
 
-			   if(sdcard.canRead()) {
-				   Log.e("XML", "sdcard.canRead()");
-				   File mFileInput = new File(sdcard, SDCARD_FILE);
-				   
-				   FileReader mReader = new FileReader(mFileInput);
-				   
-				   BufferedReader in = new BufferedReader(mReader,BUFFER_SIZE);
+			   
+			   File mFileInput = new File(sdcard, SDCARD_FILE);
+			   
+			   FileReader mReader = new FileReader(mFileInput);
+			   
+			   BufferedReader in = new BufferedReader(mReader,BUFFER_SIZE);
 
-				   mXpp.setInput(in);
+			   mXpp.setInput(in);
 				   
-			   }
 			}
 			return true;
 		}
