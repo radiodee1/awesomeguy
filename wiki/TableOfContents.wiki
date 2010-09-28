@@ -60,9 +60,6 @@
         * [Awesomeguy#addMonstersJNI() addMonstersJNI()]
         * [Awesomeguy#addPlatformsJNI() addPlatformsJNI()]
         * [Awesomeguy#JNI_Declarations JNI Declarations]
-
-----
-
   * [ConstructingLevels#ConstructingLevels Constructing Levels]
     * [ConstructingLevels#Tools_and_Programs Tools and Programs]
     * [ConstructingLevels#Basic_Structure Basic Structure]
