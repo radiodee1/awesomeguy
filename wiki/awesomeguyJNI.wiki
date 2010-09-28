@@ -239,6 +239,10 @@ static int PAINT_SOLID = 0;
 static int PAINT_TRANSPARENT = 1;
 }}}
 
+===Scope===
+
+These variables are all declared outside any method body, so they have global scope. Up until now the variables declared have been constants, but many of the variables, like the 2D array 'screen' have contents that change over time. This is because 'screen' is rewritten every time the Panel redraws itself. This is OK for our library. The contents of 'screen' are persistent over many calls to the library, and are also changeable over many calls to the library.
+
 ===Unsigned Integers===
 
 The thirteen arrays below are used to hold the data that makes up several Bitmap images. These images are loaded when the Panel.java file is initialized. They are not loaded and reloaded every time the Panel.java file draws an image to the screen. Arrays in c are really made of two things. Firstly the memory for the array is allocated, and secondly a pointer is created to the beginning of the array. The data type used here is `uint32_t`, which is an unsigned integer of 32 bits. This is the data type I use for all graphical information. Graphical elements, or pixels, are going to be stored in these arrays.
@@ -330,4 +334,13 @@ Another object used by the program is the bounding box. The struct for the bound
 typedef struct {
 	int left, right, top, bottom;
 } BoundingBox;
+}}}
+
+The integers 'left', 'right', 'top', and 'bottom' are all screen positions for the boundaries of a sprite's drawable region. In Awesomeguy we use a simple box for collision detection, where as in other games a more complex shape like an outline might be used. In Awesomeguy the sprites are so small that a simple box seems to work best.
+
+===Various Variables===
+
+Next a group of integers is defined that are used in different sections of the library.
+{{{
+static int level_h, level_w, score, lives, scrollx, scrolly, animate;
 }}}
