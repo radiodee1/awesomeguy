@@ -122,6 +122,8 @@ static int sound_boom = FALSE;
 static int preferences_monsters = FALSE;
 static int preferences_collision = FALSE;
 
+static int animate_only = FALSE;
+
 //////////////////////////////////////////////////////
 // function headers
 //////////////////////////////////////////////////////
@@ -1519,6 +1521,20 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_setMonster
 {
 	preferences_monsters = monsters;
 	preferences_collision = collision;
+
+}
+
+/**
+ *	Used to set the animate_only boolean value
+ *
+ *	@param	env			required by all java jni
+ *	@param	obj			required by all java jni
+ *	@param	animate 	weather animate_only is set
+ */
+JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_setJNIAnimateOnly(JNIEnv * env, jobject  obj, jint animate)
+{
+
+	animate_only = animate;
 
 }
 

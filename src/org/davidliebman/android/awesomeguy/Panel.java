@@ -1233,6 +1233,7 @@ public  class Panel  extends SurfaceView  {
 	public native void setGuyPosition(int x, int y, int scrollx, int scrolly, int animate);
 	public native void setScoreLives(int score, int lives);
     public native void setMonsterPreferences(int monsters, int collision);
+    public native void setJNIAnimateOnly(int animate);
     public native void setScreenData(int screenH, int screenV);
 	public native int[] drawLevel(int num);
 	public native int getSoundBoom();

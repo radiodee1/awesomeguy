@@ -481,7 +481,8 @@ public class GameStart extends Activity {
     			this.removeMessages(INPUTVALUES_KEYUP);
     			
     		    mPanelBot.setAnimationOnly(false);
-
+    		    mPanelBot.setJNIAnimateOnly(0); // '0' is false for JNI
+    		    
     			mPanelBot.setInitialBackgroundGraphics();
     			mPanelBot.setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
     			mPanelBot.setGuySprite(mGameV.getSpriteStart()); //must refresh reference to guySprite
@@ -506,6 +507,7 @@ public class GameStart extends Activity {
     		else if (msg.what == GAMESTOP) {
     			//do something here?
     	    	mPanelBot.setAnimationOnly(true);
+    	    	mPanelBot.setJNIAnimateOnly(1); // '1' is true for JNI
     	    	mPanelBot.invalidate();
     			this.removeMessages(MOVEMENTVALUES);
     			this.removeMessages(GAMEVALUES);
