@@ -96,6 +96,7 @@ public  class Panel  extends SurfaceView  {
 	int [] screen = new int [192 * 256];
 	SoundPoolManager mSounds;
 	private boolean mEnableSounds;
+	private boolean mAnimationOnly;
 	
 	public Panel(Context context,  GameValues gameValues, GameStart parent, MovementValues movementValues, Record highScores, int displayWidth) {
 		super(context);
@@ -158,6 +159,8 @@ public  class Panel  extends SurfaceView  {
 		newBG = 0;
 		lastBG = 0;
 
+		mAnimationOnly = false;
+		
 		mHighScores = highScores;//parent.getHighScores();//mGameV.getGuyScore();
 		mSounds = new SoundPoolManager(parent);
 		mSounds.init();
@@ -228,15 +231,22 @@ public  class Panel  extends SurfaceView  {
 	@Override
 	public void onDraw(Canvas canvas) {
 		mCanvas = canvas;
-		
 		this.setScoreLives(mGameV.getScore(), mGameV.getLives());
-		
-		checkRegularCollisions();
 
-		checkPhysicsAdjustments();
+		if (!mAnimationOnly) {
 		
-		scrollBg(); //always call this last!!
+			checkRegularCollisions();
 
+			checkPhysicsAdjustments();
+		
+			scrollBg(); //always call this last!!
+		}
+		else {
+			/* JNI Monster Collision setting */
+			int monsters = 0;
+			if(mHighScores.isEnableMonsters()) monsters = 1;
+			setMonsterPreferences(monsters, 0);
+		}
 		/** animate items **/
 		animateItems();
 
@@ -275,8 +285,13 @@ public  class Panel  extends SurfaceView  {
 		mGameV.setSpriteStart();
 		mGuySprite = mGameV.getSpriteStart();
 		mGameV.adjustSpriteStartPos();
-		//guyX = mGuySprite.getMapPosX();
-		//guyY = mGuySprite.getMapPosY();
+
+		/* JNI Monster Collision setting */
+		int monsters = 0;
+		int collision = 0;
+		if(mHighScores.isEnableMonsters()) monsters = 1;
+		if(mHighScores.isEnableCollision()) collision = 1;
+		setMonsterPreferences(monsters, collision);
 	}
 
 
@@ -1087,6 +1102,16 @@ public  class Panel  extends SurfaceView  {
 		keyB = b;
 	}
 
+
+
+	public boolean isAnimationOnly() {
+		return mAnimationOnly;
+	}
+
+
+	public void setAnimationOnly(boolean mAnimationOnly) {
+		this.mAnimationOnly = mAnimationOnly;
+	}
 
 
 	/**  used to refresh reference to Guy Sprite before start of level. **/

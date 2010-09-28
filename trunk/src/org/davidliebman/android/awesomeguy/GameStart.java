@@ -480,6 +480,8 @@ public class GameStart extends Activity {
     			this.removeMessages(GAMEVALUES);
     			this.removeMessages(INPUTVALUES_KEYUP);
     			
+    		    mPanelBot.setAnimationOnly(false);
+
     			mPanelBot.setInitialBackgroundGraphics();
     			mPanelBot.setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
     			mPanelBot.setGuySprite(mGameV.getSpriteStart()); //must refresh reference to guySprite
@@ -503,6 +505,8 @@ public class GameStart extends Activity {
     		
     		else if (msg.what == GAMESTOP) {
     			//do something here?
+    	    	mPanelBot.setAnimationOnly(true);
+    	    	mPanelBot.invalidate();
     			this.removeMessages(MOVEMENTVALUES);
     			this.removeMessages(GAMEVALUES);
     			this.removeMessages(INPUTVALUES_KEYUP);
@@ -579,7 +583,6 @@ public class GameStart extends Activity {
     		    mSavedRoomFlag = true;
     		    
     		    //getSavedRoom();
-
     		    
     		    mGameV.setScore(10);
     		    
