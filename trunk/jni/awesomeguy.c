@@ -364,6 +364,19 @@ void setLevelData(int a[MAP_HEIGHT * MAP_WIDTH],  int b[MAP_HEIGHT * MAP_WIDTH])
 			//LOGE("level data %i ", map_level[i][j]);
 		}
 	}
+	
+	for (i = 0; i< 100; i ++) {
+		sprite[i].x = 0;
+		sprite[i].y = 0;
+		sprite[i].animate = 0;
+		sprite[i].facingRight = FALSE;
+		sprite[i].active = FALSE;
+		sprite[i].visible = FALSE;
+		sprite[i].leftBB = 0;
+		sprite[i].rightBB = 0;
+		sprite[i].topBB = 0;
+		sprite[i].bottomBB = 0;
+	}
 	monster_num = 0;
 	sprite_num = 0;
 	platform_num = -1;
@@ -1122,12 +1135,12 @@ void drawMovingPlatform() {
 	int i;
   int x,y;
   int width = 5;
-  int cheat = -5;// - 5
+  int cheat = 0;// - 5
   int markerTest = FALSE;
   int hide = TRUE;
   int show = FALSE;
   int visibility = FALSE;
-  
+  int x_right, x_left, y_right, y_left;
     
   if(platform_num == -1) return;
     
@@ -1142,9 +1155,12 @@ void drawMovingPlatform() {
       if(sprite[i].facingRight == TRUE) {
         sprite[i].x ++;
         x = sprite[i].x / 8;
+        markerTest = FALSE; 
         // marker test
-        if(map_objects[y][x+width + cheat + 1] == B_BLOCK) markerTest = TRUE;
-        if(map_objects[y][x+width + cheat + 1] == B_MARKER) markerTest = TRUE;
+        y_right = y;
+        x_right = x + width + cheat ;
+        if(map_objects[x_right][y_right] == B_BLOCK) markerTest = TRUE;
+        if(map_objects[x_right][y_right] == B_MARKER) markerTest = TRUE;
 
         // turn platform
         if (sprite[i].x > level_w   * 8   - PLATFORM_WIDTH || markerTest == TRUE) {
@@ -1154,9 +1170,12 @@ void drawMovingPlatform() {
       else {
         sprite[i].x --;
         x = sprite[i].x / 8;
+        markerTest = FALSE; 
         // marker test
-        if(map_objects[y][x + cheat ] == B_BLOCK) markerTest = TRUE;
-        if(map_objects[y][x + cheat ] == B_MARKER) markerTest = TRUE;
+        y_left = y;
+        x_left = x + cheat ;
+        if(map_objects[x_left][y_left ] == B_BLOCK) markerTest = TRUE;
+        if(map_objects[x_left][y_left ] == B_MARKER) markerTest = TRUE;
 
         // turn platform
         if (sprite[i].x <= 0 || markerTest == TRUE) {
