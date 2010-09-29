@@ -139,7 +139,7 @@ scrollTo(scrollX, scrollY);
 
 The process of using the TileCutter and the loops described above is time consuming, so a JNI library was used.
 
-=JNI=
+=JNI Setup=
 
 JNI stands for 'Java Native Interface' and NDK stands for 'Native Development Kit'. To program JNI for the android platform you must download and configure the 'android-ndk-r4' package, which can be found on the Android developers site at the following address. See: http://developer.android.com/sdk/ndk/index.html . Download and install the package that is appropriate for your operating system. Installing this software is beyond the scope of this wiki. The documentation that accompanies the ndk software is very helpful. 
 
@@ -344,3 +344,10 @@ Next a group of integers is defined that are used in different sections of the l
 {{{
 static int level_h, level_w, score, lives, scrollx, scrolly, animate;
 }}}
+The variables 'level_h' and 'level_w' are the dimensions of the map, in tiles, that the current level actually uses. As noted, the map can be 96x96 tiles, but a given level may only use a smaller portion of that map. These two variables define the _used_ map area. This saves room in the awesomeguy.xml file, where level definition information is stored, as an array of 96x96 tiles is not necessarily stored. Instead, if for example 'level_h' is 32 and 'level_w' is 64, an array of 32x64 tiles is stored.
+
+The variables 'score' and 'lives' carry the numbers that are to be printed on the screen that are associated with those values. The 'score' and 'lives' values can also change in the JNI. These changes would be detected by the java code as the Panel redraws.
+
+The variables 'scrollx' and 'scrolly' are values passed to the JNI by the Panel.java code. They tell the JNI how to draw the screen.
+
+The variable 'animate' is used to animate the rings that appear on many of the levels. It is a integer value between 0 and 4.
