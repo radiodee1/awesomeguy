@@ -377,6 +377,8 @@ The code of the library is so straightforward that function headers might not ha
 
 I will attempt to go through all the methods in the file, occasionally grouping methods together that function in exactly the same way. 
 
+===Method Overview===
+
 The library is basically designed to produce an array that gets printed on the screen like a Bitmap image. The library takes, when it's set up, a group of arrays that are in fact Bitmaps themselves. For most of these bitmaps the methods in the library simply copy information from one array, the source bitmap, to the other array, the output screen bitmap. This is the most common scenario, and the methods that do this work are generally called 'drawSprite(..)' methods. There is some variation in the names.
 
 Sometimes, as in the case with tilesheets, the source bitmap is altered before it's copied. When the tilesheet is the source material, the program first cuts out one of the tiles, using a method called 'cutTile(...)'. The material from this tile is copied to a local array that's the size of just one tile (8x8). Then the local array is passed to a function that operates in a manner similar to that described above - it takes a source array and copies it to the output array. This method is called 'drawTile(...)'.
@@ -391,4 +393,38 @@ There are also methods in the library that turn 1 dimensional arrays into 2 dime
 
 ===Sound Setters===
 
+These methods set the variables 'sound_ow', 'sound_boom', and 'sound_prize'. They're fairly simple. Their signatures are listed here.
+
+{{{
+void setSoundOw() ;
+void setSoundPrize() ;
+void setSoundBoom() ;
+}}}
+
+The actual listing of 'setSoundOw()' is here.
+{{{
+void setSoundOw() {
+	sound_ow = TRUE;
+}
+}}}
+All three methods operate the same way.
+
 ===Sound Getters===
+
+These methods are also fairly simple. Their signatures are listed here.
+{{{
+int getSoundOw() ;
+int getSoundPrize() ;
+int getSoundBoom() ;
+}}}
+The listing of 'getSoundOw()' is below.
+{{{
+int getSoundOw() {
+	int temp = sound_ow;
+	sound_ow = FALSE;
+	return temp;
+}
+}}}
+It's slightly more complex than the 'setSoundOw()' method, because it not only returns the value of the 'sound_ow' variable, but it resets it to FALSE. The method is used by the java code to tell if an event has transpired in the last display of the 'screen' bitmap that would call for the 'ow' sound to be played. This would be when the main character comes in contact with a monster, for example. This method is closely related to the collision detection methods of the library.
+
+===setTileMapData()===
