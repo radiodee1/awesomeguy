@@ -375,7 +375,19 @@ The code of the library is so straightforward that function headers might not ha
 
 =JNI Methods=
 
-I will attempt to go through all the methods in the file, occasionally grouping methods together that function in exactly the same way.
+I will attempt to go through all the methods in the file, occasionally grouping methods together that function in exactly the same way. 
+
+The library is basically designed to produce an array that gets printed on the screen like a Bitmap image. The library takes, when it's set up, a group of arrays that are in fact Bitmaps themselves. For most of these bitmaps the methods in the library simply copy information from one array, the source bitmap, to the other array, the output screen bitmap. This is the most common scenario, and the methods that do this work are generally called 'drawSprite(..)' methods. There is some variation in the names.
+
+Sometimes, as in the case with tilesheets, the source bitmap is altered before it's copied. When the tilesheet is the source material, the program first cuts out one of the tiles, using a method called 'cutTile(...)'. The material from this tile is copied to a local array that's the size of just one tile (8x8). Then the local array is passed to a function that operates in a manner similar to that described above - it takes a source array and copies it to the output array. This method is called 'drawTile(...)'.
+
+The only thing left to do is make sure everything goes where it's supposed to on the screen. The locations that all these 'draw' methods use are determined in the 'drawLevel(...)' method, where the entire 'screen' array is managed and populated.
+
+A lot of other methods are included in the library. Some draw words and numbers on the screen, like the words 'score' and 'level'. They use tiles, so they can use the 'cutTile(...)' and the 'drawTile(...)' methods. 
+
+Some methods determine weather a collision has taken place. This would be important for the display of the 'monster' sprites. In that case the level needs to be stopped when the main character comes into contact with a monster. Collision detection is an exception to the notion that the library operates to display images only.
+
+There are also methods in the library that turn 1 dimensional arrays into 2 dimensional array, and at least one method that turns 2 dimensional arrays into 1 dimensional arrays. This is necessary because internally the library uses 2 dimensional arrays, while the java code that passes Bitmaps to the library uses 1 dimensional arrays. Also the method that turns the 'screen' array into a Bitmap for java expects a 1 dimensional array, while the 'screen' array itself is 2 dimensional.
 
 ===Sound Setters===
 
