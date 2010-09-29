@@ -387,7 +387,7 @@ A lot of other methods are included in the library. Some draw words and numbers 
 
 Some methods determine weather a collision has taken place. This would be important for the display of the 'monster' sprites. In that case the level needs to be stopped when the main character comes into contact with a monster. Collision detection is an exception to the notion that the library operates to display images only.
 
-There are also methods in the library that turn 1 dimensional arrays into 2 dimensional array, and at least one method that turns 2 dimensional arrays into 1 dimensional arrays. This is necessary because internally the library uses 2 dimensional arrays, while the java code that passes Bitmaps to the library uses 1 dimensional arrays. Also the method that turns the 'screen' array into a Bitmap for java expects a 1 dimensional array, while the 'screen' array itself is 2 dimensional.
+There are also methods in the library that turn 1 dimensional arrays into 2 dimensional array, and at least one method that turns 2 dimensional arrays into 1 dimensional arrays. This is necessary because internally the library uses 2 dimensional arrays, while the java code that passes Bitmaps to the library uses 1 dimensional arrays. Also the method that turns the 'screen' array into a Bitmap for java expects a 1 dimensional array, while the 'screen' array itself is 2 dimensional. The methods for turning 1D to 2D are all called 'copyArraysExpand(...)' or some variation on that name. The method for turning the 'screen' array into a 1D array is called 'copyScreenCompress(...)'.
 
 ===Sound Setters===
 
