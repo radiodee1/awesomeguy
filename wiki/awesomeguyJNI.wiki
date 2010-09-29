@@ -351,3 +351,32 @@ The variables 'score' and 'lives' carry the numbers that are to be printed on th
 The variables 'scrollx' and 'scrolly' are values passed to the JNI by the Panel.java code. They tell the JNI how to draw the screen.
 
 The variable 'animate' is used to animate the rings that appear on many of the levels. It is a integer value between 0 and 4.
+
+{{{
+static int endlevel = FALSE;
+
+static int sound_ow = FALSE;
+static int sound_prize = FALSE;
+static int sound_boom = FALSE;
+
+static int preferences_monsters = FALSE;
+static int preferences_collision = FALSE;
+}}}
+
+The remaining global variables are all boolean. The first four are used as a notification system between the JNI and the java. The variables 'endlevel', 'sound_ow', 'sound_prize' and 'sound_boom' are used to tell the java that a collision has happened that requires the Panel.java class to end game play (in the case of 'endlevel') or play a certain sound (in the case of 'sound_ow', 'sound_prize', and 'sound_boom'). Every time the Panel is redrawn these variables are checked. If their value changes from FALSE to TRUE then the java knows it has to do something.
+
+The variables 'preferences_monsters' and 'preferences_collision' are used as notification to the JNI from the java of the Panel class. They tell the JNI weather or not monsters should appear on the screen, and weather or not those monsters can interact with the main character. This second preference, 'preferences_collision' allows the main character to travel through the levels without fear of dying from monsters.
+
+===Function Headers===
+
+Functions in the awesomeguy JNI library are divided into two groups. The first group is the standard function that is internal to the library and may be called anywhere in the library. The second group is the group of functions that is meant to be called by the Panel.java class. This second group of functions is all located at the end of the file. The method signature for these functions is somewhat complex. Meanwhile the first group of functions has simple signatures. For this group function headers were included in the library.
+
+The code of the library is so straightforward that function headers might not have been strictly necessary, but they are included because the library has no header files (the library is composed of a single source c file). Though the headers appear in the file, they will not be duplicated here.
+
+=JNI Methods=
+
+I will attempt to go through all the methods in the file, occasionally grouping methods together that function in exactly the same way.
+
+===Sound Setters===
+
+===Sound Getters===
