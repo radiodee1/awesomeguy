@@ -494,3 +494,75 @@ void setMovingPlatformData(jint a[]) {
 	copyArraysExpand_8_40( a, PLATFORM_WIDTH * PLATFORM_HEIGHT, platform_a);
 }
 }}}
+
+====copyArraysExpand tileset()====
+
+There are three methods with signatures similar to this. They all begin 'copyArraysExpand'. They all take a 1 dimensional array and convert it to a 2 dimensional array. This one also has a second part, used for setting the 'number_alpha' variable to a value that can be used to deal with transparency when numbers are displayed on the screen. The code for the method is below.
+
+{{{
+void copyArraysExpand_tileset (jint from[], int size_l, uint32_t to[TILEMAP_HEIGHT][TILEMAP_WIDTH]) {
+
+	int num, n, l;
+	int i,j, k;
+	for (i = 0; i< TILEMAP_HEIGHT; i ++ ) {
+		for (j = 0; j < TILEMAP_WIDTH; j ++ ) {
+			k =( i * TILEMAP_WIDTH ) + j;
+			if ( k < size_l ) {
+				to[i][j] = from[k];
+			}
+		}
+	}
+	n = TILEMAP_WIDTH / TILE_HEIGHT; // 224/8 = 28
+	num = 374;
+	k = (num / n); // y pos 
+	l = num - (k * n); // x pos
+	number_alpha = to[k * 8][l * 8];
+	return;
+}
+}}}
+There are three parameters to the method. One is the 1 dimensional array called 'from'. Next is the integer that holds the size of the array, called 'size_l'. Lastly is the 2 dimensional array called 'to'.
+
+In the section used to set the 'number_alpha' variable, a specific pixel is copied to 'number_alpha' from the tilesheet. The value is the upper left hand pixel from tile number 374. This is one of the number tiles. The upper left hand pixel from this tile is simply a black pixel.
+
+It's worth noting that the calculation of 'number_alpha' happens four times. This is not ideal, but since it's convenient it's left the way that it is. 
+
+====copyArraysExpand 16()====
+
+This method is very similar to 'copyArraysExpand_tileset(...)'. The principle differences are that the size of the 2D array are different, and there is no section for setting 'number_alpha'. Both the monster sprite and the main character sprite have an alpha channel of their own in the original bitmap image. 
+{{{
+void copyArraysExpand_16(jint from[], int size_l, uint32_t to[GUY_WIDTH][GUY_HEIGHT]) {
+
+
+	int i,j, k;
+	for (i = 0; i< GUY_HEIGHT; i ++ ) {
+		for (j = 0; j < GUY_WIDTH; j ++ ) {
+			k =( i * GUY_WIDTH ) + j;
+			if ( k < size_l ) {
+				to[i][j] = (uint32_t) from[k];
+
+			}
+		}
+	}
+	return;
+}
+}}}
+
+====copyArraysExpand 8 40()====
+
+This method is similar to the other 'copyArraysExpand' methods. It takes different sized arrays as input and output, though. It's used for the moving platform. It's also only used once, as there is only one image for the moving platform.
+{{{
+void copyArraysExpand_8_40(jint from[], int size_l, uint32_t to[PLATFORM_HEIGHT][PLATFORM_WIDTH]) {
+
+	int i,j, k;
+	for (i = 0; i< PLATFORM_HEIGHT; i ++ ) {
+		for (j = 0; j < PLATFORM_WIDTH; j ++ ) {
+			k =( i * PLATFORM_WIDTH ) + j;
+			if ( k < size_l ) {
+				to[i][j] = from[k];
+			}
+		}
+	}
+	return;
+
+}
+}}}
