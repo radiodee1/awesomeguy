@@ -427,4 +427,32 @@ int getSoundOw() {
 }}}
 It's slightly more complex than the 'setSoundOw()' method, because it not only returns the value of the 'sound_ow' variable, but it resets it to FALSE. The method is used by the java code to tell if an event has transpired in the last display of the 'screen' bitmap that would call for the 'ow' sound to be played. This would be when the main character comes in contact with a monster, for example. This method is closely related to the collision detection methods of the library.
 
-===setTileMapData()===
+===Loading Graphic Data===
+
+Several steps are incorporated to load the graphics data from the java code into the JNI code. This data is used to assemble the 'screen' array, which is returned to the java code and turned into a Bitmap. 
+
+====setTileMapData()====
+
+This function, like 'setGuyData()' and 'setMonsterData()' takes four arrays as its parameters. These arrays are 1 dimensional. The method simply passes the four arrays off to another function that rearranges their data into 2 dimensional arrays. These 2 dimensional arrays are the permanent holding area for this graphical data. The three methods are called at the time of the Panel.java class's initialization, not during the subsequent drawing of the screen. The signature for the three methods is below.
+{{{
+void setTileMapData(jint a[], jint b[], jint c[], jint d[] ) ;
+
+void setGuyData(jint a[], jint b[], jint c[], jint d[] ) ;
+
+void setMonsterData(jint a[], jint b[], jint c[], jint d[] ) ;
+}}}
+The contents of the 'setTileMapData(...)' method are below.
+{{{
+void setTileMapData(jint a[], jint b[], jint c[], jint d[] ) {
+
+
+	copyArraysExpand_tileset(a, TILEMAP_WIDTH * TILEMAP_HEIGHT, tiles_a);
+	copyArraysExpand_tileset(b, TILEMAP_WIDTH * TILEMAP_HEIGHT, tiles_b);
+	copyArraysExpand_tileset(c, TILEMAP_WIDTH * TILEMAP_HEIGHT, tiles_c);
+	copyArraysExpand_tileset(d, TILEMAP_WIDTH * TILEMAP_HEIGHT, tiles_d);
+	
+}
+}}}
+The four arrays, 'a', 'b', 'c', and 'd', are each separate tile sheets. They are nearly identical, except for the animation of the rings that the main character collects for points. The method 'copyArraysExpand_tileset(...)' will be explained below.
+
+====setMovingPlatformData()====
