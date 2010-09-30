@@ -453,6 +453,44 @@ void setTileMapData(jint a[], jint b[], jint c[], jint d[] ) {
 	
 }
 }}}
-The four arrays, 'a', 'b', 'c', and 'd', are each separate tile sheets. They are nearly identical, except for the animation of the rings that the main character collects for points. The method 'copyArraysExpand_tileset(...)' will be explained below.
+The four arrays, 'a', 'b', 'c', and 'd', are each separate tile sheets. They are nearly identical, except for the animation of the rings that the main character collects for points. The method 'copyArraysExpand_tileset(...)' will be explained later. The arrays 'tiles_a', 'tiles_b', 'tiles_c', and 'tiles_d' are 2 dimensional arrays that are declared as global in the library. 
+
+====setGuyData()====
+
+The code for 'setGuyData(...)' is below. This method uses the 'copyArraysExpand_16(...)' function. This function is made for 16 x 16 sprites. Since both the main character and also the monsters are 16 x 16, we can reuse this code in both 'setGuyData(...)' and 'setMonsterData(...)'. Here we also set the bounding box for the main character's sprite.
+{{{
+void setGuyData(jint a[], jint b[], jint c[], jint d[] ) {
+            
+	copyArraysExpand_16(a, GUY_WIDTH * GUY_HEIGHT, guy_a);
+	copyArraysExpand_16(b, GUY_WIDTH * GUY_HEIGHT, guy_b);
+	copyArraysExpand_16(c, GUY_WIDTH * GUY_HEIGHT, guy_c);
+	copyArraysExpand_16(d, GUY_WIDTH * GUY_HEIGHT, guy_d);
+	
+	guy.topBB = 2; 
+	guy.bottomBB = 16;
+	guy.leftBB = 4;
+	guy.rightBB = 10;
+}
+}}}
+
+====setMonsterData()====
+
+The code for 'setMonsterData(...)' is below. Since the monster sprite is 16 x 16 we can reuse the 'copyArraysExpand_16(...)' method.
+{{{
+void setMonsterData(jint a[], jint b[], jint c[], jint d[] ) {
+
+	copyArraysExpand_16(a, MONSTER_WIDTH * MONSTER_HEIGHT, monster_a);
+	copyArraysExpand_16(b, MONSTER_WIDTH * MONSTER_HEIGHT, monster_b);
+	copyArraysExpand_16(c, MONSTER_WIDTH * MONSTER_HEIGHT, monster_c);
+	copyArraysExpand_16(d, MONSTER_WIDTH * MONSTER_HEIGHT, monster_d);
+}
+}}}
 
 ====setMovingPlatformData()====
+
+This method is very much like 'setTileMapData(...)' except that there is only one image for the moving platforms. The platforms have different dimensions then the other sprites, so they must have their own methods. Below is a listing of the 'setMovingPlatformData()' code.
+{{{
+void setMovingPlatformData(jint a[]) {
+	copyArraysExpand_8_40( a, PLATFORM_WIDTH * PLATFORM_HEIGHT, platform_a);
+}
+}}}
