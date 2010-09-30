@@ -649,3 +649,68 @@ void addPlatform(int platform_x, int platform_y) {
 }
 }}} 
 The bounding box info is totally different, and the 'platform_num' variable is set instead of the 'monster_num' variable. Note that 'platform_num' is _not_ the 'number of platforms' as you might guess the name means. Instead the 'platform_num' is the index in the sprite list at which the last platform resides.
+
+===More Setters===
+
+These are functions that are used to set variables that are part of the JNI library, usually from the java Panel class. They are called, for the most part, with every refresh of the screen.
+
+====setGuyPosition()====
+
+This function could have easily been called something else. It not only sets the main character's position but it also informs the library of the settings for the 'scrollx' and the 'scrolly' variables. It also sets the animation index for the main character. The code is listed below.
+{{{
+void setGuyPosition(int guy_x, int guy_y, int scroll_x, int scroll_y, int guy_animate) {
+
+	guy.x = guy_x;
+	guy.y = guy_y;
+	guy.animate = guy_animate;
+	animate = guy_animate;
+	scrollx = scroll_x;
+	scrolly = scroll_y;
+}
+}}}
+
+====setScoreLives()====
+
+This method sets the 'score' and 'lives' variables in the JNI library so that they can be printed on the screen. It is called every time the Panel.java class refreshes the screen.
+{{{
+void setScoreLives(int a_score, int a_lives) {
+
+    score = a_score;
+    lives = a_lives;
+}
+}}}
+
+===Object Setters===
+
+These functions can be used at any time. They change the state of the 'map_objects' array, or possibly the value associated with a certain sprite.
+
+====setObjectsDisplay()====
+
+This function identifies a single element in the 'map_objects' array and changes its value. It is used to change rings to empty space most frequently. In that case, 'map_x' and 'map_y' would be the location of the ring, and the 'value' integer would be zero.
+{{{
+void setObjectsDisplay(int map_x, int map_y, int value) {
+	map_objects[map_x][ map_y ] = value;
+}
+}}}
+
+====inactivateMonster()====
+
+This function can be called at any time. It sets the given 'active' flag for a sprite with a certian index to FALSE.
+{{{
+void inactivateMonster(int num) {
+	if (num < sprite_num) {
+		sprite[num].active = FALSE;
+	}
+}
+}}}
+
+====inactivateMonsterView()====
+
+This sets the 'visible' property to FALSE. The code is listed below.
+{{{
+void inactivateMonsterView(int num) {
+	if (num < sprite_num) {
+		sprite[num].visible = FALSE;
+	}
+}
+}}}
