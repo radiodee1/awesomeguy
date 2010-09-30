@@ -596,3 +596,56 @@ void setLevelData(int a[MAP_HEIGHT * MAP_WIDTH],  int b[MAP_HEIGHT * MAP_WIDTH])
 Since we set the 'map_objects' and 'map_level' arrays at the beginning of each level, this function is a good place to initialize some variables that are used to keep track of Sprite struct objects on the 'sprite' list. This is what we're doing when we set 'monster_num', 'sprite_num', and 'platform_num'.
 
 ===Loading Sprites===
+
+There are three types of sprites that could use the Sprite struct. They are the main character sprite, the monster sprite, and the moving platform sprite. The main character sprite uses a Sprite struct that is specially created for it, and exists separate from the other sprites. The remaining objects on the screen that need sprites are handled by an array of Sprite structs. This array can handle up to 100 sprites. The array is used as a list. On the list first go all of the monster sprites. Then on the list goes all of the floating platforms that might be on the level. The list is re-initialized at the beginning of each level. The variables 'monster_num', 'sprite_num', and 'platform_num' are used to manage the list.
+
+The lists of monsters and platforms could be initialized entirely within the JNI library, as the library has a copy of the 'map_objects' array, but it could also be initialized from the java code, and that is the way it is implemented.
+
+====addMonster()====
+
+The signature of the 'addMonster(...)' method calls for the monster's x and y position, and the starting animation index for the sprite. The body of the method sets the bounding box values and adjusts the 'sprite_num' and 'monster_num' integers. The code is listed below.
+{{{
+void addMonster(int monster_x, int monster_y, int monster_animate) {
+
+	sprite[sprite_num].x = monster_x ;
+	sprite[sprite_num].y = monster_y ;
+	sprite[sprite_num].animate = monster_animate;
+	sprite[sprite_num].facingRight = TRUE;
+	sprite[sprite_num].active = TRUE;
+	sprite[sprite_num].visible = TRUE;
+      
+	sprite[sprite_num].topBB = 3; 
+	sprite[sprite_num].bottomBB = 8;
+	sprite[sprite_num].leftBB = 0;
+	sprite[sprite_num].rightBB = 16;
+      
+	sprite_num ++;
+	monster_num = sprite_num;
+	platform_num = 0;
+}
+}}}
+The function 'addMonster(...)' must be called once for every monster on the level, and before any other platform sprite is added to the sprite list. This way all the monsters are together, and the first monster sprite starts at index zero.
+
+====addPlatform()====
+
+The method for adding a platform is similar to the method for adding a monster except that there is only one image for the platform, so no starting animation index is saved. The code for 'addPlatform(...)' is below.
+{{{
+void addPlatform(int platform_x, int platform_y) {
+
+	sprite[sprite_num].x = platform_x ;
+	sprite[sprite_num].y = platform_y ;
+	sprite[sprite_num].animate = 0;
+	sprite[sprite_num].facingRight = TRUE;
+	sprite[sprite_num].active = TRUE;
+	sprite[sprite_num].visible = TRUE;
+      
+	sprite[sprite_num].topBB = 0; 
+	sprite[sprite_num].bottomBB = 8;
+	sprite[sprite_num].leftBB = 0;
+	sprite[sprite_num].rightBB = 40;
+      
+	sprite_num ++;
+	platform_num = sprite_num;
+}
+}}} 
+The bounding box info is totally different, and the 'platform_num' variable is set instead of the 'monster_num' variable. Note that 'platform_num' is _not_ the 'number of platforms' as you might guess the name means. Instead the 'platform_num' is the index in the sprite list at which the last platform resides.
