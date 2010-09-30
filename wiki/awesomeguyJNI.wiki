@@ -568,3 +568,27 @@ void copyArraysExpand_8_40(jint from[], int size_l, uint32_t to[PLATFORM_HEIGHT]
 }}}
 
 ===Loading Map Data===
+
+For every level we need to load all the necessary map data. This data tells the library how to print the background, and also where to put things like monsters and rings. The map arrays that the JNI library uses are 96 x 96. Sometimes the java code is dealing with smaller arrays that it later copies into the 96 x 96 element arrays. The JNI library is not interested in the smaller arrays except to know what size they are. The size _is_ used by the library, and when that size is smaller than 96 x 96 the array is partly empty. The java code always passes data to the JNI library in the form of 1 dimensional arrays. In this function we convert the two 1 dimensional arrays that we need into two 2 dimensional arrays. One of the arrays is then called 'map_level' and one of them is called 'map_objects'.
+{{{
+void setLevelData(int a[MAP_HEIGHT * MAP_WIDTH],  int b[MAP_HEIGHT * MAP_WIDTH]) {
+
+	int i,j;
+	
+	for (i = 0 ; i < MAP_HEIGHT ; i ++ ) {
+		for (j = 0; j < MAP_WIDTH ; j ++ ) {
+			map_level[i][j] = a[ (i * MAP_WIDTH ) + j] ;
+			map_objects[i][j] = b[ (i * MAP_WIDTH ) + j] ;
+
+		}
+	}
+	monster_num = 0;
+	sprite_num = 0;
+	platform_num = -1;
+	
+	return;
+}
+}}}
+Since we set the 'map_objects' and 'map_level' arrays at the beginning of each level, this function is a good place to initialize some variables that are used to keep track of Sprite struct objects on the 'sprite' list. This is what we're doing when we set 'monster_num', 'sprite_num', and 'platform_num'.
+
+===Loading Sprites===
