@@ -714,3 +714,89 @@ void inactivateMonsterView(int num) {
 	}
 }
 }}}
+
+===Drawing The Screen===
+
+A single method is responsible for drawing the screen, but it calls many other methods. Here is a breakdown of the 'drawLevel(...)' method. The method itself is comparatively long so it will be listed in parts.
+
+====drawLevel()====
+
+This is the method signature line and some of the variable declarations. Because most of the things that you would expect to find as input to the method are actually global arrays in the JNI library, the method only has one parameter. The 'animate_level' parameter helps to animate the moving rings that populate some of the game's levels.
+{{{
+void drawLevel(int animate_level) {
+    
+    int i,j,k,l;
+    int baseX, baseY;
+    int mapcheat = 1;
+    uint32_t square[TILE_HEIGHT][TILE_WIDTH];
+    
+    animate = animate_level;
+}}}
+The method has no return value because it stores it's output in another global variable array, the 2 dimensional 'screen' array. 
+
+The variables internal to the method are fairly simple. The single letter variables are used as loop indexes. The variables 'baseX' and 'baseY' are for when the background is being printed on the screen and the code has to determine which tiles to actually draw. The variable 'mapcheat' is used to make sure that the proper tile index is used when we're drawing picture tiles on the screen. The 2D array 'square' is used as a temporary holding place for each tile before its data is copied to the 'screen' array of pixels. The 'square' array is exactly 8 pixels by 8 pixels.
+
+====Clear Screen====
+
+This code simply clears the screen.
+{{{
+    /* clear screen */
+    for (i = 0 ; i < (SCREEN_HEIGHT ); i ++ ) {
+    	for( j = 0; j < SCREEN_WIDTH; j ++ ) {
+    	
+	    	screen[i][j] = (uint32_t) 0x0000;// = -1;
+	    }
+    }
+}}}
+
+====Draw Background====
+
+{{{
+    /* draw background */
+    baseX = scrollx / TILE_WIDTH;
+    baseY = scrolly / TILE_HEIGHT;
+    
+	for ( j = baseX - 1; j <  baseX + tilesWidthMeasurement + 3; j++) { //32
+    	for ( i = baseY - 1 ; i < baseY + tilesHeightMeasurement + 3; i ++ ) { //24
+    		
+    		
+    		if (i >= 0 && j >= 0  && i < MAP_HEIGHT && j < MAP_WIDTH) { 
+    			if(  map_level[j][i] != 0 ) { //is tile blank??
+    				cutTile(tiles_a, square, map_level[j][i]);
+    				drawTile_8(square, j * TILE_WIDTH, i * TILE_HEIGHT , 
+    					scrollx , scrolly, PAINT_SOLID, 0);
+				}
+				// special animated tiles
+				k = map_objects[j][i];
+				if ( k != B_START && k != B_MONSTER && k != B_DEATH
+    				&& k != B_PLATFORM && k != B_MARKER && k != B_BLOCK
+    				&& k != B_LADDER  && k != B_SPACE) {
+    				
+    				
+    				if (animate == 0 || animate == 1 || animate == 8) {
+
+    		    		cutTile(tiles_a, square, k - mapcheat);
+    				}
+    				else if (animate == 2 || animate == 4 || animate == 6) {
+
+    		    		cutTile(tiles_b, square, k - mapcheat);
+    				}
+    				else if (animate == 3 || animate == 7) {
+
+    		    		cutTile(tiles_c, square, k - mapcheat);
+    				}
+    				else if (animate == 5) {
+
+    		    		cutTile(tiles_d, square, k - mapcheat);
+    				}
+    				
+
+    				drawTile_8(square, j * TILE_WIDTH, i * TILE_HEIGHT , 
+    					scrollx , scrolly, PAINT_TRANSPARENT, 0);
+    			
+    			}
+		}
+			
+    	}
+    }
+}}}
