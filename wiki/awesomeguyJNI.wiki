@@ -751,6 +751,8 @@ This code simply clears the screen.
 
 ====Draw Background====
 
+This is essentially a series of loops which does some comparisons and then calls two functions in succession. The two functions are 'cutTile(...)' and 'drawTile_8(...)'. We'll discuss the functions in depth later in the document, but for now know that the 'cutTile(...)' function isolates a single tile's graphical data in the 'square' array that's declared above. Then the 'drawTile_8(...)' method copies data from the 'square' array onto the 'screen' array, in the desired location of the screen.
+
 {{{
     /* draw background */
     baseX = scrollx / TILE_WIDTH;
@@ -800,3 +802,24 @@ This code simply clears the screen.
     	}
     }
 }}}
+The background image for any one of the game's levels is larger than the screen that we use to display it. This means that the display scrolls around, following the main character as it visits different parts of the level. To manage this situation we have two very important variables for the x and y scroll position of the screen. These variables are called 'scrollx' and 'scrolly' in the JNI code, and they're never changed in this code. The scroll settings are only changed in the java code in the Panel.java file.
+
+The background is painted by following a large map, which can contain up to 96 x 96 elements. Each element represents an 8 x 8 square. What we have to do is figure out what part of the map is on screen and just paint that part. That's what 'baseX' and 'baseY' help us do. The 'scrollx' and 'scrolly' variables represent the top left coordinate for the visible screen. The 'baseX' and 'baseY' variables are the top left map coordinate for the visible screen, and we get them by taking 'scrollx' and 'scrolly' and dividing by 8, or the size of one tile.
+
+Then we set up our loops. The loops go through the visible part of the map and print that part to the screen. The loops start at the extreme top and left and continue to the bottom right, counting in 8 pixel units. On the emulator the screen is 32 map units wide and 24 map units high (this can change with different hardware).
+
+Then we make sure that our loop indexes are within the limits of our program. The indexes, 'i' and 'j', cannot be greater than the height or width of the maps. Then we print the visible tiles to the screen.
+
+For the 'map_level' array we print all the tiles except the ones that are represented by a zero. We use the 'cutTile(...)' and 'drawTile_8(...)' methods here.
+
+For the 'map_objects' array we only print some of the tiles. The list of non printing tiles is below.
+  * B_START - the starting position of the main character
+  * B_MONSTER - the starting position of a monster
+  * B_DEATH - a block that causes death of the main character on contact
+  * B_PLATFORM - the starting position of a floating platform
+  * B_MARKER - a marker that a monster or platform cannot pass
+  * B_BLOCK - a solid wall or floor
+  * B_LADDER - a ladder
+As long as the block in question is not one of those listed above the block can be printed. Here we must print the block from the right tile sheet, since tile sheets are animated. The animation is key for the ring tiles.
+
+The 'cutTile(...)' and 'drawTile_8(...)' method pair is broken up here. We use if/else blocks to task the 'cutTile(...)' method with cutting the right tilesheet, 'tiles_a', 'tiles_b', 'tiles_c', or 'tiles_d'. Then when all of the logic concerning which tile to cut is done we call 'drawTile_8(...)' on the 'square' array.
