@@ -597,9 +597,7 @@ public class GameStart extends Activity {
        
     		     // advance through rooms
 
-    		      // Zero out lower screen. Could use another method. Maybe print picture on
-    		       // main engine...
-    		       //
+    		      
     		    mHandler.sendEmptyMessage(GameStart.STARTLEVEL);
 
         		mHandler.removeMessages(GameStart.MOVEMENTVALUES);
