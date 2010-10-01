@@ -874,3 +874,75 @@ The last sections in the 'drawLevel(...)' function draw the main character. They
 The 'drawSprite_16(...)' method is based on the 'drawTile_8(...)' method. They both do essentially the same thing, and they accomplish it in the same way. Their difference is in the size of the image that they use as their source material. The 'drawTile_8(...)' method uses a 8 x 8 array as it's source. The 'drawSprite_16(...)' method uses a 16 x 16 array as it's source. The 'drawSprite_16(...)' method is used by the 'drawMonster()' code also because the monster sprite is 16 x 16.
 
 The if/else construction that the 'drawSprite_16(...)' methods reside in is used to animate the main character. The methods must use one of the four main character sprites, called 'guy_a', 'guy_b', 'guy_c', or 'guy_d'.
+
+===Copy Tiles Sprites Platforms===
+
+There is an intended similarity to the functions that copy tiles, sprites, and platforms to the 'screen' array. They all work the same way. Their difference is in their array sizes, and therefore the starting and ending points of their loops. The functions could have been written as one function having many more parameters when it was called, but for simplicity separate methods were written. The 'drawTiles_8(...)' method will be discussed in the greatest detail here. 
+
+====drawTiles_8()====
+
+The code for the method is included here.
+{{{
+void drawTile_8(uint32_t tile[TILE_WIDTH][TILE_HEIGHT], int screen_x, int screen_y, int scroll_x, int scroll_y, int paint_all, uint32_t extra) {
+   
+    int i,j,m,n;
+
+	m = (screen_x ) - scroll_x;
+
+	n = (screen_y ) - scroll_y;
+
+    
+    for (i = 0; i < TILE_HEIGHT; i ++ ) {
+    	for (j = 0; j < TILE_WIDTH; j ++) {
+    		if ( (i + n) >= 0 && (j + m) >= 0 && (i+n) < SCREEN_HEIGHT  && (j+m) <  SCREEN_WIDTH ) {
+    			if ( paint_all == PAINT_TRANSPARENT && tile[i][j] == extra ) {
+    				//
+    			}
+    			else {
+	    			screen[i + n ][j + m] = tile[i][j];
+	    			//LOGE("drawing tile %i", tile[i][j]);
+	    		}
+    		} 
+    	}
+    }
+    return;
+}
+}}}
+The most important parameters of the method are 'tile', 'screen_x', 'screen_y', 'scroll_x', and 'scroll_y'. The 2D array 'tile' is the 8 x 8 tile that needs to be printed on the 'screen' array. It is assumed that 'tile' is prepared by the 'cutTile(...)' method. Variables 'screen_x' and 'screen_y' are the position on the screen, as measured in pixels, where the 'tile' array is to be copied. Variables 'scroll_x' and 'scroll_y' are obviously the scroll position of the rectangle that is displayed on the Panel, that we are calling the 'screen' array. The scroll properties are essentially the coordinates of the upper left hand corner of the displayed area as measured in pixels.
+
+The map arrays can acomidate a game play area that's larger than what we see on the phone's display. We need to figure out what is going to be shown on the screen and where it's going to be shown. What we try to do is subtract the scroll_x and scroll_y variables from the screen_x and screen_y. This gives us their position on the _visible_ screen. Then we cycle through the 'tile' array, copying it's contents to the visible screen area. What's left to worry about is what happens if the tile is on the edge of the screen, with one part visible and one part invisible. This would be bad and would probably cause an 'array out of bounds' type error. We take care of this with a simple 'if()' statement. It checks before each pixel is copied weather or not the resulting activity will result in 'array out of bounds'.
+
+The two loops are defined by the size of the 'tile' array. Only inside the loop do we add the offsets 'm' and 'n' to the indexes from the loops ('i' and 'j').
+
+There are two parameters from the 'drawTile_8(...)' method that we haven't covered. They are the integer 'paint_all' and the unsigned integer 'extra'. Variable 'extra' holds a single pixel value. Variable 'paint_all' can hold one of two values that tells the 'drawTile_8(...)' method what to do with 'extra'. The possible values for 'paint_all' are 'PAINT_TRANSPARENT' and 'PAINT_SOLID'. If 'PAINT_TRANSPARENT' is chosen then the routine checks each value from 'tile' before copying it to 'screen'. If the 'tile' value matches the 'extra' value, no operation is performed. This is equivalent to making a transparent area inside of 'tile'. This method is useful for printing numbers to the screen that need to have a transparent background, even if the source image has no alpha channel.
+
+====drawSprite_16()====
+
+Below is the code for 'drawSprite_16(...)'.
+{{{
+void drawSprite_16(uint32_t from[GUY_WIDTH][GUY_HEIGHT], int x, int y, int scroll_x, int scroll_y, int paint_all, uint32_t extra) {
+
+
+
+
+    int i,j,k,l;
+    k = x - scroll_x;
+    l = y - scroll_y;
+    for (i = 0; i < GUY_HEIGHT; i ++ ) {
+    	for (j = 0; j < GUY_WIDTH; j ++) {
+    		if ( (i + l) >= 0 && (j + k) >= 0 && (j+k) < SCREEN_WIDTH && (i+l) < SCREEN_HEIGHT ) {
+    			
+    			if (paint_all == PAINT_TRANSPARENT && from[i][j] == extra ) {
+    				
+    			}
+    			else {
+	    			screen[i + l][j + k] = from[i][j];
+
+	    		}
+
+    		}
+    	}
+    }
+    return;
+}
+}}}
