@@ -922,9 +922,6 @@ Below is the code for 'drawSprite_16(...)'.
 {{{
 void drawSprite_16(uint32_t from[GUY_WIDTH][GUY_HEIGHT], int x, int y, int scroll_x, int scroll_y, int paint_all, uint32_t extra) {
 
-
-
-
     int i,j,k,l;
     k = x - scroll_x;
     l = y - scroll_y;
@@ -946,3 +943,33 @@ void drawSprite_16(uint32_t from[GUY_WIDTH][GUY_HEIGHT], int x, int y, int scrol
     return;
 }
 }}}
+The method is identical to 'drawTile_8(...)' except for the names of some of the variables.
+
+====drawSprite_40_8()====
+
+The code for this method is here.
+{{{
+void drawSprite_40_8(uint32_t from[PLATFORM_HEIGHT][PLATFORM_WIDTH], int x, int y, int scroll_x, int scroll_y, int paint_all, uint32_t extra) {
+	
+	int i,j,k,l;
+    k = x - scroll_x;
+    l = y - scroll_y;
+    for (i = 0; i < PLATFORM_HEIGHT; i ++ ) {
+    	for (j = 0; j < PLATFORM_WIDTH; j ++) {
+    		if ( (i + l) >= 0 && (j + k) >= 0 && (j+k) < SCREEN_WIDTH && (i+l) < SCREEN_HEIGHT ) {
+    			
+    			if (paint_all == PAINT_TRANSPARENT && from[i][j] == extra ) {
+    				
+    			}
+    			else {
+	    			screen[i + l][j + k] = from[i][j];
+
+	    		}
+
+    		}
+    	}
+    }
+    return;
+}
+}}}
+This method is also almost identical.
