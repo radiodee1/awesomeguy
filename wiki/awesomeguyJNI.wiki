@@ -900,7 +900,7 @@ void drawTile_8(uint32_t tile[TILE_WIDTH][TILE_HEIGHT], int screen_x, int screen
     			}
     			else {
 	    			screen[i + n ][j + m] = tile[i][j];
-	    			//LOGE("drawing tile %i", tile[i][j]);
+
 	    		}
     		} 
     	}
