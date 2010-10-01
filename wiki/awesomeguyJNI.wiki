@@ -823,3 +823,52 @@ For the 'map_objects' array we only print some of the tiles. The list of non pri
 As long as the block in question is not one of those listed above the block can be printed. Here we must print the block from the right tile sheet, since tile sheets are animated. The animation is key for the ring tiles.
 
 The 'cutTile(...)' and 'drawTile_8(...)' method pair is broken up here. We use if/else blocks to task the 'cutTile(...)' method with cutting the right tilesheet, 'tiles_a', 'tiles_b', 'tiles_c', or 'tiles_d'. Then when all of the logic concerning which tile to cut is done we call 'drawTile_8(...)' on the 'square' array.
+
+====Platforms And Score====
+
+Next we call two functions responsible for drawing floating platforms on the screen and drawing the player's score on the screen. These two functions are complex and will be covered later, but for now it should be noted that they both use specialized versions of 'drawTile_8(...)' to ultimately show their images on the 'screen' array. All these functions based on 'drawTile_8(...)' essentially just copy the data from some source array to the 'screen' array.
+{{{
+    /* draw moving platform */
+    drawMovingPlatform();
+    
+    /* draw score and level */
+    drawScoreWords();
+}}}
+As noted above, the 'drawMovingPlatform()' method and thhe 'drawScoreWords()' method are complex and deserve their own section.
+
+====Monsters====
+
+The next sections draw the monsters on the screen and also check weather any of the monsters have collided with the main character. Drawing on the screen is normal for the JNI library, but checking for collisions is special and almost contrary to the stated goals of the 'awesomeguy.c' file. The advantage to checking for collisions here is that it limits the amount of interplay that must happen between the JNI library and the Panel.java class. We chose not to follow this model when we implemented the 'collision-with-platforms' code. In that case we use the java code to handle collision detection.
+{{{
+    /* draw monsters */
+    if (preferences_monsters == TRUE) {
+        drawMonsters();
+    }
+    
+    if (preferences_monsters == TRUE && preferences_collision == TRUE) {
+        collisionWithMonsters();
+    }
+}}}
+The last thing to note is that the 'drawMonsters()' and the 'collisionWithMonsters()' code is only executed if the 'preferences_monsters' and the 'preferences_collision' variables are set appropriately.
+
+====Main Character====
+
+The last sections in the 'drawLevel(...)' function draw the main character. They use the function 'drawSprite_16(...)'. 
+{{{
+	/* draw guy with animation */
+	if (guy.animate == 0) {
+	    drawSprite_16(guy_a, guy.x, guy.y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+	}
+	else if (guy.animate == 1) {
+	    drawSprite_16(guy_b, guy.x, guy.y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+	}
+	else if (guy.animate == 2) {
+	    drawSprite_16(guy_c, guy.x, guy.y, scrollx, scrolly, PAINT_TRANSPARENT, 0);	
+	}
+	else { 
+	    drawSprite_16(guy_d, guy.x, guy.y, scrollx, scrolly, PAINT_TRANSPARENT, 0);	
+	}
+}}}
+The 'drawSprite_16(...)' method is based on the 'drawTile_8(...)' method. They both do essentially the same thing, and they accomplish it in the same way. Their difference is in the size of the image that they use as their source material. The 'drawTile_8(...)' method uses a 8 x 8 array as it's source. The 'drawSprite_16(...)' method uses a 16 x 16 array as it's source. The 'drawSprite_16(...)' method is used by the 'drawMonster()' code also because the monster sprite is 16 x 16.
+
+The if/else construction that the 'drawSprite_16(...)' methods reside in is used to animate the main character. The methods must use one of the four main character sprites, called 'guy_a', 'guy_b', 'guy_c', or 'guy_d'.
