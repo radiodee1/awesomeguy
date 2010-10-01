@@ -813,6 +813,7 @@ Then we make sure that our loop indexes are within the limits of our program. Th
 For the 'map_level' array we print all the tiles except the ones that are represented by a zero. We use the 'cutTile(...)' and 'drawTile_8(...)' methods here.
 
 For the 'map_objects' array we only print some of the tiles. The list of non printing tiles is below.
+
   * B_START - the starting position of the main character
   * B_MONSTER - the starting position of a monster
   * B_DEATH - a block that causes death of the main character on contact
@@ -820,6 +821,7 @@ For the 'map_objects' array we only print some of the tiles. The list of non pri
   * B_MARKER - a marker that a monster or platform cannot pass
   * B_BLOCK - a solid wall or floor
   * B_LADDER - a ladder
+
 As long as the block in question is not one of those listed above the block can be printed. Here we must print the block from the right tile sheet, since tile sheets are animated. The animation is key for the ring tiles.
 
 The 'cutTile(...)' and 'drawTile_8(...)' method pair is broken up here. We use if/else blocks to task the 'cutTile(...)' method with cutting the right tilesheet, 'tiles_a', 'tiles_b', 'tiles_c', or 'tiles_d'. Then when all of the logic concerning which tile to cut is done we call 'drawTile_8(...)' on the 'square' array.
