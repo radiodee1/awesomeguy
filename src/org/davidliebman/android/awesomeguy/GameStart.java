@@ -592,7 +592,7 @@ public class GameStart extends Activity {
     		    
     		    mGameV.setEndGame(false);
     		    
-    		    while(mGameV.getRoomNo() <=  mGameV.getTotNumRooms() && !mGameV.isEndGame() && gameRunning && mGameV.getLives() > 0) {
+    		    while(mGameV.getRoomNo() <= mLevelList.size()  && !mGameV.isEndGame() && gameRunning && mGameV.getLives() > 0) {
 
        
     		     // advance through rooms
