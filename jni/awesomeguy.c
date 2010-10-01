@@ -164,7 +164,7 @@ void addPlatform(int platform_x, int platform_y) ;
 
 int collisionSimple(BoundingBox boxA, BoundingBox boxB) ;
 
-int collisionSimple2(BoundingBox boxA, BoundingBox boxB) ;
+int collisionHelper(BoundingBox boxA, BoundingBox boxB) ;
 
 void copyScreenCompress(uint32_t from[SCREEN_WIDTH][SCREEN_HEIGHT],  uint32_t to[]) ;
 
