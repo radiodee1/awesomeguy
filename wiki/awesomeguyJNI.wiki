@@ -1014,7 +1014,7 @@ void drawScoreWords() {
     				
 
     			}
-    			//print LEVEL:
+    			//print LIVES:
     			for (i = 0; i < 6; i ++) {
     				
     				cutTile(tiles_a, square, topLives[i]);
