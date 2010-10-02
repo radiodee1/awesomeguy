@@ -833,7 +833,7 @@ Next we call two functions responsible for drawing floating platforms on the scr
     /* draw moving platform */
     drawMovingPlatform();
     
-    /* draw score and level */
+    /* draw score and lives */
     drawScoreWords();
 }}}
 As noted above, the 'drawMovingPlatform()' method and thhe 'drawScoreWords()' method are complex and deserve their own section.
