@@ -1259,38 +1259,38 @@ void collisionWithMonsters() {
 	int i;
 	
 	
-		  BoundingBox guyBox = makeSpriteBox( guy , 0, 0 );
+	BoundingBox guyBox = makeSpriteBox( guy , 0, 0 );
 
 		  
-		  for (i = 0  ; i < monster_num ; i++) {   
-		    BoundingBox monsterBox = makeSpriteBox(sprite[i] , 0, 0 );
-		    int test =  collisionSimple(guyBox, monsterBox);
-		    if (test && sprite[i].active   == TRUE) {
+	for (i = 0  ; i < monster_num ; i++) {   
+		BoundingBox monsterBox = makeSpriteBox(sprite[i] , 0, 0 );
+		int test =  collisionSimple(guyBox, monsterBox);
+		if (test && sprite[i].active   == TRUE) {
 		    
-		      if (guyBox.bottom  < monsterBox.bottom ) {
+			if (guyBox.bottom  < monsterBox.bottom ) {
 
-		    	score = score + 10;
+		    		score = score + 10;
 		    	
-		    	if (preferences_collision == TRUE) {
-		    		inactivateMonsterView(i);
-		    		inactivateMonster(i);
-		    	}
+		    		if (preferences_collision == TRUE) {
+		    			inactivateMonsterView(i);
+		    			inactivateMonster(i);
+		    		}
 
 
 				setSoundBoom();
 		        
 		        
-		      }
-		      else {
+			}
+			else {
 				endlevel = TRUE;
 				if (preferences_collision == TRUE) inactivateMonster(i);
 
-		        lives --;
+				lives --;
 
 				setSoundOw();
-		      }
-		    }
-		  }
+			}
+		}
+	}
 
 }
 
