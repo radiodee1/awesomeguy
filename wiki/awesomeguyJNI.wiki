@@ -1258,10 +1258,8 @@ void collisionWithMonsters() {
 
 	int i;
 	
-	
 	BoundingBox guyBox = makeSpriteBox( guy , 0, 0 );
-
-		  
+	  
 	for (i = 0  ; i < monster_num ; i++) {   
 		BoundingBox monsterBox = makeSpriteBox(sprite[i] , 0, 0 );
 		int test =  collisionSimple(guyBox, monsterBox);
@@ -1293,5 +1291,9 @@ void collisionWithMonsters() {
 	}
 
 }
-
 }}}
+The function starts by setting up a for() loop that goes through all the monsters on the level. Then it checks to see if a monster has come in contact with the main character. This is done in the line 'int test = collisionSimple(guyBox, monsterBox)'. In this line the bounding boxes of the monster in question and the main character are checked, and if they overlap then the 'test' variable is set to TRUE.
+
+The next part of the function tests to see if the guy is above the monster. If the monster is higher, the guy dies. If the guy is higher, the monster dies. When the 'monster' dies we increase the score and play a sound. We also inactivate the monster so that it appears to have vanished. When the main character dies we set 'endlevel' to TRUE and decrease the 'lives'. We also play a sound and inactivate the monster so that it does not interact with other items on the screen. 
+
+In the JNI code we have now killed the main character. The java code must be notified, so the java code gets the value of 'endlevel' once in every display of the Panel view. Panel.java knows this method as 'getEndLevel()' and it returns an integer value of 0 or 1. In this way the JNI and the java coordinate things like the end of the level and the playback of sounds.
