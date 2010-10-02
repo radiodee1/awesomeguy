@@ -981,3 +981,58 @@ As you play the game, the score and lives that the main player has are printed o
 The 'tile' bitmaps do not contain tiles for every letter of the alphabet. They just contain the images for 0 through 9 and the words 'score' and 'lives'. Also, each letter or number is two tiles high. This means that the functions that print the text to the screen have to know that the letters come in two parts.
 
 If you look at any of the four tilesheets you can see the letters and numbers in the bitmap image. They are blue with a red outline on a black background.
+
+====drawScoreWords()====
+
+This method just draws the words 'score' and 'lives' on the screen. Then it calls another method which is designed to draw numbers on the screen, 'drawScoreNumbers()'. Though both functions use tiles to print their characters, the characters never scroll. It isn't necessary that the numbers and letters ever move around, so there's no parameter to 'scrollx' or 'scrolly' in the method signature. The method is concerned with weather or not the main character is going to be obscured by the letters if they are printed. That's why the method checks weather the value of 'guy.y' is greater than 16 before printing anything.
+{{{
+void drawScoreWords() {
+
+
+		int i;
+    	int topScore[] = {374,375,376,377,378,383};
+
+    	int topLives[] = {379,380,381,378,382,383};
+
+    	int scorePos, livesPos;
+    	scorePos = 2 ;
+    	livesPos = 16  ;
+        uint32_t square[TILE_HEIGHT][TILE_WIDTH];
+		
+    	if (guy.y > 16) {
+    			//print SCORE:
+    			for (i = 0; i < 6; i ++) {
+       				cutTile(tiles_a, square, topScore[i]);
+
+    				drawTile_8(square, (scorePos + i) * TILE_WIDTH + scrollx, (1) * TILE_HEIGHT + scrolly, 
+    					scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
+
+       				cutTile(tiles_a, square, topScore[i] +28);
+
+    				drawTile_8(square, (scorePos + i) * TILE_WIDTH  + scrollx, (2) * TILE_HEIGHT + scrolly, 
+    					scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
+    				
+
+    			}
+    			//print LEVEL:
+    			for (i = 0; i < 6; i ++) {
+    				
+    				cutTile(tiles_a, square, topLives[i]);
+
+    				drawTile_8(square, (livesPos + i) * TILE_WIDTH + scrollx, (1) * TILE_HEIGHT + scrolly, 
+    					scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
+
+       				cutTile(tiles_a, square, topLives[i] +28);
+
+    				drawTile_8(square, (livesPos + i) * TILE_WIDTH +scrollx , (2) * TILE_HEIGHT + scrolly , 
+    					scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
+    				
+    				
+    			}
+
+    			//print numbers:
+    			drawScoreNumbers( scorePos + 6, score  , 7); // score
+    			drawScoreNumbers( livesPos + 6, lives , 7); // lives
+    	}
+    }
+}}}
