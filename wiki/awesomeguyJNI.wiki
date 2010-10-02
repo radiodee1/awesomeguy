@@ -1226,3 +1226,72 @@ The method determines weather the sprite is facing right or facing left. It does
 Inside the 'facingRight' section the code first moves the sprite a certain distance to the right, then it checks for the presence of certain conditions at that location. These conditions are: 1) if a block stands in the way of the monster's movement 2) if a special marker stands in the way of the monster's movement 3) if the floor that the monster is on has come to an end. If any one of these conditions is true, the status of the 'facingRight' element of the sprite is changed from TRUE to FALSE, or FALSE to TRUE. In other words the direction of the monster is reversed.
 
 The code in the section for if the monster is facing left is similar to the code for 'facingRight'. Since facing left is the opposite to facing right there is only one flag for direction in the sprite struct, and it's called 'facingRight'. Similarly in the code there is no line that says 'if(sprite[i].facingLeft == TRUE)', instead we simply use the 'else' block associated with 'if(sprite[i].facingRight == TRUE)' for all the facing-left code. Lines in the facing left section of the code mimic lines in the previous section. First the sprite is moved to the left, then the 'map_objects' array is checked for conditions that would cause the monster to turn.
+
+The next section, listed below, deals mostly with weather or not a 'monster' sprite is in the area visible to the player. 
+{{{
+				//default is to show monster
+				visibility = show;
+				//hide monster if...
+				if(sprite[i].x > scrollx + 32 * 8 + 16 ) {
+					visibility = hide;
+				}
+				if (sprite[i].x < scrollx - 16) {
+					visibility = hide;
+				}
+				if (sprite[i].y > scrolly + 24 * 8 + 16) {
+					visibility = hide;
+				}
+				if ( sprite[i].y < scrolly  - 16) {
+					visibility = hide;
+				}
+}}}
+The constant 32 represents how many tiles wide the average screen is, and the constant 24 represents the height of the average screen. The constant 16 is used as a safety margin so that sprites do not suddenly appear or disappear as they come close to the edges of the screen.
+
+The next section takes care of animating the 'monster' sprite, and the last section prints the monster on the screen, with special regard to weather or not the sprite is facing right or left, weather it is visible, and what state it's animation index is in.
+
+====collisionWithMonsters()====
+
+This code draws on the methods 'makeSpriteBox(...)' and 'collisionSimple()', but otherwise is vary simple.
+
+{{{
+void collisionWithMonsters() {
+
+	int i;
+	
+	
+		  BoundingBox guyBox = makeSpriteBox( guy , 0, 0 );
+
+		  
+		  for (i = 0  ; i < monster_num ; i++) {   
+		    BoundingBox monsterBox = makeSpriteBox(sprite[i] , 0, 0 );
+		    int test =  collisionSimple(guyBox, monsterBox);
+		    if (test && sprite[i].active   == TRUE) {
+		    
+		      if (guyBox.bottom  < monsterBox.bottom ) {
+
+		    	score = score + 10;
+		    	
+		    	if (preferences_collision == TRUE) {
+		    		inactivateMonsterView(i);
+		    		inactivateMonster(i);
+		    	}
+
+
+				setSoundBoom();
+		        
+		        
+		      }
+		      else {
+				endlevel = TRUE;
+				if (preferences_collision == TRUE) inactivateMonster(i);
+
+		        lives --;
+
+				setSoundOw();
+		      }
+		    }
+		  }
+
+}
+
+}}}
