@@ -1090,3 +1090,139 @@ void drawScoreNumbers( int pos, int num, int p) {
 There are two for() loops in this function. The first one breaks the actual number that needs to be printed into pieces and puts those pieces in an array called 'places'. The array holds the number broken down so that in each element of the array a single decimal place from the original 'num' is held. With this information we can spell out the number. For example, 99 would be broken down into '9' and '9'. The number 155 would be broken down into the array '1', '5', and '5'.
 
 The second for() loop takes the 'places' array and uses the 'cutTile(...)' and 'drawTile_8(...)' methods to put the number on the screen. The numbers are left justified and leading zeroes are not printed.
+
+===Drawing Monsters===
+
+The 'monster' bitmap has an alpha color and is 16 pixels by 16 pixels, but only the top half of the image is used. The bottom half is entirely filled with the 'alpha' color. There are four bitmaps. Two bitmaps represent the monster facing right and two bitmaps represent the monster facing left. For each direction a bitmap exists to show the monster with it's mouth open or closed. The two images are used to animate the monster sprite.
+
+The JNI code has two functions oriented to dealing with monsters. They are 'drawMonsters()' and 'collisionWithMonsters()'. The 'collisionWithMonsters()' method is something of a departure from the other methods in the library, as it deals with more than just _displaying_ graphics on the screen, but also determining what to do when those graphical elements come into contact.
+
+====drawMonsters()====
+
+This method goes through the list of sprite records and determines how to print the appearance of the 'monster' sprite. The first major part of the method is the for() loop.
+{{{
+void drawMonsters() {
+	//draw all monsters
+	int anim_speed = 5;
+	int i;
+	int x,y,z;
+	int move = 3;//3
+	int markerTest = FALSE;
+	int hide = TRUE;
+	int show = FALSE;
+	int visibility = FALSE;
+	
+	//for each monster...
+	if(monster_num > 0) {
+		for (i =  0 ; i < monster_num   ; i++) {   
+			markerTest = FALSE; 
+
+			
+			if (sprite[i].active == TRUE ) {
+				x = sprite[i].x / 8;
+				y = sprite[i].y / 8;
+				// Must move and stop monsters when they hit bricks or
+				// markers or the end of the screen/room/level.
+
+				if(sprite[i].facingRight == TRUE) {
+
+					sprite[i].x = sprite[i].x + move;
+					// marker test
+					if( map_objects[x+2][y] == B_BLOCK  ) markerTest = TRUE;
+					if( map_objects[x+2][y] == B_MARKER ) markerTest = TRUE;
+					if( map_objects[ x+2][y+1] == 0) markerTest = TRUE;
+					// turn monster
+					if (sprite[i].x > level_w * 8  - 16 || markerTest == TRUE) {
+
+						sprite[i].facingRight=FALSE;
+					}
+				}
+				else {
+
+					sprite[i].x = sprite[i].x - move;
+					// marker test
+					if(map_objects[x][y] == B_BLOCK) markerTest = TRUE;
+					if(map_objects[x][y] == B_MARKER) markerTest = TRUE;
+					if(map_objects[x-1][y+1] == 0) markerTest = TRUE;
+					// turn monster
+					if (sprite[i].x < 0 || markerTest == TRUE) {
+
+						sprite[i].facingRight=TRUE;
+					}
+				}
+
+				//Only show monsters that are on the screen properly
+
+
+				//default is to show monster
+				visibility = show;
+				//hide monster if...
+				if(sprite[i].x > scrollx + 32 * 8 + 16 ) {
+					visibility = hide;
+				}
+				if (sprite[i].x < scrollx - 16) {
+					visibility = hide;
+				}
+				if (sprite[i].y > scrolly + 24 * 8 + 16) {
+					visibility = hide;
+				}
+				if ( sprite[i].y < scrolly  - 16) {
+					visibility = hide;
+				}
+			}
+	    	
+			//swap monsters
+			
+			sprite[i].animate ++;
+			if (sprite[i].animate > anim_speed * 4) sprite[i].animate=0;
+			if (sprite[i].animate > anim_speed * 2) z = 1;
+			else z = 0;
+
+			
+			if(sprite[i].visible == TRUE && visibility == show) {
+				
+	    		if(sprite[i].facingRight == TRUE) {
+					if(z == 0) {
+						//(R.drawable.monster_r0);
+						drawSprite_16(monster_a, sprite[i].x, sprite[i].y, 
+							scrollx, scrolly, PAINT_TRANSPARENT, 0);
+
+					}
+					else if (z == 1) {
+						//(R.drawable.monster_r1);
+						drawSprite_16(monster_b, sprite[i].x, sprite[i].y, 
+							scrollx, scrolly, PAINT_TRANSPARENT, 0);
+					}
+				}
+				else if (!sprite[i].facingRight == TRUE) {
+					if(z == 0) {
+						//(R.drawable.monster_l0);
+						drawSprite_16(monster_c, sprite[i].x, sprite[i].y, 
+							scrollx, scrolly, PAINT_TRANSPARENT, 0);
+					}
+					else if (z == 1) {
+						//(R.drawable.monster_l1);
+						drawSprite_16(monster_d, sprite[i].x, sprite[i].y, 
+							scrollx, scrolly, PAINT_TRANSPARENT, 0);
+					}
+				}
+	    		
+			}
+
+		}
+
+	}
+	return;
+	
+	
+}
+}}}
+The for() loop checks to see that only 'monster' structs are examined. To do this it uses the 'monster_num' variable as one of it's boundaries. From that point on the loop addresses each of the sprite structs individually. Inside the loop it checks to see if the given sprite is active. Only then does it proceed with the rest of the code. 
+
+Then it converts the sprite's x and y coordinates into their map position. This is to say that it divides the pixel coordinates by 8, yielding a measurement that can be used when comparing things to the 'map_objects' array. The monster only stops when it comes to the end of a platform, or when it comes to one of the invisible markers specially made for this purpose. The location of these elements are all recorded in the 'map_objects' array.
+
+The method determines weather the sprite is facing right or facing left. It does this by checking the 'facingRight' property of the sprite. Then it concerns itself with moving the sprite to the right if that's the way it's facing, or moving the sprite to the left. Code in the 'facingRight' section is similar to code in the 'facingLeft' section.
+
+Inside the 'facingRight' section the code first moves the sprite a certain distance to the right, then it checks for the presence of certain conditions at that location. These conditions are: 1) if a block stands in the way of the monster's movement 2) if a special marker stands in the way of the monster's movement 3) if the floor that the monster is on has come to an end. If any one of these conditions is true, the status of the 'facingRight' element of the sprite is changed from TRUE to FALSE, or FALSE to TRUE. In other words the direction of the monster is reversed.
+
+The code in the section for if the monster is facing left is similar to the code for 'facingRight'. Since facing left is the opposite to facing right there is only one flag for direction in the sprite struct, and it's called 'facingRight'. Similarly in the code there is no line that says 'if(sprite[i].facingLeft == TRUE)', instead we simply use the 'else' block associated with 'if(sprite[i].facingRight == TRUE)' for all the facing-left code. Lines in the facing left section of the code mimic lines in the previous section. First the sprite is moved to the left, then the 'map_objects' array is checked for conditions that would cause the monster to turn.
