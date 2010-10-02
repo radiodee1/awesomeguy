@@ -984,7 +984,7 @@ If you look at any of the four tilesheets you can see the letters and numbers in
 
 ====drawScoreWords()====
 
-This method just draws the words 'score' and 'lives' on the screen. Then it calls another method which is designed to draw numbers on the screen, 'drawScoreNumbers()'. Though both functions use tiles to print their characters, the characters never scroll. It isn't necessary that the numbers and letters ever move around, so there's no parameter to 'scrollx' or 'scrolly' in the method signature. The method is concerned with weather or not the main character is going to be obscured by the letters if they are printed. That's why the method checks weather the value of 'guy.y' is greater than 16 before printing anything.
+This method just draws the words 'score' and 'lives' on the screen. Then it calls another method which is designed to draw numbers on the screen, 'drawScoreNumbers()'. Though both functions use tiles to print their characters, the characters never scroll. It isn't necessary that the numbers and letters ever move around, but the background is moving, so 'scrollx' and 'scrolly' are considered when we pass values to 'drawTile_8(...)'. The method is concerned with weather or not the main character is going to be obscured by the letters if they are printed. That's why the method checks weather the value of 'guy.y' is greater than 16 before printing anything.
 {{{
 void drawScoreWords() {
 
