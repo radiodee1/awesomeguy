@@ -1181,7 +1181,7 @@ void drawMonsters() {
 			
 			if(sprite[i].visible == TRUE && visibility == show) {
 				
-	    		if(sprite[i].facingRight == TRUE) {
+	    			if(sprite[i].facingRight == TRUE) {
 					if(z == 0) {
 						//(R.drawable.monster_r0);
 						drawSprite_16(monster_a, sprite[i].x, sprite[i].y, 
