@@ -984,12 +984,12 @@ If you look at any of the four tilesheets you can see the letters and numbers in
 
 ====drawScoreWords()====
 
-This method just draws the words 'score' and 'lives' on the screen. Then it calls another method which is designed to draw numbers on the screen, 'drawScoreNumbers()'. Though both functions use tiles to print their characters, the characters never scroll. It isn't necessary that the numbers and letters ever move around, but the background is moving, so 'scrollx' and 'scrolly' are considered when we pass values to 'drawTile_8(...)'. The method is concerned with weather or not the main character is going to be obscured by the letters if they are printed. That's why the method checks weather the value of 'guy.y' is greater than 16 before printing anything.
+This method just draws the words 'score' and 'lives' on the screen. Then it calls another method which is designed to draw numbers on the screen, 'drawScoreNumbers()'. Though both functions use tiles to print their characters, the characters never scroll. It isn't necessary that the numbers and letters ever move around, but the background is moving, so 'scrollx' and 'scrolly' are considered when we pass values to 'drawTile_8(...)'. The method is also concerned with weather or not the main character is going to be obscured by the letters if they are printed. That's why the method checks weather the value of 'guy.y' is greater than 16 before printing anything.
 {{{
 void drawScoreWords() {
 
 
-		int i;
+	int i;
     	int topScore[] = {374,375,376,377,378,383};
 
     	int topLives[] = {379,380,381,378,382,383};
@@ -1039,8 +1039,54 @@ void drawScoreWords() {
 
 The array 'topScore[]' is the location of the fixed data that will allow the method to print the word 'score' on the screen. The numbers in the 'topScore[]' array hold the tile numbers for the top half of each of the letters 's', 'c', 'o', 'r', and 'e'. The tile numbers for the bottom half of each of these letters is obtained by adding 28 to the number from the array.
 
-The array 'topLives[]' is similarly the tile numbers for each of the letters 'l', 'i', 'v', 'e', and 's'. Again, 28 is added to the tile number for each printable letter to find the number for its bottom half. The combination of 'cutTile(...)' and 'drawTile_8(...)' is called once for the top half of each letter, and then again for the bottom half of each letter.
+The array 'topLives[]' is similarly the tile numbers for each of the letters 'l', 'i', 'v', 'e', and 's'. Again, 28 is added to the tile number for each printable letter to find the number for its bottom half. The combination of 'cutTile(...)' and 'drawTile_8(...)' is called once for the top half of each letter, and then again for the bottom half of each letter. Also, 'number_alpha' is used in the 'drawTile_8(...)' method. It is used successfully at other times in the library as well.
 
 At the very end of the function, the 'drawScoreNumbers(...)' method is called twice. This method prints the numbers for both the 'score' and the 'lives' display.
 
 ====drawScoreNumbers()====
+
+This method is called twice, once to print the numbers associated with how high the player's score is, and once to print how many lives the player has. In the method signature, 'pos' is the position of the text, 'num' is the actual number to be displayed, and 'p' is the number of places that the method can use to print the number to the screen. The value 'p' exists so that the numbers from 'score' don't print over the letters from 'lives'.
+
+{{{
+void drawScoreNumbers( int pos, int num, int p) {
+ 
+    	int i, a, b, c, placesValue;
+    	int places[] = {0,0,0,0,0,0,0,0,0,0};//ten spots
+    	int topNumbers[] = {364,365,366, 367, 368, 369, 370, 371, 372, 373};
+    	int showZeros = 0;
+        uint32_t square[TILE_HEIGHT][TILE_WIDTH];
+
+
+    	for (i = 0; i < 10; i ++) {
+    		a = num - (num / 10) * 10;
+    		places[9 - i] = a;
+    		b = (num / 10) * 10;
+    		num = b / 10;
+    	}
+    	c = 0;
+    	for(i = 0; i < p; i ++) {
+    		placesValue = places[i + (10 - p)];
+    		if (showZeros == 1 || placesValue != 0) {
+    			if(placesValue != 0) showZeros = 1;
+    			if(showZeros == 1 && c == 0) {
+    				c = p - i;
+    			}
+    			
+					cutTile(tiles_a, square, topNumbers[placesValue]);
+
+    				drawTile_8(square, (pos + i - p + c) * TILE_WIDTH + scrollx, (1) * TILE_HEIGHT +
+    					scrolly, scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
+
+       				cutTile(tiles_a, square, topNumbers[placesValue] +28);
+
+    				drawTile_8(square, (pos + i - p + c) * TILE_WIDTH +scrollx , (2) * TILE_HEIGHT +
+    					scrolly , scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
+    				
+    		}
+
+    	}
+}
+}}}
+There are two for() loops in this function. The first one breaks the actual number that needs to be printed into pieces and puts those pieces in an array called 'places'. The array holds the number broken down so that in each element of the array a single decimal place from the original 'num' is held. With this information we can spell out the number. For example, 99 would be broken down into '9' and '9'. The number 155 would be broken down into the array '1', '5', and '5'.
+
+The second for() loop takes the 'places' array and uses the 'cutTile(...)' and 'drawTile_8(...)' methods to put the number on the screen. The numbers are left justified and leading zeroes are not printed.
