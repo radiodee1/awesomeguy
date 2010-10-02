@@ -973,3 +973,11 @@ void drawSprite_40_8(uint32_t from[PLATFORM_HEIGHT][PLATFORM_WIDTH], int x, int 
 }
 }}}
 This method is also almost identical.
+
+===Score and Lives===
+
+As you play the game, the score and lives that the main player has are printed on the screen. There is no special bitmap resource for this 'score' and 'lives'. Instead a group of the 'tiles' bitmap has been modified to print the letters in the words 'score' and 'lives'. These are regular tiles that have been manipulated with a graphics program. The functions that print the words 'score' and 'lives' and all the numbers from 0 to 9 are hard coded with the tile numbers in the 'tile' bitmap that will produce the correct display on the screen. 
+
+The 'tile' bitmaps do not contain tiles for every letter of the alphabet. They just contain the images for 0 through 9 and the words 'score' and 'lives'. Also, each letter or number is two tiles high. This means that the functions that print the text to the screen have to know that the letters come in two parts.
+
+If you look at any of the four tilesheets you can see the letters and numbers in the bitmap image. They are blue with a red outline on a black background.
