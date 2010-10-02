@@ -1036,3 +1036,11 @@ void drawScoreWords() {
     	}
     }
 }}}
+
+The array 'topScore[]' is the location of the fixed data that will allow the method to print the word 'score' on the screen. The numbers in the 'topScore[]' array hold the tile numbers for the top half of each of the letters 's', 'c', 'o', 'r', and 'e'. The tile numbers for the bottom half of each of these letters is obtained by adding 28 to the number from the array.
+
+The array 'topLives[]' is similarly the tile numbers for each of the letters 'l', 'i', 'v', 'e', and 's'. Again, 28 is added to the tile number for each printable letter to find the number for its bottom half. The combination of 'cutTile(...)' and 'drawTile_8(...)' is called once for the top half of each letter, and then again for the bottom half of each letter.
+
+At the very end of the function, the 'drawScoreNumbers(...)' method is called twice. This method prints the numbers for both the 'score' and the 'lives' display.
+
+====drawScoreNumbers()====
