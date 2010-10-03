@@ -1483,3 +1483,5 @@ int collisionHelper(BoundingBox boxA, BoundingBox boxB) {
   return test;
 }
 }}}
+
+===Function drawMovingPlatforms()===
