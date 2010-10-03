@@ -1358,7 +1358,7 @@ Since the JNI library doesn't currently calculate the main character's movement 
 
 ====collisionSimple()====
 
-The code for 'collisionSimple(...)' is below.
+The basic concept we're using is that we have two rectangles and we want to see if they overlap. To do this we take the corners of one rectangle and check if they're inside all four sides of the other rectangle. We do this for all four corners. The code for 'collisionSimple(...)' is below.
 {{{
 int collisionSimple(BoundingBox boxA, BoundingBox boxB) {
   int x[4], y[4];
@@ -1418,3 +1418,68 @@ int collisionSimple(BoundingBox boxA, BoundingBox boxB) {
 }
 
 }}} 
+
+====collisionHelper()====
+
+The method 'collsionHelper(...)' is much like 'collisionSimple(...)' except the two rectangles are reversed, and the corners of the second rectangle are checked to see if they reside inside the first. This method is only used by 'collisionSimple(...)' and it's only called if the 'collisionSimple(...)' method returns false (i.e. no collision detected). The code for 'collisionHelper(...)' is below.
+{{{
+int collisionHelper(BoundingBox boxA, BoundingBox boxB) {
+  int x[4], y[4];
+  int i,j;
+  int test = FALSE;
+  int outsideTest, insideTest;
+  
+  x[0] = boxB.left;
+  y[0] = boxB.top;
+  
+  x[1] = boxB.right;
+  y[1] = boxB.top;
+  
+  x[2] = boxB.left;
+  y[2] = boxB.bottom;
+  
+  x[3] = boxB.right;
+  y[3] = boxB.bottom;
+  for (i = 0; i < 4; i ++) {
+    // is one point inside the other bounding box??
+    if (x[i] <= boxA.right && x[i] >= boxA.left && y[i] <= boxA.bottom && y[i] >= boxA.top ) {
+    
+    
+      // are all other points outside the other bounding box??
+      outsideTest = FALSE;
+      
+      for (j = 0; j < 4 ; j ++) {
+        if (j != i ) {
+          if (!(x[j] <= boxA.right && x[j] >= boxA.left && y[j] <= boxA.bottom && y[j] >= boxA.top) ) {
+            outsideTest = TRUE;
+            
+          }
+        }
+      }
+      if(outsideTest) {
+        test = TRUE;
+      
+      }
+      // is a second point inside the bounding box??
+      insideTest = FALSE;
+      for (j = 0; j < 4 ; j ++) {
+        if (j != i ) {
+          if ((x[j] <= boxA.right && x[j] >= boxA.left && y[j] <= boxA.bottom && y[j] >= boxA.top) ) {
+            insideTest = TRUE;
+
+          }
+        }
+      }
+      if(insideTest) {
+        test = TRUE;
+
+      }
+      
+      
+      //////////////////////////
+    }
+  }
+  
+  return test;
+}
+}}}
