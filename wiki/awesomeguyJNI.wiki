@@ -1484,4 +1484,4 @@ int collisionHelper(BoundingBox boxA, BoundingBox boxB) {
 }
 }}}
 
-===Function drawMovingPlatforms()===
+===Function drawMovingPlatform()===
