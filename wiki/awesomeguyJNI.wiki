@@ -1315,11 +1315,14 @@ void cutTile(uint32_t tileset[TILEMAP_HEIGHT][TILEMAP_WIDTH], uint32_t tile[TILE
     l = num - (k * n); // x pos
     for ( i = 0 ; i < TILE_HEIGHT; i ++ ) {
     	for (j = 0; j < TILE_WIDTH; j ++) {
+
     		p = tileset[i + (k * TILE_WIDTH)][j+(l* TILE_HEIGHT)];
-    		
     		tile[i][j] = p;
     		
     	}
     }
 }
 }}}
+The function is passed two arrays. The 'tileset' array is the source material, and the 'tile' array is the destination for the data. The integer 'num' tells us which tile to copy. Inside the function the 'num' variable is used to calculate what data to copy, then a pair of for() loops does the actual copying. For the sake of readability some commenting has been added to show the meanings of the variables 'm', 'n', 'k', and 'l'. This method is simple but it's fairly crucial to the operation of the game.
+
+===Collision Functions===
