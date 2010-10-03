@@ -1326,3 +1326,95 @@ void cutTile(uint32_t tileset[TILEMAP_HEIGHT][TILEMAP_WIDTH], uint32_t tile[TILE
 The function is passed two arrays. The 'tileset' array is the source material, and the 'tile' array is the destination for the data. The integer 'num' tells us which tile to copy. Inside the function the 'num' variable is used to calculate what data to copy, then a pair of for() loops does the actual copying. For the sake of readability some commenting has been added to show the meanings of the variables 'm', 'n', 'k', and 'l'. This method is simple but it's fairly crucial to the operation of the game.
 
 ===Collision Functions===
+
+There are a group of functions that allow for the detection of collisions in the 'collisionWithMonsters()' code. The functions are general enough that they could be used to detect other types of collision if the role of the JNI library were expanded in the Awesomeguy app. They could be used, for example, for detecting collision with platforms or collision with solid objects in general, as they're modeled on the collision detection routines that are already used in the java code. They all rely on a single struct, the 'BoundingBox' struct. The definition of the struct is shown below.
+{{{
+typedef struct {
+	int left, right, top, bottom;
+} BoundingBox;
+}}}
+The 'BoundingBox' is very simple. It does not hold the pixel offset of a sprite's outline in its elements. Instead it holds the pixel screen position of the sprite's outline in the context of the entire coordinate system. The BoundingBox item 'left' is the distance the left of the sprite is from the origin with respect to the whole screen. The 'left' that reflects the sprite's left border with respect to the bitmap that represents the sprite (the picture of the 'monster' or 'platform' or running 'guy') is stored in the Sprite struct. 
+
+Two separate types of information have to be saved. One, the boundaries of an object on the screen, is saved in the BoundingBox struct. Another, the boundaries of an object within it's own Bitmap image, is stored in the Sprite struct. The Sprite struct info does not change for a given bitmap, but the BoundingBox struct changes for every change in an object's position on the screen. This info is refreshed constantly where collision between objects is concerned. The terminology is somewhat arbitrary, so a distinction is being made.
+
+It is true, though, that the information that goes into creating a BoundingBox struct is dependent on the information in the Sprite struct. Therefore the Sprite struct is one of the parameters in the method that constructs a BoundingBox. The method that is used for constructing a BoundingBox is 'makeSpriteBox(...)'. There is a second method in the java code called 'makeBlockBox(...)' but it was not needed in the JNI library. Another method in the JNI library that's based on a java method is 'collisionSimple(...)'. Finally, a third method that can be found in the JNI code is 'collisionHelper(...)', but this method is just a helper method for 'collisionSimple(...)'.
+
+====makeSpriteBox()====
+
+This simple function is used to create a 'BoundingBox' for another collision detection function. It's called every time that collision is being checked, because to use an old 'BoundingBox' produces errors, since the elements on the screen are always changing. The code for 'makeSpriteBox(...)' is below.
+{{{
+BoundingBox makeSpriteBox(Sprite sprite, int x, int  y) {
+  BoundingBox temp;
+  temp.left = sprite.leftBB + sprite.x + x;
+  temp.right = sprite.rightBB + sprite.x + x;
+  temp.top = sprite.topBB + sprite.y + y;
+  temp.bottom = sprite.bottomBB + sprite.y + y;
+  return temp;
+}
+}}}
+The function takes the x and y position of the sprite and combines it with the sprite's definition of its borders. Then it adds in the optional arguments representing the movement that the sprite is expected to make.
+
+Since the JNI library doesn't currently calculate the main character's movement (the java code currently does this for all aspects of the game except the movement of monsters) the optional arguments to 'makeSpriteBox(...)' are always set to zero.
+
+====collisionSimple()====
+
+The code for 'collisionSimple(...)' is below.
+{{{
+int collisionSimple(BoundingBox boxA, BoundingBox boxB) {
+  int x[4], y[4];
+  int i, j;
+  int test = FALSE;
+  int outsideTest, insideTest;
+  
+  x[0] = boxA.left;
+  y[0] = boxA.top;
+  
+  x[1] = boxA.right;
+  y[1] = boxA.top;
+  
+  x[2] = boxA.left;
+  y[2] = boxA.bottom;
+  
+  x[3] = boxA.right;
+  y[3] = boxA.bottom;
+  for (i = 0; i < 4; i ++) {
+    // is one point inside the other bounding box??
+    if (x[i] <= boxB.right && x[i] >= boxB.left && y[i] <= boxB.bottom && y[i] >= boxB.top ) {
+      // are all other points outside the other bounding box??
+      outsideTest = FALSE;
+      
+      for (j = 0; j < 4 ; j ++) {
+        if (j != i ) {
+          if (!(x[j] <= boxB.right && x[j] >= boxB.left && y[j] <= boxB.bottom && y[j] >= boxB.top) ) {
+            outsideTest = TRUE;
+            
+          }
+        }
+      }
+      if(outsideTest) {
+        test = TRUE;
+       
+      }
+      // is a second point inside the bounding box??
+      insideTest = FALSE;
+      for (j = 0; j < 4 ; j ++) {
+        if (j != i ) {
+          if ((x[j] <= boxB.right && x[j] >= boxB.left && y[j] <= boxB.bottom && y[j] >= boxB.top) ) {
+            insideTest = TRUE;
+
+          }
+        }
+      }
+      if(insideTest) {
+        test = TRUE;
+       
+      }
+      
+      /////////////////////////
+    }
+  }
+  if (!test) return collisionHelper(boxA, boxB);
+  else return TRUE;
+}
+
+}}} 
