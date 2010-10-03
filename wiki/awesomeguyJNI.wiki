@@ -1297,3 +1297,29 @@ The function starts by setting up a for() loop that goes through all the monster
 The next part of the function tests to see if the guy is above the monster. If the monster is higher, the guy dies. If the guy is higher, the monster dies. When the 'monster' dies we increase the score and play a sound. We also inactivate the monster so that it appears to have vanished. When the main character dies we set 'endlevel' to TRUE and decrease the 'lives'. We also play a sound and inactivate the monster so that it does not interact with other items on the screen. 
 
 In the JNI code we have now killed the main character. The java code must be notified, so the java code gets the value of 'endlevel' once in every display of the Panel view. Panel.java knows this method as 'getEndLevel()' and it returns an integer value of 0 or 1. In this way the JNI and the java coordinate things like the end of the level and the playback of sounds. Score changes are handled this way also.
+
+===cutTile()===
+
+This method deserves a section to itself. The code for 'cutTile(...)' is below.
+{{{
+void cutTile(uint32_t tileset[TILEMAP_HEIGHT][TILEMAP_WIDTH], uint32_t tile[TILE_HEIGHT][TILE_WIDTH], int num) {
+
+
+    int i,j,k,l,m,n, p;
+
+    m = TILEMAP_HEIGHT / TILE_HEIGHT; // 128/8 = 16
+    n = TILEMAP_WIDTH / TILE_HEIGHT; // 224/8 = 28
+    
+    
+    k = (num / n); // y pos 
+    l = num - (k * n); // x pos
+    for ( i = 0 ; i < TILE_HEIGHT; i ++ ) {
+    	for (j = 0; j < TILE_WIDTH; j ++) {
+    		p = tileset[i + (k * TILE_WIDTH)][j+(l* TILE_HEIGHT)];
+    		
+    		tile[i][j] = p;
+    		
+    	}
+    }
+}
+}}}
