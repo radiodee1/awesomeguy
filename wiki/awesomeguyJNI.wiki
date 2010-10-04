@@ -1586,7 +1586,7 @@ In this example the method body is empty. The java native method 'someFunction()
   # the macro JNICALL
 
 After that comes the actual name of the method. The name can be broken down into parts. They are listed below.
-  # the text 'Java_'
+  # the text '`Java_`'
   # the text for the package name of the Android app, with the periods replaced by underscores
   # the name of the class that the function will be part of
   # the name of the function
