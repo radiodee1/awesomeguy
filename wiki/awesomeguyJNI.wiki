@@ -1571,4 +1571,24 @@ void drawMovingPlatform() {
 
 This is the group of functions that can actually be called by the java code. They can also return values to the java code. In most cases in Awesomeguy, these methods are empty except for a single line that calls another method from the JNI library. This is not the case with every one of these methods. In a few cases these methods perform tasks like converting a 1D array to a 2D array, etc.
 
-The naming conventions for these methods are fairly complex, so they'll be discussed here briefly and then discussed in another part of this wiki at greater depth.
+The naming conventions for these methods are fairly complex, so they'll be discussed here briefly and then discussed in another part of this wiki at greater depth. 
+
+Methods will be discussed here by using their java names. The average JNI native function name is unwieldy and looks something like this:
+{{{
+JNIEXPORT void JNICALL 
+Java_org_davidliebman_android_awesomeguy_Panel_someFunction(JNIEnv * env, jobject  obj)
+{}
+}}}
+
+In this example the method body is empty. The java native method 'someFunction()' would call the c function above. The name for this c function can be broken down into parts. The first part is the information before the method name. This is listed below.
+  # the macro JNIEXPORT
+  # the return type for the method ('void' in this example)
+  # the macro JNICALL
+
+After that comes the actual name of the method. The name can be broken down into parts. They are listed below.
+  # the text 'Java_'
+  # the text for the package name of the Android app, with the periods replaced by underscores
+  # the name of the class that the function will be part of
+  # the name of the function
+
+This is followed by the two mandatory parameters 'JNIEnv * env' and 'jobject obj'.
