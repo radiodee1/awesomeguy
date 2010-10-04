@@ -1615,7 +1615,7 @@ You should note that the c method declaration is different from the java declara
 
 This is an explanation of some of the functions in the JNI library that can actually be called by java.
 
-====setTileMapData()====
+====Native setTileMapData()====
 
 This function is used to copy four tilesheet bitmaps to the arrays in the JNI library where they will be stored before they are used to print the background of the game to the screen. This method uses an object called a 'jintArray'. The 'jintArray' needs to be converted to a c style array using the method 'GetIntArrayElements(...)'. Then the c style array is simply passed to the 'setTileMapData(...)' method that we wrote.
 {{{
