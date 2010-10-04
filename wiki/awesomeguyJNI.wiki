@@ -1591,4 +1591,4 @@ After that comes the actual name of the method. The name can be broken down into
   # the name of the class that the function will be part of
   # the name of the function
 
-This is followed by the two mandatory parameters 'JNIEnv * env' and 'jobject obj'.
+This is followed by the two mandatory parameters '`JNIEnv * env`' and '`jobject obj`'.
