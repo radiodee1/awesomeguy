@@ -1566,3 +1566,9 @@ void drawMovingPlatform() {
   return;
 }
 }}}
+
+=Java Native Functions=
+
+This is the group of functions that can actually be called by the java code. They can also return values to the java code. In most cases in Awesomeguy, these methods are empty except for a single line that calls another method from the JNI library. This is not the case with every one of these methods. In a few cases these methods perform tasks like converting a 1D array to a 2D array, etc.
+
+The naming conventions for these methods are fairly complex, so they'll be discussed here briefly and then discussed in another part of this wiki at greater depth.
