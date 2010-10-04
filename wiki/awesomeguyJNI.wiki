@@ -1620,7 +1620,8 @@ This is an explanation of some of the functions in the JNI library that can actu
 This function is used to copy four tilesheet bitmaps to the arrays in the JNI library where they will be stored before they are used to print the background of the game to the screen. This method uses an object called a 'jintArray'. The 'jintArray' needs to be converted to a c style array using the method 'GetIntArrayElements(...)'. Then the c style array is simply passed to the 'setTileMapData(...)' method that we wrote.
 {{{
 JNIEXPORT void JNICALL 
-Java_org_davidliebman_android_awesomeguy_Panel_setTileMapData(JNIEnv * env, jobject  obj, jintArray a_bitmap, jintArray b_bitmap, jintArray c_bitmap, jintArray d_bitmap)
+Java_org_davidliebman_android_awesomeguy_Panel_setTileMapData(JNIEnv * env, jobject  obj,
+jintArray a_bitmap, jintArray b_bitmap, jintArray c_bitmap, jintArray d_bitmap)
 {
 
   jint *a = (*env)->GetIntArrayElements(env, a_bitmap, 0);
