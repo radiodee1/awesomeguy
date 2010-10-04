@@ -1490,7 +1490,7 @@ The code for moving platforms is almost identical to the code for 'drawMonsters(
 
 {{{
 void drawMovingPlatform() {
-	int i;
+  int i;
   int x,y;
   int width = 5;
   int cheat = 0;// - 5
