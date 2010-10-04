@@ -1486,6 +1486,8 @@ int collisionHelper(BoundingBox boxA, BoundingBox boxB) {
 
 ===Function drawMovingPlatform()===
 
+The code for moving platforms is almost identical to the code for 'drawMonsters()'. The code for 'drawMovingPlatform()' is different in two major ways. There is only one image for a moving platform. This means, firstly, that there is no section at the end of the method for manipulating the animation index of the platform, and, second, that there's no section for determining which bitmap to display. The section for determining which bitmap to display is a set of if/else blocks that check both the 'facingRight' attribute of the Sprite struct, and also the 'animate' attribute. The code for moving platforms is below. 
+
 {{{
 void drawMovingPlatform() {
   int i;
