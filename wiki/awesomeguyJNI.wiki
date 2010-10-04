@@ -1569,7 +1569,7 @@ void drawMovingPlatform() {
 
 =Java Native Functions=
 
-This is the group of functions that can actually be called by the java code. They can also return values to the java code. In most cases in Awesomeguy, these methods are empty except for a single line that calls another method from the JNI library. This is not the case with every one of these methods. In a few cases these methods perform tasks like converting a 1D array to a 2D array, etc.
+This is the group of functions that can actually be called by the java code. They can also return values to the java code. In most cases in Awesomeguy, these methods are empty except for a single line that calls another method from the JNI library. This is not the case with every one of these methods. In a few cases these methods perform tasks like converting a 1D array to a 2D array, etc. There are about 25 java native functions in the JNI library.
 
 ===Naming Functions===
 
@@ -1610,3 +1610,26 @@ public native void someFunction();
 This line of code is like a java method declaration _witout_ the body. This function is also 'public' so it can be called by methods of other classes if they have an instantiated version of the class 'Panel'.
 
 You should note that the c method declaration is different from the java declaration, but you need both, and the c version must include the package name and the java class name.
+
+===Individual Functions===
+
+This is an explanation of some of the functions in the JNI library that can actually be called by java.
+
+====setTileMapData()====
+
+This function is used to copy four tilesheet bitmaps to the arrays in the JNI library where they will be stored before they are used to print the background of the game to the screen. This method uses an object called a 'jintArray'. The 'jintArray' needs to be converted to a c style array using the method 'GetIntArrayElements(...)'. Then the c style array is simply passed to the 'setTileMapData(...)' method that we wrote.
+{{{
+JNIEXPORT void JNICALL 
+Java_org_davidliebman_android_awesomeguy_Panel_setTileMapData(JNIEnv * env, jobject  obj, jintArray a_bitmap, jintArray b_bitmap, jintArray c_bitmap, jintArray d_bitmap)
+{
+
+  jint *a = (*env)->GetIntArrayElements(env, a_bitmap, 0);
+
+  jint *b = (*env)->GetIntArrayElements(env, b_bitmap, 0);
+
+  jint *c = (*env)->GetIntArrayElements(env, c_bitmap, 0);
+
+  jint *d = (*env)->GetIntArrayElements(env, d_bitmap, 0);
+  setTileMapData(a, b, c, d );
+}
+}}}
