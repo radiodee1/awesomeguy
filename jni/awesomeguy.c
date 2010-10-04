@@ -1268,6 +1268,7 @@ void drawLevel(int animate_level) {
     int i,j,k,l;
     int baseX, baseY;//, startX, startY;
     int mapcheat = 1;
+    int levelcheat = 1;
     uint32_t square[TILE_HEIGHT][TILE_WIDTH];
     
     animate = animate_level;
@@ -1290,7 +1291,7 @@ void drawLevel(int animate_level) {
     		
     		if (i >= 0 && j >= 0  && i < MAP_HEIGHT && j < MAP_WIDTH) { 
     			if(  map_level[j][i] != 0 ) { //is tile blank??
-    				cutTile(tiles_a, square, map_level[j][i]);
+    				cutTile(tiles_a, square, map_level[j][i] - levelcheat);
     				drawTile_8(square, j * TILE_WIDTH, i * TILE_HEIGHT , 
     					scrollx , scrolly, PAINT_SOLID, 0);
 				}
