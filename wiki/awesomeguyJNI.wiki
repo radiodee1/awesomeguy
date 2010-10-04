@@ -1485,3 +1485,74 @@ int collisionHelper(BoundingBox boxA, BoundingBox boxB) {
 }}}
 
 ===Function drawMovingPlatform()===
+
+{{{
+void drawMovingPlatform() {
+  int i;
+  int x,y;
+  int width = 5;
+  int cheat = -5;
+  int markerTest = FALSE;
+  int hide = TRUE;
+  int show = FALSE;
+  int visibility = FALSE;
+  
+    
+  if(platform_num == -1) return;
+    
+  for (i = monster_num + 1 ; i < platform_num ; i++) {
+    markerTest = FALSE; 
+
+      x = sprite[i].x / 8;
+      y = sprite[i].y / 8;
+      /* Must move and stop platforms when they hit bricks or
+       * markers or the end of the screen/room/level.
+       */
+      if(sprite[i].facingRight == TRUE) {
+        sprite[i].x ++;
+        // marker test
+        if(map_objects[y][x+width + cheat + 1] == B_BLOCK) markerTest = TRUE;
+        if(map_objects[y][x+width + cheat + 1] == B_MARKER) markerTest = TRUE;
+
+        // turn platform
+        if (sprite[i].x > level_w   * 8   - PLATFORM_WIDTH || markerTest == TRUE) {
+          sprite[i].facingRight = FALSE;
+        }
+      }
+      else {
+        sprite[i].x --;
+        // marker test
+        if(map_objects[y][x + cheat ] == B_BLOCK) markerTest = TRUE;
+        if(map_objects[y][x + cheat ] == B_MARKER) markerTest = TRUE;
+
+        // turn platform
+        if (sprite[i].x <= 0 || markerTest == TRUE) {
+          sprite[i].facingRight = TRUE;
+        }
+      } 
+    
+      visibility = show;
+      //hide platform
+      if(sprite[i].x > scrollx + 32 * 8 + (8 * width) ) {
+        visibility = hide;
+      }
+      if (sprite[i].x < scrollx - (8 * width)) {
+        visibility = hide;
+      }
+      //hide platform
+      if(sprite[i].y > scrolly + 24 * 8 + (8 * width)) {
+        visibility = hide;
+      }
+      if ( sprite[i].y < scrolly - (8 * width)) {
+        visibility = hide;
+      }
+    
+      if(visibility == show) {
+      		drawSprite_40_8(platform_a, sprite[i].x, sprite[i].y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+	  }
+    
+  }
+
+  return;
+}
+}}}
