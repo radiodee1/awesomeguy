@@ -1,5 +1,5 @@
-/home/dave/workspace/android.awesomeguy/obj/local/armeabi/objs/awesomeguy/awesomeguy.o: \
- /home/dave/workspace/android.awesomeguy/jni/awesomeguy.c \
+/home/dave/workspace/awesomeguy/obj/local/armeabi/objs/awesomeguy/awesomeguy.o: \
+ /home/dave/workspace/awesomeguy/jni/awesomeguy.c \
  /home/dave/bin/android-ndk-r4b/build/platforms/android-5/arch-arm/usr/include/jni.h \
  /home/dave/bin/android-ndk-r4b/build/platforms/android-5/arch-arm/usr/include/android/log.h \
  /home/dave/bin/android-ndk-r4b/build/platforms/android-5/arch-arm/usr/include/stdio.h \
