@@ -1720,12 +1720,53 @@ jint platform_mapx, jint platform_mapy)
 
 ====Native inactivateMonster()====
 
+This method is called by the java code if and when it needs to make a monster invisible. This happens when the guy character jumps on a monster and kills it. It was originally used by the java code for detecting collision with monsters that was located in the Panel.java class. It doesn't do any calculation, it just passes the value that the java code gives it to the c code 'inactivateMonster(...)'. The parameter that it passes is the index number for the monster sprite on the 'Sprite' array of structs.
 {{{
 JNIEXPORT void JNICALL
 Java_org_davidliebman_android_awesomeguy_Panel_inactivateMonster(JNIEnv * env, 
 jobject  obj, jint monster_num)
 {
 	inactivateMonster(monster_num);	
+
+}
+}}}
+
+====Native setGuyPosition()====
+
+This method passes five values to the JNI library. They are the x and y position of the guy on the background, the x and y scroll coordinates, and the value of the animation index for the level.
+{{{
+JNIEXPORT void JNICALL
+Java_org_davidliebman_android_awesomeguy_Panel_setGuyPosition(JNIEnv * env, jobject  obj,
+jint x_pos, jint y_pos, jint scroll_x, jint scroll_y, jint animate)
+{
+	setGuyPosition(x_pos, y_pos, scroll_x, scroll_y, animate);	
+
+}
+}}}
+
+====Native setScoreLives()====
+
+This method passes two values to the JNI library. One is the current score and the other is the current number of lives the main character has. They are displayed on the screen during game play.
+{{{
+JNIEXPORT void JNICALL
+Java_org_davidliebman_android_awesomeguy_Panel_setScoreLives(JNIEnv * env, jobject  obj,
+jint score, jint lives)
+{
+	setScoreLives(score,lives);	
+
+}
+}}}
+
+====Native setMonsterPreferences()====
+
+
+{{{
+JNIEXPORT void JNICALL
+Java_org_davidliebman_android_awesomeguy_Panel_setMonsterPreferences(JNIEnv * env,
+jobject  obj, jint monsters, jint collision)
+{
+	preferences_monsters = monsters;
+	preferences_collision = collision;
 
 }
 }}}
