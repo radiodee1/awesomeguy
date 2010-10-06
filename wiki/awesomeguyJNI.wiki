@@ -1634,3 +1634,42 @@ jintArray a_bitmap, jintArray b_bitmap, jintArray c_bitmap, jintArray d_bitmap)
   setTileMapData(a, b, c, d );
 }
 }}}
+
+====Native setGuyData()====
+
+This function is similar to the one above only it calls 'setGuyData()' instead of 'setTileMapData()' when it's done translating the java arrays into pointers. 
+{{{
+JNIEXPORT void JNICALL 
+Java_org_davidliebman_android_awesomeguy_Panel_setGuyData(JNIEnv * env, jobject  obj,
+jintArray a_bitmap, jintArray b_bitmap, jintArray c_bitmap, jintArray d_bitmap)
+{
+
+  jint *a = (*env)->GetIntArrayElements(env, a_bitmap, 0);
+  jint *b = (*env)->GetIntArrayElements(env, b_bitmap, 0);
+  jint *c = (*env)->GetIntArrayElements(env, c_bitmap, 0);
+  jint *d = (*env)->GetIntArrayElements(env, d_bitmap, 0);
+  
+  setGuyData(a, b, c, d );
+}
+}}}
+
+====Native setMonsterData()====
+
+This is another method that's similar to 'setTileMapData()'. It follows the exact same pattern, only it calls 'setMonsterData()' when it's done translating the java arrays into c pointers. As in all of these methods, the size of the original array is known, so we are not interested in finding out the size of the array at runtime.
+
+{{{
+JNIEXPORT void JNICALL
+Java_org_davidliebman_android_awesomeguy_Panel_setMonsterData(JNIEnv * env, jobject  obj,
+jintArray a_bitmap, jintArray b_bitmap, jintArray c_bitmap, jintArray d_bitmap)
+{
+
+  jint *a = (*env)->GetIntArrayElements(env, a_bitmap, 0);
+
+  jint *b = (*env)->GetIntArrayElements(env, b_bitmap, 0);
+
+  jint *c = (*env)->GetIntArrayElements(env, c_bitmap, 0);
+
+  jint *d = (*env)->GetIntArrayElements(env, d_bitmap, 0);
+  setMonsterData(a, b, c, d );
+}
+}}}
