@@ -1617,7 +1617,7 @@ This is an explanation of some of the functions in the JNI library that can actu
 
 ====Native setTileMapData()====
 
-This function is used to copy four tilesheet bitmaps to the arrays in the JNI library where they will be stored before they are used to print the background of the game to the screen. This method uses an object called a 'jintArray'. The 'jintArray' needs to be converted to a c style array using the method '`GetIntArrayElements(...)`'. Then the c style array is simply passed to the 'setTileMapData(...)' method that we wrote.
+This function is used to copy four tilesheet bitmaps to the arrays in the JNI library where they will be stored before they are used to print the background of the game to the screen. This method uses an object called a 'jintArray'. The 'jintArray' needs to be converted to a c style array using the method '`GetIntArrayElements(...)`'. Then the c style array is simply passed to the 'setTileMapData(...)' method that we wrote. We know the exact size of the four bitmaps that we're starting with, so there's no reason to try to find out their size at runtime.
 {{{
 JNIEXPORT void JNICALL 
 Java_org_davidliebman_android_awesomeguy_Panel_setTileMapData(JNIEnv * env, jobject  obj,
@@ -1671,5 +1671,61 @@ jintArray a_bitmap, jintArray b_bitmap, jintArray c_bitmap, jintArray d_bitmap)
 
   jint *d = (*env)->GetIntArrayElements(env, d_bitmap, 0);
   setMonsterData(a, b, c, d );
+}
+}}}
+
+====Native setMovingPlatformData()====
+
+Whereas there are four images for the main character's sprite, the monster sprite, and four images for the tilesheet, there is only one image for the moving platform. This method copies the moving platform bitmap to a c style array by calling the c function 'setMovingPlatformData()'.
+{{{
+JNIEXPORT void JNICALL
+Java_org_davidliebman_android_awesomeguy_Panel_setMovingPlatformData(JNIEnv * env,
+jobject  obj, jintArray a_bitmap) 
+{
+
+	jint *a = (*env)->GetIntArrayElements(env, a_bitmap, 0);
+	
+	setMovingPlatformData(a) ;
+
+}
+}}}
+
+====Native addMonster()====
+
+This method calls the c method 'addMonster(...)'. It basically passes three 'jint' java integer values to the JNI library. This method is called several times at the beginning of each level to initialize the monster structs on the 'Sprite' struct array. It's called before game play actually starts.
+
+{{{
+JNIEXPORT void JNICALL 
+Java_org_davidliebman_android_awesomeguy_Panel_addMonster(JNIEnv * env, jobject  obj,
+jint monster_mapx, jint monster_mapy,  jint animate_index)
+{
+	addMonster(monster_mapx, monster_mapy,  animate_index);	
+
+}
+}}}
+
+====Native addPlatform()====
+
+This method is also used for populating the array of 'Sprite' structs. After all the monsters for a particular level are put on the array another java loop calls this method once for every floating platform that is to appear on the level. Like 'addMonster(...)' it does no computation. This function simply calls the JNI c library's 'addPlatform(...)' method.
+
+{{{
+JNIEXPORT void JNICALL 
+Java_org_davidliebman_android_awesomeguy_Panel_addPlatform(JNIEnv * env, jobject  obj,
+jint platform_mapx, jint platform_mapy)
+{
+	addPlatform(platform_mapx, platform_mapy);	
+
+}
+}}}
+
+====Native inactivateMonster()====
+
+{{{
+JNIEXPORT void JNICALL
+Java_org_davidliebman_android_awesomeguy_Panel_inactivateMonster(JNIEnv * env, 
+jobject  obj, jint monster_num)
+{
+	inactivateMonster(monster_num);	
+
 }
 }}}
