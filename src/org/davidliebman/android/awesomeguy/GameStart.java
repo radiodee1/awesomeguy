@@ -67,7 +67,7 @@ public class GameStart extends Activity {
     private int mScrollConst = 200;
     private double mTrackballDist = 1.0;
     private int mDimension;
-    
+    private Context mContext;
     
 	public static final String AWESOME_NAME = new String("org.awesomeguy");
 
@@ -196,64 +196,7 @@ public class GameStart extends Activity {
         mGameV.setSpriteStart();
     }
     
-    public TableLayout getGamePad(int widthDimension) {
-
-        mButtonHeight = widthDimension/5;//95
-        mButtonWidth = widthDimension/5;//95
-        
-        /* first row buttons */
-        BlankButton mButtonTop3 = new BlankButton(this);
-        BlankButton mButtonTop4 = new BlankButton(this);
-        BlankButton mButtonTop5 = new BlankButton(this);
-    	TouchButton mButtonTop6 = new TouchButton(this, R.drawable.button_up, mButtonWidth, mButtonHeight, 0, "button_up", MovementValues.KEY_UP);
-    	BlankButton mButtonTop7 = new BlankButton(this);
-        
-    	/* middle row buttons */
-    	TouchButton mButtonMid3 = new TouchButton(this, R.drawable.button_b, mButtonWidth, mButtonHeight, 0, "button_b", MovementValues.KEY_B);
-        BlankButton mButtonMid4 = new BlankButton(this);
-        TouchButton mButtonMid5 = new TouchButton(this, R.drawable.button_left, mButtonWidth, mButtonHeight, 0, "button_left", MovementValues.KEY_LEFT);
-    	BlankButton mButtonMid6 = new BlankButton(this);
-    	mButtonMid6.setBackgroundResource(R.drawable.button_center);
-    	//mButtonMid6 = new TouchButton(this, R.drawable.button_center, mButtonWidth, mButtonHeight, 0, "button_center", 0);
-    	TouchButton mButtonMid7 = new TouchButton(this, R.drawable.button_right, mButtonWidth, mButtonHeight, 0, "button_right", MovementValues.KEY_RIGHT);
-    	
-    	/* bottom row buttons */
-    	BlankButton mButtonBot3 = new BlankButton(this);
-    	BlankButton mButtonBot4 = new BlankButton(this);
-    	BlankButton mButtonBot5 = new BlankButton(this);
-    	TouchButton mButtonBot6 = new TouchButton(this, R.drawable.button_down, mButtonWidth, mButtonHeight, 0, "button_down", MovementValues.KEY_DOWN);
-    	BlankButton mButtonBot7 = new BlankButton(this);
-    	
-    	/* put buttons in rows */
-    	TableRow mTRowTop = new TableRow(this);
-    	mTRowTop.addView((View)mButtonTop3);
-    	mTRowTop.addView((View)mButtonTop4);
-    	mTRowTop.addView((View)mButtonTop5);
-    	mTRowTop.addView((View)mButtonTop6);
-    	mTRowTop.addView((View)mButtonTop7);
-    	
-    	TableRow mTRowMid = new TableRow(this);
-    	mTRowMid.addView((View)mButtonMid3);
-    	mTRowMid.addView((View)mButtonMid4);
-    	mTRowMid.addView((View)mButtonMid5);
-    	mTRowMid.addView((View)mButtonMid6);
-    	mTRowMid.addView((View)mButtonMid7);
-    	
-    	TableRow mTRowBot = new TableRow(this);
-    	mTRowBot.addView((View)mButtonBot3);
-    	mTRowBot.addView((View)mButtonBot4);
-    	mTRowBot.addView((View)mButtonBot5);
-    	mTRowBot.addView((View)mButtonBot6);
-    	mTRowBot.addView((View)mButtonBot7);
-    	
-    	/* put rows in table */
-    	TableLayout mGamepad = new TableLayout(this);
-    	mGamepad.addView((View)mTRowTop);
-    	mGamepad.addView((View)mTRowMid);
-    	mGamepad.addView((View)mTRowBot);
     
-    	return mGamepad;
-    }
     
     @Override
     public void onPause() {
@@ -308,7 +251,7 @@ public class GameStart extends Activity {
     	/* init background */
     	//Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();    	
     	mPanelBot = new Panel(this,  mGameV, this, mMovementV, mHighScores, this.mDimension);
-    	mRLayoutGamepad.addView((View)this.getGamePad(mDimension));
+    	mRLayoutGamepad.addView((View)new GamePad(this, true, mDimension));
     	
     	mBackground = new InitBackground(mGameV, this);
     	mFLayoutBot.addView((View)mPanelBot);
@@ -334,83 +277,153 @@ public class GameStart extends Activity {
 
     }
     
-    
+    public class GamePad extends  TableLayout {
+    	
+    	public GamePad(Context c, boolean mMultiTouch, int widthDimension) {
+    		super(c);
+    		mButtonHeight = widthDimension/5;//95
+    		mButtonWidth = widthDimension/5;//95
+    		mContext = c;
+
+    		/* first row buttons */
+    		BlankButton mButtonTop3 = new BlankButton(mContext);
+    		BlankButton mButtonTop4 = new BlankButton(mContext);
+    		BlankButton mButtonTop5 = new BlankButton(mContext);
+    		TouchButton mButtonTop6 = new TouchButton(mContext, mMultiTouch ,R.drawable.button_up, mButtonWidth, mButtonHeight, 0, "button_up", MovementValues.KEY_UP);
+    		BlankButton mButtonTop7 = new BlankButton(mContext);
+
+    		/* middle row buttons */
+    		TouchButton mButtonMid3 = new TouchButton(mContext, mMultiTouch ,R.drawable.button_b, mButtonWidth, mButtonHeight, 0, "button_b", MovementValues.KEY_B);
+    		BlankButton mButtonMid4 = new BlankButton(mContext);
+    		TouchButton mButtonMid5 = new TouchButton(mContext, mMultiTouch ,R.drawable.button_left, mButtonWidth, mButtonHeight, 0, "button_left", MovementValues.KEY_LEFT);
+    		BlankButton mButtonMid6 = new BlankButton(mContext);
+    		mButtonMid6.setBackgroundResource(R.drawable.button_center);
+    		//mButtonMid6 = new TouchButton(this, R.drawable.button_center, mButtonWidth, mButtonHeight, 0, "button_center", 0);
+    		TouchButton mButtonMid7 = new TouchButton(mContext, mMultiTouch ,R.drawable.button_right, mButtonWidth, mButtonHeight, 0, "button_right", MovementValues.KEY_RIGHT);
+
+    		/* bottom row buttons */
+    		BlankButton mButtonBot3 = new BlankButton(mContext);
+    		BlankButton mButtonBot4 = new BlankButton(mContext);
+    		BlankButton mButtonBot5 = new BlankButton(mContext);
+    		TouchButton mButtonBot6 = new TouchButton(mContext,mMultiTouch , R.drawable.button_down, mButtonWidth, mButtonHeight, 0, "button_down", MovementValues.KEY_DOWN);
+    		BlankButton mButtonBot7 = new BlankButton(mContext);
+
+    		/* put buttons in rows */
+    		TableRow mTRowTop = new TableRow(mContext);
+    		mTRowTop.addView((View)mButtonTop3);
+    		mTRowTop.addView((View)mButtonTop4);
+    		mTRowTop.addView((View)mButtonTop5);
+    		mTRowTop.addView((View)mButtonTop6);
+    		mTRowTop.addView((View)mButtonTop7);
+
+    		TableRow mTRowMid = new TableRow(mContext);
+    		mTRowMid.addView((View)mButtonMid3);
+    		mTRowMid.addView((View)mButtonMid4);
+    		mTRowMid.addView((View)mButtonMid5);
+    		mTRowMid.addView((View)mButtonMid6);
+    		mTRowMid.addView((View)mButtonMid7);
+
+    		TableRow mTRowBot = new TableRow(mContext);
+    		mTRowBot.addView((View)mButtonBot3);
+    		mTRowBot.addView((View)mButtonBot4);
+    		mTRowBot.addView((View)mButtonBot5);
+    		mTRowBot.addView((View)mButtonBot6);
+    		mTRowBot.addView((View)mButtonBot7);
+
+    		/* put rows in table */
+    		this.addView((View)mTRowTop);
+    		this.addView((View)mTRowMid);
+    		this.addView((View)mTRowBot);
+
+
+    	}//end constructor
+    	
+    	
+    	
+    	
+    }// end of inner class
+
     /* button listeners */
     public class TouchButton extends Button implements View.OnTouchListener {
     	int mKeyValue = 0;
+    	boolean mMultiTouch;
     	
-        public TouchButton (Context c, int background, int width, int height, int id, String idString, int directionKey) {
+        public TouchButton (Context c, boolean mMultiTouch, int background, int width, int height, int id, String idString, int directionKey) {
         	super(c);
+        	this.mMultiTouch = mMultiTouch;
         	this.setBackgroundColor(Color.BLACK);
-        	if (background != 0) {
+        	if (background != 0 ) {
         		this.setBackgroundResource(background);
         		this.setOnTouchListener(this);
-        		this.setOnKeyListener(new View.OnKeyListener() {
+        		if (mMultiTouch == false) {
+        			this.setOnKeyListener(new View.OnKeyListener() {
+        		
     				
-    				@Override
-    				public boolean onKey(View v, int keyCode, KeyEvent event) {
-    					if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-    		    			mPanelBot.setKeyB(true);
-
-    					}
-    					
-    					if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT)
-                        {
-    						
-    						mMovementV.setKeyInput(MovementValues.KEY_LEFT);
-    				    	mPanelBot.readKeys(mTrackballDist);
-    				    	
-    				    	Message mEnd = new Message();
-    				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
-    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
-    				    	
-    						
-    						//Log.v("button factory", "trackball??? left");
-                        }
-                        else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT)
-                        {	
-                        	
-            		    	mMovementV.setKeyInput(MovementValues.KEY_RIGHT);
-    				    	mPanelBot.readKeys(mTrackballDist);
-            		    	
-            		    	Message mEnd = new Message();
-    				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
-    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
-    				    	
-    				    	
-    						//Log.v("button factory", "trackball??? right");
-                        }
-    					if (keyCode == KeyEvent.KEYCODE_DPAD_UP)
-                        {
-    						
-    				    	mMovementV.setKeyInput(MovementValues.KEY_UP);
-    				    	mPanelBot.readKeys(mTrackballDist);
-    				    	
-    				    	Message mEnd = new Message();
-    				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
-    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
-    				    	
-    						
-    						//Log.v("button factory", "trackball??? up");
-                        }
-                        else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN)
-                        {
-                        	
-                        	
-            		    	mMovementV.setKeyInput(MovementValues.KEY_DOWN);
-    				    	mPanelBot.readKeys(mTrackballDist);
-            		    	
-            		    	Message mEnd = new Message();
-    				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
-    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
-    				    	
-                        	
-    						//Log.v("button factory", "trackball??? down");
-                        }
-
-    					return true;
-    				}
-    			});
+	    				@Override
+	    				public boolean onKey(View v, int keyCode, KeyEvent event) {
+	    					if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+	    		    			mPanelBot.setKeyB(true);
+	
+	    					}
+	    					
+	    					if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT)
+	                        {
+	    						
+	    						mMovementV.setKeyInput(MovementValues.KEY_LEFT);
+	    				    	mPanelBot.readKeys(mTrackballDist);
+	    				    	
+	    				    	Message mEnd = new Message();
+	    				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
+	    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
+	    				    	
+	    						
+	    						//Log.v("button factory", "trackball??? left");
+	                        }
+	                        else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT)
+	                        {	
+	                        	
+	            		    	mMovementV.setKeyInput(MovementValues.KEY_RIGHT);
+	    				    	mPanelBot.readKeys(mTrackballDist);
+	            		    	
+	            		    	Message mEnd = new Message();
+	    				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
+	    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
+	    				    	
+	    				    	
+	    						//Log.v("button factory", "trackball??? right");
+	                        }
+	    					if (keyCode == KeyEvent.KEYCODE_DPAD_UP)
+	                        {
+	    						
+	    				    	mMovementV.setKeyInput(MovementValues.KEY_UP);
+	    				    	mPanelBot.readKeys(mTrackballDist);
+	    				    	
+	    				    	Message mEnd = new Message();
+	    				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
+	    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
+	    				    	
+	    						
+	    						//Log.v("button factory", "trackball??? up");
+	                        }
+	                        else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN)
+	                        {
+	                        	
+	                        	
+	            		    	mMovementV.setKeyInput(MovementValues.KEY_DOWN);
+	    				    	mPanelBot.readKeys(mTrackballDist);
+	            		    	
+	            		    	Message mEnd = new Message();
+	    				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
+	    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
+	    				    	
+	                        	
+	    						//Log.v("button factory", "trackball??? down");
+	                        }
+	    					
+	    					return true;
+	    				}
+	    			});
+        		}
         	}
         	this.setWidth(width);
         	this.setHeight(height);
@@ -449,9 +462,51 @@ public class GameStart extends Activity {
     		}
     		
     		
+			Log.e("MULTI-TOUCH", "multi-touch here");
+			if (m.getPointerCount() > 1 && mMultiTouch) {
+				for (int i = 0; i < m.getPointerCount(); i++) {
+					int x = (int) m.getX(i);
+					int y = (int) m.getY(i);
+					checkJumpButton(x, y, i);
+				}
+			}
+			
+			
     		return true;
     	}
-    
+    	public void checkJumpButton(int x, int y, int i) {
+    		Log.e("MULTI-TOUCH", "-> " + i + " x: "+ x + " y: " + y	);
+    		//Log.e("MULTI-TOUCH", "BUTTON:" + mButtonHeight);
+    		if (mKeyValue == MovementValues.KEY_DOWN 
+    				&& x + mButtonWidth * 3  > 0 
+    				&& x + mButtonWidth * 3 < mButtonWidth  
+    				&& y + mButtonHeight * 2 > mButtonHeight 
+    				&& y + mButtonHeight * 2 < mButtonHeight * 2 ) {
+    			mPanelBot.setKeyB(true);
+    			Log.e("MULTI-TOUCH", "KEY B");
+    		}
+    		else if (mKeyValue == MovementValues.KEY_LEFT 
+    				&& x + mButtonWidth * 2 > 0 
+    				&& x + mButtonWidth * 2 < mButtonWidth  
+    				&& y + mButtonHeight * 1 > mButtonHeight  
+    				&& y + mButtonHeight * 1 < mButtonHeight * 2) {
+    			mPanelBot.setKeyB(true);
+    		}
+    		else if (mKeyValue == MovementValues.KEY_RIGHT 
+    				&& x + mButtonWidth * 4 > 0 
+    				&& x + mButtonWidth * 4 < mButtonWidth 
+    				&& y + mButtonHeight * 1 > mButtonHeight
+    				&& y + mButtonHeight * 1 < mButtonHeight * 2) {
+    			mPanelBot.setKeyB(true);
+    		}
+    		else if (mKeyValue == MovementValues.KEY_UP 
+    				&& x + mButtonWidth * 0 > 0 
+    				&& x + mButtonWidth * 3 < mButtonWidth 
+    				&& y + mButtonHeight * 0 > mButtonHeight 
+    				&& y + mButtonHeight * 0 < mButtonHeight * 2) {
+    			mPanelBot.setKeyB(true);
+    		}
+    	}
     	
     };
     
