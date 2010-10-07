@@ -475,15 +475,13 @@ public class GameStart extends Activity {
     		return true;
     	}
     	public void checkJumpButton(int x, int y, int i) {
-    		Log.e("MULTI-TOUCH", "-> " + i + " x: "+ x + " y: " + y	);
-    		//Log.e("MULTI-TOUCH", "BUTTON:" + mButtonHeight);
+
     		if (mKeyValue == MovementValues.KEY_DOWN 
     				&& x + mButtonWidth * 3  > 0 
     				&& x + mButtonWidth * 3 < mButtonWidth  
     				&& y + mButtonHeight * 2 > mButtonHeight 
     				&& y + mButtonHeight * 2 < mButtonHeight * 2 ) {
     			mPanelBot.setKeyB(true);
-    			Log.e("MULTI-TOUCH", "KEY B");
     		}
     		else if (mKeyValue == MovementValues.KEY_LEFT 
     				&& x + mButtonWidth * 2 > 0 
@@ -500,7 +498,7 @@ public class GameStart extends Activity {
     			mPanelBot.setKeyB(true);
     		}
     		else if (mKeyValue == MovementValues.KEY_UP 
-    				&& x + mButtonWidth * 0 > 0 
+    				&& x + mButtonWidth * 3 > 0 
     				&& x + mButtonWidth * 3 < mButtonWidth 
     				&& y + mButtonHeight * 0 > mButtonHeight 
     				&& y + mButtonHeight * 0 < mButtonHeight * 2) {
