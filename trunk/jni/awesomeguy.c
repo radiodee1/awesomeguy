@@ -1,6 +1,6 @@
 ﻿/**
  * awesomeguy.c
- * --test file--
+ * 
  * native android library
  */
 
