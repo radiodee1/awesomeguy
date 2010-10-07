@@ -494,6 +494,7 @@ public class GameStart extends Activity {
     	public String getDescription() {
     		return this.mDescription;
     	}
+    	/* end multi-touch specific */
     	
     	@Override
     	public boolean onTouch(View v, MotionEvent m) {
