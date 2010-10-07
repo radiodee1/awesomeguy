@@ -500,13 +500,14 @@ public class GameStart extends Activity {
     		
     		if(m.getAction() == MotionEvent.ACTION_DOWN && mKeyValue == MovementValues.KEY_B) {
     			mPanelBot.setKeyB(true);
-    		
+    			// this is needed if 'B' key is pressed first...
     		}
     		
     		else if(m.getAction() == MotionEvent.ACTION_DOWN) {
 
 		    	
-		    	//mMovementV.setKeyInput(mKeyValue);
+		    	// mMovementV.setKeyInput(mKeyValue);
+    			// handle this below.
     		}
     		if(m.getAction() == MotionEvent.ACTION_UP) {
     			
@@ -515,7 +516,7 @@ public class GameStart extends Activity {
     		}
     		
     		
-			Log.e("MULTI-TOUCH", "multi-touch here");
+			//Log.e("MULTI-TOUCH", "multi-touch here");
 			
 			if(m.getPointerCount() > 1 ) {
 				
@@ -525,7 +526,6 @@ public class GameStart extends Activity {
 				checkTwoCoordinates((int)m.getX(0), (int)m.getY(0), (int)m.getX(0), (int)m.getY(0));
 			}
 
-			
     		return true;
     	}
     	
