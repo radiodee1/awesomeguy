@@ -518,14 +518,7 @@ public class GameStart extends Activity {
 			Log.e("MULTI-TOUCH", "multi-touch here");
 			
 			if(m.getPointerCount() > 1 ) {
-				/*
-				for (int i = 0; i < m.getPointerCount(); i++) {
-					int x = (int) m.getX(i);
-					int y = (int) m.getY(i);
-					checkJumpButton(x, y, i);
-					
-				}
-				*/
+				
 				checkTwoCoordinates((int)m.getX(0), (int)m.getY(0), (int)m.getX(1), (int)m.getY(1));
 			}
 			else {
@@ -535,38 +528,8 @@ public class GameStart extends Activity {
 			
     		return true;
     	}
-    	public void checkJumpButton(int x, int y, int i) {
-
-    		if (mKeyValue == MovementValues.KEY_DOWN 
-    				&& x + mButtonWidth * 3  > 0 
-    				&& x + mButtonWidth * 3 < mButtonWidth  
-    				&& y + mButtonHeight * 2 > mButtonHeight 
-    				&& y + mButtonHeight * 2 < mButtonHeight * 2 ) {
-    			mPanelBot.setKeyB(true);
-    		}
-    		else if (mKeyValue == MovementValues.KEY_LEFT 
-    				&& x + mButtonWidth * 2 > 0 
-    				&& x + mButtonWidth * 2 < mButtonWidth  
-    				&& y + mButtonHeight * 1 > mButtonHeight  
-    				&& y + mButtonHeight * 1 < mButtonHeight * 2) {
-    			mPanelBot.setKeyB(true);
-    		}
-    		else if (mKeyValue == MovementValues.KEY_RIGHT 
-    				&& x + mButtonWidth * 4 > 0 
-    				&& x + mButtonWidth * 4 < mButtonWidth 
-    				&& y + mButtonHeight * 1 > mButtonHeight
-    				&& y + mButtonHeight * 1 < mButtonHeight * 2) {
-    			mPanelBot.setKeyB(true);
-    		}
-    		else if (mKeyValue == MovementValues.KEY_UP 
-    				&& x + mButtonWidth * 3 > 0 
-    				&& x + mButtonWidth * 3 < mButtonWidth 
-    				&& y + mButtonHeight * 0 > mButtonHeight 
-    				&& y + mButtonHeight * 0 < mButtonHeight * 2) {
-    			mPanelBot.setKeyB(true);
-    		}
-    	}
-    	public void checkTwoCoordinates(int mFirstX, int mFirstY, int mSecondX, int mSecondY) {
+    	
+    	private void checkTwoCoordinates(int mFirstX, int mFirstY, int mSecondX, int mSecondY) {
     		int mFirstOffsetX = 0; 
     		int mFirstOffsetY = 0;
     		int mSecondOffsetX = 0;
