@@ -1759,7 +1759,7 @@ jint score, jint lives)
 
 ====Native setMonsterPreferences()====
 
-
+In the Awesomeguy Options.java activity there are two options which have to do with the interaction between the main character and the monsters seen on the screen. There are two preferences that can be set. One option is for displaying monsters on the screen at all. Another option is for weather or not the monster collision code is enabled. This second preference makes it so that the monster can be seen on the screen, but it cannot be killed and it cannot kill you. These two options need to be passed along to the JNI library so that it can enable and disable the monster code as is necessary. 
 {{{
 JNIEXPORT void JNICALL
 Java_org_davidliebman_android_awesomeguy_Panel_setMonsterPreferences(JNIEnv * env,
@@ -1768,5 +1768,56 @@ jobject  obj, jint monsters, jint collision)
 	preferences_monsters = monsters;
 	preferences_collision = collision;
 
+}
+}}}
+
+====Native setJNIAnimateOnly()====
+
+Though unimplemented, some provision for an animation of the main character has been added to the JNI library. The concept is that when the 'animate_only' variable is set to true, the screen should be redrawn, but no collision should be recorded. This way, if a special method for animating the main character were called, it wouldn't have to worry about collision with monsters, etc. The animation could be employed to show that the main character has died or finished a level, or both separately.
+
+{{{
+JNIEXPORT void JNICALL
+Java_org_davidliebman_android_awesomeguy_Panel_setJNIAnimateOnly(JNIEnv * env, jobject
+obj, jint animate)
+{
+
+	animate_only = animate;
+
+}
+}}}
+
+====Native setScreenData()====
+
+This method is used to inform the JNI library what the dimensions of the screen area are (measured in tiles).
+{{{
+JNIEXPORT void JNICALL
+Java_org_davidliebman_android_awesomeguy_Panel_setScreenData(JNIEnv * env, jobject  obj,
+jint screenH, jint screenV)
+{
+	tilesWidthMeasurement = screenH;
+	tilesHeightMeasurement = screenV;
+
+}
+}}}
+
+====Native setLevelData()====
+
+This method passes the 1D 'level' and 'object' arrays to the function 'setLevelData(...)' which converts them to the 2D arrays 'map_level' and 'map_objects'. It also passes the size of the arrays.
+{{{
+JNIEXPORT void JNICALL 
+Java_org_davidliebman_android_awesomeguy_Panel_setLevelData(JNIEnv * env, jobject  obj,
+jintArray level, jintArray objects, jint width, jint height)
+{
+	
+	jint *a = (*env)->GetIntArrayElements(env, level, 0); 
+  	jint *b = (*env)->GetIntArrayElements(env, objects, 0);
+  	
+  	level_h = height;
+  	level_w = width;
+  	
+  	sprite_num = 0;
+  	
+	setLevelData(a,b);	
+	
 }
 }}}
