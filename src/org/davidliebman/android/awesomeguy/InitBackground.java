@@ -26,13 +26,6 @@ public class InitBackground {
 		int i,j;
 		int num = 0;
 
-		/*try {
-			mParser.testParse(1);
-		}
-		catch (Exception e) {
-			Log.e("INIT LEVEL",e.getMessage());
-		}
-		*/
 		
 		mGameV.clearSpriteList();
 		mGameV.setSpriteStart();
