@@ -2,13 +2,28 @@
 #sidebar TableOfContents
 = Introduction =
 
-Add your content here.
+Here we'll go through the steps of writing your own JNI library to use with the Android platform. We'll also touch on setting up your Android app editing environment using Eclipse.
 
 <wiki:toc max_depth="5" />
 
-= Details =
+= Overview =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Before you create your Android JNI file you need a working project, and before that you need a working development environment. In this tutorial we'll briefly cover setting up your eclipse IDE for java development, and we'll go on to cover Android JNI/NDK.
+
+JNI stands for 'Java Native Interface' and NDK stands for 'Native Development Kit'. We'll use the two terms somewhat interchangeably but they could also be used to define very specific and different things. JNI could be used to define all Java applications that use native code, whereas NDK would be more related to the Android system in specific.
+
+=Setup=
+
+Here we'll start looking at Eclipse and Android plugins.
+
+===Eclipse===
+
+At the time of this writing, if you go to the Eclipse IDE web site, you'll find that the most recent version of Eclipse is 'Eclipse Helios' version 3.6.1 however that version won't work with the Android Development Kit. The link for the eclipse home page is:
+
+http://www.eclipse.org/
+
+====Download====
+
+Go to the eclipse home page and click the button for downloads. Do not download Eclipse Helios on this page. Look for a link for 'Older Versions'. 
+
+===Android===
