@@ -1821,3 +1821,51 @@ jintArray level, jintArray objects, jint width, jint height)
 	
 }
 }}}
+
+====Native setObjectsDisplay()====
+
+This method is used during game play to allow the java code to change a value in the JNI's  'map_objects' array. This is used, for example, when the java notices that the main character has hit a ring. In this case, the character needs to be given points, and the ring has to be made to disappear. This function allows the java to make the JNI ring disappear.
+{{{
+JNIEXPORT void JNICALL
+Java_org_davidliebman_android_awesomeguy_Panel_setObjectsDisplay(JNIEnv * env, jobject
+obj, jint map_x, jint map_y, jint value)
+{
+	setObjectsDisplay(map_x, map_y, value);	
+
+}
+}}}
+
+====Native drawLevel()====
+
+This method returns to the java code the contents of the 'screen' array. Before it returns these contents it must first convert them to a 1D array, and then put them into the 'jintArray'. The 'jintArray' is the java version of the integer array.
+{{{
+JNIEXPORT jintArray JNICALL
+Java_org_davidliebman_android_awesomeguy_Panel_drawLevel(JNIEnv * env, jobject  obj, 
+jint animate)
+{
+	int j,k;
+	jint size = SCREEN_WIDTH * SCREEN_HEIGHT;
+	jint fill[size]; 
+	jintArray graphic;
+	drawLevel(animate);
+	graphic = (*env)->NewIntArray(env, size);
+	if(graphic == NULL) {
+		LOGE("ARRAY NOT CREATED");
+		return NULL;
+	}
+	for (j = 0; j < SCREEN_HEIGHT; j++) {
+		for (k = 0; k < SCREEN_WIDTH ; k ++ ) {
+			fill[ (j * SCREEN_WIDTH) + k ] = (jint) screen[j][k];
+		}
+	}
+	
+	
+	(*env)->SetIntArrayRegion(env, graphic,0, size, fill);
+	return graphic;
+}
+}}}
+The four lines of code that are most important in this method are:
+  # `jintArray graphic;` 
+  # `graphic = (*env)->NewIntArray(env, size);` 
+  # `(*env)->SetIntArrayRegion(env, graphic,0, size, fill);`
+  # `return graphic;`
