@@ -4,6 +4,7 @@
 
 Add your content here.
 
+<wiki:toc max_depth="5" />
 
 = Details =
 
