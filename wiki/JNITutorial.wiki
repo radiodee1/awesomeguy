@@ -12,9 +12,9 @@ Before you create your Android JNI file you need a working project, and before t
 
 JNI stands for 'Java Native Interface' and NDK stands for 'Native Development Kit'. We'll use the two terms somewhat interchangeably but they could also be used to define very specific and different things. JNI could be used to define all Java applications that use native code, whereas NDK would be more related to the Android system in specific.
 
-=Setup=
+=Setup Everything=
 
-Here we'll start looking at Eclipse and Android plugins.
+Here we'll start looking at Eclipse and Android plugins. Awesomeguy was programmed on a debian-based linux computer. Instructions for installing software are generally written with a linux operating system in mind. However, Android apps can be successfully written on Windows computers, and all of the tools mentioned here have windows equivalents.
 
 ===Eclipse===
 
@@ -24,6 +24,6 @@ http://www.eclipse.org/
 
 ====Download====
 
-Go to the eclipse home page and click the button for downloads. Do not download Eclipse Helios on this page. Look for a link for 'Older Versions'. 
+Go to the eclipse home page and click the button for downloads. Do not download Eclipse Helios on this page. Look for a link for 'Older Versions'. Awesomeguy was written on 'Galileo' version 3.5.2. You will also need a working version of Java on your computer to compile Android code. Make sure you can write and compile java code on Eclipse before moving on to the next step.
 
 ===Android===
