@@ -22,8 +22,19 @@ At the time of this writing, if you go to the Eclipse IDE web site, you'll find 
 
 http://www.eclipse.org/
 
-====Download====
+====Download Eclipse====
 
-Go to the eclipse home page and click the button for downloads. Do not download Eclipse Helios on this page. Look for a link for 'Older Versions'. Awesomeguy was written on 'Galileo' version 3.5.2. You will also need a working version of Java on your computer to compile Android code. Make sure you can write and compile java code on Eclipse before moving on to the next step.
+Go to the eclipse home page and click the button for downloads. Do not download Eclipse Helios on this page. Look for a link for 'Older Versions'. Awesomeguy was written on 'Galileo' version 3.5.2. 
 
-===Android===
+====Download Java====
+
+You will also need a working version of Java on your computer to compile Android code. Sometimes you can run into problems if the version of Java you are using is not the official java. Oracle is the company responsible for the official java download at the time of this writing.
+
+For distributions of linux that use complex packaging systems, java can usually be downloaded as a package. In a debian-based linux system, `update-alternatives` may be employed to make sure that the correct java implementation is being used on your system after the java packages are downloaded. You are interested in java 'jre' and java 'jdk', as well as anything else they require to operate correctly.
+
+====File Folder Organization====
+
+Make sure you can write and compile java code on Eclipse before moving on to the next step.
+
+
+===Android SDK===
