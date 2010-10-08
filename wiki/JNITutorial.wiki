@@ -16,9 +16,9 @@ JNI stands for 'Java Native Interface' and NDK stands for 'Native Development Ki
 
 Here we'll start looking at Eclipse and Android plugins. Awesomeguy was programmed on a debian-based linux computer. Instructions for installing software are generally written with a linux operating system in mind. However, Android apps can be successfully written on Windows computers, and all of the tools mentioned here have windows equivalents.
 
-===Download Java===
+===Java===
 
-You will also need a working version of Java on your computer to compile Android code. Sometimes you can run into problems if the version of Java you are using is not the official java. Oracle is the company responsible for the official java download at the time of this writing.
+You will need a working version of Java on your computer to compile Android code. Sometimes you can run into problems if the version of Java you are using is not the official java. Oracle is the company responsible for the official java download at the time of this writing.
 
 For distributions of linux that use complex packaging systems, java can usually be downloaded as a package. In a debian-based linux system, `update-alternatives` may be employed to make sure that the correct java implementation is being used on your system after the java packages are downloaded. You are interested in java 'jre' and java 'jdk', as well as anything else they require to operate correctly.
 
