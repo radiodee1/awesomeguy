@@ -232,6 +232,9 @@ public class GameStart extends Activity {
     @Override
     public void onResume() {
     	
+    	/* make sure screen starts blank */
+    	mGameV.setLevelLoading(true);
+    	
     	/* retrieve Record mHighScores */
     	mHighScores = new Record();
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
@@ -242,7 +245,7 @@ public class GameStart extends Activity {
         mLookForXml = preferences.getBoolean(Options.SAVED_LOOK_FOR_XML, false);
         mGameV.setRoomNo(preferences.getInt(Options.SAVED_ROOM_NUM, 1));
         mGameV.setLookForXml(mLookForXml);
-        mLevelList = mParser.getLevelList(mLookForXml);
+        //mLevelList = mParser.getLevelList(mLookForXml);
         
         
     	mScores = new Scores(this, mHighScores);
@@ -255,6 +258,8 @@ public class GameStart extends Activity {
     	mRLayoutGamepad.addView((View)new GamePad(this, true, mDimension));
     	
     	mBackground = new InitBackground(mGameV, this);
+        mLevelList = mParser.getLevelList(mLookForXml);
+
     	mFLayoutBot.addView((View)mPanelBot);
     	
     	mPanelBot.setEnableSounds(mHighScores.isSound());
@@ -682,8 +687,8 @@ public class GameStart extends Activity {
     		
     		  //do something here.
     		    
-    		    mMovementV.setScrollX(0);
-    		    mMovementV.setScrollY(0);
+    		    //mMovementV.setScrollX(0);
+    		    //mMovementV.setScrollY(0);
     			
     			
     			// new score ?? SAVE OLD SCORE!!
