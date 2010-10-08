@@ -61,7 +61,7 @@ public class GameValues {
 	private boolean mLookForXml = false;
 	private int mTotNumRooms = 10;
 	private ArrayList<Integer> mXmlLevel = new ArrayList<Integer>();
-	
+	private InitBackground.LevelList mLevelList;
 	
 	public boolean isDoubleScreen() {
 		return mDoubleScreen;
@@ -325,6 +325,12 @@ public class GameValues {
 	}
 	public void setTotNumRooms(int mTotNumRooms) {
 		this.mTotNumRooms = mTotNumRooms;
+	}
+	public InitBackground.LevelList getLevelList() {
+		return mLevelList;
+	}
+	public void setLevelList(InitBackground.LevelList mLevelList) {
+		this.mLevelList = mLevelList;
 	}
 	
 	
