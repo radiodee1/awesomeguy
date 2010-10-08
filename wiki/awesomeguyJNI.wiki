@@ -1869,3 +1869,132 @@ The four lines of code that are most important in this method are:
   # `graphic = (*env)->NewIntArray(env, size);` 
   # `(*env)->SetIntArrayRegion(env, graphic,0, size, fill);`
   # `return graphic;`
+Parts 1 and 2 set up the int array that we want to return. Part 3 fills the int array with the data from the regular array 'fill'. Part 4 returns the filled int array. In the java code the array is used to create a bitmap.
+
+====Native getSoundBoom()====
+
+This method returns an integer value of 0 or 1 representing weather or not the java code should play the 'boom' sound.
+{{{
+JNIEXPORT int JNICALL 
+Java_org_davidliebman_android_awesomeguy_Panel_getSoundBoom(JNIEnv * env, jobject  obj)
+{
+	return getSoundBoom();	
+
+}
+}}}
+
+====Native getSoundOw()====
+
+This method returns an integer value of 0 or 1 representing weather or not the java code should play the 'ow' sound.
+{{{
+JNIEXPORT int JNICALL 
+Java_org_davidliebman_android_awesomeguy_Panel_getSoundOw(JNIEnv * env, jobject  obj)
+{
+	return getSoundOw();	
+
+}
+}}}
+
+====Native getSoundPrize()====
+
+This method returns an integer value of 0 or 1 representing weather or not the java code should play the 'prize' sound.
+{{{
+JNIEXPORT int JNICALL 
+Java_org_davidliebman_android_awesomeguy_Panel_getSoundPrize(JNIEnv * env, jobject  obj)
+{
+	return getSoundPrize();	
+
+}
+}}}
+
+====Native getLives()====
+
+This method returns the number of lives that the JNI library says the main character should have.
+{{{
+JNIEXPORT int JNICALL 
+Java_org_davidliebman_android_awesomeguy_Panel_getLives(JNIEnv * env, jobject  obj)
+{
+	return lives;	
+
+}
+}}}
+
+====Native getEndLevel()====
+
+This method returns the values 0 or 1 for weather or not the variable 'endlevel' is set. At the same time it resets 'endlevel' to false.
+{{{
+JNIEXPORT int JNICALL 
+Java_org_davidliebman_android_awesomeguy_Panel_getEndLevel(JNIEnv * env, jobject  obj)
+{
+	
+	int temp = endlevel;
+  	endlevel = FALSE;
+	return temp;	
+
+}
+}}}
+
+====Native getScore()====
+
+This method returns to the java code the value of the JNI variable 'score'.
+{{{
+JNIEXPORT int JNICALL 
+Java_org_davidliebman_android_awesomeguy_Panel_getScore(JNIEnv * env, jobject  obj)
+{
+	return score;	
+}
+}}}
+
+====Native incrementJniScore()====
+
+This method increments the JNI variable 'score' by a certain amount.
+{{{
+JNIEXPORT void JNICALL
+Java_org_davidliebman_android_awesomeguy_Panel_incrementJniScore(JNIEnv * env, 
+jobject  obj, jint num)
+{
+	score = score + num;	
+
+}
+}}}
+
+====Native getSpriteX()====
+
+One of three methods that return the value associated with a given sprite on the array of sprite structs. This method takes a array index and returns a sprite's x coordinate.
+
+{{{
+JNIEXPORT int JNICALL 
+Java_org_davidliebman_android_awesomeguy_Panel_getSpriteX(JNIEnv * env, jobject  obj,
+jint num)
+{
+	return sprite[num].x;	
+
+}
+}}}
+
+====Native getSpriteY()====
+
+One of three methods that return the value associated with a given sprite on the array of sprite structs. This method takes a array index and returns a sprite's y coordinate.
+
+{{{
+JNIEXPORT int JNICALL 
+Java_org_davidliebman_android_awesomeguy_Panel_getSpriteY(JNIEnv * env, jobject  obj,
+jint num)
+{
+	return sprite[num].y;	
+
+}
+}}}
+
+====Native getSpriteFacingRight()====
+
+One of three methods that return the value associated with a given sprite on the array of sprite structs. This method takes a array index and returns a sprite's 'facingRight' property.
+{{{
+JNIEXPORT int JNICALL
+Java_org_davidliebman_android_awesomeguy_Panel_getSpriteFacingRight(JNIEnv * env,
+jobject  obj, jint num)
+{
+	return sprite[num].facingRight;	
+
+}
+}}}
