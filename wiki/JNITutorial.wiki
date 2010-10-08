@@ -1,5 +1,5 @@
 #summary A simple tutorial for writing and compiling JNI code for the Android platform
-
+#sidebar TableOfContents
 = Introduction =
 
 Add your content here.
