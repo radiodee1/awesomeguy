@@ -1,10 +1,8 @@
 package org.davidliebman.android.awesomeguy;
 
-//import java.util.ArrayList;
 import android.os.Environment;
 import android.util.Log;
 import java.io.*;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
