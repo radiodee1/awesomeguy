@@ -15,11 +15,16 @@ public class InitBackground {
 	private GameValues mGameV;
 	private Context mContext;
 	private ParseXML mParser;
+	private LevelList mLevelList;
+	private boolean mLookForXml;
 	
-	public InitBackground(GameValues gV, Context context) {
+	public InitBackground(GameValues gV, Context context, boolean mLookForXml) {
 		mGameV = gV;
 		mContext = context;
 		mParser = new ParseXML(mContext);
+		this.mLookForXml = mLookForXml;
+		this.populateLevelList();
+
 	}
 	
 	public void initLevel(MovementValues mMovementV) {
@@ -93,7 +98,7 @@ public class InitBackground {
 		}
 		
 		this.setStartingScrollPosition(mMovementV);
-		
+				
 		mGameV.setLevelLoading(false);
 
 	}
@@ -161,7 +166,10 @@ public class InitBackground {
 	}
 
 	
-
+	public void populateLevelList() {
+		mLevelList = this.mParser.getLevelList(mLookForXml);
+		mGameV.setLevelList(mLevelList);
+	}
 
 	public static class ParseXML {
 		private Context mContext;

@@ -46,7 +46,7 @@ public class GameStart extends Activity {
     private Canvas mCanvas;
     private FrameLayout mBotFrame;
     private InnerGameLoop mGameLoopBot;
-    private InitBackground.LevelList mLevelList;
+    //private InitBackground.LevelList mLevelList;
 	private InitBackground.ParseXML mParser = new InitBackground.ParseXML(this);
 
     
@@ -245,7 +245,6 @@ public class GameStart extends Activity {
         mLookForXml = preferences.getBoolean(Options.SAVED_LOOK_FOR_XML, false);
         mGameV.setRoomNo(preferences.getInt(Options.SAVED_ROOM_NUM, 1));
         mGameV.setLookForXml(mLookForXml);
-        //mLevelList = mParser.getLevelList(mLookForXml);
         
         
     	mScores = new Scores(this, mHighScores);
@@ -257,8 +256,8 @@ public class GameStart extends Activity {
     	mPanelBot = new Panel(this,  mGameV, this, mMovementV, mHighScores, this.mDimension);
     	mRLayoutGamepad.addView((View)new GamePad(this, true, mDimension));
     	
-    	mBackground = new InitBackground(mGameV, this);
-        mLevelList = mParser.getLevelList(mLookForXml);
+    	mBackground = new InitBackground(mGameV, this, mLookForXml);
+        //mLevelList = mGameV.getLevelList();
 
     	mFLayoutBot.addView((View)mPanelBot);
     	
@@ -663,13 +662,10 @@ public class GameStart extends Activity {
     	public InnerGameLoop (GameStart game) {
     		//Log.v("InnerGameLoop", "init");
     		
-    		
     	}
     	
     	@Override
     	public void run() {
-    		
-            
     		
     		gameRunning = true;
     		//prepare timer
@@ -710,7 +706,7 @@ public class GameStart extends Activity {
     		    
     		    mGameV.setEndGame(false);
     		    
-    		    while(mGameV.getRoomNo() <= mLevelList.size()  && !mGameV.isEndGame() && gameRunning && mGameV.getLives() > 0) {
+    		    while(mGameV.getRoomNo() <= mGameV.getLevelList().size()  && !mGameV.isEndGame() && gameRunning && mGameV.getLives() > 0) {
 
        
     		     // advance through rooms
@@ -728,7 +724,7 @@ public class GameStart extends Activity {
     		    
     		    //init room
     		    //getSavedRoom();
-    		    mBackground.setLevel(mLevelList.getNum(mGameV.getRoomNo()-1));
+    		    mBackground.setLevel(mGameV.getLevelList().getNum(mGameV.getRoomNo()-1));
     		    //mBackground.setLevel(mGameV.getRoomNo());
     	    	mBackground.initLevel(mMovementV);
     	    	
