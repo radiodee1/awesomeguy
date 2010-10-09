@@ -16,6 +16,10 @@ JNI stands for 'Java Native Interface' and NDK stands for 'Native Development Ki
 
 Here we'll start looking at Eclipse and Android plugins. Awesomeguy was programmed on a debian-based linux computer. Instructions for installing software are generally written with a linux operating system in mind. However, Android apps can be successfully written on Windows computers, and all of the tools mentioned here have windows equivalents.
 
+===File Folder Organization===
+
+Make sure you can write and compile java code on Eclipse before moving on to the next step.
+
 ===Java===
 
 You will need a working version of Java on your computer to compile Android code. Sometimes you can run into problems if the version of Java you are using is not the official java. Oracle is the company responsible for the official java download at the time of this writing.
@@ -40,10 +44,8 @@ Go to the eclipse home page and click the button for downloads. Do not download 
 
 For linux users the file that you download will be called something like '`eclipse-java-galileo-SR2-linux-gtk.tar.gz`'. Set the eclipse `tar.gz` package aside.
 
+====Unpack Eclipse====
 
-====File Folder Organization====
-
-Make sure you can write and compile java code on Eclipse before moving on to the next step.
-
+Unpack Eclipse.
 
 ===Android SDK===
