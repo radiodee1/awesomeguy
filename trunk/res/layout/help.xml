@@ -22,7 +22,9 @@ pyramids, mazes, castles, and flying steaks. \n\nYou're AWESOMEGUY. Run away
   next level. The key is a checkpoint and the rings and gold bricks are worth points. There is also a 'life' or two out there and they are green. Have fun.
 \n\nMOVEMENT: Use the arrow keys on the touch screen to move the character in the four basic directions. 'B' is the jump key. On some phones the trackball can also be used for the four directions. You can climb the ladders and jump from the platforms. You can fall any distance without hurting yourself. Monsters
 can kill you unless you jump right on top of them. Green blocks with red dots are extra lives. The white crystal takes you to the next level.
-\n\nFINALLY: When playing using the touch buttons try playing the game with one finger. This works better because two buttons cannot be pressed at the same time. Using one finger (your index finger or thumb on one hand) forces you to only push one button at a time."
+\n\nFINALLY: When playing using the touch buttons try playing the game with one finger. The pointer finger or the thumb work better for different people.
+ (Hold the device in the other hand.) Depending on your phone, you can place the device on a table and press two buttons at a time - like one of the direction buttons and the jump button together. 
+ This is harder to do if you're holding the device, and may not work for everyone."
   
 android:background="@drawable/background"
 android:textColor="#000000"
