@@ -53,4 +53,15 @@ tar xvzf eclipse-java-galileo-SR2-linux-gtk.tar.gz
 }}} 
 
 You can use tab completion to make sure that you're spelling the name of the Eclipse download correctly. The 'tar' program will unpack the 'tar.gz' file and place the Eclipse folder in the current directory. After this is done you will have a directory named 'eclipse' and also the original downloaded file in your directory. You can dispose of the original download, or save it somewhere for safe keeping as you like.
+
 ===Android SDK===
+
+====Download Android SDK====
+
+====Unpack Android SDK====
+
+===Android NDK===
+
+====Download Android NDK====
+
+====Unpack Android NDK====
