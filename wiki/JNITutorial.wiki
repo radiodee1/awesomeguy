@@ -46,6 +46,11 @@ For linux users the file that you download will be called something like '`eclip
 
 ====Unpack Eclipse====
 
-Unpack Eclipse.
+Unpacking Eclipse on a linux system can be accomplished using a gtk application like 'file-roller' or you can use the 'tar' command from the command line. We'll cover the command line option. First place the 'tar.gz' file that you downloaded in the location that you want Eclipse to actually be in. Then type the command below.
 
+{{{
+tar xvzf eclipse-java-galileo-SR2-linux-gtk.tar.gz
+}}} 
+
+You can use tab completion to make sure that you're spelling the name of the Eclipse download correctly. The 'tar' program will unpack the 'tar.gz' file and place the Eclipse folder in the current directory. After this is done you will have a directory named 'eclipse' and also the original downloaded file in your directory. You can dispose of the original download, or save it somewhere for safe keeping as you like.
 ===Android SDK===
