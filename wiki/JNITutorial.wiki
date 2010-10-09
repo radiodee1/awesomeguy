@@ -18,7 +18,7 @@ Here we'll start looking at Eclipse and Android plugins. Awesomeguy was programm
 
 ===File Folder Organization===
 
-Make sure you can write and compile java code on Eclipse before moving on to the next step.
+
 
 ===Java===
 
@@ -62,6 +62,8 @@ If you are on a Windows operating system, the name of the eclipse executable is 
 {{{
 c:\path\to\eclipse\eclipse.exe 
 }}}
+
+Make sure you can write and compile java code on Eclipse before moving on to the next step.
 
 ===Android SDK===
 
