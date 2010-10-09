@@ -1,13 +1,9 @@
 package org.davidliebman.android.awesomeguy;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
 
-import org.xmlpull.v1.XmlPullParserException;
 
 import android.app.Activity;
-import android.util.Log;
+//import android.util.Log;
 import android.widget.*;
 import android.view.*;
 import android.view.View.OnClickListener;

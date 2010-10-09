@@ -19,7 +19,7 @@ import android.widget.Toast;
 import android.view.*;
 import android.content.*;
 import android.widget.*;
-import android.util.Log;
+//import android.util.Log;
 
 public class GameStart extends Activity {
 	
@@ -619,7 +619,7 @@ public class GameStart extends Activity {
     		else if(msg.what == INPUTVALUES_TRACKUP) {
     			mMovementV.clearKeys();
     			mPanelBot.readKeys(0);
-    			Log.v("Handler", "Keyup " );
+    			//Log.v("Handler", "Keyup " );
     		}
     		
     		
@@ -848,7 +848,7 @@ public class GameStart extends Activity {
     	    	
     		}
     		else {
-    			Log.v("InnerGameLoop", "Running behind");
+    			//Log.v("InnerGameLoop", "Running behind");
     			newDate = new Date();
     			nextGameTick = newDate.getTime();
     			//ticksElapsed = newDate.getTime();

@@ -3,7 +3,7 @@ package org.davidliebman.android.awesomeguy;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
+//import android.util.Log;
 import android.content.*;
 
 public  class Record  {
@@ -68,7 +68,6 @@ public  class Record  {
          out.putString("mEnableCollision",new Boolean(mEnableCollision).toString());
          out.commit();
          
-         Log.e("addToPreferences()", "--------------here");
      }
      
      public void getFromPreferences(SharedPreferences in) {
@@ -87,7 +86,7 @@ public  class Record  {
          mEnableMonsters = new Boolean(in.getString("mEnableMonsters","")).booleanValue();
          mEnableCollision = new Boolean(in.getString("mEnableCollision","")).booleanValue();
      }
-     
+     /*
      public void listInLog() {
 		Log.i("Record", "Is New Record : " + new Boolean(mNewRecord).toString());
 		Log.i("Record", "Record Database Num : "+ mRecordIdNum);
@@ -104,7 +103,7 @@ public  class Record  {
 		Log.i("Record", "Monsters Enabled : " + new Boolean(mEnableMonsters).toString());
 		Log.i("Record", "Collision Enabled : " + new Boolean(mEnableCollision).toString());
 	}
-     
+     */
 
     
 	
