@@ -3,7 +3,7 @@
 	package="org.davidliebman.android.awesomeguy" android:versionName="1.0.0.20101009" android:versionCode="1">
 
 	<application android:icon="@drawable/guy_icon" android:label="@string/app_name"
-		android:debuggable="true" >
+		android:debuggable="false" >
 
 		<activity android:name=".SplashScreen" android:label="@string/app_name"
 			android:clearTaskOnLaunch="true" android:launchMode="singleTask"
