@@ -54,6 +54,15 @@ tar xvzf eclipse-java-galileo-SR2-linux-gtk.tar.gz
 
 You can use tab completion to make sure that you're spelling the name of the Eclipse download correctly. The 'tar' program will unpack the 'tar.gz' file and place the Eclipse folder in the current directory. After this is done you will have a directory named 'eclipse' and also the original downloaded file in your directory. You can dispose of the original download, or save it somewhere for safe keeping as you like.
 
+====Running Eclipse====
+
+Assuming that you are still in the directory where you unpacked eclipse, and assuming the eclipse program is installed in a directory called 'eclipse', and assuming you're on a linux operating system, you can run eclipse by typing 'eclipse/eclipse' at the command line. You might want to make a launcher of some kind on your desktop, but doing so is beyond the scope of this wiki.
+
+If you are on a Windows operating system, the name of the eclipse executable is 'eclipse.exe' and the name of the eclipse folder will vary with the exact version you've downloaded. Still, the concept for starting the executable is the same. You type some variation on the following 
+{{{
+c:\path\to\eclipse\eclipse.exe 
+}}}
+
 ===Android SDK===
 
 ====Download Android SDK====
