@@ -11,7 +11,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.app.AlertDialog;
-import android.util.Log;
+//import android.util.Log;
 
 public class Players extends ListActivity {
 		

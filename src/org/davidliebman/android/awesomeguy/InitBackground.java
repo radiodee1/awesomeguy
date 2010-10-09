@@ -1,7 +1,7 @@
 package org.davidliebman.android.awesomeguy;
 
 import android.os.Environment;
-import android.util.Log;
+//import android.util.Log;
 import java.io.*;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -145,7 +145,7 @@ public class InitBackground {
 			if (test ) test = mParser.parseLevelXml(num, mGameV);
 		}
 		catch (Exception e) {
-			Log.e("INIT LEVEL",e.getMessage());
+			//Log.e("INIT LEVEL",e.getMessage());
 			
 		}
 		//try again without sdcard.
@@ -155,7 +155,7 @@ public class InitBackground {
 				mParser.parseLevelXml(num, mGameV);
 			}
 			catch (Exception e) {
-				Log.e("INIT LEVEL",e.getMessage());
+				//Log.e("INIT LEVEL",e.getMessage());
 				
 			}
 			
@@ -201,7 +201,7 @@ public class InitBackground {
 			   factory.setNamespaceAware(true);
 			   mXpp = factory.newPullParser(); 	
 			   File sdcard = Environment.getExternalStorageDirectory();
-			   Log.e("XML", sdcard.getAbsolutePath());
+			   //Log.e("XML", sdcard.getAbsolutePath());
 			   int BUFFER_SIZE = 8192;
 
 			   
@@ -236,7 +236,7 @@ public class InitBackground {
 						
 						mIndexNum = new Integer(mXpp.getAttributeValue(0).toString().trim()).intValue();
 
-						Log.e("XML", " attribute number " + mIndexNum);
+						//Log.e("XML", " attribute number " + mIndexNum);
 						if(mIndexNum - 1 == mList.size()) {
 							mList.add(new String("Room Num "+mIndexNum),mIndexNum);
 						}
@@ -245,7 +245,9 @@ public class InitBackground {
 						}
 						//mList.add(mIndexNum);
 					}
-					else Log.e("XML", mXpp.getAttributeName(0) + " " + mXpp.getAttributeCount());
+					else {
+						//Log.e("XML", mXpp.getAttributeName(0) + " " + mXpp.getAttributeCount());
+					}
 				
 					
 				}
@@ -290,9 +292,11 @@ public class InitBackground {
 						mIndexNum = new Integer(mXpp.getAttributeValue(0).toString().trim()).intValue();
 						//mReadNum = true;
 						if (mIndexNum == num) mStopParse = true;
-						Log.e("XML", " attribute number " + mIndexNum);
+						//Log.e("XML", " attribute number " + mIndexNum);
 					}
-					else Log.e("XML", mXpp.getAttributeName(0) + " " + mXpp.getAttributeCount());
+					else {
+						//Log.e("XML", mXpp.getAttributeName(0) + " " + mXpp.getAttributeCount());
+					}
 				
 					
 				}
@@ -381,7 +385,7 @@ public class InitBackground {
 			}
 			else {
 				/* throw hairy fit */
-				Log.e("XML"," 'tokens' doesn't match 'dimensions'!!!");
+				//Log.e("XML"," 'tokens' doesn't match 'dimensions'!!!");
 				return false;
 			}
 			return true;
@@ -396,19 +400,19 @@ public class InitBackground {
 			}
 			
 			catch (XmlPullParserException e) {
-				Log.e("INIT LEVEL","XmlPullParserException -- " + e.getMessage());
+				//Log.e("INIT LEVEL","XmlPullParserException -- " + e.getMessage());
 			}
 			catch (IOException e) {
-				Log.e("INIT LEVEL","IO exception " + e.getMessage());
+				//Log.e("INIT LEVEL","IO exception " + e.getMessage());
 			}
 			catch (Exception e) {
-				Log.e("INIT LEVEL", "exception " + e.getMessage());
+				//Log.e("INIT LEVEL", "exception " + e.getMessage());
 			}
 			
 			//try again without sdcard.
 			if (mList.size() == 0 ) {
 				try {
-					Log.e("INIT LEVEL","failed mLookForXml -- " + test);
+					//Log.e("INIT LEVEL","failed mLookForXml -- " + test);
 
 					setXmlPullParser(false);
 		        	mList = getXmlList(null);

@@ -2,7 +2,7 @@ package org.davidliebman.android.awesomeguy;
 
 import android.media.*;
 import android.content.*;
-import android.util.Log;
+//import android.util.Log;
 import java.util.*;
 
 public class SoundPoolManager { 
@@ -29,7 +29,7 @@ public class SoundPoolManager {
 
     public void init() {
             if (enabled) {
-                    Log.d(TAG, "Initializing new SoundPool");
+                    //Log.d(TAG, "Initializing new SoundPool");
                     //re-init sound pool to work around bugs
                     release();
                     soundPool = new SoundPool(2,AudioManager.STREAM_NOTIFICATION, 0);
@@ -38,23 +38,23 @@ public class SoundPoolManager {
                     this.mSoundGoal = soundPool.load(context, R.raw.goal, 1);
                     this.mSoundPrize = soundPool.load(context, R.raw.prize, 1);
                     
-                    Log.d(TAG, "SoundPool initialized");
+                    //Log.d(TAG, "SoundPool initialized");
             }
     }
 
     public void release() {
             if (soundPool != null) {
-                    Log.d(TAG, "Closing SoundPool");
+                    //Log.d(TAG, "Closing SoundPool");
                     soundPool.release();
                     soundPool = null;
-                    Log.d(TAG, "SoundPool closed");
+                    //Log.d(TAG, "SoundPool closed");
                     return;
             }
     }
 
     public void playSound(int sound) {
             if (soundPool != null && mPlaySounds) {
-                    Log.d(TAG, "Playing Sound " + sound);
+                    //Log.d(TAG, "Playing Sound " + sound);
                     AudioManager mgr = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
                     int streamVolume = mgr.getStreamVolume(AudioManager.STREAM_MUSIC);
                     

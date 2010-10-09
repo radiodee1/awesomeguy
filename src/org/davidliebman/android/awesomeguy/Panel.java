@@ -7,7 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.*;
-import android.util.Log;
+//import android.util.Log;
 import android.graphics.*;
 
 public  class Panel  extends SurfaceView  {
@@ -607,7 +607,7 @@ public  class Panel  extends SurfaceView  {
 				centerBlockIm1== mGameV.mBlock && !ladderTest) { 
 			// no hanging from
 			// blocks by accident
-			Log.v("functions","no hanging");
+			//Log.v("functions","no hanging");
 
 			y = mMovementV.getVMove() ;//crucial?
 
@@ -1194,14 +1194,14 @@ public  class Panel  extends SurfaceView  {
 	public void playSounds() {
 		if(getSoundOw() == 1) {
 			mSounds.playSound(SoundPoolManager.SOUND_OW);
-			Log.e("Play-Sound", "OW");
+			//Log.e("Play-Sound", "OW");
 		}
 		if(getSoundPrize() == 1) {
 			mSounds.playSound(SoundPoolManager.SOUND_PRIZE);
 		}
 		if(getSoundBoom() == 1) {
 			mSounds.playSound(SoundPoolManager.SOUND_BOOM);
-			Log.e("Play-Sound","BOOM");
+			//Log.e("Play-Sound","BOOM");
 		}
 	}
 	

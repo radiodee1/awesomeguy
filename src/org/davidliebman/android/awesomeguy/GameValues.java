@@ -3,7 +3,7 @@ package org.davidliebman.android.awesomeguy;
 import java.util.ArrayList;
 import java.lang.*;
 import android.content.*;
-import android.util.Log;
+//import android.util.Log;
 
 
 public class GameValues {
@@ -265,7 +265,7 @@ public class GameValues {
 	}
 	
 	public SpriteInfo getSpriteStart() {
-		if(mSprites.size() < 1) Log.e("GameValues", "no 'first' sprite yet");
+		//if(mSprites.size() < 1) Log.e("GameValues", "no 'first' sprite yet");
 		return mSprites.get(0);
 	}
 	
@@ -280,7 +280,7 @@ public class GameValues {
 		}
 		else {
 			temp = new SpriteInfo();
-			Log.v("GameValues","bad sprite number");
+			//Log.v("GameValues","bad sprite number");
 		}
 		return temp;
 	}
