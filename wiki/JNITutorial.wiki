@@ -145,15 +145,17 @@ The site for downloading the Android NDK packages is below. As always, the docum
 
 http://developer.android.com/sdk/ndk/index.html
 
-As before, we'll focus our tutorial on the linux operating system.
+As before, we'll focus our tutorial on the linux operating system. At this point in the tutorial it should be noted that the Android NDK for Windows requires the installation of 'cygwin' version 1.7 or higher. Installing 'cygwin' is beyond the scope of the tutorial.
 
 ====Download Android NDK====
 
-At the time of this writing the linux NDK package is called 'android-ndk-r4b-linux-x86.zip'. Download it from the site and set it aside.
+At the time of this writing the linux NDK package is called 'android-ndk-r4b-linux-x86.zip'. The Windows NDK package is called 'android-ndk-r4b-windows.zip'. Download it from the site and set it aside.
 
 ====Unpack Android NDK====
 
-So far we've been placed the Android SDK in the '`~/bin`' folder. We'll do the same with the NDK software. Place the zipped file in the '`~/bin`' folder and unzip it with a tool like 'file-roller' or 'unzip'.
+For Windows move the 'android-ndk-r4b-windows.zip' file to the '`c:\`' directory. Unpack the zip file there. The documentation that comes with the windows android ndk package (located in the package at '`docs\INSTALL.TXT`') states that cygwin is needed for proper operation.
+
+So far for linux we've placed the Android SDK in the '`~/bin`' folder. We'll do the same with the NDK software. Place the zipped file in the '`~/bin`' folder and unzip it with a tool like 'file-roller' or 'unzip'.
 
 In order for the build tools to work from the command line you need to add the resulting folder to the PATH variable. Again, we'll edit '.bashrc'. Add these lines to the end of your '.bashrc' file.
 
@@ -162,3 +164,5 @@ if [ -d /home/myname/bin/android-ndk-r4b/ ] ; then
     PATH=${PATH}:/home/myname/bin/android-ndk-r4b/
 fi
 }}}
+
+After the changes are made to your '.bashrc' file, close your terminal and open it again (or log out and log in again).
