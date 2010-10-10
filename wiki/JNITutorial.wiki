@@ -128,7 +128,17 @@ Note: clicking on this URL does not install the Android Eclipse plugin. The prop
   # Read Licensing Agreements and accept dependencies, ultimately installing the software.
   # Click *Next* and *Finish*
 
-Eclipse will ultimately ask you if it can restart itself. Do this now.
+Eclipse will ultimately ask you if it can restart itself. Do this now. After installing the plugin you must configure it. Instructions for configuring the plugin for Eclipse can be found on the same page as the plugin installation instructions themselves. They are repeated here for convenience.
+
+  # Start up Eclipse
+  # Select the *Window* menu
+  # Select *Preferences...* from the menu
+  # Select *Android* from the left panel to show the Android preferences
+  # Configure *SDK Location* by clicking *Browse...* and browsing to your sdk directory.
+  # Click *Apply* and *OK*
+
+For Awesomeguy an SVN repository is used. Installing the SVN software on Eclipse is beyond the scope of this tutorial.
+
 
 ===Android NDK===
 
