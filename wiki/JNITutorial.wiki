@@ -109,7 +109,7 @@ http://developer.android.com/sdk/eclipse-adt.html
 
 Instructions on this site explain installing the Eclipse ADT for Eclipse Ganymede and Eclipse Galileo. We will focus on Galileo. The basic concept is that we need to give a URL to Eclipse so it can search for and download the proper plugin. The URL is below. Copy and Paste it into the URL field of the dialog specified.
 
-https://dl-ssl.google.com/android/eclipse/
+`https://dl-ssl.google.com/android/eclipse/`
 
 Note: clicking on this URL does not install the Android Eclipse plugin. The proper steps are listed below. You need internet access to perform these steps.
 
