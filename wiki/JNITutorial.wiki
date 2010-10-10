@@ -128,6 +128,7 @@ Note: clicking on this URL does not install the Android Eclipse plugin. The prop
   # Read Licensing Agreements and accept dependencies, ultimately installing the software.
   # Click *Next* and *Finish*
 
+Eclipse will ultimately ask you if it can restart itself. Do this now.
 
 ===Android NDK===
 
