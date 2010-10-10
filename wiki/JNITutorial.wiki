@@ -170,3 +170,13 @@ fi
 }}}
 
 After the changes are made to your '.bashrc' file, close your terminal and open it again (or log out and log in again).
+
+=Reading Documentation=
+
+Some very good documentation comes as part of the Android NDK package. Also included in the NDK package are some good example files. There is also a wealth of documentation on line. On line, you can find documentation about native code development for java in general as well as specifically for Android phones.
+
+A good place to start is the page that you download the NDK package from originally.
+
+http://developer.android.com/sdk/ndk/index.html
+
+Scroll down on this page for information on using the 'ndk-build' command for the first time. The documentation on this page also directs you to read the instructions that come with the ndk package. Look in the package under 'docs/OVERVIEW.TXT'.
