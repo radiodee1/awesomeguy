@@ -73,9 +73,21 @@ Make sure you can write and compile java code on Eclipse before moving on to the
 
 ===Android SDK===
 
+The link to the Android SDK download page is below. It is very helpful to read on line all the Android documentation possible. The 'developer.android.com' site is a source for instructions for beginners and experienced users alike.
+
+http://developer.android.com/sdk/index.html
+
+On the site you will find Android SDK packages for Windows, Mac, and Linux. Choose the package that's right for you.
+
 ====Download Android SDK====
 
+The Windows package is called 'android-sdk_r07-windows.zip'. The linux package is called 'android-sdk_r07-linux_x86.tgz'. The windows package is 'zip' compressed and the linux package is 'tgz' compressed. After you have downloaded one of the packages that matches your system, set it aside for the next step.
+
+You can also chack the MD5 hash sum to see if your download completed without corrupting data. The MD5 sum is shown on the page next to the download link.
+
 ====Unpack Android SDK====
+
+
 
 ===Android NDK===
 
