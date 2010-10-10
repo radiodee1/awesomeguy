@@ -83,7 +83,7 @@ On the site you will find Android SDK packages for Windows, Mac, and Linux. Choo
 
 The Windows package is called 'android-sdk_r07-windows.zip'. The linux package is called 'android-sdk_r07-linux_x86.tgz'. The windows package is 'zip' compressed and the linux package is 'tgz' compressed. After you have downloaded one of the packages that matches your system, set it aside for the next step.
 
-You can also chack the MD5 hash sum to see if your download completed without corrupting data. The MD5 sum is shown on the page next to the download link.
+You can also chack the MD5 check sum to see if your download completed without corrupting data. The MD5 sum is shown on the page next to the download link.
 
 ====Unpack Android SDK====
 
