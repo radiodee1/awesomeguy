@@ -87,6 +87,22 @@ You can also chack the MD5 check sum to see if your download completed without c
 
 ====Unpack Android SDK====
 
+Move the compressed file to the directory where the file will reside. I put the files in the '`~/bin`' folder. Unpack with the tools provided by your operating system. In this tutorial we will use the 'tar' command. The command for unpacking the linux package is below. You can use tab completion to ensure that you are spelling the name right.
+
+{{{
+tar xvzf android-sdk_r07-linux_x86.tgz
+}}}
+
+When this is done there will be a folder named 'android-sdk-linux_x86' in your destination folder. The directory 'android-sdk-linux_x86/tools' should be added to your path at this time. This requires you edit your '.bashrc' file again. For simplicity I renamed the folder 'android-sdk-linux_x86' to 'android-sdk-linux' so that when I was editing my '.bashrc' file I had less typing to do. The lines in the '.bashrc' file look like this.
+{{{
+if [ -d /home/myname/bin/android-sdk-linux/tools ] ; then
+    PATH=${PATH}:/home/myname/bin/android-sdk-linux/tools
+fi
+}}}
+For a Windows setup, you might simply place the unpacked folder in the '`c:\`' location and then create a desktop shortcut to the executables in the 'tools' sub directory as needed.
+
+====SDK And Eclipse====
+
 
 
 ===Android NDK===
