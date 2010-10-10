@@ -18,7 +18,9 @@ Here we'll start looking at Eclipse and Android plugins. Awesomeguy was programm
 
 ===File Folder Organization===
 
+If you're using linux, all your data should be kept in your home directory. You _can_ put things in your Desktop directory, but it's not encouraged. The linux setup that the author uses includes a 'bin' directory in the 'home' directory. All the development tools and folders were placed there. This lessened the clutter of the 'home' directory. Also, the author used the 'bash' command interpreter. The '.bashrc' file was edited so that a PATH variable included the user's 'bin' directory. This way scripts could be written that automated difficult tasks. The scripts were placed in the user's 'bin' folder, and were therefore included in the user's path. 
 
+If you're using Windows, you should probably place downloaded packages at the root of the '`c:\`' directory. This does not apply to software that has built-in installers. Such software installs itself. Packages that don't have installers should go in '`c:\`' because then you can refer to the package on the command line easily without concern for spaces in the names of the folders or files. This is sometimes a concern if you use cigwin and mingw. Also, even if you're not concerned with spaces in your directory names, placing folders and files at the root of the '`c:\`' directory makes all references to them shorter (there is less typing involved).
 
 ===Java===
 
@@ -36,7 +38,7 @@ At the time of this writing, if you go to the Eclipse IDE web site, you'll find 
 
 http://www.eclipse.org/
 
-The main reason for using this version of Eclipse is because of the compatibility with the Android development software. In the future this software will certainly be updated, so later versions of Eclipse may work for you. 
+The main reason for using a specific version of Eclipse is because of the compatibility with the Android development software. In the future this software will certainly be updated, so later versions of Eclipse may work for you. 
 
 ====Download Eclipse====
 
@@ -54,6 +56,8 @@ tar xvzf eclipse-java-galileo-SR2-linux-gtk.tar.gz
 
 You can use tab completion to make sure that you're spelling the name of the Eclipse download correctly. The 'tar' program will unpack the 'tar.gz' file and place the Eclipse folder in the current directory. After this is done you will have a directory named 'eclipse' and also the original downloaded file in your directory. You can dispose of the original download, or save it somewhere for safe keeping as you like.
 
+If you are using Windows, unpack the eclipse folder in the '`c:\`' directory. You will want to make a shortcut on the desktop to the eclipse executable.
+
 ====Running Eclipse====
 
 Assuming that you are still in the directory where you unpacked eclipse, and assuming the eclipse program is installed in a directory called 'eclipse', and assuming you're on a linux operating system, you can run eclipse by typing 'eclipse/eclipse' at the command line. You might want to make a launcher of some kind on your desktop, but doing so is beyond the scope of this wiki.
@@ -62,6 +66,8 @@ If you are on a Windows operating system, the name of the eclipse executable is 
 {{{
 c:\path\to\eclipse\eclipse.exe 
 }}}
+
+You will want to make a Desktop shortcut to the eclipse executable on Windows.
 
 Make sure you can write and compile java code on Eclipse before moving on to the next step.
 
