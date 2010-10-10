@@ -137,11 +137,28 @@ Eclipse will ultimately ask you if it can restart itself. Do this now. After ins
   # Configure *SDK Location* by clicking *Browse...* and browsing to your sdk directory.
   # Click *Apply* and *OK*
 
-For Awesomeguy an SVN repository is used. Installing the SVN software on Eclipse is beyond the scope of this tutorial.
-
+For Awesomeguy an SVN repository is used. Installing the SVN software on Eclipse is beyond the scope of this tutorial. Make sure you can create a new emulator and that you can start it and run your app on it using the Eclipse IDE. This will show weather your setup works.
 
 ===Android NDK===
 
+The site for downloading the Android NDK packages is below. As always, the documentation that can be found on the site and in the actual package itself is really great.
+
+http://developer.android.com/sdk/ndk/index.html
+
+As before, we'll focus our tutorial on the linux operating system.
+
 ====Download Android NDK====
 
+At the time of this writing the linux NDK package is called 'android-ndk-r4b-linux-x86.zip'. Download it from the site and set it aside.
+
 ====Unpack Android NDK====
+
+So far we've been placed the Android SDK in the '`~/bin`' folder. We'll do the same with the NDK software. Place the zipped file in the '`~/bin`' folder and unzip it with a tool like 'file-roller' or 'unzip'.
+
+In order for the build tools to work from the command line you need to add the resulting folder to the PATH variable. Again, we'll edit '.bashrc'. Add these lines to the end of your '.bashrc' file.
+
+{{{
+if [ -d /home/myname/bin/android-ndk-r4b/ ] ; then
+    PATH=${PATH}:/home/myname/bin/android-ndk-r4b/
+fi
+}}}
