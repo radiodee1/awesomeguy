@@ -145,7 +145,11 @@ The site for downloading the Android NDK packages is below. As always, the docum
 
 http://developer.android.com/sdk/ndk/index.html
 
-As before, we'll focus our tutorial on the linux operating system. At this point in the tutorial it should be noted that the Android NDK for Windows requires the installation of 'cygwin' version 1.7 or higher. Installing 'cygwin' is beyond the scope of the tutorial.
+As before, we'll focus our tutorial on the linux operating system. At this point in the tutorial it should be noted that the Android NDK for Windows requires the installation of 'cygwin' version 1.7 or higher. Installing 'cygwin' is beyond the scope of the tutorial. A link for installing and using 'cygwin' is enclosed here.
+
+http://www.cygwin.com/
+
+Cygwin is a linux-like environment for Windows.
 
 ====Download Android NDK====
 
