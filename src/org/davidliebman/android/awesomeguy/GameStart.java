@@ -232,9 +232,7 @@ public class GameStart extends Activity {
     @Override
     public void onResume() {
     	
-    	/* make sure screen starts blank */
-    	mGameV.setLevelLoading(true);
-    	
+    	    	
     	/* retrieve Record mHighScores */
     	mHighScores = new Record();
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
@@ -597,7 +595,7 @@ public class GameStart extends Activity {
     			this.removeMessages(GAMEVALUES);
     			this.removeMessages(INPUTVALUES_KEYUP);
     			
-    			mGameV.setLevelLoading(true);
+    			//mGameV.setLevelLoading(true);
     			
     		    mPanelBot.setAnimationOnly(false);
     		    mPanelBot.setJNIAnimateOnly(0); // '0' is false for JNI

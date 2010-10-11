@@ -97,7 +97,7 @@ public class InitBackground {
 		
 		this.setStartingScrollPosition(mMovementV);
 				
-		mGameV.setLevelLoading(false);
+		//mGameV.setLevelLoading(false);
 
 	}
 

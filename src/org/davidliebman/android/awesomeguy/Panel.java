@@ -254,12 +254,10 @@ public  class Panel  extends SurfaceView  {
 		mCanvas.drawColor(Color.BLACK);
 		
 		/************** test jni *******************/
-		if(!mGameV.isLevelLoading()) {
-			mMap = Bitmap.createBitmap(drawLevel(newBG + 1), 256, 192, Bitmap.Config.RGB_565);
-			mTempJNI = Bitmap.createBitmap(mMap, 0, 0, 256, 192, mMatrix, false);
-			canvas.drawBitmap(mTempJNI, 0, 0, null);
-			playSounds();
-		}
+		mMap = Bitmap.createBitmap(drawLevel(newBG + 1), 256, 192, Bitmap.Config.RGB_565);
+		mTempJNI = Bitmap.createBitmap(mMap, 0, 0, 256, 192, mMatrix, false);
+		canvas.drawBitmap(mTempJNI, 0, 0, null);
+		playSounds();
 		
 		
 		/* at end of level */
