@@ -180,3 +180,42 @@ A good place to start is the page that you download the NDK package from origina
 http://developer.android.com/sdk/ndk/index.html
 
 Scroll down on this page for information on using the 'ndk-build' command for the first time. The documentation on this page also directs you to read the instructions that come with the ndk package. Look in the package under 'docs/OVERVIEW.TXT'.
+
+=Basic Procedure=
+
+The steps that you have to take to develop JNI libraries for Android phones are simple in principle. They are outlined below.
+
+  * Install the JNI/NDK package from Google
+  * Create your Android project
+  * Make a JNI folder in your Android project root directory (called 'jni')
+  * Put your JNI sources in the 'jni' folder
+  * Create an 'Android.mk' file, and place it in the 'jni' folder
+  * Optionally create an 'Application.mk' file, and place it in the 'jni' folder
+  * Open a command line terminal and navigate to the root directory of your Android project.
+  * Execute 'ndk-build', (if it's in your PATH variable) or execute '/path/to/command/ndk-build'
+  * The 'ndk-build' command creates the binary for your library and puts it in the proper folder.
+  * Switch to Eclipse, Refresh the 'Project Explorer View' (F5) 
+  * Rebuild the project
+  * Run your project testing your JNI library.
+
+The tutorial will now attempt to go through these steps. We will skip the 'Install the JNI/NDK' step as it's already been covered.
+
+===Create Android Project===
+
+===Make JNI Folder===
+
+===JNI Sources===
+
+===Create Android mk File===
+
+===Go To Project Root===
+
+===Execute Build Command===
+
+===What Build Command Does===
+
+===Refresh Project Explorer View===
+
+===Rebuild Project===
+
+===Test Project===
