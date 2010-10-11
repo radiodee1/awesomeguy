@@ -48,7 +48,7 @@ public class GameValues {
 	private int mUsernum = 4;
 	//public static int NUM_ROOMS = 10;
 	private int mOldGuyScore;
-	private boolean mLevelLoading;
+	//private boolean mLevelLoading;
 	
 	/* sprites */
 	private ArrayList<SpriteInfo> mSprites = new ArrayList<SpriteInfo>();
@@ -234,12 +234,7 @@ public class GameValues {
 		this.mOldGuyScore = mOldGuyScore;
 	}
 	
-	public boolean isLevelLoading() {
-		return mLevelLoading;
-	}
-	public void setLevelLoading(boolean mLevelLoading) {
-		this.mLevelLoading = mLevelLoading;
-	}
+	
 	
 	
 	/** work with sprite list **/
