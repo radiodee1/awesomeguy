@@ -202,9 +202,27 @@ The tutorial will now attempt to go through these steps. We will skip the 'Insta
 
 ===Create Android Project===
 
+This step entails using Eclipse to create a new Android project. This project will have a folder in the Eclipse 'workspace' directory. The location of the 'workspace' directory and the project directory inside it should be known to you. The 'project' directory name is the name of your project to eclipse.
+
+On a linux system the 'workspace' directory is commonly located in the user's home directory. The project is inside it. When this or other documentation refers to the project's root, for a project named 'projectname', they would be referring to the following path.
+
+`/home/myname/workspace/projectname/`
+
+This is important for steps where you create the 'jni' folder and where you call the 'ndk-build' script.
+
 ===Make JNI Folder===
 
+A folder named 'jni' (lowercase) must be created by you in the Eclipse project's root directory. In a linux system where the user is called 'myname' and the project is called 'projectname', this folder would be located in the 'projectname' folder, as referred to by the following path.
+
+`/home/myname/workspace/projectname/jni/`
+
+This would place a folder at the same level as the Eclipse/Java 'bin', 'src', and 'res' folders. It would also be at the same level as the 'AndroidManifest.xml' file. Inside this folder is where the source c or c++ documents need to be placed.
+
+If you use Eclipse to create this folder, then you are done with this step. If you create the folder from the command line, don't forget to type F5 or click on 'Refresh' to let Eclipse register that there has been a change to the folder structure.
+
 ===JNI Sources===
+
+
 
 ===Create Android mk File===
 
