@@ -305,7 +305,7 @@ The folder where the resulting binary library goes is the '`libs/armeabi/`' fold
 
 ===Refresh Project Explorer View===
 
-The 'Project Explorer' is one of the Eclipse windows that is visible when doing standard editing on the default Java perspective. It is commonly on the left side of the Eclipse screen. It shows all the files and folders in a project. You can refresh the view by selecting a project and then pressing the <F5> key, or by right clicking on the project name and selecting 'Refresh' from the menu that is displayed.
+The 'Project Explorer' is one of the Eclipse windows that is visible when doing standard editing on the default Java perspective. It is commonly on the left side of the Eclipse screen. It shows all the files and folders in a project. You can refresh the view by selecting a project and then pressing the `<F5>` key, or by right clicking on the project name and selecting 'Refresh' from the menu that is displayed.
 
 ===Rebuild Project===
 
