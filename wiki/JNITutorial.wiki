@@ -222,9 +222,17 @@ If you use Eclipse to create this folder, then you are done with this step. If y
 
 ===JNI Sources===
 
+Here you work on the actual source files in c or c++. You will probably return to this step many times as your JNI library evolves. A large part of this how-to is focused on showing how c can be used to create a simple JNI library like the one used in the Awesomeguy program.
 
+This document will explain the creation of a JNI library consisting of a single source file. Choose a name for your file and place it in the 'jni' folder. For this document the library will be called 'example' so the file will be called 'example.c'. On a linux system the path to the 'example.c' file will look something like the path shown below.
+
+`/home/myname/workspace/projectname/jni/example.c`
+
+After placing the file 'example.c' in the 'jni' folder you should refresh Eclipse so that it recognizes the new file. The file 'example.c' should be a simple text file. To edit the file you need a regular text editor. On linux systems, when viewing the project from Eclipse, if you double click on the file 'example.c' in the Project Explorer view, the systems text editor is automatically opened with 'example.c' loaded. You can then make changes and save and compile the source code. 
 
 ===Create Android mk File===
+
+
 
 ===Go To Project Root===
 
