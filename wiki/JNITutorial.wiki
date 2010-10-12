@@ -313,4 +313,4 @@ Like refreshing the project, you can rebuild the project by right clicking on th
 
 ===Test Project===
 
-Test your project thoroughly. 
+Test your project thoroughly. This step goes without saying.
