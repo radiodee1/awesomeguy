@@ -301,10 +301,16 @@ If you didn't put the 'android-ndk-r4b' folder in your PATH variable in the '.ba
 
 The ndk-build script compiles the source code for the Android project and places it in a directory where it can be included by the Eclipse build function in the final apk file.
 
-The folder where the resulting binary library goes is the '`libs/armeabi/`' folder. Two other files are placed in that folder along with the JNI library that we are creating. They are created automatically, so we're not going to worry about them. One is the 'gdb.setup' file, and one is the 'gdbserver' file. These files are for debugging, but I have not figured how to use them, so this won't be addressed in this how to.
+The folder where the resulting binary library goes is the '`libs/armeabi/`' folder. Two other files are placed in that folder along with the JNI library that we are creating. They are created automatically, so we're not going to worry about them. One is the 'gdb.setup' file, and one is the 'gdbserver' file. 
 
 ===Refresh Project Explorer View===
 
+The 'Project Explorer' is one of the Eclipse windows that is visible when doing standard editing on the default Java perspective. It is commonly on the left side of the Eclipse screen. It shows all the files and folders in a project. You can refresh the view by selecting a project and then pressing the <F5> key, or by right clicking on the project name and selecting 'Refresh' from the menu that is displayed.
+
 ===Rebuild Project===
 
+Like refreshing the project, you can rebuild the project by right clicking on the project name in the Project Explorer and then selecting 'Build Project' from the menu that's displayed. Some activities, like the 'Run' activity, automatically rebuild the project when the Eclipse IDE sees that the project has changed.
+
 ===Test Project===
+
+Test your project thoroughly. 
