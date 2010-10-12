@@ -280,9 +280,28 @@ The name, 'libexample.so' comes from the 'LOCAL_MODULE' line in the 'Android.mk'
 
 ===Go To Project Root===
 
+The project root is the base folder for the Eclipse Android project. It's found in the 'workspace' directory. It is _not_ the 'jni' folder, but instead its parent. Using the conventions we've been following for linux systems, the path to the project root directory would be the following.
+
+`/home/myname/workspace/projectname/`
+
+You want to 'cd' into this directory from the command line.
+
 ===Execute Build Command===
 
+The command to start the build scripts is called 'ndk-build'. The script for 'ndk-build' is located in the Android NDK package of software that you already downloaded. If you followed the tutorial so far, you would have placed the 'android-ndk-r4b' folder in your 'bin' directory, and then you would have added it to your path. If this is the case, simply type 'ndk-build' at the command line.
+
+If you didn't put the 'android-ndk-r4b' folder in your PATH variable in the '.bashrc' file, then you can explicitly specify the path to the 'ndk-build' script when you invoke it. The command for this is shown below.
+
+{{{
+/home/myname/bin/android-ndk-r4b/ndk-build
+}}}
+
+
 ===What Build Command Does===
+
+The ndk-build script compiles the source code for the Android project and places it in a directory where it can be included by the Eclipse build function in the final apk file.
+
+The folder where the resulting binary library goes is the '`libs/armeabi/`' folder. Two other files are placed in that folder along with the JNI library that we are creating. They are created automatically, so we're not going to worry about them. One is the 'gdb.setup' file, and one is the 'gdbserver' file.
 
 ===Refresh Project Explorer View===
 
