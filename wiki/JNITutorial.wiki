@@ -228,10 +228,51 @@ This document will explain the creation of a JNI library consisting of a single 
 
 `/home/myname/workspace/projectname/jni/example.c`
 
-After placing the file 'example.c' in the 'jni' folder you should refresh Eclipse so that it recognizes the new file. The file 'example.c' should be a simple text file. To edit the file you need a regular text editor. On linux systems, when viewing the project from Eclipse, if you double click on the file 'example.c' in the Project Explorer view, the systems text editor is automatically opened with 'example.c' loaded. You can then make changes and save and compile the source code. 
+After placing the file 'example.c' in the 'jni' folder you should refresh Eclipse so that it recognizes the new file. The file 'example.c' should be a simple text file. To edit the file you need a regular text editor. On linux systems, when viewing the project from Eclipse, if you double click on the file 'example.c' in the Project Explorer view, the system's text editor is automatically opened with 'example.c' loaded. You can then make changes and save and re-compile the source code. 
 
 ===Create Android mk File===
 
+Before the NDK build tools will compile your code they need a 'Makefile' file. That's the purpose of the file 'Android.mk'. Because our project only uses a single source file for the JNI library, our 'Android.mk' file will be simple to write. Information on writing the 'Android.mk' file can be found in the 'docs' folder inside the 'android-ndk-r4b' folder. The most relevant document is the 'ANDROID-MK.TXT', and this document does a thorough job of explaining the parts of the file that are required.
+
+An example 'Android.mk' file is shown below. This file is taken from the Awesomeguy project.
+
+{{{
+LOCAL_PATH:= $(call my-dir)
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE    := awesomeguy
+LOCAL_CFLAGS    := -Werror
+LOCAL_SRC_FILES := awesomeguy.c
+LOCAL_LDLIBS    := -llog 
+
+include $(BUILD_SHARED_LIBRARY)
+}}}
+
+For the purposes of this tutorial we'll leave most of the file as it is. 
+
+  * LOCAL_PATH - this line should be left as it is since your source file ('example.c') is in the same directory as the 'Android.mk' file.
+  * include $(CLEAR_VARS) - this line should be left as it is. It is required.
+  * LOCAL_MODULE - this line should be changed to match your module name. For this tutorial we'll change it to 'example'. This name should not have any spaces in it as it will be made into the actual library's name ('libexample.so' for us).
+  * LOCAL_CFLAGS - This line can be left as it is. It is for compiler flags.
+  * LOCAL_SRC_FILES - this line should be changed to 'example.c' since that's our source file.
+  * LOCAL_LDLIBS - leave this the same.
+  * include $(BUILD_SHARED_LIBRARY) - leave this the same.
+
+So our new 'Android.mk' file should look like this.
+
+{{{
+LOCAL_PATH:= $(call my-dir)
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE    := example
+LOCAL_CFLAGS    := -Werror
+LOCAL_SRC_FILES := example.c
+LOCAL_LDLIBS    := -llog 
+
+include $(BUILD_SHARED_LIBRARY)
+}}}
 
 
 ===Go To Project Root===
