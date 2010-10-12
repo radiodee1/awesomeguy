@@ -274,6 +274,9 @@ LOCAL_LDLIBS    := -llog
 include $(BUILD_SHARED_LIBRARY)
 }}}
 
+The NDK build tools will compile the code, and then if there are no errors it will name the object code 'libexample.so' and place it in the Android project in a new folder that it creates especially for this purpose. The name of the folder is '`libs/armeabi/`'. The build tools also manage the creation of some other files that are necessary. 
+
+The name, 'libexample.so' comes from the 'LOCAL_MODULE' line in the 'Android.mk' file, and it is the library name, but when referring to the module in the java code you refer to 'example' not 'libexample.so'. 
 
 ===Go To Project Root===
 
