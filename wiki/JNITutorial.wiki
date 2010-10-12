@@ -292,9 +292,9 @@ The command to start the build scripts is called 'ndk-build'. The script for 'nd
 
 If you didn't put the 'android-ndk-r4b' folder in your PATH variable in the '.bashrc' file, then you can explicitly specify the path to the 'ndk-build' script when you invoke it. The command for this is shown below.
 
-{{{
-/home/myname/bin/android-ndk-r4b/ndk-build
-}}}
+
+`/home/myname/bin/android-ndk-r4b/ndk-build`
+
 
 
 ===What Build Command Does===
