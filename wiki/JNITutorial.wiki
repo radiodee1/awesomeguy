@@ -316,3 +316,61 @@ Like refreshing the project, you can rebuild the project by right clicking on th
 Test your project thoroughly. This step goes without saying.
 
 =Writing JNI Sources=
+
+For our purposes here we want to build a JNI library from a single c source file. It is possible to use c++ and several source files, but we're not going to do that. 
+
+We need to be able to write methods that can be called in java code. We need to be able to pass variables to the library and pass variables from the library to java. 
+
+We will assume that the JNI library that we're using is called 'libexample.so', and that the module name, as defined in the 'Android.mk' file is 'example'. We'll also assume that the package name for the Android project we're working on is something simple. We'll use this.
+
+`org.testjni.android`
+
+This means you have a line in your program files that looks like this. 
+
+{{{
+package org.testjni.android
+}}}
+
+It also means that there is a file folder structure in your Eclipse project under 'src' that looks like this.
+
+`src/org/testjni/android`
+
+Lastly, we'll assume that the Java file that we want to call the JNI from is called 'Game.java'.
+
+===Naming Functions===
+
+The naming conventions for these methods are fairly complex. The average JNI native function name is unwieldy and looks something like this:
+{{{
+JNIEXPORT void JNICALL 
+Java_org_testjni_android_Game_someFunction(JNIEnv * env, jobject  obj)
+{}
+}}}
+
+In this example the method body is empty. The java native method 'someFunction()' would call the c function above. The name for this c function can be broken down into parts. The first part is the information before the method name. This is listed below.
+  # the macro JNIEXPORT
+  # the return type for the method ('void' in this example)
+  # the macro JNICALL
+
+After that comes the actual name of the method. The name can be broken down into parts. They are listed below.
+  # the text '`Java_`'
+  # the text for the package name of the Android app, with the periods replaced by underscores
+  # the name of the class that the function will be part of
+  # the name of the function
+
+This is followed by the two mandatory parameters '`JNIEnv * env`' and '`jobject obj`'. Other parameters for the function could have followed the mandatory ones listed above.
+
+===Java Declaration===
+
+There are two parts to the java declaration for the example code that we are using for this explanation. One part loads the library, and another part makes reference to the method so that the other java code in the app can call it. The declaration looks like the code below.
+{{{
+static {
+	System.loadLibrary("awesomeguy");
+}
+}}}
+This code has to be included in the Java class where the JNI is to be used. The second part of the java listing would look as follows.
+{{{
+public native void someFunction();
+}}}
+This line of code is like a java method declaration _witout_ the body. This function is also 'public' so it can be called by methods of other classes if they have an instantiated version of the class 'Panel'.
+
+You should note that the c method declaration is different from the java declaration, but you need both, and the c version must include the package name and the java class name.
