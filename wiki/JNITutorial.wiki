@@ -386,6 +386,12 @@ return;
 
 In this example the method body is not empty, but performs only a trivial task. The java native method 'someFunction(int x)' would call the c function above. In all examples the first two parameters to the c function are mandatory. The variables '`JNIEnv * env`' and '`jobject obj`' are included in all functions that are going to be called from the java code.
 
+NOTE: You must '`#include`' the library '`jni.h`' at the beginning of your source file for these functions to compile right. That would look like this. Do not forget this step.
+
+{{{
+#include <jni.h>
+}}} 
+
 ===Java Declaration===
 
 There are two parts to the java declaration for the example code that we are using for this explanation. One part loads the library, and another part makes reference to the method so that the other java code in the app can call it. The declaration looks like the code below.
