@@ -328,16 +328,18 @@ We will assume that the JNI library that we're using is called 'libexample.so', 
 This means you have a line in your program files that looks like this. 
 
 {{{
-package org.testjni.android
+package org.testjni.android;
 }}}
 
 It also means that there is a file folder structure in your Eclipse project under 'src' that looks like this.
 
-`src/org/testjni/android`
+`src/org/testjni/android/`
 
 Lastly, we'll assume that the Java file that we want to call the JNI from is called 'Game.java'.
 
 ===Naming Functions===
+
+====Example One====
 
 The naming conventions for these methods are fairly complex. The average JNI native function name is unwieldy and looks something like this:
 {{{
@@ -351,7 +353,7 @@ In this example the method body is empty. The java native method 'someFunction()
   # the return type for the method ('void' in this example)
   # the macro JNICALL
 
-After that comes the actual name of the method. The name can be broken down into parts. They are listed below.
+After that comes the actual name of the method. The name can be broken down into parts. They are listed below. The parts are separated by underscores.
   # the text '`Java_`'
   # the text for the package name of the Android app, with the periods replaced by underscores
   # the name of the class that the function will be part of
@@ -359,12 +361,37 @@ After that comes the actual name of the method. The name can be broken down into
 
 This is followed by the two mandatory parameters '`JNIEnv * env`' and '`jobject obj`'. Other parameters for the function could have followed the mandatory ones listed above.
 
+====Example Two====
+
+{{{
+JNIEXPORT int JNICALL 
+Java_org_testjni_android_Game_someFunction(JNIEnv * env, jobject  obj)
+{
+return 3;
+}
+}}}
+
+In this example the method body is the 'return' statement that returns the number 3. The java native method 'someFunction()' would call the c function above. Note that the return type is 'int' not 'void'. This is as you would expect from a c function.
+
+====Example Three====
+
+{{{
+JNIEXPORT void JNICALL 
+Java_org_testjni_android_Game_someFunction(JNIEnv * env, jobject  obj, jint x)
+{
+int xx = x;
+return;
+}
+}}}
+
+In this example the method body is not empty, but performs only a trivial task. The java native method 'someFunction(int x)' would call the c function above.
+
 ===Java Declaration===
 
 There are two parts to the java declaration for the example code that we are using for this explanation. One part loads the library, and another part makes reference to the method so that the other java code in the app can call it. The declaration looks like the code below.
 {{{
 static {
-	System.loadLibrary("awesomeguy");
+	System.loadLibrary("example");
 }
 }}}
 This code has to be included in the Java class where the JNI is to be used. The second part of the java listing would look as follows.
