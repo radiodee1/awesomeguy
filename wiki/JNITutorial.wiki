@@ -410,6 +410,6 @@ This code has to be included in the Java class where the JNI is to be used. The 
 {{{
 public native void someFunction();
 }}}
-This line of code is like a java method declaration _without_ the body. This function is also 'public' so it can be called by methods of other classes if they have an instantiated version of the class 'Panel'.
+This line of code is like a java method declaration _without_ the body. This function is also 'public' so it can be called by methods of other classes if they have an instantiated version of the class 'Game'.
 
 You should note that the c method declaration is different from the java declaration, but you need both, and the c version must include the package name and the java class name.
