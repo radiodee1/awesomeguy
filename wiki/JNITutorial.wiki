@@ -335,7 +335,13 @@ It also means that there is a file folder structure in your Eclipse project unde
 
 `src/org/testjni/android/`
 
-Lastly, we'll assume that the Java file that we want to call the JNI from is called 'Game.java'.
+We'll assume that the Java file that we want to call the JNI from is called 'Game.java'.
+
+In your JNI library source file you must '`#include`' the library 'jni.h'. Including the library would look like this. Including this library ensures that the source file you are working on will compile.
+
+{{{
+#include <jni.h>
+}}}
 
 ===Naming Functions===
 
