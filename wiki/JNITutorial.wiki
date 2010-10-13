@@ -384,7 +384,7 @@ return;
 }
 }}}
 
-In this example the method body is not empty, but performs only a trivial task. The java native method 'someFunction(int x)' would call the c function above.
+In this example the method body is not empty, but performs only a trivial task. The java native method 'someFunction(int x)' would call the c function above. In all examples the first two parameters to the c function are mandatory. The variables '`JNIEnv * env`' and '`jobject obj`' are included in all functions that are going to be called from the java code.
 
 ===Java Declaration===
 
