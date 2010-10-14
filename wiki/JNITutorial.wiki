@@ -420,4 +420,31 @@ One thing that was essential in the awesomeguy.c file was the passing of arrays 
 
 ====Arrays as Parameter====
 
+Here is an example of code actually used in the awesomeguy.c JNI file. It shows how a '`jintArray`', which is an array of integers, can be passed to a JNI library. It also shows the processing that's needed to access the data in the manner of a c int array.
+
+{{{
+JNIEXPORT void JNICALL
+Java_org_davidliebman_android_awesomeguy_Panel_setTileMapData(JNIEnv * env, jobject  obj,
+jintArray a_bitmap, jintArray b_bitmap, jintArray c_bitmap, jintArray d_bitmap)
+{
+  //jsize a_len = (*env)->GetArrayLength(env, a_bitmap);
+  jint *a = (*env)->GetIntArrayElements(env, a_bitmap, 0);
+  //jsize b_len = (*env)->GetArrayLength(env, b_bitmap);
+  jint *b = (*env)->GetIntArrayElements(env, b_bitmap, 0);
+  //jsize c_len = (*env)->GetArrayLength(env, c_bitmap);
+  jint *c = (*env)->GetIntArrayElements(env, c_bitmap, 0);
+  //jsize d_len = (*env)->GetArrayLength(env, d_bitmap);
+  jint *d = (*env)->GetIntArrayElements(env, d_bitmap, 0);
+  setTileMapData(a, b, c, d );
+}
+}}}
+
+There are lines in the above code that are purposely commented out. They demonstrate how to determine the size of the array that has been passed to the JNI library. In our program, we know the size of the arrays. We rely on the fact that the arrays are a given size representing their visual size when displayed on the screen.
+
+There are three important aspects of the method above. They're listed below. For this explanation we'll focus on '`a_bitmap`'.
+
+  # The parameters in the function signature call for 'jintArray' elements to be passed to the method.
+  # The size of the 'jintArray' is determined by the line: '`jsize a_len = (*env)->GetArrayLength(env, a_bitmap);`'
+  # The actual array pointer to be used in c style code is found like this: '`jint *a = (*env)->GetIntArrayElements(env, a_bitmap, 0);`'
+
 ====Arrays as Return Type====
