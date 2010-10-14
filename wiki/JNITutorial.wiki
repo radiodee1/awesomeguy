@@ -456,3 +456,53 @@ public native void setTileMapData( int [] a, int [] b, int [] c, int [] d);
 }}}
 
 ====Arrays as Return Type====
+
+Arrays can be returned to the Java code from the JNI library. The process is involved. Below is a block of code from the Awesomeguy JNI library where we pass an integer to the method and return an entire array from the method.
+
+{{{
+JNIEXPORT jintArray JNICALL
+Java_org_davidliebman_android_awesomeguy_Panel_drawLevel(JNIEnv * env, jobject  obj,
+jint animate)
+{
+	int j,k;
+	jint size = SCREEN_WIDTH * SCREEN_HEIGHT;
+	jint fill[size]; 
+	jintArray graphic;
+	drawLevel(animate);
+	graphic = (*env)->NewIntArray(env, size);
+	if(graphic == NULL) {
+		LOGE("ARRAY NOT CREATED");
+		return NULL;
+	}
+	for (j = 0; j < SCREEN_HEIGHT; j++) {
+		for (k = 0; k < SCREEN_WIDTH ; k ++ ) {
+			fill[ (j * SCREEN_WIDTH) + k ] = (jint) screen[j][k];
+		}
+	}
+	
+	
+	(*env)->SetIntArrayRegion(env, graphic,0, size, fill);
+	return graphic;
+}
+}}}
+
+We'll try to go over the code step by step.
+
+  # The first thing to notice is the '`jintArray`' return type in the method signature.
+  # On the next line we pass a jint called 'animate' as a paramter.
+  # We declare two ints, 'j' and 'k' to be used as for() loop index variables.
+  # We declare a jint called 'size' that is the size of our array.
+  # We declare a c style array called `fill[]` that will hold our c data.
+  # We declare a special '`jintArray`' called 'graphic'. This object still needs to be initialized.
+  # We call the method that will populate the 2D 'screen' array. This method calls all the necessary drawing functions of our library.
+  # We initialize the `jintArray` with a special JNI method that uses both the 'env' object and the 'size' jint that we defined previously.
+  # We test if the 'graphic' object was properly created. If not we return null.
+  # Using 'j' and 'k' we populate the 'fill' array. The 'fill' array is 1 dimensional and the 'screen' array is 2 dimensional.
+  # Using the special '`SetIntArrayRegion()`' method we place the 'fill' data in the 'graphic' object. The variables 'size' and 'env' are also used in this method call.
+  # We return the 'graphic' object.
+
+That covers the process we used to convert a c style array into a java array and pass it back to the java code. We only do this once in the entire library. Below is the code that must be included in the java to allow the JNI method to be called.
+
+{{{
+public native int[] drawLevel(int num);
+}}}
