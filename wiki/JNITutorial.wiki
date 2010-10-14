@@ -422,6 +422,8 @@ One thing that was essential in the awesomeguy.c file was the passing of arrays 
 
 Here is an example of code actually used in the awesomeguy.c JNI file. It shows how a '`jintArray`', which is an array of integers, can be passed to a JNI library. It also shows the processing that's needed to access the data in the manner of a c int array.
 
+Note that the first two parameters to the JNI method are always the same. They are '`JNIEnv * env`, and `jobject  obj`'. After that the method can be customized in different ways.
+
 {{{
 JNIEXPORT void JNICALL
 Java_org_davidliebman_android_awesomeguy_Panel_setTileMapData(JNIEnv * env, jobject  obj,
@@ -446,5 +448,11 @@ There are three important aspects of the method above. They're listed below. For
   # The parameters in the function signature call for 'jintArray' elements to be passed to the method.
   # The size of the 'jintArray' is determined by the line: '`jsize a_len = (*env)->GetArrayLength(env, a_bitmap);`'
   # The actual array pointer to be used in c style code is found like this: '`jint *a = (*env)->GetIntArrayElements(env, a_bitmap, 0);`'
+
+The Java code that allows us to use this method is:
+
+{{{
+public native void setTileMapData( int [] a, int [] b, int [] c, int [] d);
+}}}
 
 ====Arrays as Return Type====
