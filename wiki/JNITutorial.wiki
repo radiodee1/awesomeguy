@@ -416,7 +416,7 @@ You should note that the c method declaration is different from the java declara
 
 ===Passing Arrays===
 
-One thing that was essential in the awesomeguy.c file was the passing of arrays between the JNI code and the Java code.
+One thing that was essential in the awesomeguy.c file was the passing of arrays between the JNI code and the Java code. In awesomeguy the bitmaps for the main character and the other graphic elements were converted to arrays in the java code and then passed to the JNI library during the class instantiation phase. When it was time to draw the actual screen, the JNI code assembled a large array that was passed back to the java code. In java the array was converted to a bitmap and displayed on the screen.
 
 ====Arrays as Parameter====
 
