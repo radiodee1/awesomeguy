@@ -10,7 +10,7 @@ Here we'll go through a method by method explanation of the 'awesomeguy.c' file,
 
 The format of the Awesomeguy game is that of a simple platform game, in some ways like the original “Donkey Kong” or “Super Mario Brothers”. The Nintendo DS version has two screens of 192x256 pixels each. During gameplay one of the screens was generally used as a splash screen. The game also makes use of four directional keys and two special keys -- one of which is the 'jump' key. 
 
-The android phone that the game was developed for had no "D-pad". For the android version, two separate View objects were required during regular game play. One View was for display of the game screen, the equivalent of the main screen from the Nintendo game, and the other View was the emulated "D-pad". The "D-pad" was emulated using TouchButtons? on the touch screen and also an alternative where movement instructions were taken from the trackball. The DS version of the game uses several large int arrays for keeping track of the appearance of each level in the game. In order to port the levels to the android version, the same sort of array was used in the android code. In this way the android version can use the exact same level definition info. The android version also uses an ArrayList? to keep track of sprite data, though sprites are not hardware supported in java. One ArrayList? is used for all types of sprites. The DS version makes use of a set of four tiles that are used to paint the levels from the predefined level array on the game screen. The same tile set was used in the android version, but software was used to emulate the DS's hardware tiling system. For these reasons the android version of the game is slower to play than the homebrew DS version.
+The android phone that the game was developed for had no "D-pad". For the android version, two separate View objects were required during regular game play. One View was for display of the game screen, the equivalent of the main screen from the Nintendo game, and the other View was the emulated "D-pad". The "D-pad" was emulated using TouchButtons? on the touch screen and also an alternative where movement instructions were taken from the trackball. The DS version of the game uses several large int arrays for keeping track of the appearance of each level in the game. In order to port the levels to the android version, the same sort of array was used in the android code. In this way the android version can use the exact same level definition info. The android version also uses an ArrayList? to keep track of sprite data, though sprites are not hardware supported in java. One ArrayList? is used for all types of sprites. The DS version makes use of a set of four tiles that are used to paint the levels from the predefined level array on the game screen. The same tile set was used in the android version, but software was used to emulate the DS's hardware tiling system. For these reasons the android version of the game is slower to play than the homebrew DS version.  [awesomeguyJNI#Introduction top]
 
 ===Tilesheets===
 
@@ -22,7 +22,7 @@ Awesomeguy uses two map arrays for each level, and it uses four tile sheets. The
 
 The first map array holds a definition for the background of the level that is much the same as the one discussed above. This is a map of the visible background of the level that's being played. The second map array is identical in size to the first one. It holds information about what each picture in the other map means to the program and the character. Where the first map shows a solid wall, the second map holds a number that tells the program that the character may not pass through it. Walls in the first array can be many colors and patterns as chosen from the tilesheet, but in the second array, just one number corresponds to all wall objects. The first array is visible while the second array is never seen. The first array is referred to as the 'level' or 'tile' array, and the second array is referred to as the 'objects' array. Remember, the two arrays are always the same size.
 
-The way the four tilesheets work is relatively simple. They are identical in size and content except for the images imbedded in the tilesheet of the rings. The rings are prizes in the game and when you get one you get points. There are four tilesheets so that the rings can be animated and made to look like they are turning. The difference in the ring images is the only difference in the four tilesheets. To make the rings look like they are moving the tilesheets are swapped during game play. This swapping happens in the JNI functions. 
+The way the four tilesheets work is relatively simple. They are identical in size and content except for the images imbedded in the tilesheet of the rings. The rings are prizes in the game and when you get one you get points. There are four tilesheets so that the rings can be animated and made to look like they are turning. The difference in the ring images is the only difference in the four tilesheets. To make the rings look like they are moving the tilesheets are swapped during game play. This swapping happens in the JNI functions.   [awesomeguyJNI#Introduction top]
 
 ===Tilemaps===
 
@@ -32,23 +32,23 @@ Tilesheets are not numbered with two indexes. Tilesheet 8x8 squares are numbered
 
 For Awesomeguy there are two identical tilemaps. One holds all the information mentioned above. It holds designations for where to place tiles that show images of walls and ladders and floors. The second tilemap holds extra information that the game needs. This info includes the starting location of the main character, the starting location of each monster, further information about the location of walls and floors, the location of floating platforms, and the location of all the rings and prizes on the level. It holds the code for the checkpoint character and the level goal character and also the code for a special tile that causes instant death when it is touched. The two tilemaps are called the 'level' tilemap and the 'object' tilemap. They are exactly the same size, and an element at a certain x/y location on one map refers to the same spot on the screen as that x/y location on the other map. The two maps can be laid on top of each other.
 
-The reason for two maps is so that one map, the 'level' map, can be responsible for drawing the image of the background, while the other map, the 'object' map, is responsible for telling the program how to treat that particular set of elements. Only some of the 'object' map elements result in an actual object being drawn on the screen. Rings, for example, are drawn on the screen until the player gets them. Similarly, not all 'level' objects are solid objects. Some, like some of the pillars, are only for outward appearances. 
+The reason for two maps is so that one map, the 'level' map, can be responsible for drawing the image of the background, while the other map, the 'object' map, is responsible for telling the program how to treat that particular set of elements. Only some of the 'object' map elements result in an actual object being drawn on the screen. Rings, for example, are drawn on the screen until the player gets them. Similarly, not all 'level' objects are solid objects. Some, like some of the pillars, are only for outward appearances.   [awesomeguyJNI#Introduction top]
 
 ===Sprites===
 
-Aside from the tilesheets and tilemaps described above, the game uses several sprite images. For these images small 'png' files were used. There are four images of the main character and two images of the monster for each direction. That means four monster images in total, two left and two right. The multiple images are used to animate the main character and the monsters. Each of the 'png' images has an alpha channel (a transparent area) and is indexed to a 256 color palette. The size of the images is unimportant on the android phone, but for the Nintendo DS it was dictated by the hardware. For this reason the monster sprite uses only the top half of the png image, which is 16 pixels by 16 pixels. The main character is also 16 x 16, but it uses the space more evenly. 
+Aside from the tilesheets and tilemaps described above, the game uses several sprite images. For these images small 'png' files were used. There are four images of the main character and two images of the monster for each direction. That means four monster images in total, two left and two right. The multiple images are used to animate the main character and the monsters. Each of the 'png' images has an alpha channel (a transparent area) and is indexed to a 256 color palette. The size of the images is unimportant on the android phone, but for the Nintendo DS it was dictated by the hardware. For this reason the monster sprite uses only the top half of the png image, which is 16 pixels by 16 pixels. The main character is also 16 x 16, but it uses the space more evenly.   [awesomeguyJNI#Introduction top]
 
 ===Software Tools===
 
-Several pieces of software were used when making Awesomeguy. Awesomeguy was programmed on a Linux computer. The graphic images in the game were all edited on Gimp, the Gnome Image Manipulation Program. The source code for Awesomeguy was edited using the Eclipse IDE for java. The C library used for the Awesomeguy Java Native Interface (JNI) was edited using Gedit, a Gnome text editor. The tilemaps, the large arrays that define the appearance of each level, were edited first using a Windows program called 'Mappy', and then further edited using Gedit and the command line tool 'sed'. The Wine (Wine Is Not An Emulator) program loader was employed to allow Mappy to work on a Linux platform. Instructions for using Mappy to create level definitions will accompany this document. 
+Several pieces of software were used when making Awesomeguy. Awesomeguy was programmed on a Linux computer. The graphic images in the game were all edited on Gimp, the Gnome Image Manipulation Program. The source code for Awesomeguy was edited using the Eclipse IDE for java. The C library used for the Awesomeguy Java Native Interface (JNI) was edited using Gedit, a Gnome text editor. The tilemaps, the large arrays that define the appearance of each level, were edited first using a Windows program called 'Mappy', and then further edited using Gedit and the command line tool 'sed'. The Wine (Wine Is Not An Emulator) program loader was employed to allow Mappy to work on a Linux platform. Instructions for using Mappy to create level definitions will accompany this document.   [awesomeguyJNI#Introduction top]
 
 =Java=
 
-The game was actually programmed somewhat successfully in java before a JNI library was added. The graphics for the game all appeared in its correct position on the screen in a version that ran on the emulator. The main problem was that the java version of the game was slow. 
+The game was actually programmed somewhat successfully in java before a JNI library was added. The graphics for the game all appeared in its correct position on the screen in a version that ran on the emulator. The main problem was that the java version of the game was slow.   [awesomeguyJNI#Introduction top]
 
 ===Tilesheets===
 
-Tilesheets are not supported by java. In order to implement them in java a special class was added to the android project. The TileCutter class took the raw tilesheet and cut the image into smaller pieces that were applied to the screen one at a time as tiles.
+Tilesheets are not supported by java. In order to implement them in java a special class was added to the android project. The TileCutter class took the raw tilesheet and cut the image into smaller pieces that were applied to the screen one at a time as tiles.  [awesomeguyJNI#Introduction top]
 
 ===!TileCutter java===
 
@@ -67,9 +67,9 @@ The first thing we do in TileCutter is define some variables.
 	private int mScale;
 	private int mTileAdjustment = 1;
 }}}
-The variables 'mTilesHeight' and 'mTilesWidth' are constants that describe the dimensions of the tilesheet image. There are four tilesheet images, but they're almost identical. Their dimensions have to be the same. The four sheets are 128 pixels high and 224 pixels wide. Also, a block or tile is 8 pixels high and 8 pixels wide. The variables 'mWidthInTiles' and 'mHeightInTiles' are easily computed. 
+The variables 'mTilesHeight' and 'mTilesWidth' are constants that describe the dimensions of the tilesheet image. There are four tilesheet images, but they're almost identical. Their dimensions have to be the same. The four sheets are 128 pixels high and 224 pixels wide. Also, a block or tile is 8 pixels high and 8 pixels wide. The variables 'mWidthInTiles' and 'mHeightInTiles' are easily computed.   [awesomeguyJNI#Introduction top]
 
-The ultimate goal is for us to be able to pass a method in the class a number that is associated with an individual tile, and for the method to return the tile that we specify. We achieve this goal by ultimately using simple calculations. We take one parameter and do some simple math, and feed the results into the 'Bitmap.createBitmap(...)' method, returning the Bitmap of the tile that we're interested in. Below are listings.
+The ultimate goal is for us to be able to pass a method in the class a number that is associated with an individual tile, and for the method to return the tile that we specify. We achieve this goal by ultimately using simple calculations. We take one parameter and do some simple math, and feed the results into the 'Bitmap.createBitmap(...)' method, returning the Bitmap of the tile that we're interested in. Below are listings.  [awesomeguyJNI#Introduction top]
 
 {{{
 public Bitmap getTile(int i) {
@@ -93,7 +93,7 @@ public Bitmap getTile(int i) {
 	}
 }
 }}}
-Essentially we need the row and column values, and we get those by manipulating the 'mWidthInTiles' variable. Extra code is added for scaling the images. If we want to double the images size for larger screens we can do this with the 'mMatrix' object. The value of 'mScale' is set using a regular java setter method.
+Essentially we need the row and column values, and we get those by manipulating the 'mWidthInTiles' variable. Extra code is added for scaling the images. If we want to double the images size for larger screens we can do this with the 'mMatrix' object. The value of 'mScale' is set using a regular java setter method.  [awesomeguyJNI#Introduction top]
 
 ===Panel java===
 
@@ -137,17 +137,17 @@ We accomplish drawing the background on the screen this way using tiles instead 
 scrollTo(scrollX, scrollY);
 }}}
 
-The process of using the TileCutter and the loops described above is time consuming, so a JNI library was used.
+The process of using the TileCutter and the loops described above is time consuming, so a JNI library was used.  [awesomeguyJNI#Introduction top]
 
 =JNI Setup=
 
-JNI stands for 'Java Native Interface' and NDK stands for 'Native Development Kit'. To program JNI for the android platform you must download and configure the 'android-ndk-r4' package, which can be found on the Android developers site at the following address. See: http://developer.android.com/sdk/ndk/index.html . Download and install the package that is appropriate for your operating system. Installing this software is beyond the scope of this wiki. The documentation that accompanies the ndk software is very helpful. 
+JNI stands for 'Java Native Interface' and NDK stands for 'Native Development Kit'. To program JNI for the android platform you must download and configure the 'android-ndk-r4' package, which can be found on the Android developers site at the following address. See: http://developer.android.com/sdk/ndk/index.html . Download and install the package that is appropriate for your operating system. Installing this software is beyond the scope of this wiki. The documentation that accompanies the ndk software is very helpful.   [awesomeguyJNI#Introduction top]
 
 ===Names===
 
 The name of the file that's compiled into the awesomeguy JNI library is 'awesomeguy.c', and the actual compiled library is called 'libawesomeguy.so'. The Android NDK package takes care of naming the actual library for us, so we only have to concern ourselves with writing the awesomeguy.c file. To compile a Android JNI library, we create a folder in the Eclipse project called 'jni'. We place the c file in this folder. There is a non trivial step of creating the android 'Android.mk' file, which is the library's 'make' file. Then we use tools from the Android NDK package to compile the file. 
 
-The NDK tools create the actual library for us and place the library in a specially created folder in the Eclipse project. When Eclipse creates the app file it includes the library automatically. We have to 'Refresh' the project manually every time we re-compile the library, but that's the only tricky part. To refresh the project, press the F5 button.
+The NDK tools create the actual library for us and place the library in a specially created folder in the Eclipse project. When Eclipse creates the app file it includes the library automatically. We have to 'Refresh' the project manually every time we re-compile the library, but that's the only tricky part. To refresh the project, press the F5 button.  [awesomeguyJNI#Introduction top]
 
 ===Awesomeguy in c===
 
@@ -155,7 +155,7 @@ Both c and c++ can be used for Android JNI. Awesomeguy uses c. The c programming
 
 There is no boolean data type in c. Instead you must use integers. Awesomeguy uses a pair of `#define` statements to create 'TRUE' and 'FALSE' values that correspond to integer values of '1' and '0'. For this reason when the awesomeguy library is asked by the java code to return a true or false it returns an integer which must be translated somehow for the java code. Java does use a separate boolean data type.
 
-The awesomeguy JNI library is meant to operate within the context of the Panel.java class. JNI code will only be called from that class. This simplifies the awesomeguy.c file slightly.
+The awesomeguy JNI library is meant to operate within the context of the Panel.java class. JNI code will only be called from that class. This simplifies the awesomeguy.c file slightly.  [awesomeguyJNI#Introduction top]
 
 ===include===
 
@@ -168,7 +168,7 @@ There are four `#include` statements at the beginning of the awesomeguy.c file.
 }}}
 The first two are specific to android JNI programming. They allow the project to interface with the java code, and allow our program to print log messages to the Dalvik Debugger. This is important for development and debugging. Once the c library is working correctly the line `#include <android/log.h>` could be removed.
 
-The second two `#include` statements are standard c libraries that any c programmer might use in their program. You can `#include` many c libraries, and also several libraries that are provided by google for programming the Android device.
+The second two `#include` statements are standard c libraries that any c programmer might use in their program. You can `#include` many c libraries, and also several libraries that are provided by google for programming the Android device.  [awesomeguyJNI#Introduction top]
 
 ===define===
 
@@ -186,6 +186,8 @@ Next the constants for 'TRUE' and 'FALSE' are defined.
 #define TRUE 1
 #define FALSE 0 
 }}}
+
+  [awesomeguyJNI#Introduction top]
 
 ===constants===
 
@@ -239,9 +241,11 @@ static int PAINT_SOLID = 0;
 static int PAINT_TRANSPARENT = 1;
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ===Scope===
 
-These variables are all declared outside any method body, so they have global scope. Up until now the variables declared have been constants, but many of the variables, like the 2D array 'screen' have contents that change over time. This is because 'screen' is rewritten every time the Panel redraws itself. This is OK for our library. The contents of 'screen' are persistent over many calls to the library, and are also changeable over many calls to the library.
+These variables are all declared outside any method body, so they have global scope. Up until now the variables declared have been constants, but many of the variables, like the 2D array 'screen' have contents that change over time. This is because 'screen' is rewritten every time the Panel redraws itself. This is OK for our library. The contents of 'screen' are persistent over many calls to the library, and are also changeable over many calls to the library.  [awesomeguyJNI#Introduction top]
 
 ===Unsigned Integers===
 
@@ -265,6 +269,8 @@ static uint32_t monster_d[16][16];
 static uint32_t platform_a[8][40];
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ===Map Arrays===
 
 These are the two arrays that the JNI use as maps for the background elements. Elsewhere in this documentation the maps were called 'tilemaps'. Each element is a number representing an 8x8 square. In the Java code these arrays are located in the GameValues class, and are called the 'level' and 'objects' arrays. They are duplicated in the JNI because JNI functions are responsible for drawing the screen just as the Java was. The 'map_level' array holds just visual information, and the 'map_objects' array holds info on (usually) non visible information.
@@ -275,12 +281,16 @@ static int map_level [96][96];
 static int map_objects[96][96];
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ===Screen===
 
 There is an array in the variable definition section of the JNI file that represents the information that will ultimately be displayed on the screen. It is intended to hold graphical information, pixels, and it is the size of the maximum that the screen is allowed to be, (192x256). This is the array that is returned to the java code by the 'drawLevel()' function. This may be the most important array in the program.
 {{{
 uint32_t screen [192][256];
 }}}
+
+  [awesomeguyJNI#Introduction top]
 
 ===Alpha===
 
