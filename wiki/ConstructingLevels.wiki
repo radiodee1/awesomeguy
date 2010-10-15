@@ -132,15 +132,15 @@ Rings, the objects that you gather to accumulate points, go on the 'objects' lay
 
 ====Ladders====
 
-Ladders are like solid objects. You must first copy a symbol on the 'Layer 0' layer for the ladder, and then you copy the ladder object tile to the 'New Layer' layer in the same exact place. The ladder tile can be any tile at all, but tile 257 is used commonly. The ladder objects tile looks like a set of horizontal black and white lines.
+Ladders are like solid objects. You must first copy a symbol on the 'Layer 0' layer for the ladder, and then you copy the ladder object tile to the 'New Layer' layer in the same exact place. The ladder tile can be any tile at all, but tile 257 is used commonly. The ladder objects tile looks like a set of horizontal black and white lines.  [ConstructingLevels#Introduction top]
 
 ====Monsters====
 
-Monsters can be placed on a level by simply putting the 'monster' block on the objects level, but they have a special behavior. The monster block defines the starting location of the monster sprite. The monster sprite travels to the right until it comes to the end of the platform it's on or until it comes to an obstacle. Then it turns around. For this reason you want to make sure you place your monsters on a platform, not floating in the air. If you put them floating in the air they think that they must turn around constantly and as a result they don't go anywhere, they just constantly switch from left-facing image to right-facing image without stopping. If you place a monster on a solid platform and you want to impede it's movement you can place a marker on the 'objects' layer that tells the monster sprite to turn around when it is encountered. This marker looks like a white box with an M in it and is located at tile position 441. Marker tiles do not appear on the screen.
+Monsters can be placed on a level by simply putting the 'monster' block on the objects level, but they have a special behavior. The monster block defines the starting location of the monster sprite. The monster sprite travels to the right until it comes to the end of the platform it's on or until it comes to an obstacle. Then it turns around. For this reason you want to make sure you place your monsters on a platform, not floating in the air. If you put them floating in the air they think that they must turn around constantly and as a result they don't go anywhere, they just constantly switch from left-facing image to right-facing image without stopping. If you place a monster on a solid platform and you want to impede it's movement you can place a marker on the 'objects' layer that tells the monster sprite to turn around when it is encountered. This marker looks like a white box with an M in it and is located at tile position 441. Marker tiles do not appear on the screen.  [ConstructingLevels#Introduction top]
 
 ====Floating Platforms====
 
-Floating platforms are like monsters in many ways except they're supposed to be placed in the air. When their tile is placed on the 'objects' layer a moving platform will appear in the game. The tile will slowly move to the right until it encounters a solid object and then it moves to the left in the same way. The invisible marker block -- with an M in it -- can also be used with floating platforms. The marker serves as an instruction to the platform to stop moving in one direction and start moving in the other.
+Floating platforms are like monsters in many ways except they're supposed to be placed in the air. When their tile is placed on the 'objects' layer a moving platform will appear in the game. The tile will slowly move to the right until it encounters a solid object and then it moves to the left in the same way. The invisible marker block -- with an M in it -- can also be used with floating platforms. The marker serves as an instruction to the platform to stop moving in one direction and start moving in the other.  [ConstructingLevels#Introduction top]
 
 ===Text Files===
 
@@ -173,7 +173,7 @@ const short test_map1[25] = {
 };
 }}}
 
-This is the total contents of the file. The file has to be edited and the edited parts need to be placed in the xml file.
+This is the total contents of the file. The file has to be edited and the edited parts need to be placed in the xml file.  [ConstructingLevels#Introduction top]
 
 ===Text Editor===
 
@@ -239,7 +239,7 @@ The xml file, therefore, would look like this:
 </game>
 }}}
 
-We also changed the 'horizontal' and 'vertical' tags to hold sensible values. You must edit each level you create and add it to your xml file in the same way.
+We also changed the 'horizontal' and 'vertical' tags to hold sensible values. You must edit each level you create and add it to your xml file in the same way.  [ConstructingLevels#Introduction top]
 
 ===Sed===
 
@@ -331,7 +331,7 @@ Then, when you're certain that the changes have been made properly, you can dele
 rm raw.xml raw2.xml
 }}}
 
-Finally, if you want you can use the search and replace functions of your favorite text editor to erase the curly braces instead of sed if you find that easier.
+Finally, if you want you can use the search and replace functions of your favorite text editor to erase the curly braces instead of sed if you find that easier.  [ConstructingLevels#Introduction top]
 
 =Finished Level=
 
@@ -343,4 +343,4 @@ Change the number of levels that the game recognizes to the number in your xml f
 	public static int NUM_ROOMS = 10;
 }}}
 
-Build the project and run it on your android device.
+Build the project and run it on your android device.  [ConstructingLevels#Introduction top]
