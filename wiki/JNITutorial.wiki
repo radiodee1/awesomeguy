@@ -10,17 +10,17 @@ Here we'll go through the steps of writing your own JNI library to use with the 
 
 Before you create your Android JNI file you need a working project, and before that you need a working development environment. In this tutorial we'll briefly cover setting up your eclipse IDE for java development, and we'll go on to cover Android JNI/NDK.
 
-JNI stands for 'Java Native Interface' and NDK stands for 'Native Development Kit'. We'll use the two terms somewhat interchangeably but they could also be used to define very specific and different things. JNI could be used to define all Java applications that use native code, whereas NDK would be more related to the Android system in specific.
+JNI stands for 'Java Native Interface' and NDK stands for 'Native Development Kit'. We'll use the two terms somewhat interchangeably but they could also be used to define very specific and different things. JNI could be used to define all Java applications that use native code, whereas NDK would be more related to the Android system in specific.  [JNITutorial#Introduction top]
 
 =Setup Environment=
 
-Here we'll start looking at Eclipse and Android plugins. Awesomeguy was programmed on a debian-based linux computer. Instructions for installing software are generally written with a linux operating system in mind. However, Android apps can be successfully written on Windows computers, and all of the tools mentioned here have windows equivalents.
+Here we'll start looking at Eclipse and Android plugins. Awesomeguy was programmed on a debian-based linux computer. Instructions for installing software are generally written with a linux operating system in mind. However, Android apps can be successfully written on Windows computers, and all of the tools mentioned here have windows equivalents.  [JNITutorial#Introduction top]
 
 ===File Folder Organization===
 
 If you're using linux, all your data should be kept in your home directory. You _can_ put things in your Desktop directory, but it's not encouraged. The linux setup that the author uses includes a 'bin' directory in the 'home' directory. All the development tools and folders were placed there. This lessened the clutter of the 'home' directory. Also, the author used the 'bash' command interpreter. The '.bashrc' file was edited so that a PATH variable included the user's 'bin' directory. This way scripts could be written that automated difficult tasks. The scripts were placed in the user's 'bin' folder, and were therefore included in the user's path. 
 
-If you're using Windows, you should probably place downloaded packages at the root of the '`c:\`' directory. This does not apply to software that has built-in installers. Such software installs itself. Packages that don't have installers should go in '`c:\`' because then you can refer to the package on the command line easily without concern for spaces in the names of the folders or files. This is sometimes a concern if you use cigwin and mingw. Also, even if you're not concerned with spaces in your directory names, placing folders and files at the root of the '`c:\`' directory makes all references to them shorter (there is less typing involved).
+If you're using Windows, you should probably place downloaded packages at the root of the '`c:\`' directory. This does not apply to software that has built-in installers. Such software installs itself. Packages that don't have installers should go in '`c:\`' because then you can refer to the package on the command line easily without concern for spaces in the names of the folders or files. This is sometimes a concern if you use cigwin and mingw. Also, even if you're not concerned with spaces in your directory names, placing folders and files at the root of the '`c:\`' directory makes all references to them shorter (there is less typing involved).  [JNITutorial#Introduction top]
 
 ===Java===
 
