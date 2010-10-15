@@ -300,6 +300,8 @@ A single graphic pixel is created to hold the value that is used by the JNI libr
 uint32_t number_alpha = 0;
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ===Tile Loops===
 
 The next two variables are used by the loop mechanism that prints tiles on the 'screen' array. Their definition is mostly unimportant to the operation of the game, but should be mentioned at this point. The two variables value refers to the number of tiles that could be printed on the screen.
@@ -308,6 +310,8 @@ The next two variables are used by the loop mechanism that prints tiles on the '
 static int tilesWidthMeasurement = 32;
 static int tilesHeightMeasurement = 32;
 }}}
+
+  [awesomeguyJNI#Introduction top]
 
 ===Sprite Structs===
 
@@ -334,7 +338,7 @@ int platform_num = -1;
 
 Sprite guy;
 }}}
-There is also one sprite that we keep track of that's not on the list. This is the sprite for the main character. This sprite we call 'guy'. In the java version of the graphical display code there is one list and the guy sprite is always on the list at position '0'. Because of the slight difference between the java and the JNI, the indexes of sprite objects on the list are not the same between the two parts of the program. Special care has to be taken when referring to the sprite objects.
+There is also one sprite that we keep track of that's not on the list. This is the sprite for the main character. This sprite we call 'guy'. In the java version of the graphical display code there is one list and the guy sprite is always on the list at position '0'. Because of the slight difference between the java and the JNI, the indexes of sprite objects on the list are not the same between the two parts of the program. Special care has to be taken when referring to the sprite objects.  [awesomeguyJNI#Introduction top]
 
 ===Bounding Box===
 
@@ -346,7 +350,7 @@ typedef struct {
 } BoundingBox;
 }}}
 
-The integers 'left', 'right', 'top', and 'bottom' are all screen positions for the boundaries of a sprite's drawable region. In Awesomeguy we use a simple box for collision detection, where as in other games a more complex shape like an outline might be used. In Awesomeguy the sprites are so small that a simple box seems to work best.
+The integers 'left', 'right', 'top', and 'bottom' are all screen positions for the boundaries of a sprite's drawable region. In Awesomeguy we use a simple box for collision detection, where as in other games a more complex shape like an outline might be used. In Awesomeguy the sprites are so small that a simple box seems to work best.  [awesomeguyJNI#Introduction top]
 
 ===Various Variables===
 
@@ -375,17 +379,17 @@ static int preferences_collision = FALSE;
 
 The remaining global variables are all boolean. The first four are used as a notification system between the JNI and the java. The variables 'endlevel', 'sound_ow', 'sound_prize' and 'sound_boom' are used to tell the java that a collision has happened that requires the Panel.java class to end game play (in the case of 'endlevel') or play a certain sound (in the case of 'sound_ow', 'sound_prize', and 'sound_boom'). Every time the Panel is redrawn these variables are checked. If their value changes from FALSE to TRUE then the java knows it has to do something.
 
-The variables 'preferences_monsters' and 'preferences_collision' are used as notification to the JNI from the java of the Panel class. They tell the JNI weather or not monsters should appear on the screen, and weather or not those monsters can interact with the main character. This second preference, 'preferences_collision' allows the main character to travel through the levels without fear of dying from monsters.
+The variables 'preferences_monsters' and 'preferences_collision' are used as notification to the JNI from the java of the Panel class. They tell the JNI weather or not monsters should appear on the screen, and weather or not those monsters can interact with the main character. This second preference, 'preferences_collision' allows the main character to travel through the levels without fear of dying from monsters.  [awesomeguyJNI#Introduction top]
 
 ===Function Headers===
 
 Functions in the awesomeguy JNI library are divided into two groups. The first group is the standard function that is internal to the library and may be called anywhere in the library. The second group is the group of functions that is meant to be called by the Panel.java class. This second group of functions is all located at the end of the file. The method signature for these functions is somewhat complex. Meanwhile the first group of functions has simple signatures. For this group function headers were included in the library.
 
-The code of the library is so straightforward that function headers might not have been strictly necessary, but they are included because the library has no header files (the library is composed of a single source c file). Though the headers appear in the file, they will not be duplicated here.
+The code of the library is so straightforward that function headers might not have been strictly necessary, but they are included because the library has no header files (the library is composed of a single source c file). Though the headers appear in the file, they will not be duplicated here.  [awesomeguyJNI#Introduction top]
 
 =JNI Methods=
 
-I will attempt to go through all the methods in the file, occasionally grouping methods together that function in exactly the same way. 
+I will attempt to go through all the methods in the file, occasionally grouping methods together that function in exactly the same way.   [awesomeguyJNI#Introduction top]
 
 ===Method Overview===
 
@@ -399,7 +403,7 @@ A lot of other methods are included in the library. Some draw words and numbers 
 
 Some methods determine weather a collision has taken place. This would be important for the display of the 'monster' sprites. In that case the level needs to be stopped when the main character comes into contact with a monster. Collision detection is an exception to the notion that the library operates to display images only.
 
-There are also methods in the library that turn 1 dimensional arrays into 2 dimensional array, and at least one method that turns 2 dimensional arrays into 1 dimensional arrays. This is necessary because internally the library uses 2 dimensional arrays, while the java code that passes Bitmaps to the library uses 1 dimensional arrays. Also the method that turns the 'screen' array into a Bitmap for java expects a 1 dimensional array, while the 'screen' array itself is 2 dimensional. The methods for turning 1D to 2D are all called 'copyArraysExpand(...)' or some variation on that name. The method for turning the 'screen' array into a 1D array is called 'copyScreenCompress(...)'.
+There are also methods in the library that turn 1 dimensional arrays into 2 dimensional array, and at least one method that turns 2 dimensional arrays into 1 dimensional arrays. This is necessary because internally the library uses 2 dimensional arrays, while the java code that passes Bitmaps to the library uses 1 dimensional arrays. Also the method that turns the 'screen' array into a Bitmap for java expects a 1 dimensional array, while the 'screen' array itself is 2 dimensional. The methods for turning 1D to 2D are all called 'copyArraysExpand(...)' or some variation on that name. The method for turning the 'screen' array into a 1D array is called 'copyScreenCompress(...)'.  [awesomeguyJNI#Introduction top]
 
 ===Sound Setters===
 
@@ -417,7 +421,7 @@ void setSoundOw() {
 	sound_ow = TRUE;
 }
 }}}
-All three methods operate the same way.
+All three methods operate the same way.  [awesomeguyJNI#Introduction top]
 
 ===Sound Getters===
 
@@ -435,11 +439,11 @@ int getSoundOw() {
 	return temp;
 }
 }}}
-It's slightly more complex than the 'setSoundOw()' method, because it not only returns the value of the 'sound_ow' variable, but it resets it to FALSE. The method is used by the java code to tell if an event has transpired in the last display of the 'screen' bitmap that would call for the 'ow' sound to be played. This would be when the main character comes in contact with a monster, for example. This method is closely related to the collision detection methods of the library.
+It's slightly more complex than the 'setSoundOw()' method, because it not only returns the value of the 'sound_ow' variable, but it resets it to FALSE. The method is used by the java code to tell if an event has transpired in the last display of the 'screen' bitmap that would call for the 'ow' sound to be played. This would be when the main character comes in contact with a monster, for example. This method is closely related to the collision detection methods of the library.  [awesomeguyJNI#Introduction top]
 
 ===Loading Graphic Data===
 
-Several steps are incorporated to load the graphics data from the java code into the JNI code. This data is used to assemble the 'screen' array, which is returned to the java code and turned into a Bitmap. 
+Several steps are incorporated to load the graphics data from the java code into the JNI code. This data is used to assemble the 'screen' array, which is returned to the java code and turned into a Bitmap.   [awesomeguyJNI#Introduction top]
 
 ====setTileMapData()====
 
@@ -463,7 +467,7 @@ void setTileMapData(jint a[], jint b[], jint c[], jint d[] ) {
 	
 }
 }}}
-The four arrays, 'a', 'b', 'c', and 'd', are each separate tile sheets. They are nearly identical, except for the animation of the rings that the main character collects for points. The method 'copyArraysExpand_tileset(...)' will be explained later. The arrays 'tiles_a', 'tiles_b', 'tiles_c', and 'tiles_d' are 2 dimensional arrays that are declared as global in the library. 
+The four arrays, 'a', 'b', 'c', and 'd', are each separate tile sheets. They are nearly identical, except for the animation of the rings that the main character collects for points. The method 'copyArraysExpand_tileset(...)' will be explained later. The arrays 'tiles_a', 'tiles_b', 'tiles_c', and 'tiles_d' are 2 dimensional arrays that are declared as global in the library.   [awesomeguyJNI#Introduction top]
 
 ====setGuyData()====
 
@@ -483,6 +487,8 @@ void setGuyData(jint a[], jint b[], jint c[], jint d[] ) {
 }
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ====setMonsterData()====
 
 The code for 'setMonsterData(...)' is below. Since the monster sprite is 16 x 16 we can reuse the 'copyArraysExpand_16(...)' method.
@@ -496,6 +502,8 @@ void setMonsterData(jint a[], jint b[], jint c[], jint d[] ) {
 }
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ====setMovingPlatformData()====
 
 This method is very much like 'setTileMapData(...)' except that there is only one image for the moving platforms. The platforms have different dimensions then the other sprites, so they must have their own methods. Below is a listing of the 'setMovingPlatformData()' code.
@@ -504,6 +512,8 @@ void setMovingPlatformData(jint a[]) {
 	copyArraysExpand_8_40( a, PLATFORM_WIDTH * PLATFORM_HEIGHT, platform_a);
 }
 }}}
+
+  [awesomeguyJNI#Introduction top]
 
 ====copyArraysExpand tileset()====
 
@@ -534,7 +544,7 @@ There are three parameters to the method. One is the 1 dimensional array called 
 
 In the section used to set the 'number_alpha' variable, a specific pixel is copied to 'number_alpha' from the tilesheet. The value is the upper left hand pixel from tile number 374. This is one of the number tiles. The upper left hand pixel from this tile is simply a black pixel.
 
-It's worth noting that the calculation of 'number_alpha' happens four times. This is not ideal, but since it's convenient it's left the way that it is. 
+It's worth noting that the calculation of 'number_alpha' happens four times. This is not ideal, but since it's convenient it's left the way that it is.   [awesomeguyJNI#Introduction top]
 
 ====copyArraysExpand 16()====
 
@@ -557,6 +567,8 @@ void copyArraysExpand_16(jint from[], int size_l, uint32_t to[GUY_WIDTH][GUY_HEI
 }
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ====copyArraysExpand 8 40()====
 
 This method is similar to the other 'copyArraysExpand' methods. It takes different sized arrays as input and output, though. It's used for the moving platform. It's also only used once, as there is only one image for the moving platform.
@@ -577,9 +589,11 @@ void copyArraysExpand_8_40(jint from[], int size_l, uint32_t to[PLATFORM_HEIGHT]
 }
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ===Loading Map Data===
 
-For every level we need to load all the necessary map data. This data tells the library how to print the background, and also where to put things like monsters and rings. The map arrays that the JNI library uses are 96 x 96. Sometimes the java code is dealing with smaller arrays that it later copies into the 96 x 96 element arrays. The JNI library is not interested in the smaller arrays except to know what size they are. The size _is_ used by the library, and when that size is smaller than 96 x 96 the array is partly empty. The java code always passes data to the JNI library in the form of 1 dimensional arrays. 
+For every level we need to load all the necessary map data. This data tells the library how to print the background, and also where to put things like monsters and rings. The map arrays that the JNI library uses are 96 x 96. Sometimes the java code is dealing with smaller arrays that it later copies into the 96 x 96 element arrays. The JNI library is not interested in the smaller arrays except to know what size they are. The size _is_ used by the library, and when that size is smaller than 96 x 96 the array is partly empty. The java code always passes data to the JNI library in the form of 1 dimensional arrays.   [awesomeguyJNI#Introduction top]
 
 ====setLevelData()====
 
@@ -605,11 +619,15 @@ void setLevelData(int a[MAP_HEIGHT * MAP_WIDTH],  int b[MAP_HEIGHT * MAP_WIDTH])
 }}}
 Since we set the 'map_objects' and 'map_level' arrays at the beginning of each level, this function is a good place to initialize some variables that are used to keep track of Sprite struct objects on the 'sprite' list. This is what we're doing when we set 'monster_num', 'sprite_num', and 'platform_num'.
 
+  [awesomeguyJNI#Introduction top]
+
 ===Loading Sprites===
 
 There are three types of sprites that could use the Sprite struct. They are the main character sprite, the monster sprite, and the moving platform sprite. The main character sprite uses a Sprite struct that is specially created for it, and exists separate from the other sprites. The remaining objects on the screen that need sprites are handled by an array of Sprite structs. This array can handle up to 100 sprites. The array is used as a list. On the list first go all of the monster sprites. Then on the list goes all of the floating platforms that might be on the level. The list is re-initialized at the beginning of each level. The variables 'monster_num', 'sprite_num', and 'platform_num' are used to manage the list.
 
 The lists of monsters and platforms could be initialized entirely within the JNI library, as the library has a copy of the 'map_objects' array, but it could also be initialized from the java code, and that is the way it is implemented.
+
+  [awesomeguyJNI#Introduction top]
 
 ====addMonster()====
 
@@ -636,6 +654,8 @@ void addMonster(int monster_x, int monster_y, int monster_animate) {
 }}}
 The function 'addMonster(...)' must be called once for every monster on the level, and before any other platform sprite is added to the sprite list. This way all the monsters are together, and the first monster sprite starts at index zero.
 
+  [awesomeguyJNI#Introduction top]
+
 ====addPlatform()====
 
 The method for adding a platform is similar to the method for adding a monster except that there is only one image for the platform, so no starting animation index is saved. The code for 'addPlatform(...)' is below.
@@ -658,11 +678,11 @@ void addPlatform(int platform_x, int platform_y) {
 	platform_num = sprite_num;
 }
 }}} 
-The bounding box info is totally different, and the 'platform_num' variable is set instead of the 'monster_num' variable. Note that 'platform_num' is _not_ the 'number of platforms' as you might guess the name means. Instead the 'platform_num' is the index in the sprite list at which the last platform resides.
+The bounding box info is totally different, and the 'platform_num' variable is set instead of the 'monster_num' variable. Note that 'platform_num' is _not_ the 'number of platforms' as you might guess the name means. Instead the 'platform_num' is the index in the sprite list at which the last platform resides.  [awesomeguyJNI#Introduction top]
 
 ===More Setters===
 
-These are functions that are used to set variables that are part of the JNI library, usually from the java Panel class. They are called, for the most part, with every refresh of the screen.
+These are functions that are used to set variables that are part of the JNI library, usually from the java Panel class. They are called, for the most part, with every refresh of the screen.  [awesomeguyJNI#Introduction top]
 
 ====setGuyPosition()====
 
@@ -679,6 +699,8 @@ void setGuyPosition(int guy_x, int guy_y, int scroll_x, int scroll_y, int guy_an
 }
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ====setScoreLives()====
 
 This method sets the 'score' and 'lives' variables in the JNI library so that they can be printed on the screen. It is called every time the Panel.java class refreshes the screen.
@@ -690,9 +712,11 @@ void setScoreLives(int a_score, int a_lives) {
 }
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ===Object Setters===
 
-These functions can be used at any time. They change the state of the 'map_objects' array, or possibly the value associated with a certain sprite.
+These functions can be used at any time. They change the state of the 'map_objects' array, or possibly the value associated with a certain sprite.  [awesomeguyJNI#Introduction top]
 
 ====setObjectsDisplay()====
 
@@ -702,6 +726,8 @@ void setObjectsDisplay(int map_x, int map_y, int value) {
 	map_objects[map_x][ map_y ] = value;
 }
 }}}
+
+  [awesomeguyJNI#Introduction top]
 
 ====inactivateMonster()====
 
@@ -714,6 +740,8 @@ void inactivateMonster(int num) {
 }
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ====inactivateMonsterView()====
 
 This sets the 'visible' property to FALSE. The code is listed below.
@@ -725,9 +753,11 @@ void inactivateMonsterView(int num) {
 }
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ===Drawing The Screen===
 
-A single method is responsible for drawing the screen, but it calls many other methods. Here is a breakdown of the 'drawLevel(...)' method. The method itself is comparatively long so it will be listed in parts.
+A single method is responsible for drawing the screen, but it calls many other methods. Here is a breakdown of the 'drawLevel(...)' method. The method itself is comparatively long so it will be listed in parts.  [awesomeguyJNI#Introduction top]
 
 ====drawLevel()====
 
@@ -744,7 +774,7 @@ void drawLevel(int animate_level) {
 }}}
 The method has no return value because it stores it's output in another global variable array, the 2 dimensional 'screen' array. 
 
-The variables internal to the method are fairly simple. The single letter variables are used as loop indexes. The variables 'baseX' and 'baseY' are for when the background is being printed on the screen and the code has to determine which tiles to actually draw. The variable 'mapcheat' is used to make sure that the proper tile index is used when we're drawing picture tiles on the screen. The 2D array 'square' is used as a temporary holding place for each tile before its data is copied to the 'screen' array of pixels. The 'square' array is exactly 8 pixels by 8 pixels.
+The variables internal to the method are fairly simple. The single letter variables are used as loop indexes. The variables 'baseX' and 'baseY' are for when the background is being printed on the screen and the code has to determine which tiles to actually draw. The variable 'mapcheat' is used to make sure that the proper tile index is used when we're drawing picture tiles on the screen. The 2D array 'square' is used as a temporary holding place for each tile before its data is copied to the 'screen' array of pixels. The 'square' array is exactly 8 pixels by 8 pixels.  [awesomeguyJNI#Introduction top]
 
 ====Clear Screen====
 
@@ -758,6 +788,8 @@ This code simply clears the screen.
 	    }
     }
 }}}
+
+  [awesomeguyJNI#Introduction top]
 
 ====Draw Background====
 
@@ -834,7 +866,7 @@ For the 'map_objects' array we only print some of the tiles. The list of non pri
 
 As long as the block in question is not one of those listed above the block can be printed. Here we must print the block from the right tile sheet, since tile sheets are animated. The animation is key for the ring tiles.
 
-The 'cutTile(...)' and 'drawTile_8(...)' method pair is broken up here. We use if/else blocks to task the 'cutTile(...)' method with cutting the right tilesheet, 'tiles_a', 'tiles_b', 'tiles_c', or 'tiles_d'. Then when all of the logic concerning which tile to cut is done we call 'drawTile_8(...)' on the 'square' array.
+The 'cutTile(...)' and 'drawTile_8(...)' method pair is broken up here. We use if/else blocks to task the 'cutTile(...)' method with cutting the right tilesheet, 'tiles_a', 'tiles_b', 'tiles_c', or 'tiles_d'. Then when all of the logic concerning which tile to cut is done we call 'drawTile_8(...)' on the 'square' array.  [awesomeguyJNI#Introduction top]
 
 ====Platforms And Score====
 
@@ -846,7 +878,7 @@ Next we call two functions responsible for drawing floating platforms on the scr
     /* draw score and lives */
     drawScoreWords();
 }}}
-As noted above, the 'drawMovingPlatform()' method and thhe 'drawScoreWords()' method are complex and deserve their own section.
+As noted above, the 'drawMovingPlatform()' method and thhe 'drawScoreWords()' method are complex and deserve their own section.  [awesomeguyJNI#Introduction top]
 
 ====Monsters====
 
@@ -861,7 +893,7 @@ The next sections draw the monsters on the screen and also check weather any of 
         collisionWithMonsters();
     }
 }}}
-The last thing to note is that the 'drawMonsters()' and the 'collisionWithMonsters()' code is only executed if the 'preferences_monsters' and the 'preferences_collision' variables are set appropriately.
+The last thing to note is that the 'drawMonsters()' and the 'collisionWithMonsters()' code is only executed if the 'preferences_monsters' and the 'preferences_collision' variables are set appropriately.  [awesomeguyJNI#Introduction top]
 
 ====Main Character====
 
@@ -883,11 +915,11 @@ The last sections in the 'drawLevel(...)' function draw the main character. They
 }}}
 The 'drawSprite_16(...)' method is based on the 'drawTile_8(...)' method. They both do essentially the same thing, and they accomplish it in the same way. Their difference is in the size of the image that they use as their source material. The 'drawTile_8(...)' method uses a 8 x 8 array as it's source. The 'drawSprite_16(...)' method uses a 16 x 16 array as it's source. The 'drawSprite_16(...)' method is used by the 'drawMonster()' code also because the monster sprite is 16 x 16.
 
-The if/else construction that the 'drawSprite_16(...)' methods reside in is used to animate the main character. The methods must use one of the four main character sprites, called 'guy_a', 'guy_b', 'guy_c', or 'guy_d'.
+The if/else construction that the 'drawSprite_16(...)' methods reside in is used to animate the main character. The methods must use one of the four main character sprites, called 'guy_a', 'guy_b', 'guy_c', or 'guy_d'.  [awesomeguyJNI#Introduction top]
 
 ===Copy Tiles Sprites Platforms===
 
-There is an intended similarity to the functions that copy tiles, sprites, and platforms to the 'screen' array. They all work the same way. Their difference is in their array sizes, and therefore the starting and ending points of their loops. The functions could have been written as one function having many more parameters when it was called, but for simplicity separate methods were written. The 'drawTiles_8(...)' method will be discussed in the greatest detail here. 
+There is an intended similarity to the functions that copy tiles, sprites, and platforms to the 'screen' array. They all work the same way. Their difference is in their array sizes, and therefore the starting and ending points of their loops. The functions could have been written as one function having many more parameters when it was called, but for simplicity separate methods were written. The 'drawTiles_8(...)' method will be discussed in the greatest detail here.   [awesomeguyJNI#Introduction top]
 
 ====drawTiles_8()====
 
@@ -924,7 +956,7 @@ The map arrays can acomidate a game play area that's larger than what we see on 
 
 The two loops are defined by the size of the 'tile' array. Only inside the loop do we add the offsets 'm' and 'n' to the indexes from the loops ('i' and 'j').
 
-There are two parameters from the 'drawTile_8(...)' method that we haven't covered. They are the integer 'paint_all' and the unsigned integer 'extra'. Variable 'extra' holds a single pixel value. Variable 'paint_all' can hold one of two values that tells the 'drawTile_8(...)' method what to do with 'extra'. The possible values for 'paint_all' are 'PAINT_TRANSPARENT' and 'PAINT_SOLID'. If 'PAINT_TRANSPARENT' is chosen then the routine checks each value from 'tile' before copying it to 'screen'. If the 'tile' value matches the 'extra' value, no operation is performed. This is equivalent to making a transparent area inside of 'tile'. This method is useful for printing numbers to the screen that need to have a transparent background, even if the source image has no alpha channel.
+There are two parameters from the 'drawTile_8(...)' method that we haven't covered. They are the integer 'paint_all' and the unsigned integer 'extra'. Variable 'extra' holds a single pixel value. Variable 'paint_all' can hold one of two values that tells the 'drawTile_8(...)' method what to do with 'extra'. The possible values for 'paint_all' are 'PAINT_TRANSPARENT' and 'PAINT_SOLID'. If 'PAINT_TRANSPARENT' is chosen then the routine checks each value from 'tile' before copying it to 'screen'. If the 'tile' value matches the 'extra' value, no operation is performed. This is equivalent to making a transparent area inside of 'tile'. This method is useful for printing numbers to the screen that need to have a transparent background, even if the source image has no alpha channel.  [awesomeguyJNI#Introduction top]
 
 ====drawSprite_16()====
 
@@ -953,7 +985,7 @@ void drawSprite_16(uint32_t from[GUY_WIDTH][GUY_HEIGHT], int x, int y, int scrol
     return;
 }
 }}}
-The method is identical to 'drawTile_8(...)' except for the names of some of the variables.
+The method is identical to 'drawTile_8(...)' except for the names of some of the variables.  [awesomeguyJNI#Introduction top]
 
 ====drawSprite_40_8()====
 
@@ -982,7 +1014,7 @@ void drawSprite_40_8(uint32_t from[PLATFORM_HEIGHT][PLATFORM_WIDTH], int x, int 
     return;
 }
 }}}
-This method is also almost identical.
+This method is also almost identical.  [awesomeguyJNI#Introduction top]
 
 ===Score and Lives===
 
@@ -990,7 +1022,7 @@ As you play the game, the score and lives that the main player has are printed o
 
 The 'tile' bitmaps do not contain tiles for every letter of the alphabet. They just contain the images for 0 through 9 and the words 'score' and 'lives'. Also, each letter or number is two tiles high. This means that the functions that print the text to the screen have to know that the letters come in two parts.
 
-If you look at any of the four tilesheets you can see the letters and numbers in the bitmap image. They are blue with a red outline on a black background.
+If you look at any of the four tilesheets you can see the letters and numbers in the bitmap image. They are blue with a red outline on a black background.  [awesomeguyJNI#Introduction top]
 
 ====drawScoreWords()====
 
@@ -1051,7 +1083,7 @@ The array 'topScore[]' is the location of the fixed data that will allow the met
 
 The array 'topLives[]' is similarly the tile numbers for each of the letters 'l', 'i', 'v', 'e', and 's'. Again, 28 is added to the tile number for each printable letter to find the number for its bottom half. The combination of 'cutTile(...)' and 'drawTile_8(...)' is called once for the top half of each letter, and then again for the bottom half of each letter. Also, 'number_alpha' is used in the 'drawTile_8(...)' method. It is used successfully at other times in the library as well.
 
-At the very end of the function, the 'drawScoreNumbers(...)' method is called twice. This method prints the numbers for both the 'score' and the 'lives' display.
+At the very end of the function, the 'drawScoreNumbers(...)' method is called twice. This method prints the numbers for both the 'score' and the 'lives' display.  [awesomeguyJNI#Introduction top]
 
 ====drawScoreNumbers()====
 
@@ -1099,13 +1131,13 @@ void drawScoreNumbers( int pos, int num, int p) {
 }}}
 There are two for() loops in this function. The first one breaks the actual number that needs to be printed into pieces and puts those pieces in an array called 'places'. The array holds the number broken down so that in each element of the array a single decimal place from the original 'num' is held. With this information we can spell out the number. For example, 99 would be broken down into '9' and '9'. The number 155 would be broken down into the array '1', '5', and '5'.
 
-The second for() loop takes the 'places' array and uses the 'cutTile(...)' and 'drawTile_8(...)' methods to put the number on the screen. The numbers are left justified and leading zeroes are not printed.
+The second for() loop takes the 'places' array and uses the 'cutTile(...)' and 'drawTile_8(...)' methods to put the number on the screen. The numbers are left justified and leading zeroes are not printed.  [awesomeguyJNI#Introduction top]
 
 ===Drawing Monsters===
 
 The 'monster' bitmap has an alpha color and is 16 pixels by 16 pixels, but only the top half of the image is used. The bottom half is entirely filled with the 'alpha' color. There are four bitmaps. Two bitmaps represent the monster facing right and two bitmaps represent the monster facing left. For each direction a bitmap exists to show the monster with it's mouth open or closed. The two images are used to animate the monster sprite.
 
-The JNI code has two functions oriented to dealing with monsters. They are 'drawMonsters()' and 'collisionWithMonsters()'. The 'collisionWithMonsters()' method is something of a departure from the other methods in the library, as it deals with more than just _displaying_ graphics on the screen, but also determining what to do when those graphical elements come into contact.
+The JNI code has two functions oriented to dealing with monsters. They are 'drawMonsters()' and 'collisionWithMonsters()'. The 'collisionWithMonsters()' method is something of a departure from the other methods in the library, as it deals with more than just _displaying_ graphics on the screen, but also determining what to do when those graphical elements come into contact.  [awesomeguyJNI#Introduction top]
 
 ====drawMonsters()====
 
@@ -1257,7 +1289,7 @@ The next section, listed below, deals mostly with weather or not a 'monster' spr
 }}}
 The constant 32 represents how many tiles wide the average screen is, and the constant 24 represents the height of the average screen. The constant 16 is used as a safety margin so that sprites do not suddenly appear or disappear as they come close to the edges of the screen.
 
-The next section takes care of animating the 'monster' sprite, and the last section prints the monster on the screen, with special regard to weather or not the sprite is facing right or left, weather it is visible, and what state it's animation index is in.
+The next section takes care of animating the 'monster' sprite, and the last section prints the monster on the screen, with special regard to weather or not the sprite is facing right or left, weather it is visible, and what state it's animation index is in.  [awesomeguyJNI#Introduction top]
 
 ====collisionWithMonsters()====
 
@@ -1306,7 +1338,7 @@ The function starts by setting up a for() loop that goes through all the monster
 
 The next part of the function tests to see if the guy is above the monster. If the monster is higher, the guy dies. If the guy is higher, the monster dies. When the 'monster' dies we increase the score and play a sound. We also inactivate the monster so that it appears to have vanished. When the main character dies we set 'endlevel' to TRUE and decrease the 'lives'. We also play a sound and inactivate the monster so that it does not interact with other items on the screen. 
 
-In the JNI code we have now killed the main character. The java code must be notified, so the java code gets the value of 'endlevel' once in every display of the Panel view. Panel.java knows this method as 'getEndLevel()' and it returns an integer value of 0 or 1. In this way the JNI and the java coordinate things like the end of the level and the playback of sounds. Score changes are handled this way also.
+In the JNI code we have now killed the main character. The java code must be notified, so the java code gets the value of 'endlevel' once in every display of the Panel view. Panel.java knows this method as 'getEndLevel()' and it returns an integer value of 0 or 1. In this way the JNI and the java coordinate things like the end of the level and the playback of sounds. Score changes are handled this way also.  [awesomeguyJNI#Introduction top]
 
 ===Function cutTile()===
 
@@ -1333,7 +1365,7 @@ void cutTile(uint32_t tileset[TILEMAP_HEIGHT][TILEMAP_WIDTH], uint32_t tile[TILE
     }
 }
 }}}
-The function is passed two arrays. The 'tileset' array is the source material, and the 'tile' array is the destination for the data. The integer 'num' tells us which tile to copy. Inside the function the 'num' variable is used to calculate what data to copy, then a pair of for() loops does the actual copying. For the sake of readability some commenting has been added to show the meanings of the variables 'm', 'n', 'k', and 'l'. This method is simple but it's fairly crucial to the operation of the game.
+The function is passed two arrays. The 'tileset' array is the source material, and the 'tile' array is the destination for the data. The integer 'num' tells us which tile to copy. Inside the function the 'num' variable is used to calculate what data to copy, then a pair of for() loops does the actual copying. For the sake of readability some commenting has been added to show the meanings of the variables 'm', 'n', 'k', and 'l'. This method is simple but it's fairly crucial to the operation of the game.  [awesomeguyJNI#Introduction top]
 
 ===Collision Functions===
 
@@ -1347,7 +1379,7 @@ The 'BoundingBox' is very simple. It does not hold the pixel offset of a sprite'
 
 Two separate types of information have to be saved. One, the boundaries of an object on the screen, is saved in the BoundingBox struct. Another, the boundaries of an object within it's own Bitmap image, is stored in the Sprite struct. The Sprite struct info does not change for a given bitmap, but the BoundingBox struct changes for every change in an object's position on the screen. This info is refreshed constantly where collision between objects is concerned. The terminology is somewhat arbitrary, so a distinction is being made.
 
-It is true, though, that the information that goes into creating a BoundingBox struct is dependent on the information in the Sprite struct. Therefore the Sprite struct is one of the parameters in the method that constructs a BoundingBox. The method that is used for constructing a BoundingBox is 'makeSpriteBox(...)'. There is a second method in the java code called 'makeBlockBox(...)' but it was not needed in the JNI library. Another method in the JNI library that's based on a java method is 'collisionSimple(...)'. Finally, a third method that can be found in the JNI code is 'collisionHelper(...)', but this method is just a helper method for 'collisionSimple(...)'.
+It is true, though, that the information that goes into creating a BoundingBox struct is dependent on the information in the Sprite struct. Therefore the Sprite struct is one of the parameters in the method that constructs a BoundingBox. The method that is used for constructing a BoundingBox is 'makeSpriteBox(...)'. There is a second method in the java code called 'makeBlockBox(...)' but it was not needed in the JNI library. Another method in the JNI library that's based on a java method is 'collisionSimple(...)'. Finally, a third method that can be found in the JNI code is 'collisionHelper(...)', but this method is just a helper method for 'collisionSimple(...)'.  [awesomeguyJNI#Introduction top]
 
 ====makeSpriteBox()====
 
@@ -1364,7 +1396,7 @@ BoundingBox makeSpriteBox(Sprite sprite, int x, int  y) {
 }}}
 The function takes the x and y position of the sprite and combines it with the sprite's definition of its borders. Then it adds in the optional arguments representing the movement that the sprite is expected to make.
 
-Since the JNI library doesn't currently calculate the main character's movement (the java code currently does this for all aspects of the game except the movement of monsters) the optional arguments to 'makeSpriteBox(...)' are always set to zero.
+Since the JNI library doesn't currently calculate the main character's movement (the java code currently does this for all aspects of the game except the movement of monsters) the optional arguments to 'makeSpriteBox(...)' are always set to zero.  [awesomeguyJNI#Introduction top]
 
 ====collisionSimple()====
 
@@ -1428,6 +1460,8 @@ int collisionSimple(BoundingBox boxA, BoundingBox boxB) {
 }
 
 }}} 
+
+  [awesomeguyJNI#Introduction top]
 
 ====collisionHelper()====
 
@@ -1493,6 +1527,8 @@ int collisionHelper(BoundingBox boxA, BoundingBox boxB) {
   return test;
 }
 }}}
+
+  [awesomeguyJNI#Introduction top]
 
 ===Function drawMovingPlatform()===
 
@@ -1577,9 +1613,11 @@ void drawMovingPlatform() {
 }
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 =Java Native Functions=
 
-This is the group of functions that can actually be called by the java code. They can also return values to the java code. In most cases in Awesomeguy, these methods are empty except for a single line that calls another method from the JNI library. This is not the case with every one of these methods. In a few cases these methods perform tasks like converting a 1D array to a 2D array, etc. There are about 25 java native functions in the JNI library.
+This is the group of functions that can actually be called by the java code. They can also return values to the java code. In most cases in Awesomeguy, these methods are empty except for a single line that calls another method from the JNI library. This is not the case with every one of these methods. In a few cases these methods perform tasks like converting a 1D array to a 2D array, etc. There are about 25 java native functions in the JNI library.  [awesomeguyJNI#Introduction top]
 
 ===Naming Functions===
 
@@ -1603,7 +1641,7 @@ After that comes the actual name of the method. The name can be broken down into
   # the name of the class that the function will be part of
   # the name of the function
 
-This is followed by the two mandatory parameters '`JNIEnv * env`' and '`jobject obj`'. Other parameters for the function could have followed the mandatory ones listed above.
+This is followed by the two mandatory parameters '`JNIEnv * env`' and '`jobject obj`'. Other parameters for the function could have followed the mandatory ones listed above.  [awesomeguyJNI#Introduction top]
 
 ===Java Declaration===
 
@@ -1619,11 +1657,11 @@ public native void someFunction();
 }}}
 This line of code is like a java method declaration _witout_ the body. This function is also 'public' so it can be called by methods of other classes if they have an instantiated version of the class 'Panel'.
 
-You should note that the c method declaration is different from the java declaration, but you need both, and the c version must include the package name and the java class name.
+You should note that the c method declaration is different from the java declaration, but you need both, and the c version must include the package name and the java class name.  [awesomeguyJNI#Introduction top]
 
 ===Individual Functions===
 
-This is an explanation of some of the functions in the JNI library that can actually be called by java.
+This is an explanation of some of the functions in the JNI library that can actually be called by java.  [awesomeguyJNI#Introduction top]
 
 ====Native setTileMapData()====
 
@@ -1645,6 +1683,8 @@ jintArray a_bitmap, jintArray b_bitmap, jintArray c_bitmap, jintArray d_bitmap)
 }
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ====Native setGuyData()====
 
 This function is similar to the one above only it calls 'setGuyData()' instead of 'setTileMapData()' when it's done translating the java arrays into pointers. 
@@ -1662,6 +1702,8 @@ jintArray a_bitmap, jintArray b_bitmap, jintArray c_bitmap, jintArray d_bitmap)
   setGuyData(a, b, c, d );
 }
 }}}
+
+  [awesomeguyJNI#Introduction top]
 
 ====Native setMonsterData()====
 
@@ -1684,6 +1726,8 @@ jintArray a_bitmap, jintArray b_bitmap, jintArray c_bitmap, jintArray d_bitmap)
 }
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ====Native setMovingPlatformData()====
 
 Whereas there are four images for the main character's sprite, the monster sprite, and four images for the tilesheet, there is only one image for the moving platform. This method copies the moving platform bitmap to a c style array by calling the c function 'setMovingPlatformData()'.
@@ -1700,6 +1744,8 @@ jobject  obj, jintArray a_bitmap)
 }
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ====Native addMonster()====
 
 This method calls the c method 'addMonster(...)'. It basically passes three 'jint' java integer values to the JNI library. This method is called several times at the beginning of each level to initialize the monster structs on the 'Sprite' struct array. It's called before game play actually starts.
@@ -1713,6 +1759,8 @@ jint monster_mapx, jint monster_mapy,  jint animate_index)
 
 }
 }}}
+
+  [awesomeguyJNI#Introduction top]
 
 ====Native addPlatform()====
 
@@ -1728,6 +1776,8 @@ jint platform_mapx, jint platform_mapy)
 }
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ====Native inactivateMonster()====
 
 This method is called by the java code if and when it needs to make a monster invisible. This happens when the guy character jumps on a monster and kills it. It was originally used by the java code for detecting collision with monsters that was located in the Panel.java class. It doesn't do any calculation, it just passes the value that the java code gives it to the c code 'inactivateMonster(...)'. The parameter that it passes is the index number for the monster sprite on the 'Sprite' array of structs.
@@ -1740,6 +1790,8 @@ jobject  obj, jint monster_num)
 
 }
 }}}
+
+  [awesomeguyJNI#Introduction top]
 
 ====Native setGuyPosition()====
 
@@ -1754,6 +1806,8 @@ jint x_pos, jint y_pos, jint scroll_x, jint scroll_y, jint animate)
 }
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ====Native setScoreLives()====
 
 This method passes two values to the JNI library. One is the current score and the other is the current number of lives the main character has. They are displayed on the screen during game play.
@@ -1766,6 +1820,8 @@ jint score, jint lives)
 
 }
 }}}
+
+  [awesomeguyJNI#Introduction top]
 
 ====Native setMonsterPreferences()====
 
@@ -1780,6 +1836,8 @@ jobject  obj, jint monsters, jint collision)
 
 }
 }}}
+
+  [awesomeguyJNI#Introduction top]
 
 ====Native setJNIAnimateOnly()====
 
@@ -1796,6 +1854,8 @@ obj, jint animate)
 }
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ====Native setScreenData()====
 
 This method is used to inform the JNI library what the dimensions of the screen area are (measured in tiles).
@@ -1809,6 +1869,8 @@ jint screenH, jint screenV)
 
 }
 }}}
+
+  [awesomeguyJNI#Introduction top]
 
 ====Native setLevelData()====
 
@@ -1832,6 +1894,8 @@ jintArray level, jintArray objects, jint width, jint height)
 }
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ====Native setObjectsDisplay()====
 
 This method is used during game play to allow the java code to change a value in the JNI's  'map_objects' array. This is used, for example, when the java notices that the main character has hit a ring. In this case, the character needs to be given points, and the ring has to be made to disappear. This function allows the java to make the JNI ring disappear.
@@ -1844,6 +1908,8 @@ obj, jint map_x, jint map_y, jint value)
 
 }
 }}}
+
+  [awesomeguyJNI#Introduction top]
 
 ====Native drawLevel()====
 
@@ -1879,7 +1945,7 @@ The four lines of code that are most important in this method are:
   # `graphic = (*env)->NewIntArray(env, size);` 
   # `(*env)->SetIntArrayRegion(env, graphic,0, size, fill);`
   # `return graphic;`
-Parts 1 and 2 set up the int array that we want to return. Part 3 fills the int array with the data from the regular array 'fill'. Part 4 returns the filled int array. In the java code the array is used to create a bitmap.
+Parts 1 and 2 set up the int array that we want to return. Part 3 fills the int array with the data from the regular array 'fill'. Part 4 returns the filled int array. In the java code the array is used to create a bitmap.  [awesomeguyJNI#Introduction top]
 
 ====Native getSoundBoom()====
 
@@ -1893,6 +1959,8 @@ Java_org_davidliebman_android_awesomeguy_Panel_getSoundBoom(JNIEnv * env, jobjec
 }
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ====Native getSoundOw()====
 
 This method returns an integer value of 0 or 1 representing weather or not the java code should play the 'ow' sound.
@@ -1904,6 +1972,8 @@ Java_org_davidliebman_android_awesomeguy_Panel_getSoundOw(JNIEnv * env, jobject 
 
 }
 }}}
+
+  [awesomeguyJNI#Introduction top]
 
 ====Native getSoundPrize()====
 
@@ -1917,6 +1987,8 @@ Java_org_davidliebman_android_awesomeguy_Panel_getSoundPrize(JNIEnv * env, jobje
 }
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ====Native getLives()====
 
 This method returns the number of lives that the JNI library says the main character should have.
@@ -1928,6 +2000,8 @@ Java_org_davidliebman_android_awesomeguy_Panel_getLives(JNIEnv * env, jobject  o
 
 }
 }}}
+
+  [awesomeguyJNI#Introduction top]
 
 ====Native getEndLevel()====
 
@@ -1944,6 +2018,8 @@ Java_org_davidliebman_android_awesomeguy_Panel_getEndLevel(JNIEnv * env, jobject
 }
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ====Native getScore()====
 
 This method returns to the java code the value of the JNI variable 'score'.
@@ -1954,6 +2030,8 @@ Java_org_davidliebman_android_awesomeguy_Panel_getScore(JNIEnv * env, jobject  o
 	return score;	
 }
 }}}
+
+  [awesomeguyJNI#Introduction top]
 
 ====Native incrementJniScore()====
 
@@ -1967,6 +2045,8 @@ jobject  obj, jint num)
 
 }
 }}}
+
+  [awesomeguyJNI#Introduction top]
 
 ====Native getSpriteX()====
 
@@ -1982,6 +2062,8 @@ jint num)
 }
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ====Native getSpriteY()====
 
 One of three methods that return the value associated with a given sprite on the array of sprite structs. This method takes a array index and returns a sprite's y coordinate.
@@ -1996,6 +2078,8 @@ jint num)
 }
 }}}
 
+  [awesomeguyJNI#Introduction top]
+
 ====Native getSpriteFacingRight()====
 
 One of three methods that return the value associated with a given sprite on the array of sprite structs. This method takes a array index and returns a sprite's 'facingRight' property.
@@ -2008,3 +2092,5 @@ jobject  obj, jint num)
 
 }
 }}}
+
+  [awesomeguyJNI#Introduction top]
