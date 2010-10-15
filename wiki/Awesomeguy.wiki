@@ -81,7 +81,7 @@ Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).get
 int mDimension = display.getWidth();
 }}}
 
-===GamePad===
+===!GamePad===
 
 The width dimension is used to size the game screen and the touch buttons. A separate inner class is used to construct the touch button part of the screen. This class is called 'GamePad' and it returns an entire TableLayout already filled with all the necessary buttons. Two types of buttons are used, one called a BlankButton and one called a TouchButton. Both kinds of buttons are inner classes in the GameStart.java file, and they both extend the android 'Button' type. The TouchButton also implements the 'View.OnTouchListener' interface, which allows the program to respond to user input.   [Awesomeguy#Introduction top]
 
