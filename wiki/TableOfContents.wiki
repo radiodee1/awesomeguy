@@ -3,7 +3,7 @@
 
 ----
 
-  * [Awesomeguy#Awesomeguy Awesomeguy: Method By Method]
+  * [Awesomeguy#Awesomeguy Awesomeguy Java: Method By Method]
   * [awesomeguyJNI#awesomeguyJNI Awesomeguy JNI: Method By Method]
   * [ConstructingLevels#ConstructingLevels Constructing Levels For Awesomeguy]
   * [JNITutorial#JNITutorial JNI Tutorial]
