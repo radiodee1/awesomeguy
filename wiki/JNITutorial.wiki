@@ -30,7 +30,7 @@ For distributions of linux that use complex packaging systems, java can usually 
 
 You are interested in java 'jre' and java 'jdk', as well as anything else they require to operate correctly. Java 'jre' is the 'Java Runtime Environment' and it allows you to run Java programs. Java 'jdk' is the 'Java Development Kit' and it allows you to compile Java programs.
 
-Java linux packages install to special directories reserved for programs and their associated files. You do not have to worry about where your system puts the Java packages as it installs them. Similarly Java Windows installers place the java software where it needs to be, and you usually don't need to worry about its location.
+Java linux packages install to special directories reserved for programs and their associated files. You do not have to worry about where your system puts the Java packages as it installs them. Similarly Java Windows installers place the java software where it needs to be, and you usually don't need to worry about its location.  [JNITutorial#Introduction top]
 
 ===Eclipse===
 
@@ -38,13 +38,13 @@ At the time of this writing, if you go to the Eclipse IDE web site, you'll find 
 
 http://www.eclipse.org/
 
-The main reason for using a specific version of Eclipse is because of the compatibility with the Android development software. In the future this software will certainly be updated, so later versions of Eclipse may work for you. 
+The main reason for using a specific version of Eclipse is because of the compatibility with the Android development software. In the future this software will certainly be updated, so later versions of Eclipse may work for you.   [JNITutorial#Introduction top]
 
 ====Download Eclipse====
 
 Go to the eclipse home page and click the button for downloads. Do not download Eclipse Helios on this page. Look for a link for 'Older Versions'. Awesomeguy was written on 'Galileo' version 3.5.2. 
 
-For linux users the file that you download will be called something like '`eclipse-java-galileo-SR2-linux-gtk.tar.gz`'. Set the eclipse `tar.gz` package aside.
+For linux users the file that you download will be called something like '`eclipse-java-galileo-SR2-linux-gtk.tar.gz`'. Set the eclipse `tar.gz` package aside.  [JNITutorial#Introduction top]
 
 ====Unpack Eclipse====
 
@@ -56,7 +56,7 @@ tar xvzf eclipse-java-galileo-SR2-linux-gtk.tar.gz
 
 You can use tab completion to make sure that you're spelling the name of the Eclipse download correctly. The 'tar' program will unpack the 'tar.gz' file and place the Eclipse folder in the current directory. After this is done you will have a directory named 'eclipse' and also the original downloaded file in your directory. You can dispose of the original download, or save it somewhere for safe keeping as you like.
 
-If you are using Windows, unpack the eclipse folder in the '`c:\`' directory. You will want to make a shortcut on the desktop to the eclipse executable.
+If you are using Windows, unpack the eclipse folder in the '`c:\`' directory. You will want to make a shortcut on the desktop to the eclipse executable.  [JNITutorial#Introduction top]
 
 ====Running Eclipse====
 
@@ -69,7 +69,7 @@ c:\path\to\eclipse\eclipse.exe
 
 You will want to make a Desktop shortcut to the eclipse executable on Windows.
 
-Make sure you can write and compile java code on Eclipse before moving on to the next step.
+Make sure you can write and compile java code on Eclipse before moving on to the next step.  [JNITutorial#Introduction top]
 
 ===Android SDK===
 
@@ -77,13 +77,13 @@ The link to the Android SDK download page is below. It is very helpful to read o
 
 http://developer.android.com/sdk/index.html
 
-On the site you will find Android SDK packages for Windows, Mac, and Linux. Choose the package that's right for you.
+On the site you will find Android SDK packages for Windows, Mac, and Linux. Choose the package that's right for you.  [JNITutorial#Introduction top]
 
 ====Download Android SDK====
 
 The Windows package is called 'android-sdk_r07-windows.zip'. The linux package is called 'android-sdk_r07-linux_x86.tgz'. The windows package is 'zip' compressed and the linux package is 'tgz' compressed. After you have downloaded one of the packages that matches your system, set it aside for the next step.
 
-You can also chack the MD5 check sum to see if your download completed without corrupting data. The MD5 sum is shown on the page next to the download link.
+You can also chack the MD5 check sum to see if your download completed without corrupting data. The MD5 sum is shown on the page next to the download link.  [JNITutorial#Introduction top]
 
 ====Unpack Android SDK====
 
@@ -99,7 +99,7 @@ if [ -d /home/myname/bin/android-sdk-linux/tools ] ; then
     PATH=${PATH}:/home/myname/bin/android-sdk-linux/tools
 fi
 }}}
-For a Windows setup, you might simply place the unpacked folder in the '`c:\`' location and then create a desktop shortcut to the executables in the 'tools' sub directory as needed.
+For a Windows setup, you might simply place the unpacked folder in the '`c:\`' location and then create a desktop shortcut to the executables in the 'tools' sub directory as needed.  [JNITutorial#Introduction top]
 
 ====SDK And Eclipse====
 
@@ -137,7 +137,7 @@ Eclipse will ultimately ask you if it can restart itself. Do this now. After ins
   # Configure *SDK Location* by clicking *Browse...* and browsing to your sdk directory.
   # Click *Apply* and *OK*
 
-For Awesomeguy an SVN repository is used. Installing the SVN software on Eclipse is beyond the scope of this tutorial. Make sure you can create a new emulator and that you can start it and run your app on it using the Eclipse IDE. This will show weather your setup works.
+For Awesomeguy an SVN repository is used. Installing the SVN software on Eclipse is beyond the scope of this tutorial. Make sure you can create a new emulator and that you can start it and run your app on it using the Eclipse IDE. This will show weather your setup works.  [JNITutorial#Introduction top]
 
 ===Android NDK===
 
@@ -149,11 +149,11 @@ As before, we'll focus our tutorial on the linux operating system. At this point
 
 http://www.cygwin.com/
 
-Cygwin is a linux-like environment for Windows.
+Cygwin is a linux-like environment for Windows.  [JNITutorial#Introduction top]
 
 ====Download Android NDK====
 
-At the time of this writing the linux NDK package is called 'android-ndk-r4b-linux-x86.zip'. The Windows NDK package is called 'android-ndk-r4b-windows.zip'. Download it from the site and set it aside.
+At the time of this writing the linux NDK package is called 'android-ndk-r4b-linux-x86.zip'. The Windows NDK package is called 'android-ndk-r4b-windows.zip'. Download it from the site and set it aside.  [JNITutorial#Introduction top]
 
 ====Unpack Android NDK====
 
@@ -169,7 +169,7 @@ if [ -d /home/myname/bin/android-ndk-r4b/ ] ; then
 fi
 }}}
 
-After the changes are made to your '.bashrc' file, close your terminal and open it again (or log out and log in again).
+After the changes are made to your '.bashrc' file, close your terminal and open it again (or log out and log in again).  [JNITutorial#Introduction top]
 
 =Reading Documentation=
 
@@ -179,7 +179,7 @@ A good place to start is the page that you download the NDK package from origina
 
 http://developer.android.com/sdk/ndk/index.html
 
-Scroll down on this page for information on using the 'ndk-build' command for the first time. The documentation on this page also directs you to read the instructions that come with the ndk package. Look in the package under 'docs/OVERVIEW.TXT'.
+Scroll down on this page for information on using the 'ndk-build' command for the first time. The documentation on this page also directs you to read the instructions that come with the ndk package. Look in the package under 'docs/OVERVIEW.TXT'.  [JNITutorial#Introduction top]
 
 =Basic Procedure=
 
@@ -198,7 +198,7 @@ The steps that you have to take to develop JNI libraries for Android phones are 
   * Rebuild the project
   * Run your project testing your JNI library.
 
-The tutorial will now attempt to go through these steps. We will skip the 'Install the JNI/NDK' step as it's already been covered.
+The tutorial will now attempt to go through these steps. We will skip the 'Install the JNI/NDK' step as it's already been covered.  [JNITutorial#Introduction top]
 
 ===Create Android Project===
 
@@ -208,7 +208,7 @@ On a linux system the 'workspace' directory is commonly located in the user's ho
 
 `/home/myname/workspace/projectname/`
 
-This is important for steps where you create the 'jni' folder and where you call the 'ndk-build' script.
+This is important for steps where you create the 'jni' folder and where you call the 'ndk-build' script.  [JNITutorial#Introduction top]
 
 ===Make JNI Folder===
 
@@ -218,7 +218,7 @@ A folder named 'jni' (lowercase) must be created by you in the Eclipse project's
 
 This would place a folder at the same level as the Eclipse/Java 'bin', 'src', and 'res' folders. It would also be at the same level as the 'AndroidManifest.xml' file. Inside this folder is where the source c or c++ documents need to be placed.
 
-If you use Eclipse to create this folder, then you are done with this step. If you create the folder from the command line, don't forget to type F5 or click on 'Refresh' to let Eclipse register that there has been a change to the folder structure.
+If you use Eclipse to create this folder, then you are done with this step. If you create the folder from the command line, don't forget to type F5 or click on 'Refresh' to let Eclipse register that there has been a change to the folder structure.  [JNITutorial#Introduction top]
 
 ===JNI Sources===
 
@@ -228,7 +228,7 @@ This document will explain the creation of a JNI library consisting of a single 
 
 `/home/myname/workspace/projectname/jni/example.c`
 
-After placing the file 'example.c' in the 'jni' folder you should refresh Eclipse so that it recognizes the new file. The file 'example.c' should be a simple text file. To edit the file you need a regular text editor. On linux systems, when viewing the project from Eclipse, if you double click on the file 'example.c' in the Project Explorer view, the system's text editor is automatically opened with 'example.c' loaded. You can then make changes and save and re-compile the source code. 
+After placing the file 'example.c' in the 'jni' folder you should refresh Eclipse so that it recognizes the new file. The file 'example.c' should be a simple text file. To edit the file you need a regular text editor. On linux systems, when viewing the project from Eclipse, if you double click on the file 'example.c' in the Project Explorer view, the system's text editor is automatically opened with 'example.c' loaded. You can then make changes and save and re-compile the source code.   [JNITutorial#Introduction top]
 
 ===Create Android mk File===
 
@@ -276,7 +276,7 @@ include $(BUILD_SHARED_LIBRARY)
 
 The NDK build tools will compile the code, and then if there are no errors it will name the object code 'libexample.so' and place it in the Android project in a new folder that it creates especially for this purpose. The name of the folder is '`libs/armeabi/`'. The build tools also manage the creation of some other files that are necessary. 
 
-The name, 'libexample.so' comes from the 'LOCAL_MODULE' line in the 'Android.mk' file, and it is the library name, but when referring to the module in the java code you refer to 'example' not 'libexample.so'. 
+The name, 'libexample.so' comes from the 'LOCAL_MODULE' line in the 'Android.mk' file, and it is the library name, but when referring to the module in the java code you refer to 'example' not 'libexample.so'.   [JNITutorial#Introduction top]
 
 ===Go To Project Root===
 
@@ -284,13 +284,13 @@ The project root is the base folder for the Eclipse Android project. It's found 
 
 `/home/myname/workspace/projectname/`
 
-You want to 'cd' into this directory from the command line.
+You want to 'cd' into this directory from the command line.  [JNITutorial#Introduction top]
 
 ===Execute Build Command===
 
 The command to start the build scripts is called 'ndk-build'. The script for 'ndk-build' is located in the Android NDK package of software that you already downloaded. If you followed the tutorial so far, you would have placed the 'android-ndk-r4b' folder in your 'bin' directory, and then you would have added it to your path. If this is the case, simply type 'ndk-build' at the command line.
 
-If you didn't put the 'android-ndk-r4b' folder in your PATH variable in the '.bashrc' file, then you can explicitly specify the path to the 'ndk-build' script when you invoke it. The command for this is shown below.
+If you didn't put the 'android-ndk-r4b' folder in your PATH variable in the '.bashrc' file, then you can explicitly specify the path to the 'ndk-build' script when you invoke it. The command for this is shown below.  [JNITutorial#Introduction top]
 
 
 `/home/myname/bin/android-ndk-r4b/ndk-build`
@@ -301,15 +301,15 @@ If you didn't put the 'android-ndk-r4b' folder in your PATH variable in the '.ba
 
 The ndk-build script compiles the source code for the Android project and places it in a directory where it can be included by the Eclipse build function in the final apk file.
 
-The folder where the resulting binary library goes is the '`libs/armeabi/`' folder. Two other files are placed in that folder along with the JNI library that we are creating. They are created automatically, so we're not going to worry about them. One is the 'gdb.setup' file, and one is the 'gdbserver' file. 
+The folder where the resulting binary library goes is the '`libs/armeabi/`' folder. Two other files are placed in that folder along with the JNI library that we are creating. They are created automatically, so we're not going to worry about them. One is the 'gdb.setup' file, and one is the 'gdbserver' file.   [JNITutorial#Introduction top]
 
 ===Refresh Project Explorer View===
 
-The 'Project Explorer' is one of the Eclipse windows that is visible when doing standard editing on the default Java perspective. It is commonly on the left side of the Eclipse screen. It shows all the files and folders in a project. You can refresh the view by selecting a project and then pressing the `<F5>` key, or by right clicking on the project name and selecting 'Refresh' from the menu that is displayed.
+The 'Project Explorer' is one of the Eclipse windows that is visible when doing standard editing on the default Java perspective. It is commonly on the left side of the Eclipse screen. It shows all the files and folders in a project. You can refresh the view by selecting a project and then pressing the `<F5>` key, or by right clicking on the project name and selecting 'Refresh' from the menu that is displayed.  [JNITutorial#Introduction top]
 
 ===Rebuild Project===
 
-Like refreshing the project, you can rebuild the project by right clicking on the project name in the Project Explorer and then selecting 'Build Project' from the menu that's displayed. Some activities, like the 'Run' activity, automatically rebuild the project when the Eclipse IDE sees that the project has changed.
+Like refreshing the project, you can rebuild the project by right clicking on the project name in the Project Explorer and then selecting 'Build Project' from the menu that's displayed. Some activities, like the 'Run' activity, automatically rebuild the project when the Eclipse IDE sees that the project has changed.  [JNITutorial#Introduction top]
 
 ===Test Project===
 
@@ -343,6 +343,8 @@ In your JNI library source file you must '`#include`' the library 'jni.h'. Inclu
 #include <jni.h>
 }}}
 
+  [JNITutorial#Introduction top]
+
 ===Naming Functions===
 
 ====Example One====
@@ -365,7 +367,7 @@ After that comes the actual name of the method. The name can be broken down into
   # the name of the class that the function will be part of
   # the name of the function
 
-This is followed by the two mandatory parameters '`JNIEnv * env`' and '`jobject obj`'. Other parameters for the function could have followed the mandatory ones listed above.
+This is followed by the two mandatory parameters '`JNIEnv * env`' and '`jobject obj`'. Other parameters for the function could have followed the mandatory ones listed above.  [JNITutorial#Introduction top]
 
 ====Example Two====
 
@@ -377,7 +379,7 @@ return 3;
 }
 }}}
 
-In this example the method body is the 'return' statement that returns the number 3. The java native method 'someFunction()' would call the c function above. Note that the return type is 'int' not 'void'. This is as you would expect from a c function.
+In this example the method body is the 'return' statement that returns the number 3. The java native method 'someFunction()' would call the c function above. Note that the return type is 'int' not 'void'. This is as you would expect from a c function.  [JNITutorial#Introduction top]
 
 ====Example Three====
 
@@ -398,6 +400,8 @@ NOTE: You must '`#include`' the library '`jni.h`' at the beginning of your sourc
 #include <jni.h>
 }}} 
 
+  [JNITutorial#Introduction top]
+
 ===Java Declaration===
 
 There are two parts to the java declaration for the example code that we are using for this explanation. One part loads the library, and another part makes reference to the method so that the other java code in the app can call it. The declaration looks like the code below.
@@ -412,11 +416,11 @@ public native void someFunction();
 }}}
 This line of code is like a java method declaration _without_ the body. This function is also 'public' so it can be called by methods of other classes if they have an instantiated version of the class 'Game'.
 
-You should note that the c method declaration is different from the java declaration, but you need both, and the c version must include the package name and the java class name.
+You should note that the c method declaration is different from the java declaration, but you need both, and the c version must include the package name and the java class name.  [JNITutorial#Introduction top]
 
 ===Passing Arrays===
 
-One thing that was essential in the awesomeguy.c file was the passing of arrays between the JNI code and the Java code. In awesomeguy the bitmaps for the main character and the other graphic elements were converted to arrays in the java code and then passed to the JNI library during the class instantiation phase. When it was time to draw the actual screen, the JNI code assembled a large array that was passed back to the java code. In java the array was converted to a bitmap and displayed on the screen.
+One thing that was essential in the awesomeguy.c file was the passing of arrays between the JNI code and the Java code. In awesomeguy the bitmaps for the main character and the other graphic elements were converted to arrays in the java code and then passed to the JNI library during the class instantiation phase. When it was time to draw the actual screen, the JNI code assembled a large array that was passed back to the java code. In java the array was converted to a bitmap and displayed on the screen.  [JNITutorial#Introduction top]
 
 ====Arrays as Parameter====
 
@@ -454,6 +458,8 @@ The Java code that allows us to use this method is:
 {{{
 public native void setTileMapData( int [] a, int [] b, int [] c, int [] d);
 }}}
+
+  [JNITutorial#Introduction top]
 
 ====Arrays as Return Type====
 
@@ -506,3 +512,5 @@ That covers the process we used to convert a c style array into a java array and
 {{{
 public native int[] drawLevel(int num);
 }}}
+
+  [JNITutorial#Introduction top]
