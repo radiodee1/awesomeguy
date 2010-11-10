@@ -14,7 +14,7 @@ import java.util.*;
 
 public class Scores {
 	private static final String DATABASE_NAME = "AwesomeguyScores.db";
-	private static final int DATABASE_VERSION = 14;
+	private static final int DATABASE_VERSION = 15;
 	private static final String TABLE_SCORES_NAME = "scores";
 	private static final String TABLE_HIGHS_NAME = "highs";
 	
@@ -263,7 +263,6 @@ public class Scores {
 	}
 	
 	public ArrayList<High> getGameHighList(int num) {
-		// NOTE: if 'num' is negative, all records are returned
 		ArrayList<High> mList = new ArrayList<High>();
 		mOpenHelper = new ScoreOpenHelper(mContext);
 		mDatabase = mOpenHelper.getReadableDatabase();
@@ -285,7 +284,9 @@ public class Scores {
 			mTempRec.setName(c.getString(c.getColumnIndex("name")));
 			mTempRec.setScoreKey(c.getInt(c.getColumnIndex("score_key")));
 			mTempRec.setHigh(c.getInt(c.getColumnIndex("high")));
-			mTempRec.setDate(c.getString(c.getColumnIndex("date")));
+			
+			mTempRec.setDate(Long.parseLong((c.getString(c.getColumnIndex("date")))));
+
 			mTempRec.setInternetKey(c.getInt(c.getColumnIndex("internet_key")));
 			mTempRec.setSave(c.getInt(c.getColumnIndex("save")));
 			mList.add(mTempRec);
@@ -299,7 +300,7 @@ public class Scores {
 	}
 	
 	public String getSelectAllHighRecordsString() {
-		return new String("SELECT * FROM " + TABLE_HIGHS_NAME +" ORDER BY score DESC");
+		return new String("SELECT * FROM " + TABLE_HIGHS_NAME +" ORDER BY high DESC");
 	}
 	
 	public static class ScoreOpenHelper extends SQLiteOpenHelper {
@@ -360,12 +361,14 @@ public class Scores {
 		
 	}
 	
-	public class High {
+
+	
+	public static class High {
 		private int mKey;
 		private String mName;
 		private int mScoreKey;
 		private int mHigh;
-		private String mDate;
+		private long mDate;
 		private int mInternetKey;
 		private int mSave;
 		
@@ -374,7 +377,7 @@ public class Scores {
 			mName = "anonymous";
 			mScoreKey = 0;
 			mHigh = 0;
-			mDate = "";
+			mDate = System.currentTimeMillis();
 			mInternetKey = 0;
 			mSave = 0;
 		}
@@ -411,11 +414,11 @@ public class Scores {
 			this.mHigh = mHigh;
 		}
 
-		public String getDate() {
+		public long getDate() {
 			return mDate;
 		}
 
-		public void setDate(String mDate) {
+		public void setDate(long mDate) {
 			this.mDate = mDate;
 		}
 
