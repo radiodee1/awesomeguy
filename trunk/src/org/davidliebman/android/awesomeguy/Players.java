@@ -206,7 +206,7 @@ public class Players extends ListActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
     		
     		LayoutInflater inflater = (LayoutInflater)mContext.getSystemService (Context.LAYOUT_INFLATER_SERVICE);
-    		convertView = inflater.inflate(R.layout.data_row, null);
+    		convertView = inflater.inflate(R.layout.data_players_row, null);
     		Record mRec = mList.get(position);
     		mPosition = position;
     		
@@ -215,7 +215,7 @@ public class Players extends ListActivity {
     		TextView mLevel = (TextView) convertView.findViewById(R.id.text_level);
     		
     		mName.setText("Name: " + mRec.getName() );//+ " id " + mRec.getRecordIdNum());
-    		mScore.setText("Score: "+ mRec.getScore());
+    		mScore.setText("Personal Best Score: "+ mRec.getScore());
     		mLevel.setText("Last Checkpoint: Level " + mRec.getLevel());
     		
     		
