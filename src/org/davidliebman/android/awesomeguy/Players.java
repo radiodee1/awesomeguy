@@ -38,7 +38,7 @@ public class Players extends ListActivity {
         
         
         mScores = new Scores(this, mHighScores);
-        mNames = mScores.getHighScoreList(mHighScores.getNumRecords());
+        mNames = mScores.getHighScorePlayerList(mHighScores.getNumRecords());
 
         
         mAadapter = new RecordAdapter(this, R.layout.players, mNames);
@@ -163,7 +163,7 @@ public class Players extends ListActivity {
         mScores = new Scores(this, mHighScores);
 
     	
-    	ArrayList<Record> temp = mScores.getHighScoreList(mHighScores.getNumRecords());
+    	ArrayList<Record> temp = mScores.getHighScorePlayerList(mHighScores.getNumRecords());
         this.mNames.clear();
         this.mNames.addAll(temp);
     	

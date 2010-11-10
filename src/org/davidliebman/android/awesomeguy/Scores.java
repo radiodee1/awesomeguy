@@ -14,8 +14,9 @@ import java.util.*;
 
 public class Scores {
 	private static final String DATABASE_NAME = "AwesomeguyScores.db";
-	private static final int DATABASE_VERSION = 13;
-	private static final String TABLE_NAME = "scores";
+	private static final int DATABASE_VERSION = 14;
+	private static final String TABLE_SCORES_NAME = "scores";
+	private static final String TABLE_HIGHS_NAME = "highs";
 	
 	private SQLiteDatabase mDatabase;
 	private ScoreOpenHelper mOpenHelper;
@@ -32,7 +33,7 @@ public class Scores {
 	}
 	
 	
-	public ArrayList<Record> getHighScoreList(int num) {
+	public ArrayList<Record> getHighScorePlayerList(int num) {
 		// NOTE: if 'num' is negative, all records are returned
 		ArrayList<Record> mList = new ArrayList<Record>();
 		mOpenHelper = new ScoreOpenHelper(mContext);
@@ -83,7 +84,7 @@ public class Scores {
 		if(mHighScores.getName().contentEquals(mLowestScore.getName())) return;
 		
 		
-		ArrayList<Record> test = this.getHighScoreList(mHighScores.getNumRecords());
+		ArrayList<Record> test = this.getHighScorePlayerList(mHighScores.getNumRecords());
 		if (test.size() > 0) {
 			mLowestScore = test.get(test.size() - 1);
 		}
@@ -98,7 +99,7 @@ public class Scores {
 				//set new record to false
 				//set ID Num
 				
-				long i = mDatabase.insert(TABLE_NAME, null, this.getInsertContentValues());
+				long i = mDatabase.insert(TABLE_SCORES_NAME, null, this.getInsertScoresContentValues());
 				
 				
 				mHighScores.setRecordIdNum((int)i);
@@ -133,7 +134,7 @@ public class Scores {
 	}
 	
 	public void updateOptions(int idnum) {
-		ArrayList<Record> mList = this.getHighScoreList(-1);
+		ArrayList<Record> mList = this.getHighScorePlayerList(-1);
 		boolean found = false;
 		if(mList.size() > 0 ) {
 			for (int i = 0; i < mList.size(); i ++ ) {
@@ -152,7 +153,7 @@ public class Scores {
 	}
 	
 	public int pruneScoresList() {
-		ArrayList<Record> mList = this.getHighScoreList(-1);
+		ArrayList<Record> mList = this.getHighScorePlayerList(-1);
 		mOpenHelper = new ScoreOpenHelper(mContext);
 		SQLiteDatabase mDatabase = mOpenHelper.getWritableDatabase();
 		int num = 0;
@@ -160,7 +161,7 @@ public class Scores {
 			num = mList.size() - mHighScores.getNumRecords();
 			for (int i = mHighScores.getNumRecords(); i < mList.size(); i ++) {
 				int j = mList.get(i).getRecordIdNum();
-				Cursor c = mDatabase.rawQuery("DELETE FROM "+ TABLE_NAME + " WHERE id=" + j, null);
+				Cursor c = mDatabase.rawQuery("DELETE FROM "+ TABLE_SCORES_NAME + " WHERE id=" + j, null);
 				c.getCount();
 				c.close();
 				Log.e("scores", "REMOVE RECORD " + j + "<--------------");
@@ -208,30 +209,30 @@ public class Scores {
 	
 	public String getSelectNumOfRecordsString( int num ) {
 		return new String ("SELECT * FROM " +
-							TABLE_NAME + " " +
+							TABLE_SCORES_NAME + " " +
 							" ORDER BY score DESC LIMIT " + num +
 							" ");
 	}
 	
 	public String getSelectAllRecordsString() {
-		return new String("SELECT * FROM " + TABLE_NAME +" ORDER BY score DESC");
+		return new String("SELECT * FROM " + TABLE_SCORES_NAME +" ORDER BY score DESC");
 	}
 	
 	public String getUpdateScoreLevelString(int id) {
-		return new String("UPDATE " + TABLE_NAME + " " +
+		return new String("UPDATE " + TABLE_SCORES_NAME + " " +
 							" SET score=" + mHighScores.getScore() + " , " +
 							" level=" + mHighScores.getLevel() + " " + // note: level is used for checkpoints
 							" WHERE id=" + id);
 	}
 	
 	public String getUpdateNumOfRecordsString(int id) {
-		return new String("UPDATE " + TABLE_NAME + " " +
+		return new String("UPDATE " + TABLE_SCORES_NAME + " " +
 							" SET num_records=" + mHighScores.getNumRecords() +
 							" WHERE id=" + id);
 	}
 	
 	public String getUpdateOptionsString(int id) {
-		return new String("UPDATE " + TABLE_NAME + " " +
+		return new String("UPDATE " + TABLE_SCORES_NAME + " " +
 							" SET  " +
 							" game_speed=" + mHighScores.getGameSpeed() + " , " +
 							" num_records=" + mHighScores.getNumRecords() + " , " +
@@ -242,7 +243,7 @@ public class Scores {
 							" WHERE id=" + id);
 	}
 	
-	public ContentValues getInsertContentValues() {
+	public ContentValues getInsertScoresContentValues() {
 		ContentValues mValues = new ContentValues();
 		mValues.put("new_record", "false");
 		mValues.put("name", mHighScores.getName());
@@ -261,6 +262,46 @@ public class Scores {
 		return mValues;
 	}
 	
+	public ArrayList<High> getGameHighList(int num) {
+		// NOTE: if 'num' is negative, all records are returned
+		ArrayList<High> mList = new ArrayList<High>();
+		mOpenHelper = new ScoreOpenHelper(mContext);
+		mDatabase = mOpenHelper.getReadableDatabase();
+		Cursor c;
+		c = mDatabase.rawQuery(this.getSelectAllHighRecordsString(), null);
+		/*
+		if (num < 0 ) {
+			c = mDatabase.rawQuery(this.getSelectAllRecordsString(), null);
+		}
+		else {
+			c = mDatabase.rawQuery(this.getSelectNumOfRecordsString(num), null);
+		}
+		*/
+		if (c.getCount() == 0) return mList;
+		c.moveToFirst();
+		for (int i = 0; i < c.getCount(); i ++ ) {
+			High mTempRec = new High();
+			mTempRec.setKey(c.getInt(c.getColumnIndex("id")));
+			mTempRec.setName(c.getString(c.getColumnIndex("name")));
+			mTempRec.setScoreKey(c.getInt(c.getColumnIndex("score_key")));
+			mTempRec.setHigh(c.getInt(c.getColumnIndex("high")));
+			mTempRec.setDate(c.getString(c.getColumnIndex("date")));
+			mTempRec.setInternetKey(c.getInt(c.getColumnIndex("internet_key")));
+			mTempRec.setSave(c.getInt(c.getColumnIndex("save")));
+			mList.add(mTempRec);
+			c.moveToNext();
+			//Log.e("Scores","____"+ mTempRec.getRecordIdNum());
+			
+		}
+		c.close();
+		mDatabase.close();
+		return mList;
+	}
+	
+	public String getSelectAllHighRecordsString() {
+		return new String("SELECT * FROM " + TABLE_HIGHS_NAME +" ORDER BY score DESC");
+	}
+	
 	public static class ScoreOpenHelper extends SQLiteOpenHelper {
 		ScoreOpenHelper(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -268,20 +309,22 @@ public class Scores {
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			db.execSQL(getCreateTableString());
+			db.execSQL(getCreatePlayerTableString());
+			db.execSQL(getCreateHighsTableString());
 		}
 		
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			Log.w("Scores", "Upgrading database, this will drop tables and recreate.");
-			db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+			db.execSQL("DROP TABLE IF EXISTS " + TABLE_SCORES_NAME);
+			db.execSQL("DROP TABLE IF EXISTS " + TABLE_HIGHS_NAME);
 			onCreate(db);
 		}
 		
-		public String getCreateTableString() {
+		public String getCreatePlayerTableString() {
 			return new String(
 					" CREATE TABLE " +
-					TABLE_NAME + " " +
+					TABLE_SCORES_NAME + " " +
 					" ( id INTEGER PRIMARY KEY , " +
 					" new_record TEXT , " +
 					" name TEXT , " +
@@ -298,6 +341,98 @@ public class Scores {
 					" enable_collision TEXT  " +
 					" ) "
 					);
+		}
+		
+		public String getCreateHighsTableString() {
+			return new String (
+					" CREATE TABLE " +
+					TABLE_HIGHS_NAME + " " + 
+					" ( id INTEGER PRIMARY KEY , " +
+					" name TEXT , " +
+					" score_key INTEGER , " +
+					" high INTEGER , " +
+					" date TEXT , " +
+					" internet_key INTEGER, " +
+					" save INTEGER " +
+					" ) "
+					);
+		}
+		
+	}
+	
+	public class High {
+		private int mKey;
+		private String mName;
+		private int mScoreKey;
+		private int mHigh;
+		private String mDate;
+		private int mInternetKey;
+		private int mSave;
+		
+		public High () {
+			mKey = 0;
+			mName = "anonymous";
+			mScoreKey = 0;
+			mHigh = 0;
+			mDate = "";
+			mInternetKey = 0;
+			mSave = 0;
+		}
+
+		public int getKey() {
+			return mKey;
+		}
+
+		public void setKey(int mKey) {
+			this.mKey = mKey;
+		}
+
+		public String getName() {
+			return mName;
+		}
+
+		public void setName(String mName) {
+			this.mName = mName;
+		}
+
+		public int getScoreKey() {
+			return mScoreKey;
+		}
+
+		public void setScoreKey(int mScoreKey) {
+			this.mScoreKey = mScoreKey;
+		}
+
+		public int getHigh() {
+			return mHigh;
+		}
+
+		public void setHigh(int mHigh) {
+			this.mHigh = mHigh;
+		}
+
+		public String getDate() {
+			return mDate;
+		}
+
+		public void setDate(String mDate) {
+			this.mDate = mDate;
+		}
+
+		public int getInternetKey() {
+			return mInternetKey;
+		}
+
+		public void setInternetKey(int mInternetKey) {
+			this.mInternetKey = mInternetKey;
+		}
+
+		public int getSave() {
+			return mSave;
+		}
+
+		public void setSave(int mSave) {
+			this.mSave = mSave;
 		}
 		
 	}
