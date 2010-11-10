@@ -69,6 +69,17 @@
 
 			</intent-filter>
 		</activity>
+		
+		<activity android:name=".Highscores"
+		android:screenOrientation="portrait"
+		android:clearTaskOnLaunch="true">
+		
+			<intent-filter>
+				<action android:name="org.davidliebman.android.awesomeguy.Highscores"></action>
+				<category android:name="android.intent.category.LAUNCHER"></category>
+
+			</intent-filter>
+		</activity>
 
        
 
