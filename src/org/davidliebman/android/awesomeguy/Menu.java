@@ -58,5 +58,14 @@ public class Menu extends Activity {
         		startActivity(PlayersIntent);
         	}
         });
+        
+        Button HighscoresButton = (Button)findViewById(R.id.Highscores);
+        HighscoresButton.setOnClickListener(new OnClickListener() {
+        	
+        	public void onClick(View v) {
+        		Intent HighscoresIntent= new Intent(Menu.this,Highscores.class);
+        		startActivity(HighscoresIntent);
+        	}
+        });
     }
 }
