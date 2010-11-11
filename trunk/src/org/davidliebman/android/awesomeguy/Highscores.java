@@ -2,10 +2,6 @@ package org.davidliebman.android.awesomeguy;
 
 import java.util.ArrayList;
 
-import org.davidliebman.android.awesomeguy.Players.AlertNumRecords;
-import org.davidliebman.android.awesomeguy.Players.RecordAdapter;
-import org.davidliebman.android.awesomeguy.Scores.High;
-
 import android.app.ListActivity;
 import android.app.Activity;
 import android.content.Context;
@@ -23,7 +19,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
-
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class Highscores   extends ListActivity {
 
@@ -107,9 +105,17 @@ public class Highscores   extends ListActivity {
     		TextView mScore = (TextView) convertView.findViewById(R.id.text_score);
     		TextView mDate = (TextView) convertView.findViewById(R.id.text_date);
     		
+    		/* Convert milliseconds to readable date */
+    		long mMilliseconds = mRec.getDate();
+    		DateFormat mFormat = new SimpleDateFormat("dd/MM/yyyy");
+    		Calendar mCalendar = Calendar.getInstance();
+    		mCalendar.setTimeInMillis(mMilliseconds);
+    		String mDateString = new String(mFormat.format(mCalendar.getTime()));
+    		
+    		/* Insert info in inflated layout */
     		mName.setText("Name: " + mRec.getName() );//+ " id " + mRec.getRecordIdNum());
     		mScore.setText("Score: "+ mRec.getHigh());
-    		mDate.setText("Date: " + mRec.getDate());
+    		mDate.setText("Date: " + mDateString);
     		
     		
     		

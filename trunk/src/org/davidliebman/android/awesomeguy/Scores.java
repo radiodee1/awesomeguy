@@ -76,6 +76,7 @@ public class Scores {
 	}
 	
 	public void insertRecordIfRanks(Record mHighScores) {
+		this.insertHighInTableIfRanks(mHighScores);
 		String query = new String();
 		Record mLowestScore = new Record();
 		//SharedPreferences preferences = mContext.getSharedPreferences(Options.AWESOME_NAME, Context.MODE_PRIVATE);
@@ -299,9 +300,59 @@ public class Scores {
 		return mList;
 	}
 	
+	public void insertHighInTableIfRanks(Record mHighScores) {
+		String query = new String();
+		High mLowestScore = new High();
+		//SharedPreferences preferences = mContext.getSharedPreferences(Options.AWESOME_NAME, Context.MODE_PRIVATE);
+		
+		ArrayList<High> test = this.getGameHighList(0); 
+		if (test.size() > 0) {
+			mLowestScore = test.get(test.size() - 1);
+		}
+		
+		if (mHighScores.getScore() > mLowestScore.getHigh() || test.size() < mHighScores.getNumRecords()) {
+			mOpenHelper = new ScoreOpenHelper(mContext);
+			SQLiteDatabase mDatabase = mOpenHelper.getWritableDatabase();
+			
+			
+			query = this.getInsertHighString(mHighScores, 0);
+			Cursor c = mDatabase.rawQuery(query, null);
+			int i = c.getCount();
+			//Log.e("Scores","setting old score number <----------------" + mHighScores.getRecordIdNum())	;
+			c.close();
+				
+			
+			mDatabase.close();
+		}
+	}
+	
 	public String getSelectAllHighRecordsString() {
 		return new String("SELECT * FROM " + TABLE_HIGHS_NAME +" ORDER BY high DESC");
 	}
+	
+	public String getInsertHighString(Record mHighScores, int mScoreKey) {
+		return new String (
+				"INSERT INTO " +
+				TABLE_HIGHS_NAME +
+				" ( " +
+				" name, " +
+				" score_key, " +
+				" high, " +
+				" date, " +
+				" internet_key, " +
+				" save " +
+				" ) " +
+				" VALUES " +
+				" ( " +
+				mHighScores.getName() + ", " +
+				mScoreKey + ", " +
+				mHighScores.getScore() + ", " +
+				System.currentTimeMillis() + ", " +
+				0 + ", " +
+				0 + ", " +
+				" ) ");
+	}
+	
 	
 	public static class ScoreOpenHelper extends SQLiteOpenHelper {
 		ScoreOpenHelper(Context context) {
@@ -358,6 +409,8 @@ public class Scores {
 					" ) "
 					);
 		}
+		
+		
 		
 	}
 	
