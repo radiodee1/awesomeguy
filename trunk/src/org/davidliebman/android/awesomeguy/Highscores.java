@@ -51,10 +51,10 @@ public class Highscores   extends ListActivity {
         
         mScores = new Scores(this, mHighScores);
 
-        ArrayList<Scores.High> temp = mScores.getGameHighList(0);
+        mNames = mScores.getGameHighList(0);
       
         mAadapter = new HighAdapter(this, R.layout.players, mNames);
-    	mAadapter.notifyDataSetChanged();
+        mAadapter.setNotifyOnChange(true);
     	
     	setListAdapter(mAadapter);
         ListView lv = getListView();
@@ -80,6 +80,32 @@ public class Highscores   extends ListActivity {
         });
         
 	}
+	
+	/* when the activity is resumed, re-display a new list */
+    @Override
+    public void onResume() {
+    	super.onResume();
+    	
+    	/* retrieve Record mHighScores */
+    	mHighScores = new Record();
+        mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+        mHighScores.getFromPreferences(mPreferences);
+        this.mPreferredNumRecords = this.mPreferences.getInt(Options.SAVED_NUM_SCORES, Record.RADIO_PLAYERS_FIFTY);
+        
+        mScores = new Scores(this, mHighScores);
+
+    	
+    	ArrayList<Scores.High> temp = mScores.getGameHighList(0);
+        this.mNames.clear();
+        this.mNames.addAll(temp);
+    	
+    	mAadapter.notifyDataSetChanged();
+    	
+    	int num = mScores.pruneHighList();
+    	if (num > 0) {
+    		Toast.makeText(Highscores.this, num + "You Have 50 Scores In Your List!!", Toast.LENGTH_LONG).show();
+    	}
+    }
 	
 	/* special adapter for displaying list from ArrayList */
     public class HighAdapter extends ArrayAdapter<Scores.High> {

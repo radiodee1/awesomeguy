@@ -326,6 +326,27 @@ public class Scores {
 		}
 	}
 	
+	public int pruneHighList() {
+		ArrayList<Scores.High> mList = this.getGameHighList(0);
+		mOpenHelper = new ScoreOpenHelper(mContext);
+		SQLiteDatabase mDatabase = mOpenHelper.getWritableDatabase();
+		int num = 0;
+		if (50 < mList.size()) {
+			num = mList.size() - 50;
+			for (int i = mHighScores.getNumRecords(); i < mList.size(); i ++) {
+				int j = mList.get(i).getKey();
+				Cursor c = mDatabase.rawQuery("DELETE FROM "+ TABLE_HIGHS_NAME + " WHERE id=" + j, null);
+				c.getCount();
+				c.close();
+				//Log.e("scores", "REMOVE RECORD " + j + "<--------------");
+				//mList.get(i).listInLog();
+			}
+		}
+		mDatabase.close();
+		return num;
+		
+	}
+	
 	public String getSelectAllHighRecordsString() {
 		return new String("SELECT * FROM " + TABLE_HIGHS_NAME +" ORDER BY high DESC");
 	}
@@ -344,12 +365,12 @@ public class Scores {
 				" ) " +
 				" VALUES " +
 				" ( " +
-				mHighScores.getName() + ", " +
+				" \"" + mHighScores.getName() + "\", " +
 				mScoreKey + ", " +
 				mHighScores.getScore() + ", " +
-				System.currentTimeMillis() + ", " +
+				" \"" + System.currentTimeMillis() + "\", " +
 				0 + ", " +
-				0 + ", " +
+				0 +
 				" ) ");
 	}
 	
