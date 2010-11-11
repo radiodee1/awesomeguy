@@ -76,7 +76,6 @@ public class Scores {
 	}
 	
 	public void insertRecordIfRanks(Record mHighScores) {
-		this.insertHighInTableIfRanks(mHighScores);
 		String query = new String();
 		Record mLowestScore = new Record();
 		//SharedPreferences preferences = mContext.getSharedPreferences(Options.AWESOME_NAME, Context.MODE_PRIVATE);

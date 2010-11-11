@@ -139,7 +139,7 @@ public class Highscores   extends ListActivity {
     		String mDateString = new String(mFormat.format(mCalendar.getTime()));
     		
     		/* Insert info in inflated layout */
-    		mName.setText("Name: " + mRec.getName() );//+ " id " + mRec.getRecordIdNum());
+    		mName.setText("#" + (position + 1 )+ ". " + mRec.getName() );//+ " id " + mRec.getRecordIdNum());
     		mScore.setText("Score: "+ mRec.getHigh());
     		mDate.setText("Date: " + mDateString);
     		
