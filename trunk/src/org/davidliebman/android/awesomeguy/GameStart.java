@@ -217,6 +217,8 @@ public class GameStart extends Activity {
        	}
     	
     	// save high scores if they rank
+    	mScores.insertHighInTableIfRanks(mHighScores);
+    	
     	if(mHighScores.getScore() > mGameV.getOldGuyScore()) {
 	    	  
 	    	  mScores.insertRecordIfRanks(mHighScores);
@@ -804,7 +806,7 @@ public class GameStart extends Activity {
     		    	
     		    	// this basically saves high scores...
       		      	// duplicated in 'onPause()'
-      		      
+      		      	mScores.insertHighInTableIfRanks(mHighScores);
 	      		      if(mHighScores.getScore() > mGameV.getOldGuyScore()) {
 	      		    	  
 	      		    	  mScores.insertRecordIfRanks(mHighScores);
