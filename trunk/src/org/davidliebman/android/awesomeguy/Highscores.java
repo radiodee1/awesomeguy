@@ -103,7 +103,7 @@ public class Highscores   extends ListActivity {
     	
     	int num = mScores.pruneHighList();
     	if (num > 0) {
-    		Toast.makeText(Highscores.this, num + "You Have 50 Scores In Your List!!", Toast.LENGTH_LONG).show();
+    		Toast.makeText(Highscores.this, "You Have 51 Scores In Your List!!", Toast.LENGTH_LONG).show();
     	}
     }
 	
