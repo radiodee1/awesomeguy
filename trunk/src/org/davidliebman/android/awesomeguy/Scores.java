@@ -14,7 +14,7 @@ import java.util.*;
 
 public class Scores {
 	private static final String DATABASE_NAME = "AwesomeguyScores.db";
-	private static final int DATABASE_VERSION = 15;
+	private static final int DATABASE_VERSION = 16;
 	private static final String TABLE_SCORES_NAME = "scores";
 	private static final String TABLE_HIGHS_NAME = "highs";
 	
@@ -314,7 +314,7 @@ public class Scores {
 			SQLiteDatabase mDatabase = mOpenHelper.getWritableDatabase();
 			
 			
-			query = this.getInsertHighString(mHighScores, 0);
+			query = this.getInsertHighString(mHighScores, mHighScores.getRecordIdNum());
 			Cursor c = mDatabase.rawQuery(query, null);
 			int i = c.getCount();
 			//Log.e("Scores","setting old score number <----------------" + mHighScores.getRecordIdNum())	;

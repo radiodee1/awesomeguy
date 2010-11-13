@@ -217,14 +217,15 @@ public class GameStart extends Activity {
        	}
     	
     	// save high scores if they rank
-    	mScores.insertHighInTableIfRanks(mHighScores);
-    	
     	if(mHighScores.getScore() > mGameV.getOldGuyScore()) {
 	    	  
 	    	  mScores.insertRecordIfRanks(mHighScores);
 	    	  mHighScores.setNewRecord(false);
 
 	      }
+    	mScores.insertHighInTableIfRanks(mHighScores);
+
+    	
 		SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
 
     	mHighScores.addToPreferences(preferences);
@@ -806,7 +807,6 @@ public class GameStart extends Activity {
     		    	
     		    	// this basically saves high scores...
       		      	// duplicated in 'onPause()'
-      		      	mScores.insertHighInTableIfRanks(mHighScores);
 	      		      if(mHighScores.getScore() > mGameV.getOldGuyScore()) {
 	      		    	  
 	      		    	  mScores.insertRecordIfRanks(mHighScores);
@@ -814,7 +814,8 @@ public class GameStart extends Activity {
 	      		    	  mGameV.setOldGuyScore(mHighScores.getScore());
 	
 	      		      }
-      		      
+      		        mScores.insertHighInTableIfRanks(mHighScores);
+
     		    	
     		    }
     		    
