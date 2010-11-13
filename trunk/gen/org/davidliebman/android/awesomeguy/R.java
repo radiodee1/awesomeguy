@@ -65,13 +65,13 @@ public final class R {
     public static final class id {
         public static final int AbsoluteLayout01=0x7f070032;
         public static final int AbsoluteLayout02=0x7f070034;
-        public static final int Credits=0x7f070014;
+        public static final int Credits=0x7f070017;
         public static final int GameStart=0x7f07000f;
         public static final int Help=0x7f070010;
-        public static final int Highscores=0x7f070017;
+        public static final int Highscores=0x7f070016;
         public static final int Logo=0x7f07000e;
         public static final int Options=0x7f070012;
-        public static final int Players=0x7f070016;
+        public static final int Players=0x7f070014;
         public static final int TableLayout01=0x7f07000a;
         public static final int TextView01=0x7f070004;
         public static final int TextView02=0x7f07001d;
