@@ -11,7 +11,7 @@ import android.content.*;
 public class SplashScreen extends Activity {
     protected boolean mActive = true;
     protected int mSplashTime = 20000;
-    
+    private boolean mRememberPlayer;
     public static final String AWESOME_NAME = new String("org.awesomeguy");
     
     private Record mHighScores;
@@ -33,10 +33,21 @@ public class SplashScreen extends Activity {
         
         
         /* one highscores record passed around for preferences */
-        mHighScores = new Record();
-        
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
-        mHighScores.addToPreferences(preferences);
+        mRememberPlayer = preferences.getBoolean(Options.SAVED_REMEMBER_PLAYER, false);
+        
+        if(!mRememberPlayer) {
+        	mHighScores = new Record();
+        	mHighScores.addToPreferences(preferences);
+        }
+        else {
+        	mHighScores.getFromPreferences(preferences);
+        }
+        
+        /* if 'anonymous' then blank out record. */
+        if(mHighScores.getName().contentEquals(new Record().getName())) {
+        	mHighScores = new Record();
+        }
         
         /* reset preferences so that game starts with room 1 */
         SharedPreferences.Editor e = preferences.edit();
@@ -45,8 +56,6 @@ public class SplashScreen extends Activity {
         
         /* init scores object */
         mScores = new Scores(this, mHighScores);
-        //mScores.setHighScores(mHighScores);
-        //mScores.test();
         
         // thread for displaying the SplashScreen
         Thread splashTread = new Thread() {
