@@ -1,7 +1,6 @@
 package org.davidliebman.android.awesomeguy;
 
 
-import android.util.Log;
 import android.content.Context;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
@@ -105,18 +104,14 @@ public class Scores {
 				mHighScores.setRecordIdNum((int)i);
 				mHighScores.setNewRecord(false);
 				
-				/* the record id and 'new_record' fields have changed, so we put them in shared preferences */
-				//mHighScores.addToPreferences(preferences);
 				
-				Log.e("Scores", "setting new record number <-------------- "+ i);
-				//mHighScores.listInLog();
 				
 			}
 			else  {
 				query = this.getUpdateScoreLevelString(mHighScores.getRecordIdNum());
 				Cursor c = mDatabase.rawQuery(query, null);
 				int i = c.getCount();
-				Log.e("Scores","setting old score number <----------------" + mHighScores.getRecordIdNum())	;
+				//Log.e("Scores","setting old score number <----------------" + mHighScores.getRecordIdNum())	;
 				c.close();
 				
 			}
@@ -149,7 +144,7 @@ public class Scores {
 			c.close();
 			mDatabase.close();
 		}
-		Log.e("Scores", "at Options save");
+		//Log.e("Scores", "at Options save");
 	}
 	
 	public int pruneScoresList() {
@@ -164,7 +159,7 @@ public class Scores {
 				Cursor c = mDatabase.rawQuery("DELETE FROM "+ TABLE_SCORES_NAME + " WHERE id=" + j, null);
 				c.getCount();
 				c.close();
-				Log.e("scores", "REMOVE RECORD " + j + "<--------------");
+				//Log.e("scores", "REMOVE RECORD " + j + "<--------------");
 				//mList.get(i).listInLog();
 			}
 		}
@@ -268,14 +263,7 @@ public class Scores {
 		mDatabase = mOpenHelper.getReadableDatabase();
 		Cursor c;
 		c = mDatabase.rawQuery(this.getSelectAllHighRecordsString(), null);
-		/*
-		if (num < 0 ) {
-			c = mDatabase.rawQuery(this.getSelectAllRecordsString(), null);
-		}
-		else {
-			c = mDatabase.rawQuery(this.getSelectNumOfRecordsString(num), null);
-		}
-		*/
+		
 		if (c.getCount() == 0) return mList;
 		c.moveToFirst();
 		for (int i = 0; i < c.getCount(); i ++ ) {
@@ -387,7 +375,7 @@ public class Scores {
 		
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			Log.w("Scores", "Upgrading database, this will drop tables and recreate.");
+			//Log.w("Scores", "Upgrading database, this will drop tables and recreate.");
 			db.execSQL("DROP TABLE IF EXISTS " + TABLE_SCORES_NAME);
 			db.execSQL("DROP TABLE IF EXISTS " + TABLE_HIGHS_NAME);
 			onCreate(db);
