@@ -68,7 +68,7 @@ public class Players extends ListActivity {
                 SharedPreferences.Editor mSave = mPreferences.edit();
                 mSave.putInt(Options.SAVED_NUM_SCORES, mHighScores.getNumRecords());
                 mSave.commit();
-                mNumPlayers.setText("This is where you choose from a list of " + mHighScores.getNumRecords() + " high scores.");
+                mNumPlayers.setText("This is where you enter a new player name, or choose from a list of " + mHighScores.getNumRecords() + " players.");
                 
                 /* save num of high scores for player */
                 //TODO: TEST ME!!

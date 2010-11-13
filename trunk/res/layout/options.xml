@@ -66,7 +66,7 @@
 				android:text="Play Game Sounds" />
 
 			<TextView
-				android:text="This is where you decide how many High Score entries will be in the High Score table. "
+				android:text="This is where you decide how many Player profiles will be in the 'Players' table. "
 				android:id="@+id/TextView03" android:layout_width="wrap_content"
 				android:layout_height="wrap_content">
 			</TextView>
@@ -75,14 +75,25 @@
 				android:layout_height="wrap_content" android:orientation="vertical">
 				<RadioButton android:id="@+id/radio_players_five"
 					android:layout_width="wrap_content" android:layout_height="wrap_content"
-					android:text="Five High Scores" />
+					android:text="Five Players" />
 				<RadioButton android:id="@+id/radio_players_ten"
 					android:layout_width="wrap_content" android:layout_height="wrap_content"
-					android:text="Ten High Scores" />
+					android:text="Ten Players" />
 				<RadioButton android:id="@+id/radio_players_fifty"
 					android:layout_width="wrap_content" android:layout_height="wrap_content"
-					android:text="Fifty High Scores" />
+					android:text="Fifty Players" />
 			</RadioGroup>
+
+            <TextView
+                android:text="Here you decide weather or not your game will remember the last Player selected. "
+                android:id="@+id/TextView05" android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+
+            <CheckBox android:id="@+id/checkbox_remember"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Remember Me" />
+
 
 			<TextView
 				android:text="This is where you decide weather or not your game will search for an alternate XML file on the sdcard. "
