@@ -341,7 +341,7 @@ Finally, if you want you can use the search and replace functions of your favori
 
 At this point you have a finished awesomeguy.xml file. To use it download the Awesomeguy project from code.google.com and set it up in your Android ready Eclipse IDE. Replace the awesomeguy.xml file that is packaged in the /res/xml folder. 
 
-In early versions of the game you must change the number of levels that the game recognizes to the number in your xml file. This can be done by going to the GameValues Class and editing the line that reads like this at the beginning of the file. The declaration can be found under the commented line `/* game progress */`.
+In early versions of the game you must change the number of levels that the game recognizes to the number in your xml file. This can be done by going to the !GameValues Class and editing the line that reads like this at the beginning of the file. The declaration can be found under the commented line `/* game progress */`.
 
 {{{
 	public static int NUM_ROOMS = 10;
