@@ -125,7 +125,7 @@ public class Options extends Activity {
         
         /** remember player **/
         final CheckBox checkbox_remember = (CheckBox) findViewById(R.id.checkbox_remember );
-        checkbox_remember.setChecked(true);
+        checkbox_remember.setChecked(mRememberPlayer);
         
         checkbox_remember.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {

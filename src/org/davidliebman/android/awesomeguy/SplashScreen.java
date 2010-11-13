@@ -35,9 +35,9 @@ public class SplashScreen extends Activity {
         /* one highscores record passed around for preferences */
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mRememberPlayer = preferences.getBoolean(Options.SAVED_REMEMBER_PLAYER, false);
-        
+        mHighScores = new Record();
+
         if(!mRememberPlayer) {
-        	mHighScores = new Record();
         	mHighScores.addToPreferences(preferences);
         }
         else {
