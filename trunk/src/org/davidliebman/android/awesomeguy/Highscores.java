@@ -103,7 +103,7 @@ public class Highscores   extends ListActivity {
     	
     	int num = mScores.pruneHighList();
     	if (num > 0) {
-    		Toast.makeText(Highscores.this, "You Have 51 Scores In Your List!!", Toast.LENGTH_LONG).show();
+    		Toast.makeText(Highscores.this, "You Have 51 Scores In Your List!! One will be dropped!", Toast.LENGTH_LONG).show();
     	}
     }
 	
@@ -133,7 +133,7 @@ public class Highscores   extends ListActivity {
     		
     		/* Convert milliseconds to readable date */
     		long mMilliseconds = mRec.getDate();
-    		DateFormat mFormat = new SimpleDateFormat("dd/MM/yyyy");
+    		DateFormat mFormat = new SimpleDateFormat("MM/dd/yyyy");
     		Calendar mCalendar = Calendar.getInstance();
     		mCalendar.setTimeInMillis(mMilliseconds);
     		String mDateString = new String(mFormat.format(mCalendar.getTime()));
