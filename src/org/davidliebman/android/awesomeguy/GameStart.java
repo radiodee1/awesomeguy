@@ -56,7 +56,7 @@ public class GameStart extends Activity {
     private FrameLayout mFLayoutBot ;
     private Panel mPanelBot ;
 	
-    private View mSpaceView, mSepView;
+    private View mSpaceView, mSpaceViewSecond, mSepView;
     private TableLayout mGameRow;
     
     private RelativeLayout mRLayoutGamepad;
@@ -130,24 +130,25 @@ public class GameStart extends Activity {
         mRLayout.setLayoutParams(mRLayoutParams);
         mRLayout.setHorizontalGravity(Gravity.CENTER_HORIZONTAL);
         
-        mTLayoutOuter.setBackgroundColor(Color.BLACK);
+        //mTLayoutOuter.setBackgroundColor(Color.BLACK);
         ViewGroup.LayoutParams mTLayoutOuterParams = new 
     		ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);//480,WRAP_CONTENT
         mTLayoutOuter.setLayoutParams(mTLayoutOuterParams);
         
         
-        mTLayout.setBackgroundColor(Color.BLACK);
+        //mTLayout.setBackgroundColor(Color.BLACK);
         ViewGroup.LayoutParams mTLayoutParams = new 
     		ViewGroup.LayoutParams(mDimension, ViewGroup.LayoutParams.WRAP_CONTENT);
         mTLayout.setLayoutParams(mTLayoutParams);
         
         mGameRow = new TableLayout(this);
-        mGameRow.setBackgroundColor(Color.GRAY);
+        //mGameRow.setBackgroundColor(Color.GRAY);
+        //mGameRow.setBackgroundResource(R.drawable.background);
         ViewGroup.LayoutParams mGameRowParams = new 
 			ViewGroup.LayoutParams(mDimension,panelV);
         mGameRow.setLayoutParams(mGameRowParams);
         
-        mFLayoutBot.setBackgroundColor(Color.BLACK);
+        //mFLayoutBot.setBackgroundColor(Color.BLACK);
         ViewGroup.LayoutParams mFLayoutBotParams = new 
 			ViewGroup.LayoutParams(panelH,panelV);
         mFLayoutBot.setLayoutParams(mFLayoutBotParams);
@@ -158,6 +159,13 @@ public class GameStart extends Activity {
         ViewGroup.LayoutParams mSpaceLayoutParams = new 
     		ViewGroup.LayoutParams(mDimension, 2);
         mSpaceView.setLayoutParams(mSpaceLayoutParams);
+        
+        /* small view to draw line between game pad and screens */
+        mSpaceViewSecond = new View(this);
+        mSpaceViewSecond.setBackgroundColor(Color.GRAY);
+        ViewGroup.LayoutParams mSpaceLayoutParamsSecond = new 
+    		ViewGroup.LayoutParams(mDimension, 2);
+        mSpaceViewSecond.setLayoutParams(mSpaceLayoutParamsSecond);
         
         /* generate components for game pad */
         mRLayoutGamepad = new RelativeLayout(this);
@@ -173,6 +181,8 @@ public class GameStart extends Activity {
         mRLayout.addView((View)mTLayoutOuter);
         mTLayoutOuter.addView((View)mTLayout);
         //mTLayout.addView((View)mFLayoutBot);
+        mTLayout.addView((View)this.mSpaceView);
+
         mTLayout.addView((View)mGameRow	);
 
         mGameRow.addView((View)mFLayoutBot);
@@ -187,7 +197,7 @@ public class GameStart extends Activity {
 
         
         //test.addView(mSpaceView);
-        mTLayout.addView((View)this.mSpaceView);
+        mTLayout.addView((View)this.mSpaceViewSecond);
 
         /* add gamepad to bottom of screen */
         mTLayoutOuter.addView((View)mRLayoutGamepad);
@@ -580,7 +590,7 @@ public class GameStart extends Activity {
     		this.setWidth(mButtonWidth);
     		this.setHeight(mButtonHeight);
         	this.setBackgroundColor(Color.BLACK);
-
+    		//this.setLayoutParams(new ViewGroup.LayoutParams(mButtonWidth,mButtonHeight));
     	}
     };
     
