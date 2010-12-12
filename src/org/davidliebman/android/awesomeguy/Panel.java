@@ -760,11 +760,12 @@ public  class Panel  extends SurfaceView  {
 		guyWidth = (mGuySprite.getRightBB() - mGuySprite.getLeftBB()) + 5; // 12 ?
 		guyHeight = mGuySprite.getBottomBB() - mGuySprite.getTopBB();
 
-		
+		//TODO: fix display for tablet devices.
 		int tilesMeasurement;
 
 		if (mGameV.isDoubleScreen()) {
 			tilesMeasurement = ((this.mDisplayWidth / 2 ) / 8) ;
+			if (tilesMeasurement > 32 ) tilesMeasurement = 32;
 			this.mScreenW = tilesMeasurement * 8;
 			//if (tilesMeasurement * 16 < this.mDisplayWidth) tilesMeasurement ++;
 		}

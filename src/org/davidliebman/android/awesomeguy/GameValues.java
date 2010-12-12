@@ -81,6 +81,7 @@ public class GameValues {
 			this.mScreenTilesHMod = ((this.mDisplayWidth / 2 ) / 8) ;
 
 			if (this.mScreenTilesHMod * 16 < this.mDisplayWidth) this.mScreenTilesHMod ++;
+			if (this.mScreenTilesHMod > 33) this.mScreenTilesHMod = 32;
 		}
 		else {
 			this.mScreenTilesHMod = 32;
