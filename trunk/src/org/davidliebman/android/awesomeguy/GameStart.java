@@ -109,6 +109,7 @@ public class GameStart extends Activity {
         if ( screenHeight - ((192 * 2) + (mDimension/5) * 3) > 0 ) {
         	mGameV.setDoubleScreen(true);
         	panelV = 192 * 2;
+        	if (mDimension / 16 > 32) panelH = 256 * 2;
         }
         if (!mGameV.isDoubleScreen()) panelH = 256;
         
@@ -177,7 +178,7 @@ public class GameStart extends Activity {
         mGameRow.addView((View)mFLayoutBot);
         //mTLayout.addView((View) mGameRow);
         
-        if (!mGameV.isDoubleScreen()) {
+        if (!mGameV.isDoubleScreen() || panelH == 256 * 2) {
         	
         	mGameRow.setHorizontalGravity(Gravity.CENTER_HORIZONTAL);
           
