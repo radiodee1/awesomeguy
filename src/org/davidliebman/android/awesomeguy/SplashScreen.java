@@ -1,5 +1,7 @@
 package org.davidliebman.android.awesomeguy;
 
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
+
 import android.app.Activity;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Intent;
@@ -18,6 +20,8 @@ public class SplashScreen extends Activity {
     private Scores.ScoreOpenHelper mScoresHelper;
     private Scores mScores;
     private SQLiteDatabase db;
+    
+    GoogleAnalyticsTracker tracker;
     
     /** Called when the activity is first created. */
     @Override
