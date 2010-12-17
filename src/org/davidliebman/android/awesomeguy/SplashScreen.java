@@ -29,6 +29,11 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.splashscreen);
+        
+        // google analytics tracker
+        tracker = GoogleAnalyticsTracker.getInstance();
+        tracker.start("UA-19479622-2", this);
+        tracker.trackPageView("/SplashScreen");
        
         /* init database if not already done so */
         mScoresHelper = new Scores.ScoreOpenHelper(this);
