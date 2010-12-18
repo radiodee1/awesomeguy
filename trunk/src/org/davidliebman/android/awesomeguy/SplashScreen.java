@@ -35,7 +35,9 @@ public class SplashScreen extends Activity {
         tracker = GoogleAnalyticsTracker.getInstance();
         tracker.start(UA_NUMBER, this);
         tracker.trackPageView("/SplashScreen");
-       
+        tracker.dispatch();
+        tracker.stop();
+        
         /* init database if not already done so */
         mScoresHelper = new Scores.ScoreOpenHelper(this);
         db = mScoresHelper.getReadableDatabase();
