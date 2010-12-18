@@ -15,6 +15,7 @@ public class SplashScreen extends Activity {
     protected int mSplashTime = 20000;
     private boolean mRememberPlayer;
     public static final String AWESOME_NAME = new String("org.awesomeguy");
+    public static final String UA_NUMBER = new String("UA-19479622-2");
     
     private Record mHighScores;
     private Scores.ScoreOpenHelper mScoresHelper;
@@ -32,7 +33,7 @@ public class SplashScreen extends Activity {
         
         // google analytics tracker
         tracker = GoogleAnalyticsTracker.getInstance();
-        tracker.start("UA-19479622-2", this);
+        tracker.start(UA_NUMBER, this);
         tracker.trackPageView("/SplashScreen");
        
         /* init database if not already done so */
