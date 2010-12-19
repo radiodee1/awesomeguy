@@ -63,8 +63,8 @@ public final class R {
         public static final int tiles4=0x7f020031;
     }
     public static final class id {
-        public static final int AbsoluteLayout01=0x7f070032;
-        public static final int AbsoluteLayout02=0x7f070034;
+        public static final int AbsoluteLayout01=0x7f070033;
+        public static final int AbsoluteLayout02=0x7f070035;
         public static final int Credits=0x7f070017;
         public static final int GameStart=0x7f07000f;
         public static final int Help=0x7f070010;
@@ -78,23 +78,25 @@ public final class R {
         public static final int TextView03=0x7f07001f;
         public static final int TextView04=0x7f070025;
         public static final int TextView05=0x7f070023;
-        public static final int TextView06=0x7f070028;
-        public static final int TextView07=0x7f07002a;
+        public static final int TextView06=0x7f070029;
+        public static final int TextView07=0x7f07002b;
         public static final int button_highscores=0x7f07000b;
-        public static final int button_options=0x7f07002b;
-        public static final int button_players=0x7f070031;
-        public static final int checkbox_collision=0x7f070029;
-        public static final int checkbox_monsters=0x7f070027;
+        public static final int button_options=0x7f07002c;
+        public static final int button_players=0x7f070032;
+        public static final int button_termsofservice=0x7f070037;
+        public static final int checkbox_analytics=0x7f070027;
+        public static final int checkbox_collision=0x7f07002a;
+        public static final int checkbox_monsters=0x7f070028;
         public static final int checkbox_remember=0x7f070024;
         public static final int checkbox_sounds=0x7f07001e;
         public static final int checkbox_xml=0x7f070026;
         public static final int congrats_text=0x7f070002;
-        public static final int edittext_name=0x7f070030;
-        public static final int guy_icon=0x7f07002e;
+        public static final int edittext_name=0x7f070031;
+        public static final int guy_icon=0x7f07002f;
         public static final int icon=0x7f070005;
         public static final int image=0x7f070001;
-        public static final int image_bot=0x7f070035;
-        public static final int image_top=0x7f070033;
+        public static final int image_bot=0x7f070036;
+        public static final int image_top=0x7f070034;
         public static final int layout_root=0x7f070000;
         public static final int player_name_options=0x7f070018;
         public static final int radio_players_fifty=0x7f070022;
@@ -105,11 +107,11 @@ public final class R {
         public static final int radio_speed_24=0x7f07001c;
         public static final int room_spinner=0x7f070019;
         public static final int text_date=0x7f070008;
-        public static final int text_description=0x7f07002f;
+        public static final int text_description=0x7f070030;
         public static final int text_level=0x7f070009;
         public static final int text_name=0x7f070006;
-        public static final int text_num_message=0x7f07002c;
-        public static final int text_player_name=0x7f07002d;
+        public static final int text_num_message=0x7f07002d;
+        public static final int text_player_name=0x7f07002e;
         public static final int text_score=0x7f070007;
         public static final int widget28=0x7f07000c;
         public static final int widget32=0x7f070003;
@@ -130,6 +132,7 @@ public final class R {
         public static final int options=0x7f030008;
         public static final int players=0x7f030009;
         public static final int splashscreen=0x7f03000a;
+        public static final int termsofservice=0x7f03000b;
     }
     public static final class raw {
         public static final int boom=0x7f050000;

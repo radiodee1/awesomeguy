@@ -21,6 +21,8 @@ public class Options extends Activity {
 	public static final String SAVED_ROOM_NUM = new String("room");
 	public static final String SAVED_LOOK_FOR_XML = new String("look_for_xml");
 	public static final String SAVED_REMEMBER_PLAYER = new String("remember_player");
+	public static final String SAVED_ANALYTICS = new String("analytics_tracking");
+	public static final String SAVED_TOS = new String("terms_of_service_shown");
 	
 	private int mRoomNumSelected = 1;
 
@@ -33,6 +35,7 @@ public class Options extends Activity {
 	
 	private boolean mLookForXml = false;
 	private boolean mRememberPlayer = true;
+	private boolean mGoogleAnalytics = false;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -136,6 +139,24 @@ public class Options extends Activity {
                 } else {
                     Toast.makeText(Options.this, "Do Not Remember Player", Toast.LENGTH_SHORT).show();
                     mRememberPlayer = false;
+                }
+            }
+        });
+        
+        
+        /** google analytics **/
+        final CheckBox checkbox_analytics = (CheckBox) findViewById(R.id.checkbox_analytics );
+        checkbox_analytics.setChecked(this.mGoogleAnalytics);
+        
+        checkbox_analytics.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on clicks, depending on whether it's now checked
+                if (((CheckBox) v).isChecked()) {
+                    Toast.makeText(Options.this, "Use Google Analytics", Toast.LENGTH_SHORT).show();
+                    mGoogleAnalytics = true;
+                } else {
+                    Toast.makeText(Options.this, "Do Not Use Google Analytics", Toast.LENGTH_SHORT).show();
+                    mGoogleAnalytics = false;
                 }
             }
         });
@@ -259,6 +280,7 @@ public class Options extends Activity {
         edit.putInt(SAVED_ROOM_NUM, mRoomNumSelected);
         edit.putBoolean(SAVED_LOOK_FOR_XML, mLookForXml);
         edit.putBoolean(SAVED_REMEMBER_PLAYER, mRememberPlayer);
+        edit.putBoolean(SAVED_ANALYTICS, mGoogleAnalytics);
         edit.commit();
         
         /* save all other options to player's personal record if it's not 'anonymous' */
