@@ -106,6 +106,17 @@
 				android:text="Search For XML File" />
 
 
+            <TextView
+                android:text="This is where you decide weather or not your game will be tracked using Google Analytics. This is good for future game development. "
+                android:id="@+id/TextView04" android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+
+            <CheckBox android:id="@+id/checkbox_analytics"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Use Google Analytics" />
+
+
 			<TextView
 				android:text="Here you decide weather or not your game will have monsters. "
 				android:id="@+id/TextView05" android:layout_width="wrap_content"

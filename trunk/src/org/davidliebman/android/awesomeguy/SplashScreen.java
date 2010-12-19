@@ -14,6 +14,8 @@ public class SplashScreen extends Activity {
     protected boolean mActive = true;
     protected int mSplashTime = 20000;
     private boolean mRememberPlayer;
+    private boolean mGoogleAnalytics;
+    private boolean mTermsOfService;
     public static final String AWESOME_NAME = new String("org.awesomeguy");
     public static final String UA_NUMBER = new String("UA-19479622-2");
     
@@ -30,19 +32,11 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.splashscreen);
-        
-        /* google analytics tracker */
-        tracker = GoogleAnalyticsTracker.getInstance();
-        tracker.start(UA_NUMBER, this);
-        tracker.trackPageView("/SplashScreen");
-        tracker.dispatch();
-        tracker.stop();
-        
+                
         /* init database if not already done so */
         mScoresHelper = new Scores.ScoreOpenHelper(this);
         db = mScoresHelper.getReadableDatabase();
         db.close();
-        
         
         /* one highscores record passed around for preferences */
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
@@ -59,6 +53,19 @@ public class SplashScreen extends Activity {
         /* if 'anonymous' then blank out record. */
         if(mHighScores.getName().contentEquals(new Record().getName())) {
         	mHighScores = new Record();
+        }
+        
+        /* get TOS info from preferences */
+        mGoogleAnalytics = preferences.getBoolean(Options.SAVED_ANALYTICS, true);
+        mTermsOfService = preferences.getBoolean(Options.SAVED_TOS, false);
+        
+        /* google analytics tracker */
+        if (mGoogleAnalytics) {
+        	tracker = GoogleAnalyticsTracker.getInstance();
+            tracker.start(UA_NUMBER, this);
+            tracker.trackPageView("/SplashScreen");
+            tracker.dispatch();
+            tracker.stop();
         }
         
         /* reset preferences so that game starts with room 1 */
@@ -85,7 +92,12 @@ public class SplashScreen extends Activity {
                     // do nothing
                 } finally {
                     finish();
-                    startActivity(new Intent("org.davidliebman.android.awesomeguy.Menu"));
+                    if (! mTermsOfService ) {
+                    	startActivity(new Intent("org.davidliebman.android.awesomeguy.TermsOfService"));
+                    }
+                    else {
+                    	startActivity(new Intent("org.davidliebman.android.awesomeguy.Menu"));
+                    }
                     //stop();
                     interrupt();
                 }
