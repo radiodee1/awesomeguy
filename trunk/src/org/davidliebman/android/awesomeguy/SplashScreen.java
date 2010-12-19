@@ -93,7 +93,8 @@ public class SplashScreen extends Activity {
                 } finally {
                     finish();
                     if (! mTermsOfService ) {
-                    	startActivity(new Intent("org.davidliebman.android.awesomeguy.TermsOfService"));
+                    	startActivity(new Intent(SplashScreen.this,TermsOfService.class));
+                    	
                     }
                     else {
                     	startActivity(new Intent("org.davidliebman.android.awesomeguy.Menu"));
