@@ -140,7 +140,7 @@ public class Players extends ListActivity {
         });
         
         mNumPlayers = (TextView) findViewById(R.id.text_num_message);
-        mNumPlayers.setText("This is where you choose from a list of " + mHighScores.getNumRecords() + " high scores.");
+        mNumPlayers.setText("This is where you choose from a list of " + mHighScores.getNumRecords() + " players.");
         
         mPlayerText = (TextView) findViewById(R.id.text_player_name);
         mPlayerText.setText("Player Chosen: " +mHighScores.getName());
@@ -242,7 +242,7 @@ public class Players extends ListActivity {
 	   public int alertUser() {
 	       	if ( mPreferredNumRecords != mRec.getNumRecords() ) {
 	   	    	AlertDialog.Builder builder = new AlertDialog.Builder(mParent);
-	   	    	String mAMessage = new String("Your old preference for 'Number of High Score Records' is " + mHighScores.getNumRecords());
+	   	    	String mAMessage = new String("Your old preference for 'Number of Player Records' is " + mHighScores.getNumRecords());
 	   	    	String mPositive = new String("Choose " + mHighScores.getNumRecords() + " records.");
 	   	    	String mNegative = new String("Choose " + mRec.getNumRecords() + " records.");
 	   	    	builder.setMessage(mAMessage)
