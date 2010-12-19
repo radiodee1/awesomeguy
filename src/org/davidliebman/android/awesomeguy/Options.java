@@ -53,6 +53,7 @@ public class Options extends Activity {
         }
         mLookForXml = preferences.getBoolean(SAVED_LOOK_FOR_XML, false);
         mRememberPlayer = preferences.getBoolean(SAVED_REMEMBER_PLAYER, true);
+        mGoogleAnalytics = preferences.getBoolean(this.SAVED_ANALYTICS, true);
         
         setContentView(R.layout.options);  
         

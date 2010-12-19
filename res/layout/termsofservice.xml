@@ -12,16 +12,28 @@ android:scrollbarAlwaysDrawVerticalTrack="true"
 android:id="@+id/widget32"
 android:layout_width="fill_parent"
 android:layout_height="fill_parent"
+android:background="@drawable/background"
 android:orientation="vertical"
 xmlns:android="http://schemas.android.com/apk/res/android"
 android:isScrollContainer="true" android:scrollbarAlwaysDrawVerticalTrack="true">
+
+<TextView android:text="Awesomeguy"
+  
+
+android:textColor="#000000"
+android:textSize="20sp"
+android:textStyle="bold"
+android:id="@+id/TextView01" 
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content" >
+</TextView>
 
 <TextView android:text="This version of Awesomeguy can report your game usage to Google Analytics. This allows the developers to track
 how many users actually play the game. Google Analytics does not change any aspect of game play, and it does not report
 the identity of the users in any way. It DOES encourage the developers of the game to add features for future releases.
 Google Analytics is enabled by default, but can be disabled easily from the Options screen."
   
-android:background="@drawable/background"
+
 android:textColor="#000000"
 android:textSize="16sp"
 android:textStyle="bold"
