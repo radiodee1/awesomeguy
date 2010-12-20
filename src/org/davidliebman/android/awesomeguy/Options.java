@@ -23,6 +23,7 @@ public class Options extends Activity {
 	public static final String SAVED_REMEMBER_PLAYER = new String("remember_player");
 	public static final String SAVED_ANALYTICS = new String("analytics_tracking");
 	public static final String SAVED_TOS = new String("terms_of_service_shown");
+	public static final String SAVED_VERSIONCODE = new String("old_versioncode");
 	
 	private int mRoomNumSelected = 1;
 

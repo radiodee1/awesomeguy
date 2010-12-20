@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.content.*;
+import android.content.pm.*;
+import android.content.pm.PackageManager.NameNotFoundException;
 
 public class SplashScreen extends Activity {
     protected boolean mActive = true;
@@ -16,6 +18,7 @@ public class SplashScreen extends Activity {
     private boolean mRememberPlayer;
     private boolean mGoogleAnalytics;
     private boolean mTermsOfService;
+    private int mVersionCode = 1;
     public static final String AWESOME_NAME = new String("org.awesomeguy");
     public static final String UA_NUMBER = new String("UA-19479622-2");
     
@@ -59,6 +62,23 @@ public class SplashScreen extends Activity {
         mGoogleAnalytics = preferences.getBoolean(Options.SAVED_ANALYTICS, true);
         mTermsOfService = preferences.getBoolean(Options.SAVED_TOS, false);
         
+        /* check version / show TermsOfService.java */
+        PackageManager mManager = this.getPackageManager();
+        try {
+        	PackageInfo mInfo = mManager.getPackageInfo("org.davidliebman.android.awesomeguy", 0);
+        	mVersionCode = mInfo.versionCode;
+        }
+        catch (NameNotFoundException e) {
+        	// not a big deal if Package Manager 
+        	// doesn't find the version code.
+        	mVersionCode = 1;
+        }
+        /* if game was just updated, show TOS page. */
+        if (preferences.getInt(Options.SAVED_VERSIONCODE, 1) != mVersionCode) {
+        	mTermsOfService = false;
+        	
+        }
+        
         /* google analytics tracker */
         if (mGoogleAnalytics) {
         	tracker = GoogleAnalyticsTracker.getInstance();
@@ -69,8 +89,10 @@ public class SplashScreen extends Activity {
         }
         
         /* reset preferences so that game starts with room 1 */
+        /* save most recent version code */
         SharedPreferences.Editor e = preferences.edit();
         e.putInt(Options.SAVED_ROOM_NUM, 1);
+        e.putInt(Options.SAVED_VERSIONCODE, mVersionCode);
         e.commit();
         
         /* init scores object */
