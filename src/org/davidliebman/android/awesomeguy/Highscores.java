@@ -22,6 +22,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import android.util.Log;
 
 public class Highscores   extends ListActivity {
 
@@ -92,6 +93,13 @@ public class Highscores   extends ListActivity {
         mHighScores.getFromPreferences(mPreferences);
         this.mPreferredNumRecords = this.mPreferences.getInt(Options.SAVED_NUM_SCORES, Record.RADIO_PLAYERS_FIFTY);
         
+        try {
+    		mScores.closeAll();
+    	}
+    	catch (NullPointerException e) {
+    		//Log.e("Awesomeguy", "Null Pointer Highscores");
+    	}
+        
         mScores = new Scores(this, mHighScores);
 
     	
@@ -107,6 +115,17 @@ public class Highscores   extends ListActivity {
     	}
     }
 	
+    @Override
+    public void onPause() {
+    	try {
+    		mScores.closeAll();
+    	}
+    	catch (NullPointerException e) {
+    		Log.e("Awesomeguy", "Null Pointer Highscores");
+    	}
+    	super.onPause();
+    }
+    
 	/* special adapter for displaying list from ArrayList */
     public class HighAdapter extends ArrayAdapter<Scores.High> {
     	ArrayList<Scores.High> mList;

@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.os.Bundle;
 import android.widget.*;
 import android.content.*;
+import android.util.Log;
 import android.view.View.OnKeyListener;
 import java.util.ArrayList;
 import android.view.*;
@@ -160,6 +161,13 @@ public class Players extends ListActivity {
         mHighScores.getFromPreferences(mPreferences);
         this.mPreferredNumRecords = this.mPreferences.getInt(Options.SAVED_NUM_SCORES, Record.RADIO_PLAYERS_FIFTY);
         
+        try {
+    		mScores.closeAll();
+    	}
+    	catch (NullPointerException e) {
+    		Log.e("Awesomeguy", "Null Pointer Players");
+    	}
+        
         mScores = new Scores(this, mHighScores);
 
     	
@@ -189,6 +197,16 @@ public class Players extends ListActivity {
     	return value;
     }
     
+    @Override
+    public void onPause() {
+    	try {
+    		mScores.closeAll();
+    	}
+    	catch(NullPointerException e) {
+    		//Log.e("Awesomeguy", "Null Pointer Players");
+    	}
+    	super.onPause();
+    }
     
     /* special adapter for displaying list from ArrayList */
     public class RecordAdapter extends ArrayAdapter<Record> {
