@@ -227,7 +227,7 @@ public class InitBackground {
 			int eventType = mXpp.getEventType();
 			while (eventType != XmlPullParser.END_DOCUMENT ) {
 				
-				System.out.println("name: " + mXpp.getName());
+				//System.out.println("name: " + mXpp.getName());
 				
 				if(eventType == XmlPullParser.START_TAG && mXpp.getName().equalsIgnoreCase(LEVEL) ) {
 				
@@ -282,7 +282,7 @@ public class InitBackground {
 			int eventType = mXpp.getEventType();
 			while (eventType != XmlPullParser.END_DOCUMENT && !mStopParse) {
 				
-				System.out.println("name: " + mXpp.getName());
+				//System.out.println("name: " + mXpp.getName());
 				
 				if(eventType == XmlPullParser.START_TAG && mXpp.getName().equalsIgnoreCase(LEVEL) ) {
 				
@@ -308,10 +308,10 @@ public class InitBackground {
 				while (!(eventType == XmlPullParser.END_TAG && mXpp.getName().contentEquals(LEVEL))) {
 					//mHorizontal
 					if(eventType == XmlPullParser.START_TAG && mXpp.getName().contentEquals(HORIZONTAL)) {
-						System.out.println("Start tag "+mXpp.getName() + " number " + mIndexNum);
+						//System.out.println("Start tag "+mXpp.getName() + " number " + mIndexNum);
 						mHorizontal = true;
 					} else if(eventType == XmlPullParser.END_TAG && mXpp.getName().contentEquals(HORIZONTAL)) {
-						System.out.println("End tag "+mXpp.getName());
+						//System.out.println("End tag "+mXpp.getName());
 						mHorizontal = false;
 					} else if(eventType == XmlPullParser.TEXT && mHorizontal == true) {
 						mHorDimensions = new Integer(mXpp.getText()).intValue();
@@ -319,10 +319,10 @@ public class InitBackground {
 					}
 					//mVertical
 					if(eventType == XmlPullParser.START_TAG && mXpp.getName().contentEquals(VERTICAL)) {
-						System.out.println("Start tag "+mXpp.getName());
+						//System.out.println("Start tag "+mXpp.getName());
 						mVertical = true;
 					} else if(eventType == XmlPullParser.END_TAG && mXpp.getName().contentEquals(VERTICAL)) {
-						System.out.println("End tag "+mXpp.getName());
+						//System.out.println("End tag "+mXpp.getName());
 						mVertical = false;
 					} else if(eventType == XmlPullParser.TEXT && mVertical == true) {
 						mVerDimensions = new Integer(mXpp.getText()).intValue();
@@ -330,20 +330,20 @@ public class InitBackground {
 					}
 					//mObjects
 					if(eventType == XmlPullParser.START_TAG && mXpp.getName().contentEquals(OBJECTS)) {
-						System.out.println("Start tag "+mXpp.getName());
+						//System.out.println("Start tag "+mXpp.getName());
 						mObjects = true;
 					} else if(eventType == XmlPullParser.END_TAG && mXpp.getName().contentEquals(OBJECTS)) {
-						System.out.println("End tag "+mXpp.getName());
+						//System.out.println("End tag "+mXpp.getName());
 						mObjects = false;
 					} else if(eventType == XmlPullParser.TEXT && mObjects == true) {
 						mOList = mXpp.getText();
 					}
 					//mTiles
 					if(eventType == XmlPullParser.START_TAG && mXpp.getName().contentEquals(TILES)) {
-						System.out.println("Start tag "+mXpp.getName());
+						//System.out.println("Start tag "+mXpp.getName());
 						mTiles = true;
 					} else if(eventType == XmlPullParser.END_TAG && mXpp.getName().contentEquals(TILES)) {
-						System.out.println("End tag "+mXpp.getName());
+						//System.out.println("End tag "+mXpp.getName());
 						mTiles = false;
 					} else if(eventType == XmlPullParser.TEXT && mTiles == true) {
 						mTList = mXpp.getText();

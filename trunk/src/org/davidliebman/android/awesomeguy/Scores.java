@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
+import android.util.Log;
 //import android.util.Log;
 import java.util.*;
 
@@ -21,6 +22,14 @@ public class Scores {
 	private ScoreOpenHelper mOpenHelper;
 	public Context mContext;
 	public Record mHighScores;
+	public Cursor mPlayerListC;
+	public Cursor mIfRanksC;
+	public Cursor mNumOfRecordsC;
+	public Cursor mUpdateOptionsC;
+	public Cursor mPruneScoresC;
+	public Cursor mGameHighC;
+	public Cursor mHighInTableC;
+	public Cursor mPruneHighC;
 	
 	public Scores (Context context, Record highScores) {
 		mContext = context;
@@ -31,45 +40,66 @@ public class Scores {
 		mHighScores = highScores;
 	}
 	
+	public void closeAll() {
+		mDatabase.close();
+		
+		mPlayerListC.close();
+		mIfRanksC.close();
+		mNumOfRecordsC.close();
+		mUpdateOptionsC.close();
+		mPruneScoresC.close();
+		mGameHighC.close();
+		mHighInTableC.close();
+		mPruneHighC.close();
+		
+	}
 	
 	public ArrayList<Record> getHighScorePlayerList(int num) {
 		// NOTE: if 'num' is negative, all records are returned
 		ArrayList<Record> mList = new ArrayList<Record>();
 		mOpenHelper = new ScoreOpenHelper(mContext);
+		
+		try {
+    		mDatabase.close();
+    	}
+    	catch (NullPointerException e) {
+    		//Log.e("Awesomeguy", "Null Pointer mDatabase");
+    	}
+		
 		mDatabase = mOpenHelper.getReadableDatabase();
-		Cursor c;
+		//Cursor c;
 		if (num < 0 ) {
-			c = mDatabase.rawQuery(this.getSelectAllRecordsString(), null);
+			mPlayerListC = mDatabase.rawQuery(this.getSelectAllRecordsString(), null);
 		}
 		else {
-			c = mDatabase.rawQuery(this.getSelectNumOfRecordsString(num), null);
+			mPlayerListC = mDatabase.rawQuery(this.getSelectNumOfRecordsString(num), null);
 		}
-		if (c.getCount() == 0) return mList;
-		c.moveToFirst();
-		for (int i = 0; i < c.getCount(); i ++ ) {
+		if (mPlayerListC.getCount() == 0) return mList;
+		mPlayerListC.moveToFirst();
+		for (int i = 0; i < mPlayerListC.getCount(); i ++ ) {
 			//Log.d("Scores","_id" + c.getColumnIndex("_id"));
 			//Log.d("Scores","id" + c.getColumnIndex("id"));
 			Record mTempRec = new Record();
-			mTempRec.setRecordIdNum(c.getInt(c.getColumnIndex("id")));
-			mTempRec.setNewRecord(new Boolean(c.getString(c.getColumnIndex("new_record"))).booleanValue());//TODO: should I change this to 'false'??
-			mTempRec.setName(c.getString(c.getColumnIndex("name")));
-			mTempRec.setLevel(c.getInt(c.getColumnIndex("level")));
-			mTempRec.setScore(c.getInt(c.getColumnIndex("score")));
-			mTempRec.setLives(c.getInt(c.getColumnIndex("lives")));
-			mTempRec.setCycles(c.getInt(c.getColumnIndex("cycles")));
-			mTempRec.setSave1(c.getInt(c.getColumnIndex("save")));
-			mTempRec.setGameSpeed(c.getInt(c.getColumnIndex("game_speed")));
-			mTempRec.setNumRecords(c.getInt(c.getColumnIndex("num_records")));
-			mTempRec.setSound(new Boolean(c.getString(c.getColumnIndex("sound"))).booleanValue());
-			mTempRec.setEnableJNI(new Boolean(c.getString(c.getColumnIndex("enable_jni"))).booleanValue());
-			mTempRec.setEnableMonsters(new Boolean(c.getString(c.getColumnIndex("enable_monsters"))).booleanValue());
-			mTempRec.setEnableCollision(new Boolean(c.getString(c.getColumnIndex("enable_collision"))).booleanValue());
+			mTempRec.setRecordIdNum(mPlayerListC.getInt(mPlayerListC.getColumnIndex("id")));
+			mTempRec.setNewRecord(new Boolean(mPlayerListC.getString(mPlayerListC.getColumnIndex("new_record"))).booleanValue());//TODO: should I change this to 'false'??
+			mTempRec.setName(mPlayerListC.getString(mPlayerListC.getColumnIndex("name")));
+			mTempRec.setLevel(mPlayerListC.getInt(mPlayerListC.getColumnIndex("level")));
+			mTempRec.setScore(mPlayerListC.getInt(mPlayerListC.getColumnIndex("score")));
+			mTempRec.setLives(mPlayerListC.getInt(mPlayerListC.getColumnIndex("lives")));
+			mTempRec.setCycles(mPlayerListC.getInt(mPlayerListC.getColumnIndex("cycles")));
+			mTempRec.setSave1(mPlayerListC.getInt(mPlayerListC.getColumnIndex("save")));
+			mTempRec.setGameSpeed(mPlayerListC.getInt(mPlayerListC.getColumnIndex("game_speed")));
+			mTempRec.setNumRecords(mPlayerListC.getInt(mPlayerListC.getColumnIndex("num_records")));
+			mTempRec.setSound(new Boolean(mPlayerListC.getString(mPlayerListC.getColumnIndex("sound"))).booleanValue());
+			mTempRec.setEnableJNI(new Boolean(mPlayerListC.getString(mPlayerListC.getColumnIndex("enable_jni"))).booleanValue());
+			mTempRec.setEnableMonsters(new Boolean(mPlayerListC.getString(mPlayerListC.getColumnIndex("enable_monsters"))).booleanValue());
+			mTempRec.setEnableCollision(new Boolean(mPlayerListC.getString(mPlayerListC.getColumnIndex("enable_collision"))).booleanValue());
 			mList.add(mTempRec);
-			c.moveToNext();
+			mPlayerListC.moveToNext();
 			//Log.e("Scores","____"+ mTempRec.getRecordIdNum());
 			
 		}
-		c.close();
+		mPlayerListC.close();
 		mDatabase.close();
 		return mList;
 	}
@@ -109,10 +139,11 @@ public class Scores {
 			}
 			else  {
 				query = this.getUpdateScoreLevelString(mHighScores.getRecordIdNum());
-				Cursor c = mDatabase.rawQuery(query, null);
-				int i = c.getCount();
+				//Cursor c;
+				mIfRanksC = mDatabase.rawQuery(query, null);
+				int i = mIfRanksC.getCount();
 				//Log.e("Scores","setting old score number <----------------" + mHighScores.getRecordIdNum())	;
-				c.close();
+				mIfRanksC.close();
 				
 			}
 			mDatabase.close();
@@ -122,9 +153,10 @@ public class Scores {
 	public void updateNumOfRecords(int idnum) {
 		mOpenHelper = new ScoreOpenHelper(mContext);
 		SQLiteDatabase mDatabase = mOpenHelper.getWritableDatabase();
-		Cursor c = mDatabase.rawQuery(this.getUpdateNumOfRecordsString(idnum), null);
-		c.getCount();
-		c.close();
+		//Cursor c ;
+		mNumOfRecordsC = mDatabase.rawQuery(this.getUpdateNumOfRecordsString(idnum), null);
+		mNumOfRecordsC.getCount();
+		mNumOfRecordsC.close();
 		mDatabase.close();
 	}
 	
@@ -139,9 +171,10 @@ public class Scores {
 		if (found) {
 			mOpenHelper = new ScoreOpenHelper(mContext);
 			SQLiteDatabase mDatabase = mOpenHelper.getWritableDatabase();
-			Cursor c = mDatabase.rawQuery(this.getUpdateOptionsString(idnum), null);
-			c.getCount();
-			c.close();
+			//Cursor c ;
+			mUpdateOptionsC = mDatabase.rawQuery(this.getUpdateOptionsString(idnum), null);
+			mUpdateOptionsC.getCount();
+			mUpdateOptionsC.close();
 			mDatabase.close();
 		}
 		//Log.e("Scores", "at Options save");
@@ -156,9 +189,10 @@ public class Scores {
 			num = mList.size() - mHighScores.getNumRecords();
 			for (int i = mHighScores.getNumRecords(); i < mList.size(); i ++) {
 				int j = mList.get(i).getRecordIdNum();
-				Cursor c = mDatabase.rawQuery("DELETE FROM "+ TABLE_SCORES_NAME + " WHERE id=" + j, null);
-				c.getCount();
-				c.close();
+				//Cursor c ;
+				mPruneScoresC = mDatabase.rawQuery("DELETE FROM "+ TABLE_SCORES_NAME + " WHERE id=" + j, null);
+				mPruneScoresC.getCount();
+				mPruneScoresC.close();
 				//Log.e("scores", "REMOVE RECORD " + j + "<--------------");
 				//mList.get(i).listInLog();
 			}
@@ -260,29 +294,37 @@ public class Scores {
 	public ArrayList<High> getGameHighList(int num) {
 		ArrayList<High> mList = new ArrayList<High>();
 		mOpenHelper = new ScoreOpenHelper(mContext);
-		mDatabase = mOpenHelper.getReadableDatabase();
-		Cursor c;
-		c = mDatabase.rawQuery(this.getSelectAllHighRecordsString(), null);
 		
-		if (c.getCount() == 0) return mList;
-		c.moveToFirst();
-		for (int i = 0; i < c.getCount(); i ++ ) {
+		try {
+    		mDatabase.close();
+    	}
+    	catch (NullPointerException e) {
+    		//Log.e("Awesomeguy", "Null Pointer mDatabase");
+    	}
+		
+		mDatabase = mOpenHelper.getReadableDatabase();
+		//Cursor c;
+		mGameHighC = mDatabase.rawQuery(this.getSelectAllHighRecordsString(), null);
+		
+		if (mGameHighC.getCount() == 0) return mList;
+		mGameHighC.moveToFirst();
+		for (int i = 0; i < mGameHighC.getCount(); i ++ ) {
 			High mTempRec = new High();
-			mTempRec.setKey(c.getInt(c.getColumnIndex("id")));
-			mTempRec.setName(c.getString(c.getColumnIndex("name")));
-			mTempRec.setScoreKey(c.getInt(c.getColumnIndex("score_key")));
-			mTempRec.setHigh(c.getInt(c.getColumnIndex("high")));
+			mTempRec.setKey(mGameHighC.getInt(mGameHighC.getColumnIndex("id")));
+			mTempRec.setName(mGameHighC.getString(mGameHighC.getColumnIndex("name")));
+			mTempRec.setScoreKey(mGameHighC.getInt(mGameHighC.getColumnIndex("score_key")));
+			mTempRec.setHigh(mGameHighC.getInt(mGameHighC.getColumnIndex("high")));
 			
-			mTempRec.setDate(Long.parseLong((c.getString(c.getColumnIndex("date")))));
+			mTempRec.setDate(Long.parseLong((mGameHighC.getString(mGameHighC.getColumnIndex("date")))));
 
-			mTempRec.setInternetKey(c.getInt(c.getColumnIndex("internet_key")));
-			mTempRec.setSave(c.getInt(c.getColumnIndex("save")));
+			mTempRec.setInternetKey(mGameHighC.getInt(mGameHighC.getColumnIndex("internet_key")));
+			mTempRec.setSave(mGameHighC.getInt(mGameHighC.getColumnIndex("save")));
 			mList.add(mTempRec);
-			c.moveToNext();
+			mGameHighC.moveToNext();
 			//Log.e("Scores","____"+ mTempRec.getRecordIdNum());
 			
 		}
-		c.close();
+		mGameHighC.close();
 		mDatabase.close();
 		return mList;
 	}
@@ -303,10 +345,11 @@ public class Scores {
 			
 			
 			query = this.getInsertHighString(mHighScores, mHighScores.getRecordIdNum());
-			Cursor c = mDatabase.rawQuery(query, null);
-			int i = c.getCount();
+			//Cursor c;
+			mHighInTableC = mDatabase.rawQuery(query, null);
+			int i = mHighInTableC.getCount();
 			//Log.e("Scores","setting old score number <----------------" + mHighScores.getRecordIdNum())	;
-			c.close();
+			mHighInTableC.close();
 				
 			
 			mDatabase.close();
@@ -322,9 +365,10 @@ public class Scores {
 			num = mList.size() - 50;
 			for (int i = mHighScores.getNumRecords(); i < mList.size(); i ++) {
 				int j = mList.get(i).getKey();
-				Cursor c = mDatabase.rawQuery("DELETE FROM "+ TABLE_HIGHS_NAME + " WHERE id=" + j, null);
-				c.getCount();
-				c.close();
+				//Cursor c;
+				mPruneHighC = mDatabase.rawQuery("DELETE FROM "+ TABLE_HIGHS_NAME + " WHERE id=" + j, null);
+				mPruneHighC.getCount();
+				mPruneHighC.close();
 				//Log.e("scores", "REMOVE RECORD " + j + "<--------------");
 				//mList.get(i).listInLog();
 			}
