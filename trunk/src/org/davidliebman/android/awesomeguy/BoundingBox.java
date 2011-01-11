@@ -244,7 +244,75 @@ public class BoundingBox {
 		this.type = type;
 	}
 	
+}
+
+class DetectionPattern {
 	
+	public boolean mTop, mBottom, mCenter;
+	public boolean mUpperLeft, mLowerLeft, mUpperRight, mLowerRight;
+	public int mType;
+	
+	public DetectionPattern () {
+		mTop = false;
+		mBottom = false;
+		mCenter = false;
+		mUpperLeft = false;
+		mLowerLeft = false;
+		mUpperRight = false;
+		mLowerRight = false;
+		mType = 0;
+	}
+	
+	public boolean ismTop() {
+		return mTop;
+	}
+	public void setTop(boolean mTop) {
+		this.mTop = mTop;
+	}
+	public boolean isBottom() {
+		return mBottom;
+	}
+	public void setBottom(boolean mBottom) {
+		this.mBottom = mBottom;
+	}
+	public boolean isCenter() {
+		return mCenter;
+	}
+	public void setCenter(boolean mCenter) {
+		this.mCenter = mCenter;
+	}
+	public boolean isUpperLeft() {
+		return mUpperLeft;
+	}
+	public void setUpperLeft(boolean mUpperLeft) {
+		this.mUpperLeft = mUpperLeft;
+	}
+	public boolean isLowerLeft() {
+		return mLowerLeft;
+	}
+	public void setLowerLeft(boolean mLowerLeft) {
+		this.mLowerLeft = mLowerLeft;
+	}
+	public boolean isUpperRight() {
+		return mUpperRight;
+	}
+	public void setUpperRight(boolean mUpperRight) {
+		this.mUpperRight = mUpperRight;
+	}
+	public boolean isLowerRight() {
+		return mLowerRight;
+	}
+	public void setLowerRight(boolean mLowerRight) {
+		this.mLowerRight = mLowerRight;
+	}
+
+	public int getType() {
+		return mType;
+	}
+
+	public void setType(int mType) {
+		this.mType = mType;
+	}
 	
 	
 }

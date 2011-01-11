@@ -382,6 +382,7 @@ public  class Panel  extends SurfaceView  {
 
 
 		/* BLOCK TEST */
+		/*
 			if (actual > 6) {
 				if(!boundaryRight) center ++;
 				collisionWithBlocks(   center , END);
@@ -393,9 +394,9 @@ public  class Panel  extends SurfaceView  {
 			else {
 				collisionWithBlocks(   center , MIDDLE);
 			}
+		*/
 		
-		
-		
+		collisionWithBlocksRevised();
 
 		
 		/* PLATFORMS */
@@ -458,6 +459,59 @@ public  class Panel  extends SurfaceView  {
 		
 	}
 
+	private boolean collisionWithBlocksRevised() {
+		boolean mTemp = true;
+		SpriteInfo mSprite = mGameV.getSprite(0);
+		
+		//drop when you hit a wall
+		DetectionPattern mPattern = makeDetectionPattern(mGameV.mBlock, mMovementV.getHMove());
+		DetectionPattern mPatternFloor = makeDetectionPattern(mGameV.mBlock, 1);
+		
+		if ( !mPatternFloor.isBottom() &&
+				(mPattern.isUpperLeft() || mPattern.isUpperRight() || mPattern.isLowerLeft() || mPattern.isLowerRight())) {
+			y = mMovementV.getVMove();
+			x = 0;
+			canFall = true;
+			
+		}
+		
+		//floor
+		if (mPatternFloor.isBottom()) {
+			canFall = false;
+		}
+		
+		int mTestBottomY = mSprite.getMapPosY() + mSprite.getBottomBB() - 2;
+		int mTestRightSkipX = mSprite.getMapPosX() + mSprite.getRightBB() + 2;
+		int mTestLeftSkipX = mSprite.getMapPosX() + mSprite.getLeftBB() - 2;
+		
+		//skip RIGHT
+		if (mMovementV.getDirectionLR() == mMovementV.KEY_RIGHT &&  
+				pointToBlockNum(mTestRightSkipX, mTestBottomY) == mGameV.mBlock && 
+				pointToBlockNum(mTestRightSkipX, mTestBottomY - 8) != mGameV.mBlock &&
+				pointToBlockNum(mTestRightSkipX, mTestBottomY - 16) != mGameV.mBlock) {
+			canFall = false;
+			y = - (8 + mMovementV.getVMove());
+		}
+		
+		//skip LEFT
+		if (mMovementV.getDirectionLR() == mMovementV.KEY_LEFT && 
+				pointToBlockNum(mTestLeftSkipX, mTestBottomY) == mGameV.mBlock &&
+				pointToBlockNum(mTestLeftSkipX, mTestBottomY - 8) != mGameV.mBlock &&
+				pointToBlockNum(mTestLeftSkipX, mTestBottomY - 16) != mGameV.mBlock) {
+			canFall = false;
+			y = -(8 + mMovementV.getVMove());
+		}
+		
+		//no HANGING
+		if (jumptime >=0 && !ladderTest && mPattern.ismTop()) {
+			y = mMovementV.getVMove();
+			canFall = true;
+			jumptime = -1;
+		}
+		
+		return mTemp;
+	}
+	
 	private boolean collisionWithBlocks(  int centerBlock , int boundaryTest) {
 		int i;
 		int below = 2;
@@ -1187,7 +1241,60 @@ public  class Panel  extends SurfaceView  {
 		
 
 	}
+	
+	public int pointToBlockNum(int x, int y) {
+		int mNewX, mNewY;
+		mNewX = x / 8;
+		mNewY = y / 8;
+		return mGameV.getObjectsCell(mNewX, mNewY);
+	}
 
+	public DetectionPattern makeDetectionPattern(int type, int cheat){
+		DetectionPattern mTemp = new DetectionPattern();
+		mTemp.setType(type);
+		SpriteInfo mSprite = mGameV.getSprite(0);
+		
+		int mTestCenterX = mSprite.getMapPosX() + (mSprite.getLeftBB() + mSprite.getRightBB()) / 2;
+		int mTestBelowY = mSprite.getMapPosY() + mSprite.getBottomBB() + cheat;
+		int mTestAboveY = mSprite.getMapPosY() + mSprite.getTopBB() - cheat;
+		
+		int mTestLowerY = mSprite.getMapPosY() + mSprite.getBottomBB() - cheat;
+		int mTestUpperY = mSprite.getMapPosY() + mSprite.getTopBB() + cheat;
+		int mTestRightX = mSprite.getMapPosX() + mSprite.getRightBB() + cheat;
+		int mTestLeftX = mSprite.getMapPosX() + mSprite.getLeftBB() - cheat;
+		
+		if (pointToBlockNum(mTestCenterX, mTestAboveY) == type) mTemp.setTop(true);
+		if (pointToBlockNum(mTestCenterX, mTestBelowY) == type) mTemp.setBottom(true);
+		
+		if (pointToBlockNum(mTestLeftX, mTestUpperY) == type) mTemp.setUpperLeft(true);
+		if (pointToBlockNum(mTestLeftX, mTestLowerY) == type) mTemp.setLowerLeft(true);
+		
+		if (pointToBlockNum(mTestRightX, mTestUpperY) == type) mTemp.setUpperRight(true);
+		if (pointToBlockNum(mTestRightX, mTestLowerY) == type) mTemp.setLowerRight(true);
+		
+		if (type == mGameV.mBlock) {
+			
+			if (mSprite.getMapPosX() + mSprite.getRightBB() + cheat > mGameV.getMapH() * 8) {
+				mTemp.setUpperRight(true);
+				mTemp.setLowerRight(true);
+			}
+			if (mSprite.getMapPosX() + mSprite.getLeftBB() - cheat < 0) {
+				mTemp.setLowerLeft(true);
+				mTemp.setUpperLeft(true);
+			}
+			if (mSprite.getMapPosY() + mSprite.getBottomBB() + cheat > mGameV.getMapV() * 8) {
+				mTemp.setBottom(true);
+				
+			}
+			if (mSprite.getMapPosY() + mSprite.getTopBB() - cheat < 0 ) {
+				mTemp.setTop(true);
+			}
+			
+		}
+		
+		return mTemp;
+	}
+	
 	/* strictly JNI oriented */
 	public void playSounds() {
 		if(getSoundOw() == 1) {
