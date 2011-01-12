@@ -459,8 +459,8 @@ public  class Panel  extends SurfaceView  {
 		
 	}
 
-	private boolean collisionWithBlocksRevised() {
-		boolean mTemp = true;
+	private void collisionWithBlocksRevised() {
+		//boolean mTemp = true;
 		SpriteInfo mSprite = mGameV.getSprite(0);
 		
 		//drop when you hit a wall
@@ -480,7 +480,7 @@ public  class Panel  extends SurfaceView  {
 			canFall = false;
 		}
 		
-		int mTestBottomY = mSprite.getMapPosY() + mSprite.getBottomBB() - 2;
+		int mTestBottomY = mSprite.getMapPosY() + mSprite.getBottomBB() - 4;
 		int mTestRightSkipX = mSprite.getMapPosX() + mSprite.getRightBB() + 2;
 		int mTestLeftSkipX = mSprite.getMapPosX() + mSprite.getLeftBB() - 2;
 		
@@ -509,7 +509,7 @@ public  class Panel  extends SurfaceView  {
 			jumptime = -1;
 		}
 		
-		return mTemp;
+		return;
 	}
 	
 	private boolean collisionWithBlocks(  int centerBlock , int boundaryTest) {
