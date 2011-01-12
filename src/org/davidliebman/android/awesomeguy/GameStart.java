@@ -17,6 +17,7 @@ import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 import android.view.*;
+import android.view.ViewGroup.LayoutParams;
 import android.content.*;
 import android.widget.*;
 //import android.util.Log;
@@ -56,7 +57,7 @@ public class GameStart extends Activity {
     private FrameLayout mFLayoutBot ;
     private Panel mPanelBot ;
 	
-    private View mSpaceView, mSpaceViewSecond, mSepView;
+    private View mSpaceView, mSpaceViewSecond,mSpaceViewThird, mSepView;
     private TableLayout mGameRow;
     
     private RelativeLayout mRLayoutGamepad;
@@ -167,6 +168,14 @@ public class GameStart extends Activity {
     		ViewGroup.LayoutParams(mDimension, 2);
         mSpaceViewSecond.setLayoutParams(mSpaceLayoutParamsSecond);
         
+        /* small view to draw line between game pad and screens */
+        mSpaceViewThird = new View(this);
+        mSpaceViewThird.setBackgroundColor(Color.GRAY);
+        ViewGroup.LayoutParams mSpaceLayoutParamsThird = new 
+    		ViewGroup.LayoutParams(mDimension, 2);
+        mSpaceViewThird.setLayoutParams(mSpaceLayoutParamsThird);
+   
+        
         /* generate components for game pad */
         mRLayoutGamepad = new RelativeLayout(this);
         mRLayoutGamepad.setHorizontalGravity(Gravity.CENTER_HORIZONTAL);
@@ -202,6 +211,8 @@ public class GameStart extends Activity {
         /* add gamepad to bottom of screen */
         mTLayoutOuter.addView((View)mRLayoutGamepad);
         
+        /* add spaceview to bottom of gamepad */
+        mTLayoutOuter.addView((View)mSpaceViewThird);
         //setContentView(mRLayout);
 
         
@@ -589,9 +600,9 @@ public class GameStart extends Activity {
     		super(c);
     		this.setWidth(mButtonWidth);
     		this.setHeight(mButtonHeight);
-        	this.setBackgroundColor(Color.BLACK);
-    		//this.setLayoutParams(new ViewGroup.LayoutParams(mButtonWidth,mButtonHeight));
+        	this.setBackgroundColor(Color.TRANSPARENT);
     	}
+    	
     };
     
     
