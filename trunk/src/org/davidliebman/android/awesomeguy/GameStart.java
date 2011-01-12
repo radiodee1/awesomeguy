@@ -20,9 +20,11 @@ import android.view.*;
 import android.view.ViewGroup.LayoutParams;
 import android.content.*;
 import android.widget.*;
+import android.inputmethodservice.KeyboardView;
+
 //import android.util.Log;
 
-public class GameStart extends Activity {
+public class GameStart extends Activity implements KeyEvent.Callback{
 	
 	public static final int GAMEVALUES = 1;
 	public static final int STARTLEVEL = 2;
@@ -42,7 +44,7 @@ public class GameStart extends Activity {
 	private GameValues mGameV = new GameValues();
 	private MovementValues mMovementV = new MovementValues();
 	private InitBackground mBackground ;
-    private Canvas mCanvas;
+    //private Canvas mCanvas;
     private FrameLayout mBotFrame;
     private InnerGameLoop mGameLoopBot;
     //private InitBackground.LevelList mLevelList;
@@ -287,6 +289,9 @@ public class GameStart extends Activity {
     	if(mGameV.getScreenOrientation() == GameValues.ORIENTATION_PORTRAIT){
     		mRLayoutGamepad.addView((View)new GamePad(this, true, mDimension));
     	}
+    	else {
+    		//mRLayoutGamepad.addView((View) new GameKeys(this));
+    	}
     	
     	mBackground = new InitBackground(mGameV, this, mLookForXml);
         //mLevelList = mGameV.getLevelList();
@@ -329,6 +334,96 @@ public class GameStart extends Activity {
     	this.mButtonList.clear();
     }
     
+    /** Start key listener overrides **/
+
+	
+	@Override
+	public boolean onKeyDown( int keyCode, KeyEvent event) {
+		//super(keyCode, event);
+		if(keyCode == KeyEvent.KEYCODE_A || keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+			mMovementV.setKeyInput(MovementValues.KEY_LEFT);
+	    	mPanelBot.readKeys(mTrackballDist);
+	    	
+	    	//Message mEnd = new Message();
+	    	//mEnd.what = GameStart.INPUTVALUES_TRACKUP;
+	    	//mHandler.sendMessageDelayed(mEnd, mScrollConst);
+
+		}
+		if(keyCode == KeyEvent.KEYCODE_S || keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+			mMovementV.setKeyInput(MovementValues.KEY_RIGHT);
+	    	mPanelBot.readKeys(mTrackballDist);
+	    	
+	    	//Message mEnd = new Message();
+	    	//mEnd.what = GameStart.INPUTVALUES_TRACKUP;
+	    	//mHandler.sendMessageDelayed(mEnd, mScrollConst);
+	    	
+			
+		}
+		if(keyCode == KeyEvent.KEYCODE_D || keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+			
+	    	mMovementV.setKeyInput(MovementValues.KEY_UP);
+	    	mPanelBot.readKeys(mTrackballDist);
+	    	
+	    	//Message mEnd = new Message();
+	    	//mEnd.what = GameStart.INPUTVALUES_TRACKUP;
+	    	//mHandler.sendMessageDelayed(mEnd, mScrollConst);
+	    
+		}
+		if(keyCode == KeyEvent.KEYCODE_F || keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+
+	    	mMovementV.setKeyInput(MovementValues.KEY_DOWN);
+	    	mPanelBot.readKeys(mTrackballDist);
+	    	
+	    	//Message mEnd = new Message();
+	    	//mEnd.what = GameStart.INPUTVALUES_TRACKUP;
+	    	//mHandler.sendMessageDelayed(mEnd, mScrollConst);
+	    	
+			
+		}
+		if(keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+			mPanelBot.setKeyB(true);
+			
+		}
+		return true;
+	}
+
+
+	
+	@Override
+	public boolean onKeyUp( int keyCode, KeyEvent event) {
+		//super(keyCode, event);
+		if(keyCode == KeyEvent.KEYCODE_A || keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+			mMovementV.clearKeys();
+			mPanelBot.readKeys(0);
+			
+		}
+		if(keyCode == KeyEvent.KEYCODE_S || keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+			mMovementV.clearKeys();
+			mPanelBot.readKeys(0);
+			
+			
+		}
+		if(keyCode == KeyEvent.KEYCODE_D || keyCode == KeyEvent.KEYCODE_DPAD_UP) {
+			
+			mMovementV.clearKeys();
+			mPanelBot.readKeys(0);
+			
+		}
+		if(keyCode == KeyEvent.KEYCODE_F || keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+			mMovementV.clearKeys();
+			mPanelBot.readKeys(0);
+			
+			
+		}
+		if(keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+			mPanelBot.setKeyB(true);
+			
+		}
+		return true;
+	}
+
+	
+    /** Game Pad Here **/
     public class GamePad extends  TableLayout {
     	
     	public GamePad(Context c, boolean mMultiTouch, int widthDimension) {
