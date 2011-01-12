@@ -213,7 +213,6 @@ public class GameStart extends Activity {
         
         /* add spaceview to bottom of gamepad */
         mTLayoutOuter.addView((View)mSpaceViewThird);
-        //setContentView(mRLayout);
 
         
         mGameV.setSpriteStart();
