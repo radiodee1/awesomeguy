@@ -39,6 +39,12 @@ public class GameValues {
 	private int mScreenTilesHMod = this.SCREEN_TILES_H;
 	private int mDisplayWidth;
 	
+	/* screen orientation */
+	public static final int ORIENTATION_LANDSCAPE = 1;
+	public static final int ORIENTATION_PORTRAIT = 2;
+	
+	private int mScreenOrientation;
+	
 	/* game progress */
 	private Record mGuyScore = new Record();
 	private int mRoom = 1;
@@ -327,6 +333,13 @@ public class GameValues {
 	}
 	public void setLevelList(InitBackground.LevelList mLevelList) {
 		this.mLevelList = mLevelList;
+	}
+	/*  screen orientation */
+	public int getScreenOrientation() {
+		return mScreenOrientation;
+	}
+	public void setScreenOrientation(int mScreenOrientation) {
+		this.mScreenOrientation = mScreenOrientation;
 	}
 	
 	

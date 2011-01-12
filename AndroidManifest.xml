@@ -42,7 +42,6 @@
 
 
 		<activity android:name=".GameStart"
-			android:screenOrientation="portrait" 
 			android:clearTaskOnLaunch="true">
 			<intent-filter>
 				<category android:name="android.intent.category.DEFAULT"></category>

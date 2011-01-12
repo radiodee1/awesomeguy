@@ -34,8 +34,6 @@ public class GameStart extends Activity {
 	public static final int CONGRATS = 8;
 	public static final int PLAYAGAIN = 9;
 
-
-	
 	public static final int DIALOG_PAUSED_ID = 0;
 	public static final int DIALOG_GAMEOVER_ID = 1;
 	public static final int DIALOG_CONGRATS_ID = 2;
@@ -66,7 +64,7 @@ public class GameStart extends Activity {
     private int mButtonHeight, mButtonWidth;
     private int mScrollConst = 200;
     private double mTrackballDist = 1.0;
-    private int mDimension;
+    private int mDimension, mDimensionHeight;
     private Context mContext;
     
     private ArrayList<TouchButton> mButtonList = new ArrayList<TouchButton>();
@@ -104,6 +102,15 @@ public class GameStart extends Activity {
         
     	Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();    	
         mDimension = display.getWidth();
+        mDimensionHeight = display.getHeight();
+        
+        if (mDimension > mDimensionHeight) {
+        	mGameV.setScreenOrientation(GameValues.ORIENTATION_LANDSCAPE);
+        }
+        else {
+        	mGameV.setScreenOrientation(GameValues.ORIENTATION_PORTRAIT);
+        }
+        
         int panelH = mDimension;
         int panelV = 192;
         int screenHeight = display.getHeight();
@@ -180,6 +187,7 @@ public class GameStart extends Activity {
         mRLayoutGamepad = new RelativeLayout(this);
         mRLayoutGamepad.setHorizontalGravity(Gravity.CENTER_HORIZONTAL);
         
+        
         this.setContentView(mRLayout);
         
         mButtonHeight = mDimension/5;//95
@@ -192,6 +200,7 @@ public class GameStart extends Activity {
         //mTLayout.addView((View)mFLayoutBot);
         mTLayout.addView((View)this.mSpaceView);
 
+        
         mTLayout.addView((View)mGameRow	);
 
         mGameRow.addView((View)mFLayoutBot);
@@ -204,8 +213,6 @@ public class GameStart extends Activity {
         }
         
 
-        
-        //test.addView(mSpaceView);
         mTLayout.addView((View)this.mSpaceViewSecond);
 
         /* add gamepad to bottom of screen */
@@ -213,7 +220,7 @@ public class GameStart extends Activity {
         
         /* add spaceview to bottom of gamepad */
         mTLayoutOuter.addView((View)mSpaceViewThird);
-
+        
         
         mGameV.setSpriteStart();
     }
@@ -276,7 +283,10 @@ public class GameStart extends Activity {
     	/* init background */
     	//Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();    	
     	mPanelBot = new Panel(this,  mGameV, this, mMovementV, mHighScores, this.mDimension);
-    	mRLayoutGamepad.addView((View)new GamePad(this, true, mDimension));
+    	
+    	if(mGameV.getScreenOrientation() == GameValues.ORIENTATION_PORTRAIT){
+    		mRLayoutGamepad.addView((View)new GamePad(this, true, mDimension));
+    	}
     	
     	mBackground = new InitBackground(mGameV, this, mLookForXml);
         //mLevelList = mGameV.getLevelList();
