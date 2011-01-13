@@ -138,6 +138,10 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         	panelH = mDimension;
         	panelV = mDimensionHeight;
         }
+        else if (mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE) {
+        	//put screen with touch buttons
+        }
+        
         
         mGameV.setDisplayWidth(mDimension);
         
