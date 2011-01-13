@@ -28,8 +28,11 @@ public  class Panel  extends SurfaceView  {
 
 	private SpriteInfo mGuySprite;
 	private Paint mP;
-	private int mScale = 2;
+	//private float mScale = 2;
+	private float mScaleH = 2;
+	private float mScaleV = 2;
 
+	
 	
 	/* -- start 'for scrolling' -- */
 	/* for scrolling */
@@ -98,7 +101,7 @@ public  class Panel  extends SurfaceView  {
 	private boolean mEnableSounds;
 	private boolean mAnimationOnly;
 	
-	public Panel(Context context,  GameValues gameValues, GameStart parent, MovementValues movementValues, Record highScores, int displayWidth) {
+	public Panel(Context context,  GameValues gameValues, GameStart parent, MovementValues movementValues, Record highScores) {
 		super(context);
 		this.setWillNotDraw(false);
 		
@@ -109,6 +112,10 @@ public  class Panel  extends SurfaceView  {
 		mGuySprite = mGameV.getSpriteStart();
 
 		/* display width considerations */
+    	Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();    	
+    	int displayWidth = display.getWidth();
+    	int displayHeight = display.getHeight();
+		
 		if ( displayWidth < 256 * 2 ) {
 			mDisplayWidth = displayWidth;
 		}
@@ -117,10 +124,19 @@ public  class Panel  extends SurfaceView  {
 		}
 		
 		if (!mGameV.isDoubleScreen()) {
-			mScale = 1;
+			mScaleH = 1;
+			mScaleV = 1;
 			mDisplayWidth = 256;
 		}
 
+		if(mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE) {
+			
+			mScaleH = (float)displayWidth/256;//  192;
+			//mScaleH = (float)mGameV.getViewW()/256;
+			mScaleV = ((float)displayHeight-35)/192;
+			//mScaleV = (float)mGameV.getViewH()/192;
+		}
+		
 		/* paint options BitmapFactory.Options */
 		mOptionsSprite.inScaled = false;
 		mOptionsSprite.outHeight = 16;
@@ -147,7 +163,7 @@ public  class Panel  extends SurfaceView  {
 		mP = new Paint();
 		mP.setAlpha(0xff);
 		mMatrix = new Matrix();
-		mMatrix.setScale(mScale, mScale);
+		mMatrix.setScale(mScaleH, mScaleV);
 
 		scrollX = mMovementV.getScrollX();
 		scrollY = mMovementV.getScrollY();
@@ -231,6 +247,7 @@ public  class Panel  extends SurfaceView  {
 	@Override
 	public void onDraw(Canvas canvas) {
 		mCanvas = canvas;
+		
 		this.setScoreLives(mGameV.getScore(), mGameV.getLives());
 
 		if (!mAnimationOnly) {

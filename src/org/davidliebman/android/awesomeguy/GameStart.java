@@ -21,6 +21,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.content.*;
 import android.widget.*;
 import android.inputmethodservice.KeyboardView;
+import android.content.res.*;
 
 //import android.util.Log;
 
@@ -106,6 +107,8 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         mDimension = display.getWidth();
         mDimensionHeight = display.getHeight();
         
+        Configuration config = this.getResources().getConfiguration();
+        
         if (mDimension > mDimensionHeight) {
         	mGameV.setScreenOrientation(GameValues.ORIENTATION_LANDSCAPE);
         }
@@ -116,12 +119,25 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         int panelH = mDimension;
         int panelV = 192;
         int screenHeight = display.getHeight();
-        if ( screenHeight - ((192 * 2) + (mDimension/5) * 3) > 0 ) {
-        	mGameV.setDoubleScreen(true);
-        	panelV = 192 * 2;
-        	if (mDimension / 16 > 32) panelH = 256 * 2;
+        
+        if(mGameV.getScreenOrientation() == GameValues.ORIENTATION_PORTRAIT) {
+        
+        	if ( screenHeight - ((192 * 2) + (mDimension/5) * 3) > 0 ) {
+        		mGameV.setDoubleScreen(true);
+        		panelV = 192 * 2;
+        		if (mDimension / 16 > 32) panelH = 256 * 2;
+        	}
+        	if (!mGameV.isDoubleScreen()) panelH = 256;
+        
         }
-        if (!mGameV.isDoubleScreen()) panelH = 256;
+        else if (mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE 
+        		&& config.keyboard != Configuration.KEYBOARD_NOKEYS &&
+        		config.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO
+        		) {
+        	
+        	panelH = mDimension;
+        	panelV = mDimensionHeight;
+        }
         
         mGameV.setDisplayWidth(mDimension);
         
@@ -139,6 +155,10 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         	ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);//.WRAP_CONTENT);
         mRLayout.setLayoutParams(mRLayoutParams);
         mRLayout.setHorizontalGravity(Gravity.CENTER_HORIZONTAL);
+        
+        //try to detect size of mRLayout
+        mGameV.setViewH(this.mRLayout.getHeight());
+        mGameV.setViewW(this.mRLayout.getWidth());
         
         //mTLayoutOuter.setBackgroundColor(Color.BLACK);
         ViewGroup.LayoutParams mTLayoutOuterParams = new 
@@ -284,7 +304,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     	
     	/* init background */
     	//Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();    	
-    	mPanelBot = new Panel(this,  mGameV, this, mMovementV, mHighScores, this.mDimension);
+    	mPanelBot = new Panel(this,  mGameV, this, mMovementV, mHighScores);
     	
     	if(mGameV.getScreenOrientation() == GameValues.ORIENTATION_PORTRAIT){
     		mRLayoutGamepad.addView((View)new GamePad(this, true, mDimension));

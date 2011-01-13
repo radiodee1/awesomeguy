@@ -38,6 +38,7 @@ public class GameValues {
 	private boolean mDoubleScreen = false;
 	private int mScreenTilesHMod = this.SCREEN_TILES_H;
 	private int mDisplayWidth;
+	private int mViewH, mViewW;
 	
 	/* screen orientation */
 	public static final int ORIENTATION_LANDSCAPE = 1;
@@ -340,6 +341,18 @@ public class GameValues {
 	}
 	public void setScreenOrientation(int mScreenOrientation) {
 		this.mScreenOrientation = mScreenOrientation;
+	}
+	public int getViewH() {
+		return mViewH;
+	}
+	public void setViewH(int mViewH) {
+		this.mViewH = mViewH;
+	}
+	public int getViewW() {
+		return mViewW;
+	}
+	public void setViewW(int mViewW) {
+		this.mViewW = mViewW;
 	}
 	
 	
