@@ -27,7 +27,7 @@
 
 		<activity android:name=".Menu" 
 			android:clearTaskOnLaunch="true"
-			android:screenOrientation="portrait">
+			>
 			<intent-filter>
 				<action android:name="org.davidliebman.android.awesomeguy.Menu"></action>
 				<category android:name="android.intent.category.DEFAULT"></category>
