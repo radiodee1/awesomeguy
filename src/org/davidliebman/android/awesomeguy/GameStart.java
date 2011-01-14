@@ -63,7 +63,10 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     
     private RelativeLayout mRLayoutGamepad;
     
-    
+    private Configuration mConfig;
+    private int panelH, panelV;
+    private int screenHeight;
+    private boolean mPutGameKeys = false;
     private int mButtonHeight, mButtonWidth;
     private int mScrollConst = 200;
     private double mTrackballDist = 1.0;
@@ -103,13 +106,16 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         
-    	Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();    	
+        ////////////////////////////////
+    	/*
+        
+        Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();    	
         mDimension = display.getWidth();
         mDimensionHeight = display.getHeight();
         
-        Configuration config = this.getResources().getConfiguration();
+        mConfig = this.getResources().getConfiguration();
         
-        if (mDimension > mDimensionHeight) {
+        if (mConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
         	mGameV.setScreenOrientation(GameValues.ORIENTATION_LANDSCAPE);
         }
         else {
@@ -131,8 +137,8 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         
         }
         else if (mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE 
-        		&& config.keyboard != Configuration.KEYBOARD_NOKEYS &&
-        		config.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO
+        		&& mConfig.keyboard != Configuration.KEYBOARD_NOKEYS &&
+        		mConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO
         		) {
         	
         	panelH = mDimension;
@@ -144,6 +150,11 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         
         
         mGameV.setDisplayWidth(mDimension);
+        
+        */
+        this.setOrientationVars();
+        ////////////////////////////////
+        
         
         /* generate components for top of screen */
         mRLayout = new RelativeLayout(this) ; 
@@ -307,14 +318,15 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     	framesPerSec = mHighScores.getGameSpeed();
     	
     	/* init background */
-    	//Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();    	
+
+    	this.setOrientationVars();
     	mPanelBot = new Panel(this,  mGameV, this, mMovementV, mHighScores);
     	
-    	if(mGameV.getScreenOrientation() == GameValues.ORIENTATION_PORTRAIT){
+    	if( mConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
     		mRLayoutGamepad.addView((View)new GamePad(this, true, mDimension));
     	}
-    	else {
-    		//mRLayoutGamepad.addView((View) new GameKeys(this));
+    	else if (mPutGameKeys) {
+    		mRLayoutGamepad.addView((View)new GameKeys(this, mDimension, true));
     	}
     	
     	mBackground = new InitBackground(mGameV, this, mLookForXml);
@@ -341,6 +353,55 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     	
     	
 
+    }
+    
+    public void setOrientationVars() {
+
+        ////////////////////////////////
+    	Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();    	
+        mDimension = display.getWidth();
+        mDimensionHeight = display.getHeight();
+        
+        mConfig = this.getResources().getConfiguration();
+        
+        if (mConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        	mGameV.setScreenOrientation(GameValues.ORIENTATION_LANDSCAPE);
+        }
+        else {
+        	mGameV.setScreenOrientation(GameValues.ORIENTATION_PORTRAIT);
+        }
+        
+        panelH = mDimension;
+        panelV = 192;
+        screenHeight = display.getHeight();
+        
+        if(mGameV.getScreenOrientation() == GameValues.ORIENTATION_PORTRAIT) {
+        
+        	if ( screenHeight - ((192 * 2) + (mDimension/5) * 3) > 0 ) {
+        		mGameV.setDoubleScreen(true);
+        		panelV = 192 * 2;
+        		if (mDimension / 16 > 32) panelH = 256 * 2;
+        	}
+        	if (!mGameV.isDoubleScreen()) panelH = 256;
+        
+        }
+        else if (mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE 
+        		&& mConfig.keyboard != Configuration.KEYBOARD_NOKEYS &&
+        		mConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO
+        		) {
+        	
+        	panelH = mDimension;
+        	panelV = mDimensionHeight;
+        }
+        else if (mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE) {
+        	//put screen with touch buttons
+        	mPutGameKeys = true;
+        }
+        
+        
+        mGameV.setDisplayWidth(mDimension);
+        ////////////////////////////////
+        
     }
     
     public void addButton(TouchButton mButton) {
@@ -528,6 +589,31 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     	
     	
     }// end of inner class
+    
+    public class GameKeys extends TableLayout{
+    	public GameKeys(Context c, int widthDimension, boolean mMultiTouch) {
+    		super (c);
+    		
+    		int mButtonHeight = widthDimension/5;
+    		int mButtonWidth = widthDimension/5;
+    		
+    		TableRow mTRow = new TableRow(c);
+    		TouchButton mButton1 = new TouchButton(c, mMultiTouch ,R.drawable.button_left, mButtonWidth, mButtonHeight, 0, "button_left", MovementValues.KEY_LEFT);
+    		TouchButton mButton2 = new TouchButton(c, mMultiTouch ,R.drawable.button_right, mButtonWidth, mButtonHeight, 0, "button_right", MovementValues.KEY_RIGHT);
+    		TouchButton mButton3 = new TouchButton(c, mMultiTouch ,R.drawable.button_up, mButtonWidth, mButtonHeight, 0, "button_up", MovementValues.KEY_UP);
+    		TouchButton mButton4 = new TouchButton(c,mMultiTouch , R.drawable.button_down, mButtonWidth, mButtonHeight, 0, "button_down", MovementValues.KEY_DOWN);
+
+    		TouchButton mButton5 = new TouchButton(c, mMultiTouch ,R.drawable.button_b, mButtonWidth, mButtonHeight, 0, "button_b", MovementValues.KEY_B);
+
+    		mTRow.addView((View)mButton1);
+    		mTRow.addView((View)mButton2);
+    		mTRow.addView((View)mButton3);
+    		mTRow.addView((View)mButton4);
+    		mTRow.addView((View)mButton5);
+
+    		this.addView((View)mTRow);
+    	}
+    }
 
     /* button listeners */
     public class TouchButton extends Button implements View.OnTouchListener {
