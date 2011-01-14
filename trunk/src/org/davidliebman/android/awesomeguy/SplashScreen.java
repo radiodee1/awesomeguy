@@ -80,12 +80,11 @@ public class SplashScreen extends Activity {
         }
         
         /* google analytics tracker */
+        tracker = GoogleAnalyticsTracker.getInstance();
+        tracker.start(UA_NUMBER, this);
         if (mGoogleAnalytics) {
-        	tracker = GoogleAnalyticsTracker.getInstance();
-            tracker.start(UA_NUMBER, this);
             tracker.trackPageView("/SplashScreen");
             tracker.dispatch();
-            tracker.stop();
             //Log.d("Awesomeguy","Google Analytics-----------------");
         }
         
@@ -136,5 +135,11 @@ public class SplashScreen extends Activity {
             mActive = false;
         }
         return true;
+    }
+    
+    @Override
+    protected void onDestroy() {
+    	super.onDestroy();
+    	tracker.stop();
     }
 }
