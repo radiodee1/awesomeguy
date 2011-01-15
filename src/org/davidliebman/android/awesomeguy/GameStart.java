@@ -319,6 +319,8 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         mGameV.setDisplayWidth(mDimensionWidth);
         mGameV.setDisplayHeight(mDimensionHeight);
         
+        mGameV.setScreenTitle((int)(mDimensionHeight * .10));
+        
         mConfig = this.getResources().getConfiguration();
         
         if (mConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -333,13 +335,21 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         screenHeight = display.getHeight();
         
         if(mGameV.getScreenOrientation() == GameValues.ORIENTATION_PORTRAIT) {
-        
         	if ( screenHeight - ((192 * 2) + (mDimensionWidth/5) * 3) > 0 ) {
         		mGameV.setDoubleScreen(true);
-        		panelV = 192 * 2;
-        		if (mDimensionWidth / 16 > 32) panelH = 256 * 2;
+        		//panelV = (int)(192 * mGameV.getScaleV());
+        		//panelH = mDimensionWidth;
+        		//if (mDimensionWidth / 16 > 32) panelH = (int)(256 * mGameV.getScaleH());
         	}
-        	//else panelH = mDimension
+        	
+        	if ( screenHeight - ((192 * mGameV.getScaleH()) + (mDimensionWidth/5) * 3) > 0 ) {
+        		//mGameV.setDoubleScreen(true);
+        		panelV = (int)(192 * mGameV.getScaleV());
+        		panelH = mDimensionWidth;
+        		//if (mDimensionWidth / 16 > 32) panelH = (int)(256 * mGameV.getScaleH());
+        	}
+        	
+        	
         }
         else if (mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE 
         		&& mConfig.keyboard != Configuration.KEYBOARD_NOKEYS &&

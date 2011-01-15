@@ -490,14 +490,24 @@ public  class Panel  extends SurfaceView  {
 		if ( !mPatternFloor.isBottom() &&
 				(mPattern.isUpperLeft() || mPattern.isUpperRight() || mPattern.isLowerLeft() || mPattern.isLowerRight())) {
 			y = mMovementV.getVMove();
-			x = 0;
-			canFall = true;
+			int mDirection = mMovementV.getDirectionLR();
+			if (mDirection == MovementValues.KEY_LEFT && (mPattern.isLowerLeft() || mPattern.isUpperLeft())) {
+				x = 0;
+				canFall = true;
+			}
+			if (mDirection == MovementValues.KEY_RIGHT && (mPattern.isLowerRight() || mPattern.isUpperRight())) {
+				x = 0;
+				canFall = true;
+			}
+			//x = 0;
+			//canFall = true;
 			
 		}
 		
 		//floor
 		if (mPatternFloor.isBottom()) {
 			canFall = false;
+			
 		}
 		
 		int mTestBottomY = mSprite.getMapPosY() + mSprite.getBottomBB() - 4;

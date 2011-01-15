@@ -405,6 +405,7 @@ public class GameValues {
 		}
 		else if (this.getScreenOrientation() == ORIENTATION_PORTRAIT) {
 			mScaleV = 1;
+			//mScaleV = getScaleH();
 		}
 		else if (this.isPutGameKeys()) {
 			mScaleV = (float)(this.mDisplayHeight - (mScreenTitle + 30))/192;
@@ -416,6 +417,12 @@ public class GameValues {
 	}
 	public void setScaleV(int mScaleV) {
 		this.mScaleV = mScaleV;
+	}
+	public int getScreenTitle() {
+		return mScreenTitle;
+	}
+	public void setScreenTitle(int mScreenTitle) {
+		this.mScreenTitle = mScreenTitle;
 	}
 	
 	
