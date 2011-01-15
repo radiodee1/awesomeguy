@@ -70,7 +70,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     private int mButtonHeight, mButtonWidth;
     private int mScrollConst = 200;
     private double mTrackballDist = 1.0;
-    private int mDimension, mDimensionHeight;
+    private int mDimensionWidth, mDimensionHeight;
     private Context mContext;
     
     private ArrayList<TouchButton> mButtonList = new ArrayList<TouchButton>();
@@ -105,54 +105,8 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         
         
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        
-        ////////////////////////////////
-    	/*
-        
-        Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();    	
-        mDimension = display.getWidth();
-        mDimensionHeight = display.getHeight();
-        
-        mConfig = this.getResources().getConfiguration();
-        
-        if (mConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-        	mGameV.setScreenOrientation(GameValues.ORIENTATION_LANDSCAPE);
-        }
-        else {
-        	mGameV.setScreenOrientation(GameValues.ORIENTATION_PORTRAIT);
-        }
-        
-        int panelH = mDimension;
-        int panelV = 192;
-        int screenHeight = display.getHeight();
-        
-        if(mGameV.getScreenOrientation() == GameValues.ORIENTATION_PORTRAIT) {
-        
-        	if ( screenHeight - ((192 * 2) + (mDimension/5) * 3) > 0 ) {
-        		mGameV.setDoubleScreen(true);
-        		panelV = 192 * 2;
-        		if (mDimension / 16 > 32) panelH = 256 * 2;
-        	}
-        	if (!mGameV.isDoubleScreen()) panelH = 256;
-        
-        }
-        else if (mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE 
-        		&& mConfig.keyboard != Configuration.KEYBOARD_NOKEYS &&
-        		mConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO
-        		) {
-        	
-        	panelH = mDimension;
-        	panelV = mDimensionHeight;
-        }
-        else if (mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE) {
-        	//put screen with touch buttons
-        }
-        
-        
-        mGameV.setDisplayWidth(mDimension);
-        
-        */
-        this.setOrientationVars();
+       
+        this.setOrientationVars(); // TODO: remove?
         ////////////////////////////////
         
         
@@ -183,14 +137,14 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         
         //mTLayout.setBackgroundColor(Color.BLACK);
         ViewGroup.LayoutParams mTLayoutParams = new 
-    		ViewGroup.LayoutParams(mDimension, ViewGroup.LayoutParams.WRAP_CONTENT);
+    		ViewGroup.LayoutParams(mDimensionWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
         mTLayout.setLayoutParams(mTLayoutParams);
         
         mGameRow = new TableLayout(this);
         //mGameRow.setBackgroundColor(Color.GRAY);
         //mGameRow.setBackgroundResource(R.drawable.background);
         ViewGroup.LayoutParams mGameRowParams = new 
-			ViewGroup.LayoutParams(mDimension,panelV);
+			ViewGroup.LayoutParams(mDimensionWidth,panelV);
         mGameRow.setLayoutParams(mGameRowParams);
         
         //mFLayoutBot.setBackgroundColor(Color.BLACK);
@@ -202,21 +156,21 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         mSpaceView = new View(this);
         mSpaceView.setBackgroundColor(Color.GRAY);
         ViewGroup.LayoutParams mSpaceLayoutParams = new 
-    		ViewGroup.LayoutParams(mDimension, 2);
+    		ViewGroup.LayoutParams(mDimensionWidth, 2);
         mSpaceView.setLayoutParams(mSpaceLayoutParams);
         
         /* small view to draw line between game pad and screens */
         mSpaceViewSecond = new View(this);
         mSpaceViewSecond.setBackgroundColor(Color.GRAY);
         ViewGroup.LayoutParams mSpaceLayoutParamsSecond = new 
-    		ViewGroup.LayoutParams(mDimension, 2);
+    		ViewGroup.LayoutParams(mDimensionWidth, 2);
         mSpaceViewSecond.setLayoutParams(mSpaceLayoutParamsSecond);
         
         /* small view to draw line between game pad and screens */
         mSpaceViewThird = new View(this);
         mSpaceViewThird.setBackgroundColor(Color.GRAY);
         ViewGroup.LayoutParams mSpaceLayoutParamsThird = new 
-    		ViewGroup.LayoutParams(mDimension, 2);
+    		ViewGroup.LayoutParams(mDimensionWidth, 2);
         mSpaceViewThird.setLayoutParams(mSpaceLayoutParamsThird);
    
         
@@ -227,8 +181,8 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         
         this.setContentView(mRLayout);
         
-        mButtonHeight = mDimension/5;//95
-        mButtonWidth = mDimension/5;//95
+        mButtonHeight = mDimensionWidth/5;//95
+        mButtonWidth = mDimensionWidth/5;//95
        
         /* assemble top part of screen */
     	
@@ -323,10 +277,10 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     	mPanelBot = new Panel(this,  mGameV, this, mMovementV, mHighScores);
     	
     	if( mConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-    		mRLayoutGamepad.addView((View)new GamePad(this, true, mDimension));
+    		mRLayoutGamepad.addView((View)new GamePad(this, true, mDimensionWidth));
     	}
-    	else if (mPutGameKeys) {
-    		mRLayoutGamepad.addView((View)new GameKeys(this, mDimension, true));
+    	else if (mGameV.isPutGameKeys()) {
+    		mRLayoutGamepad.addView((View)new GameKeys(this, mDimensionWidth, true));
     	}
     	
     	mBackground = new InitBackground(mGameV, this, mLookForXml);
@@ -359,8 +313,11 @@ public class GameStart extends Activity implements KeyEvent.Callback{
 
         ////////////////////////////////
     	Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();    	
-        mDimension = display.getWidth();
+        mDimensionWidth = display.getWidth();
         mDimensionHeight = display.getHeight();
+        
+        mGameV.setDisplayWidth(mDimensionWidth);
+        mGameV.setDisplayHeight(mDimensionHeight);
         
         mConfig = this.getResources().getConfiguration();
         
@@ -371,35 +328,35 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         	mGameV.setScreenOrientation(GameValues.ORIENTATION_PORTRAIT);
         }
         
-        panelH = mDimension;
+        panelH = mDimensionWidth;
         panelV = 192;
         screenHeight = display.getHeight();
         
         if(mGameV.getScreenOrientation() == GameValues.ORIENTATION_PORTRAIT) {
         
-        	if ( screenHeight - ((192 * 2) + (mDimension/5) * 3) > 0 ) {
+        	if ( screenHeight - ((192 * 2) + (mDimensionWidth/5) * 3) > 0 ) {
         		mGameV.setDoubleScreen(true);
         		panelV = 192 * 2;
-        		if (mDimension / 16 > 32) panelH = 256 * 2;
+        		if (mDimensionWidth / 16 > 32) panelH = 256 * 2;
         	}
-        	if (!mGameV.isDoubleScreen()) panelH = 256;
-        
+        	//else panelH = mDimension
         }
         else if (mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE 
         		&& mConfig.keyboard != Configuration.KEYBOARD_NOKEYS &&
         		mConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO
         		) {
         	
-        	panelH = mDimension;
+        	panelH = mDimensionWidth;
         	panelV = mDimensionHeight;
         }
         else if (mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE) {
         	//put screen with touch buttons
-        	mPutGameKeys = true;
+        	//mPutGameKeys = true;
+        	mGameV.setPutGameKeys(true);
         }
         
         
-        mGameV.setDisplayWidth(mDimension);
+        mGameV.setDisplayWidth(mDimensionWidth);
         ////////////////////////////////
         
     }
