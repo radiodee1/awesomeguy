@@ -159,5 +159,37 @@ public class MovementValues {
 	public void setVMove(int mVMove) {
 		this.mVMove = mVMove;
 	}
+
+	public int getDirectionKeyUp() {
+		return directionKeyUp;
+	}
+
+	public void setDirectionKeyUp(int directionKeyUp) {
+		this.directionKeyUp = directionKeyUp;
+	}
+
+	public int getDirectionKeyDown() {
+		return directionKeyDown;
+	}
+
+	public void setDirectionKeyDown(int directionKeyDown) {
+		this.directionKeyDown = directionKeyDown;
+	}
+
+	public int getDirectionKeyLeft() {
+		return directionKeyLeft;
+	}
+
+	public void setDirectionKeyLeft(int directionKeyLeft) {
+		this.directionKeyLeft = directionKeyLeft;
+	}
+
+	public int getDirectionKeyRight() {
+		return directionKeyRight;
+	}
+
+	public void setDirectionKeyRight(int directionKeyRight) {
+		this.directionKeyRight = directionKeyRight;
+	}
 	
 }

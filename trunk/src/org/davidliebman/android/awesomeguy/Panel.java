@@ -507,7 +507,8 @@ public  class Panel  extends SurfaceView  {
 		//floor
 		if (mPatternFloor.isBottom()) {
 			canFall = false;
-			
+			mMovementV.setDirectionKeyDown(0);
+			if (y > 0) y = 0;
 		}
 		
 		int mTestBottomY = mSprite.getMapPosY() + mSprite.getBottomBB() - 4;
