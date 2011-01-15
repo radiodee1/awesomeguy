@@ -37,7 +37,7 @@ public class GameValues {
 	/* screen size */
 	private boolean mDoubleScreen = false;
 	private int mScreenTilesHMod = this.SCREEN_TILES_H;
-	private int mDisplayWidth;
+	private int mDisplayWidth, mDisplayHeight, mMeasuredWidth, mMeasuredHeight;
 	private int mViewH, mViewW;
 	
 	/* screen orientation */
@@ -45,6 +45,10 @@ public class GameValues {
 	public static final int ORIENTATION_PORTRAIT = 2;
 	
 	private int mScreenOrientation;
+	private boolean mPutGameKeys = false;
+	private float mScaleH = 1; 
+	private float mScaleV = 1;
+	private int mScreenTitle = 20;
 	
 	/* game progress */
 	private Record mGuyScore = new Record();
@@ -70,18 +74,39 @@ public class GameValues {
 	private ArrayList<Integer> mXmlLevel = new ArrayList<Integer>();
 	private InitBackground.LevelList mLevelList;
 	
-	public boolean isDoubleScreen() {
-		return mDoubleScreen;
+	
+	/* first part of screen size and orientation stuff */
+	
+	public int getMeasuredWidth() {
+		return mMeasuredWidth;
+	}
+	public void setMeasuredWidth(int mMeasuredWidth) {
+		this.mMeasuredWidth = mMeasuredWidth;
+	}
+	public int getMeasuredHeight() {
+		return mMeasuredHeight;
+	}
+	public void setMeasuredHeight(int mMeasuredHeight) {
+		this.mMeasuredHeight = mMeasuredHeight;
 	}
 	public void setDoubleScreen(boolean mDoubleScreen) {
 		this.mDoubleScreen = mDoubleScreen;
 	}
-	
+	public boolean isDoubleScreen() {
+		return mDoubleScreen;
+	}
 	public int getDisplayWidth() {
 		return mDisplayWidth;
 	}
 	public void setDisplayWidth(int mDisplayWidth) {
 		this.mDisplayWidth = mDisplayWidth;
+	}
+	
+	public int getDisplayHeight() {
+		return mDisplayHeight;
+	}
+	public void setDisplayHeight(int mDisplayHeight) {
+		this.mDisplayHeight = mDisplayHeight;
 	}
 	public int getScreenTilesHMod() {
 		if (isDoubleScreen()) {
@@ -353,6 +378,44 @@ public class GameValues {
 	}
 	public void setViewW(int mViewW) {
 		this.mViewW = mViewW;
+	}
+	public boolean isPutGameKeys() {
+		return mPutGameKeys;
+	}
+	public void setPutGameKeys(boolean mPutGameKeys) {
+		this.mPutGameKeys = mPutGameKeys;
+	}
+	public float getScaleH() {
+		if (this.isDoubleScreen() && 
+				this.getScreenOrientation() == ORIENTATION_PORTRAIT) {
+			mScaleH = 2;
+		}
+		else {
+			mScaleH = (float)this.mDisplayWidth/256;
+		}
+		return mScaleH;
+	}
+	public void setScaleH(int mScaleH) {
+		this.mScaleH = mScaleH;
+	}
+	public float getScaleV() {
+		if (this.isDoubleScreen() && 
+				this.getScreenOrientation() == ORIENTATION_PORTRAIT) {
+			mScaleV = 2;
+		}
+		else if (this.getScreenOrientation() == ORIENTATION_PORTRAIT) {
+			mScaleV = 1;
+		}
+		else if (this.isPutGameKeys()) {
+			mScaleV = (float)(this.mDisplayHeight - (mScreenTitle + 30))/192;
+		}
+		else if (!this.isPutGameKeys()) {
+			mScaleV = (float)(this.mDisplayHeight - mScreenTitle)/192;
+		}
+		return mScaleV;
+	}
+	public void setScaleV(int mScaleV) {
+		this.mScaleV = mScaleV;
 	}
 	
 	

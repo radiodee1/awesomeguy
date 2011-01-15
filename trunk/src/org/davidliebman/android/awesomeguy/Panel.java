@@ -16,7 +16,7 @@ public  class Panel  extends SurfaceView  {
 
 	private MovementValues mMovementV;
 	private Record mHighScores;
-	private int mDisplayWidth;
+	private int mDisplayViewWidth;
 	private Matrix mMatrix;
 	
 	private int scrollX, scrollY;
@@ -116,25 +116,28 @@ public  class Panel  extends SurfaceView  {
     	int displayWidth = display.getWidth();
     	int displayHeight = display.getHeight();
 		
-		if ( displayWidth < 256 * 2 ) {
-			mDisplayWidth = displayWidth;
-		}
-		else {
-			mDisplayWidth = 256 * 2;
-		}
-		
-		if (!mGameV.isDoubleScreen()) {
-			mScaleH = 1;
-			mScaleV = 1;
-			mDisplayWidth = 256;
-		}
-
-		if(mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE) {
+    	if(mGameV.getScreenOrientation() == GameValues.ORIENTATION_PORTRAIT) {
+	    	
+			if ( displayWidth < 256 * 2 ) {
+				mDisplayViewWidth = mGameV.getDisplayWidth();//displayWidth;
+				mScaleH = mGameV.getScaleH();
+			}
+			else {
+				mDisplayViewWidth = 256 * 2;
+			}
 			
-			mScaleH = (float)displayWidth/256;//  192;
-			//mScaleH = (float)mGameV.getViewW()/256;
-			mScaleV = ((float)displayHeight-35)/192;
-			//mScaleV = (float)mGameV.getViewH()/192;
+			if (!mGameV.isDoubleScreen()) {
+				mScaleH = mGameV.getScaleH();
+				mScaleV = 1;
+				mDisplayViewWidth = 256;
+			}
+			
+    	}
+    	else if(mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE) {
+			mScaleH = mGameV.getScaleH();
+			mScaleV = mGameV.getScaleV();
+			//mScaleH = (float)displayWidth/256;//  192;
+			//mScaleV = ((float)displayHeight-35)/192;
 		}
 		
 		/* paint options BitmapFactory.Options */
@@ -231,7 +234,7 @@ public  class Panel  extends SurfaceView  {
 		this.setMovingPlatformData(platform_a);
 		
 		/* JNI display size setting */
-		mGameV.setDisplayWidth(mDisplayWidth);
+		//mGameV.setDisplayWidth(mDisplayViewWidth); // TODO: check if this is used here
 		setScreenData(mGameV.getScreenTilesHMod(), 24);
 		
 		/* JNI Monster Collision setting */
@@ -834,13 +837,13 @@ public  class Panel  extends SurfaceView  {
 		int tilesMeasurement;
 
 		if (mGameV.isDoubleScreen()) {
-			tilesMeasurement = ((this.mDisplayWidth / 2 ) / 8) ;
+			tilesMeasurement = ((this.mDisplayViewWidth / 2 ) / 8) ;
 			if (tilesMeasurement > 32 ) tilesMeasurement = 32;
 			this.mScreenW = tilesMeasurement * 8;
 			//if (tilesMeasurement * 16 < this.mDisplayWidth) tilesMeasurement ++;
 		}
 		else {
-			this.mScreenW = this.mDisplayWidth;
+			this.mScreenW = this.mDisplayViewWidth;
 			tilesMeasurement = 32;
 		}
 		
