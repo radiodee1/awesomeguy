@@ -1,3 +1,0 @@
-set solib-search-path /home/dave/workspace/awesomeguy/obj/local/armeabi
-directory /home/dave/bin/android-ndk-r4b/build/platforms/android-5/arch-arm/usr/include
-directory /home/dave/workspace/awesomeguy/jni
