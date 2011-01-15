@@ -45,10 +45,8 @@ public class GameStart extends Activity implements KeyEvent.Callback{
 	private GameValues mGameV = new GameValues();
 	private MovementValues mMovementV = new MovementValues();
 	private InitBackground mBackground ;
-    //private Canvas mCanvas;
     private FrameLayout mBotFrame;
     private InnerGameLoop mGameLoopBot;
-    //private InitBackground.LevelList mLevelList;
 	private InitBackground.ParseXML mParser = new InitBackground.ParseXML(this);
 
     
@@ -106,7 +104,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         
         requestWindowFeature(Window.FEATURE_NO_TITLE);
        
-        this.setOrientationVars(); // TODO: remove?
+        this.setOrientationVars(); 
         ////////////////////////////////
         
         
@@ -118,8 +116,10 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         
         
         /* assemble components for top of screen */
-        mRLayout.setBackgroundColor(Color.BLUE);
-        mRLayout.setBackgroundResource(R.drawable.background);
+        mRLayout.setBackgroundColor(Color.BLACK);
+        if (mGameV.getScreenOrientation() != GameValues.ORIENTATION_LANDSCAPE) {
+        	mRLayout.setBackgroundResource(R.drawable.background);
+        }
         ViewGroup.LayoutParams mRLayoutParams = new 
         	ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);//.WRAP_CONTENT);
         mRLayout.setLayoutParams(mRLayoutParams);
@@ -129,25 +129,20 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         mGameV.setViewH(this.mRLayout.getHeight());
         mGameV.setViewW(this.mRLayout.getWidth());
         
-        //mTLayoutOuter.setBackgroundColor(Color.BLACK);
         ViewGroup.LayoutParams mTLayoutOuterParams = new 
     		ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);//480,WRAP_CONTENT
         mTLayoutOuter.setLayoutParams(mTLayoutOuterParams);
         
         
-        //mTLayout.setBackgroundColor(Color.BLACK);
         ViewGroup.LayoutParams mTLayoutParams = new 
     		ViewGroup.LayoutParams(mDimensionWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
         mTLayout.setLayoutParams(mTLayoutParams);
         
         mGameRow = new TableLayout(this);
-        //mGameRow.setBackgroundColor(Color.GRAY);
-        //mGameRow.setBackgroundResource(R.drawable.background);
         ViewGroup.LayoutParams mGameRowParams = new 
 			ViewGroup.LayoutParams(mDimensionWidth,panelV);
         mGameRow.setLayoutParams(mGameRowParams);
         
-        //mFLayoutBot.setBackgroundColor(Color.BLACK);
         ViewGroup.LayoutParams mFLayoutBotParams = new 
 			ViewGroup.LayoutParams(panelH,panelV);
         mFLayoutBot.setLayoutParams(mFLayoutBotParams);
@@ -188,14 +183,12 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     	
         mRLayout.addView((View)mTLayoutOuter);
         mTLayoutOuter.addView((View)mTLayout);
-        //mTLayout.addView((View)mFLayoutBot);
         mTLayout.addView((View)this.mSpaceView);
 
         
         mTLayout.addView((View)mGameRow	);
 
         mGameRow.addView((View)mFLayoutBot);
-        //mTLayout.addView((View) mGameRow);
         
         if (!mGameV.isDoubleScreen() || panelH == 256 * 2) {
         	
@@ -284,7 +277,6 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     	}
     	
     	mBackground = new InitBackground(mGameV, this, mLookForXml);
-        //mLevelList = mGameV.getLevelList();
 
     	mFLayoutBot.addView((View)mPanelBot);
     	
@@ -295,7 +287,6 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     	mGameLoopBot = new InnerGameLoop(this);
     	
     	/* set loop to 'endless' */
-    	//mGameFunct.setGameRunning(true);
     	mGameLoopBot.setGameRunning(true);
     	
     	this.getSavedRoom();
@@ -337,16 +328,12 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         if(mGameV.getScreenOrientation() == GameValues.ORIENTATION_PORTRAIT) {
         	if ( screenHeight - ((192 * 2) + (mDimensionWidth/5) * 3) > 0 ) {
         		mGameV.setDoubleScreen(true);
-        		//panelV = (int)(192 * mGameV.getScaleV());
-        		//panelH = mDimensionWidth;
-        		//if (mDimensionWidth / 16 > 32) panelH = (int)(256 * mGameV.getScaleH());
+        		
         	}
         	
         	if ( screenHeight - ((192 * mGameV.getScaleH()) + (mDimensionWidth/5) * 3) > 0 ) {
-        		//mGameV.setDoubleScreen(true);
         		panelV = (int)(192 * mGameV.getScaleV());
         		panelH = mDimensionWidth;
-        		//if (mDimensionWidth / 16 > 32) panelH = (int)(256 * mGameV.getScaleH());
         	}
         	
         	
@@ -357,7 +344,9 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         		) {
         	
         	panelH = mDimensionWidth;
-        	panelV = mDimensionHeight;
+        	//panelV = mDimensionHeight;
+    		panelV = (int)(192 * mGameV.getScaleV());
+
         }
         else if (mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE) {
         	//put screen with touch buttons
