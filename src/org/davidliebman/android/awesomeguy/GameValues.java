@@ -360,6 +360,7 @@ public class GameValues {
 	public void setLevelList(InitBackground.LevelList mLevelList) {
 		this.mLevelList = mLevelList;
 	}
+	
 	/*  screen orientation */
 	public int getScreenOrientation() {
 		return mScreenOrientation;
