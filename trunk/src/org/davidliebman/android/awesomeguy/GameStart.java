@@ -71,6 +71,8 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     private int mDimensionWidth, mDimensionHeight;
     private Context mContext;
     
+    private boolean mTestLandscapeButtons = true;
+    
     private ArrayList<TouchButton> mButtonList = new ArrayList<TouchButton>();
     
 	public static final String AWESOME_NAME = new String("org.awesomeguy");
@@ -273,7 +275,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     		mRLayoutGamepad.addView((View)new GamePad(this, true, mDimensionWidth));
     	}
     	else if (mGameV.isPutGameKeys()) {
-    		mRLayoutGamepad.addView((View)new GameKeys(this, mDimensionWidth, true));
+    		mRLayoutGamepad.addView((View)new GameKeys(this, 30 , true));
     	}
     	
     	mBackground = new InitBackground(mGameV, this, mLookForXml);
@@ -339,8 +341,9 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         	
         }
         else if (mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE 
-        		&& mConfig.keyboard != Configuration.KEYBOARD_NOKEYS &&
-        		mConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO
+        		&& ((mConfig.keyboard != Configuration.KEYBOARD_NOKEYS &&
+        		mConfig.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO) &&
+        		this.mTestLandscapeButtons == false)
         		) {
         	
         	panelH = mDimensionWidth;
@@ -348,10 +351,10 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     		panelV = (int)(192 * mGameV.getScaleV());
 
         }
-        else if (mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE) {
+        else if (mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE && this.mTestLandscapeButtons) {
         	//put screen with touch buttons
-        	//mPutGameKeys = true;
         	mGameV.setPutGameKeys(true);
+        	panelV = (int) (192 * mGameV.getScaleV());
         }
         
         
