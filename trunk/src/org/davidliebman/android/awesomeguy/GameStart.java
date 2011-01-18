@@ -56,7 +56,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     private FrameLayout mFLayoutBot ;
     private Panel mPanelBot ;
 	
-    private View mSpaceView, mSpaceViewSecond,mSpaceViewThird, mSepView;
+    private View mSpaceView, mSpaceViewSecond,mSpaceViewThird;//, mSepView;
     private TableLayout mGameRow;
     
     private RelativeLayout mRLayoutGamepad;
@@ -275,7 +275,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     		mRLayoutGamepad.addView((View)new GamePad(this, true, mDimensionWidth));
     	}
     	else if (mGameV.isPutGameKeys()) {
-    		mRLayoutGamepad.addView((View)new GameKeys(this, GameValues.LANDSCAPE_BUTTON_PIXEL , true));
+    		mRLayoutGamepad.addView((View)new GameKeys(this, mGameV.getLandscapeButtonPixel() , true));
     	}
     	
     	mBackground = new InitBackground(mGameV, this, mLookForXml);
@@ -553,8 +553,8 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     	public GameKeys(Context c, int widthDimension, boolean mMultiTouch) {
     		super (c);
     		
-    		int mButtonHeight = widthDimension/5;
-    		int mButtonWidth = widthDimension/5;
+    		int mButtonHeight = widthDimension;
+    		int mButtonWidth = widthDimension;
     		
     		TableRow mTRow = new TableRow(c);
     		TouchButton mButton1 = new TouchButton(c, mMultiTouch ,R.drawable.button_left, mButtonWidth, mButtonHeight, 0, "button_left", MovementValues.KEY_LEFT);
@@ -564,10 +564,40 @@ public class GameStart extends Activity implements KeyEvent.Callback{
 
     		TouchButton mButton5 = new TouchButton(c, mMultiTouch ,R.drawable.button_b, mButtonWidth, mButtonHeight, 0, "button_b", MovementValues.KEY_B);
 
+    		/*
+            View mDeviderView1 = new View(c);
+            mDeviderView1.setBackgroundColor(Color.RED);
+            ViewGroup.LayoutParams mLayout1 = new 
+        		ViewGroup.LayoutParams(2, mButtonHeight);
+            mDeviderView1.setLayoutParams(mLayout1);
+    		
+            View mDeviderView2 = new View(c);
+            mDeviderView2.setBackgroundColor(Color.BLACK);
+            ViewGroup.LayoutParams mLayout2 = new 
+        		ViewGroup.LayoutParams(2, mButtonHeight);
+            mDeviderView2.setLayoutParams(mLayout2);
+            
+            View mDeviderView3 = new View(c);
+            mDeviderView3.setBackgroundColor(Color.BLACK);
+            ViewGroup.LayoutParams mLayout3 = new 
+        		ViewGroup.LayoutParams(2, mButtonHeight);
+            mDeviderView3.setLayoutParams(mLayout3);
+            
+            View mDeviderView4 = new View(c);
+            mDeviderView4.setBackgroundColor(Color.BLACK);
+            ViewGroup.LayoutParams mLayout4 = new 
+        		ViewGroup.LayoutParams(2, mButtonHeight);
+            mDeviderView4.setLayoutParams(mLayout4);
+            */
+    		
     		mTRow.addView((View)mButton1);
+    		//mTRow.addView(mDeviderView1);
     		mTRow.addView((View)mButton2);
+    		//mTRow.addView(mDeviderView2);
     		mTRow.addView((View)mButton3);
+    		//mTRow.addView(mDeviderView3);
     		mTRow.addView((View)mButton4);
+    		//mTRow.addView(mDeviderView4);
     		mTRow.addView((View)mButton5);
 
     		this.addView((View)mTRow);

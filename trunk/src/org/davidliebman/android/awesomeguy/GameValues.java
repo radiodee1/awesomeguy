@@ -49,7 +49,8 @@ public class GameValues {
 	private float mScaleH = 1; 
 	private float mScaleV = 1;
 	private int mScreenTitle = 20;
-	public static final int LANDSCAPE_BUTTON_PIXEL = 30;
+	private float mLandscapeButtonPixelPercent;
+	public static final float LANDSCAPE_BUTTON_PERCENT = (float).20;
 	
 	/* game progress */
 	private Record mGuyScore = new Record();
@@ -410,7 +411,9 @@ public class GameValues {
 			//mScaleV = getScaleH();
 		}
 		else if (this.isPutGameKeys()) {
-			mScaleV = (float)(this.mDisplayHeight - (mScreenTitle + LANDSCAPE_BUTTON_PIXEL))/192;
+			//mScaleV = (float)(this.mDisplayHeight - (mScreenTitle + LANDSCAPE_BUTTON_PIXEL))/192;
+			mScaleV = (float)(this.mDisplayHeight - (mScreenTitle + this.getLandscapeButtonPixel()))/192;
+
 		}
 		else if (!this.isPutGameKeys()) {
 			mScaleV = (float)(this.mDisplayHeight - mScreenTitle)/192;
@@ -425,6 +428,16 @@ public class GameValues {
 	}
 	public void setScreenTitle(int mScreenTitle) {
 		this.mScreenTitle = mScreenTitle;
+	}
+	public int getLandscapeButtonPixel() {
+		//return mLandscapeButtonPixel;
+		if (this.mLandscapeButtonPixelPercent == 0) {
+			this.mLandscapeButtonPixelPercent =  LANDSCAPE_BUTTON_PERCENT;
+		}
+		return (int)(this.mDisplayHeight * this.mLandscapeButtonPixelPercent);
+	}
+	public void setLandscapeButtonPixelPercent(int mPercent) {
+		this.mLandscapeButtonPixelPercent = mPercent;
 	}
 	
 	
