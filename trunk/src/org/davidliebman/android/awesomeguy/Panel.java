@@ -463,7 +463,7 @@ public  class Panel  extends SurfaceView  {
 				pointToBlockNum(mTestRightSkipX, mTestBottomY - 8) != mGameV.mBlock &&
 				pointToBlockNum(mTestRightSkipX, mTestBottomY - 16) != mGameV.mBlock) {
 			canFall = false;
-			y = - (8 + mMovementV.getVMove());
+			y = - ( mMovementV.getVMove());
 			x = x + mMovementV.getHMove();
 			mSkip = true;
 		}
@@ -475,7 +475,7 @@ public  class Panel  extends SurfaceView  {
 				pointToBlockNum(mTestLeftSkipX, mTestBottomY - 8) != mGameV.mBlock &&
 				pointToBlockNum(mTestLeftSkipX, mTestBottomY - 16) != mGameV.mBlock) {
 			canFall = false;
-			y = -(8 + mMovementV.getVMove());
+			y = -( mMovementV.getVMove());
 			x = x - mMovementV.getHMove();
 			mSkip = true;
 		}
