@@ -275,7 +275,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     		mRLayoutGamepad.addView((View)new GamePad(this, true, mDimensionWidth));
     	}
     	else if (mGameV.isPutGameKeys()) {
-    		mRLayoutGamepad.addView((View)new GameKeys(this, GameValues.LANDSCAPE_BUTTON_H , true));
+    		mRLayoutGamepad.addView((View)new GameKeys(this, GameValues.LANDSCAPE_BUTTON_PIXEL , true));
     	}
     	
     	mBackground = new InitBackground(mGameV, this, mLookForXml);
