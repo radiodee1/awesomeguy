@@ -4,6 +4,12 @@
     <string name="main_screen">Game Play</string>
     <string name="splash_screen">Awesomeguy</string>
     <string name="room_prompt">Select a starting level</string>
+        <string name="app_gamestart">Start Game</string>
+        <string name="app_help">Help</string>
+        <string name="app_options">Options</string>
+        <string name="app_credits">Credits</string>
+        <string name="app_players">Players</string>
+        <string name="app_highscores">High Scores</string>
     
 
 </resources>
