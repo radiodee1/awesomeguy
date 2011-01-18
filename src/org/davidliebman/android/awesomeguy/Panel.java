@@ -449,7 +449,6 @@ public  class Panel  extends SurfaceView  {
 		DetectionPattern mPatternFloor = makeDetectionPattern(mGameV.mBlock, 1);
 		DetectionPattern mPatternLadder = makeDetectionPattern(mGameV.mLadder,2);
 		DetectionPattern mPatternSpace = makeDetectionPattern(mGameV.mSpace, 3);
-		//int mDirectionLR = mMovementV.getDirectionLR();
 		
 		int mTestBottomY = mSprite.getMapPosY() + mSprite.getBottomBB() - 4;
 		int mTestRightSkipX = mSprite.getMapPosX() + mSprite.getRightBB() + (mMovementV.getHMove() + 1);
@@ -458,7 +457,6 @@ public  class Panel  extends SurfaceView  {
 		
 		//skip RIGHT
 		if (x > 0 &&  
-				//pointToBlockNum(mTestRightSkipX, mTestBottomY) == mGameV.mBlock &&
 				mPattern.isLowerRight() &&
 				pointToBlockNum(mTestRightSkipX, mTestBottomY - 8) != mGameV.mBlock &&
 				pointToBlockNum(mTestRightSkipX, mTestBottomY - 16) != mGameV.mBlock) {
@@ -470,7 +468,6 @@ public  class Panel  extends SurfaceView  {
 		
 		//skip LEFT
 		if ( x < 0 && 
-				//pointToBlockNum(mTestLeftSkipX, mTestBottomY) == mGameV.mBlock &&
 				mPattern.isLowerLeft() &&
 				pointToBlockNum(mTestLeftSkipX, mTestBottomY - 8) != mGameV.mBlock &&
 				pointToBlockNum(mTestLeftSkipX, mTestBottomY - 16) != mGameV.mBlock) {
@@ -480,14 +477,6 @@ public  class Panel  extends SurfaceView  {
 			mSkip = true;
 		}
 		
-		// jump a little at top of ladder
-		/*
-		if (y < 0 && mPatternLadder.isBottom() && !mPatternLadder.isLowerRight() && !mPatternLadder.isLowerLeft()) {
-			canFall = false;
-			y = -(mMovementV.getVMove());
-			mSkip = true;
-		}
-		*/
 		
 		//drop when you hit a wall
 
