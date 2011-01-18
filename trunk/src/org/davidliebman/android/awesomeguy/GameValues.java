@@ -49,7 +49,7 @@ public class GameValues {
 	private float mScaleH = 1; 
 	private float mScaleV = 1;
 	private int mScreenTitle = 20;
-	public static final int LANDSCAPE_BUTTON_H = 30;
+	public static final int LANDSCAPE_BUTTON_PIXEL = 30;
 	
 	/* game progress */
 	private Record mGuyScore = new Record();
@@ -410,7 +410,7 @@ public class GameValues {
 			//mScaleV = getScaleH();
 		}
 		else if (this.isPutGameKeys()) {
-			mScaleV = (float)(this.mDisplayHeight - (mScreenTitle + LANDSCAPE_BUTTON_H))/192;
+			mScaleV = (float)(this.mDisplayHeight - (mScreenTitle + LANDSCAPE_BUTTON_PIXEL))/192;
 		}
 		else if (!this.isPutGameKeys()) {
 			mScaleV = (float)(this.mDisplayHeight - mScreenTitle)/192;

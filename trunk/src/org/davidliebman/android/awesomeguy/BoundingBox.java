@@ -173,20 +173,6 @@ public class BoundingBox {
 		return test;
 	}
 
-	public static int getCenterBlock(BoundingBox guy) {
-		int guyCenter, centerBlock;
-
-		guyCenter = (guy.left + guy.right ) / 2;
-
-		centerBlock = guyCenter / 8;
-		if(guyCenter - (centerBlock*8) > 4) centerBlock ++;
-
-		return centerBlock;
-	}
-
-	public int getCenterBlock() {
-		return getCenterBlock(this);
-	}
 	
 	public int getX() {
 		return x;

@@ -392,31 +392,7 @@ public  class Panel  extends SurfaceView  {
 		}
 
 		
-		
-		
-		
-		int center = ((guyBox.getLeft() + guyBox.getRight() ) / 2) /8; 
-		int actual = ((guyBox.getLeft() + guyBox.getRight() ) / 2) - (center *8);
-		int centerBlock = BoundingBox.getCenterBlock(guyBox);
-		//if (center == centerBlock) centerTest = true;
-
-
-		/* BLOCK TEST */
-		/*
-			if (actual > 6) {
-				if(!boundaryRight) center ++;
-				collisionWithBlocks(   center , END);
-			}
-			else if (actual < 2) {
-				if(!boundaryLeft) center --;
-				collisionWithBlocks(   center , START);
-			}
-			else {
-				collisionWithBlocks(   center , MIDDLE);
-			}
-		*/
-		
-		collisionWithBlocksRevised();
+		collisionWithBlocks();
 
 		
 		/* PLATFORMS */
@@ -424,39 +400,25 @@ public  class Panel  extends SurfaceView  {
 		
 		
 		/* JUMP */
-		if (keyB) {
+		
+		//used to test for jumping
+		
+		SpriteInfo mSprite = mGameV.getSprite(0);
+		int mTestCenterX = mSprite.getMapPosX() + (mSprite.getLeftBB() + mSprite.getRightBB()) /2;
+		int mTestBelowY = mSprite.getMapPosY() + mSprite.getBottomBB() + 2;
 
-			if ( jumptime <= 0 && y == 0 && actual >= 2 && actual <= 6 &&
-					(mGameV.getObjectsCellReversed(mapY/8 -1, centerBlock) != mGameV.mBlock  ||
-							mGameV.getObjectsCellReversed(mapY/8 - 1, centerBlock) != mGameV.mBlock) && // mapX/8 + 1 
-							(mGameV.getObjectsCellReversed(mapY/8 + 2, centerBlock) == mGameV.mBlock || // mapX/8 + 1 
-									ladderTest || guyBox.getBottom() == mGameV.getMapV() * 8 || canJump) ) {
-
-				jumptime = mMovementV.getVMove() * jumpHeight;
-
-			} 
-			else  if ( jumptime <= 0 && y == 0 && actual > 6 &&
-					(mGameV.getObjectsCellReversed(mapY/8 -1,centerBlock + 1) != mGameV.mBlock ||
-							mGameV.getObjectsCellReversed(mapY/8 -1,centerBlock + 1) != mGameV.mBlock) && // mapX/8 + 1 
-							(mGameV.getObjectsCellReversed(mapY/8 + 2,centerBlock + 1) == mGameV.mBlock || // mapX/8 + 1 
-									ladderTest || guyBox.getBottom() == mGameV.getMapV() * 8 || canJump) ) {
-
-				jumptime = mMovementV.getVMove() * jumpHeight;
-
-			} 
-			else if ( jumptime <= 0 && y == 0 && actual < 2 &&
-					(mGameV.getObjectsCellReversed(mapY/8 -1,centerBlock - 1) != mGameV.mBlock ||
-							mGameV.getObjectsCellReversed(mapY/8 -1,centerBlock -1) != mGameV.mBlock) && // mapX/8 + 1 
-							(mGameV.getObjectsCellReversed(mapY/8 + 2,centerBlock - 1) == mGameV.mBlock || // mapX/8 + 1 
-									ladderTest || guyBox.getBottom() == mGameV.getMapV() * 8 || canJump) ) {
-
-				jumptime = mMovementV.getVMove() * jumpHeight;
-
-			} 
+		if(jumptime <= 0 && y == 0 &&  keyB &&
+				(pointToBlockNum(mTestCenterX,mTestBelowY - 16) != mGameV.mBlock && 
+				pointToBlockNum(mTestCenterX,mTestBelowY - 8) != mGameV.mBlock) && 
+				(pointToBlockNum(mTestCenterX, mTestBelowY) == mGameV.mBlock || 
+				ladderTest || guyBox.getBottom() == mGameV.getMapV() * 8 || canJump)) {
+			
+			jumptime = mMovementV.getVMove() * jumpHeight;
 			keyB = false;
 		}
-
-
+		
+		
+			
 		/* 
 		 * Here we implement the gravity.
 		 */
@@ -479,59 +441,94 @@ public  class Panel  extends SurfaceView  {
 		
 	}
 
-	private void collisionWithBlocksRevised() {
-		//boolean mTemp = true;
+	private void collisionWithBlocks() {
+		boolean mSkip = false;
 		SpriteInfo mSprite = mGameV.getSprite(0);
 		
-		//drop when you hit a wall
 		DetectionPattern mPattern = makeDetectionPattern(mGameV.mBlock, mMovementV.getHMove());
 		DetectionPattern mPatternFloor = makeDetectionPattern(mGameV.mBlock, 1);
+		DetectionPattern mPatternLadder = makeDetectionPattern(mGameV.mLadder,2);
+		DetectionPattern mPatternSpace = makeDetectionPattern(mGameV.mSpace, 3);
+		//int mDirectionLR = mMovementV.getDirectionLR();
 		
-		if ( !mPatternFloor.isBottom() &&
+		int mTestBottomY = mSprite.getMapPosY() + mSprite.getBottomBB() - 4;
+		int mTestRightSkipX = mSprite.getMapPosX() + mSprite.getRightBB() + (mMovementV.getHMove() + 1);
+		int mTestLeftSkipX = mSprite.getMapPosX() + mSprite.getLeftBB() - (mMovementV.getHMove() + 1);
+		
+		
+		//skip RIGHT
+		if (x > 0 &&  
+				//pointToBlockNum(mTestRightSkipX, mTestBottomY) == mGameV.mBlock &&
+				mPattern.isLowerRight() &&
+				pointToBlockNum(mTestRightSkipX, mTestBottomY - 8) != mGameV.mBlock &&
+				pointToBlockNum(mTestRightSkipX, mTestBottomY - 16) != mGameV.mBlock) {
+			canFall = false;
+			y = - (8 + mMovementV.getVMove());
+			x = x + mMovementV.getHMove();
+			mSkip = true;
+		}
+		
+		//skip LEFT
+		if ( x < 0 && 
+				//pointToBlockNum(mTestLeftSkipX, mTestBottomY) == mGameV.mBlock &&
+				mPattern.isLowerLeft() &&
+				pointToBlockNum(mTestLeftSkipX, mTestBottomY - 8) != mGameV.mBlock &&
+				pointToBlockNum(mTestLeftSkipX, mTestBottomY - 16) != mGameV.mBlock) {
+			canFall = false;
+			y = -(8 + mMovementV.getVMove());
+			x = x - mMovementV.getHMove();
+			mSkip = true;
+		}
+		
+		// jump a little at top of ladder
+		/*
+		if (y < 0 && mPatternLadder.isBottom() && !mPatternLadder.isLowerRight() && !mPatternLadder.isLowerLeft()) {
+			canFall = false;
+			y = -(mMovementV.getVMove());
+			mSkip = true;
+		}
+		*/
+		
+		//drop when you hit a wall
+
+		if ( !mPatternFloor.isBottom() && !ladderTest && !mSkip &&
 				(mPattern.isUpperLeft() || mPattern.isUpperRight() || mPattern.isLowerLeft() || mPattern.isLowerRight())) {
 			y = mMovementV.getVMove();
-			int mDirection = mMovementV.getDirectionLR();
-			if (mDirection == MovementValues.KEY_LEFT && (mPattern.isLowerLeft() || mPattern.isUpperLeft())) {
+
+			if (x < 0 && (mPattern.isLowerLeft() || mPattern.isUpperLeft())) {
 				x = 0;
 				canFall = true;
 			}
-			if (mDirection == MovementValues.KEY_RIGHT && (mPattern.isLowerRight() || mPattern.isUpperRight())) {
+			if (x > 0 && (mPattern.isLowerRight() || mPattern.isUpperRight())) {
 				x = 0;
 				canFall = true;
 			}
-			//x = 0;
-			//canFall = true;
+			
 			
 		}
 		
+		//stop when you hit a wall
+		if (!mSkip) {	
+			if (x < 0  && ((mPattern.isLowerLeft() && !mPatternLadder.isBottom()) || 
+					mPattern.isUpperLeft()) 
+					&& !mPatternSpace.isLowerLeft()) {
+				x = 0;
+			}
+			if (x > 0  && ((mPattern.isLowerRight() && !mPatternLadder.isBottom()) || 
+					mPattern.isUpperRight()) 
+					&& !mPatternSpace.isLowerRight()) {
+				x = 0;
+			}
+		}
+		
 		//floor
-		if (mPatternFloor.isBottom()) {
+		if (mPatternFloor.isBottom() ) {
 			canFall = false;
 			mMovementV.setDirectionKeyDown(0);
 			if (y > 0) y = 0;
 		}
 		
-		int mTestBottomY = mSprite.getMapPosY() + mSprite.getBottomBB() - 4;
-		int mTestRightSkipX = mSprite.getMapPosX() + mSprite.getRightBB() + 2;
-		int mTestLeftSkipX = mSprite.getMapPosX() + mSprite.getLeftBB() - 2;
 		
-		//skip RIGHT
-		if (mMovementV.getDirectionLR() == mMovementV.KEY_RIGHT &&  
-				pointToBlockNum(mTestRightSkipX, mTestBottomY) == mGameV.mBlock && 
-				pointToBlockNum(mTestRightSkipX, mTestBottomY - 8) != mGameV.mBlock &&
-				pointToBlockNum(mTestRightSkipX, mTestBottomY - 16) != mGameV.mBlock) {
-			canFall = false;
-			y = - (8 + mMovementV.getVMove());
-		}
-		
-		//skip LEFT
-		if (mMovementV.getDirectionLR() == mMovementV.KEY_LEFT && 
-				pointToBlockNum(mTestLeftSkipX, mTestBottomY) == mGameV.mBlock &&
-				pointToBlockNum(mTestLeftSkipX, mTestBottomY - 8) != mGameV.mBlock &&
-				pointToBlockNum(mTestLeftSkipX, mTestBottomY - 16) != mGameV.mBlock) {
-			canFall = false;
-			y = -(8 + mMovementV.getVMove());
-		}
 		
 		//no HANGING
 		if (jumptime >=0 && !ladderTest && mPattern.ismTop()) {
@@ -541,231 +538,6 @@ public  class Panel  extends SurfaceView  {
 		}
 		
 		return;
-	}
-	
-	private boolean collisionWithBlocks(  int centerBlock , int boundaryTest) {
-		int i;
-		int below = 2;
-		int mapY = mGuySprite.getMapPosY();
-		i = mapY / 8;
-		if (mapY - (i *8) > 4) below --;
-		boolean keyLeft = false;
-		boolean keyRight = false;
-		//boolean keyUp = false;
-		boolean keyDown = false;
-
-		/* these are shortcuts for commonly used values in this function */
-		int centerBlockIm1 = mGameV.getObjectsCellReversed(i-1, centerBlock); // i minus 1
-		int centerBlockI = mGameV.getObjectsCellReversed(i, centerBlock);     // i
-		int centerBlockIp1 = mGameV.getObjectsCellReversed(i+1, centerBlock); // i plus 1
-		int centerBlockIp2 = mGameV.getObjectsCellReversed(i+2, centerBlock); // i plus 2
-		int centerBlockIpBelow = mGameV.getObjectsCellReversed(i+below, centerBlock); // i plus below
-
-		if (mMovementV.getDirectionLR() == MovementValues.KEY_LEFT) keyLeft = true;
-		if (mMovementV.getDirectionLR() == MovementValues.KEY_RIGHT) keyRight = true;
-		if (mMovementV.getDirectionUD() == MovementValues.KEY_DOWN) keyDown = true;
-		//if (mMovementV.getDirectionUD() == MovementValues.KEY_UP) keyUp = true;
-
-
-
-		//what if centerBlock is on the boundary??
-		if(centerBlock == mGameV.getMapH()) {
-			//y = 0;
-			canFall = false;
-			return false;
-		}
-
-
-		if(keyDown ) { // regular falling ... don't adjust y in case of ladders.
-			canFall = false;
-
-		}
-
-
-		if (// boundaryTest == MIDDLE &&
-				centerBlockIm1 != mGameV.mLadder && ladderTest == false) { 
-			// ladder above?
-			if (y > 0 ) y = 0;
-			canFall = false;
-		}
-		if (keyDown && ladderTest && 
-				centerBlockIp2 == mGameV.mBlock) { // bottom of ladder?
-			// don't go through floor!
-			y =0;
-			canFall = false;
-		}
-
-		if (jumptime > 0 && 
-				centerBlockI == mGameV.mBlock ){    // hit block from below
-			//y = V_MOVE * 2;
-			y = 0;
-			canFall = true;
-			jumptime =0;
-		}
-
-		// wall at RIGHT
-		if (keyRight && boundaryTest == END && 
-				centerBlockIp2 != mGameV.mBlock &&   // not on ground
-				(
-						centerBlockI== mGameV.mBlock ||      // one block to the right
-						centerBlockIp1== mGameV.mBlock )) {   // or another block to the right
-			canFall = true;
-			x =  0;
-
-		}
-		// wall at RIGHT and hanging
-		if (  boundaryTest == END && mGameV.getObjectsCellReversed(i+2,centerBlock-1) != mGameV.mBlock 
-				&& !ladderTest &&  // not on ground
-				(
-						centerBlockI == mGameV.mBlock ||      // one block to the right
-						centerBlockIp1 == mGameV.mBlock )) {   // or another block to the right
-			canFall = true;
-			x =  0;
-
-		}
-		// wall at RIGHT on ground
-		if (keyRight && boundaryTest == END && 
-				centerBlockIp2 == mGameV.mBlock&& // on ground 
-				centerBlockI == mGameV.mBlock) {     // block to the right // j + 2
-			x = 0;
-		}
-		
-		// wall at LEFT
-		if (keyLeft && boundaryTest == START && 
-				centerBlockIp2 != mGameV.mBlock && 
-				// not on ground
-				(
-						centerBlockI == mGameV.mBlock ||      // one block to the left
-						centerBlockIp1 == mGameV.mBlock)){ // or another block to the left
-			canFall = true;
-			x = 0;//- H_MOVE;
-		}
-		// wall at LEFT and hanging
-		if (  boundaryTest == START && mGameV.getObjectsCellReversed(i+2,centerBlock+1) != mGameV.mBlock 
-				&& !ladderTest &&   // not on ground
-				(
-						centerBlockI == mGameV.mBlock ||      // one block to the right
-						centerBlockIp1 == mGameV.mBlock )) {   // or another block to the right
-			canFall = true;
-			x =  0;
-
-		}
-		// wall at LEFT on ground
-		if (keyLeft && boundaryTest == START && 
-				centerBlockIp2 == mGameV.mBlock &&  // on ground
-				centerBlockI == mGameV.mBlock) {    // block to the left
-			x = 0;//- H_MOVE;
-		}
-		// skip RIGHT
-		if(keyRight  && 
-				centerBlockIp1 == mGameV.mBlock && 
-				centerBlockI != mGameV.mBlock && 
-				centerBlockIm1 != mGameV.mBlock ) { //y,x
-			canFall = false;
-			y = - (8 +  mMovementV.getVMove());
-		}
-		else if(keyRight && 
-				centerBlockIp1 == mGameV.mBlock) { //hit block from side
-			x = 0;
-
-		}
-
-		// skip LEFT
-		if(keyLeft && 
-				centerBlockIp1 == mGameV.mBlock && 
-				centerBlockI != mGameV.mBlock &&
-				centerBlockIm1 != mGameV.mBlock) {// j-1 j-1
-			canFall = false;
-			y = - (8 + mMovementV.getVMove());
-		}
-		else if(keyLeft && 
-				centerBlockIp1 == mGameV.mBlock ) { // hit block from side
-			x = 0;
-		}
-
-		// no hanging
-		if( 
-				centerBlockIp1 != mGameV.mBlock && 
-				centerBlockIp2 != mGameV.mBlock && 
-				centerBlockIm1== mGameV.mBlock && !ladderTest) { 
-			// no hanging from
-			// blocks by accident
-			//Log.v("functions","no hanging");
-
-			y = mMovementV.getVMove() ;//crucial?
-
-			canFall = true;
-			jumptime =0;
-		}
-
-		if(keyRight && 
-				centerBlockI== mGameV.mBlock && 
-				centerBlockIp1 == mGameV.mBlock && 
-				!ladderTest && boundaryTest == END) {                                         // hit wall
-			// no hanging from
-			// blocks by accident
-			x = 0 ;
-			canFall = true;
-
-		}
-		if(keyLeft && 
-				centerBlockI == mGameV.mBlock && 
-				centerBlockIp1 == mGameV.mBlock && 
-				!ladderTest && boundaryTest == START) {                                       // hit wall
-			// no hanging from
-			// blocks by accident
-			x = 0 ;
-			canFall = true;
-
-		}
-
-		if (jumptime <= 0 && //boundaryTest == MIDDLE && 
-				centerBlockIpBelow == mGameV.mBlock || 
-				centerBlockIpBelow == mGameV.mLadder
-
-		) { // i + 2
-			// if no space below, then don't fall.
-			//y = V_MOVE;
-			canFall = false;
-		}
-		if (jumptime <= 0 // && boundaryTest == MIDDLE 
-				&& 
-				centerBlockIpBelow != mGameV.mBlock && 
-				centerBlockIpBelow != mGameV.mLadder
-		){ // i + 2
-			// if space below, then fall.
-			//y = V_MOVE;
-			canFall = true;
-		}
-
-		//if no space above and guy is rising
-		if ((y < 0 && boundaryTest == MIDDLE && 
-				centerBlockIm1 == mGameV.mBlock) || 
-				(y < 0 && 
-						mGameV.getObjectsCellReversed(i-1,centerBlock+1) == mGameV.mBlock
-						&& boundaryTest == MIDDLE)) {
-
-			if (!ladderTest) y = 0;
-		}
-		//guy shouldn't sink at boundary of level
-		if (this.boundaryTest &&  
-				centerBlockIp2 == mGameV.mBlock) {
-			y = 0;
-
-		}
-		//ladders should work - no sliding at top of ladder
-		if (ladderTest) {
-			canFall = false;
-		}
-		// if you start to fall, and there's a ladder below you
-		// you should stop falling
-		if (!keyDown && ladderTest) {
-			if(y > 0) y = 0;
-		}
-		
-		
-		
-		return canFall;
 	}
 	
 	
@@ -1295,7 +1067,11 @@ public  class Panel  extends SurfaceView  {
 		int mTestLeftX = mSprite.getMapPosX() + mSprite.getLeftBB() - cheat;
 		
 		if (pointToBlockNum(mTestCenterX, mTestAboveY) == type) mTemp.setTop(true);
-		if (pointToBlockNum(mTestCenterX, mTestBelowY) == type) mTemp.setBottom(true);
+		
+		if (pointToBlockNum(mTestCenterX - 2, mTestBelowY) == type
+			|| pointToBlockNum(mTestCenterX + 2, mTestBelowY) == type) {
+			mTemp.setBottom(true);
+		}
 		
 		if (pointToBlockNum(mTestLeftX, mTestUpperY) == type) mTemp.setUpperLeft(true);
 		if (pointToBlockNum(mTestLeftX, mTestLowerY) == type) mTemp.setLowerLeft(true);
