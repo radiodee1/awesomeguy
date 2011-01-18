@@ -36,7 +36,7 @@
 
 
 		<activity android:name=".Help"
-		android:screenOrientation="portrait">
+		>
 			<intent-filter></intent-filter>
 		</activity>
 
@@ -51,7 +51,6 @@
 
 
 		<activity android:name=".Options"
-		android:screenOrientation="portrait"
 		android:clearTaskOnLaunch="true"
 		>
 			<intent-filter>
@@ -62,7 +61,7 @@
 
 
 		<activity android:name=".Credits"
-		android:screenOrientation="portrait">
+		>
 			<intent-filter>
 				<action android:name="org.davidliebman.android.awesomeguy.Credits"></action>
 				<category android:name="android.intent.category.LAUNCHER"></category>
@@ -70,7 +69,7 @@
 		</activity>
 
 		<activity android:name=".Players"
-		android:screenOrientation="portrait"
+		
 		android:clearTaskOnLaunch="true">
 		
 			<intent-filter>
@@ -81,7 +80,7 @@
 		</activity>
 		
 		<activity android:name=".Highscores"
-		android:screenOrientation="portrait"
+		
 		android:clearTaskOnLaunch="true">
 		
 			<intent-filter>
