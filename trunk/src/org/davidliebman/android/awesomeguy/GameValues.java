@@ -50,7 +50,7 @@ public class GameValues {
 	private float mScaleV = 1;
 	private int mScreenTitle = 20;
 	private float mLandscapeButtonPixelPercent;
-	public static final float LANDSCAPE_BUTTON_PERCENT = (float).20;
+	public static final float LANDSCAPE_BUTTON_PERCENT = (float).15;
 	
 	/* game progress */
 	private Record mGuyScore = new Record();
