@@ -22,6 +22,7 @@
 			android:layout_height="wrap_content">
 		</TextView>
 		<Button android:layout_width="wrap_content" android:gravity="left"
+		    android:paddingLeft="15px"
 			android:layout_height="wrap_content" android:background="@drawable/gamestart_button"
 			android:textColor="#FFFFFF" android:text="@string/app_gamestart"
 			android:layout_gravity="left" android:textSize="30px"
@@ -33,6 +34,7 @@
 			android:layout_height="wrap_content">
 		</TextView>
 		<Button android:id="@+id/Help" android:layout_width="wrap_content" android:gravity="left"
+		    android:paddingLeft="15px"
 			android:textColor="#FFFFFF" android:text="@string/app_help"
 			android:layout_gravity="left" android:textSize="30px"
 			android:layout_height="wrap_content" android:background="@drawable/gamestart_button">
@@ -41,6 +43,7 @@
 			android:layout_height="wrap_content">
 		</TextView>
 		<Button android:id="@+id/Options" android:layout_width="wrap_content" android:gravity="left"
+		    android:paddingLeft="15px"
 			android:textColor="#FFFFFF" android:text="@string/app_options"
 			android:layout_gravity="left" android:textSize="30px"
 			android:layout_height="wrap_content" android:background="@drawable/gamestart_button">
@@ -51,6 +54,7 @@
 
 
 		<Button android:id="@+id/Players" android:layout_width="wrap_content" android:gravity="left"
+		    android:paddingLeft="15px"
 			android:textColor="#FFFFFF" android:text="@string/app_players"
 			android:layout_gravity="left" android:textSize="30px"
 			android:layout_height="wrap_content" android:background="@drawable/gamestart_button">
@@ -61,6 +65,7 @@
 		</TextView>
 
 		<Button android:id="@+id/Highscores" android:layout_width="wrap_content" android:gravity="left"
+			android:paddingLeft="15px"
 			android:textColor="#FFFFFF" android:text="@string/app_highscores"
 			android:layout_gravity="left" android:textSize="30px"
 			android:layout_height="wrap_content" android:background="@drawable/gamestart_button">
@@ -71,6 +76,7 @@
 		</TextView>
 
 		<Button android:id="@+id/Credits" android:layout_width="wrap_content" android:gravity="left"
+			android:paddingLeft="15px"
 			android:textColor="#FFFFFF" android:text="@string/app_credits"
 			android:layout_gravity="left" android:textSize="30px"
 			android:layout_height="wrap_content" android:background="@drawable/gamestart_button">
