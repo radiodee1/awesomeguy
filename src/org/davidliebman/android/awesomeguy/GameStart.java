@@ -564,40 +564,20 @@ public class GameStart extends Activity implements KeyEvent.Callback{
 
     		TouchButton mButton5 = new TouchButton(c, mMultiTouch ,R.drawable.button_b, mButtonWidth, mButtonHeight, 0, "button_b", MovementValues.KEY_B);
 
-    		/*
-            View mDeviderView1 = new View(c);
-            mDeviderView1.setBackgroundColor(Color.RED);
-            ViewGroup.LayoutParams mLayout1 = new 
-        		ViewGroup.LayoutParams(2, mButtonHeight);
-            mDeviderView1.setLayoutParams(mLayout1);
     		
-            View mDeviderView2 = new View(c);
-            mDeviderView2.setBackgroundColor(Color.BLACK);
-            ViewGroup.LayoutParams mLayout2 = new 
-        		ViewGroup.LayoutParams(2, mButtonHeight);
-            mDeviderView2.setLayoutParams(mLayout2);
-            
-            View mDeviderView3 = new View(c);
-            mDeviderView3.setBackgroundColor(Color.BLACK);
-            ViewGroup.LayoutParams mLayout3 = new 
-        		ViewGroup.LayoutParams(2, mButtonHeight);
-            mDeviderView3.setLayoutParams(mLayout3);
-            
-            View mDeviderView4 = new View(c);
-            mDeviderView4.setBackgroundColor(Color.BLACK);
-            ViewGroup.LayoutParams mLayout4 = new 
-        		ViewGroup.LayoutParams(2, mButtonHeight);
-            mDeviderView4.setLayoutParams(mLayout4);
-            */
+    		BlankButton mDeviderView1 = new BlankButton(c, 2, mButtonHeight);
+    		BlankButton mDeviderView2 = new BlankButton(c, 2, mButtonHeight);
+    		BlankButton mDeviderView3 = new BlankButton(c, 2, mButtonHeight);
+    		BlankButton mDeviderView4 = new BlankButton(c, 2, mButtonHeight);
     		
     		mTRow.addView((View)mButton1);
-    		//mTRow.addView(mDeviderView1);
+    		mTRow.addView((View)mDeviderView1);
     		mTRow.addView((View)mButton2);
-    		//mTRow.addView(mDeviderView2);
+    		mTRow.addView((View)mDeviderView2);
     		mTRow.addView((View)mButton3);
-    		//mTRow.addView(mDeviderView3);
+    		mTRow.addView((View)mDeviderView3);
     		mTRow.addView((View)mButton4);
-    		//mTRow.addView(mDeviderView4);
+    		mTRow.addView((View)mDeviderView4);
     		mTRow.addView((View)mButton5);
 
     		this.addView((View)mTRow);
@@ -805,7 +785,12 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     		this.setHeight(mButtonHeight);
         	this.setBackgroundColor(Color.TRANSPARENT);
     	}
-    	
+    	BlankButton(Context c, int width, int height) {
+    		super(c);
+    		this.setWidth(width);
+    		this.setHeight(height);
+    		this.setBackgroundColor(Color.TRANSPARENT);
+    	}
     };
     
     
