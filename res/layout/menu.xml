@@ -13,11 +13,19 @@
 		<TextView android:id="@+id/widget34" android:layout_width="wrap_content"
 			android:layout_height="wrap_content">
 		</TextView>
-		<Button android:layout_width="wrap_content" android:background="@drawable/logo"
-			android:textColor="#FFFFFF" 
-			android:layout_gravity="left" android:textSize="30px"
-			android:layout_height="wrap_content" android:id="@+id/Logo"></Button>
-
+		
+		<LinearLayout 
+		    android:layout_width="fill_parent" android:layout_height="wrap_content" android:gravity="fill_horizontal" 
+		    android:background="@drawable/black" >
+		    
+		  
+		
+		
+        <Button android:layout_width="wrap_content" android:background="@drawable/guy_icon"
+            android:layout_gravity="left" android:textSize="30px"
+            android:layout_height="fill_parent" android:id="@+id/Logo"></Button>
+        
+        </LinearLayout>
 		<TextView android:id="@+id/widget34" android:layout_width="wrap_content"
 			android:layout_height="wrap_content">
 		</TextView>
