@@ -60,10 +60,11 @@ public final class R {
         public static final int TextView05=0x7f070023;
         public static final int TextView06=0x7f070029;
         public static final int TextView07=0x7f07002b;
+        public static final int bottom=0x7f070038;
         public static final int button_highscores=0x7f07000b;
         public static final int button_options=0x7f07002c;
         public static final int button_players=0x7f070032;
-        public static final int button_termsofservice=0x7f070037;
+        public static final int button_termsofservice=0x7f070039;
         public static final int checkbox_analytics=0x7f070027;
         public static final int checkbox_collision=0x7f07002a;
         public static final int checkbox_monsters=0x7f070028;
@@ -86,6 +87,7 @@ public final class R {
         public static final int radio_speed_20=0x7f07001b;
         public static final int radio_speed_24=0x7f07001c;
         public static final int room_spinner=0x7f070019;
+        public static final int text=0x7f070037;
         public static final int text_date=0x7f070008;
         public static final int text_description=0x7f070030;
         public static final int text_level=0x7f070009;
