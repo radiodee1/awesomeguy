@@ -313,14 +313,15 @@ public  class Panel  extends SurfaceView  {
 
 	public void setReturnBackgroundGraphics() {
 		/*** set initial scroll positions ***/
-
+		
+		
 		scrollX = mGameV.getScrollX();
 		scrollY = mGameV.getScrollY();
 
 		/*** Load sprites for level ***/
 		//mGameV.setSpriteStart();
 		mGuySprite = mGameV.getSpriteStart();
-		mGameV.adjustSpriteStartPos();
+		//mGameV.adjustSpriteStartPos();
 
 		/* JNI Monster Collision setting */
 		int monsters = 0;
