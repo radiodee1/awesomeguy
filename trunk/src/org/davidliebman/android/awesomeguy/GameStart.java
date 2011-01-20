@@ -56,7 +56,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     private FrameLayout mFLayoutBot ;
     private Panel mPanelBot ;
 	
-    private View mSpaceView, mSpaceViewSecond,mSpaceViewThird;//, mSepView;
+    private View mSpaceView, mSpaceViewSecond,mSpaceViewThird;
     private TableLayout mGameRow;
     
     private RelativeLayout mRLayoutGamepad;
@@ -64,12 +64,13 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     private Configuration mConfig;
     private int panelH, panelV;
     private int screenHeight;
-    private boolean mPutGameKeys = false;
     private int mButtonHeight, mButtonWidth;
     private int mScrollConst = 200;
     private double mTrackballDist = 1.0;
     private int mDimensionWidth, mDimensionHeight;
     private Context mContext;
+    private Bundle mBundle;
+    private boolean mUseSavedBundle = false;
     
     private boolean mTestLandscapeButtons = true;
     
@@ -106,9 +107,16 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         
         requestWindowFeature(Window.FEATURE_NO_TITLE);
        
+        if(savedInstanceState != null) {
+        	mBundle = savedInstanceState;
+        }
+        else {
+        	mBundle = mGameV.getInitialBundle();
+        	
+        }
+        
         this.setOrientationVars(); 
         ////////////////////////////////
-        
         
         /* generate components for top of screen */
         mRLayout = new RelativeLayout(this) ; 
@@ -209,6 +217,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         
         
         mGameV.setSpriteStart();
+        
     }
     
     
@@ -243,6 +252,11 @@ public class GameStart extends Activity implements KeyEvent.Callback{
 		SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
 
     	mHighScores.addToPreferences(preferences);
+    	//TODO: bundle stuff
+    	mGameV.addToBundle(mBundle, mMovementV);
+    	
+    	this.onSaveInstanceState(mBundle);
+    	
 	    super.onPause();
     }
     
@@ -256,7 +270,8 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         mHighScores.getFromPreferences(preferences);
         
         
-        /* retrieve other saved preferences */	    	
+        /* retrieve other saved preferences */	
+        
         mLookForXml = preferences.getBoolean(Options.SAVED_LOOK_FOR_XML, false);
         mGameV.setRoomNo(preferences.getInt(Options.SAVED_ROOM_NUM, 1));
         mGameV.setLookForXml(mLookForXml);
@@ -267,7 +282,12 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     	framesPerSec = mHighScores.getGameSpeed();
     	
     	/* init background */
-
+    	if(!mBundle.getBoolean(GameValues.BUNDLE_INITIAL)) {
+    		mGameV.useBundleInfo(mBundle);
+    		mUseSavedBundle = true;
+    	}
+    	
+    	
     	this.setOrientationVars();
     	mPanelBot = new Panel(this,  mGameV, this, mMovementV, mHighScores);
     	
@@ -286,7 +306,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     	
     	
     	/* create game loop thread */
-    	mGameLoopBot = new InnerGameLoop(this);
+    	mGameLoopBot = new InnerGameLoop(this); 
     	
     	/* set loop to 'endless' */
     	mGameLoopBot.setGameRunning(true);
@@ -388,39 +408,22 @@ public class GameStart extends Activity implements KeyEvent.Callback{
 			mMovementV.setKeyInput(MovementValues.KEY_LEFT);
 	    	mPanelBot.readKeys(mTrackballDist);
 	    	
-	    	//Message mEnd = new Message();
-	    	//mEnd.what = GameStart.INPUTVALUES_TRACKUP;
-	    	//mHandler.sendMessageDelayed(mEnd, mScrollConst);
-
 		}
 		if(keyCode == KeyEvent.KEYCODE_S || keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
 			mMovementV.setKeyInput(MovementValues.KEY_RIGHT);
 	    	mPanelBot.readKeys(mTrackballDist);
-	    	
-	    	//Message mEnd = new Message();
-	    	//mEnd.what = GameStart.INPUTVALUES_TRACKUP;
-	    	//mHandler.sendMessageDelayed(mEnd, mScrollConst);
-	    	
-			
+	   
 		}
 		if(keyCode == KeyEvent.KEYCODE_D || keyCode == KeyEvent.KEYCODE_DPAD_UP) {
 			
 	    	mMovementV.setKeyInput(MovementValues.KEY_UP);
 	    	mPanelBot.readKeys(mTrackballDist);
 	    	
-	    	//Message mEnd = new Message();
-	    	//mEnd.what = GameStart.INPUTVALUES_TRACKUP;
-	    	//mHandler.sendMessageDelayed(mEnd, mScrollConst);
-	    
 		}
 		if(keyCode == KeyEvent.KEYCODE_F || keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
 
 	    	mMovementV.setKeyInput(MovementValues.KEY_DOWN);
 	    	mPanelBot.readKeys(mTrackballDist);
-	    	
-	    	//Message mEnd = new Message();
-	    	//mEnd.what = GameStart.INPUTVALUES_TRACKUP;
-	    	//mHandler.sendMessageDelayed(mEnd, mScrollConst);
 	    	
 			
 		}
@@ -934,11 +937,12 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     			
     		    
     		    //init room
-    		    //getSavedRoom();
     		    mBackground.setLevel(mGameV.getLevelList().getNum(mGameV.getRoomNo()-1));
-    		    //mBackground.setLevel(mGameV.getRoomNo());
-    	    	mBackground.initLevel(mMovementV);
-    	    	
+    		    //TODO: get game restore to work
+    		    if (!mUseSavedBundle) {
+    		    	mBackground.initLevel(mMovementV);
+    		    }
+    		    	
     	    	//jni test !!
     		    mPanelBot.setLevelData(mGameV.getLevelArray(), mGameV.getObjectsArray(), mGameV.getMapH(), mGameV.getMapV());
     	    	mPanelBot.addMonstersJNI();
