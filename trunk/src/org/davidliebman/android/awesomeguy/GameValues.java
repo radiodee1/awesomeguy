@@ -477,7 +477,7 @@ public class GameValues {
 	/* --------------Make and use Bundle -----------------*/
 	public void addToBundle(Bundle bundle, MovementValues mMovementV) {
 		mBundle = bundle;
-		
+		//mBundle = new Bundle(10);
 		this.setScrollX(mMovementV.getScrollX());
 		this.setScrollY(mMovementV.getScrollY());
 		
@@ -562,6 +562,8 @@ public class GameValues {
 		
 		this.mScrollX = mBundle.getInt(BUNDLE_SCROLL_X);
 		this.mScrollY = mBundle.getInt(BUNDLE_SCROLL_Y);
+		
+		Log.e("GameValues","scroll x " + mScrollX + " num of sprites " + mSpritesSize);
 		// end of restoring GameValues from Bundle. //
 	}
 	public Bundle getInitialBundle() {

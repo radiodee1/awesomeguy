@@ -109,6 +109,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
        
         if(savedInstanceState != null) {
         	mBundle = savedInstanceState;
+        	//mUseSavedBundle = true;
         }
         else {
         	mBundle = mGameV.getInitialBundle();
@@ -252,12 +253,28 @@ public class GameStart extends Activity implements KeyEvent.Callback{
 		SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
 
     	mHighScores.addToPreferences(preferences);
-    	//TODO: bundle stuff
-    	mGameV.addToBundle(mBundle, mMovementV);
-    	
-    	this.onSaveInstanceState(mBundle);
     	
 	    super.onPause();
+    }
+    
+    @Override
+    public void onSaveInstanceState(Bundle b) {
+    	mGameV.addToBundle(b, mMovementV);
+    	super.onSaveInstanceState(b);
+    }
+    
+    @Override
+    public void onRestoreInstanceState(Bundle b) {
+    	mBundle = b;
+    	super.onRestoreInstanceState(b);
+    	if(this.mUseSavedBundle) {
+    		mGameV.useBundleInfo(mBundle);
+    		
+    	}
+    	if(!mBundle.getBoolean(GameValues.BUNDLE_INITIAL)) {
+    		mGameV.useBundleInfo(mBundle);
+    		mUseSavedBundle = true;
+    	}
     }
     
     @Override
@@ -282,10 +299,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     	framesPerSec = mHighScores.getGameSpeed();
     	
     	/* init background */
-    	if(!mBundle.getBoolean(GameValues.BUNDLE_INITIAL)) {
-    		mGameV.useBundleInfo(mBundle);
-    		mUseSavedBundle = true;
-    	}
+    	
     	
     	
     	this.setOrientationVars();
@@ -816,9 +830,19 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     		    mPanelBot.setAnimationOnly(false);
     		    mPanelBot.setJNIAnimateOnly(0); // '0' is false for JNI
     		    
-    			mPanelBot.setInitialBackgroundGraphics();
-    			mPanelBot.setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
-    			mPanelBot.setGuySprite(mGameV.getSpriteStart()); //must refresh reference to guySprite
+    		    if( !mUseSavedBundle ) {
+    		    	mPanelBot.setInitialBackgroundGraphics();
+    		    	mPanelBot.setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
+    		    	mPanelBot.setGuySprite(mGameV.getSpriteStart()); //must refresh reference to guySprite
+    		    }
+    		    else {
+    		    	mPanelBot.setReturnBackgroundGraphics();
+    		    	mPanelBot.setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
+    		    	mPanelBot.setGuySprite(mGameV.getSpriteStart()); //must refresh reference to guySprite
+
+    		    }
+    			
+    			
     			mPanelBot.invalidate();
     			
     		}

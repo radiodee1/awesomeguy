@@ -311,7 +311,24 @@ public  class Panel  extends SurfaceView  {
 		setMonsterPreferences(monsters, collision);
 	}
 
+	public void setReturnBackgroundGraphics() {
+		/*** set initial scroll positions ***/
 
+		scrollX = mGameV.getScrollX();
+		scrollY = mGameV.getScrollY();
+
+		/*** Load sprites for level ***/
+		//mGameV.setSpriteStart();
+		mGuySprite = mGameV.getSpriteStart();
+		mGameV.adjustSpriteStartPos();
+
+		/* JNI Monster Collision setting */
+		int monsters = 0;
+		int collision = 0;
+		if(mHighScores.isEnableMonsters()) monsters = 1;
+		if(mHighScores.isEnableCollision()) collision = 1;
+		setMonsterPreferences(monsters, collision);
+	}
 
 
 	public void setGameValues(GameValues g) {
