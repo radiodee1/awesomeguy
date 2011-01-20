@@ -519,7 +519,7 @@ public class GameValues {
 	public Bundle getBundle() {
 		return mBundle;
 	}
-	public void useBundleInfo(Bundle bundle) {
+	public void useBundleInfo(Bundle bundle, MovementValues mMovementV) {
 		mBundle = bundle;
 		
 		//if(mBundle.getBoolean(BUNDLE_INITIAL)) return;
@@ -562,6 +562,9 @@ public class GameValues {
 		
 		this.mScrollX = mBundle.getInt(BUNDLE_SCROLL_X);
 		this.mScrollY = mBundle.getInt(BUNDLE_SCROLL_Y);
+		
+		mMovementV.setScrollX(mScrollX);
+		mMovementV.setScrollY(mScrollY);
 		
 		Log.e("GameValues","scroll x " + mScrollX + " num of sprites " + mSpritesSize);
 		// end of restoring GameValues from Bundle. //

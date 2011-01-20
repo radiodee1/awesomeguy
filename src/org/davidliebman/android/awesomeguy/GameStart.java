@@ -259,6 +259,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     
     @Override
     public void onSaveInstanceState(Bundle b) {
+    	
     	mGameV.addToBundle(b, mMovementV);
     	super.onSaveInstanceState(b);
     }
@@ -267,12 +268,14 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     public void onRestoreInstanceState(Bundle b) {
     	mBundle = b;
     	super.onRestoreInstanceState(b);
+    	/*
     	if(this.mUseSavedBundle) {
-    		mGameV.useBundleInfo(mBundle);
+    		mGameV.useBundleInfo(mBundle, mMovementV);
     		
     	}
+    	*/
     	if(!mBundle.getBoolean(GameValues.BUNDLE_INITIAL)) {
-    		mGameV.useBundleInfo(mBundle);
+    		mGameV.useBundleInfo(mBundle, mMovementV);
     		mUseSavedBundle = true;
     	}
     }
@@ -965,6 +968,9 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     		    //TODO: get game restore to work
     		    if (!mUseSavedBundle) {
     		    	mBackground.initLevel(mMovementV);
+    		    }
+    		    else {
+    		    	mBackground.setStartingScrollPosition(mMovementV);
     		    }
     		    	
     	    	//jni test !!
