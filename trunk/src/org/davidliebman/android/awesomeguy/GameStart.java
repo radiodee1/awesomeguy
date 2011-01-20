@@ -266,8 +266,10 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     
     @Override
     public void onRestoreInstanceState(Bundle b) {
-    	mBundle = b;
+    	//mBundle = b;
     	super.onRestoreInstanceState(b);
+    	mBundle = b;
+    	
     	/*
     	if(this.mUseSavedBundle) {
     		mGameV.useBundleInfo(mBundle, mMovementV);
@@ -827,9 +829,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     			this.removeMessages(MOVEMENTVALUES);
     			this.removeMessages(GAMEVALUES);
     			this.removeMessages(INPUTVALUES_KEYUP);
-    			
-    			//mGameV.setLevelLoading(true);
-    			
+    			    			
     		    mPanelBot.setAnimationOnly(false);
     		    mPanelBot.setJNIAnimateOnly(0); // '0' is false for JNI
     		    
@@ -970,7 +970,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     		    	mBackground.initLevel(mMovementV);
     		    }
     		    else {
-    		    	mBackground.setStartingScrollPosition(mMovementV);
+    		    	//mBackground.setStartingScrollPosition(mMovementV);
     		    }
     		    	
     	    	//jni test !!
