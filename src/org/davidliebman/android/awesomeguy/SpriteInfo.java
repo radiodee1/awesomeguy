@@ -66,6 +66,22 @@ public class SpriteInfo {
     	//this.mAnimate = true;
     }
     
+    public SpriteInfo(int resource) {
+    	clearInfo();
+    	if (resource == R.drawable.guy0) {
+    		this.mResourceId = resource;
+    		this.mTopBB = 2;
+    		this.mBottomBB = 16;
+    		this.mLeftBB = 4;
+    		this.mRightBB = 10;
+    		this.mVisible = true;
+    		this.mActive = true;
+    	}
+    	if (resource == R.drawable.monster_l0) {
+    		
+    	}
+    }
+    
     public SpriteInfo( int top, int bot, int left, int right) {
     	clearInfo();
     	this.mResourceId = 0;

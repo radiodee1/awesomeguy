@@ -290,8 +290,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     	mHighScores = new Record();
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.getFromPreferences(preferences);
-        
-        
+                
         /* retrieve other saved preferences */	
         
         mLookForXml = preferences.getBoolean(Options.SAVED_LOOK_FOR_XML, false);
@@ -974,10 +973,12 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     		    }
     		    	
     	    	//jni test !!
-    		    mPanelBot.setLevelData(mGameV.getLevelArray(), mGameV.getObjectsArray(), mGameV.getMapH(), mGameV.getMapV());
-    	    	mPanelBot.addMonstersJNI();
-    		    mPanelBot.addPlatformsJNI();
-    	    	
+    		    if( !mUseSavedBundle ) {
+    		    	mPanelBot.setLevelData(mGameV.getLevelArray(), mGameV.getObjectsArray(), mGameV.getMapH(), mGameV.getMapV());
+    		    
+    		    	mPanelBot.addMonstersJNI();
+    		    	mPanelBot.addPlatformsJNI();
+    		    }
     		    //get guy sprite reference 
     			mGuySprite = mGameV.getSpriteStart();
     		    mPanelBot.setGuySprite(mGuySprite);
