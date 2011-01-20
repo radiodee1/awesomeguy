@@ -3,7 +3,8 @@ package org.davidliebman.android.awesomeguy;
 import java.util.ArrayList;
 import java.lang.*;
 import android.content.*;
-//import android.util.Log;
+import android.os.Bundle;
+import android.util.Log;
 
 
 public class GameValues {
@@ -62,11 +63,13 @@ public class GameValues {
 	//public static int NUM_ROOMS = 10;
 	private int mOldGuyScore;
 	//private boolean mLevelLoading;
+	private int mScrollX, mScrollY;
 	
 	/* sprites */
 	private ArrayList<SpriteInfo> mSprites = new ArrayList<SpriteInfo>();
 	private int mMonsterNum, mMonsterOffset;
 	private int mPlatformNum, mPlatformOffset;
+	private int mBossmonsterNum, mBossmonsterOffset;
 	public static final int MONSTER_TOTAL = 15;
 	public static final int PLATFORM_TOTAL = 15;
 	
@@ -76,6 +79,23 @@ public class GameValues {
 	private ArrayList<Integer> mXmlLevel = new ArrayList<Integer>();
 	private InitBackground.LevelList mLevelList;
 	
+	/* Bundle stuff */
+	public static final String BUNDLE_NUM_OF_SPRITES = new String("sprites");
+	public static final String BUNDLE_SPRITES_X_ARRAY = new String("sprites_x_array");
+	public static final String BUNDLE_SPRITES_Y_ARRAY = new String("sprites_y_array");
+	public static final String BUNDLE_MAP_H = new String("map_h");
+	public static final String BUNDLE_MAP_V = new String("map_v");
+	public static final String BUNDLE_MAP_ARRAY = new String("map_array");
+	public static final String BUNDLE_MONSTER_NUMBER = new String("monster_num");
+	public static final String BUNDLE_MONSTER_OFFSET = new String("monster_offset");
+	public static final String BUNDLE_PLATFORM_NUMBER = new String("platform_num");
+	public static final String BUNDLE_PLATFORM_OFFSET = new String("platform_offset");
+	public static final String BUNDLE_BOSSMONSTER_NUMBER = new String("bossmonster_num");
+	public static final String BUNDLE_BOSSMONSTER_OFFSET = new String("bossmonster_offset");
+	public static final String BUNDLE_INITIAL = new String("initial");
+	public static final String BUNDLE_SCROLL_X = new String("scroll_x");
+	public static final String BUNDLE_SCROLL_Y = new String("scroll_y");
+	private Bundle mBundle = new Bundle();
 	
 	/* first part of screen size and orientation stuff */
 	
@@ -270,6 +290,20 @@ public class GameValues {
 	}
 	
 	
+	/* screen scroll */
+	
+	public int getScrollX() {
+		return mScrollX;
+	}
+	public void setScrollX(int mScrollX) {
+		this.mScrollX = mScrollX;
+	}
+	public int getScrollY() {
+		return mScrollY;
+	}
+	public void setScrollY(int mScrollY) {
+		this.mScrollY = mScrollY;
+	}
 	
 	
 	/** work with sprite list **/
@@ -430,7 +464,7 @@ public class GameValues {
 		this.mScreenTitle = mScreenTitle;
 	}
 	public int getLandscapeButtonPixel() {
-		//return mLandscapeButtonPixel;
+
 		if (this.mLandscapeButtonPixelPercent == 0) {
 			this.mLandscapeButtonPixelPercent =  LANDSCAPE_BUTTON_PERCENT;
 		}
@@ -440,5 +474,99 @@ public class GameValues {
 		this.mLandscapeButtonPixelPercent = mPercent;
 	}
 	
-	
+	/* --------------Make and use Bundle -----------------*/
+	public void addToBundle(Bundle bundle, MovementValues mMovementV) {
+		mBundle = bundle;
+		
+		this.setScrollX(mMovementV.getScrollX());
+		this.setScrollY(mMovementV.getScrollY());
+		
+		mBundle.putBoolean(BUNDLE_INITIAL, false);
+
+		mBundle.putInt(BUNDLE_NUM_OF_SPRITES, this.mSprites.size());
+		int [] mXvalues = new int [mSprites.size()];
+		int [] mYvalues = new int [mSprites.size()];
+		for (int i = 0; i < mSprites.size(); i ++) {
+			mXvalues [i] = mSprites.get(i).getMapPosX();
+			mYvalues [i] = mSprites.get(i).getMapPosY();
+		}
+		mBundle.putIntArray(BUNDLE_SPRITES_X_ARRAY, mXvalues);
+		mBundle.putIntArray(BUNDLE_SPRITES_Y_ARRAY, mYvalues);
+		
+		mBundle.putInt(BUNDLE_MONSTER_NUMBER, mMonsterNum);
+		mBundle.putInt(BUNDLE_MONSTER_OFFSET, mMonsterOffset);
+		
+		mBundle.putInt(BUNDLE_PLATFORM_NUMBER, mPlatformNum);
+		mBundle.putInt(BUNDLE_PLATFORM_OFFSET, mPlatformOffset);
+		
+		mBundle.putInt(BUNDLE_BOSSMONSTER_NUMBER, mBossmonsterNum);
+		mBundle.putInt(BUNDLE_BOSSMONSTER_OFFSET, mBossmonsterOffset);
+		
+		mBundle.putInt(BUNDLE_MAP_H, mMapH);
+		mBundle.putInt(BUNDLE_MAP_V, mMapV);
+		
+		int [] mObjects = new int [mMapH * mMapV];
+		for (int y = 0; y < mMapV; y ++) {
+			for(int x = 0; x < mMapH; x ++ ) {
+				mObjects[(y * mMapH) + x] = this.getObjectsCell(x, y);
+			}
+		}
+		mBundle.putIntArray(BUNDLE_MAP_ARRAY, mObjects);
+		
+		mBundle.putInt(BUNDLE_SCROLL_X, mScrollX);
+		mBundle.putInt(BUNDLE_SCROLL_Y, mScrollY);
+	}
+	public Bundle getBundle() {
+		return mBundle;
+	}
+	public void useBundleInfo(Bundle bundle) {
+		mBundle = bundle;
+		
+		//if(mBundle.getBoolean(BUNDLE_INITIAL)) return;
+
+		int mSpritesSize = mBundle.getInt(BUNDLE_NUM_OF_SPRITES);
+		this.mMonsterNum = mBundle.getInt(BUNDLE_MONSTER_NUMBER);
+		this.mMonsterOffset = mBundle.getInt(BUNDLE_MONSTER_OFFSET);
+		this.mPlatformNum = mBundle.getInt(BUNDLE_PLATFORM_NUMBER);
+		this.mPlatformOffset = mBundle.getInt(BUNDLE_PLATFORM_OFFSET);
+		this.mBossmonsterNum = mBundle.getInt(BUNDLE_BOSSMONSTER_NUMBER);
+		this.mBossmonsterOffset = mBundle.getInt(BUNDLE_BOSSMONSTER_OFFSET);
+		
+		this.mMapH = mBundle.getInt(BUNDLE_MAP_H);
+		this.mMapV = mBundle.getInt(BUNDLE_MAP_V);
+		
+		int mSpritesX [] = new int[mSpritesSize];
+		int mSpritesY [] = new int[mSpritesSize];
+		mSpritesX = mBundle.getIntArray(BUNDLE_SPRITES_X_ARRAY);
+		mSpritesY = mBundle.getIntArray(BUNDLE_SPRITES_Y_ARRAY);
+		
+		mSprites.clear();
+		
+		for (int i = 0; i < mSpritesSize ; i ++) {
+			SpriteInfo mTempSprite = new SpriteInfo();
+			
+			//TODO: fill in other info like bounding box and size.
+			mTempSprite.setMapPosX(mSpritesX[i]);
+			mTempSprite.setMapPosY(mSpritesY[i]);
+			this.mSprites.add(mTempSprite);
+		}
+		
+		int [] mObjectsArray = new int [mMapH * mMapV];
+		mObjectsArray = mBundle.getIntArray(BUNDLE_MAP_ARRAY);
+		
+		for (int y = 0; y < mMapV; y ++) {
+			for (int x = 0; x < mMapH; x ++ ) {
+				this.setObjectsCell(x, y, mObjectsArray[(y * mMapH) + x]);
+			}
+		}
+		
+		this.mScrollX = mBundle.getInt(BUNDLE_SCROLL_X);
+		this.mScrollY = mBundle.getInt(BUNDLE_SCROLL_Y);
+		// end of restoring GameValues from Bundle. //
+	}
+	public Bundle getInitialBundle() {
+		Bundle mInitial = new Bundle();
+		mInitial.putBoolean(BUNDLE_INITIAL, true);
+		return mInitial;
+	}
 }

@@ -136,8 +136,7 @@ public  class Panel  extends SurfaceView  {
     	else if(mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE) {
 			mScaleH = mGameV.getScaleH();
 			mScaleV = mGameV.getScaleV();
-			//mScaleH = (float)displayWidth/256;//  192;
-			//mScaleV = ((float)displayHeight-35)/192;
+			
 		}
 		
 		/* paint options BitmapFactory.Options */
@@ -234,7 +233,6 @@ public  class Panel  extends SurfaceView  {
 		this.setMovingPlatformData(platform_a);
 		
 		/* JNI display size setting */
-		//mGameV.setDisplayWidth(mDisplayViewWidth); // TODO: check if this is used here
 		setScreenData(mGameV.getScreenTilesHMod(), 24);
 		
 		/* JNI Monster Collision setting */
