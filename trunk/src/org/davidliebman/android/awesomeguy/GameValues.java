@@ -505,13 +505,13 @@ public class GameValues {
 		mBundle.putInt(BUNDLE_MAP_H, mMapH);
 		mBundle.putInt(BUNDLE_MAP_V, mMapV);
 		
-		int [] mObjects = new int [mMapH * mMapV];
-		for (int y = 0; y < mMapV; y ++) {
-			for(int x = 0; x < mMapH; x ++ ) {
-				mObjects[(y * mMapH) + x] = this.getObjectsCell(x, y);
+		int [] mObjectsArray = new int [96 * 96];
+		for (int y = 0; y < 96; y ++) {
+			for(int x = 0; x < 96; x ++ ) {
+				mObjectsArray[(y * 96) + x] = this.mObjects[y][x];
 			}
 		}
-		mBundle.putIntArray(BUNDLE_MAP_ARRAY, mObjects);
+		mBundle.putIntArray(BUNDLE_MAP_ARRAY, mObjectsArray);
 		
 		mBundle.putInt(BUNDLE_SCROLL_X, mScrollX);
 		mBundle.putInt(BUNDLE_SCROLL_Y, mScrollY);
@@ -544,6 +544,13 @@ public class GameValues {
 		
 		for (int i = 0; i < mSpritesSize ; i ++) {
 			SpriteInfo mTempSprite = new SpriteInfo();
+			if (i == 0) {
+				mTempSprite = new SpriteInfo(R.drawable.guy0);
+			}
+			else {
+				mTempSprite = new SpriteInfo();
+			}
+			
 			
 			//TODO: fill in other info like bounding box and size.
 			mTempSprite.setMapPosX(mSpritesX[i]);
@@ -551,12 +558,14 @@ public class GameValues {
 			this.mSprites.add(mTempSprite);
 		}
 		
-		int [] mObjectsArray = new int [mMapH * mMapV];
+		int [] mObjectsArray = new int [96 * 96];
 		mObjectsArray = mBundle.getIntArray(BUNDLE_MAP_ARRAY);
 		
-		for (int y = 0; y < mMapV; y ++) {
-			for (int x = 0; x < mMapH; x ++ ) {
-				this.setObjectsCell(x, y, mObjectsArray[(y * mMapH) + x]);
+		for (int y = 0; y < 96; y ++) {
+			for (int x = 0; x < 96; x ++ ) {
+				//this.setObjectsCell(x, y, mObjectsArray[(y * 96) + x]);
+				//Log.e("GameValues","objects "+ mObjectsArray[(y * mMapH) + x]);
+				this.mObjects[y][x] = mObjectsArray[(y * 96) + x];
 			}
 		}
 		
@@ -566,7 +575,7 @@ public class GameValues {
 		mMovementV.setScrollX(mScrollX);
 		mMovementV.setScrollY(mScrollY);
 		
-		Log.e("GameValues","scroll x " + mScrollX + " num of sprites " + mSpritesSize);
+		//Log.e("GameValues","scroll x " + mScrollX + " num of sprites " + mSpritesSize);
 		// end of restoring GameValues from Bundle. //
 	}
 	public Bundle getInitialBundle() {
