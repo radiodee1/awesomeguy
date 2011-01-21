@@ -249,6 +249,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
 	      }
     	mScores.insertHighInTableIfRanks(mHighScores);
 
+    	//TODO: make sure records are not saved when screen is re-oriented
     	
 		SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
 
@@ -270,12 +271,6 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     	super.onRestoreInstanceState(b);
     	mBundle = b;
     	
-    	/*
-    	if(this.mUseSavedBundle) {
-    		mGameV.useBundleInfo(mBundle, mMovementV);
-    		
-    	}
-    	*/
     	if(!mBundle.getBoolean(GameValues.BUNDLE_INITIAL)) {
     		mGameV.useBundleInfo(mBundle, mMovementV);
     		mUseSavedBundle = true;
@@ -924,9 +919,6 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     		
     		  //do something here.
     		    
-    		    //mMovementV.setScrollX(0);
-    		    //mMovementV.setScrollY(0);
-    			
     			
     			// new score ?? SAVE OLD SCORE!!
     		    mGameV.setOldGuyScore(mHighScores.getScore());
@@ -959,7 +951,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
 
     		    //init room
     		    mBackground.setLevel(mGameV.getLevelList().getNum(mGameV.getRoomNo()-1));
-    		    //TODO: get game restore to work
+
     		    if (!mUseSavedBundle) {
     		    	mMovementV.setScrollX(0);
     		    	mMovementV.setScrollY(0);
