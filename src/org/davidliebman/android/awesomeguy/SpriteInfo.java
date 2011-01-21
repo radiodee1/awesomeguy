@@ -76,6 +76,7 @@ public class SpriteInfo {
     		this.mRightBB = 10;
     		this.mVisible = true;
     		this.mActive = true;
+    		this.mAnimate = true;
     	}
     	if (resource == R.drawable.monster_l0) {
     		this.mResourceId = resource;
