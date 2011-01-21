@@ -974,6 +974,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     		    	mPanelBot.addPlatformsJNI();
     		    }
     		    
+    		    //end of restore from bundle
     		    mUseSavedBundle = false;
     		    
     		    //get guy sprite reference 
