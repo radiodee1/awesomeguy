@@ -95,6 +95,8 @@ public class GameValues {
 	public static final String BUNDLE_INITIAL = new String("initial");
 	public static final String BUNDLE_SCROLL_X = new String("scroll_x");
 	public static final String BUNDLE_SCROLL_Y = new String("scroll_y");
+	public static final String BUNDLE_SCORE = new String("score");
+	public static final String BUNDLE_LIVES = new String("lives");
 	private Bundle mBundle = new Bundle();
 	
 	/* first part of screen size and orientation stuff */
@@ -515,6 +517,9 @@ public class GameValues {
 		
 		mBundle.putInt(BUNDLE_SCROLL_X, mScrollX);
 		mBundle.putInt(BUNDLE_SCROLL_Y, mScrollY);
+		
+		mBundle.putInt(BUNDLE_SCORE, this.getScore());
+		mBundle.putInt(BUNDLE_LIVES, this.getLives());
 	}
 	public Bundle getBundle() {
 		return mBundle;
@@ -547,12 +552,16 @@ public class GameValues {
 			if (i == 0) {
 				mTempSprite = new SpriteInfo(R.drawable.guy0);
 			}
-			else {
-				mTempSprite = new SpriteInfo();
+			else if (i > mMonsterOffset && i <  mMonsterNum) {
+				mTempSprite = new SpriteInfo(R.drawable.monster_l0);
+			}
+			else if (i > mPlatformOffset && i <  mPlatformNum) 
+			{
+				mTempSprite = new SpriteInfo(R.drawable.concrete);
 			}
 			
 			
-			//TODO: fill in other info like bounding box and size.
+			//TODO: fill in other info like boss monster sprite info
 			mTempSprite.setMapPosX(mSpritesX[i]);
 			mTempSprite.setMapPosY(mSpritesY[i]);
 			this.mSprites.add(mTempSprite);
@@ -575,6 +584,8 @@ public class GameValues {
 		mMovementV.setScrollX(mScrollX);
 		mMovementV.setScrollY(mScrollY);
 		
+		this.setScore(mBundle.getInt(BUNDLE_SCORE));
+		this.setLives(mBundle.getInt(BUNDLE_LIVES));
 		//Log.e("GameValues","scroll x " + mScrollX + " num of sprites " + mSpritesSize);
 		// end of restoring GameValues from Bundle. //
 	}
