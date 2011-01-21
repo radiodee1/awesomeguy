@@ -844,7 +844,6 @@ public class GameStart extends Activity implements KeyEvent.Callback{
 
     		    }
     			
-    			
     			mPanelBot.invalidate();
     			
     		}
@@ -852,7 +851,9 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     		else if(msg.what == MOVEMENTVALUES) {
     			
     			mPanelBot.setHighScores((Record)msg.obj);
+    			
     			mPanelBot.setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
+    			
     			mPanelBot.invalidate();
     		}
     		
@@ -956,29 +957,25 @@ public class GameStart extends Activity implements KeyEvent.Callback{
 
         		mHandler.removeMessages(GameStart.MOVEMENTVALUES);
 
-    		    mMovementV.setScrollX(0);
-    		    mMovementV.setScrollY(0);
-    			
-    			
-    			
-    		    
     		    //init room
     		    mBackground.setLevel(mGameV.getLevelList().getNum(mGameV.getRoomNo()-1));
     		    //TODO: get game restore to work
     		    if (!mUseSavedBundle) {
-    		    	mBackground.initLevel(mMovementV);
-    		    }
-    		    else {
-    		    	//mBackground.setStartingScrollPosition(mMovementV);
-    		    }
+    		    	mMovementV.setScrollX(0);
+    		    	mMovementV.setScrollY(0);
     		    	
-    	    	//jni test !!
-    		    if( !mUseSavedBundle ) {
+    		    	mBackground.initLevel(mMovementV);
+    		    
+    		    	//jni  !!
+    		    
     		    	mPanelBot.setLevelData(mGameV.getLevelArray(), mGameV.getObjectsArray(), mGameV.getMapH(), mGameV.getMapV());
     		    
     		    	mPanelBot.addMonstersJNI();
     		    	mPanelBot.addPlatformsJNI();
     		    }
+    		    
+    		    mUseSavedBundle = false;
+    		    
     		    //get guy sprite reference 
     			mGuySprite = mGameV.getSpriteStart();
     		    mPanelBot.setGuySprite(mGuySprite);

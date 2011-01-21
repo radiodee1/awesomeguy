@@ -312,18 +312,18 @@ public  class Panel  extends SurfaceView  {
 	}
 
 	public void setReturnBackgroundGraphics() {
+		/*** jni lives and score ***/
+		setScoreLives(mGameV.getScore(), mGameV.getLives());
+		
 		/*** set initial scroll positions ***/
-		
-		
 		scrollX = mGameV.getScrollX();
 		scrollY = mGameV.getScrollY();
-
+		setJNIScroll(scrollX, scrollY);
+		
 		/*** Load sprites for level ***/
-		//mGameV.setSpriteStart();
 		mGuySprite = mGameV.getSpriteStart();
-		//mGameV.adjustSpriteStartPos();
 
-		/* JNI Monster Collision setting */
+		/*** JNI Monster Collision setting ***/
 		int monsters = 0;
 		int collision = 0;
 		if(mHighScores.isEnableMonsters()) monsters = 1;
@@ -1164,6 +1164,7 @@ public  class Panel  extends SurfaceView  {
 	public native int getSpriteX(int num);
 	public native int getSpriteY(int num);
 	public native int getSpriteFacingRight(int num);
+	public native int setJNIScroll(int x, int y);
 	static {
 		System.loadLibrary("awesomeguy");
 	}
