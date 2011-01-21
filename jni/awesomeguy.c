@@ -1787,3 +1787,20 @@ JNIEXPORT int JNICALL Java_org_davidliebman_android_awesomeguy_Panel_getSpriteFa
 	return sprite[num].facingRight;	
 
 }
+
+/**
+ *	Used to set the scroll registers in the JNI library
+ *
+ *	@param	env				required by all java jni
+ *	@param	obj				required by all java jni
+ *	@param	x	 			scroll_x
+ *  @param	y				scroll_y
+ *	@return					void
+ */
+JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_setJNIScroll(JNIEnv * env, jobject  obj, jint x , jint y)
+{
+	scrollx = x;
+	scrolly = y;
+	
+
+}
