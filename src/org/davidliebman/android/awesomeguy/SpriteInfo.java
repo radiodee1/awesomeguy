@@ -78,7 +78,24 @@ public class SpriteInfo {
     		this.mActive = true;
     	}
     	if (resource == R.drawable.monster_l0) {
-    		
+    		this.mResourceId = resource;
+    		this.mTopBB = 3;
+    		this.mBottomBB = 8;
+    		this.mLeftBB = 0;
+    		this.mRightBB = 16;
+    		this.mVisible = true;
+    		this.mActive = true;
+    		this.mFacingRight = true;
+    	}
+    	if (resource == R.drawable.concrete) {
+    		this.mResourceId = resource;
+    		this.mTopBB = 0;
+    		this.mBottomBB = 8;
+    		this.mLeftBB = 0;
+    		this.mRightBB = 40;
+    		this.mVisible = true;
+    		this.mActive = true;
+    		this.mFacingRight = true;
     	}
     }
     
