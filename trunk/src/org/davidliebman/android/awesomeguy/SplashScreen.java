@@ -85,7 +85,7 @@ public class SplashScreen extends Activity {
         if (mGoogleAnalytics) {
             tracker.trackPageView("/SplashScreen");
             tracker.dispatch();
-            //Log.d("Awesomeguy","Google Analytics-----------------");
+            Log.d("Awesomeguy","Google Analytics-----------------");
         }
         
         /* reset preferences so that game starts with room 1 */
