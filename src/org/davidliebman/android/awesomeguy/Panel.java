@@ -313,7 +313,10 @@ public  class Panel  extends SurfaceView  {
 
 	public void setReturnBackgroundGraphics() {
 		/*** jni lives and score ***/
+		
 		setScoreLives(mGameV.getScore(), mGameV.getLives());
+		mHighScores.setLives(mGameV.getLives());
+		mHighScores.setScore(mGameV.getScore());
 		
 		/*** set initial scroll positions ***/
 		scrollX = mGameV.getScrollX();

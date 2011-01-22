@@ -36,6 +36,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
 	public static final int INPUTVALUES_TRACKUP = 7;
 	public static final int CONGRATS = 8;
 	public static final int PLAYAGAIN = 9;
+	public static final int REORIENTATION = 10;
 
 	public static final int DIALOG_PAUSED_ID = 0;
 	public static final int DIALOG_GAMEOVER_ID = 1;
@@ -279,7 +280,10 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     	if(!mBundle.getBoolean(GameValues.BUNDLE_INITIAL)) {
     		mGameV.useBundleInfo(mBundle, mMovementV);
     		mUseSavedBundle = true;
+    		mGameV.setXmlMode(GameValues.XML_USE_LEVEL);
     	}
+    	
+    	
     	if(mBundle.getInt(GameValues.BUNDLE_LAST_ORIENTATION) != mGameV.getScreenOrientation()) {
     		mScreenOrientationChange = true;
     	}
@@ -832,22 +836,36 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     		    mPanelBot.setAnimationOnly(false);
     		    mPanelBot.setJNIAnimateOnly(0); // '0' is false for JNI
     		    
-    		    if( !mUseSavedBundle ) {
-    		    	mPanelBot.setInitialBackgroundGraphics();
-    		    	mPanelBot.setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
-    		    	mPanelBot.setGuySprite(mGameV.getSpriteStart()); //must refresh reference to guySprite
-    		    }
-    		    else {
-    		    	mPanelBot.setReturnBackgroundGraphics();
-    		    	mPanelBot.setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
-    		    	mPanelBot.setGuySprite(mGameV.getSpriteStart()); //must refresh reference to guySprite
-
-    		    }
+    		    mPanelBot.setInitialBackgroundGraphics();
+    		    mPanelBot.setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
+    		    mPanelBot.setGuySprite(mGameV.getSpriteStart()); //must refresh reference to guySprite
+    		    
     			
     			mPanelBot.invalidate();
     			
     		}
-    		
+    		else if (msg.what == REORIENTATION) {
+    			
+    			this.removeMessages(MOVEMENTVALUES);
+    			this.removeMessages(GAMEVALUES);
+    			this.removeMessages(INPUTVALUES_KEYUP);
+    			 
+        		mGameV.useBundleInfo(mBundle, mMovementV);
+    			
+    		    mPanelBot.setAnimationOnly(false);
+    		    mPanelBot.setJNIAnimateOnly(0); // '0' is false for JNI
+    		    
+    		    
+    		    mPanelBot.setReturnBackgroundGraphics();
+    		    mPanelBot.setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
+    		    mPanelBot.setGuySprite(mGameV.getSpriteStart()); //must refresh reference to guySprite
+
+    		    
+    			
+    			mPanelBot.invalidate();
+    			
+    			
+    		}
     		else if(msg.what == MOVEMENTVALUES) {
     			
     			mPanelBot.setHighScores((Record)msg.obj);
@@ -932,7 +950,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     		    // PREP FOR GAME PLAY
     		    // set lives
     		    
-    		    mGameV.setLives(3);
+    		    if (!mUseSavedBundle) mGameV.setLives(3);
     		    // set room num
     		    
     		    if (mSavedRoomFlag == true) mGameV.setRoomNo(1);
@@ -940,7 +958,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     		    
     		    //getSavedRoom();
     		    
-    		    mGameV.setScore(10);
+    		    if (!mUseSavedBundle) mGameV.setScore(10);
     		    
     		    mGameV.setEndGame(false);
     		    
@@ -950,8 +968,14 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     		     // advance through rooms
 
     		      
-    		    mHandler.sendEmptyMessage(GameStart.STARTLEVEL);
-
+    		    if (!mUseSavedBundle) {
+    		    	mHandler.sendEmptyMessage(GameStart.STARTLEVEL);
+    		    }
+    		    else {
+    		    	mHandler.sendEmptyMessage(GameStart.REORIENTATION);
+    		    }
+    		    
+    		    
         		mHandler.removeMessages(GameStart.MOVEMENTVALUES);
 
     		    //init room
@@ -971,8 +995,13 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     		    	mPanelBot.addPlatformsJNI();
     		    }
     		    
+    		    
+		    	//mPanelBot.setLevelData(mGameV.getLevelArray(), mGameV.getObjectsArray(), mGameV.getMapH(), mGameV.getMapV());
+
+    		    
     		    //end of restore from bundle
     		    mUseSavedBundle = false;
+    		    mGameV.setXmlMode(GameValues.XML_USE_BOTH);
     		    
     		    //get guy sprite reference 
     			mGuySprite = mGameV.getSpriteStart();
