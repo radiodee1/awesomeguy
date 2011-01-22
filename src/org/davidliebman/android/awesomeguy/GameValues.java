@@ -97,6 +97,7 @@ public class GameValues {
 	public static final String BUNDLE_SCROLL_Y = new String("scroll_y");
 	public static final String BUNDLE_SCORE = new String("score");
 	public static final String BUNDLE_LIVES = new String("lives");
+	public static final String BUNDLE_LAST_ORIENTATION = new String("orientation");
 	private Bundle mBundle = new Bundle();
 	
 	/* first part of screen size and orientation stuff */
@@ -520,6 +521,8 @@ public class GameValues {
 		
 		mBundle.putInt(BUNDLE_SCORE, this.getScore());
 		mBundle.putInt(BUNDLE_LIVES, this.getLives());
+		
+		mBundle.putInt(BUNDLE_LAST_ORIENTATION, this.getScreenOrientation());
 	}
 	public Bundle getBundle() {
 		return mBundle;
@@ -527,8 +530,6 @@ public class GameValues {
 	public void useBundleInfo(Bundle bundle, MovementValues mMovementV) {
 		mBundle = bundle;
 		
-		//if(mBundle.getBoolean(BUNDLE_INITIAL)) return;
-
 		int mSpritesSize = mBundle.getInt(BUNDLE_NUM_OF_SPRITES);
 		this.mMonsterNum = mBundle.getInt(BUNDLE_MONSTER_NUMBER);
 		this.mMonsterOffset = mBundle.getInt(BUNDLE_MONSTER_OFFSET);

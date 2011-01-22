@@ -71,6 +71,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     private Context mContext;
     private Bundle mBundle;
     private boolean mUseSavedBundle = false;
+    private boolean mScreenOrientationChange = false;
     
     private boolean mTestLandscapeButtons = true;
     
@@ -240,15 +241,18 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     		//
        	}
     	
-    	// save high scores if they rank
-    	if(mHighScores.getScore() > mGameV.getOldGuyScore()) {
-	    	  
-	    	  mScores.insertRecordIfRanks(mHighScores);
-	    	  mHighScores.setNewRecord(false);
-
-	      }
-    	mScores.insertHighInTableIfRanks(mHighScores);
-
+    	if(!mScreenOrientationChange) {
+	    	// save high scores if they rank
+	    	if(mHighScores.getScore() > mGameV.getOldGuyScore()) {
+		    	  
+		    	  mScores.insertRecordIfRanks(mHighScores);
+		    	  mHighScores.setNewRecord(false);
+	
+		      }
+	    	mScores.insertHighInTableIfRanks(mHighScores);
+    	}
+    	mScreenOrientationChange = false;
+    	
     	//TODO: make sure records are not saved when screen is re-oriented
     	
 		SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
@@ -262,18 +266,22 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     public void onSaveInstanceState(Bundle b) {
     	
     	mGameV.addToBundle(b, mMovementV);
+    	
     	super.onSaveInstanceState(b);
     }
     
     @Override
     public void onRestoreInstanceState(Bundle b) {
-    	//mBundle = b;
+
     	super.onRestoreInstanceState(b);
     	mBundle = b;
     	
     	if(!mBundle.getBoolean(GameValues.BUNDLE_INITIAL)) {
     		mGameV.useBundleInfo(mBundle, mMovementV);
     		mUseSavedBundle = true;
+    	}
+    	if(mBundle.getInt(GameValues.BUNDLE_LAST_ORIENTATION) != mGameV.getScreenOrientation()) {
+    		mScreenOrientationChange = true;
     	}
     }
     
@@ -298,8 +306,6 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     	framesPerSec = mHighScores.getGameSpeed();
     	
     	/* init background */
-    	
-    	
     	
     	this.setOrientationVars();
     	mPanelBot = new Panel(this,  mGameV, this, mMovementV, mHighScores);
@@ -337,7 +343,6 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     
     public void setOrientationVars() {
 
-        ////////////////////////////////
     	Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();    	
         mDimensionWidth = display.getWidth();
         mDimensionHeight = display.getHeight();
