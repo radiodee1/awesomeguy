@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.os.Bundle;
 import android.widget.*;
 import android.content.*;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View.OnKeyListener;
 import java.util.ArrayList;
@@ -97,6 +98,7 @@ public class Players extends ListActivity {
         
         /* edit text field*/
         final EditText edittext = (EditText) findViewById(R.id.edittext_name);
+        
         edittext.setOnKeyListener(new OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 // If the event is a key-down event on the "enter" button
