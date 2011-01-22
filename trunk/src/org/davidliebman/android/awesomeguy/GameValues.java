@@ -78,6 +78,7 @@ public class GameValues {
 	private int mTotNumRooms = 10;
 	private ArrayList<Integer> mXmlLevel = new ArrayList<Integer>();
 	private InitBackground.LevelList mLevelList;
+	private int mXmlMode = XML_USE_BOTH;
 	
 	/* Bundle stuff */
 	public static final String BUNDLE_NUM_OF_SPRITES = new String("sprites");
@@ -99,6 +100,10 @@ public class GameValues {
 	public static final String BUNDLE_LIVES = new String("lives");
 	public static final String BUNDLE_LAST_ORIENTATION = new String("orientation");
 	private Bundle mBundle = new Bundle();
+	
+	public static final int XML_USE_LEVEL = 0;
+	public static final int XML_USE_OBJECTS = 1;
+	public static final int XML_USE_BOTH = 2;
 	
 	/* first part of screen size and orientation stuff */
 	
@@ -399,7 +404,12 @@ public class GameValues {
 	public void setLevelList(InitBackground.LevelList mLevelList) {
 		this.mLevelList = mLevelList;
 	}
-	
+	public int getXmlMode() {
+		return mXmlMode;
+	}
+	public void setXmlMode(int mXmlMode) {
+		this.mXmlMode = mXmlMode;
+	}
 	/*  screen orientation */
 	public int getScreenOrientation() {
 		return mScreenOrientation;
@@ -529,6 +539,8 @@ public class GameValues {
 	}
 	public void useBundleInfo(Bundle bundle, MovementValues mMovementV) {
 		mBundle = bundle;
+		
+		this.mXmlMode = XML_USE_LEVEL;
 		
 		int mSpritesSize = mBundle.getInt(BUNDLE_NUM_OF_SPRITES);
 		this.mMonsterNum = mBundle.getInt(BUNDLE_MONSTER_NUMBER);

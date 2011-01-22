@@ -373,9 +373,13 @@ public class InitBackground {
 				
 				for(int i = 0; i < mGameV.getMapV(); i ++) { // 32 y
 					for(int j =0; j < mGameV.getMapH(); j ++) { // 64 x
-
-						mGameV.setLevelCell(j, i,  new Integer(mTileToken.nextToken().trim()).intValue());
-						mGameV.setObjectsCell(j, i, new Integer(mObjectToken.nextToken().trim()).intValue());
+						
+						if (mGameV.getXmlMode() == GameValues.XML_USE_BOTH || mGameV.getXmlMode() == GameValues.XML_USE_LEVEL) {
+							mGameV.setLevelCell(j, i,  new Integer(mTileToken.nextToken().trim()).intValue());
+						}
+						if (mGameV.getXmlMode() == GameValues.XML_USE_BOTH || mGameV.getXmlMode() == GameValues.XML_USE_OBJECTS) {
+							mGameV.setObjectsCell(j, i, new Integer(mObjectToken.nextToken().trim()).intValue());
+						}
 
 					} //j block                        
 				} // i block
