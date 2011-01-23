@@ -1110,6 +1110,14 @@ public  class Panel  extends SurfaceView  {
 		return mTemp;
 	}
 	
+	/* query the jni for sprite info used for Bundle */
+	public void updateSpriteList() {
+		for (int x = 0; x < mGameV.getSpriteListSize() - 1; x ++) {
+			if(this.getSpriteFacingRight(x) == 1) mGameV.getSprite(x + 1).setFacingRight(true);
+			else mGameV.getSprite(x + 1).setFacingRight(false);
+		}
+	}
+	
 	/* strictly JNI oriented */
 	public void playSounds() {
 		if(getSoundOw() == 1) {
