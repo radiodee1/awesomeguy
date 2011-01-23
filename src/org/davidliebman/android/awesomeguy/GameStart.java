@@ -266,7 +266,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     
     @Override
     public void onSaveInstanceState(Bundle b) {
-    	
+    	mPanelBot.updateSpriteList();
     	mGameV.addToBundle(b, mMovementV);
     	
     	super.onSaveInstanceState(b);
@@ -431,7 +431,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     
 	@Override
 	public boolean onKeyDown( int keyCode, KeyEvent event) {
-		this.closeSoftKeyboard((View)this.getCurrentFocus());
+		//this.closeSoftKeyboard((View)this.getCurrentFocus());
 		
 		//super(keyCode, event);
 		if(keyCode == KeyEvent.KEYCODE_A || keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
@@ -468,7 +468,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
 	
 	@Override
 	public boolean onKeyUp( int keyCode, KeyEvent event) {
-		this.closeSoftKeyboard((View)this.getCurrentFocus());
+		//this.closeSoftKeyboard((View)this.getCurrentFocus());
 
 		
 		//super(keyCode, event);
