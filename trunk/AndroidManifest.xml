@@ -42,7 +42,8 @@
 
 
 		<activity android:name=".GameStart"
-			android:clearTaskOnLaunch="true">
+			android:clearTaskOnLaunch="true"
+			android:windowSoftInputMode="stateAlwaysHidden">
 			<intent-filter>
 				<category android:name="android.intent.category.DEFAULT"></category>
 				<action android:name="org.davidliebman.android.awesomeguy.GameStart"></action>
