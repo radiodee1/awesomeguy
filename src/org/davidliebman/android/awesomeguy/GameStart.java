@@ -21,11 +21,12 @@ import android.view.ViewGroup.LayoutParams;
 import android.content.*;
 import android.widget.*;
 import android.inputmethodservice.KeyboardView;
+import android.view.inputmethod.*;
 import android.content.res.*;
 
 //import android.util.Log;
 
-public class GameStart extends Activity implements KeyEvent.Callback{
+public class GameStart extends Activity  implements KeyEvent.Callback{
 	
 	public static final int GAMEVALUES = 1;
 	public static final int STARTLEVEL = 2;
@@ -291,7 +292,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     
     @Override
     public void onResume() {
-    	
+    
     	    	
     	/* retrieve Record mHighScores */
     	mHighScores = new Record();
@@ -405,6 +406,11 @@ public class GameStart extends Activity implements KeyEvent.Callback{
         
     }
     
+    public void closeSoftKeyboard(View v) {
+    	InputMethodManager inputManager = (InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE);
+    	inputManager.hideSoftInputFromWindow(v.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+    
     public void addButton(TouchButton mButton) {
     	this.mButtonList.add(mButton);
     }
@@ -422,9 +428,11 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     
     /** Start key listener overrides **/
 
-	
+    
 	@Override
 	public boolean onKeyDown( int keyCode, KeyEvent event) {
+		this.closeSoftKeyboard((View)this.getCurrentFocus());
+		
 		//super(keyCode, event);
 		if(keyCode == KeyEvent.KEYCODE_A || keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
 			mMovementV.setKeyInput(MovementValues.KEY_LEFT);
@@ -460,6 +468,9 @@ public class GameStart extends Activity implements KeyEvent.Callback{
 	
 	@Override
 	public boolean onKeyUp( int keyCode, KeyEvent event) {
+		this.closeSoftKeyboard((View)this.getCurrentFocus());
+
+		
 		//super(keyCode, event);
 		if(keyCode == KeyEvent.KEYCODE_A || keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
 			mMovementV.clearKeys();
@@ -490,7 +501,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
 		}
 		return true;
 	}
-
+	
 	
     /** Game Pad Here **/
     public class GamePad extends  TableLayout {
@@ -628,12 +639,15 @@ public class GameStart extends Activity implements KeyEvent.Callback{
 				
     				@Override
     				public boolean onKey(View v, int keyCode, KeyEvent event) {
-    					if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+    					
+    					closeSoftKeyboard(v);
+    					
+    					if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_SPACE) {
     		    			mPanelBot.setKeyB(true);
 
     					}
     					
-    					if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT)
+    					if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT || keyCode == KeyEvent.KEYCODE_A)
                         {
     						
     						mMovementV.setKeyInput(MovementValues.KEY_LEFT);
@@ -646,7 +660,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     						
     						//Log.v("button factory", "trackball??? left");
                         }
-                        else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT)
+                        else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT || keyCode == KeyEvent.KEYCODE_S)
                         {	
                         	
             		    	mMovementV.setKeyInput(MovementValues.KEY_RIGHT);
@@ -659,7 +673,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     				    	
     						//Log.v("button factory", "trackball??? right");
                         }
-    					if (keyCode == KeyEvent.KEYCODE_DPAD_UP)
+    					if (keyCode == KeyEvent.KEYCODE_DPAD_UP || keyCode == KeyEvent.KEYCODE_D)
                         {
     						
     				    	mMovementV.setKeyInput(MovementValues.KEY_UP);
@@ -672,7 +686,7 @@ public class GameStart extends Activity implements KeyEvent.Callback{
     						
     						//Log.v("button factory", "trackball??? up");
                         }
-                        else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN)
+                        else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN || keyCode == KeyEvent.KEYCODE_F)
                         {
                         	
                         	
