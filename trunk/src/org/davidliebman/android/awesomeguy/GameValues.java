@@ -99,6 +99,7 @@ public class GameValues {
 	public static final String BUNDLE_SCORE = new String("score");
 	public static final String BUNDLE_LIVES = new String("lives");
 	public static final String BUNDLE_LAST_ORIENTATION = new String("orientation");
+	public static final String BUNDLE_SPRITES_FACINGRIGHT_ARRAY = new String("sprites_facing_right_array");
 	private Bundle mBundle = new Bundle();
 	
 	public static final int XML_USE_LEVEL = 0;
@@ -359,6 +360,10 @@ public class GameValues {
 	public void clearSpriteList() {
 		mSprites = new ArrayList<SpriteInfo>();
 	}
+	public int getSpriteListSize() {
+		return mSprites.size();
+	}
+	
 	/** set and get sprite index markers **/
 	public int getMonsterNum() {
 		return mMonsterNum;
@@ -499,12 +504,16 @@ public class GameValues {
 		mBundle.putInt(BUNDLE_NUM_OF_SPRITES, this.mSprites.size());
 		int [] mXvalues = new int [mSprites.size()];
 		int [] mYvalues = new int [mSprites.size()];
+		boolean [] mFacingRight = new boolean [mSprites.size()];
+		
 		for (int i = 0; i < mSprites.size(); i ++) {
 			mXvalues [i] = mSprites.get(i).getMapPosX();
 			mYvalues [i] = mSprites.get(i).getMapPosY();
+			mFacingRight [i] = mSprites.get(i).getFacingRight();
 		}
 		mBundle.putIntArray(BUNDLE_SPRITES_X_ARRAY, mXvalues);
 		mBundle.putIntArray(BUNDLE_SPRITES_Y_ARRAY, mYvalues);
+		mBundle.putBooleanArray(BUNDLE_SPRITES_FACINGRIGHT_ARRAY, mFacingRight);
 		
 		mBundle.putInt(BUNDLE_MONSTER_NUMBER, mMonsterNum);
 		mBundle.putInt(BUNDLE_MONSTER_OFFSET, mMonsterOffset);
@@ -555,8 +564,11 @@ public class GameValues {
 		
 		int mSpritesX [] = new int[mSpritesSize];
 		int mSpritesY [] = new int[mSpritesSize];
+		boolean mSpritesFacingRight [] = new boolean [mSpritesSize];
+		
 		mSpritesX = mBundle.getIntArray(BUNDLE_SPRITES_X_ARRAY);
 		mSpritesY = mBundle.getIntArray(BUNDLE_SPRITES_Y_ARRAY);
+		mSpritesFacingRight = mBundle.getBooleanArray(BUNDLE_SPRITES_FACINGRIGHT_ARRAY);
 		
 		mSprites.clear();
 		
@@ -577,6 +589,8 @@ public class GameValues {
 			//TODO: fill in other info like boss monster sprite info
 			mTempSprite.setMapPosX(mSpritesX[i]);
 			mTempSprite.setMapPosY(mSpritesY[i]);
+			mTempSprite.setFacingRight(mSpritesFacingRight[i]);
+			
 			this.mSprites.add(mTempSprite);
 		}
 		
