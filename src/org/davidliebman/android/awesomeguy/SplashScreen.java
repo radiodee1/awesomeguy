@@ -81,7 +81,7 @@ public class SplashScreen extends Activity {
         
         /* google analytics tracker */
         tracker = GoogleAnalyticsTracker.getInstance();
-        tracker.start(UA_NUMBER, this);
+        tracker.start(UA_NUMBER, 5, this);
         if (mGoogleAnalytics) {
             tracker.trackPageView("/SplashScreen");
             tracker.dispatch();
