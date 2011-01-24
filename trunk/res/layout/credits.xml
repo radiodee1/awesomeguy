@@ -32,12 +32,10 @@ android:layout_height="wrap_content" >
 by Monty Stewart and Griffin Stewart. All the artwork in the game was created by one of the three persons mentioned
 above. \n\n'Awesomeguy' for the android phone is based on the 'Awesomeguy' homebrew game programmed for the Nintendo DS.\n
 " 
-
-android:background="@drawable/background"
 android:textColor="#000000"
 android:textSize="16sp"
 android:textStyle="bold"
-android:id="@+id/TextView01" 
+android:id="@+id/TextView02" 
 android:layout_width="wrap_content" 
 android:layout_height="wrap_content">
 </TextView>
@@ -49,11 +47,10 @@ Google Analytics is enabled by default, but can be disabled easily from the Opti
 
 " 
 
-android:background="@drawable/background"
 android:textColor="#000000"
 android:textSize="16sp"
 android:textStyle="bold"
-android:id="@+id/TextView01" 
+android:id="@+id/TextView03" 
 android:layout_width="wrap_content" 
 android:layout_height="wrap_content">
 </TextView>

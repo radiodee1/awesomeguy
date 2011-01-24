@@ -72,7 +72,7 @@ public class Menu extends Activity {
         StoryButton.setOnClickListener(new OnClickListener() {
         	
         	public void onClick(View v) {
-        		Intent StoryIntent= new Intent(Menu.this,Highscores.class);
+        		Intent StoryIntent= new Intent(Menu.this,Story.class);
         		startActivity(StoryIntent);
         	}
         });
