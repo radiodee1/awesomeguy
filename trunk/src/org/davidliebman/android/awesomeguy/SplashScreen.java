@@ -115,7 +115,7 @@ public class SplashScreen extends Activity {
                 } finally {
                     finish();
                     if (! mTermsOfService ) {
-                    	startActivity(new Intent(SplashScreen.this,TermsOfService.class));
+                    	startActivity(new Intent(SplashScreen.this,Credits.class));
                     	
                     }
                     else {

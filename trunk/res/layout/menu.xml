@@ -41,15 +41,8 @@
 		<TextView android:id="@+id/widget34" android:layout_width="wrap_content"
 			android:layout_height="wrap_content">
 		</TextView>
-		<Button android:id="@+id/Help" android:layout_width="wrap_content" android:gravity="left"
-		    android:paddingLeft="15px"
-			android:textColor="#FFFFFF" android:text="@string/app_help"
-			android:layout_gravity="left" android:textSize="30px"
-			android:layout_height="wrap_content" android:background="@drawable/gamestart_button">
-		</Button>
-		<TextView android:id="@+id/widget35" android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
-		</TextView>
+		
+		
 		<Button android:id="@+id/Options" android:layout_width="wrap_content" android:gravity="left"
 		    android:paddingLeft="15px"
 			android:textColor="#FFFFFF" android:text="@string/app_options"
@@ -80,6 +73,28 @@
 		</Button>
 
 		<TextView android:id="@+id/widget40" android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+		</TextView>
+
+
+		
+		<Button android:id="@+id/Help" android:layout_width="wrap_content" android:gravity="left"
+		    android:paddingLeft="15px"
+			android:textColor="#FFFFFF" android:text="@string/app_help"
+			android:layout_gravity="left" android:textSize="30px"
+			android:layout_height="wrap_content" android:background="@drawable/gamestart_button">
+		</Button>
+		<TextView android:id="@+id/widget35" android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+		</TextView>
+		
+		<Button android:id="@+id/Story" android:layout_width="wrap_content" android:gravity="left"
+		    android:paddingLeft="15px"
+			android:textColor="#FFFFFF" android:text="@string/app_story"
+			android:layout_gravity="left" android:textSize="30px"
+			android:layout_height="wrap_content" android:background="@drawable/gamestart_button">
+		</Button>
+		<TextView android:id="@+id/widget35" android:layout_width="wrap_content"
 			android:layout_height="wrap_content">
 		</TextView>
 

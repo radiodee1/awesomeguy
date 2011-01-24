@@ -6,9 +6,16 @@ android:layout_height="fill_parent"
 xmlns:android="http://schemas.android.com/apk/res/android"
 >
 
-<TextView android:text="The game 'Awesomeguy' was created by David Liebman. The character 'Awesomeguy' was created 
+<TextView android:text="CREDITS \n\n The game 'Awesomeguy' was created by David Liebman. The character 'Awesomeguy' was created 
 by Monty Stewart and Griffin Stewart. All the artwork in the game was created by one of the three persons mentioned
-above. \n\n'Awesomeguy' for the android phone is based on the 'Awesomeguy' homebrew game programmed for the Nintendo DS." 
+above. \n\n'Awesomeguy' for the android phone is based on the 'Awesomeguy' homebrew game programmed for the Nintendo DS.\n\n
+
+LEGAL \n\n This version of Awesomeguy can report your game usage statistics to Google Analytics. This allows the developers to track
+how many users actually play the game. Google Analytics does not change any aspect of game play, and it does not report
+the identity of the users in any way. It DOES encourage the developers of the game to add features for future releases.
+Google Analytics is enabled by default, but can be disabled easily from the Options screen.
+
+" 
 
 android:background="@drawable/background"
 android:textColor="#000000"
