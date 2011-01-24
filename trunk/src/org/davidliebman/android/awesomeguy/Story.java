@@ -12,10 +12,10 @@ public class Story extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.credits);      
+        setContentView(R.layout.story);      
               
         /* button at bottom of view */
-	    final Button button = (Button) findViewById(R.id.button_termsofservice);
+	    final Button button = (Button) findViewById(R.id.button_clear);
 	    button.setOnClickListener(new OnClickListener() {
 	        public void onClick(View v) {
 	        	Intent MenuIntent = new Intent(Story.this,Menu.class);

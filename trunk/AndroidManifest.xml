@@ -41,6 +41,12 @@
 		</activity>
 
 
+		<activity android:name=".Story"
+		>
+			<intent-filter></intent-filter>
+		</activity>
+
+
 		<activity android:name=".GameStart"
 			android:clearTaskOnLaunch="true"
 			android:windowSoftInputMode="stateAlwaysHidden">
