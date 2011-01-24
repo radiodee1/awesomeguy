@@ -28,12 +28,13 @@ android:layout_width="wrap_content"
 android:layout_height="wrap_content" >
 </TextView>
 
-<TextView android:text="This version of Awesomeguy can report your game usage statistics to Google Analytics. This allows the developers to track
-how many users actually play the game. Google Analytics does not change any aspect of game play, and it does not report
-the identity of the users in any way. It DOES encourage the developers of the game to add features for future releases.
-Google Analytics is enabled by default, but can be disabled easily from the Options screen."
+<TextView android:text="THE STORY: 
+ \nIn the future, evil robot aligators take over the planet. AWESOMEGUY, the hero, must find his way around the world, transporting to different places, collecting points and stopping the alien aligators. Look out for platforms, 
+pyramids, mazes, castles, and flying steaks. \n\nYou're AWESOMEGUY. Run away 
+  from the aligators. Jump on them to kill them. Get the crystal to go to the 
+  next level. The key is a checkpoint and the rings and gold bricks are worth points. There is also a 'life' or two out there and they are green. Have fun.
+"
   
-
 android:textColor="#000000"
 android:textSize="16sp"
 android:textStyle="bold"
