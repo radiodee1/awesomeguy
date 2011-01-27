@@ -1,7 +1,7 @@
 package org.davidliebman.android.awesomeguy;
 
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
-import android.util.Log;
+//import android.util.Log;
 import android.app.Activity;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Intent;
@@ -85,7 +85,7 @@ public class SplashScreen extends Activity {
         if (mGoogleAnalytics) {
             tracker.trackPageView("/SplashScreen");
             tracker.dispatch();
-            Log.d("Awesomeguy","Google Analytics-----------------");
+            //Log.d("Awesomeguy","Google Analytics-----------------");
         }
         
         /* reset preferences so that game starts with room 1 */

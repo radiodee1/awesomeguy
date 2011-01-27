@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.lang.*;
 import android.content.*;
 import android.os.Bundle;
-import android.util.Log;
+//import android.util.Log;
 
 
 public class GameValues {

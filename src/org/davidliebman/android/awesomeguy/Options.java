@@ -7,7 +7,7 @@ import android.app.Activity;
 import android.widget.*;
 import android.view.*;
 import android.view.View.OnClickListener;
-import android.content.Context;
+//import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;

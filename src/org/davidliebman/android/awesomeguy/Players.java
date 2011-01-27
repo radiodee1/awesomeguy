@@ -4,8 +4,8 @@ import android.app.ListActivity;
 import android.os.Bundle;
 import android.widget.*;
 import android.content.*;
-import android.text.InputType;
-import android.util.Log;
+//import android.text.InputType;
+//import android.util.Log;
 import android.view.View.OnKeyListener;
 import java.util.ArrayList;
 import android.view.*;
@@ -168,7 +168,7 @@ public class Players extends ListActivity {
     		mScores.closeAll();
     	}
     	catch (NullPointerException e) {
-    		Log.e("Awesomeguy", "Null Pointer Players");
+    		//Log.e("Awesomeguy", "Null Pointer Players");
     	}
         
         mScores = new Scores(this, mHighScores);

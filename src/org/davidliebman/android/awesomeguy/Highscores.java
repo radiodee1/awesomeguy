@@ -3,7 +3,7 @@ package org.davidliebman.android.awesomeguy;
 import java.util.ArrayList;
 
 import android.app.ListActivity;
-import android.app.Activity;
+//import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
