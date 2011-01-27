@@ -22,7 +22,9 @@ android:background="@drawable/background">
 can kill you unless you jump right on top of them. Green blocks with red dots are extra lives. The white crystal takes you to the next level.\n\n
 PLAYERS: Choose the \'Players\' option from the main menu. Here you can enter the name of your own player, used for high scores and also for 
 saving all your game preferences. Touch the edit area to enter a name. Use the pop-up keyboard to type in letters, then press \'enter\' when 
-you are done. Press enter a second time to accept the new name and use it for all your high scores."
+you are done. Press enter a second time to accept the new name and use it for all your high scores. The first time you make a high score the 
+new name will be saved in the Players table with all the others. After that, touch the entry in the Players table to select a different player,
+or use the game \'Remember Me\' setting to use the same player over and over."
   
 android:textColor="#000000"
 android:textSize="16sp"
