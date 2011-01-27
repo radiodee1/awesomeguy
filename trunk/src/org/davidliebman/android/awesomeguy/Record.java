@@ -1,8 +1,8 @@
 package org.davidliebman.android.awesomeguy;
 
 
-import android.os.Parcel;
-import android.os.Parcelable;
+//import android.os.Parcel;
+//import android.os.Parcelable;
 //import android.util.Log;
 import android.content.*;
 
