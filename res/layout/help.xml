@@ -19,8 +19,10 @@ android:orientation="vertical"
 android:background="@drawable/background">
 
 <TextView android:text="MOVEMENT: Use the arrow keys on the touch screen to move the character in the four basic directions. 'B' is the jump key. On some phones the trackball can also be used for the four directions. You can climb the ladders and jump from the platforms. You can fall any distance without hurting yourself. Monsters
-can kill you unless you jump right on top of them. Green blocks with red dots are extra lives. The white crystal takes you to the next level.
-"
+can kill you unless you jump right on top of them. Green blocks with red dots are extra lives. The white crystal takes you to the next level.\n\n
+PLAYERS: Choose the \'Players\' option from the main menu. Here you can enter the name of your own player, used for high scores and also for 
+saving all your game preferences. Touch the edit area to enter a name. Use the pop-up keyboard to type in letters, then press \'enter\' when 
+you are done. Press enter a second time to accept the new name and use it for all your high scores."
   
 android:textColor="#000000"
 android:textSize="16sp"
