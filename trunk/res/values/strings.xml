@@ -17,10 +17,10 @@ the identity of the users in any way. It DOES encourage the developers of the ga
 Google Analytics is enabled by default, but can be disabled easily from the Options screen.
 </string>
         <string name="app_features">FEATURES \n This version of Awesomeguy supports game play in landscape mode. In this
-mode the d-pad is re-arranged on the bottom of the screen in a single row. Awesomeguy should automatically re-orient
+mode the D-pad is re-arranged on the bottom of the screen in a single row. Awesomeguy should automatically re-orient
 itself when the phone is turned. \n\n
 When playing in portrait view using the touch buttons try playing the game with one finger. The pointer finger or the thumb work better for different people.
  (Hold the device in the other hand.) Depending on your phone, you can place the device on a table and press two buttons at a time - like one of the direction buttons and the jump button together. 
- This is harder to do if you're holding the device, and may not work for everyone. \n\n
+ This is harder to do if you are holding the device, and may not work for everyone. \n\n
 When playing in landscape view you can use your thumbs to press the buttons.</string>
 </resources>
