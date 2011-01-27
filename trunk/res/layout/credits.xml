@@ -40,12 +40,7 @@ android:layout_width="wrap_content"
 android:layout_height="wrap_content">
 </TextView>
 
-<TextView android:text="LEGAL \n\n This version of Awesomeguy can report your game usage statistics to Google Analytics. This allows the developers to track
-how many users actually play the game. Google Analytics does not change any aspect of game play, and it does not report
-the identity of the users in any way. It DOES encourage the developers of the game to add features for future releases.
-Google Analytics is enabled by default, but can be disabled easily from the Options screen.
-
-" 
+<TextView android:text="@string/app_legal"
 
 android:textColor="#000000"
 android:textSize="16sp"
