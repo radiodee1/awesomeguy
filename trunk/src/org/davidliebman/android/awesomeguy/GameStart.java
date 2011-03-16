@@ -239,7 +239,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     	mHandler.sendMessageAtFrontOfQueue(mEndMessage);
     	
     	try {
-    		mGameLoopBot.join(100);
+    		mGameLoopBot.join();//100
     		
     	}
     	catch (Exception e) {
@@ -1032,7 +1032,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     			mLoop = true;
     		    while(mLoop && gameRunning && !mGameV.isEndLevel()) { // GAME PLAY LOOP
     		       
-    		    	if (true) gameSpeedRegulator(); //call inside 'game play' loop
+    		    	if (gameRunning) gameSpeedRegulator(); //call inside 'game play' loop
     		    	
     		    
     		    	
@@ -1049,12 +1049,13 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     		    
     	    	mHandler.sendEmptyMessage(GameStart.GAMESTOP);
     		    // *** ANIMATE SPINNING GUY ***
-    		    try {
-    		    	Thread.sleep(1000);
-    		    } catch (InterruptedException e) {
-    		    	//
-    		    } 
-
+    	    	if (gameRunning) {
+    	    		try {
+    	    			Thread.sleep(1000);
+    	    		} catch (InterruptedException e) {
+    	    			//
+    	    		} 
+    	    	}
     		      // ** CHECK IF LEVEL IS OVER ***
     		      // * advance the room count if it is
     		      // * necessary.
@@ -1124,7 +1125,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     		ticksElapsed = newDate.getTime();
     		nextGameTick += skipTicks;
     		sleepTime = nextGameTick - ticksElapsed;
-    		if ( sleepTime >= 0 ) {
+    		if ( sleepTime >= 0 && gameRunning) {
     		
     			//Log.v("InnerGameLoop", "---Passing time");
     			try {
