@@ -110,6 +110,9 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
         
         requestWindowFeature(Window.FEATURE_NO_TITLE);
        
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        
         if(savedInstanceState != null) {
         	mBundle = savedInstanceState;
         	//mUseSavedBundle = true;
@@ -236,7 +239,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     	mHandler.sendMessageAtFrontOfQueue(mEndMessage);
     	
     	try {
-    		mGameLoopBot.join(1000);
+    		mGameLoopBot.join(100);
     		
     	}
     	catch (Exception e) {

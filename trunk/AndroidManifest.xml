@@ -49,6 +49,7 @@
 
 		<activity android:name=".GameStart"
 			android:clearTaskOnLaunch="true"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
 			android:windowSoftInputMode="stateAlwaysHidden">
 			<intent-filter>
 				<category android:name="android.intent.category.DEFAULT"></category>
