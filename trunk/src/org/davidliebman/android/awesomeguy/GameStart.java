@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -57,7 +58,8 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     private TableLayout mTLayout ;
     private FrameLayout mFLayoutBot ;
     private Panel mPanelBot ;
-	
+	private GameKeys mKeysView;
+    
     private View mSpaceView, mSpaceViewSecond,mSpaceViewThird;
     private TableLayout mGameRow;
     
@@ -322,7 +324,10 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     		mRLayoutGamepad.addView((View)new GamePad(this, true, mDimensionWidth));
     	}
     	else if (mGameV.isPutGameKeys()) {
-    		mRLayoutGamepad.addView((View)new GameKeys(this, mGameV.getLandscapeButtonPixel() , true));
+    		mKeysView = new GameKeys(this, mGameV.getLandscapeButtonPixel(), true);
+    		//mRLayoutGamepad.addView((View)new GameKeys(this, mGameV.getLandscapeButtonPixel() , true));
+    		mRLayoutGamepad.addView(mKeysView);
+    		//TODO: check that this works on landscape AND portrait
     	}
     	
     	mBackground = new InitBackground(mGameV, this, mLookForXml);
@@ -595,6 +600,9 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     		int mButtonHeight = widthDimension;
     		int mButtonWidth = widthDimension;
     		
+    		GameStart.this.mButtonWidth = mGameV.getLandscapeButtonPixel();
+    		GameStart.this.mButtonHeight = mGameV.getLandscapeButtonPixel();
+    		
     		TableRow mTRow = new TableRow(c);
     		TouchButton mButton1 = new TouchButton(c, mMultiTouch ,R.drawable.button_left, mButtonWidth, mButtonHeight, 0, "button_left", MovementValues.KEY_LEFT);
     		TouchButton mButton2 = new TouchButton(c, mMultiTouch ,R.drawable.button_right, mButtonWidth, mButtonHeight, 0, "button_right", MovementValues.KEY_RIGHT);
@@ -620,6 +628,21 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     		mTRow.addView((View)mButton5);
 
     		this.addView((View)mTRow);
+    		
+    		/* set button x and button y */
+    		mButton1.setButtonXY(0, 0);
+    		mButton2.setButtonXY(1, 0);
+    		mButton3.setButtonXY(2, 0);
+    		mButton4.setButtonXY(3, 0);
+    		mButton5.setButtonXY(4, 0);
+    		
+    		/* populate button list */
+    		clearButtonList();
+    		addButton(mButton1);
+    		addButton(mButton2);
+    		addButton(mButton3);
+    		addButton(mButton4);
+    		addButton(mButton5);
     	}
     }
 
@@ -800,7 +823,10 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     			mSecondOffsetX = getButton(i).getButtonX();
     			mSecondOffsetY = getButton(i).getButtonY();
     			
-    			if (mSecondX + mFirstOffsetX * mButtonWidth > mSecondOffsetX * mButtonWidth &&
+    			
+    			//portrait
+    			if (!(mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE && mTestLandscapeButtons) &&
+    					mSecondX + mFirstOffsetX * mButtonWidth > mSecondOffsetX * mButtonWidth &&
     					mSecondX + mFirstOffsetX * mButtonWidth < (mSecondOffsetX + 1) * mButtonWidth &&
     					mSecondY + mFirstOffsetY * mButtonHeight > mSecondOffsetY * mButtonHeight &&
     					mSecondY + mFirstOffsetY * mButtonHeight < (mSecondOffsetY + 1) * mButtonHeight) {
@@ -813,6 +839,31 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     		    		mMovementV.setKeyInput(getButton(i).getKeyValue());
     		    	}
 
+    			}
+    			
+    			int mNewButtonWidth = getButton(i).getWidth();
+    			int mNewButtonHeight = getButton(i).getHeight();
+    				     			
+    			//landscape
+    			if ((mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE && mTestLandscapeButtons) &&
+    					mSecondX + mFirstOffsetX * mNewButtonWidth >  mSecondOffsetX * mNewButtonWidth &&
+    					mSecondX + mFirstOffsetX * mNewButtonWidth <  (mSecondOffsetX + 1) * mNewButtonWidth &&
+    					mSecondY + mFirstOffsetY * mNewButtonHeight > mSecondOffsetY * mNewButtonHeight &&
+    					mSecondY + mFirstOffsetY * mNewButtonHeight < (mSecondOffsetY + 1) * mNewButtonHeight) {
+    				//handle second click here !!
+    				
+    				if (getButton(i).getKeyValue() == MovementValues.KEY_B) {
+    		    		mPanelBot.setKeyB(true);
+    		    	}
+    		    	else{
+    		    		mMovementV.setKeyInput(getButton(i).getKeyValue());
+    		    	}
+    		    	Log.e("-------"," button value "+ getButton(i).getDescription());
+    		    	Log.e("-------"," new button width " + getButton(i).getWidth());
+    		    	Log.e("-------"," First values:" + mFirstX + "," + mFirstY);
+    		    	Log.e("-------", " Second values:" + mSecondX + "," + mSecondY);
+    		    	Log.e("-------", " First Offset:" + mFirstOffsetX + "," + mFirstOffsetY);
+    		    	Log.e("-------", " Second Offset:" + mSecondOffsetX + "," + mSecondOffsetY);
     			}
     		}
     		
