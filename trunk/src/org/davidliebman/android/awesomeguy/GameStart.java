@@ -844,7 +844,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     			int mNewButtonWidth = getButton(i).getWidth();
     			int mNewButtonHeight = getButton(i).getHeight();
     				     			
-    			//landscape
+    			//landscape - buttons are a different size
     			if ((mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE && mTestLandscapeButtons) &&
     					mSecondX + mFirstOffsetX * mNewButtonWidth >  mSecondOffsetX * mNewButtonWidth &&
     					mSecondX + mFirstOffsetX * mNewButtonWidth <  (mSecondOffsetX + 1) * mNewButtonWidth &&
@@ -858,12 +858,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     		    	else{
     		    		mMovementV.setKeyInput(getButton(i).getKeyValue());
     		    	}
-    		    	Log.e("-------"," button value "+ getButton(i).getDescription());
-    		    	Log.e("-------"," new button width " + getButton(i).getWidth());
-    		    	Log.e("-------"," First values:" + mFirstX + "," + mFirstY);
-    		    	Log.e("-------", " Second values:" + mSecondX + "," + mSecondY);
-    		    	Log.e("-------", " First Offset:" + mFirstOffsetX + "," + mFirstOffsetY);
-    		    	Log.e("-------", " Second Offset:" + mSecondOffsetX + "," + mSecondOffsetY);
+    		    	
     			}
     		}
     		
