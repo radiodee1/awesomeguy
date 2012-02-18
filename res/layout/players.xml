@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- start wrapper open -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_height="fill_parent"
+		android:layout_width="fill_parent">
+		
+<!-- start players.xml -->
+
 <TableLayout android:id="@+id/widget32"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="wrap_content" android:layout_height="wrap_content">
@@ -50,3 +58,8 @@
 		android:layout_height="wrap_content" xmlns:android="http://schemas.android.com/apk/res/android"
 		android:id="@+id/button_players" android:text="Go To Game" />
 </TableLayout>
+
+<!-- end players.xml -->
+
+<!-- start wrapper closing -->
+</LinearLayout>
