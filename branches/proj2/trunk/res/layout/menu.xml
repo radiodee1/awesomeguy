@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content" android:layout_width="fill_parent"
+	android:orientation="vertical" android:scrollbars="vertical"
+	android:scrollbarAlwaysDrawVerticalTrack="true">
+
+
+	<TableLayout android:id="@+id/widget28"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:orientation="vertical" android:layout_centerVertical="true"
+		android:layout_centerHorizontal="true" android:background="@drawable/background">
+
+		<TextView android:id="@+id/widget34" android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+		</TextView>
+		
+		<LinearLayout 
+		    android:layout_width="fill_parent" android:layout_height="wrap_content" android:gravity="fill_horizontal" 
+		    android:background="@drawable/black" >
+		    
+		  
+		
+		
+        <Button android:layout_width="wrap_content" android:background="@drawable/guy_icon"
+            android:layout_gravity="left" android:textSize="30px"
+            android:layout_height="fill_parent" android:id="@+id/Logo"></Button>
+        
+        </LinearLayout>
+		<TextView android:id="@+id/widget34" android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+		</TextView>
+		<Button android:layout_width="wrap_content" android:gravity="left"
+		    android:paddingLeft="15px"
+			android:layout_height="wrap_content" android:background="@drawable/gamestart_button"
+			android:textColor="#FFFFFF" android:text="@string/app_gamestart"
+			android:layout_gravity="left" android:textSize="30px"
+			
+			android:id="@+id/GameStart">
+			
+		</Button>
+		<TextView android:id="@+id/widget34" android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+		</TextView>
+		
+		
+		<Button android:id="@+id/Options" android:layout_width="wrap_content" android:gravity="left"
+		    android:paddingLeft="15px"
+			android:textColor="#FFFFFF" android:text="@string/app_options"
+			android:layout_gravity="left" android:textSize="30px"
+			android:layout_height="wrap_content" android:background="@drawable/gamestart_button">
+		</Button>
+		<TextView android:id="@+id/widget38" android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+		</TextView>
+
+
+		<Button android:id="@+id/Players" android:layout_width="wrap_content" android:gravity="left"
+		    android:paddingLeft="15px"
+			android:textColor="#FFFFFF" android:text="@string/app_players"
+			android:layout_gravity="left" android:textSize="30px"
+			android:layout_height="wrap_content" android:background="@drawable/gamestart_button">
+		</Button>
+
+		<TextView android:id="@+id/widget40" android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+		</TextView>
+
+		<Button android:id="@+id/Highscores" android:layout_width="wrap_content" android:gravity="left"
+			android:paddingLeft="15px"
+			android:textColor="#FFFFFF" android:text="@string/app_highscores"
+			android:layout_gravity="left" android:textSize="30px"
+			android:layout_height="wrap_content" android:background="@drawable/gamestart_button">
+		</Button>
+
+		<TextView android:id="@+id/widget40" android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+		</TextView>
+
+
+		
+		<Button android:id="@+id/Help" android:layout_width="wrap_content" android:gravity="left"
+		    android:paddingLeft="15px"
+			android:textColor="#FFFFFF" android:text="@string/app_help"
+			android:layout_gravity="left" android:textSize="30px"
+			android:layout_height="wrap_content" android:background="@drawable/gamestart_button">
+		</Button>
+		<TextView android:id="@+id/widget35" android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+		</TextView>
+		
+		<Button android:id="@+id/Story" android:layout_width="wrap_content" android:gravity="left"
+		    android:paddingLeft="15px"
+			android:textColor="#FFFFFF" android:text="@string/app_story"
+			android:layout_gravity="left" android:textSize="30px"
+			android:layout_height="wrap_content" android:background="@drawable/gamestart_button">
+		</Button>
+		<TextView android:id="@+id/widget35" android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+		</TextView>
+
+		<Button android:id="@+id/Credits" android:layout_width="wrap_content" android:gravity="left"
+			android:paddingLeft="15px"
+			android:textColor="#FFFFFF" android:text="@string/app_credits"
+			android:layout_gravity="left" android:textSize="30px"
+			android:layout_height="wrap_content" android:background="@drawable/gamestart_button">
+		</Button>
+		<TextView android:id="@+id/widget40" android:layout_width="wrap_content"
+			android:layout_height="wrap_content">
+
+		</TextView>
+
+
+</TableLayout>
+</ScrollView>

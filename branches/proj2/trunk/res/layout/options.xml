@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:id="@+id/widget32"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="wrap_content"
+	android:layout_height="wrap_content">
+
+
+
+
+	<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_height="wrap_content" android:layout_width="fill_parent"
+		android:orientation="vertical" android:scrollbars="vertical"
+		android:scrollbarAlwaysDrawVerticalTrack="true">
+
+		<LinearLayout android:orientation="vertical" android:id="@+id/widget32"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			xmlns:android="http://schemas.android.com/apk/res/android">
+
+			<TextView
+				android:text="This is where you would show any options your game has. The player name should be featured prominently. "
+				android:id="@+id/player_name_options" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:textSize="16sp"
+				android:textStyle="bold">
+			</TextView>
+
+            <View
+                android:layout_height="1px"
+                android:layout_width="fill_parent"
+                android:background="#ffffff" >
+            </View>
+
+			<TextView
+				android:text="Here is where you choose the level that you want to start your game at. "
+				android:id="@+id/TextView01" android:layout_width="wrap_content"
+				android:layout_height="wrap_content">
+			</TextView>
+
+			<Spinner android:id="@+id/room_spinner"
+				android:layout_height="wrap_content" android:layout_width="fill_parent"
+				android:drawSelectorOnTop="true" android:prompt="@string/room_prompt">
+			</Spinner>
+
+            <View
+                android:layout_height="1px"
+                android:layout_width="fill_parent"
+                android:background="#ffffff" >
+            </View>
+
+			<TextView
+				android:text="Here you choose the preferred running speed for your game. "
+				android:id="@+id/TextView01" android:layout_width="wrap_content"
+				android:layout_height="wrap_content">
+			</TextView>
+
+			<RadioGroup android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:orientation="vertical">
+				<RadioButton android:id="@+id/radio_speed_16"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:text="Speed = 16" />
+				<RadioButton android:id="@+id/radio_speed_20"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:text="Speed = 20" />
+				<RadioButton android:id="@+id/radio_speed_24"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:text="Speed = 24" />
+			</RadioGroup>
+
+            <View
+                android:layout_height="1px"
+                android:layout_width="fill_parent"
+                android:background="#ffffff" >
+            </View>
+            
+			<TextView
+				android:text="This option selects weather or not sound should be played during the game. "
+				android:id="@+id/TextView02" android:layout_width="wrap_content"
+				android:layout_height="wrap_content">
+			</TextView>
+
+			<CheckBox android:id="@+id/checkbox_sounds"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="Play Game Sounds" />
+
+            <View
+                android:layout_height="1px"
+                android:layout_width="fill_parent"
+                android:background="#ffffff" >
+            </View>
+
+			<TextView
+				android:text="This is where you decide how many Player profiles will be in the 'Players' table. "
+				android:id="@+id/TextView03" android:layout_width="wrap_content"
+				android:layout_height="wrap_content">
+			</TextView>
+
+			<RadioGroup android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:orientation="vertical">
+				<RadioButton android:id="@+id/radio_players_five"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:text="Five Players" />
+				<RadioButton android:id="@+id/radio_players_ten"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:text="Ten Players" />
+				<RadioButton android:id="@+id/radio_players_fifty"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:text="Fifty Players" />
+			</RadioGroup>
+
+            <View
+                android:layout_height="1px"
+                android:layout_width="fill_parent"
+                android:background="#ffffff" >
+            </View>
+
+            <TextView
+                android:text="Here you decide weather or not your game will remember the last Player selected. "
+                android:id="@+id/TextView05" android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+
+            <CheckBox android:id="@+id/checkbox_remember"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Remember Me" />
+
+            <View
+                android:layout_height="1px"
+                android:layout_width="fill_parent"
+                android:background="#ffffff" >
+            </View>
+
+			<TextView
+				android:text="This is where you decide weather or not your game will search for an alternate XML file on the sdcard. "
+				android:id="@+id/TextView04" android:layout_width="wrap_content"
+				android:layout_height="wrap_content">
+			</TextView>
+
+			<CheckBox android:id="@+id/checkbox_xml"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="Search For XML File" />
+
+            <View
+                android:layout_height="1px"
+                android:layout_width="fill_parent"
+                android:background="#ffffff" >
+            </View>
+
+            <TextView
+                android:text="This is where you decide weather or not your game will be tracked using Google Analytics. This is good for future game development. "
+                android:id="@+id/TextView04" android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+
+            <CheckBox android:id="@+id/checkbox_analytics"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Use Google Analytics" />
+
+            <View
+                android:layout_height="1px"
+                android:layout_width="fill_parent"
+                android:background="#ffffff" >
+            </View>
+
+			<TextView
+				android:text="Here you decide weather or not your game will have monsters. "
+				android:id="@+id/TextView05" android:layout_width="wrap_content"
+				android:layout_height="wrap_content">
+			</TextView>
+
+			<CheckBox android:id="@+id/checkbox_monsters"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="Monsters" />
+
+            <View
+                android:layout_height="1px"
+                android:layout_width="fill_parent"
+                android:background="#ffffff" >
+            </View>
+
+			<TextView
+				android:text="Here you decide weather monsters in the game can kill you. This doesn't matter if monsters are already disabled above."
+				android:id="@+id/TextView06" android:layout_width="wrap_content"
+				android:layout_height="wrap_content">
+			</TextView>
+
+			<CheckBox android:id="@+id/checkbox_collision"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="Monster Collision" />
+
+            <View
+                android:layout_height="1px"
+                android:layout_width="fill_parent"
+                android:background="#ffffff" >
+            </View>
+
+			<TextView
+				android:text="Click the 'Back' button to accept changes and leave 'Options' for the main menu. "
+				android:id="@+id/TextView07" android:layout_width="wrap_content"
+				android:layout_height="wrap_content">
+			</TextView>
+
+			<Button android:layout_width="fill_parent"
+				android:layout_height="wrap_content" xmlns:android="http://schemas.android.com/apk/res/android"
+				android:id="@+id/button_options" android:text="Go To Game" />
+
+		</LinearLayout>
+
+	</ScrollView>
+
+
+
+</LinearLayout>
