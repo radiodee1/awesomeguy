@@ -28,6 +28,11 @@ public class Players extends ListActivity {
     private TextView mNumPlayers;
     private int mPreferredNumRecords;
     
+    public static final int VIEW_SPLASH = 0;
+    public static final int VIEW_PLAYERS = 1;
+    public static final int VIEW_TEXT = 2;
+    public static final int VIEW_SCORES = 3;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,6 +163,8 @@ public class Players extends ListActivity {
     public void onResume() {
     	super.onResume();
     	
+    	this.showView(VIEW_PLAYERS);
+    	
     	/* retrieve Record mHighScores */
     	mHighScores = new Record();
         mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
@@ -211,6 +218,34 @@ public class Players extends ListActivity {
     	super.onPause();
     }
     
+    public void showView(int mViewToShow) {
+    	// blank out all views
+    	this.findViewById(R.id.view_splash).setEnabled(false);
+    	this.findViewById(R.id.view_splash).setVisibility(View.GONE);
+    	this.findViewById(R.id.view_players).setEnabled(false);
+    	this.findViewById(R.id.view_players).setVisibility(View.GONE);
+    	this.findViewById(R.id.view_text).setEnabled(false);
+    	this.findViewById(R.id.view_text).setVisibility(View.GONE);
+    	//...
+    	// show selected view
+    	switch (mViewToShow) {
+    	case Players.VIEW_SPLASH:
+    		this.findViewById(R.id.view_splash).setEnabled(true);
+    		this.findViewById(R.id.view_splash).setVisibility(View.VISIBLE);
+    		break;
+    	case Players.VIEW_PLAYERS:
+    		this.findViewById(R.id.view_players).setEnabled(true);
+    		this.findViewById(R.id.view_players).setVisibility(View.VISIBLE);
+    		break;
+    	case Players.VIEW_TEXT:
+    		this.findViewById(R.id.view_text).setEnabled(true);
+    		this.findViewById(R.id.view_text).setVisibility(View.VISIBLE);
+    		break;
+    	case Players.VIEW_SCORES:
+    		break;
+    	}
+    }
+    
     /* special adapter for displaying list from ArrayList */
     public class RecordAdapter extends ArrayAdapter<Record> {
     	ArrayList<Record> mList;
@@ -244,6 +279,8 @@ public class Players extends ListActivity {
     		return convertView;
     	}
     };
+    
+    
     
    /* Inner class for making alert message about number of high scores */
    public static class AlertNumRecords {

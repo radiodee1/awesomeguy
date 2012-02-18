@@ -23,4 +23,11 @@ When playing in portrait view using the touch buttons try playing the game with 
  (Hold the device in the other hand.) Depending on your phone, you can place the device on a table and press two buttons at a time - like one of the direction buttons and the jump button together. 
  This is harder to do if you are holding the device, and may not work for everyone. \n\n
 When playing in landscape view you can use your thumbs to press the buttons.</string>
+		<string name="app_helptext">MOVEMENT: Use the arrow keys on the touch screen to move the character in the four basic directions. =B= is the jump key. On some phones the trackball can also be used for the four directions. You can climb the ladders and jump from the platforms. You can fall any distance without hurting yourself. Monsters
+can kill you unless you jump right on top of them. Green blocks with red dots are extra lives. The white crystal takes you to the next level.\n\n
+PLAYERS: Choose the =Players= option from the main menu. Here you can enter the name of your own player, used for high scores and also for 
+saving all your game preferences. Touch the edit area to enter a name. Use the pop-up keyboard to type in letters, then press ENTER when 
+you are done. Press enter a second time to accept the new name and use it for all your high scores. The first time you make a high score the 
+new name will be saved in the Players table with all the others. After that, touch the entry in the Players table to select a different player,
+or use the game =Remember Me= setting to use the same player over and over.</string>
 </resources>
