@@ -43,8 +43,8 @@ public final class R {
         public static final int yellow=0x7f02001d;
     }
     public static final class id {
-        public static final int AbsoluteLayout01=0x7f070036;
-        public static final int AbsoluteLayout02=0x7f070038;
+        public static final int AbsoluteLayout01=0x7f07003a;
+        public static final int AbsoluteLayout02=0x7f07003b;
         public static final int Credits=0x7f07001c;
         public static final int GameStart=0x7f070013;
         public static final int Help=0x7f070019;
@@ -61,12 +61,12 @@ public final class R {
         public static final int TextView05=0x7f070026;
         public static final int TextView06=0x7f07002c;
         public static final int TextView07=0x7f07002e;
-        public static final int bottom=0x7f07003b;
-        public static final int button_clear=0x7f07003c;
+        public static final int bottom=0x7f07003e;
+        public static final int button_clear=0x7f07003f;
         public static final int button_help=0x7f07000d;
         public static final int button_highscores=0x7f07000f;
         public static final int button_options=0x7f07002f;
-        public static final int button_players=0x7f070035;
+        public static final int button_players=0x7f070038;
         public static final int button_termsofservice=0x7f070007;
         public static final int checkbox_analytics=0x7f07002a;
         public static final int checkbox_collision=0x7f07002d;
@@ -75,12 +75,12 @@ public final class R {
         public static final int checkbox_sounds=0x7f070022;
         public static final int checkbox_xml=0x7f070029;
         public static final int congrats_text=0x7f070002;
-        public static final int edittext_name=0x7f070034;
-        public static final int guy_icon=0x7f070032;
+        public static final int edittext_name=0x7f070037;
+        public static final int guy_icon=0x7f070035;
         public static final int icon=0x7f070008;
         public static final int image=0x7f070001;
-        public static final int image_bot=0x7f070039;
-        public static final int image_top=0x7f070037;
+        public static final int image_bot=0x7f07003c;
+        public static final int image_top=0x7f070031;
         public static final int layout_root=0x7f070000;
         public static final int player_name_options=0x7f07001d;
         public static final int radio_players_fifty=0x7f070025;
@@ -90,14 +90,17 @@ public final class R {
         public static final int radio_speed_20=0x7f070020;
         public static final int radio_speed_24=0x7f070021;
         public static final int room_spinner=0x7f07001e;
-        public static final int text=0x7f07003a;
+        public static final int text=0x7f07003d;
         public static final int text_date=0x7f07000b;
-        public static final int text_description=0x7f070033;
+        public static final int text_description=0x7f070036;
         public static final int text_level=0x7f07000c;
         public static final int text_name=0x7f070009;
-        public static final int text_num_message=0x7f070030;
-        public static final int text_player_name=0x7f070031;
+        public static final int text_num_message=0x7f070033;
+        public static final int text_player_name=0x7f070034;
         public static final int text_score=0x7f07000a;
+        public static final int view_players=0x7f070032;
+        public static final int view_splash=0x7f070030;
+        public static final int view_text=0x7f070039;
         public static final int widget28=0x7f070010;
         public static final int widget32=0x7f070003;
         public static final int widget34=0x7f070011;
@@ -130,6 +133,7 @@ public final class R {
         public static final int app_features=0x7f06000c;
         public static final int app_gamestart=0x7f060004;
         public static final int app_help=0x7f060005;
+        public static final int app_helptext=0x7f06000d;
         public static final int app_highscores=0x7f060009;
         public static final int app_legal=0x7f06000b;
         public static final int app_name=0x7f060000;

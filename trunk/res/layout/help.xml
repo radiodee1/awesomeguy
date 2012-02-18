@@ -1,81 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView 
-xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_height="wrap_content"
-android:layout_width="fill_parent" 
-android:orientation="vertical" 
-android:scrollbars="vertical" 
-android:scrollbarAlwaysDrawVerticalTrack="true"
->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="wrap_content" android:layout_width="fill_parent"
+	android:orientation="vertical" android:scrollbars="vertical"
+	android:scrollbarAlwaysDrawVerticalTrack="true" >
 
-<LinearLayout
-android:id="@+id/widget32"
-android:layout_width="fill_parent"
-android:layout_height="fill_parent"
-xmlns:android="http://schemas.android.com/apk/res/android"
-android:isScrollContainer="true" android:scrollbarAlwaysDrawVerticalTrack="true"
-android:gravity="fill_vertical"
-android:orientation="vertical"
-android:background="@drawable/background">
+	<LinearLayout android:id="@+id/widget32"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:isScrollContainer="true"
+		android:scrollbarAlwaysDrawVerticalTrack="true" android:gravity="fill_vertical"
+		android:orientation="vertical" android:background="@drawable/background">
 
-<TextView android:text="MOVEMENT: Use the arrow keys on the touch screen to move the character in the four basic directions. 'B' is the jump key. On some phones the trackball can also be used for the four directions. You can climb the ladders and jump from the platforms. You can fall any distance without hurting yourself. Monsters
-can kill you unless you jump right on top of them. Green blocks with red dots are extra lives. The white crystal takes you to the next level.\n\n
-PLAYERS: Choose the \'Players\' option from the main menu. Here you can enter the name of your own player, used for high scores and also for 
-saving all your game preferences. Touch the edit area to enter a name. Use the pop-up keyboard to type in letters, then press \'enter\' when 
-you are done. Press enter a second time to accept the new name and use it for all your high scores. The first time you make a high score the 
-new name will be saved in the Players table with all the others. After that, touch the entry in the Players table to select a different player,
-or use the game \'Remember Me\' setting to use the same player over and over."
-  
-android:textColor="#000000"
-android:textSize="16sp"
-android:textStyle="bold"
-android:id="@+id/TextView01" 
-android:layout_width="wrap_content" 
-android:layout_height="wrap_content" >
-</TextView>
+		<TextView android:text="@string/app_helptext"
 
-<TextView android:text=""
-android:textColor="#000000"
-android:textSize="16sp"
-android:textStyle="bold"
-android:id="@+id/TextView01" 
-android:layout_width="wrap_content" 
-android:layout_height="wrap_content" >
-</TextView>
-
-<TextView android:text="@string/app_features"
-android:textColor="#000000"
-android:textSize="16sp"
-android:textStyle="bold"
-android:id="@+id/TextView01" 
-android:layout_width="wrap_content" 
-android:layout_height="wrap_content" >
-</TextView>
+			android:textColor="#000000" android:textSize="16sp"
+			android:textStyle="bold" android:id="@+id/TextView01"
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
 
-<TextView android:text=""
-android:textColor="#000000"
-android:textSize="16sp"
-android:textStyle="bold"
-android:id="@+id/TextView01" 
-android:layout_width="wrap_content" 
-android:layout_height="wrap_content" >
-</TextView>
-
-<TextView android:text="@string/app_legal"
-android:textColor="#000000"
-android:textSize="16sp"
-android:textStyle="bold"
-android:id="@+id/TextView01" 
-android:layout_width="wrap_content" 
-android:layout_height="wrap_content" >
-</TextView>
+		<TextView android:text="" android:textColor="#000000"
+			android:textSize="16sp" android:textStyle="bold" android:id="@+id/TextView01"
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
 
-      <Button android:layout_width="fill_parent"
-                android:layout_height="wrap_content" xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/button_help" android:text="OK" />
+		<TextView android:text="@string/app_features"
+			android:textColor="#000000" android:textSize="16sp"
+			android:textStyle="bold" android:id="@+id/TextView01"
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
 
 
-</LinearLayout>
+
+		<TextView android:text="" android:textColor="#000000"
+			android:textSize="16sp" android:textStyle="bold" android:id="@+id/TextView01"
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+
+		<TextView android:text="@string/app_legal" android:textColor="#000000"
+			android:textSize="16sp" android:textStyle="bold" android:id="@+id/TextView01"
+			android:layout_width="wrap_content" android:layout_height="wrap_content" />
+
+
+
+		<Button android:layout_width="fill_parent"
+			android:layout_height="wrap_content" xmlns:android="http://schemas.android.com/apk/res/android"
+			android:id="@+id/button_help" android:text="OK" />
+
+
+	</LinearLayout>
 </ScrollView>
