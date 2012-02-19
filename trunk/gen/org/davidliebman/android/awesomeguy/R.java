@@ -47,8 +47,8 @@ public final class R {
         public static final int yellow=0x7f02001e;
     }
     public static final class id {
-        public static final int AbsoluteLayout01=0x7f09003a;
-        public static final int AbsoluteLayout02=0x7f09003b;
+        public static final int AbsoluteLayout01=0x7f09003c;
+        public static final int AbsoluteLayout02=0x7f09003d;
         public static final int Credits=0x7f09001c;
         public static final int GameStart=0x7f090013;
         public static final int Help=0x7f090019;
@@ -65,8 +65,9 @@ public final class R {
         public static final int TextView05=0x7f090026;
         public static final int TextView06=0x7f09002c;
         public static final int TextView07=0x7f09002e;
-        public static final int bottom=0x7f09003e;
-        public static final int button_clear=0x7f09003f;
+        public static final int bottom=0x7f090040;
+        public static final int button_clear=0x7f090041;
+        public static final int button_endtext=0x7f09003b;
         public static final int button_help=0x7f09000d;
         public static final int button_highscores=0x7f09000f;
         public static final int button_options=0x7f09002f;
@@ -83,15 +84,15 @@ public final class R {
         public static final int guy_icon=0x7f090035;
         public static final int icon=0x7f090008;
         public static final int image=0x7f090001;
-        public static final int image_bot=0x7f09003c;
+        public static final int image_bot=0x7f09003e;
         public static final int image_top=0x7f090031;
         public static final int layout_root=0x7f090000;
-        public static final int menu_credits_legal_item=0x7f090044;
-        public static final int menu_game_item=0x7f090041;
-        public static final int menu_help_item=0x7f090040;
-        public static final int menu_highs_item=0x7f090043;
-        public static final int menu_options_item=0x7f090042;
-        public static final int menu_story_item=0x7f090045;
+        public static final int menu_credits_legal_item=0x7f090046;
+        public static final int menu_game_item=0x7f090043;
+        public static final int menu_help_item=0x7f090042;
+        public static final int menu_highs_item=0x7f090045;
+        public static final int menu_options_item=0x7f090044;
+        public static final int menu_story_item=0x7f090047;
         public static final int player_name_options=0x7f09001d;
         public static final int radio_players_fifty=0x7f090025;
         public static final int radio_players_five=0x7f090023;
@@ -100,12 +101,13 @@ public final class R {
         public static final int radio_speed_20=0x7f090020;
         public static final int radio_speed_24=0x7f090021;
         public static final int room_spinner=0x7f09001e;
-        public static final int text=0x7f09003d;
+        public static final int text=0x7f09003f;
         public static final int text_date=0x7f09000b;
         public static final int text_description=0x7f090036;
         public static final int text_level=0x7f09000c;
         public static final int text_name=0x7f090009;
         public static final int text_num_message=0x7f090033;
+        public static final int text_out=0x7f09003a;
         public static final int text_player_name=0x7f090034;
         public static final int text_score=0x7f09000a;
         public static final int view_players=0x7f090032;
@@ -143,16 +145,16 @@ public final class R {
     }
     public static final class string {
         public static final int app_credits=0x7f070007;
-        public static final int app_features=0x7f07000c;
         public static final int app_gamestart=0x7f070004;
         public static final int app_help=0x7f070005;
-        public static final int app_helptext=0x7f07000d;
+        public static final int app_helptext=0x7f07000c;
         public static final int app_highscores=0x7f070009;
         public static final int app_legal=0x7f07000b;
         public static final int app_name=0x7f070000;
         public static final int app_options=0x7f070006;
         public static final int app_players=0x7f070008;
         public static final int app_story=0x7f07000a;
+        public static final int app_storytext=0x7f07000d;
         public static final int main_screen=0x7f070001;
         public static final int room_prompt=0x7f070003;
         public static final int splash_screen=0x7f070002;
