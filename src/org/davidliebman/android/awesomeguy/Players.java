@@ -254,16 +254,20 @@ public class Players extends ListActivity {
     		displayText(Players.TEXT_LEGAL);
     		break;
     	case R.id.menu_game_item:
+        	Intent StartGameIntent = new Intent(Players.this,GameStart.class);
+    		startActivity(StartGameIntent);
     		break;
     	case R.id.menu_help_item:
     		displayText(Players.TEXT_HELP);
     		break;
     	case R.id.menu_highs_item:
-    		break;
-    	case R.id.menu_options_item:
+        	Intent HighScoreIntent = new Intent(Players.this,Highscores.class);
+    		startActivity(HighScoreIntent);
     		break;
     	case R.id.menu_story_item:
     		displayText(Players.TEXT_STORY);
+    		break;
+    	case R.id.menu_options_item:
     		break;
     	}
     	return true;
