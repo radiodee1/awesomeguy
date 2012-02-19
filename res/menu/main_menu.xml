@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+     <item 
+         android:id="@+id/menu_help_item"
+         android:icon="@drawable/ic_menu_default"
+         android:title="@string/app_help" 
+         >          
+         
+    </item>
+    <item android:id="@+id/menu_game_item"
+          android:icon="@drawable/ic_menu_default"
+          android:title="@string/app_gamestart" >
+          
+    </item>
+    
+    <item android:id="@+id/menu_options_item"
+          android:icon="@drawable/ic_menu_default"
+          android:title="@string/app_options" >
+          
+    </item>
+        
+    <item android:id="@+id/menu_highs_item"
+          android:icon="@drawable/ic_menu_default"
+          android:title="@string/app_highscores" >
+   
+    </item>
+    
+    <item 
+          android:id="@+id/menu_credits_legal_item"
+          android:title="@string/app_credits"
+          android:icon="@drawable/ic_menu_default" >
+     </item> 
+            
+     <item android:id="@+id/menu_story_item"
+          android:icon="@drawable/ic_menu_default"
+          android:title="@string/app_story" >
+      
+    </item>
+    
+       
+
+</menu>
