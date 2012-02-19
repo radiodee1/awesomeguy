@@ -351,7 +351,6 @@ public class Players extends ListActivity {
     	this.findViewById(R.id.view_players).setVisibility(View.GONE);
     	this.findViewById(R.id.view_text).setEnabled(false);
     	this.findViewById(R.id.view_text).setVisibility(View.GONE);
-    	//...
     	// show selected view
     	switch (mViewToShow) {
     	case Players.VIEW_SPLASH:
@@ -363,6 +362,7 @@ public class Players extends ListActivity {
     		this.findViewById(R.id.view_players).setVisibility(View.VISIBLE);
     		break;
     	case Players.VIEW_TEXT:
+    		this.findViewById(R.id.view_text).scrollTo(0, 0);
     		this.findViewById(R.id.view_text).setEnabled(true);
     		this.findViewById(R.id.view_text).setVisibility(View.VISIBLE);
     		break;
