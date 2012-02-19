@@ -1,5 +1,6 @@
 package org.davidliebman.android.awesomeguy;
 
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -36,6 +37,9 @@ public class Players extends ListActivity {
     public static final int VIEW_TEXT = 2;
     public static final int VIEW_SCORES = 3;
     
+    public static final int DIALOG_USERNUM_CHANGED = 0;
+    public static final int DIALOG_UNUSED = 1;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,8 +68,13 @@ public class Players extends ListActivity {
         	 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         		mRec = mNames.get(position);
 
-        		AlertNumRecords mAlert = new AlertNumRecords(Players.this,mHighScores,mRec);
-        		mRec.setNumRecords(mAlert.alertUser());
+        		//AlertNumRecords mAlert = new AlertNumRecords(Players.this,mHighScores,mRec);
+        		mPreferredNumRecords = mHighScores.getNumRecords();
+        		if ( mPreferredNumRecords != mRec.getNumRecords() ) {
+      			   showDialog(Players.DIALOG_USERNUM_CHANGED);
+        		}
+        		
+        		//mRec.setNumRecords(mAlert.alertUser()); // TODO: is this redundant??
         		mHighScores = mRec;
 
         		Toast.makeText(Players.this, "Player Selected: " + mHighScores.getName(), Toast.LENGTH_SHORT).show();
@@ -190,16 +199,18 @@ public class Players extends ListActivity {
     	
     	mAadapter.notifyDataSetChanged();
     	
-    	int num = mScores.pruneScoresList();
-    	if (num > 0) {
-    		//Toast.makeText(Players.this, num + " scores were removed from High Score List!!", Toast.LENGTH_LONG).show();
-    	}
+    	
     	SplashScreen mSplash = new SplashScreen();
     	mSplash.execute(new Integer[] {0});
     	
     }
     
     public void onPostSplash() {
+    	
+    	int num = mScores.pruneScoresList();
+    	if (num > 0) {
+    		Toast.makeText(Players.this, num + " scores were removed from High Score List!!", Toast.LENGTH_LONG).show();
+    	}
     	
     }
     
@@ -227,6 +238,54 @@ public class Players extends ListActivity {
     	}
     	super.onPause();
     }
+    
+    protected Dialog onCreateDialog(int mId) {
+    	Dialog  dialog = new Dialog(Players.this);
+    	AlertDialog.Builder builder;
+    	AlertDialog alertDialog;
+    	
+    	switch (mId) {
+    	/////////////////////////////////////
+    	case Players.DIALOG_USERNUM_CHANGED:
+ 		   this.mPreferredNumRecords = mHighScores.getNumRecords();
+
+ 		   if ( mPreferredNumRecords != mRec.getNumRecords() ) {
+	   	    	builder = new AlertDialog.Builder(Players.this);
+	   	    	String mAMessage = new String("Your old preference for 'Number of Player Records' is " + mHighScores.getNumRecords());
+	   	    	String mPositive = new String("Choose " + mHighScores.getNumRecords() + " records.");
+	   	    	String mNegative = new String("Choose " + mRec.getNumRecords() + " records.");
+	   	    	builder.setMessage(mAMessage)
+	   	    	       .setCancelable(false)
+	   	    	       .setPositiveButton(mPositive, new DialogInterface.OnClickListener() {
+	   	    	           public void onClick(DialogInterface dialog, int id) {
+	   	    	                //Players.this.finish();
+	   	    	        	   mRec.setNumRecords(mHighScores.getNumRecords());
+	   	    	        	   dialog.cancel();
+	   	    	        	   
+	   	    	           }
+	   	    	       })
+	   	    	       .setNegativeButton(mNegative, new DialogInterface.OnClickListener() {
+	   	    	           public void onClick(DialogInterface dialog, int id) {
+	   	    	        	   	
+	   	    	                dialog.cancel();
+	   	    	           }
+	   	    	       });
+	   	    	AlertDialog alert = builder.create();
+	   	    	dialog = (Dialog) alert;
+	       	}
+    		
+    		break;
+    	////////////////////////////////////
+    	case Players.DIALOG_UNUSED:
+    		break;
+    	////////////////////////////////////
+    		default:
+    			dialog = null;
+    	}
+    	
+    	return dialog;
+    }
+    
     
     public void showView(int mViewToShow) {
     	// blank out all views
