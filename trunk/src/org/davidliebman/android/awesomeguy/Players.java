@@ -6,6 +6,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.*;
 import android.content.*;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.database.sqlite.SQLiteDatabase;
 //import android.text.InputType;
 //import android.util.Log;
 import android.view.View.OnKeyListener;
@@ -20,14 +24,14 @@ import android.view.MenuItem;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.app.AlertDialog;
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
+
 //import android.util.Log;
 
 public class Players extends ListActivity {
 		
     public static final String AWESOME_NAME = new String("org.awesomeguy");
     private ArrayList<Record> mNames = new ArrayList<Record>();
-    private Scores mScores ;
-	private Record mHighScores;
     private Record mRec = new Record();
     private SharedPreferences mPreferences;
     private RecordAdapter mAadapter;
@@ -47,9 +51,66 @@ public class Players extends ListActivity {
     public static final int DIALOG_USERNUM_CHANGED = 0;
     public static final int DIALOG_UNUSED = 1;
     
+    protected boolean mActive = true;
+    private boolean mRememberPlayer;
+    private boolean mGoogleAnalytics;
+    private boolean mTermsOfService;
+    private int mVersionCode = 1;
+    public static final String UA_NUMBER = new String("UA-19479622-2");
+    public GoogleAnalyticsTracker tracker;
+    private Record mHighScores;
+    private Scores.ScoreOpenHelper mScoresHelper;
+    private Scores mScores;
+    private SQLiteDatabase db;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        //////////////////////start SplashScreen
+        /* init database if not already done so */
+        mScoresHelper = new Scores.ScoreOpenHelper(this);
+        db = mScoresHelper.getReadableDatabase();
+        db.close();
+        
+        /* one highscores record passed around for preferences */
+        SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+        mRememberPlayer = preferences.getBoolean(Options.SAVED_REMEMBER_PLAYER, false);
+        mHighScores = new Record();
+
+        if(!mRememberPlayer) {
+        	mHighScores.addToPreferences(preferences);
+        }
+        else {
+        	mHighScores.getFromPreferences(preferences);
+        }
+        
+        /* if 'anonymous' then blank out record. */
+        if(mHighScores.getName().contentEquals(new Record().getName())) {
+        	mHighScores = new Record();
+        }
+        
+        /* google analytics tracker */
+        tracker = GoogleAnalyticsTracker.getInstance();
+        tracker.start(UA_NUMBER, 5, this);
+        if (mGoogleAnalytics) {
+            tracker.trackPageView("/SplashScreen");
+            tracker.dispatch();
+            //Log.d("Awesomeguy","Google Analytics-----------------");
+        }
+        
+        /* reset preferences so that game starts with room 1 */
+        /* save most recent version code */
+        SharedPreferences.Editor e = preferences.edit();
+        e.putInt(Options.SAVED_ROOM_NUM, 1);
+        e.putInt(Options.SAVED_VERSIONCODE, mVersionCode);
+        e.commit();
+        
+        /* init scores object */
+        mScores = new Scores(this, mHighScores);
+        
+        // thread for displaying the SplashScreen
+        //////////////////////end SplashScreen
         
         /* retrieve Record mHighScores */
     	mHighScores = new Record();
@@ -173,8 +234,7 @@ public class Players extends ListActivity {
         buttonText.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
             	showView(Players.VIEW_PLAYERS);
-//            	Intent StartGameIntent = new Intent(Players.this,GameStart.class);
-//        		startActivity(StartGameIntent);
+
             	//Toast.makeText(Players.this, "And We're Off", Toast.LENGTH_SHORT).show();
             }
         });
@@ -218,7 +278,32 @@ public class Players extends ListActivity {
     	
     	mAadapter.notifyDataSetChanged();
     	
-    	
+    	/////////////////////////////start TOS
+        SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+
+    	 /* get TOS info from preferences */
+        mGoogleAnalytics = preferences.getBoolean(Options.SAVED_ANALYTICS, true);
+        mTermsOfService = preferences.getBoolean(Options.SAVED_TOS, false);
+        
+        /* check version / show TermsOfService.java */
+        PackageManager mManager = this.getPackageManager();
+        try {
+        	PackageInfo mInfo = mManager.getPackageInfo("org.davidliebman.android.awesomeguy", 0);
+        	mVersionCode = mInfo.versionCode;
+        }
+        catch (NameNotFoundException e) {
+        	// not a big deal if Package Manager 
+        	// doesn't find the version code.
+        	e.printStackTrace();
+        	mVersionCode = 1;
+        }
+        /* if game was just updated, show TOS page. */
+        if (preferences.getInt(Options.SAVED_VERSIONCODE, 1) != mVersionCode) {
+        	mTermsOfService = false;
+        	
+        }
+    	////////////////////////////start splashscreen
+        
     	SplashScreen mSplash = new SplashScreen();
     	mSplash.execute(new Integer[] {0});
     	
@@ -230,7 +315,18 @@ public class Players extends ListActivity {
     	if (num > 0) {
     		Toast.makeText(Players.this, num + " scores were removed from High Score List!!", Toast.LENGTH_LONG).show();
     	}
-    	
+    	if (mTermsOfService) {
+    		displayText(Players.TEXT_LEGAL);
+    	}
+    	else {
+    		showView(Players.VIEW_PLAYERS);
+    	}
+    }
+    
+    @Override
+    protected void onDestroy() {
+    	super.onDestroy();
+    	tracker.stop();
     }
     
     @Override
