@@ -14,6 +14,9 @@ import android.view.*;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.app.AlertDialog;
@@ -36,6 +39,10 @@ public class Players extends ListActivity {
     public static final int VIEW_PLAYERS = 1;
     public static final int VIEW_TEXT = 2;
     public static final int VIEW_SCORES = 3;
+    
+    public static final int TEXT_HELP = 0;
+    public static final int TEXT_STORY = 1;
+    public static final int TEXT_LEGAL = 2;
     
     public static final int DIALOG_USERNUM_CHANGED = 0;
     public static final int DIALOG_UNUSED = 1;
@@ -160,6 +167,18 @@ public class Players extends ListActivity {
             }
         });
         
+        
+        /* button at bottom of view */
+        final Button buttonText = (Button) findViewById(R.id.button_endtext);
+        buttonText.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+            	showView(Players.VIEW_PLAYERS);
+//            	Intent StartGameIntent = new Intent(Players.this,GameStart.class);
+//        		startActivity(StartGameIntent);
+            	//Toast.makeText(Players.this, "And We're Off", Toast.LENGTH_SHORT).show();
+            }
+        });
+        
         mNumPlayers = (TextView) findViewById(R.id.text_num_message);
         mNumPlayers.setText("This is where you choose from a list of " + mHighScores.getNumRecords() + " players.");
         
@@ -213,6 +232,43 @@ public class Players extends ListActivity {
     	}
     	
     }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+    	MenuInflater inflate = getMenuInflater();
+    	inflate.inflate(R.menu.main_menu, menu);
+    	
+    	return true;
+    	
+    }
+    
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+    	return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	switch (item.getItemId()) {
+    	case R.id.menu_credits_legal_item:
+    		displayText(Players.TEXT_LEGAL);
+    		break;
+    	case R.id.menu_game_item:
+    		break;
+    	case R.id.menu_help_item:
+    		displayText(Players.TEXT_HELP);
+    		break;
+    	case R.id.menu_highs_item:
+    		break;
+    	case R.id.menu_options_item:
+    		break;
+    	case R.id.menu_story_item:
+    		displayText(Players.TEXT_STORY);
+    		break;
+    	}
+    	return true;
+    }
+    
     
     /* determine if a name is already taken */
     public static boolean isNameTaken(ArrayList<Record> mNames, String test) {
@@ -315,6 +371,22 @@ public class Players extends ListActivity {
     	}
     }
     
+    public void displayText(int mText) {
+    	this.showView(Players.VIEW_TEXT);
+    	TextView mTextView = (TextView) this.findViewById(R.id.text_out);
+    	switch (mText) {
+    	case Players.TEXT_HELP:
+    		mTextView.setText(R.string.app_helptext);
+    		break;
+    	case Players.TEXT_LEGAL:
+    		mTextView.setText(R.string.app_legal);
+    		break;
+    	case Players.TEXT_STORY :
+    		mTextView.setText(R.string.app_storytext);
+    		break;
+    	}
+    }
+    
     /* special adapter for displaying list from ArrayList */
     public class RecordAdapter extends ArrayAdapter<Record> {
     	ArrayList<Record> mList;
@@ -352,50 +424,50 @@ public class Players extends ListActivity {
     
     
    /* Inner class for making alert message about number of high scores */
-   public static class AlertNumRecords {
-	   
-	   Record mRec = new Record();
-	   Record mHighScores = new Record();
-	   int mPreferredNumRecords;
-	   Context mParent;
-	   
-	   public AlertNumRecords(Context parent, Record mHighScores, Record mRec) {
-		   this.mHighScores = mHighScores;
-		   this.mRec = mRec;
-		   this.mPreferredNumRecords = mHighScores.getNumRecords();
-		   mParent = parent;
-	   }
-	   
-	   public int alertUser() {
-	       	if ( mPreferredNumRecords != mRec.getNumRecords() ) {
-	   	    	AlertDialog.Builder builder = new AlertDialog.Builder(mParent);
-	   	    	String mAMessage = new String("Your old preference for 'Number of Player Records' is " + mHighScores.getNumRecords());
-	   	    	String mPositive = new String("Choose " + mHighScores.getNumRecords() + " records.");
-	   	    	String mNegative = new String("Choose " + mRec.getNumRecords() + " records.");
-	   	    	builder.setMessage(mAMessage)
-	   	    	       .setCancelable(false)
-	   	    	       .setPositiveButton(mPositive, new DialogInterface.OnClickListener() {
-	   	    	           public void onClick(DialogInterface dialog, int id) {
-	   	    	                //Players.this.finish();
-	   	    	        	   mRec.setNumRecords(mHighScores.getNumRecords());
-	   	    	        	   dialog.cancel();
-	   	    	        	   
-	   	    	           }
-	   	    	       })
-	   	    	       .setNegativeButton(mNegative, new DialogInterface.OnClickListener() {
-	   	    	           public void onClick(DialogInterface dialog, int id) {
-	   	    	        	   	
-	   	    	                dialog.cancel();
-	   	    	           }
-	   	    	       });
-	   	    	AlertDialog alert = builder.create();
-	   	    	alert.show();
-	       	}
-       /* regardless which the user chooses, copy mRec */
-       mHighScores = mRec;
-       return mHighScores.getNumRecords() ;
-       }
-   }
+//   public static class AlertNumRecords {
+//	   
+//	   Record mRec = new Record();
+//	   Record mHighScores = new Record();
+//	   int mPreferredNumRecords;
+//	   Context mParent;
+//	   
+//	   public AlertNumRecords(Context parent, Record mHighScores, Record mRec) {
+//		   this.mHighScores = mHighScores;
+//		   this.mRec = mRec;
+//		   this.mPreferredNumRecords = mHighScores.getNumRecords();
+//		   mParent = parent;
+//	   }
+//	   
+//	   public int alertUser() {
+//	       	if ( mPreferredNumRecords != mRec.getNumRecords() ) {
+//	   	    	AlertDialog.Builder builder = new AlertDialog.Builder(mParent);
+//	   	    	String mAMessage = new String("Your old preference for 'Number of Player Records' is " + mHighScores.getNumRecords());
+//	   	    	String mPositive = new String("Choose " + mHighScores.getNumRecords() + " records.");
+//	   	    	String mNegative = new String("Choose " + mRec.getNumRecords() + " records.");
+//	   	    	builder.setMessage(mAMessage)
+//	   	    	       .setCancelable(false)
+//	   	    	       .setPositiveButton(mPositive, new DialogInterface.OnClickListener() {
+//	   	    	           public void onClick(DialogInterface dialog, int id) {
+//	   	    	                //Players.this.finish();
+//	   	    	        	   mRec.setNumRecords(mHighScores.getNumRecords());
+//	   	    	        	   dialog.cancel();
+//	   	    	        	   
+//	   	    	           }
+//	   	    	       })
+//	   	    	       .setNegativeButton(mNegative, new DialogInterface.OnClickListener() {
+//	   	    	           public void onClick(DialogInterface dialog, int id) {
+//	   	    	        	   	
+//	   	    	                dialog.cancel();
+//	   	    	           }
+//	   	    	       });
+//	   	    	AlertDialog alert = builder.create();
+//	   	    	alert.show();
+//	       	}
+//       /* regardless which the user chooses, copy mRec */
+//       mHighScores = mRec;
+//       return mHighScores.getNumRecords() ;
+//       }
+//   }
 
    private class SplashScreen extends AsyncTask<Integer, Void, String> {
 	   @Override

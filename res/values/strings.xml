@@ -16,8 +16,7 @@
 how many users actually play the game. Google Analytics does not change any aspect of game play, and it does not report
 the identity of the users in any way. It DOES encourage the developers of the game to add features for future releases.
 Google Analytics is enabled by default, but can be disabled easily from the Options screen.
-</string>
-        <string name="app_features">FEATURES \n This version of Awesomeguy supports game play in landscape mode. In this
+\n\nFEATURES \n This version of Awesomeguy supports game play in landscape mode. In this
 mode the D-pad is re-arranged on the bottom of the screen in a single row. Awesomeguy should automatically re-orient
 itself when the phone is turned. \n\n
 When playing in portrait view using the touch buttons try playing the game with one finger. The pointer finger or the thumb work better for different people.
@@ -31,4 +30,10 @@ saving all your game preferences. Touch the edit area to enter a name. Use the p
 you are done. Press enter a second time to accept the new name and use it for all your high scores. The first time you make a high score the 
 new name will be saved in the Players table with all the others. After that, touch the entry in the Players table to select a different player,
 or use the game =Remember Me= setting to use the same player over and over.</string>
+		<string name="app_storytext">THE STORY: 
+ \nIn the future, evil robot aligators take over the planet. AWESOMEGUY, the hero, must find his way around the world, transporting to different places, collecting points and stopping the alien aligators. Look out for platforms, 
+pyramids, mazes, castles, and flying steaks. \n\nYou are AWESOMEGUY. Run away 
+  from the aligators. Jump on them to kill them. Get the crystal to go to the 
+  next level. The key is a checkpoint and the rings and gold bricks are worth points. There is also a life or two out there and they are green. Have fun.
+</string>
 </resources>
