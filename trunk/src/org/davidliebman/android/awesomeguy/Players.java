@@ -1,6 +1,7 @@
 package org.davidliebman.android.awesomeguy;
 
 import android.app.ListActivity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.*;
 import android.content.*;
@@ -10,6 +11,8 @@ import android.view.View.OnKeyListener;
 import java.util.ArrayList;
 import android.view.*;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.app.AlertDialog;
@@ -189,8 +192,15 @@ public class Players extends ListActivity {
     	
     	int num = mScores.pruneScoresList();
     	if (num > 0) {
-    		Toast.makeText(Players.this, num + " scores were removed from High Score List!!", Toast.LENGTH_LONG).show();
+    		//Toast.makeText(Players.this, num + " scores were removed from High Score List!!", Toast.LENGTH_LONG).show();
     	}
+    	SplashScreen mSplash = new SplashScreen();
+    	mSplash.execute(new Integer[] {0});
+    	
+    }
+    
+    public void onPostSplash() {
+    	
     }
     
     /* determine if a name is already taken */
@@ -328,6 +338,31 @@ public class Players extends ListActivity {
        }
    }
 
-   
+   private class SplashScreen extends AsyncTask<Integer, Void, String> {
+	   @Override
+	   protected void onPreExecute() {
+		   showView(Players.VIEW_SPLASH);
+		   Animation myFadeInAnimation = AnimationUtils.loadAnimation(Players.this, R.anim.fadein);
+		   findViewById(R.id.view_splash).startAnimation(myFadeInAnimation);
+	   }
+	   
+	   @Override
+	   protected String doInBackground(Integer ... mSec) {
+		   String mReturn = new String("");
+		   try {
+			   Thread.sleep(3500);
+		   }
+		   catch (Exception e) {
+			   
+		   }
+		   return mReturn;
+	   }
+	   
+	   @Override
+	   protected void onPostExecute(String mResult) {
+		   showView(Players.VIEW_PLAYERS);
+		   onPostSplash();
+	   }
+   }
 }
 
