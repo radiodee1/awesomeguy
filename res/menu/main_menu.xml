@@ -14,12 +14,7 @@
           
     </item>
     
-    <item android:id="@+id/menu_options_item"
-          android:icon="@drawable/ic_menu_default"
-          android:title="@string/app_options" >
-          
-    </item>
-        
+   
     <item android:id="@+id/menu_highs_item"
           android:icon="@drawable/ic_menu_default"
           android:title="@string/app_highscores" >
@@ -38,6 +33,48 @@
       
     </item>
     
-       
-
+        
+            <item android:id="@+id/menu_options_room_item" android:icon="@drawable/ic_menu_default"
+                android:title="@string/menu_text_room_item">
+                </item>
+            <item android:id="@+id/menu_options_speed_item"  android:icon="@drawable/ic_menu_default"
+                android:title="@string/menu_text_speed_item">
+                	<menu >
+                	    <group android:checkableBehavior="single" >
+                	         <item android:id="@+id/menu_options_speed_slow_item"
+                				android:title="@string/menu_text_speed_slow">
+                			 </item>
+                			 <item android:id="@+id/menu_options_speed_medium_item"
+                				android:title="@string/menu_text_speed_medium">
+                			 </item>
+                			 <item android:id="@+id/menu_options_speed_fast_item"
+                				android:title="@string/menu_text_speed_fast">
+                			 </item>
+                	    </group>
+                	</menu>
+                
+                </item>
+             <item android:id="@+id/menu_options_sound_item"  android:icon="@drawable/ic_menu_default"
+                android:title="@string/menu_text_sound_item">
+                </item>
+              <item android:id="@+id/menu_options_players_item"  android:icon="@drawable/ic_menu_default"
+                android:title="@string/menu_text_players_item">
+                </item>
+              <item android:id="@+id/menu_options_rememberme_item"  android:icon="@drawable/ic_menu_default"
+                android:title="@string/menu_text_rememberme_item">
+                </item>
+              <item android:id="@+id/menu_options_xml_item"  android:icon="@drawable/ic_menu_default"
+                android:title="@string/menu_text_xml_item">
+                </item>
+              <item android:id="@+id/menu_options_analytics_item"  android:icon="@drawable/ic_menu_default"
+                android:title="@string/menu_text_analytics_item">
+                </item>
+              <item android:id="@+id/menu_options_monsters_item"  android:icon="@drawable/ic_menu_default"
+                android:title="@string/menu_text_monsters_item">
+                </item>
+              <item android:id="@+id/menu_options_collision_item"  android:icon="@drawable/ic_menu_default"
+                android:title="@string/menu_text_collision_item">
+                </item>
+                  
+                  
 </menu>
