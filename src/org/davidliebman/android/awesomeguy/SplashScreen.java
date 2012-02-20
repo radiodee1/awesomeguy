@@ -37,66 +37,66 @@ public class SplashScreen extends Activity {
         setContentView(R.layout.splashscreen);
                 
         /* init database if not already done so */
-        mScoresHelper = new Scores.ScoreOpenHelper(this);
-        db = mScoresHelper.getReadableDatabase();
-        db.close();
-        
+//        mScoresHelper = new Scores.ScoreOpenHelper(this);
+//        db = mScoresHelper.getReadableDatabase();
+//        db.close();
+//        
         /* one highscores record passed around for preferences */
-        SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
-        mRememberPlayer = preferences.getBoolean(Options.SAVED_REMEMBER_PLAYER, false);
-        mHighScores = new Record();
-
-        if(!mRememberPlayer) {
-        	mHighScores.addToPreferences(preferences);
-        }
-        else {
-        	mHighScores.getFromPreferences(preferences);
-        }
-        
+//        SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+//        mRememberPlayer = preferences.getBoolean(Options.SAVED_REMEMBER_PLAYER, false);
+//        mHighScores = new Record();
+//
+//        if(!mRememberPlayer) {
+//        	mHighScores.addToPreferences(preferences);
+//        }
+//        else {
+//        	mHighScores.getFromPreferences(preferences);
+//        }
+//        
         /* if 'anonymous' then blank out record. */
-        if(mHighScores.getName().contentEquals(new Record().getName())) {
-        	mHighScores = new Record();
-        }
+//        if(mHighScores.getName().contentEquals(new Record().getName())) {
+//        	mHighScores = new Record();
+//        }
         
         /* get TOS info from preferences */
-        mGoogleAnalytics = preferences.getBoolean(Options.SAVED_ANALYTICS, true);
-        mTermsOfService = preferences.getBoolean(Options.SAVED_TOS, false);
+//        mGoogleAnalytics = preferences.getBoolean(Options.SAVED_ANALYTICS, true);
+//        mTermsOfService = preferences.getBoolean(Options.SAVED_TOS, false);
         
         /* check version / show TermsOfService.java */
-        PackageManager mManager = this.getPackageManager();
-        try {
-        	PackageInfo mInfo = mManager.getPackageInfo("org.davidliebman.android.awesomeguy", 0);
-        	mVersionCode = mInfo.versionCode;
-        }
-        catch (NameNotFoundException e) {
-        	// not a big deal if Package Manager 
-        	// doesn't find the version code.
-        	mVersionCode = 1;
-        }
+//        PackageManager mManager = this.getPackageManager();
+//        try {
+//        	PackageInfo mInfo = mManager.getPackageInfo("org.davidliebman.android.awesomeguy", 0);
+//        	mVersionCode = mInfo.versionCode;
+//        }
+//        catch (NameNotFoundException e) {
+//        	// not a big deal if Package Manager 
+//        	// doesn't find the version code.
+//        	mVersionCode = 1;
+//        }
         /* if game was just updated, show TOS page. */
-        if (preferences.getInt(Options.SAVED_VERSIONCODE, 1) != mVersionCode) {
-        	mTermsOfService = false;
+//        if (preferences.getInt(Options.SAVED_VERSIONCODE, 1) != mVersionCode) {
+//        	mTermsOfService = false;
         	
-        }
+//        }
         
         /* google analytics tracker */
-        tracker = GoogleAnalyticsTracker.getInstance();
-        tracker.start(UA_NUMBER, 5, this);
-        if (mGoogleAnalytics) {
-            tracker.trackPageView("/SplashScreen");
-            tracker.dispatch();
-            //Log.d("Awesomeguy","Google Analytics-----------------");
-        }
+//        tracker = GoogleAnalyticsTracker.getInstance();
+//        tracker.start(UA_NUMBER, 5, this);
+//        if (mGoogleAnalytics) {
+//            tracker.trackPageView("/SplashScreen");
+//            tracker.dispatch();
+//            //Log.d("Awesomeguy","Google Analytics-----------------");
+//        }
         
         /* reset preferences so that game starts with room 1 */
         /* save most recent version code */
-        SharedPreferences.Editor e = preferences.edit();
-        e.putInt(Options.SAVED_ROOM_NUM, 1);
-        e.putInt(Options.SAVED_VERSIONCODE, mVersionCode);
-        e.commit();
-        
+//        SharedPreferences.Editor e = preferences.edit();
+//        e.putInt(Options.SAVED_ROOM_NUM, 1);
+//        e.putInt(Options.SAVED_VERSIONCODE, mVersionCode);
+//        e.commit();
+//        
         /* init scores object */
-        mScores = new Scores(this, mHighScores);
+//        mScores = new Scores(this, mHighScores);
         
         // thread for displaying the SplashScreen
         Thread splashTread = new Thread() {
@@ -114,13 +114,13 @@ public class SplashScreen extends Activity {
                     // do nothing
                 } finally {
                     finish();
-                    if (! mTermsOfService ) {
-                    	startActivity(new Intent(SplashScreen.this,Credits.class));
-                    	
-                    }
-                    else {
+//                    if (! mTermsOfService ) {
+//                    	startActivity(new Intent(SplashScreen.this,Credits.class));
+//                    	
+//                    }
+//                    else {
                     	startActivity(new Intent("org.davidliebman.android.awesomeguy.Menu"));
-                    }
+//                    }
                     //stop();
                     interrupt();
                 }
@@ -140,6 +140,6 @@ public class SplashScreen extends Activity {
     @Override
     protected void onDestroy() {
     	super.onDestroy();
-    	tracker.stop();
+//    	tracker.stop();
     }
 }
