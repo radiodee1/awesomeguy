@@ -47,7 +47,7 @@ public class Highscores   extends ListActivity {
     	mHighScores = new Record();
         mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.getFromPreferences(mPreferences);
-        this.mPreferredNumRecords = this.mPreferences.getInt(Options.SAVED_NUM_SCORES, Record.RADIO_PLAYERS_FIFTY);
+        this.mPreferredNumRecords = this.mPreferences.getInt(Players.SAVED_NUM_SCORES, Record.RADIO_PLAYERS_FIFTY);
 
         
         mScores = new Scores(this, mHighScores);
@@ -74,7 +74,7 @@ public class Highscores   extends ListActivity {
         final Button button = (Button) findViewById(R.id.button_highscores);
         button.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-            	Intent StartGameIntent = new Intent(Highscores.this,GameStart.class);
+            	Intent StartGameIntent = new Intent(Highscores.this,Players.class);
         		startActivity(StartGameIntent);
             	//Toast.makeText(Players.this, "And We're Off", Toast.LENGTH_SHORT).show();
             }
@@ -91,7 +91,7 @@ public class Highscores   extends ListActivity {
     	mHighScores = new Record();
         mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.getFromPreferences(mPreferences);
-        this.mPreferredNumRecords = this.mPreferences.getInt(Options.SAVED_NUM_SCORES, Record.RADIO_PLAYERS_FIFTY);
+        this.mPreferredNumRecords = this.mPreferences.getInt(Players.SAVED_NUM_SCORES, Record.RADIO_PLAYERS_FIFTY);
         
         try {
     		mScores.closeAll();
