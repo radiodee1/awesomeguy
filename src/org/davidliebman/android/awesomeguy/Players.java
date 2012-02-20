@@ -57,7 +57,8 @@ public class Players extends ListActivity {
     public static final int TEXT_LEGAL = 2;
     
     public static final int DIALOG_USERNUM_CHANGED = 0;
-    public static final int DIALOG_UNUSED = 1;
+    public static final int DIALOG_STARTGAME = 1;
+    public static final int DIALOG_UNUSED = 2;
     
     protected boolean mActive = true;
     private boolean mRememberPlayer;
@@ -241,7 +242,7 @@ public class Players extends ListActivity {
         buttonText.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
             	showView(Players.VIEW_PLAYERS);
-
+            	showDialog(Players.DIALOG_STARTGAME);
             	//Toast.makeText(Players.this, "And We're Off", Toast.LENGTH_SHORT).show();
             }
         });
@@ -327,6 +328,7 @@ public class Players extends ListActivity {
     	}
     	else {
     		showView(Players.VIEW_PLAYERS);
+    		showDialog(Players.DIALOG_STARTGAME);
     	}
     }
     
@@ -414,28 +416,56 @@ public class Players extends ListActivity {
 
  		   if ( mPreferredNumRecords != mRec.getNumRecords() ) {
 	   	    	builder = new AlertDialog.Builder(Players.this);
-	   	    	String mAMessage = new String("Your old preference for 'Number of Player Records' is " + mHighScores.getNumRecords());
+	   	    	String mAMessage = new String("Your old preference for 'Number of Player Records' is " 
+	   	    			+ mHighScores.getNumRecords());
 	   	    	String mPositive = new String("Choose " + mHighScores.getNumRecords() + " records.");
 	   	    	String mNegative = new String("Choose " + mRec.getNumRecords() + " records.");
 	   	    	builder.setMessage(mAMessage)
 	   	    	       .setCancelable(false)
 	   	    	       .setPositiveButton(mPositive, new DialogInterface.OnClickListener() {
 	   	    	           public void onClick(DialogInterface dialog, int id) {
-	   	    	                //Players.this.finish();
 	   	    	        	   mRec.setNumRecords(mHighScores.getNumRecords());
 	   	    	        	   dialog.cancel();
-	   	    	        	   
+	   	    	        	   removeDialog(Players.DIALOG_USERNUM_CHANGED);
 	   	    	           }
 	   	    	       })
 	   	    	       .setNegativeButton(mNegative, new DialogInterface.OnClickListener() {
 	   	    	           public void onClick(DialogInterface dialog, int id) {
-	   	    	        	   	
+	   	    	        	   	removeDialog(Players.DIALOG_USERNUM_CHANGED);
 	   	    	                dialog.cancel();
 	   	    	           }
 	   	    	       });
 	   	    	AlertDialog alert = builder.create();
 	   	    	dialog = (Dialog) alert;
 	       	}
+    		
+    		break;
+    	////////////////////////////////////
+    	case Players.DIALOG_STARTGAME:
+    		
+    		builder = new AlertDialog.Builder(Players.this);
+   	    	String mAMessage = new String("Play Awesomeguy as " + mHighScores.getName() +
+   	    			" or choose another player:");
+   	    	String mPositive = new String("Choose " + mHighScores.getName() );
+   	    	String mNegative = new String("Stay on this screen." );
+   	    	builder.setMessage(mAMessage)
+   	    	       .setCancelable(false)
+   	    	       .setPositiveButton(mPositive, new DialogInterface.OnClickListener() {
+   	    	    	   public void onClick(DialogInterface dialog, int id) {
+   	    	    		   Intent StartGameIntent = new Intent(Players.this,GameStart.class);
+   	    	    		   startActivity(StartGameIntent);   	    	        	   
+   	    	    		   dialog.cancel();
+   	    	        	   removeDialog(Players.DIALOG_USERNUM_CHANGED);
+   	    	           }
+   	    	       })
+   	    	       .setNegativeButton(mNegative, new DialogInterface.OnClickListener() {
+   	    	           public void onClick(DialogInterface dialog, int id) {
+   	    	        	   	removeDialog(Players.DIALOG_USERNUM_CHANGED);
+   	    	                dialog.cancel();
+   	    	           }
+   	    	       });
+   	    	AlertDialog alert = builder.create();
+   	    	dialog = (Dialog) alert;
     		
     		break;
     	////////////////////////////////////
