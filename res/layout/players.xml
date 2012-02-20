@@ -78,6 +78,7 @@
                     android:id="@+id/edittext_name"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textVisiblePassword"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 

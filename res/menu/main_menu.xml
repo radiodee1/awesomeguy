@@ -56,24 +56,104 @@
                 </item>
              <item android:id="@+id/menu_options_sound_item"  android:icon="@drawable/ic_menu_default"
                 android:title="@string/menu_text_sound_item">
+                	<menu >
+                	    <group android:checkableBehavior="single" >
+                	         <item android:id="@+id/menu_options_sound_yes_item"
+                				android:title="@string/menu_text_sound_yes">
+                			 </item>
+                			 <item android:id="@+id/menu_options_sound_no_item"
+                				android:title="@string/menu_text_sound_no">
+                			 </item>
+                			 
+                	    </group>
+                	</menu>
                 </item>
               <item android:id="@+id/menu_options_players_item"  android:icon="@drawable/ic_menu_default"
                 android:title="@string/menu_text_players_item">
+                	<menu >
+                	    <group android:checkableBehavior="single" >
+                	         <item android:id="@+id/menu_options_players_five_item"
+                				android:title="@string/menu_text_players_five">
+                			 </item>
+                			 <item android:id="@+id/menu_options_players_ten_item"
+                				android:title="@string/menu_text_players_ten">
+                			 </item>
+                			 <item android:id="@+id/menu_options_players_fifty_item"
+                				android:title="@string/menu_text_players_fifty">
+                			 </item>
+                	    </group>
+                	</menu>
                 </item>
+                
               <item android:id="@+id/menu_options_rememberme_item"  android:icon="@drawable/ic_menu_default"
                 android:title="@string/menu_text_rememberme_item">
+                	<menu >
+                	    <group android:checkableBehavior="single" >
+                	         <item android:id="@+id/menu_options_rememberme_no_item"
+                				android:title="@string/menu_text_rememberme_no">
+                			 </item>
+                			 <item android:id="@+id/menu_options_rememberme_yes_item"
+                				android:title="@string/menu_text_rememberme_yes">
+                			 </item>
+                			
+                	    </group>
+                	</menu>
                 </item>
               <item android:id="@+id/menu_options_xml_item"  android:icon="@drawable/ic_menu_default"
                 android:title="@string/menu_text_xml_item">
+                	<menu >
+                	    <group android:checkableBehavior="single" >
+                	         <item android:id="@+id/menu_options_xml_no_item"
+                				android:title="@string/menu_text_speed_slow">
+                			 </item>
+                			 <item android:id="@+id/menu_options_xml_yes_item"
+                				android:title="@string/menu_text_speed_medium">
+                			 </item>
+                			
+                	    </group>
+                	</menu>
                 </item>
               <item android:id="@+id/menu_options_analytics_item"  android:icon="@drawable/ic_menu_default"
                 android:title="@string/menu_text_analytics_item">
+                	<menu >
+                	    <group android:checkableBehavior="single" >
+                	         <item android:id="@+id/menu_options_analytics_no_item"
+                				android:title="@string/menu_text_speed_slow">
+                			 </item>
+                			 <item android:id="@+id/menu_options_analytics_yes_item"
+                				android:title="@string/menu_text_speed_medium">
+                			 </item>
+                			 
+                	    </group>
+                	</menu>
                 </item>
               <item android:id="@+id/menu_options_monsters_item"  android:icon="@drawable/ic_menu_default"
                 android:title="@string/menu_text_monsters_item">
+                	<menu >
+                	    <group android:checkableBehavior="single" >
+                	         <item android:id="@+id/menu_options_monsters_no_item"
+                				android:title="@string/menu_text_speed_slow">
+                			 </item>
+                			 <item android:id="@+id/menu_options_monsters_yes_item"
+                				android:title="@string/menu_text_speed_medium">
+                			 </item>
+                			
+                	    </group>
+                	</menu>
                 </item>
               <item android:id="@+id/menu_options_collision_item"  android:icon="@drawable/ic_menu_default"
                 android:title="@string/menu_text_collision_item">
+                	<menu >
+                	    <group android:checkableBehavior="single" >
+                	         <item android:id="@+id/menu_options_collision_no_item"
+                				android:title="@string/menu_text_speed_slow">
+                			 </item>
+                			 <item android:id="@+id/menu_options_collision_yes_item"
+                				android:title="@string/menu_text_speed_medium">
+                			 </item>
+                			 
+                	    </group>
+                	</menu>
                 </item>
                   
                   
