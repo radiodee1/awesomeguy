@@ -26,7 +26,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.app.AlertDialog;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 
-//import android.util.Log;
+import android.util.Log;
 
 public class Players extends ListActivity {
 		
@@ -47,11 +47,13 @@ public class Players extends ListActivity {
     private TextView mNumPlayers;
     private int mPreferredNumRecords;
     
+    
     public static final int VIEW_SPLASH = 0;
     public static final int VIEW_PLAYERS = 1;
     public static final int VIEW_TEXT = 2;
     public static final int VIEW_SCORES = 3;
     
+    public static final int TEXT_NOTEXT = -1;
     public static final int TEXT_HELP = 0;
     public static final int TEXT_STORY = 1;
     public static final int TEXT_LEGAL = 2;
@@ -238,6 +240,7 @@ public class Players extends ListActivity {
             	showView(Players.VIEW_PLAYERS);
             	showDialog(Players.DIALOG_STARTGAME);
             	//Toast.makeText(Players.this, "And We're Off", Toast.LENGTH_SHORT).show();
+
             }
         });
         
@@ -281,17 +284,19 @@ public class Players extends ListActivity {
     	mAadapter.notifyDataSetChanged();
     	
     	/////////////////////////////start TOS
-        SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+        mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
 
     	 /* get TOS info from preferences */
-        mGoogleAnalytics = preferences.getBoolean(Players.SAVED_ANALYTICS, true);
-        mTermsOfService = preferences.getBoolean(Players.SAVED_TOS, false);
+        mGoogleAnalytics = mPreferences.getBoolean(Players.SAVED_ANALYTICS, true);
+        mTermsOfService = mPreferences.getBoolean(Players.SAVED_TOS, false);
+        Log.e("tag", "version code saved " + mPreferences.getInt(SAVED_VERSIONCODE, 1));
         
         /* check version / show TermsOfService.java */
         PackageManager mManager = this.getPackageManager();
         try {
         	PackageInfo mInfo = mManager.getPackageInfo("org.davidliebman.android.awesomeguy", 0);
         	mVersionCode = mInfo.versionCode;
+        	
         }
         catch (NameNotFoundException e) {
         	// not a big deal if Package Manager 
@@ -300,16 +305,14 @@ public class Players extends ListActivity {
         	mVersionCode = 1;
         }
         /* if game was just updated, show TOS page. */
-        if (preferences.getInt(Players.SAVED_VERSIONCODE, 1) != mVersionCode) {
+        if (mPreferences.getInt(Players.SAVED_VERSIONCODE, 1) != mVersionCode) {
         	mTermsOfService = false;
         	
         }
         
         /* reset preferences so that game starts with room 1 */
-        /* save most recent version code */
-        SharedPreferences.Editor e = preferences.edit();
+        SharedPreferences.Editor e = mPreferences.edit();
         e.putInt(Options.SAVED_ROOM_NUM, 1);
-        e.putInt(Options.SAVED_VERSIONCODE, mVersionCode);
         e.commit();
         
     	////////////////////////////start splashscreen
@@ -325,11 +328,12 @@ public class Players extends ListActivity {
     	if (num > 0) {
     		Toast.makeText(Players.this, num + " scores were removed from High Score List!!", Toast.LENGTH_LONG).show();
     	}
-    	if (mTermsOfService) {
+    	if (!mTermsOfService) {
     		displayText(Players.TEXT_LEGAL);
-    		//SharedPreferences preferences = getSharedPreferences(Options.AWESOME_NAME, MODE_PRIVATE);
         	SharedPreferences.Editor edit = mPreferences.edit();
-        	edit.putBoolean(Options.SAVED_TOS, true);
+        	edit.putBoolean(Players.SAVED_TOS, true);
+            edit.putInt(Options.SAVED_VERSIONCODE, mVersionCode);
+
         	edit.commit();
     	}
     	else {
