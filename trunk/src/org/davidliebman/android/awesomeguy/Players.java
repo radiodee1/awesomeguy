@@ -83,15 +83,15 @@ public class Players extends ListActivity {
         db.close();
         
         /* one highscores record passed around for preferences */
-        SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
-        mRememberPlayer = preferences.getBoolean(Players.SAVED_REMEMBER_PLAYER, false);
+        mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+        mRememberPlayer = mPreferences.getBoolean(Players.SAVED_REMEMBER_PLAYER, false);
         mHighScores = new Record();
 
         if(!mRememberPlayer) {
-        	mHighScores.addToPreferences(preferences);
+        	mHighScores.addToPreferences(mPreferences);
         }
         else {
-        	mHighScores.getFromPreferences(preferences);
+        	mHighScores.getFromPreferences(mPreferences);
         }
         
         /* if 'anonymous' then blank out record. */
@@ -108,13 +108,7 @@ public class Players extends ListActivity {
             //Log.d("Awesomeguy","Google Analytics-----------------");
         }
         
-        /* reset preferences so that game starts with room 1 */
-        /* save most recent version code */
-        SharedPreferences.Editor e = preferences.edit();
-        e.putInt(Options.SAVED_ROOM_NUM, 1);
-        e.putInt(Options.SAVED_VERSIONCODE, mVersionCode);
-        e.commit();
-        
+    
         /* init scores object */
         mScores = new Scores(this, mHighScores);
         
@@ -310,6 +304,14 @@ public class Players extends ListActivity {
         	mTermsOfService = false;
         	
         }
+        
+        /* reset preferences so that game starts with room 1 */
+        /* save most recent version code */
+        SharedPreferences.Editor e = preferences.edit();
+        e.putInt(Options.SAVED_ROOM_NUM, 1);
+        e.putInt(Options.SAVED_VERSIONCODE, mVersionCode);
+        e.commit();
+        
     	////////////////////////////start splashscreen
         
     	SplashScreen mSplash = new SplashScreen();
@@ -325,6 +327,10 @@ public class Players extends ListActivity {
     	}
     	if (mTermsOfService) {
     		displayText(Players.TEXT_LEGAL);
+    		//SharedPreferences preferences = getSharedPreferences(Options.AWESOME_NAME, MODE_PRIVATE);
+        	SharedPreferences.Editor edit = mPreferences.edit();
+        	edit.putBoolean(Options.SAVED_TOS, true);
+        	edit.commit();
     	}
     	else {
     		showView(Players.VIEW_PLAYERS);
@@ -444,8 +450,8 @@ public class Players extends ListActivity {
     	case Players.DIALOG_STARTGAME:
     		
     		builder = new AlertDialog.Builder(Players.this);
-   	    	String mAMessage = new String("Play Awesomeguy as " + mHighScores.getName() +
-   	    			" or choose another player:");
+   	    	String mAMessage = new String("Play Awesomeguy as \'" + mHighScores.getName() +
+   	    			"\' or choose another player:");
    	    	String mPositive = new String("Choose " + mHighScores.getName() );
    	    	String mNegative = new String("Stay on this screen." );
    	    	builder.setMessage(mAMessage)
