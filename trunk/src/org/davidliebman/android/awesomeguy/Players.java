@@ -31,6 +31,14 @@ import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 public class Players extends ListActivity {
 		
     public static final String AWESOME_NAME = new String("org.awesomeguy");
+    public static final String SAVED_NUM_SCORES = new String("saved_num_scores");
+	public static final String SAVED_ROOM_NUM = new String("room");
+	public static final String SAVED_LOOK_FOR_XML = new String("look_for_xml");
+	public static final String SAVED_REMEMBER_PLAYER = new String("remember_player");
+	public static final String SAVED_ANALYTICS = new String("analytics_tracking");
+	public static final String SAVED_TOS = new String("terms_of_service_shown");
+	public static final String SAVED_VERSIONCODE = new String("old_versioncode");
+	
     private ArrayList<Record> mNames = new ArrayList<Record>();
     private Record mRec = new Record();
     private SharedPreferences mPreferences;
@@ -75,7 +83,7 @@ public class Players extends ListActivity {
         
         /* one highscores record passed around for preferences */
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
-        mRememberPlayer = preferences.getBoolean(Options.SAVED_REMEMBER_PLAYER, false);
+        mRememberPlayer = preferences.getBoolean(Players.SAVED_REMEMBER_PLAYER, false);
         mHighScores = new Record();
 
         if(!mRememberPlayer) {
@@ -109,14 +117,13 @@ public class Players extends ListActivity {
         /* init scores object */
         mScores = new Scores(this, mHighScores);
         
-        // thread for displaying the SplashScreen
         //////////////////////end SplashScreen
         
         /* retrieve Record mHighScores */
     	mHighScores = new Record();
         mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.getFromPreferences(mPreferences);
-        this.mPreferredNumRecords = this.mPreferences.getInt(Options.SAVED_NUM_SCORES, Record.RADIO_PLAYERS_FIFTY);
+        this.mPreferredNumRecords = this.mPreferences.getInt(Players.SAVED_NUM_SCORES, Record.RADIO_PLAYERS_FIFTY);
         
         
         mScores = new Scores(this, mHighScores);
@@ -260,7 +267,7 @@ public class Players extends ListActivity {
     	mHighScores = new Record();
         mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.getFromPreferences(mPreferences);
-        this.mPreferredNumRecords = this.mPreferences.getInt(Options.SAVED_NUM_SCORES, Record.RADIO_PLAYERS_FIFTY);
+        this.mPreferredNumRecords = this.mPreferences.getInt(Players.SAVED_NUM_SCORES, Record.RADIO_PLAYERS_FIFTY);
         
         try {
     		mScores.closeAll();
@@ -282,8 +289,8 @@ public class Players extends ListActivity {
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
 
     	 /* get TOS info from preferences */
-        mGoogleAnalytics = preferences.getBoolean(Options.SAVED_ANALYTICS, true);
-        mTermsOfService = preferences.getBoolean(Options.SAVED_TOS, false);
+        mGoogleAnalytics = preferences.getBoolean(Players.SAVED_ANALYTICS, true);
+        mTermsOfService = preferences.getBoolean(Players.SAVED_TOS, false);
         
         /* check version / show TermsOfService.java */
         PackageManager mManager = this.getPackageManager();
@@ -298,7 +305,7 @@ public class Players extends ListActivity {
         	mVersionCode = 1;
         }
         /* if game was just updated, show TOS page. */
-        if (preferences.getInt(Options.SAVED_VERSIONCODE, 1) != mVersionCode) {
+        if (preferences.getInt(Players.SAVED_VERSIONCODE, 1) != mVersionCode) {
         	mTermsOfService = false;
         	
         }
