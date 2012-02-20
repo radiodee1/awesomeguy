@@ -382,8 +382,8 @@ public class Players extends ListActivity {
     	case R.id.menu_story_item:
     		displayText(Players.TEXT_STORY);
     		break;
-    	case R.id.menu_options_item:
-    		break;
+//    	case R.id.menu_options_item:
+//    		break;
     	}
     	return true;
     }

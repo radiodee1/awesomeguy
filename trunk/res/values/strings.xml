@@ -5,13 +5,29 @@
     <string name="splash_screen">Awesomeguy</string>
     <string name="room_prompt">Select a starting level</string>
         <string name="app_gamestart">Start Game</string>
-        <string name="app_help">Help</string>
+        <string name="app_help">Read Help</string>
         <string name="app_options">Options</string>
         <string name="app_credits">Credits and Legal</string>
         <string name="app_players">Players</string>
         <string name="app_highscores">High Scores</string>
-    	<string name="app_story">Story</string>
+    	<string name="app_story">Read Story</string>
     	
+    	<string name="menu_text_greeting">Options for </string>
+    	<string name="menu_text_room_item">Starting Room</string>
+    	
+    	<string name="menu_text_speed_item">Game Speed</string>
+    	<string name="menu_text_speed_slow">Speed = 16</string>
+    	<string name="menu_text_speed_medium">Speed = 20</string>
+    	<string name="menu_text_speed_fast">Speed = 24</string>
+    	
+    	<string name="menu_text_sound_item">Play No Sound</string>
+    	<string name="menu_text_players_item">How Many Players</string>
+    	<string name="menu_text_rememberme_item">Remember Me</string>
+    	<string name="menu_text_xml_item">Look for XML</string>
+    	<string name="menu_text_analytics_item">Google Analytics</string>
+    	<string name="menu_text_monsters_item">Show Monsters</string>
+    	<string name="menu_text_collision_item">Monster Collision</string>
+    	    
         <string name="app_legal">LEGAL \n This version of Awesomeguy can report your game usage statistics to Google Analytics. This allows the developers to track
 how many users actually play the game. Google Analytics does not change any aspect of game play, and it does not report
 the identity of the users in any way. It DOES encourage the developers of the game to add features for future releases.
