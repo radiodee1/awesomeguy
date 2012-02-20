@@ -21,8 +21,19 @@
     	<string name="menu_text_speed_fast">Speed = 24</string>
     	
     	<string name="menu_text_sound_item">Play No Sound</string>
+    	<string name="menu_text_sound_no">No Sound</string>
+    	<string name="menu_text_sound_yes">Play Sound</string>
+    	    
     	<string name="menu_text_players_item">How Many Players</string>
+		<string name="menu_text_players_five">Five Players</string>
+		<string name="menu_text_players_ten">Ten Players</string>
+		<string name="menu_text_players_fifty">Fifty Players</string>
+    	    
     	<string name="menu_text_rememberme_item">Remember Me</string>
+    	<string name="menu_text_rememberme_no">Remember Me</string>
+       	<string name="menu_text_rememberme_yes">Do Not Remember Me</string>
+    	    	
+    	    
     	<string name="menu_text_xml_item">Look for XML</string>
     	<string name="menu_text_analytics_item">Google Analytics</string>
     	<string name="menu_text_monsters_item">Show Monsters</string>
