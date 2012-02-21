@@ -104,10 +104,10 @@
                 	<menu >
                 	    <group android:checkableBehavior="single" >
                 	         <item android:id="@+id/menu_options_xml_no_item"
-                				android:title="@string/menu_text_speed_slow">
+                				android:title="@string/menu_text_xml_no">
                 			 </item>
                 			 <item android:id="@+id/menu_options_xml_yes_item"
-                				android:title="@string/menu_text_speed_medium">
+                				android:title="@string/menu_text_xml_yes">
                 			 </item>
                 			
                 	    </group>
@@ -118,10 +118,10 @@
                 	<menu >
                 	    <group android:checkableBehavior="single" >
                 	         <item android:id="@+id/menu_options_analytics_no_item"
-                				android:title="@string/menu_text_speed_slow">
+                				android:title="@string/menu_text_analytics_no">
                 			 </item>
                 			 <item android:id="@+id/menu_options_analytics_yes_item"
-                				android:title="@string/menu_text_speed_medium">
+                				android:title="@string/menu_text_analytics_yes">
                 			 </item>
                 			 
                 	    </group>
@@ -132,10 +132,10 @@
                 	<menu >
                 	    <group android:checkableBehavior="single" >
                 	         <item android:id="@+id/menu_options_monsters_no_item"
-                				android:title="@string/menu_text_speed_slow">
+                				android:title="@string/menu_text_monsters_no">
                 			 </item>
                 			 <item android:id="@+id/menu_options_monsters_yes_item"
-                				android:title="@string/menu_text_speed_medium">
+                				android:title="@string/menu_text_monsters_yes">
                 			 </item>
                 			
                 	    </group>
@@ -146,10 +146,10 @@
                 	<menu >
                 	    <group android:checkableBehavior="single" >
                 	         <item android:id="@+id/menu_options_collision_no_item"
-                				android:title="@string/menu_text_speed_slow">
+                				android:title="@string/menu_text_collision_no">
                 			 </item>
                 			 <item android:id="@+id/menu_options_collision_yes_item"
-                				android:title="@string/menu_text_speed_medium">
+                				android:title="@string/menu_text_collision_yes">
                 			 </item>
                 			 
                 	    </group>

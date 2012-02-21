@@ -33,11 +33,21 @@
     	<string name="menu_text_rememberme_no">Remember Me</string>
        	<string name="menu_text_rememberme_yes">Do Not Remember Me</string>
     	    	
-    	    
     	<string name="menu_text_xml_item">Look for XML</string>
+    	<string name="menu_text_xml_no">Do Not Look For XML</string>
+    	<string name="menu_text_xml_yes">Look For XML</string>
+    	    
     	<string name="menu_text_analytics_item">Google Analytics</string>
+    	<string name="menu_text_analytics_no">Do Not Report</string>
+    	<string name="menu_text_analytics_yes">Report Google Analytics</string>
+    	    
     	<string name="menu_text_monsters_item">Show Monsters</string>
+    	<string name="menu_text_monsters_no">No Monsters</string>
+    	<string name="menu_text_monsters_yes">Monsters</string>
+    	    
     	<string name="menu_text_collision_item">Monster Collision</string>
+    	<string name="menu_text_collision_no">No Collision Detection</string>
+    	<string name="menu_text_collision_yes">Regular Collision</string>
     	    
         <string name="app_legal">LEGAL \n This version of Awesomeguy can report your game usage statistics to Google Analytics. This allows the developers to track
 how many users actually play the game. Google Analytics does not change any aspect of game play, and it does not report
