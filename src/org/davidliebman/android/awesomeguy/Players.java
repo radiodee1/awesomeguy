@@ -46,6 +46,7 @@ public class Players extends ListActivity {
     private TextView mPlayerText;
     private TextView mNumPlayers;
     private int mPreferredNumRecords;
+    private boolean mLookForXml;
     
     
     public static final int VIEW_SPLASH = 0;
@@ -286,6 +287,9 @@ public class Players extends ListActivity {
     	/////////////////////////////start TOS
         mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
 
+        mLookForXml = mPreferences.getBoolean(SAVED_LOOK_FOR_XML, false);
+        mRememberPlayer = mPreferences.getBoolean(SAVED_REMEMBER_PLAYER, true);
+        
     	 /* get TOS info from preferences */
         mGoogleAnalytics = mPreferences.getBoolean(Players.SAVED_ANALYTICS, true);
         mTermsOfService = mPreferences.getBoolean(Players.SAVED_TOS, false);
@@ -359,6 +363,21 @@ public class Players extends ListActivity {
     
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+    	
+    	//must populate menu entries for level
+    	
+    	//set game speed
+    	if (mHighScores.getGameSpeed() == Record.SPEED_SLOW) {
+    		menu.findItem(R.id.menu_options_speed_slow_item).setChecked(true);
+    	}
+    	if (mHighScores.getGameSpeed() == Record.SPEED_MEDIUM) {
+    		menu.findItem(R.id.menu_options_speed_medium_item).setChecked(true);
+    	}
+    	if (mHighScores.getGameSpeed() == Record.SPEED_FAST) {
+    		menu.findItem(R.id.menu_options_speed_fast_item).setChecked(true);
+    	}
+    	
+    	
     	return true;
     }
     
@@ -382,9 +401,29 @@ public class Players extends ListActivity {
     	case R.id.menu_story_item:
     		displayText(Players.TEXT_STORY);
     		break;
-//    	case R.id.menu_options_item:
-//    		break;
+    	case R.id.menu_options_speed_slow_item:
+    		if (!item.isChecked()) {
+    			item.setChecked(true);
+    			mHighScores.setGameSpeed(Record.SPEED_SLOW);
+    		}
+    		break;
+    	case R.id.menu_options_speed_medium_item:
+    		if (!item.isChecked()) {
+    			item.setChecked(true);
+    			mHighScores.setGameSpeed(Record.SPEED_MEDIUM);
+    		}
+    		break;
+    	case R.id.menu_options_speed_fast_item:
+    		if (!item.isChecked()) {
+    			item.setChecked(true);
+    			mHighScores.setGameSpeed(Record.SPEED_FAST);
+    		}
+    		break;
     	}
+
+    	mHighScores.addToPreferences(mPreferences);
+    	mScores.setHighScores(mHighScores);
+    	mScores.updateOptions(mHighScores.getRecordIdNum());
     	return true;
     }
     

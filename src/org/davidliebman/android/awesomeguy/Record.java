@@ -8,6 +8,10 @@ import android.content.*;
 
 public  class Record  {
 	
+	public final static int SPEED_SLOW = 16;
+	public final static int SPEED_MEDIUM = 20;
+	public final static int SPEED_FAST = 24;
+	
 	public static int RADIO_PLAYERS_TEN = 10;
 	public static int RADIO_PLAYERS_FIVE = 5;
 	public static int RADIO_PLAYERS_FIFTY = 50;
