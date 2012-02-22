@@ -378,8 +378,12 @@ public class Players extends ListActivity {
     		menu.findItem(R.id.menu_options_speed_fast_item).setChecked(true);
     	}
     	//play game sound
-    	menu.findItem(R.id.menu_options_sound_no_item).setChecked(!mHighScores.isSound());
-    	menu.findItem(R.id.menu_options_sound_yes_item).setChecked(mHighScores.isSound());
+    	if (!mHighScores.isSound()) {
+    		menu.findItem(R.id.menu_options_sound_no_item).setChecked(true);
+    	}
+    	else {
+    		menu.findItem(R.id.menu_options_sound_yes_item).setChecked(true);
+    	}
     	//how many players
     	if (mHighScores.getNumRecords() == Record.RADIO_PLAYERS_FIFTY) {
     		menu.findItem(R.id.menu_options_players_fifty_item).setChecked(true);
@@ -391,20 +395,40 @@ public class Players extends ListActivity {
     		menu.findItem(R.id.menu_options_players_five_item).setChecked(true);
     	}
     	//remember me
-    	menu.findItem(R.id.menu_options_rememberme_yes_item).setChecked(mRememberPlayer);
-    	menu.findItem(R.id.menu_options_rememberme_no_item).setChecked(!mRememberPlayer);
+    	if (mRememberPlayer) {
+    		menu.findItem(R.id.menu_options_rememberme_yes_item).setChecked(true);
+    	}
+    	else {
+    		menu.findItem(R.id.menu_options_rememberme_no_item).setChecked(true);
+    	}
     	//look for xml
-    	menu.findItem(R.id.menu_options_xml_no_item).setChecked(!mLookForXml);
-    	menu.findItem(R.id.menu_options_xml_yes_item).setChecked(mLookForXml);
+    	if (!mLookForXml) {
+    		menu.findItem(R.id.menu_options_xml_no_item).setChecked(true);
+    	}
+    	else {
+    		menu.findItem(R.id.menu_options_xml_yes_item).setChecked(true);
+    	}
     	//use google analytics
-    	menu.findItem(R.id.menu_options_analytics_yes_item).setChecked(mGoogleAnalytics);
-    	menu.findItem(R.id.menu_options_analytics_no_item).setChecked(!mGoogleAnalytics);
+    	if (mGoogleAnalytics ) {
+    		menu.findItem(R.id.menu_options_analytics_yes_item).setChecked(true);
+    	}
+    	else {
+    		menu.findItem(R.id.menu_options_analytics_no_item).setChecked(true);
+    	}
     	//will game have monsters?
-    	menu.findItem(R.id.menu_options_monsters_yes_item).setChecked(mHighScores.isEnableMonsters());
-    	menu.findItem(R.id.menu_options_monsters_no_item).setChecked(!mHighScores.isEnableMonsters());
+    	if (mHighScores.isEnableMonsters()) {
+    		menu.findItem(R.id.menu_options_monsters_yes_item).setChecked(true);
+    	}
+    	else {
+    		menu.findItem(R.id.menu_options_monsters_no_item).setChecked(true);
+    	}
     	//will game have collision?
-    	menu.findItem(R.id.menu_options_collision_yes_item).setChecked(mHighScores.isEnableCollision());
-    	menu.findItem(R.id.menu_options_collision_no_item).setChecked(!mHighScores.isEnableCollision());
+    	if (mHighScores.isEnableCollision()) {
+    		menu.findItem(R.id.menu_options_collision_yes_item).setChecked(true);
+    	}
+    	else {
+    		menu.findItem(R.id.menu_options_collision_no_item).setChecked(true);
+    	}
     	
     	return true;
     }
