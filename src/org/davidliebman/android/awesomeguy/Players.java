@@ -64,6 +64,10 @@ public class Players extends ListActivity {
     public static final int DIALOG_STARTGAME = 1;
     public static final int DIALOG_UNUSED = 2;
     
+    public static final int MENU_BASE = Menu.FIRST;
+    public static final int MENU_GROUP_ROOMS = MENU_BASE + 1;
+
+    
     protected boolean mActive = true;
     private boolean mRememberPlayer;
     private boolean mGoogleAnalytics;
@@ -75,6 +79,9 @@ public class Players extends ListActivity {
     private Scores.ScoreOpenHelper mScoresHelper;
     private Scores mScores;
     private SQLiteDatabase db;
+    
+	private InitBackground.LevelList mList;
+	private InitBackground.ParseXML mParser = new InitBackground.ParseXML(this);
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -357,7 +364,16 @@ public class Players extends ListActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
     	MenuInflater inflate = getMenuInflater();
     	inflate.inflate(R.menu.main_menu, menu);
+    	mList = new InitBackground.LevelList();
+    	mList = mParser.getLevelList(mLookForXml);
     	
+    	
+    	SubMenu mRoomMenu = menu.addSubMenu(0, 0, 1, "Starting Level");
+    	for (int x = 0; x < mList.size(); x ++ ) {
+    		mRoomMenu.add(Players.MENU_GROUP_ROOMS,Players.MENU_BASE + mList.getNum(x), 0, "Level #" + mList.getNum(x));	
+    	}
+    	mRoomMenu.setGroupCheckable(Players.MENU_GROUP_ROOMS, true, true);
+
     	return true;
     	
     }
@@ -366,6 +382,11 @@ public class Players extends ListActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
     	
     	//must populate menu entries for level
+    	for (int x = 0; x < mList.size(); x ++ ) {
+    		if (this.mRoomNumSelected == mList.getNum(x)) {
+    			menu.findItem(Players.MENU_BASE + mList.getNum(x)).setChecked(true);
+    		}
+    	}
     	
     	//set game speed
     	if (mHighScores.getGameSpeed() == Record.SPEED_SLOW) {
@@ -563,6 +584,11 @@ public class Players extends ListActivity {
     		break;
     	}
     	
+    	for (int x = 0; x < mList.size(); x ++ ) {
+    		if (Players.MENU_BASE + mList.getNum(x) == item.getItemId()) {
+    			this.mRoomNumSelected = x + 1;
+    		}
+    	}
 
     	SharedPreferences.Editor edit = mPreferences.edit();
         edit.putInt(SAVED_ROOM_NUM, mRoomNumSelected);

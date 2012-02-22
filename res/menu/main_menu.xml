@@ -34,9 +34,7 @@
     </item>
     
         
-            <item android:id="@+id/menu_options_room_item" android:icon="@drawable/ic_menu_default"
-                android:title="@string/menu_text_room_item">
-                </item>
+            
             <item android:id="@+id/menu_options_speed_item"  android:icon="@drawable/ic_menu_default"
                 android:title="@string/menu_text_speed_item">
                 	<menu >
