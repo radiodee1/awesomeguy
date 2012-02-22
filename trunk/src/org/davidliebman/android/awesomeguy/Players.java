@@ -43,6 +43,8 @@ public class Players extends ListActivity {
     private Record mRec = new Record();
     private SharedPreferences mPreferences;
     private RecordAdapter mAadapter;
+    private SplashScreen mSplash;
+    private Animation myFadeInAnimation;
     private TextView mPlayerText;
     private TextView mNumPlayers;
     private int mPreferredNumRecords;
@@ -253,6 +255,20 @@ public class Players extends ListActivity {
             }
         });
         
+        final View buttonSplash =  findViewById(R.id.view_splash);
+        buttonSplash.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+            	//showView(Players.VIEW_PLAYERS);
+            	//showDialog(Players.DIALOG_STARTGAME);
+            	//Toast.makeText(Players.this, "And We're Off", Toast.LENGTH_SHORT).show();
+            	if (mSplash != null && !mSplash.isCancelled()) {
+            		mSplash.cancel(true);
+            		myFadeInAnimation.scaleCurrentDuration(0);
+            		showView(Players.VIEW_PLAYERS);
+            	}
+            }
+        });
+        
         mNumPlayers = (TextView) findViewById(R.id.text_num_message);
         mNumPlayers.setText("This is where you choose from a list of " + mHighScores.getNumRecords() + " players.");
         
@@ -329,7 +345,7 @@ public class Players extends ListActivity {
         
     	////////////////////////////start splashscreen
         
-    	SplashScreen mSplash = new SplashScreen();
+    	mSplash = new SplashScreen();
     	mSplash.execute(new Integer[] {0});
     	
     }
@@ -835,7 +851,7 @@ public class Players extends ListActivity {
 	   @Override
 	   protected void onPreExecute() {
 		   showView(Players.VIEW_SPLASH);
-		   Animation myFadeInAnimation = AnimationUtils.loadAnimation(Players.this, R.anim.fadein);
+		   myFadeInAnimation = AnimationUtils.loadAnimation(Players.this, R.anim.fadein);
 		   findViewById(R.id.view_splash).startAnimation(myFadeInAnimation);
 	   }
 	   
