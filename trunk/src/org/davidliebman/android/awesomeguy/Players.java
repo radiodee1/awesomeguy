@@ -46,6 +46,7 @@ public class Players extends ListActivity {
     private TextView mPlayerText;
     private TextView mNumPlayers;
     private int mPreferredNumRecords;
+    private int mRoomNumSelected = 1;
     private boolean mLookForXml;
     
     
@@ -376,7 +377,34 @@ public class Players extends ListActivity {
     	if (mHighScores.getGameSpeed() == Record.SPEED_FAST) {
     		menu.findItem(R.id.menu_options_speed_fast_item).setChecked(true);
     	}
-    	
+    	//play game sound
+    	menu.findItem(R.id.menu_options_sound_no_item).setChecked(!mHighScores.isSound());
+    	menu.findItem(R.id.menu_options_sound_yes_item).setChecked(mHighScores.isSound());
+    	//how many players
+    	if (mHighScores.getNumRecords() == Record.RADIO_PLAYERS_FIFTY) {
+    		menu.findItem(R.id.menu_options_players_fifty_item).setChecked(true);
+    	}
+    	if (mHighScores.getNumRecords() == Record.RADIO_PLAYERS_TEN) {
+    		menu.findItem(R.id.menu_options_players_ten_item).setChecked(true);
+    	}
+    	if (mHighScores.getNumRecords() == Record.RADIO_PLAYERS_FIVE) {
+    		menu.findItem(R.id.menu_options_players_five_item).setChecked(true);
+    	}
+    	//remember me
+    	menu.findItem(R.id.menu_options_rememberme_yes_item).setChecked(mRememberPlayer);
+    	menu.findItem(R.id.menu_options_rememberme_no_item).setChecked(!mRememberPlayer);
+    	//look for xml
+    	menu.findItem(R.id.menu_options_xml_no_item).setChecked(!mLookForXml);
+    	menu.findItem(R.id.menu_options_xml_yes_item).setChecked(mLookForXml);
+    	//use google analytics
+    	menu.findItem(R.id.menu_options_analytics_yes_item).setChecked(mGoogleAnalytics);
+    	menu.findItem(R.id.menu_options_analytics_no_item).setChecked(!mGoogleAnalytics);
+    	//will game have monsters?
+    	menu.findItem(R.id.menu_options_monsters_yes_item).setChecked(mHighScores.isEnableMonsters());
+    	menu.findItem(R.id.menu_options_monsters_no_item).setChecked(!mHighScores.isEnableMonsters());
+    	//will game have collision?
+    	menu.findItem(R.id.menu_options_collision_yes_item).setChecked(mHighScores.isEnableCollision());
+    	menu.findItem(R.id.menu_options_collision_no_item).setChecked(!mHighScores.isEnableCollision());
     	
     	return true;
     }
@@ -419,8 +447,106 @@ public class Players extends ListActivity {
     			mHighScores.setGameSpeed(Record.SPEED_FAST);
     		}
     		break;
+    	case R.id.menu_options_players_fifty_item:
+    		if (!item.isChecked()) {
+    			item.setChecked(true);
+    			mHighScores.setNumRecords(Record.RADIO_PLAYERS_FIFTY);
+    		}
+    		break;
+    	case R.id.menu_options_players_ten_item:
+    		if (!item.isChecked()) {
+    			item.setChecked(true);
+    			mHighScores.setNumRecords(Record.RADIO_PLAYERS_TEN);
+    		}
+    		break;
+    	case R.id.menu_options_players_five_item:
+    		if (!item.isChecked()) {
+    			item.setChecked(true);
+    			mHighScores.setNumRecords(Record.RADIO_PLAYERS_FIVE);
+    		}
+    		break;
+    	case R.id.menu_options_sound_yes_item:
+    		if (!item.isChecked()) {
+    			item.setChecked(true);
+    			mHighScores.setSound(true);
+    		}
+    		break;
+    	case R.id.menu_options_sound_no_item:
+    		if (!item.isChecked()) {
+    			item.setChecked(true);
+    			mHighScores.setSound(false);
+    		}
+    		break;
+    	case R.id.menu_options_rememberme_yes_item:
+    		if (!item.isChecked()) {
+    			item.setChecked(true);
+    			this.mRememberPlayer = true;
+    		}
+    		break;
+    	case R.id.menu_options_rememberme_no_item:
+    		if (!item.isChecked()) {
+    			item.setChecked(true);
+    			this.mRememberPlayer = false;
+    		}
+    		break;
+    	case R.id.menu_options_xml_yes_item:
+    		if (!item.isChecked()) {
+    			item.setChecked(true);
+    			this.mLookForXml = true;
+    		}
+    		break;
+    	case R.id.menu_options_xml_no_item:
+    		if (!item.isChecked()) {
+    			item.setChecked(true);
+    			this.mLookForXml = false;
+    		}
+    		break;
+    	case R.id.menu_options_analytics_yes_item:
+    		if (!item.isChecked()) {
+    			item.setChecked(true);
+    			this.mGoogleAnalytics = true;
+    		}
+    		break;
+    	case R.id.menu_options_analytics_no_item:
+    		if (!item.isChecked()) {
+    			item.setChecked(true);
+    			this.mGoogleAnalytics = false;
+    		}
+    		break;
+    	case R.id.menu_options_monsters_yes_item:
+    		if (!item.isChecked()) {
+    			item.setChecked(true);
+    			mHighScores.setEnableMonsters(true);
+    		}
+    		break;
+    	case R.id.menu_options_monsters_no_item:
+    		if (!item.isChecked()) {
+    			item.setChecked(true);
+    			this.mHighScores.setEnableMonsters(false);
+    		}
+    		break;
+    	case R.id.menu_options_collision_yes_item:
+    		if (!item.isChecked()) {
+    			item.setChecked(true);
+    			this.mHighScores.setEnableCollision(true);
+    		}
+    		break;
+    	case R.id.menu_options_collision_no_item:
+    		if (!item.isChecked()) {
+    			item.setChecked(true);
+    			this.mHighScores.setEnableCollision(false);
+    		}
+    		break;
     	}
+    	
 
+    	SharedPreferences.Editor edit = mPreferences.edit();
+        edit.putInt(SAVED_ROOM_NUM, mRoomNumSelected);
+        edit.putBoolean(SAVED_LOOK_FOR_XML, mLookForXml);
+        edit.putBoolean(SAVED_REMEMBER_PLAYER, mRememberPlayer);
+        edit.putBoolean(SAVED_ANALYTICS, mGoogleAnalytics);
+        edit.commit();
+        
     	mHighScores.addToPreferences(mPreferences);
     	mScores.setHighScores(mHighScores);
     	mScores.updateOptions(mHighScores.getRecordIdNum());
