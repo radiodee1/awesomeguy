@@ -67,7 +67,8 @@ public class Players extends ListActivity {
     public static final int DIALOG_UNUSED = 2;
     
     public static final int MENU_BASE = Menu.FIRST;
-    public static final int MENU_GROUP_ROOMS = MENU_BASE + 1;
+    public static final int MENU_GROUP_SUBMENU = MENU_BASE + 1;
+    public static final int MENU_GROUP_ROOMS = MENU_BASE + 2; //this is always last entry
 
     
     protected boolean mActive = true;
@@ -380,15 +381,7 @@ public class Players extends ListActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
     	MenuInflater inflate = getMenuInflater();
     	inflate.inflate(R.menu.main_menu, menu);
-    	mList = new InitBackground.LevelList();
-    	mList = mParser.getLevelList(mLookForXml);
     	
-    	
-    	SubMenu mRoomMenu = menu.addSubMenu(0, 0, 1, "Starting Level");
-    	for (int x = 0; x < mList.size(); x ++ ) {
-    		mRoomMenu.add(Players.MENU_GROUP_ROOMS,Players.MENU_BASE + mList.getNum(x), 0, "Level #" + mList.getNum(x));	
-    	}
-    	mRoomMenu.setGroupCheckable(Players.MENU_GROUP_ROOMS, true, true);
 
     	return true;
     	
@@ -397,7 +390,20 @@ public class Players extends ListActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
     	
+    	
+    	mList = new InitBackground.LevelList();
+    	mList = mParser.getLevelList(mLookForXml);
+    	
+    	//erase old room menu
+    	menu.removeGroup(Players.MENU_GROUP_SUBMENU);
     	//must populate menu entries for level
+    	SubMenu mRoomMenu = menu.addSubMenu(Players.MENU_GROUP_SUBMENU, 0, 1, "Starting Level");
+    	for (int x = 0; x < mList.size(); x ++ ) {
+    		mRoomMenu.add(Players.MENU_GROUP_ROOMS,Players.MENU_BASE + mList.getNum(x), 0, "Level #" + mList.getNum(x));	
+    	}
+    	mRoomMenu.setGroupCheckable(Players.MENU_GROUP_ROOMS, true, true);
+
+    	//set one entry as selected
     	for (int x = 0; x < mList.size(); x ++ ) {
     		if (this.mRoomNumSelected == mList.getNum(x)) {
     			menu.findItem(Players.MENU_BASE + mList.getNum(x)).setChecked(true);
