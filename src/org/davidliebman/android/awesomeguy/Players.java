@@ -643,7 +643,7 @@ public class Players extends ListActivity {
 	        
 	        /* save num of high scores for player */
 	        //TODO: TEST ME!!
-	        mScores.updateNumOfRecords(mNewNumOfRecords);
+	        //mScores.updateNumOfRecords(mHighScores.getRecordIdNum());
 
 	        //save options again...
 	        mHighScores.addToPreferences(mPreferences);
@@ -706,10 +706,9 @@ public class Players extends ListActivity {
 	   	    	       .setCancelable(false)
 	   	    	       .setPositiveButton(mPositive, new DialogInterface.OnClickListener() {
 	   	    	           public void onClick(DialogInterface dialog, int id) {
-	   	    	        	   //mRec.setNumRecords(mHighScores.getNumRecords());
+	   	    	        	   adjustPlayersList(mHighScores.getNumRecords());
 	   	    	        	   dialog.cancel();
 	   	    	        	   removeDialog(Players.DIALOG_USERNUM_CHANGED);
-	   	    	        	   adjustPlayersList(mHighScores.getNumRecords());
 	   	    	           }
 	   	    	       })
 	   	    	       .setNegativeButton(mNegative, new DialogInterface.OnClickListener() {
@@ -717,7 +716,6 @@ public class Players extends ListActivity {
 	   	    	        	   mHighScores.setNumRecords(mPreferredNumRecords);	
 	   	    	        	   removeDialog(Players.DIALOG_USERNUM_CHANGED);
 	   	    	                dialog.cancel();
-	   	    	                adjustPlayersList(mPreferredNumRecords);
 	   	    	           }
 	   	    	       });
 	   	    	AlertDialog alert = builder.create();
