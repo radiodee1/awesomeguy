@@ -655,6 +655,11 @@ public class Players extends ListActivity {
         
         /* adjust number of high scores shown */
         mScores.pruneScoresList();
+        mNames = mScores.getHighScorePlayerList(mHighScores.getNumRecords());
+
+        
+        mAadapter = new RecordAdapter(this, R.layout.players, mNames);
+        mAadapter.setNotifyOnChange(true);
     }
     
     /* determine if a name is already taken */
