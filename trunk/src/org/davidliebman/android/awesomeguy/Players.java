@@ -518,18 +518,21 @@ public class Players extends ListActivity {
     		if (!item.isChecked()) {
     			item.setChecked(true);
     			mHighScores.setNumRecords(Record.RADIO_PLAYERS_FIFTY);
+    			this.adjustPlayersList(Record.RADIO_PLAYERS_FIFTY);
     		}
     		break;
     	case R.id.menu_options_players_ten_item:
     		if (!item.isChecked()) {
     			item.setChecked(true);
     			mHighScores.setNumRecords(Record.RADIO_PLAYERS_TEN);
+    			this.adjustPlayersList(Record.RADIO_PLAYERS_TEN);
     		}
     		break;
     	case R.id.menu_options_players_five_item:
     		if (!item.isChecked()) {
     			item.setChecked(true);
     			mHighScores.setNumRecords(Record.RADIO_PLAYERS_FIVE);
+    			this.adjustPlayersList(Record.RADIO_PLAYERS_FIVE);
     		}
     		break;
     	case R.id.menu_options_sound_yes_item:
@@ -625,6 +628,34 @@ public class Players extends ListActivity {
     	return true;
     }
     
+    public void adjustPlayersList(int mNewNumOfRecords) {
+    	//mPreferredNumRecords = mHighScores.getNumRecords();
+		if ( mPreferredNumRecords != mNewNumOfRecords ) {
+			   showDialog(Players.DIALOG_USERNUM_CHANGED);
+		}
+		
+		//mRec.setNumRecords(mAlert.alertUser()); // TODO: is this redundant??
+		//mHighScores = mRec;
+
+//		Toast.makeText(Players.this, "Player Selected: " + mHighScores.getName(), Toast.LENGTH_SHORT).show();
+//		SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+//    	mHighScores.setNewRecord(false);
+//		mHighScores.addToPreferences(preferences);
+//        mPlayerText.setText("Player Chosen: " +mHighScores.getName());
+        
+        /* save num of high scores */
+        SharedPreferences.Editor mSave = mPreferences.edit();
+        mSave.putInt(Options.SAVED_NUM_SCORES, mHighScores.getNumRecords());
+        mSave.commit();
+        //mNumPlayers.setText("This is where you enter a new player name, or choose from a list of " + mHighScores.getNumRecords() + " players.");
+        
+        /* save num of high scores for player */
+        //TODO: TEST ME!!
+        mScores.updateNumOfRecords(mHighScores.getNumRecords());
+        
+        /* adjust number of high scores shown */
+        mScores.pruneScoresList();
+    }
     
     /* determine if a name is already taken */
     public static boolean isNameTaken(ArrayList<Record> mNames, String test) {
