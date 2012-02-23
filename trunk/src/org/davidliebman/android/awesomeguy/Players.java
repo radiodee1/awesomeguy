@@ -518,21 +518,21 @@ public class Players extends ListActivity {
     		if (!item.isChecked()) {
     			item.setChecked(true);
     			mHighScores.setNumRecords(Record.RADIO_PLAYERS_FIFTY);
-    			this.adjustPlayersList(Record.RADIO_PLAYERS_FIFTY);
+    			showDialog(Players.DIALOG_USERNUM_CHANGED);
     		}
     		break;
     	case R.id.menu_options_players_ten_item:
     		if (!item.isChecked()) {
     			item.setChecked(true);
     			mHighScores.setNumRecords(Record.RADIO_PLAYERS_TEN);
-    			this.adjustPlayersList(Record.RADIO_PLAYERS_TEN);
+    			showDialog(Players.DIALOG_USERNUM_CHANGED);
     		}
     		break;
     	case R.id.menu_options_players_five_item:
     		if (!item.isChecked()) {
     			item.setChecked(true);
     			mHighScores.setNumRecords(Record.RADIO_PLAYERS_FIVE);
-    			this.adjustPlayersList(Record.RADIO_PLAYERS_FIVE);
+    			showDialog(Players.DIALOG_USERNUM_CHANGED);
     		}
     		break;
     	case R.id.menu_options_sound_yes_item:
@@ -631,35 +631,26 @@ public class Players extends ListActivity {
     public void adjustPlayersList(int mNewNumOfRecords) {
     	//mPreferredNumRecords = mHighScores.getNumRecords();
 		if ( mPreferredNumRecords != mNewNumOfRecords ) {
-			   showDialog(Players.DIALOG_USERNUM_CHANGED);
+			mPreferredNumRecords = mNewNumOfRecords;
+
+	        /* save num of high scores */
+	        SharedPreferences.Editor mSave = mPreferences.edit();
+	        mSave.putInt(Options.SAVED_NUM_SCORES, mHighScores.getNumRecords());
+	        mSave.commit();
+	        //mNumPlayers.setText("This is where you enter a new player name, or choose from a list of " + mHighScores.getNumRecords() + " players.");
+	        
+	        /* save num of high scores for player */
+	        //TODO: TEST ME!!
+	        mScores.updateNumOfRecords(mHighScores.getNumRecords());
+	        
+	        /* adjust number of high scores shown */
+	        mScores.pruneScoresList();
+	        mNames = mScores.getHighScorePlayerList(mHighScores.getNumRecords());
+	
+	        
+	        mAadapter = new RecordAdapter(this, R.layout.players, mNames);
+	        mAadapter.setNotifyOnChange(true);
 		}
-		
-		//mRec.setNumRecords(mAlert.alertUser()); // TODO: is this redundant??
-		//mHighScores = mRec;
-
-//		Toast.makeText(Players.this, "Player Selected: " + mHighScores.getName(), Toast.LENGTH_SHORT).show();
-//		SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
-//    	mHighScores.setNewRecord(false);
-//		mHighScores.addToPreferences(preferences);
-//        mPlayerText.setText("Player Chosen: " +mHighScores.getName());
-        
-        /* save num of high scores */
-        SharedPreferences.Editor mSave = mPreferences.edit();
-        mSave.putInt(Options.SAVED_NUM_SCORES, mHighScores.getNumRecords());
-        mSave.commit();
-        //mNumPlayers.setText("This is where you enter a new player name, or choose from a list of " + mHighScores.getNumRecords() + " players.");
-        
-        /* save num of high scores for player */
-        //TODO: TEST ME!!
-        mScores.updateNumOfRecords(mHighScores.getNumRecords());
-        
-        /* adjust number of high scores shown */
-        mScores.pruneScoresList();
-        mNames = mScores.getHighScorePlayerList(mHighScores.getNumRecords());
-
-        
-        mAadapter = new RecordAdapter(this, R.layout.players, mNames);
-        mAadapter.setNotifyOnChange(true);
     }
     
     /* determine if a name is already taken */
@@ -695,14 +686,14 @@ public class Players extends ListActivity {
     	switch (mId) {
     	/////////////////////////////////////
     	case Players.DIALOG_USERNUM_CHANGED:
- 		   this.mPreferredNumRecords = mHighScores.getNumRecords();
-
- 		   if ( mPreferredNumRecords != mRec.getNumRecords() ) {
+    		//old: mPreferredNumRecords
+    		//new: mHighScores.getNumRecords()
+ 		   if ( mPreferredNumRecords != mHighScores.getNumRecords() ) {
 	   	    	builder = new AlertDialog.Builder(Players.this);
 	   	    	String mAMessage = new String("Your old preference for 'Number of Player Records' is " 
-	   	    			+ mHighScores.getNumRecords());
+	   	    			+ mPreferredNumRecords);
 	   	    	String mPositive = new String("Choose " + mHighScores.getNumRecords() + " records.");
-	   	    	String mNegative = new String("Choose " + mRec.getNumRecords() + " records.");
+	   	    	String mNegative = new String("Choose " + mPreferredNumRecords + " records.");
 	   	    	builder.setMessage(mAMessage)
 	   	    	       .setCancelable(false)
 	   	    	       .setPositiveButton(mPositive, new DialogInterface.OnClickListener() {
@@ -710,12 +701,14 @@ public class Players extends ListActivity {
 	   	    	        	   mRec.setNumRecords(mHighScores.getNumRecords());
 	   	    	        	   dialog.cancel();
 	   	    	        	   removeDialog(Players.DIALOG_USERNUM_CHANGED);
+	   	    	        	   adjustPlayersList(mHighScores.getNumRecords());
 	   	    	           }
 	   	    	       })
 	   	    	       .setNegativeButton(mNegative, new DialogInterface.OnClickListener() {
 	   	    	           public void onClick(DialogInterface dialog, int id) {
 	   	    	        	   	removeDialog(Players.DIALOG_USERNUM_CHANGED);
 	   	    	                dialog.cancel();
+	   	    	                //adjustPlayersList(mPreferredNumRecords);
 	   	    	           }
 	   	    	       });
 	   	    	AlertDialog alert = builder.create();
