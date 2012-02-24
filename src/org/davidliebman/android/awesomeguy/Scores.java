@@ -193,7 +193,7 @@ public class Scores {
 				mPruneScoresC = mDatabase.rawQuery("DELETE FROM "+ TABLE_SCORES_NAME + " WHERE id=" + j, null);
 				mPruneScoresC.getCount();
 				mPruneScoresC.close();
-				Log.e("scores", "REMOVE RECORD " + j + "<--------------");
+				//Log.e("scores", "REMOVE RECORD " + j + "<--------------");
 				//mList.get(i).listInLog();
 			}
 		}
