@@ -694,6 +694,11 @@ public class Players extends ListActivity {
     	Dialog  dialog = new Dialog(Players.this);
     	AlertDialog.Builder builder;
     	AlertDialog alertDialog;
+    	LayoutInflater mInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+    	View mLayout;
+    	
+    	mLayout = mInflater.inflate(R.layout.congrats, 
+    			(ViewGroup) findViewById(R.id.layout_root));
     	
     	switch (mId) {
     	/////////////////////////////////////
@@ -702,8 +707,10 @@ public class Players extends ListActivity {
     		//new: mHighScores.getNumRecords()
  		   if ( mPreferredNumRecords != mHighScores.getNumRecords() ) {
 	   	    	builder = new AlertDialog.Builder(Players.this);
+	   	    	builder.setView(mLayout);
 	   	    	String mAMessage = new String("Your old preference for 'Number of Player Records' is " 
 	   	    			+ mPreferredNumRecords);
+	   	    	((TextView)mLayout.findViewById(R.id.congrats_text)).setTag(mAMessage);
 	   	    	String mPositive = new String("Choose " + mHighScores.getNumRecords() + " records.");
 	   	    	String mNegative = new String("Choose " + mPreferredNumRecords + " records.");
 	   	    	builder.setMessage(mAMessage)
@@ -731,8 +738,11 @@ public class Players extends ListActivity {
     	case Players.DIALOG_STARTGAME:
     		
     		builder = new AlertDialog.Builder(Players.this);
+    		builder.setView(mLayout);
    	    	String mAMessage = new String("Play Awesomeguy as \'" + mHighScores.getName() +
    	    			"\' or choose another player:");
+   	    	((TextView)mLayout.findViewById(R.id.congrats_text)).setTag(mAMessage);
+
    	    	String mPositive = new String("Choose " + mHighScores.getName() );
    	    	String mNegative = new String("Stay on this screen." );
    	    	builder.setMessage(mAMessage)
