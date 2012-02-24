@@ -925,6 +925,7 @@ public class Players extends ListActivity {
 	   
 	   @Override
 	   protected void onPostExecute(String mResult) {
+		   myFadeInAnimation.scaleCurrentDuration(0);
 		   showView(Players.VIEW_PLAYERS);
 		   onPostSplash();
 	   }
