@@ -42,7 +42,7 @@ public class Players extends ListActivity {
     private ArrayList<Record> mNames = new ArrayList<Record>();
     private Record mRec = new Record();
     private SharedPreferences mPreferences;
-    private RecordAdapter mAadapter;
+    private RecordAdapter mAdapter;
     private SplashScreen mSplash;
     private Animation myFadeInAnimation;
     private TextView mPlayerText;
@@ -138,12 +138,12 @@ public class Players extends ListActivity {
         mNames = mScores.getHighScorePlayerList(mHighScores.getNumRecords());
 
         
-        mAadapter = new RecordAdapter(this, R.layout.players, mNames);
-        mAadapter.setNotifyOnChange(true);
-        mAadapter.notifyDataSetChanged();
+        mAdapter = new RecordAdapter(this, R.layout.players, mNames);
+        mAdapter.setNotifyOnChange(true);
+        mAdapter.notifyDataSetChanged();
         
         setContentView(R.layout.players);      
-        setListAdapter(mAadapter);
+        setListAdapter(mAdapter);
         ListView lv = getListView();
         lv.setTextFilterEnabled(true);
         lv.setOnItemClickListener(new OnItemClickListener () {
@@ -256,16 +256,16 @@ public class Players extends ListActivity {
             }
         });
         
+        /* dismiss splash screen on touch */
         final View buttonSplash =  findViewById(R.id.view_splash);
         buttonSplash.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-            	//showView(Players.VIEW_PLAYERS);
-            	//showDialog(Players.DIALOG_STARTGAME);
-            	//Toast.makeText(Players.this, "And We're Off", Toast.LENGTH_SHORT).show();
+            	
             	if (mSplash != null && !mSplash.isCancelled()) {
             		mSplash.cancel(true);
             		myFadeInAnimation.scaleCurrentDuration(0);
             		showView(Players.VIEW_PLAYERS);
+            		showDialog(Players.DIALOG_STARTGAME);
             	}
             }
         });
@@ -291,8 +291,11 @@ public class Players extends ListActivity {
     	mHighScores = new Record();
         mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.getFromPreferences(mPreferences);
-        this.mPreferredNumRecords = this.mPreferences.getInt(Players.SAVED_NUM_SCORES, Record.RADIO_PLAYERS_FIFTY);
+        mPlayerText.setText("Player Chosen: " +mHighScores.getName());
         
+        this.mPreferredNumRecords = this.mPreferences.getInt(Players.SAVED_NUM_SCORES, Record.RADIO_PLAYERS_FIFTY);
+        mNumPlayers.setText("This is where you choose from a list of " + this.mPreferredNumRecords + " players.");
+
         try {
     		mScores.closeAll();
     	}
@@ -306,8 +309,9 @@ public class Players extends ListActivity {
     	ArrayList<Record> temp = mScores.getHighScorePlayerList(mHighScores.getNumRecords());
         this.mNames.clear();
         this.mNames.addAll(temp);
-    	
-    	mAadapter.notifyDataSetChanged();
+        mAdapter = new RecordAdapter(this, R.layout.players, mNames);
+        setListAdapter(mAdapter);
+    	mAdapter.notifyDataSetChanged();
     	
     	/////////////////////////////start TOS
         mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
@@ -631,36 +635,34 @@ public class Players extends ListActivity {
     
     public void adjustPlayersList(int mNewNumOfRecords) {
     	//mPreferredNumRecords = mHighScores.getNumRecords();
-		if ( mPreferredNumRecords != mNewNumOfRecords ) {
-			mPreferredNumRecords = mNewNumOfRecords;
-			
-			mHighScores.setNumRecords(mNewNumOfRecords);
-	        /* save num of high scores */
-	        SharedPreferences.Editor mSave = mPreferences.edit();
-	        mSave.putInt(Options.SAVED_NUM_SCORES, mNewNumOfRecords);
-	        mSave.commit();
-	        mNumPlayers.setText("This is where you enter a new player name, or choose from a list of " + mHighScores.getNumRecords() + " players.");
-	        
-	        /* save num of high scores for player */
-	        //TODO: TEST ME!!
-	        //mScores.updateNumOfRecords(mHighScores.getRecordIdNum());
-
-	        //save options again...
-	        mHighScores.addToPreferences(mPreferences);
-	    	mScores.setHighScores(mHighScores);
-	    	mScores.updateOptions(mHighScores.getRecordIdNum());
-	    	
-	    	mScores.pruneScoresList();
-	        mNames = mScores.getHighScorePlayerList(mNewNumOfRecords);
-	
-	        setListAdapter(mAadapter);
+		
+		//mPreferredNumRecords = mNewNumOfRecords;
+		
+		mHighScores.setNumRecords(mNewNumOfRecords);
+        /* save num of high scores */
+        SharedPreferences.Editor mSave = mPreferences.edit();
+        mSave.putInt(Options.SAVED_NUM_SCORES, mNewNumOfRecords);
+        mSave.commit();
+        mNumPlayers.setText("This is where you enter a new player name, or choose from a list of " + mHighScores.getNumRecords() + " players.");
         
-	        mAadapter = new RecordAdapter(this, R.layout.players, mNames);
-	        mAadapter.setNotifyOnChange(true);
-	        mAadapter.notifyDataSetChanged();
+        /* save num of high scores for player */
+        
+        //save options again...
+        mHighScores.addToPreferences(mPreferences);
+    	mScores.setHighScores(mHighScores);
+    	mScores.updateOptions(mHighScores.getRecordIdNum());
+    	
+    	mScores.pruneScoresList();
+    	mNames.clear();
+    	mNames.addAll(mScores.getHighScorePlayerList(mNewNumOfRecords));
+        mAdapter = new RecordAdapter(this, R.layout.players, mNames);
 
-	    	mPreferredNumRecords = mNewNumOfRecords;
-		}
+        setListAdapter(mAdapter);
+    
+        mAdapter.notifyDataSetChanged();
+
+    	mPreferredNumRecords = mNewNumOfRecords;
+	
     }
     
     /* determine if a name is already taken */
@@ -820,6 +822,7 @@ public class Players extends ListActivity {
             this.mList = list;
             mContext = context;
     	}
+    	
     	
     	@Override
         public View getView(int position, View convertView, ViewGroup parent) {
