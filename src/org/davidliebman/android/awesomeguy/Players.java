@@ -855,53 +855,6 @@ public class Players extends ListActivity {
     	}
     };
     
-    
-    
-   /* Inner class for making alert message about number of high scores */
-//   public static class AlertNumRecords {
-//	   
-//	   Record mRec = new Record();
-//	   Record mHighScores = new Record();
-//	   int mPreferredNumRecords;
-//	   Context mParent;
-//	   
-//	   public AlertNumRecords(Context parent, Record mHighScores, Record mRec) {
-//		   this.mHighScores = mHighScores;
-//		   this.mRec = mRec;
-//		   this.mPreferredNumRecords = mHighScores.getNumRecords();
-//		   mParent = parent;
-//	   }
-//	   
-//	   public int alertUser() {
-//	       	if ( mPreferredNumRecords != mRec.getNumRecords() ) {
-//	   	    	AlertDialog.Builder builder = new AlertDialog.Builder(mParent);
-//	   	    	String mAMessage = new String("Your old preference for 'Number of Player Records' is " + mHighScores.getNumRecords());
-//	   	    	String mPositive = new String("Choose " + mHighScores.getNumRecords() + " records.");
-//	   	    	String mNegative = new String("Choose " + mRec.getNumRecords() + " records.");
-//	   	    	builder.setMessage(mAMessage)
-//	   	    	       .setCancelable(false)
-//	   	    	       .setPositiveButton(mPositive, new DialogInterface.OnClickListener() {
-//	   	    	           public void onClick(DialogInterface dialog, int id) {
-//	   	    	                //Players.this.finish();
-//	   	    	        	   mRec.setNumRecords(mHighScores.getNumRecords());
-//	   	    	        	   dialog.cancel();
-//	   	    	        	   
-//	   	    	           }
-//	   	    	       })
-//	   	    	       .setNegativeButton(mNegative, new DialogInterface.OnClickListener() {
-//	   	    	           public void onClick(DialogInterface dialog, int id) {
-//	   	    	        	   	
-//	   	    	                dialog.cancel();
-//	   	    	           }
-//	   	    	       });
-//	   	    	AlertDialog alert = builder.create();
-//	   	    	alert.show();
-//	       	}
-//       /* regardless which the user chooses, copy mRec */
-//       mHighScores = mRec;
-//       return mHighScores.getNumRecords() ;
-//       }
-//   }
 
    private class SplashScreen extends AsyncTask<Integer, Void, String> {
 	   @Override
