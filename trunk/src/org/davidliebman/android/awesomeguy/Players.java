@@ -222,7 +222,7 @@ public class Players extends ListActivity {
                 	  mPlayerText.setText("Player Chosen: " +mHighScores.getName());
                       mNumPlayers.setText("This is where you choose from a list of " + mHighScores.getNumRecords() + " players.");
                       SharedPreferences.Editor edit = mPreferences.edit();
-                      edit.putInt(Options.SAVED_ROOM_NUM, mHighScores.getLevel());
+                      edit.putInt(Players.SAVED_ROOM_NUM, mHighScores.getLevel());
                       edit.commit();
                   }
                   return true;
@@ -653,10 +653,12 @@ public class Players extends ListActivity {
 	    	mScores.pruneScoresList();
 	        mNames = mScores.getHighScorePlayerList(mNewNumOfRecords);
 	
-	        
+	        setListAdapter(mAadapter);
+        
 	        mAadapter = new RecordAdapter(this, R.layout.players, mNames);
-	        mAadapter.notifyDataSetChanged();
 	        mAadapter.setNotifyOnChange(true);
+	        mAadapter.notifyDataSetChanged();
+
 	    	mPreferredNumRecords = mNewNumOfRecords;
 		}
     }
