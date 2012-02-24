@@ -699,6 +699,7 @@ public class Players extends ListActivity {
     	
     	mLayout = mInflater.inflate(R.layout.congrats, 
     			(ViewGroup) findViewById(R.id.layout_root));
+    	mLayout.findViewById(R.id.image).setBackgroundResource(R.drawable.guy_icon);
     	
     	switch (mId) {
     	/////////////////////////////////////
@@ -710,11 +711,10 @@ public class Players extends ListActivity {
 	   	    	builder.setView(mLayout);
 	   	    	String mAMessage = new String("Your old preference for 'Number of Player Records' is " 
 	   	    			+ mPreferredNumRecords);
-	   	    	((TextView)mLayout.findViewById(R.id.congrats_text)).setTag(mAMessage);
+	   	    	((TextView)mLayout.findViewById(R.id.congrats_text)).setText(mAMessage);
 	   	    	String mPositive = new String("Choose " + mHighScores.getNumRecords() + " records.");
 	   	    	String mNegative = new String("Choose " + mPreferredNumRecords + " records.");
-	   	    	builder.setMessage(mAMessage)
-	   	    	       .setCancelable(false)
+	   	    	builder.setCancelable(false)
 	   	    	       .setPositiveButton(mPositive, new DialogInterface.OnClickListener() {
 	   	    	           public void onClick(DialogInterface dialog, int id) {
 	   	    	        	   adjustPlayersList(mHighScores.getNumRecords());
@@ -741,12 +741,11 @@ public class Players extends ListActivity {
     		builder.setView(mLayout);
    	    	String mAMessage = new String("Play Awesomeguy as \'" + mHighScores.getName() +
    	    			"\' or choose another player:");
-   	    	((TextView)mLayout.findViewById(R.id.congrats_text)).setTag(mAMessage);
+   	    	((TextView)mLayout.findViewById(R.id.congrats_text)).setText(mAMessage);
 
    	    	String mPositive = new String("Choose " + mHighScores.getName() );
    	    	String mNegative = new String("Stay on this screen." );
-   	    	builder.setMessage(mAMessage)
-   	    	       .setCancelable(false)
+   	    	builder.setCancelable(false)
    	    	       .setPositiveButton(mPositive, new DialogInterface.OnClickListener() {
    	    	    	   public void onClick(DialogInterface dialog, int id) {
    	    	    		   Intent StartGameIntent = new Intent(Players.this,GameStart.class);
