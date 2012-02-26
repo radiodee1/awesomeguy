@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_marginRight="6dip"
-        android:src="@drawable/guy_icon" />
+         />
           <LinearLayout
      
  xmlns:android="http://schemas.android.com/apk/res/android"

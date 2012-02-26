@@ -844,15 +844,52 @@ public class Players extends ListActivity {
     		TextView mName = (TextView) convertView.findViewById(R.id.text_name);
     		TextView mScore = (TextView) convertView.findViewById(R.id.text_score);
     		TextView mLevel = (TextView) convertView.findViewById(R.id.text_level);
+    		ImageView mImage = (ImageView) convertView.findViewById(R.id.icon);
     		
     		mName.setText("Name: " + mRec.getName() );//+ " id " + mRec.getRecordIdNum());
     		mScore.setText("Personal Best Score: "+ mRec.getScore());
     		mLevel.setText("Last Checkpoint: Level " + mRec.getLevel());
-    		
+    		mImage.setImageResource(this.getGuyIcon(position));
     		
     		
     		return convertView;
     	}
+    	
+    	public int getGuyIcon(int mPosition ) {
+    		int mI = R.drawable.guy_icon;
+    		switch(mPosition % 9) {
+    		case 0:
+    			mI = R.drawable.ic_guy_0;
+    			break;
+    		case 1:
+    			mI = R.drawable.ic_guy_1;
+    			break;
+    		case 2:
+    			mI = R.drawable.ic_guy_2;
+    			break;
+    		case 3:
+    			mI = R.drawable.ic_guy_3;
+    			break;
+    		case 4:
+    			mI = R.drawable.ic_guy_4;
+    			break;
+    		case 5:
+    			mI = R.drawable.ic_guy_5;
+    			break;
+    		case 6:
+    			mI = R.drawable.ic_guy_6;
+    			break;
+    		case 7:
+    			mI = R.drawable.ic_guy_7;
+    			break;
+    		case 8:
+    			mI = R.drawable.ic_guy_8;
+    			break;
+    		}
+    		
+    		return mI;
+    	}
+    	
     };
     
 
