@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -149,6 +150,7 @@ public class Highscores   extends ListActivity {
     		TextView mName = (TextView) convertView.findViewById(R.id.text_name);
     		TextView mScore = (TextView) convertView.findViewById(R.id.text_score);
     		TextView mDate = (TextView) convertView.findViewById(R.id.text_date);
+    		ImageView mImage = (ImageView) convertView.findViewById(R.id.icon);
     		
     		/* Convert milliseconds to readable date */
     		long mMilliseconds = mRec.getDate();
@@ -161,11 +163,44 @@ public class Highscores   extends ListActivity {
     		mName.setText("#" + (position + 1 )+ ". " + mRec.getName() );//+ " id " + mRec.getRecordIdNum());
     		mScore.setText("Score: "+ mRec.getHigh());
     		mDate.setText("Date: " + mDateString);
-    		
+    		mImage.setImageResource(this.getGatorIcon(position));
     		
     		
     		return convertView;
     	}
+    	public int getGatorIcon(int mPosition ) {
+    		int mI = R.drawable.guy_icon;
+    		switch(mPosition % 8) {
+    		case 0:
+    			mI = R.drawable.ic_gator_0;
+    			break;
+    		case 1:
+    			mI = R.drawable.ic_gator_1;
+    			break;
+    		case 2:
+    			mI = R.drawable.ic_gator_2;
+    			break;
+    		case 3:
+    			mI = R.drawable.ic_gator_3;
+    			break;
+    		case 4:
+    			mI = R.drawable.ic_gator_4;
+    			break;
+    		case 5:
+    			mI = R.drawable.ic_gator_5;
+    			break;
+    		case 6:
+    			mI = R.drawable.ic_gator_6;
+    			break;
+    		case 7:
+    			mI = R.drawable.ic_gator_7;
+    			break;
+    		
+    		}
+    		
+    		return mI;
+    	}
+    	
     };
     
 }
