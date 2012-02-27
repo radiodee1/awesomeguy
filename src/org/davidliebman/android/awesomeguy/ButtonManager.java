@@ -10,13 +10,15 @@ import android.os.Message;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
-public class ButtonManager extends TableLayout {
+public class ButtonManager extends FrameLayout {
 
 	public static final int MODE_PORTRAIT = 0;
 	public static final int MODE_STRIP = 1;
@@ -26,16 +28,15 @@ public class ButtonManager extends TableLayout {
     private Context mContext;
 	private MovementValues mMovementV;
     private GameValues mGameV;
-    private Handler mHandler;
 	
     private RelativeLayout mRLayout ;
     private TableLayout mTLayoutOuter ;
     private TableLayout mTLayout ;
     private FrameLayout mFLayoutBot ;
-    //private Panel mPanelBot ;
 	private GameKeys mKeysView;
     
-	//private RelativeLayout mParent;
+	private RelativeLayout mParent;
+	private Button mBackground;
 	
 	private int mDimensionWidth;
 	private int mButtonHeight;
@@ -48,29 +49,59 @@ public class ButtonManager extends TableLayout {
 
     
 	
-	public ButtonManager(Context c, MovementValues m, GameValues v, Handler h, int mode ) {
+	public ButtonManager(Context c, MovementValues m, GameValues v,  int mode ) {
 		super(c);
 		mContext = c;
 		mMovementV = m;
 		mGameV = v;
-		mHandler = h;
 		mMode = mode;
 		mDimensionWidth = mGameV.getDisplayWidth();
+		mParent = new RelativeLayout(mContext);
 		
 		switch (mMode) {
 		case ButtonManager.MODE_PORTRAIT:
-			this.addView((View)new GamePad(mContext, true, mDimensionWidth) );
+			mParent.addView((View)new GamePad(mContext, true, mDimensionWidth) );
 			break;
 		case ButtonManager.MODE_STRIP:
-			this.addView((View)new GameKeys(mContext, mGameV.getLandscapeButtonPixel(), true));
+			mParent.addView((View)new GameKeys(mContext, mGameV.getLandscapeButtonPixel(), true));
 			break;
 		case ButtonManager.MODE_TRANSPARENT:
 			break;
 		}
 		
+		ViewGroup.LayoutParams mRLayoutParams = new 
+    		ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
+		this.setLayoutParams(mRLayoutParams);
 		
+		ViewGroup.LayoutParams mRLayoutParamsParent = new 
+		ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+		
+		mParent.setLayoutParams(mRLayoutParams);
+		
+		initBackgroundButton();
+
+
+		this.addView(mBackground);
+		this.addView(mParent);
+
 	}
 
+	public void initBackgroundButton() {
+		ViewGroup.LayoutParams mRLayoutParams = new 
+    		ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
+		
+		mBackground = new Button(mContext);
+		mBackground.setText("A");
+		mBackground.setLayoutParams(mRLayoutParams);
+		
+		mBackground.setBackgroundColor(Color.TRANSPARENT);
+		//mBackground.setBackgroundResource(R.drawable.button_center);
+		mBackground.setVisibility(View.VISIBLE);
+		mBackground.setEnabled(true);
+	}
+	
+	
 	public void addButton(TouchButton mButton) {
     	this.mButtonList.add(mButton);
     }
@@ -235,76 +266,7 @@ public class ButtonManager extends TableLayout {
         	if (background != 0 ) {
         		this.setBackgroundResource(background);
         		this.setOnTouchListener(this);
-//    			this.setOnKeyListener(new View.OnKeyListener() {
-//    		
-//				
-//    				@Override
-//    				public boolean onKey(View v, int keyCode, KeyEvent event) {
-//    					
-//    					//closeSoftKeyboard(v);
-//    					
-//    					if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_SPACE) {
-//    		    			mPanelBot.setKeyB(true);
-//
-//    					}
-//    					
-//    					if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT || keyCode == KeyEvent.KEYCODE_A)
-//                        {
-//    						
-//    						mMovementV.setKeyInput(MovementValues.KEY_LEFT);
-//    				    	mPanelBot.readKeys(mTrackballDist);
-//    				    	
-//    				    	Message mEnd = new Message();
-//    				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
-//    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
-//    				    	
-//    						
-//    						//Log.v("button factory", "trackball??? left");
-//                        }
-//                        else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT || keyCode == KeyEvent.KEYCODE_S)
-//                        {	
-//                        	
-//            		    	mMovementV.setKeyInput(MovementValues.KEY_RIGHT);
-//    				    	mPanelBot.readKeys(mTrackballDist);
-//            		    	
-//            		    	Message mEnd = new Message();
-//    				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
-//    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
-//    				    	
-//    				    	
-//    						//Log.v("button factory", "trackball??? right");
-//                        }
-//    					if (keyCode == KeyEvent.KEYCODE_DPAD_UP || keyCode == KeyEvent.KEYCODE_D)
-//                        {
-//    						
-//    				    	mMovementV.setKeyInput(MovementValues.KEY_UP);
-//    				    	mPanelBot.readKeys(mTrackballDist);
-//    				    	
-//    				    	Message mEnd = new Message();
-//    				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
-//    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
-//    				    	
-//    						
-//    						//Log.v("button factory", "trackball??? up");
-//                        }
-//                        else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN || keyCode == KeyEvent.KEYCODE_F)
-//                        {
-//                        	
-//                        	
-//            		    	mMovementV.setKeyInput(MovementValues.KEY_DOWN);
-//    				    	mPanelBot.readKeys(mTrackballDist);
-//            		    	
-//            		    	Message mEnd = new Message();
-//    				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
-//    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
-//    				    	
-//                        	
-//    						//Log.v("button factory", "trackball??? down");
-//                        }
-//    					
-//    					return true;
-//    				}
-//    			});
+
         	}
         	this.setWidth(width);
         	this.setHeight(height);
