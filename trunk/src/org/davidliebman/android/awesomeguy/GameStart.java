@@ -297,8 +297,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     
     @Override
     public void onResume() {
-    
-    	    	
+        	    	
     	/* retrieve Record mHighScores */
     	mHighScores = new Record();
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
@@ -441,6 +440,10 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
 	public boolean onKeyDown( int keyCode, KeyEvent event) {
 		//this.closeSoftKeyboard((View)this.getCurrentFocus());
 		
+		if (keyCode == KeyEvent.KEYCODE_BACK ){
+			
+			finish();
+		}
 		//super(keyCode, event);
 		if(keyCode == KeyEvent.KEYCODE_A || keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
 			mMovementV.setKeyInput(MovementValues.KEY_LEFT);
@@ -469,7 +472,8 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
 			mPanelBot.setKeyB(true);
 			
 		}
-		return true;
+		
+		return super.onKeyDown(keyCode, event);
 	}
 
 
@@ -930,12 +934,12 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     			
     		}
     		else if(msg.what == MOVEMENTVALUES) {
-    			
     			mPanelBot.setHighScores((Record)msg.obj);
     			
     			mPanelBot.setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
     			
     			mPanelBot.invalidate();
+    			
     		}
     		
     		else if(msg.what == INPUTVALUES_TRACKUP) {
