@@ -1201,14 +1201,14 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     public void saveRoomNo() {
     	// this function doesn't seem to work from inside the 'InnerGameLoop'
     	// because it's a separate thread.
-        SharedPreferences preferences = getSharedPreferences(SplashScreen.AWESOME_NAME, MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(Players.AWESOME_NAME, MODE_PRIVATE);
         SharedPreferences.Editor mPrefEdit = preferences.edit();
         mPrefEdit.putInt(Options.SAVED_ROOM_NUM, mGameV.getRoomNo());
         mPrefEdit.commit();
 	}
 	
 	public void getSavedRoom() {
-		SharedPreferences preferences = getSharedPreferences(SplashScreen.AWESOME_NAME, MODE_PRIVATE);
+		SharedPreferences preferences = getSharedPreferences(Players.AWESOME_NAME, MODE_PRIVATE);
 		mGameV.setRoomNo(preferences.getInt(Options.SAVED_ROOM_NUM, 1));
 	}
 
