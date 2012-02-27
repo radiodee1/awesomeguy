@@ -10,13 +10,13 @@
 
 		
 
-        <activity android:name=".TermsOfService" android:label="@string/app_name"
+        <!--  activity android:name=".TermsOfService" android:label="@string/app_name"
             android:clearTaskOnLaunch="true" android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
                
             </intent-filter>
-        </activity>
+        </activity -->
 
 
 
