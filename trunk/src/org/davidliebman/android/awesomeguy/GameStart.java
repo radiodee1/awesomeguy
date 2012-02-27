@@ -322,13 +322,13 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     	if( mConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
     		//mRLayoutGamepad.addView((View)new GamePad(this, true, mDimensionWidth));
     		mRLayoutGamepad.addView((View) 
-    				new ButtonManager(this, mMovementV, mGameV, mHandler ,ButtonManager.MODE_PORTRAIT));
+    				new ButtonManager(this, mMovementV, mGameV,ButtonManager.MODE_PORTRAIT));
     	}
     	else if (mGameV.isPutGameKeys()) {
     		//mKeysView = new GameKeys(this, mGameV.getLandscapeButtonPixel(), true);
     		//mRLayoutGamepad.addView(mKeysView);
     		mRLayoutGamepad.addView((View)
-    				new ButtonManager(this, mMovementV, mGameV, mHandler, ButtonManager.MODE_STRIP));
+    				new ButtonManager(this, mMovementV, mGameV, ButtonManager.MODE_STRIP));
     		//TODO: check that this works on landscape AND portrait
     	}
     	
