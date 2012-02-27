@@ -8,14 +8,7 @@
 	<application android:icon="@drawable/guy_icon" android:label="@string/app_name"
 		android:debuggable="false" >
 
-		<activity android:name=".SplashScreen" android:label="@string/app_name"
-			android:clearTaskOnLaunch="true" android:launchMode="singleTask"
-			>
-			<intent-filter>
-				<!--  action android:name="android.intent.action.MAIN" -->
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-		</activity>
+		
 
         <activity android:name=".TermsOfService" android:label="@string/app_name"
             android:clearTaskOnLaunch="true" android:launchMode="singleTask"
@@ -25,26 +18,6 @@
             </intent-filter>
         </activity>
 
-		<activity android:name=".Menu" 
-			android:clearTaskOnLaunch="true"
-			>
-			<intent-filter>
-				<action android:name="org.davidliebman.android.awesomeguy.Menu"></action>
-				<category android:name="android.intent.category.DEFAULT"></category>
-			</intent-filter>
-		</activity>
-
-
-		<activity android:name=".Help"
-		>
-			<intent-filter></intent-filter>
-		</activity>
-
-
-		<activity android:name=".Story"
-		>
-			<intent-filter></intent-filter>
-		</activity>
 
 
 		<activity android:name=".GameStart"
@@ -68,13 +41,7 @@
 		</activity>
 
 
-		<activity android:name=".Credits"
-		>
-			<intent-filter>
-				<action android:name="org.davidliebman.android.awesomeguy.Credits"></action>
-				<category android:name="android.intent.category.LAUNCHER"></category>
-			</intent-filter>
-		</activity>
+		
 
 		<activity android:name=".Players"
 		
