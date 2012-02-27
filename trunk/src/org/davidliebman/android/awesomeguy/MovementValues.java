@@ -130,7 +130,7 @@ public class MovementValues {
 		this.directionKeyLeft = 0;
 		this.directionKeyRight = 0;
 		this.letterKeyA = 0;
-		//this.letterKeyB = 0;
+		this.letterKeyB = 0;
 		this.mTrackballInput = false;
 	}
 	

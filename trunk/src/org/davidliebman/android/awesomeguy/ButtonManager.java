@@ -32,7 +32,7 @@ public class ButtonManager extends TableLayout {
     private TableLayout mTLayoutOuter ;
     private TableLayout mTLayout ;
     private FrameLayout mFLayoutBot ;
-    private Panel mPanelBot ;
+    //private Panel mPanelBot ;
 	private GameKeys mKeysView;
     
 	//private RelativeLayout mParent;
@@ -235,76 +235,76 @@ public class ButtonManager extends TableLayout {
         	if (background != 0 ) {
         		this.setBackgroundResource(background);
         		this.setOnTouchListener(this);
-    			this.setOnKeyListener(new View.OnKeyListener() {
-    		
-				
-    				@Override
-    				public boolean onKey(View v, int keyCode, KeyEvent event) {
-    					
-    					//closeSoftKeyboard(v);
-    					
-    					if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_SPACE) {
-    		    			mPanelBot.setKeyB(true);
-
-    					}
-    					
-    					if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT || keyCode == KeyEvent.KEYCODE_A)
-                        {
-    						
-    						mMovementV.setKeyInput(MovementValues.KEY_LEFT);
-    				    	mPanelBot.readKeys(mTrackballDist);
-    				    	
-    				    	Message mEnd = new Message();
-    				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
-    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
-    				    	
-    						
-    						//Log.v("button factory", "trackball??? left");
-                        }
-                        else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT || keyCode == KeyEvent.KEYCODE_S)
-                        {	
-                        	
-            		    	mMovementV.setKeyInput(MovementValues.KEY_RIGHT);
-    				    	mPanelBot.readKeys(mTrackballDist);
-            		    	
-            		    	Message mEnd = new Message();
-    				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
-    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
-    				    	
-    				    	
-    						//Log.v("button factory", "trackball??? right");
-                        }
-    					if (keyCode == KeyEvent.KEYCODE_DPAD_UP || keyCode == KeyEvent.KEYCODE_D)
-                        {
-    						
-    				    	mMovementV.setKeyInput(MovementValues.KEY_UP);
-    				    	mPanelBot.readKeys(mTrackballDist);
-    				    	
-    				    	Message mEnd = new Message();
-    				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
-    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
-    				    	
-    						
-    						//Log.v("button factory", "trackball??? up");
-                        }
-                        else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN || keyCode == KeyEvent.KEYCODE_F)
-                        {
-                        	
-                        	
-            		    	mMovementV.setKeyInput(MovementValues.KEY_DOWN);
-    				    	mPanelBot.readKeys(mTrackballDist);
-            		    	
-            		    	Message mEnd = new Message();
-    				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
-    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
-    				    	
-                        	
-    						//Log.v("button factory", "trackball??? down");
-                        }
-    					
-    					return true;
-    				}
-    			});
+//    			this.setOnKeyListener(new View.OnKeyListener() {
+//    		
+//				
+//    				@Override
+//    				public boolean onKey(View v, int keyCode, KeyEvent event) {
+//    					
+//    					//closeSoftKeyboard(v);
+//    					
+//    					if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_SPACE) {
+//    		    			mPanelBot.setKeyB(true);
+//
+//    					}
+//    					
+//    					if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT || keyCode == KeyEvent.KEYCODE_A)
+//                        {
+//    						
+//    						mMovementV.setKeyInput(MovementValues.KEY_LEFT);
+//    				    	mPanelBot.readKeys(mTrackballDist);
+//    				    	
+//    				    	Message mEnd = new Message();
+//    				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
+//    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
+//    				    	
+//    						
+//    						//Log.v("button factory", "trackball??? left");
+//                        }
+//                        else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT || keyCode == KeyEvent.KEYCODE_S)
+//                        {	
+//                        	
+//            		    	mMovementV.setKeyInput(MovementValues.KEY_RIGHT);
+//    				    	mPanelBot.readKeys(mTrackballDist);
+//            		    	
+//            		    	Message mEnd = new Message();
+//    				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
+//    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
+//    				    	
+//    				    	
+//    						//Log.v("button factory", "trackball??? right");
+//                        }
+//    					if (keyCode == KeyEvent.KEYCODE_DPAD_UP || keyCode == KeyEvent.KEYCODE_D)
+//                        {
+//    						
+//    				    	mMovementV.setKeyInput(MovementValues.KEY_UP);
+//    				    	mPanelBot.readKeys(mTrackballDist);
+//    				    	
+//    				    	Message mEnd = new Message();
+//    				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
+//    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
+//    				    	
+//    						
+//    						//Log.v("button factory", "trackball??? up");
+//                        }
+//                        else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN || keyCode == KeyEvent.KEYCODE_F)
+//                        {
+//                        	
+//                        	
+//            		    	mMovementV.setKeyInput(MovementValues.KEY_DOWN);
+//    				    	mPanelBot.readKeys(mTrackballDist);
+//            		    	
+//            		    	Message mEnd = new Message();
+//    				    	mEnd.what = GameStart.INPUTVALUES_TRACKUP;
+//    				    	mHandler.sendMessageDelayed(mEnd, mScrollConst);
+//    				    	
+//                        	
+//    						//Log.v("button factory", "trackball??? down");
+//                        }
+//    					
+//    					return true;
+//    				}
+//    			});
         	}
         	this.setWidth(width);
         	this.setHeight(height);
@@ -350,7 +350,8 @@ public class ButtonManager extends TableLayout {
     	public boolean onTouch(View v, MotionEvent m) {
     		
     		if(m.getAction() == MotionEvent.ACTION_DOWN && mKeyValue == MovementValues.KEY_B) {
-    			mPanelBot.setKeyB(true);
+    			//mPanelBot.setKeyB(true);
+    			mMovementV.setKeyInput(MovementValues.KEY_B);
     			// this is needed if 'B' key is pressed first...
     		}
     		
@@ -399,28 +400,13 @@ public class ButtonManager extends TableLayout {
     			mSecondOffsetY = getButton(i).getButtonY();
     			
     			
-    			//portrait
-    			if (!(mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE && mTestLandscapeButtons) &&
-    					mSecondX + mFirstOffsetX * mButtonWidth > mSecondOffsetX * mButtonWidth &&
-    					mSecondX + mFirstOffsetX * mButtonWidth < (mSecondOffsetX + 1) * mButtonWidth &&
-    					mSecondY + mFirstOffsetY * mButtonHeight > mSecondOffsetY * mButtonHeight &&
-    					mSecondY + mFirstOffsetY * mButtonHeight < (mSecondOffsetY + 1) * mButtonHeight) {
-    				//handle second click here !!
-
-    				if (getButton(i).getKeyValue() == MovementValues.KEY_B) {
-    		    		mPanelBot.setKeyB(true);
-    		    	}
-    		    	else{
-    		    		mMovementV.setKeyInput(getButton(i).getKeyValue());
-    		    	}
-
-    			}
+    	
     			
     			int mNewButtonWidth = getButton(i).getWidth();
     			int mNewButtonHeight = getButton(i).getHeight();
     				     			
     			//landscape - buttons are a different size
-    			if ((mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE && mTestLandscapeButtons) &&
+    			if (//(mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE && mTestLandscapeButtons) &&
     					mSecondX + mFirstOffsetX * mNewButtonWidth >  mSecondOffsetX * mNewButtonWidth &&
     					mSecondX + mFirstOffsetX * mNewButtonWidth <  (mSecondOffsetX + 1) * mNewButtonWidth &&
     					mSecondY + mFirstOffsetY * mNewButtonHeight > mSecondOffsetY * mNewButtonHeight &&
@@ -428,7 +414,8 @@ public class ButtonManager extends TableLayout {
     				//handle second click here !!
     				
     				if (getButton(i).getKeyValue() == MovementValues.KEY_B) {
-    		    		mPanelBot.setKeyB(true);
+    		    		//mPanelBot.setKeyB(true);
+    		    		mMovementV.setKeyInput(MovementValues.KEY_B);
     		    	}
     		    	else{
     		    		mMovementV.setKeyInput(getButton(i).getKeyValue());
