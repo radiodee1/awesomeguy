@@ -322,7 +322,7 @@ public class Players extends ListActivity {
     	 /* get TOS info from preferences */
         mGoogleAnalytics = mPreferences.getBoolean(Players.SAVED_ANALYTICS, true);
         mTermsOfService = mPreferences.getBoolean(Players.SAVED_TOS, false);
-        Log.e("tag", "version code saved " + mPreferences.getInt(SAVED_VERSIONCODE, 1));
+        //Log.e("tag", "version code saved " + mPreferences.getInt(SAVED_VERSIONCODE, 1));
         
         /* check version / show TermsOfService.java */
         PackageManager mManager = this.getPackageManager();
