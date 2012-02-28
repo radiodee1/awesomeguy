@@ -7,6 +7,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 public class ButtonManager extends FrameLayout {
 
@@ -29,12 +31,9 @@ public class ButtonManager extends FrameLayout {
 	private MovementValues mMovementV;
     private GameValues mGameV;
 	
-    private RelativeLayout mRLayout ;
-    private TableLayout mTLayoutOuter ;
-    private TableLayout mTLayout ;
-    private FrameLayout mFLayoutBot ;
-	private GameKeys mKeysView;
+    public BoundingBox mLargeBox;
     
+ 
 	private RelativeLayout mParent;
 	private Button mBackground;
 	
@@ -42,11 +41,6 @@ public class ButtonManager extends FrameLayout {
 	private int mButtonHeight;
 	private int mButtonWidth;
 	private int mMode;
-	
-    private double mTrackballDist = 1.0;
-    private int mScrollConst = 200;
-    private boolean mTestLandscapeButtons = true;
-
     
 	
 	public ButtonManager(Context c, MovementValues m, GameValues v,  int mode ) {
@@ -58,12 +52,13 @@ public class ButtonManager extends FrameLayout {
 		mDimensionWidth = mGameV.getDisplayWidth();
 		mParent = new RelativeLayout(mContext);
 		
+		
 		switch (mMode) {
 		case ButtonManager.MODE_PORTRAIT:
-			mParent.addView((View)new GamePad(mContext, true, mDimensionWidth) );
+			mParent.addView((View)new GamePad(mContext, true) );
 			break;
 		case ButtonManager.MODE_STRIP:
-			mParent.addView((View)new GameKeys(mContext, mGameV.getLandscapeButtonPixel(), true));
+			mParent.addView((View)new GameKeys(mContext,  true));
 			break;
 		case ButtonManager.MODE_TRANSPARENT:
 			break;
@@ -81,9 +76,9 @@ public class ButtonManager extends FrameLayout {
 		
 		initBackgroundButton();
 
+		this.addView(mParent);
 
 		this.addView(mBackground);
-		this.addView(mParent);
 
 	}
 
@@ -99,6 +94,16 @@ public class ButtonManager extends FrameLayout {
 		//mBackground.setBackgroundResource(R.drawable.button_center);
 		mBackground.setVisibility(View.VISIBLE);
 		mBackground.setEnabled(true);
+		
+		mBackground.setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				Toast.makeText(mContext, "A button " , Toast.LENGTH_LONG).show();
+				Log.e("Button", "A button");
+				return false;
+			}
+		});
 	}
 	
 	
@@ -116,14 +121,28 @@ public class ButtonManager extends FrameLayout {
     public void clearButtonList() {
     	this.mButtonList.clear();
     }
+    public BoundingBox getButtonBoundingBox(int i) {
+    	return this.mButtonList.get(i).mBox;
+    }
+    
+    public void setButtonBoundingBoxAll() {
+    	mLargeBox = new BoundingBox(mBackground.getLeft(), mBackground.getRight(), 
+    			mBackground.getTop(), mBackground.getBottom());
+    	
+    	for (int i = 0; i < this.mButtonList.size(); i ++ ) {
+    		TouchButton temp = this.mButtonList.get(i);
+    		temp.mBox = new BoundingBox(temp.getLeft(), temp.getRight(), 
+    				temp.getTop(), temp.getBottom());
+    	}
+    }
     
 	/** Game Pad Here **/
     public class GamePad extends  TableLayout {
     	
-    	public GamePad(Context c, boolean mMultiTouch, int widthDimension) {
+    	public GamePad(Context c, boolean mMultiTouch) {
     		super(c);
-    		mButtonHeight = widthDimension/5;//95
-    		mButtonWidth = widthDimension/5;//95
+    		mButtonHeight = mDimensionWidth/5;//95
+    		mButtonWidth = mDimensionWidth/5;//95
     		mContext = c;
 
     		/* first row buttons */
@@ -200,11 +219,11 @@ public class ButtonManager extends FrameLayout {
     };// end of inner class
     
     class GameKeys extends TableLayout{
-    	public GameKeys(Context c, int widthDimension, boolean mMultiTouch) {
+    	public GameKeys(Context c,  boolean mMultiTouch) {
     		super (c);
     		
-    		int mButtonHeight = widthDimension;
-    		int mButtonWidth = widthDimension;
+    		int mButtonHeight = mGameV.getLandscapeButtonPixel();//widthDimension;
+    		int mButtonWidth = mGameV.getLandscapeButtonPixel();
     		
     		mButtonWidth = mGameV.getLandscapeButtonPixel();
     		mButtonHeight = mGameV.getLandscapeButtonPixel();
@@ -258,6 +277,7 @@ public class ButtonManager extends FrameLayout {
     	int mButtonX, mButtonY;
     	boolean mMultiTouch;
     	String mDescription;
+    	public BoundingBox mBox;
     	
         public TouchButton (Context c, boolean mMultiTouch, int background, int width, int height, int id, String idString, int directionKey) {
         	super(c);
@@ -275,6 +295,9 @@ public class ButtonManager extends FrameLayout {
         	this.setTag(idString);
         	this.mDescription = idString;
         	mKeyValue = directionKey;
+        	
+        	// left, right, top, bottom...
+        	mBox = new BoundingBox( 0, 0, 0, 0);
         }
     	
     	public TouchButton(Context c, int direction) {
