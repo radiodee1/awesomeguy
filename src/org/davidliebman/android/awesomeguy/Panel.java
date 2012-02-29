@@ -49,6 +49,8 @@ public  class Panel  extends SurfaceView  {
 	private int mapH;
 	private int mapV;
 	
+	private boolean mCanSkip; // for problem spots
+	
 	private int mScreenW;
 	//private int mScreenH;
 	
@@ -475,7 +477,7 @@ public  class Panel  extends SurfaceView  {
 		
 		
 		//skip RIGHT
-		if (x > 0 &&  
+		if (x > 0 &&  mCanSkip &&
 				mPattern.isLowerRight() &&
 				pointToBlockNum(mTestRightSkipX, mTestBottomY - 8) != mGameV.mBlock &&
 				pointToBlockNum(mTestRightSkipX, mTestBottomY - 16) != mGameV.mBlock) {
@@ -486,7 +488,7 @@ public  class Panel  extends SurfaceView  {
 		}
 		
 		//skip LEFT
-		if ( x < 0 && 
+		if ( x < 0 && mCanSkip &&
 				mPattern.isLowerLeft() &&
 				pointToBlockNum(mTestLeftSkipX, mTestBottomY - 8) != mGameV.mBlock &&
 				pointToBlockNum(mTestLeftSkipX, mTestBottomY - 16) != mGameV.mBlock) {
@@ -788,6 +790,13 @@ public  class Panel  extends SurfaceView  {
 			}
 
 		}
+		////////////////////////
+		//special test for trouble spot:
+		if (x > 0 && !canScroll && mapX + x >= mScreenW) {
+				//turn off skip
+				mCanSkip = false;
+		}
+		else mCanSkip = true;
 		////////////////////////
 		
 		mGuySprite.setMapPosX(newMapX);
