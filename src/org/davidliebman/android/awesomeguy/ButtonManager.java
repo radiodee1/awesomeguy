@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -99,8 +100,13 @@ public class ButtonManager extends FrameLayout {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				Toast.makeText(mContext, "A button " , Toast.LENGTH_LONG).show();
-				Log.e("Button", "A button");
+				if(event.getAction() == MotionEvent.ACTION_DOWN) {
+				
+					Toast.makeText(mContext, "A button " , Toast.LENGTH_LONG).show();
+					Log.e("Button", "A button");
+					setButtonBoundingBoxAll();
+					return true;
+				}
 				return false;
 			}
 		});
@@ -126,13 +132,34 @@ public class ButtonManager extends FrameLayout {
     }
     
     public void setButtonBoundingBoxAll() {
-    	mLargeBox = new BoundingBox(mBackground.getLeft(), mBackground.getRight(), 
-    			mBackground.getTop(), mBackground.getBottom());
+    	this.requestLayout();
+    	
+    	Rect mRect = new Rect();
+    	
+    	mBackground.requestLayout();
+    	mBackground.getDrawingRect(mRect);
+    	int location[] = new int[2];
+    	mBackground.getLocationOnScreen(location);
+    	
+    	Log.e("Location", "x,y " + location[0] + "," + location[1]);
+    	Log.e("Width", "w,h " + mBackground.getWidth() + "," + mBackground.getHeight());
+    	mLargeBox = new BoundingBox(mRect.left, mRect.right, 
+    			mRect.top, mRect.bottom);
+    
+    	Log.e("ButtonManager", "rect "+ mRect.top + " large button " + mLargeBox.getLeft() +
+    			" -- " + mLargeBox.getTop());
     	
     	for (int i = 0; i < this.mButtonList.size(); i ++ ) {
+    		
     		TouchButton temp = this.mButtonList.get(i);
-    		temp.mBox = new BoundingBox(temp.getLeft(), temp.getRight(), 
-    				temp.getTop(), temp.getBottom());
+    		temp.requestLayout();
+    		temp.getLocalVisibleRect(mRect);
+    		
+    		temp.mBox = new BoundingBox(mRect.left, mRect.right, 
+    				mRect.top, mRect.bottom);
+    		
+        	Log.e("ButtonManager", "small button " + i + " coords " + mLargeBox.getLeft() + " -- " + mLargeBox.getTop());
+
     	}
     }
     

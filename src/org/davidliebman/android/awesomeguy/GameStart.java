@@ -79,7 +79,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     
     private boolean mTestLandscapeButtons = true;
     
-    //private ArrayList<TouchButton> mButtonList = new ArrayList<TouchButton>();
+    private ButtonManager mButtonManager;
     
 	public static final String AWESOME_NAME = new String("org.awesomeguy");
 
@@ -320,17 +320,15 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     	mPanelBot = new Panel(this,  mGameV, this, mMovementV, mHighScores);
     	
     	if( mConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-    		//mRLayoutGamepad.addView((View)new GamePad(this, true, mDimensionWidth));
-    		mRLayoutGamepad.addView((View) 
-    				new ButtonManager(this, mMovementV, mGameV,ButtonManager.MODE_PORTRAIT));
+    		mButtonManager = new ButtonManager(this, mMovementV, mGameV,ButtonManager.MODE_PORTRAIT);
+    		mRLayoutGamepad.addView((View) mButtonManager);
     	}
     	else if (mGameV.isPutGameKeys()) {
-    		//mKeysView = new GameKeys(this, mGameV.getLandscapeButtonPixel(), true);
-    		//mRLayoutGamepad.addView(mKeysView);
-    		mRLayoutGamepad.addView((View)
-    				new ButtonManager(this, mMovementV, mGameV, ButtonManager.MODE_STRIP));
+    		mButtonManager = new ButtonManager(this, mMovementV, mGameV, ButtonManager.MODE_STRIP);
+    		mRLayoutGamepad.addView((View) mButtonManager);
     		//TODO: check that this works on landscape AND portrait
     	}
+    	
     	
     	mBackground = new InitBackground(mGameV, this, mLookForXml);
 
@@ -354,6 +352,13 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     	
     	
 
+    }
+    
+    @Override
+    public void onWindowFocusChanged(boolean hasWindowFocus) {
+    	if (true) {
+    		mButtonManager.setButtonBoundingBoxAll();
+    	}
     }
     
     public void setOrientationVars() {
