@@ -88,11 +88,9 @@ public class ButtonManager extends FrameLayout {
     		ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
 		
 		mBackground = new Button(mContext);
-		mBackground.setText("A");
 		mBackground.setLayoutParams(mRLayoutParams);
 		
 		mBackground.setBackgroundColor(Color.TRANSPARENT);
-		//mBackground.setBackgroundResource(R.drawable.button_center);
 		mBackground.setVisibility(View.VISIBLE);
 		mBackground.setEnabled(true);
 		
@@ -102,16 +100,38 @@ public class ButtonManager extends FrameLayout {
 			public boolean onTouch(View v, MotionEvent event) {
 				if(event.getAction() == MotionEvent.ACTION_DOWN) {
 				
-					Toast.makeText(mContext, "A button " , Toast.LENGTH_LONG).show();
-					Log.e("Button", "A button");
+					
+					for (int i = 0; i < event.getPointerCount(); i ++) {
+						//go through buttons and check if one has input
+						for (int j = 0; j < mButtonList.size(); j ++ ) {
+							checkOneButton( j, mMovementV , (int)event.getX(i), (int)event.getY(i));
+						}
+					}
+					
+					//Log.e("Button", "A button");
 					//setButtonBoundingBoxAll();
 					return true;
 				}
+				else if (event.getAction() == MotionEvent.ACTION_UP) {
+					mMovementV.clearKeys();
+					return true;
+				}
+				
 				return false;
 			}
 		});
 	}
 	
+	public void checkOneButton(int mButtonIndex, MovementValues mV, int mX, int mY) {
+		mY = mY + this.mLargeBox.getTop();
+		TouchButton mTemp = mButtonList.get(mButtonIndex);
+		
+		if (mX >= mTemp.mBox.getLeft() && mX <= mTemp.mBox.getRight() &&
+				mY >= mTemp.mBox.getTop() && mY <= mTemp.mBox.getBottom()) {
+			mMovementV.setKeyInput(mTemp.getKeyValue());
+			Log.e("Movement"," key value: "+ mTemp.getKeyValue());
+		}
+	}
 	
 	public void addButton(TouchButton mButton) {
     	this.mButtonList.add(mButton);
@@ -138,8 +158,6 @@ public class ButtonManager extends FrameLayout {
     	int location[] = new int[2];
     	mBackground.getLocationOnScreen(location);
     	
-    	//Log.e("Location", "x,y " + location[0] + "," + location[1]);
-    	//Log.e("Width", "w,h " + mBackground.getWidth() + "," + mBackground.getHeight());
     	mLargeBox = new BoundingBox(location[0], location[0] + mBackground.getWidth(), 
     			location[1], location[1] + mBackground.getHeight());
     
