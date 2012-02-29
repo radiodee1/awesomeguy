@@ -99,18 +99,18 @@ public class ButtonManager extends FrameLayout {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				if(event.getAction() == MotionEvent.ACTION_DOWN) {
-				
-					
+					boolean mTest = false;
+					// go through pointers
 					for (int i = 0; i < event.getPointerCount(); i ++) {
 						//go through buttons and check if one has input
 						for (int j = 0; j < mButtonList.size(); j ++ ) {
-							checkOneButton( j, mMovementV , (int)event.getX(i), (int)event.getY(i));
+							if (checkOneButton( j, mMovementV , (int)event.getX(i), (int)event.getY(i))) {
+								mTest = true;
+							}
 						}
 					}
 					
-					//Log.e("Button", "A button");
-					//setButtonBoundingBoxAll();
-					return true;
+					return mTest;
 				}
 				else if (event.getAction() == MotionEvent.ACTION_UP) {
 					mMovementV.clearKeys();
@@ -122,15 +122,16 @@ public class ButtonManager extends FrameLayout {
 		});
 	}
 	
-	public void checkOneButton(int mButtonIndex, MovementValues mV, int mX, int mY) {
+	public boolean checkOneButton(int mButtonIndex, MovementValues mV, int mX, int mY) {
 		mY = mY + this.mLargeBox.getTop();
 		TouchButton mTemp = mButtonList.get(mButtonIndex);
 		
 		if (mX >= mTemp.mBox.getLeft() && mX <= mTemp.mBox.getRight() &&
 				mY >= mTemp.mBox.getTop() && mY <= mTemp.mBox.getBottom()) {
 			mMovementV.setKeyInput(mTemp.getKeyValue());
-			Log.e("Movement"," key value: "+ mTemp.getKeyValue());
+			return true;
 		}
+		return false;
 	}
 	
 	public void addButton(TouchButton mButton) {
