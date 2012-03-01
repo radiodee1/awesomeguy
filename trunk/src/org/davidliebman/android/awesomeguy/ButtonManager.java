@@ -199,7 +199,7 @@ public class ButtonManager extends FrameLayout {
     		BlankButton mButtonMid4 = new BlankButton(mContext);
     		TouchButton mButtonMid5 = new TouchButton(mContext, mMultiTouch ,R.drawable.button_left, mButtonWidth, mButtonHeight, 0, "button_left", MovementValues.KEY_LEFT);
     		BlankButton mButtonMid6 = new BlankButton(mContext);
-    		mButtonMid6.setBackgroundResource(R.drawable.button_center);
+    		//mButtonMid6.setBackgroundResource(R.drawable.button_center);
     		//mButtonMid6 = new TouchButton(this, R.drawable.button_center, mButtonWidth, mButtonHeight, 0, "button_center", 0);
     		TouchButton mButtonMid7 = new TouchButton(mContext, mMultiTouch ,R.drawable.button_right, mButtonWidth, mButtonHeight, 0, "button_right", MovementValues.KEY_RIGHT);
 
