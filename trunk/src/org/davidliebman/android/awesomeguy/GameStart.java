@@ -145,8 +145,8 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
         mRLayout.setHorizontalGravity(Gravity.CENTER_HORIZONTAL);
         
         //try to detect size of mRLayout
-        mGameV.setViewH(this.mRLayout.getHeight());
-        mGameV.setViewW(this.mRLayout.getWidth());
+          mGameV.setViewH(192 + 6); // 192 for game and 6 for two dividers.
+//        mGameV.setViewW(this.mRLayout.getWidth());
         
         ViewGroup.LayoutParams mTLayoutOuterParams = new 
     		ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);//480,WRAP_CONTENT
@@ -361,8 +361,12 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     	}
     }
     
+    
+    
+    
     public void setOrientationVars() {
-
+    	
+    	
     	Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();    	
         mDimensionWidth = display.getWidth();
         mDimensionHeight = display.getHeight();
