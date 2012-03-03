@@ -145,7 +145,8 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
         mRLayout.setHorizontalGravity(Gravity.CENTER_HORIZONTAL);
         
         //try to detect size of mRLayout
-          mGameV.setViewH(192 + 6); // 192 for game and 6 for two dividers.
+          mGameV.setViewH((int)(192 * mGameV.getScaleV()) + 6); // 192 for game and 6 for two dividers.
+          Log.e("GameStart","h pixels " + mGameV.getViewH());
 //        mGameV.setViewW(this.mRLayout.getWidth());
         
         ViewGroup.LayoutParams mTLayoutOuterParams = new 
