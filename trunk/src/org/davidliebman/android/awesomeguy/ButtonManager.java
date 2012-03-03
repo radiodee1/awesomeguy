@@ -38,6 +38,7 @@ public class ButtonManager extends FrameLayout {
 	private RelativeLayout mParent;
 	private Button mBackground;
 	
+	private int mDimensionHeight;
 	private int mDimensionWidth;
 	private int mButtonHeight;
 	private int mButtonWidth;
@@ -50,6 +51,7 @@ public class ButtonManager extends FrameLayout {
 		mMovementV = m;
 		mGameV = v;
 		mMode = mode;
+		mDimensionHeight = mGameV.getDisplayHeight() - mGameV.getViewH();
 		mDimensionWidth = mGameV.getDisplayWidth();
 		mParent = new RelativeLayout(mContext);
 		
@@ -162,8 +164,6 @@ public class ButtonManager extends FrameLayout {
     	mLargeBox = new BoundingBox(location[0], location[0] + mBackground.getWidth(), 
     			location[1], location[1] + mBackground.getHeight());
     
-    	//Log.e("ButtonManager",  " large button " + mLargeBox.getLeft() +
-    	//		" -- " + mLargeBox.getTop());
     	
     	for (int i = 0; i < this.mButtonList.size(); i ++ ) {
     		
@@ -173,7 +173,6 @@ public class ButtonManager extends FrameLayout {
     		temp.mBox = new BoundingBox(location[0], location[0] + temp.getWidth(), 
         			location[1], location[1] + temp.getHeight());
     		
-        	//Log.e("ButtonManager", "small button " + i + " coords " + temp.mBox.getLeft() + " -- " + temp.mBox.getTop());
 
     	}
     }
@@ -183,9 +182,26 @@ public class ButtonManager extends FrameLayout {
     	
     	public GamePad(Context c, boolean mMultiTouch) {
     		super(c);
-    		mButtonHeight = mDimensionWidth/5;//95
-    		mButtonWidth = mDimensionWidth/5;//95
     		mContext = c;
+    		float mRatioAvailable = (float)mDimensionHeight/(float)mDimensionWidth;
+    		
+    		
+    		
+    		if ( mRatioAvailable >= (float) 3/5 ) {
+    			mButtonHeight = mDimensionWidth/5;//95
+        		mButtonWidth = mDimensionWidth/5;//95
+        		
+    		}
+    		else {
+    			mButtonHeight = mDimensionHeight/3;
+        		mButtonWidth = mDimensionHeight/3;
+        		
+    		}
+    		
+    		
+    		//mButtonHeight = mDimensionWidth/5;//95
+    		//mButtonWidth = mDimensionWidth/5;//95
+    		
 
     		/* first row buttons */
     		BlankButton mButtonTop3 = new BlankButton(mContext);
