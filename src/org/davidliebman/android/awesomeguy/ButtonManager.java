@@ -62,6 +62,8 @@ public class ButtonManager extends FrameLayout {
 			break;
 		case ButtonManager.MODE_STRIP:
 			mParent.addView((View)new GameKeys(mContext,  true));
+			mParent.setBackgroundResource(R.drawable.background);
+
 			break;
 		case ButtonManager.MODE_TRANSPARENT:
 			break;
@@ -307,7 +309,7 @@ public class ButtonManager extends FrameLayout {
     		BlankButton mDeviderView3 = new BlankButton(c, (int) mSpacerWidth, mButtonHeight);
     		BlankButton mDeviderView4 = new BlankButton(c, (int) mSpacerWidth, mButtonHeight);
     		
-    		BlankButton mIndentView = new BlankButton(c, mIndentWidth, mButtonHeight);
+    		BlankButton mIndentView = new BlankButton(c, mIndentWidth, mButtonHeight);// used to center buttons horizontally
     		
     		mTRow.addView((View)mIndentView);
     		mTRow.addView((View)mButton1);
