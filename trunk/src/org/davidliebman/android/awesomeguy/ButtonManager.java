@@ -283,8 +283,8 @@ public class ButtonManager extends FrameLayout {
     	public GameKeys(Context c,  boolean mMultiTouch) {
     		super (c);
     		
-    		int mButtonHeight = mGameV.getLandscapeButtonPixel();//widthDimension;
-    		int mButtonWidth = mGameV.getLandscapeButtonPixel();
+    		int mButtonHeight = mDimensionHeight ;
+    		int mButtonWidth = mDimensionHeight; 
     		
     		/* percent of free space used for 4 spacers */
     		float mSpacerPercent = (float) 0.20; 
