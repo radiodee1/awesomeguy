@@ -290,8 +290,14 @@ public class ButtonManager extends FrameLayout {
     		int mButtonHeight = mGameV.getLandscapeButtonPixel();//widthDimension;
     		int mButtonWidth = mGameV.getLandscapeButtonPixel();
     		
-    		mButtonWidth = mGameV.getLandscapeButtonPixel();
-    		mButtonHeight = mGameV.getLandscapeButtonPixel();
+    		/* percent of free space used for 4 spacers */
+    		float mSpacerPercent = (float) 0.20; 
+    		
+    		float mSpacerWidth = ((float)(mDimensionWidth - (mButtonWidth * 5 ))) * mSpacerPercent;
+    		
+    		int mIndentWidth = (mDimensionWidth - ((mButtonWidth * 5) + ((int )mSpacerWidth * 4)))/2;
+    		
+    		
     		
     		TableRow mTRow = new TableRow(c);
     		TouchButton mButton1 = new TouchButton(c, mMultiTouch ,R.drawable.button_left, mButtonWidth, mButtonHeight, 0, "button_left", MovementValues.KEY_LEFT);
@@ -302,11 +308,14 @@ public class ButtonManager extends FrameLayout {
     		TouchButton mButton5 = new TouchButton(c, mMultiTouch ,R.drawable.button_b, mButtonWidth, mButtonHeight, 0, "button_b", MovementValues.KEY_B);
 
     		
-    		BlankButton mDeviderView1 = new BlankButton(c, 2, mButtonHeight);
-    		BlankButton mDeviderView2 = new BlankButton(c, 2, mButtonHeight);
-    		BlankButton mDeviderView3 = new BlankButton(c, 2, mButtonHeight);
-    		BlankButton mDeviderView4 = new BlankButton(c, 2, mButtonHeight);
+    		BlankButton mDeviderView1 = new BlankButton(c, (int) mSpacerWidth, mButtonHeight);
+    		BlankButton mDeviderView2 = new BlankButton(c, (int) mSpacerWidth, mButtonHeight);
+    		BlankButton mDeviderView3 = new BlankButton(c, (int) mSpacerWidth, mButtonHeight);
+    		BlankButton mDeviderView4 = new BlankButton(c, (int) mSpacerWidth, mButtonHeight);
     		
+    		BlankButton mIndentView = new BlankButton(c, mIndentWidth, mButtonHeight);
+    		
+    		mTRow.addView((View)mIndentView);
     		mTRow.addView((View)mButton1);
     		mTRow.addView((View)mDeviderView1);
     		mTRow.addView((View)mButton2);
