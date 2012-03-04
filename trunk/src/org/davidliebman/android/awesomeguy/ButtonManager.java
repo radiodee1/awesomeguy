@@ -260,13 +260,7 @@ public class ButtonManager extends FrameLayout {
     		this.addView((View)mTRowMid);
     		this.addView((View)mTRowBot);
     		
-    		/* set button x and button y */
-    		mButtonTop6.setButtonXY(3, 0);
-    		mButtonMid3.setButtonXY(0, 1);
-    		mButtonMid5.setButtonXY(2, 1);
-    		mButtonMid7.setButtonXY(4, 1);
-    		mButtonBot6.setButtonXY(3, 2);
-    		
+    	
     		/* populate button list */
     		clearButtonList();
     		addButton(mButtonTop6);
@@ -328,13 +322,7 @@ public class ButtonManager extends FrameLayout {
 
     		this.addView((View)mTRow);
     		
-    		/* set button x and button y */
-    		mButton1.setButtonXY(0, 0);
-    		mButton2.setButtonXY(1, 0);
-    		mButton3.setButtonXY(2, 0);
-    		mButton4.setButtonXY(3, 0);
-    		mButton5.setButtonXY(4, 0);
-    		
+    	
     		/* populate button list */
     		clearButtonList();
     		addButton(mButton1);
@@ -346,9 +334,9 @@ public class ButtonManager extends FrameLayout {
     };
     
     /* button listeners */
-    class TouchButton extends Button { //Button implements View.OnTouchListener {
+    class TouchButton extends Button { 
     	int mKeyValue = 0;
-    	int mButtonX, mButtonY;
+    	//int mButtonX, mButtonY;
     	boolean mMultiTouch;
     	String mDescription;
     	public BoundingBox mBox;
@@ -382,19 +370,7 @@ public class ButtonManager extends FrameLayout {
     		super(c);
     	}
     	
-    	/* multi-touch implementation */
-    	public void setButtonXY(int mButtonX, int mButtonY) {
-    		this.mButtonX = mButtonX;
-    		this.mButtonY = mButtonY;
-    	}
     	
-    	public int getButtonX() {
-    		return mButtonX;
-    	}
-    	
-    	public int getButtonY() {
-    		return mButtonY;
-    	}
     	
     	public int getKeyValue() {
     		return this.mKeyValue;
