@@ -28,6 +28,8 @@ public class ButtonManager extends FrameLayout {
 	public static final int MODE_TRANSPARENT = 2;
 	
     private ArrayList<TouchButton> mButtonList = new ArrayList<TouchButton>();
+    private ArrayList<Integer> mSpecificButtons = new ArrayList<Integer>();
+    
     private Context mContext;
 	private MovementValues mMovementV;
     private GameValues mGameV;
@@ -43,7 +45,7 @@ public class ButtonManager extends FrameLayout {
 	private int mButtonHeight;
 	private int mButtonWidth;
 	private int mMode;
-    
+    private int mOldSize = 0;
 	
 	public ButtonManager(Context c, MovementValues m, GameValues v,  int mode ) {
 		super(c);
@@ -104,6 +106,7 @@ public class ButtonManager extends FrameLayout {
 			public boolean onTouch(View v, MotionEvent event) {
 				if(event.getAction() == MotionEvent.ACTION_DOWN) {
 					boolean mTest = false;
+					mOldSize = mSpecificButtons.size();
 					// go through pointers
 					for (int i = 0; i < event.getPointerCount(); i ++) {
 						//go through buttons and check if one has input
@@ -113,11 +116,15 @@ public class ButtonManager extends FrameLayout {
 							}
 						}
 					}
-					
+					if (mSpecificButtons.size() != mOldSize && mOldSize != 0  ) {
+						mMovementV.clearKeys();
+						mSpecificButtons.clear();
+					}
 					return mTest;
 				}
 				else if (event.getAction() == MotionEvent.ACTION_UP) {
 					mMovementV.clearKeys();
+					mSpecificButtons.clear();
 					return true;
 				}
 				
@@ -133,9 +140,24 @@ public class ButtonManager extends FrameLayout {
 		if (mX >= mTemp.mBox.getLeft() && mX <= mTemp.mBox.getRight() &&
 				mY >= mTemp.mBox.getTop() && mY <= mTemp.mBox.getBottom()) {
 			mMovementV.setKeyInput(mTemp.getKeyValue());
+			this.addSpecificButton(mTemp.mKeyValue);
 			return true;
 		}
 		return false;
+	}
+	
+	public void addSpecificButton(int mKeyValue) {
+		String mTestString = new String();
+		for (int i = 0; i < this.mSpecificButtons.size(); i ++ ) {
+			mTestString = mTestString + " -- " + this.mSpecificButtons.get(i).toString();
+			if (this.mSpecificButtons.get(i).intValue() == mKeyValue ) {
+				return;
+			}
+			
+		}
+		this.mSpecificButtons.add(mKeyValue);
+		
+		Log.e("ButtonManager", "SpecificButtons" + mTestString);
 	}
 	
 	public void addButton(TouchButton mButton) {
