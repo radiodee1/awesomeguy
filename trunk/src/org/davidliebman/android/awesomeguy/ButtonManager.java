@@ -28,7 +28,7 @@ public class ButtonManager extends FrameLayout {
 	public static final int MODE_TRANSPARENT = 2;
 	
     private ArrayList<TouchButton> mButtonList = new ArrayList<TouchButton>();
-    private ArrayList<Integer> mSpecificButtons = new ArrayList<Integer>();
+    private ArrayList<Integer> mPressedButtons = new ArrayList<Integer>();
     
     private Context mContext;
 	private MovementValues mMovementV;
@@ -106,7 +106,7 @@ public class ButtonManager extends FrameLayout {
 			public boolean onTouch(View v, MotionEvent event) {
 				if(event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
 					boolean mTest = false;
-					mOldSize = mSpecificButtons.size();
+					mOldSize = mPressedButtons.size();
 					// go through pointers
 					for (int i = 0; i < event.getPointerCount(); i ++) {
 						//go through buttons and check if one has input
@@ -116,8 +116,8 @@ public class ButtonManager extends FrameLayout {
 							}
 						}
 					}
-					if ((mSpecificButtons.size() != mOldSize && mOldSize != 0 ) ||
-							( mSpecificButtons.size() != event.getPointerCount()) ) {
+					if ((mPressedButtons.size() != mOldSize && mOldSize != 0 ) ||
+							( mPressedButtons.size() != event.getPointerCount()) ) {
 						
 						clearButtonPress();
 					}
@@ -152,15 +152,15 @@ public class ButtonManager extends FrameLayout {
 	public void addSpecificButton(int mKeyValue) {
 		boolean mAddKey = true;
 		String mTestString = new String();
-		for (int i = 0; i < this.mSpecificButtons.size(); i ++ ) {
-			mTestString = new String(mTestString + " -- " + this.mSpecificButtons.get(i).toString());
-			if (this.mSpecificButtons.get(i).intValue() == mKeyValue ) {
+		for (int i = 0; i < this.mPressedButtons.size(); i ++ ) {
+			mTestString = new String(mTestString + " -- " + this.mPressedButtons.get(i).toString());
+			if (this.mPressedButtons.get(i).intValue() == mKeyValue ) {
 				mAddKey = false;
 			}
 			
 		}
 		if (mAddKey) {
-			this.mSpecificButtons.add(mKeyValue);
+			this.mPressedButtons.add(mKeyValue);
 		}
 		
 		Log.e("ButtonManager", "SpecificButtons" + mTestString);
@@ -168,7 +168,7 @@ public class ButtonManager extends FrameLayout {
 	
 	public void clearButtonPress() {
 		mMovementV.clearKeys();
-		this.mSpecificButtons.clear();
+		this.mPressedButtons.clear();
 		for (int i = 0; i < this.mButtonList.size(); i ++ ) {
 			this.mButtonList.get(i).mBeingTouched = false;
 		}
