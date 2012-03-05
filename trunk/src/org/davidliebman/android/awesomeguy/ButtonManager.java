@@ -104,7 +104,7 @@ public class ButtonManager extends FrameLayout {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				if(event.getAction() == MotionEvent.ACTION_DOWN) {
+				if(event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
 					boolean mTest = false;
 					mOldSize = mSpecificButtons.size();
 					// go through pointers
@@ -116,7 +116,9 @@ public class ButtonManager extends FrameLayout {
 							}
 						}
 					}
-					if (mSpecificButtons.size() != mOldSize && mOldSize != 0  ) {
+					if ((mSpecificButtons.size() != mOldSize && mOldSize != 0 ) ||
+							( mSpecificButtons.size() != event.getPointerCount()) ) {
+						
 						mMovementV.clearKeys();
 						mSpecificButtons.clear();
 					}
@@ -143,6 +145,8 @@ public class ButtonManager extends FrameLayout {
 			this.addSpecificButton(mTemp.mKeyValue);
 			return true;
 		}
+//		mMovementV.clearKeys();
+//		this.mSpecificButtons.clear();
 		return false;
 	}
 	
