@@ -153,7 +153,7 @@ public class ButtonManager extends FrameLayout {
 		boolean mAddKey = true;
 		String mTestString = new String();
 		for (int i = 0; i < this.mSpecificButtons.size(); i ++ ) {
-			mTestString = mTestString + " -- " + this.mSpecificButtons.get(i).toString();
+			mTestString = new String(mTestString + " -- " + this.mSpecificButtons.get(i).toString());
 			if (this.mSpecificButtons.get(i).intValue() == mKeyValue ) {
 				mAddKey = false;
 			}
