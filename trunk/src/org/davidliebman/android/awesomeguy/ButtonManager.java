@@ -119,14 +119,12 @@ public class ButtonManager extends FrameLayout {
 					if ((mSpecificButtons.size() != mOldSize && mOldSize != 0 ) ||
 							( mSpecificButtons.size() != event.getPointerCount()) ) {
 						
-						mMovementV.clearKeys();
-						mSpecificButtons.clear();
+						clearButtonPress();
 					}
 					return mTest;
 				}
 				else if (event.getAction() == MotionEvent.ACTION_UP) {
-					mMovementV.clearKeys();
-					mSpecificButtons.clear();
+					clearButtonPress();
 					return true;
 				}
 				
@@ -143,25 +141,37 @@ public class ButtonManager extends FrameLayout {
 				mY >= mTemp.mBox.getTop() && mY <= mTemp.mBox.getBottom()) {
 			mMovementV.setKeyInput(mTemp.getKeyValue());
 			this.addSpecificButton(mTemp.mKeyValue);
+			mTemp.mBeingTouched = true;
 			return true;
 		}
-//		mMovementV.clearKeys();
-//		this.mSpecificButtons.clear();
+
+//		mTemp.mBeingTouched = false;
 		return false;
 	}
 	
 	public void addSpecificButton(int mKeyValue) {
+		boolean mAddKey = true;
 		String mTestString = new String();
 		for (int i = 0; i < this.mSpecificButtons.size(); i ++ ) {
 			mTestString = mTestString + " -- " + this.mSpecificButtons.get(i).toString();
 			if (this.mSpecificButtons.get(i).intValue() == mKeyValue ) {
-				return;
+				mAddKey = false;
 			}
 			
 		}
-		this.mSpecificButtons.add(mKeyValue);
+		if (mAddKey) {
+			this.mSpecificButtons.add(mKeyValue);
+		}
 		
 		Log.e("ButtonManager", "SpecificButtons" + mTestString);
+	}
+	
+	public void clearButtonPress() {
+		mMovementV.clearKeys();
+		this.mSpecificButtons.clear();
+		for (int i = 0; i < this.mButtonList.size(); i ++ ) {
+			this.mButtonList.get(i).mBeingTouched = false;
+		}
 	}
 	
 	public void addButton(TouchButton mButton) {
@@ -175,9 +185,9 @@ public class ButtonManager extends FrameLayout {
     public int getButtonListSize() {
     	return this.mButtonList.size();
     }
-    public void clearButtonList() {
-    	this.mButtonList.clear();
-    }
+//    public void clearButtonList() {
+//    	this.mButtonList.clear();
+//    }
     public BoundingBox getButtonBoundingBox(int i) {
     	return this.mButtonList.get(i).mBox;
     }
@@ -290,7 +300,7 @@ public class ButtonManager extends FrameLayout {
     		
     	
     		/* populate button list */
-    		clearButtonList();
+    		mButtonList.clear();
     		addButton(mButtonTop6);
     		addButton(mButtonMid3);
     		addButton(mButtonMid5);
@@ -352,7 +362,7 @@ public class ButtonManager extends FrameLayout {
     		
     	
     		/* populate button list */
-    		clearButtonList();
+    		mButtonList.clear();
     		addButton(mButton1);
     		addButton(mButton2);
     		addButton(mButton3);
@@ -366,6 +376,7 @@ public class ButtonManager extends FrameLayout {
     	int mKeyValue = 0;
     	//int mButtonX, mButtonY;
     	boolean mMultiTouch;
+    	public boolean mBeingTouched;
     	String mDescription;
     	public BoundingBox mBox;
     	
@@ -385,7 +396,7 @@ public class ButtonManager extends FrameLayout {
         	this.setTag(idString);
         	this.mDescription = idString;
         	mKeyValue = directionKey;
-        	
+        	this.mBeingTouched = false;
         	// left, right, top, bottom...
         	mBox = new BoundingBox( 0, 0, 0, 0);
         }
