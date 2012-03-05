@@ -189,8 +189,8 @@ public class Players extends ListActivity {
         lv.setOnItemLongClickListener(new OnItemLongClickListener () {
         	
         	public boolean onItemLongClick (AdapterView<?> parent, View view, int position, long id) {
-        		Toast.makeText(Players.this, "Player - Num Records: " + mNames.get(position).getNumRecords() + 
-        				" Record ID: " + mNames.get(position).getRecordIdNum(), Toast.LENGTH_LONG).show();
+//        		Toast.makeText(Players.this, "Player - Num Records: " + mNames.get(position).getNumRecords() + 
+//        				" Record ID: " + mNames.get(position).getRecordIdNum(), Toast.LENGTH_LONG).show();
 
         		return true;
         	}
@@ -917,6 +917,7 @@ public class Players extends ListActivity {
 	   protected void onPostExecute(String mResult) {
 		   myFadeInAnimation.scaleCurrentDuration(0);
 		   showView(Players.VIEW_PLAYERS);
+		   showDialog(Players.DIALOG_STARTGAME);
 		   onPostSplash();
 	   }
    }
