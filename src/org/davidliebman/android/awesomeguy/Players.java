@@ -264,8 +264,8 @@ public class Players extends ListActivity {
             	if (mSplash != null && !mSplash.isCancelled()) {
             		mSplash.cancel(true);
             		myFadeInAnimation.scaleCurrentDuration(0);
-            		showView(Players.VIEW_PLAYERS);
-            		showDialog(Players.DIALOG_STARTGAME);
+            		onPostSplash();
+            	
             	}
             }
         });
