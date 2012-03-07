@@ -274,8 +274,9 @@ public class ButtonManager extends FrameLayout {
     		mTRowTop.addView((View)mButtonTop6);
     		mTRowTop.addView((View)mButtonTop7);
 
-    		mTRowTop.addView((View)mButtonTop3);
     		mTRowTop.addView((View)mButtonTop4);
+
+    		mTRowTop.addView((View)mButtonTop3);
     	
     		TableRow mTRowMid = new TableRow(mContext);
     		mTRowMid.addView((View)mButtonMid1);// blank
@@ -295,8 +296,9 @@ public class ButtonManager extends FrameLayout {
     		mTRowBot.addView((View)mButtonBot6);
     		mTRowBot.addView((View)mButtonBot7);
 
-    		mTRowBot.addView((View)mButtonBot3);
     		mTRowBot.addView((View)mButtonBot4);
+
+    		mTRowBot.addView((View)mButtonBot3);
     		
     		/* put rows in table */
     		this.addView((View)mTRowTop);
