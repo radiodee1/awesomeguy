@@ -149,9 +149,9 @@ public class ButtonManager extends FrameLayout {
 	
 	public void addSpecificButton(int mKeyValue) {
 		boolean mAddKey = true;
-		String mTestString = new String();
+		//String mTestString = new String();
 		for (int i = 0; i < this.mPressedButtons.size(); i ++ ) {
-			mTestString = new String(mTestString + " -- " + this.mPressedButtons.get(i).toString());
+			//mTestString = new String(mTestString + " -- " + this.mPressedButtons.get(i).toString());
 			if (this.mPressedButtons.get(i).intValue() == mKeyValue ) {
 				mAddKey = false;
 			}
@@ -161,7 +161,7 @@ public class ButtonManager extends FrameLayout {
 			this.mPressedButtons.add(mKeyValue);
 		}
 		
-		Log.e("ButtonManager", "SpecificButtons" + mTestString);
+		//Log.e("ButtonManager", "SpecificButtons" + mTestString);
 	}
 	
 	public void clearButtonPress() {
