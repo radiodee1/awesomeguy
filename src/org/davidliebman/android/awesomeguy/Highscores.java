@@ -75,6 +75,9 @@ public class Highscores   extends ListActivity {
         final Button button = (Button) findViewById(R.id.button_highscores);
         button.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
+            	mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+            	mHighScores.addToPreferences(mPreferences);
+
             	Intent StartGameIntent = new Intent(Highscores.this,Players.class);
         		startActivity(StartGameIntent);
             	//Toast.makeText(Players.this, "And We're Off", Toast.LENGTH_SHORT).show();
@@ -118,6 +121,9 @@ public class Highscores   extends ListActivity {
 	
     @Override
     public void onPause() {
+    	mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+    	mHighScores.addToPreferences(mPreferences);
+
     	try {
     		mScores.closeAll();
     	}
