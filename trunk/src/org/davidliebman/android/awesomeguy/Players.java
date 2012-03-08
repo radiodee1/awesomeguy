@@ -98,7 +98,7 @@ public class Players extends ListActivity {
         
         /* one highscores record passed around for preferences */
         mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
-        mRememberPlayer = mPreferences.getBoolean(Players.SAVED_REMEMBER_PLAYER, false);
+        mRememberPlayer = mPreferences.getBoolean(Players.SAVED_REMEMBER_PLAYER, true);
         mHighScores = new Record();
 
         if(!mRememberPlayer) {
@@ -494,6 +494,9 @@ public class Players extends ListActivity {
     		displayText(Players.TEXT_HELP);
     		break;
     	case R.id.menu_highs_item:
+    		mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+        	mHighScores.addToPreferences(mPreferences);
+
         	Intent HighScoreIntent = new Intent(Players.this,Highscores.class);
     		startActivity(HighScoreIntent);
     		break;
@@ -752,6 +755,9 @@ public class Players extends ListActivity {
    	    	builder.setCancelable(false)
    	    	       .setPositiveButton(mPositive, new DialogInterface.OnClickListener() {
    	    	    	   public void onClick(DialogInterface dialog, int id) {
+   	    	    		   mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+   	    	    		   mHighScores.addToPreferences(mPreferences);
+
    	    	    		   Intent StartGameIntent = new Intent(Players.this,GameStart.class);
    	    	    		   startActivity(StartGameIntent);   	    	        	   
    	    	    		   dialog.cancel();
@@ -921,7 +927,6 @@ public class Players extends ListActivity {
 	   protected void onPostExecute(String mResult) {
 		   myFadeInAnimation.scaleCurrentDuration(0);
 		   showView(Players.VIEW_PLAYERS);
-		   showDialog(Players.DIALOG_STARTGAME);
 		   onPostSplash();
 	   }
    }
