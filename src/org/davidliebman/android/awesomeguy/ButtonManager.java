@@ -141,11 +141,9 @@ public class ButtonManager extends FrameLayout {
 				mY >= mTemp.mBox.getTop() && mY <= mTemp.mBox.getBottom()) {
 			mMovementV.setKeyInput(mTemp.getKeyValue());
 			this.addSpecificButton(mTemp.mKeyValue);
-			mTemp.mBeingTouched = true;
 			return true;
 		}
 
-//		mTemp.mBeingTouched = false;
 		return false;
 	}
 	
@@ -169,9 +167,6 @@ public class ButtonManager extends FrameLayout {
 	public void clearButtonPress() {
 		mMovementV.clearKeys();
 		this.mPressedButtons.clear();
-		for (int i = 0; i < this.mButtonList.size(); i ++ ) {
-			this.mButtonList.get(i).mBeingTouched = false;
-		}
 	}
 	
 	public void addButton(TouchButton mButton) {
@@ -185,9 +180,7 @@ public class ButtonManager extends FrameLayout {
     public int getButtonListSize() {
     	return this.mButtonList.size();
     }
-//    public void clearButtonList() {
-//    	this.mButtonList.clear();
-//    }
+
     public BoundingBox getButtonBoundingBox(int i) {
     	return this.mButtonList.get(i).mBox;
     }
@@ -381,9 +374,7 @@ public class ButtonManager extends FrameLayout {
     /* button listeners */
     class TouchButton extends Button { 
     	int mKeyValue = 0;
-    	//int mButtonX, mButtonY;
     	boolean mMultiTouch;
-    	public boolean mBeingTouched;
     	String mDescription;
     	public BoundingBox mBox;
     	
@@ -393,7 +384,6 @@ public class ButtonManager extends FrameLayout {
         	this.setBackgroundColor(Color.BLACK);
         	if (background != 0 ) {
         		this.setBackgroundResource(background);
-        		//this.setOnTouchListener(this);
 
         	}
         	this.setWidth(width);
@@ -403,7 +393,6 @@ public class ButtonManager extends FrameLayout {
         	this.setTag(idString);
         	this.mDescription = idString;
         	mKeyValue = directionKey;
-        	this.mBeingTouched = false;
         	// left, right, top, bottom...
         	mBox = new BoundingBox( 0, 0, 0, 0);
         }
@@ -425,7 +414,6 @@ public class ButtonManager extends FrameLayout {
     	public String getDescription() {
     		return this.mDescription;
     	}
-    	/* end multi-touch specific */
     	
 
     	
