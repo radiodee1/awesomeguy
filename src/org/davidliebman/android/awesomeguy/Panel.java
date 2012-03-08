@@ -792,7 +792,7 @@ public  class Panel  extends SurfaceView  {
 		}
 		////////////////////////
 		//special test for trouble spot:
-		if (x > 0 && !canScroll && mapX + x >= mScreenW) {
+		if (x > 0 && !canScroll && mapX + x >= mScreenW ) {
 				//turn off skip
 				mCanSkip = false;
 		}
