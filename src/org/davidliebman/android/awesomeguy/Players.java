@@ -72,7 +72,7 @@ public class Players extends ListActivity {
 
     
     protected boolean mActive = true;
-    private boolean mRememberPlayer;
+    private boolean mRememberPlayer = true;
     private boolean mGoogleAnalytics;
     private boolean mTermsOfService;
     private int mVersionCode = 1;
