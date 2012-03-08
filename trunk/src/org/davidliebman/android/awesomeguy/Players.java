@@ -681,6 +681,10 @@ public class Players extends ListActivity {
     
     @Override
     public void onPause() {
+    	
+        mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+    	mHighScores.addToPreferences(mPreferences);
+
     	try {
     		mScores.closeAll();
     	}
@@ -751,12 +755,12 @@ public class Players extends ListActivity {
    	    	    		   Intent StartGameIntent = new Intent(Players.this,GameStart.class);
    	    	    		   startActivity(StartGameIntent);   	    	        	   
    	    	    		   dialog.cancel();
-   	    	        	   removeDialog(Players.DIALOG_USERNUM_CHANGED);
+   	    	        	   removeDialog(Players.DIALOG_STARTGAME);
    	    	           }
    	    	       })
    	    	       .setNegativeButton(mNegative, new DialogInterface.OnClickListener() {
    	    	           public void onClick(DialogInterface dialog, int id) {
-   	    	        	   	removeDialog(Players.DIALOG_USERNUM_CHANGED);
+   	    	        	   	removeDialog(Players.DIALOG_STARTGAME);
    	    	                dialog.cancel();
    	    	           }
    	    	       });
