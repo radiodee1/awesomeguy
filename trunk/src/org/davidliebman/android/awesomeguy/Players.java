@@ -101,12 +101,12 @@ public class Players extends ListActivity {
         mRememberPlayer = mPreferences.getBoolean(Players.SAVED_REMEMBER_PLAYER, true);
         mHighScores = new Record();
 
-        if(!mRememberPlayer) {
-        	mHighScores.addToPreferences(mPreferences);
-        }
-        else {
-        	mHighScores.getFromPreferences(mPreferences);
-        }
+//        if(!mRememberPlayer) {
+//        	mHighScores.addToPreferences(mPreferences);
+//        }
+//        else {
+//        	mHighScores.getFromPreferences(mPreferences);
+//        }
         
         /* if 'anonymous' then blank out record. */
         if(mHighScores.getName().contentEquals(new Record().getName())) {
@@ -290,7 +290,18 @@ public class Players extends ListActivity {
     	/* retrieve Record mHighScores */
     	mHighScores = new Record();
         mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
-        mHighScores.getFromPreferences(mPreferences);
+        
+        mRememberPlayer = mPreferences.getBoolean(Players.SAVED_REMEMBER_PLAYER, true);
+        //mHighScores = new Record();
+
+        if(!mRememberPlayer) {
+        	mHighScores.addToPreferences(mPreferences);
+        }
+        else {
+        	mHighScores.getFromPreferences(mPreferences);
+        }
+        
+        //mHighScores.getFromPreferences(mPreferences);
         mPlayerText.setText("Player Chosen: " +mHighScores.getName());
         
         this.mPreferredNumRecords = this.mPreferences.getInt(Players.SAVED_NUM_SCORES, Record.RADIO_PLAYERS_FIFTY);
@@ -317,7 +328,7 @@ public class Players extends ListActivity {
         mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
 
         mLookForXml = mPreferences.getBoolean(SAVED_LOOK_FOR_XML, false);
-        mRememberPlayer = mPreferences.getBoolean(SAVED_REMEMBER_PLAYER, true);
+        //mRememberPlayer = mPreferences.getBoolean(SAVED_REMEMBER_PLAYER, true);
         
     	 /* get TOS info from preferences */
         mGoogleAnalytics = mPreferences.getBoolean(Players.SAVED_ANALYTICS, true);
@@ -687,7 +698,11 @@ public class Players extends ListActivity {
     	
         mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
     	mHighScores.addToPreferences(mPreferences);
-
+    	
+    	SharedPreferences.Editor edit = mPreferences.edit();
+        edit.putBoolean(SAVED_REMEMBER_PLAYER, mRememberPlayer);
+        edit.commit();
+    	Log.e("Players","remember "+ mRememberPlayer);
     	try {
     		mScores.closeAll();
     	}

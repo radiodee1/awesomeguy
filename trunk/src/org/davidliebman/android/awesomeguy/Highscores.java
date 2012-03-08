@@ -121,8 +121,8 @@ public class Highscores   extends ListActivity {
 	
     @Override
     public void onPause() {
-    	mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
-    	mHighScores.addToPreferences(mPreferences);
+    	//mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+    	//mHighScores.addToPreferences(mPreferences);
 
     	try {
     		mScores.closeAll();
