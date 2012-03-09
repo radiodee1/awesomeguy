@@ -391,8 +391,9 @@ public class ButtonManager extends FrameLayout {
         	this.setText("");
         	this.setId(id);
         	this.setTag(idString);
+        	
         	this.mDescription = idString;
-        	mKeyValue = directionKey;
+        	this.mKeyValue = directionKey;
         	// left, right, top, bottom...
         	mBox = new BoundingBox( 0, 0, 0, 0);
         }
