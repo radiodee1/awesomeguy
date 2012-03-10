@@ -30,8 +30,8 @@
 		<string name="menu_text_players_fifty">Fifty Players</string>
     	    
     	<string name="menu_text_rememberme_item">Remember Me</string>
-    	<string name="menu_text_rememberme_no">Remember Me</string>
-       	<string name="menu_text_rememberme_yes">Do Not Remember Me</string>
+    	<string name="menu_text_rememberme_no">Do Not Remember Me</string>
+       	<string name="menu_text_rememberme_yes">Remember Me</string>
     	    	
     	<string name="menu_text_xml_item">Look for XML</string>
     	<string name="menu_text_xml_no">Do Not Look For XML</string>
