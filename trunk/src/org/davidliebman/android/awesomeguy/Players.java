@@ -640,7 +640,7 @@ public class Players extends ListActivity {
         edit.putBoolean(SAVED_ANALYTICS, mGoogleAnalytics);
         //edit.putInt(SAVED_NUM_SCORES, mPreferredNumRecords);
         edit.commit();
-        
+                
     	mHighScores.addToPreferences(mPreferences);
     	mScores.setHighScores(mHighScores);
     	mScores.updateOptions(mHighScores.getRecordIdNum());
