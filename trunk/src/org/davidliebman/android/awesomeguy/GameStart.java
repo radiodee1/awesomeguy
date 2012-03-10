@@ -96,8 +96,8 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     private boolean mLookForXml;
 	
 	/* old GameLoop - prepare timer */
-	private static long framesPerSec = 25;
-	private static final long skipTicks = 1000 / framesPerSec;
+	private long framesPerSec = 25;
+	private long skipTicks = 1000 / framesPerSec;
 	private long ticksElapsed; //, startTicks;
 	private long sleepTime = 0;
 	private long nextGameTick = 0;
@@ -314,6 +314,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     	mScores = new Scores(this, mHighScores);
         
     	framesPerSec = mHighScores.getGameSpeed();
+    	skipTicks = 1000 / framesPerSec;
     	
     	/* init background */
     	

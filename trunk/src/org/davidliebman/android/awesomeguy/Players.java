@@ -26,7 +26,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.app.AlertDialog;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 
-import android.util.Log;
+//import android.util.Log;
 
 public class Players extends ListActivity {
 		
@@ -702,7 +702,6 @@ public class Players extends ListActivity {
     	SharedPreferences.Editor edit = mPreferences.edit();
         edit.putBoolean(SAVED_REMEMBER_PLAYER, mRememberPlayer);
         edit.commit();
-    	Log.e("Players","remember "+ mRememberPlayer);
     	try {
     		mScores.closeAll();
     	}
