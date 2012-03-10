@@ -149,9 +149,7 @@ public class ButtonManager extends FrameLayout {
 	
 	public void addSpecificButton(int mKeyValue) {
 		boolean mAddKey = true;
-		//String mTestString = new String();
 		for (int i = 0; i < this.mPressedButtons.size(); i ++ ) {
-			//mTestString = new String(mTestString + " -- " + this.mPressedButtons.get(i).toString());
 			if (this.mPressedButtons.get(i).intValue() == mKeyValue ) {
 				mAddKey = false;
 			}
@@ -161,7 +159,6 @@ public class ButtonManager extends FrameLayout {
 			this.mPressedButtons.add(mKeyValue);
 		}
 		
-		//Log.e("ButtonManager", "SpecificButtons" + mTestString);
 	}
 	
 	public void clearButtonPress() {
@@ -223,7 +220,7 @@ public class ButtonManager extends FrameLayout {
     			//height is greater
     			mButtonHeight = mDimensionWidth/5;//95
         		mButtonWidth = mDimensionWidth/5;//95
-        		
+        		mTopSpace = (mDimensionHeight - (mButtonHeight * 3 ))/ 2;
     		}
     		else {
     			//width is greater
@@ -259,6 +256,22 @@ public class ButtonManager extends FrameLayout {
     		TouchButton mButtonBot6 = new TouchButton(mContext,mMultiTouch , R.drawable.button_down, mButtonWidth, mButtonHeight, 0, "button_down", MovementValues.KEY_DOWN);
     		BlankButton mButtonBot7 = new BlankButton(mContext);
 
+    		/* make blank row at top */
+    		TableRow mTRowBlank = new TableRow(mContext);
+    		BlankButton mButtonBlank1 = new BlankButton(mContext, mLeftSpace, mTopSpace);
+    		BlankButton mButtonBlank2 = new BlankButton(mContext, mButtonWidth, mTopSpace);
+    		BlankButton mButtonBlank3 = new BlankButton(mContext, mButtonWidth, mTopSpace);
+    		BlankButton mButtonBlank4 = new BlankButton(mContext, mButtonWidth, mTopSpace);
+    		BlankButton mButtonBlank5 = new BlankButton(mContext, mButtonWidth, mTopSpace);
+    		BlankButton mButtonBlank6 = new BlankButton(mContext, mButtonWidth, mTopSpace);
+    		mTRowBlank.addView((View)mButtonBlank1);
+    		mTRowBlank.addView((View)mButtonBlank2);
+    		mTRowBlank.addView((View)mButtonBlank3);
+    		mTRowBlank.addView((View)mButtonBlank4);
+    		mTRowBlank.addView((View)mButtonBlank5);
+    		mTRowBlank.addView((View)mButtonBlank6);
+    		this.addView((View)mTRowBlank);
+    		
     		/* put buttons in rows */
     		TableRow mTRowTop = new TableRow(mContext);
     		mTRowTop.addView((View)mButtonTop1);// blank
