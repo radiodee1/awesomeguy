@@ -392,6 +392,7 @@ public class Players extends ListActivity {
     	tracker.stop();
     }
     
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
     	MenuInflater inflate = getMenuInflater();
@@ -695,6 +696,10 @@ public class Players extends ListActivity {
     
     @Override
     public void onPause() {
+    
+    	if (mSplash != null) {
+    		mSplash.cancel(true);
+    	}
     	
         mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
     	mHighScores.addToPreferences(mPreferences);
