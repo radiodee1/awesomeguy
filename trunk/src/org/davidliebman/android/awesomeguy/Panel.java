@@ -10,7 +10,7 @@ import android.view.*;
 //import android.util.Log;
 import android.graphics.*;
 
-public  class Panel  extends SurfaceView  {
+public  class Panel  extends SurfaceView implements SurfaceHolder.Callback {
 	private GameValues mGameV;
 	private Canvas mCanvas;
 
@@ -87,6 +87,9 @@ public  class Panel  extends SurfaceView  {
 	public static final int MIDDLE = 2;
 	public static final int START = 3;
 
+	public static final int JNI_TRUE = 1;
+	public static final int JNI_FALSE = 0;
+	
 	/* -- end 'for scrolling' -- */
 
 	/* for monster animation */
@@ -103,9 +106,11 @@ public  class Panel  extends SurfaceView  {
 	private boolean mEnableSounds;
 	private boolean mAnimationOnly;
 	
-	public Panel(Context context,  GameValues gameValues, GameStart parent, MovementValues movementValues, Record highScores) {
+	public Panel(Context context,  GameValues gameValues, GameStart parent, MovementValues movementValues) {//, Record highScores) {
 		super(context);
 		this.setWillNotDraw(false);
+		
+		this.getHolder().addCallback(this);
 		
 		mGameV = gameValues;
 		mMovementV = movementValues;
@@ -113,6 +118,8 @@ public  class Panel  extends SurfaceView  {
 		mGameV.setSpriteStart();
 		mGuySprite = mGameV.getSpriteStart();
 
+		
+		
 		/* display width considerations */
     	Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();    	
     	int displayWidth = display.getWidth();
@@ -181,7 +188,7 @@ public  class Panel  extends SurfaceView  {
 
 		mAnimationOnly = false;
 		
-		mHighScores = highScores;//parent.getHighScores();//mGameV.getGuyScore();
+		mHighScores = mGameV.getGuyScore();//highScores;//mGameV.getGuyScore();
 		mSounds = new SoundPoolManager(parent);
 		mSounds.init();
 		
@@ -244,6 +251,7 @@ public  class Panel  extends SurfaceView  {
 		if(mHighScores.isEnableCollision()) collision = 1;
 		setMonsterPreferences(monsters, collision);
 		
+		this.prepareBitmap();
 	}
 
 
@@ -255,11 +263,11 @@ public  class Panel  extends SurfaceView  {
 
 		if (!mAnimationOnly) {
 		
-			checkRegularCollisions();
-
-			checkPhysicsAdjustments();
-		
-			scrollBg(); //always call this last!!
+//			checkRegularCollisions();
+//
+//			checkPhysicsAdjustments();
+//		
+//			scrollBg(); //always call this last!!
 		}
 		else {
 			/* JNI Monster Collision setting */
@@ -268,32 +276,37 @@ public  class Panel  extends SurfaceView  {
 			setMonsterPreferences(monsters, 0);
 		}
 		/** animate items **/
-		animateItems();
+//		animateItems();
 
 		/******* draw background  *********/
 		mCanvas.drawColor(Color.BLACK);
 		
 		/************** test jni *******************/
-		mMap = Bitmap.createBitmap(drawLevel(newBG + 1), 256, 192, Bitmap.Config.RGB_565);
-		mTempJNI = Bitmap.createBitmap(mMap, 0, 0, 256, 192, mMatrix, false);
-		canvas.drawBitmap(mTempJNI, 0, 0, null);
-		playSounds();
+//		mMap = Bitmap.createBitmap(drawLevel(newBG + 1), 256, 192, Bitmap.Config.RGB_565);
+//		mTempJNI = Bitmap.createBitmap(mMap, 0, 0, 256, 192, mMatrix, false);
+		mCanvas.drawBitmap(mTempJNI, 0, 0, null);
+//		playSounds();
 		
 		
-		/* at end of level */
-		if(getEndLevel() == 1) {
-			mGameV.setEndLevel(true);
-			mGameV.decrementLives();
-			mGameV.setGameDeath(true);
-		}
-		
-		/* changes during level */
-		mHighScores.setLives(getLives());
-		mHighScores.setScore(getScore());
-		mGameV.setScore(getScore());
+//		/* at end of level */
+//		if(getEndLevel() == 1) {
+//			mGameV.setEndLevel(true);
+//			mGameV.decrementLives();
+//			mGameV.setGameDeath(true);
+//		}
+//		
+//		/* changes during level */
+//		mHighScores.setLives(getLives());
+//		mHighScores.setScore(getScore());
+//		mGameV.setScore(getScore());
 		
 	}
 
+	public void prepareBitmap() {
+		mMap = Bitmap.createBitmap(drawLevel(newBG + 1), 256, 192, Bitmap.Config.RGB_565);
+		mTempJNI = Bitmap.createBitmap(mMap, 0, 0, 256, 192, mMatrix, false);
+	}
+	
 	public void setInitialBackgroundGraphics() {
 		/*** set initial scroll positions ***/
 
@@ -358,7 +371,7 @@ public  class Panel  extends SurfaceView  {
 	}
 
 	
-	private void animateItems() {
+	public void animateItems() {
 
 		if (ANIMATE_SPEED != 0) animate ++;
 		if (this.mGuySprite.getAnimate() == true) {
@@ -388,7 +401,7 @@ public  class Panel  extends SurfaceView  {
 	
 	
 	
-	private void checkPhysicsAdjustments() {
+	public void checkPhysicsAdjustments() {
 
 		this.readKeys();
 
@@ -462,7 +475,7 @@ public  class Panel  extends SurfaceView  {
 		
 	}
 
-	private void collisionWithBlocks() {
+	public void collisionWithBlocks() {
 		boolean mSkip = false;
 		SpriteInfo mSprite = mGameV.getSprite(0);
 		
@@ -551,7 +564,7 @@ public  class Panel  extends SurfaceView  {
 	}
 	
 	
-	private boolean collisionWithPlatforms(boolean canFall) {
+	public boolean collisionWithPlatforms(boolean canFall) {
 		int i, j;
 		//
 		  BoundingBox guyBox, platformBox;
@@ -604,7 +617,7 @@ public  class Panel  extends SurfaceView  {
 		  
 	}
 
-	private void scrollBg() {
+	public void scrollBg() {
 		/* scroll registers for background */
 
 		canScroll = true;
@@ -805,7 +818,7 @@ public  class Panel  extends SurfaceView  {
 		mMovementV.setScrollX(screenX);
 		mMovementV.setScrollY(screenY);
 	}
-	private void checkRegularCollisions() {
+	public void checkRegularCollisions() {
 
 		/*
 		 * Here we create a BoundingBox for the guy character. Then
@@ -1068,6 +1081,36 @@ public  class Panel  extends SurfaceView  {
 		mNewY = y / 8;
 		return mGameV.getObjectsCell(mNewX, mNewY);
 	}
+	
+	@Override
+	public void surfaceChanged(SurfaceHolder holder, int format, int width,
+			int height) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void surfaceCreated(SurfaceHolder holder) {
+		// TODO Auto-generated method stub
+		 if (!mGameV.isUseSavedBundle()) {
+				mGameV.getHandler().sendEmptyMessage(GameStart.STARTLEVEL);
+
+			 //mHandler.sendEmptyMessage(GameStart.STARTLEVEL);
+		    }
+		    else {
+		    	mGameV.getHandler().sendEmptyMessage(GameStart.REORIENTATION);
+		    }
+		
+		//mGameV.setGameRunning(true);
+	}
+
+
+	@Override
+	public void surfaceDestroyed(SurfaceHolder holder) {
+		// TODO Auto-generated method stub
+		//mGameV.setGameRunning(false);
+	}
 
 	public DetectionPattern makeDetectionPattern(int type, int cheat){
 		DetectionPattern mTemp = new DetectionPattern();
@@ -1188,4 +1231,5 @@ public  class Panel  extends SurfaceView  {
 	static {
 		System.loadLibrary("awesomeguy");
 	}
+	
 }

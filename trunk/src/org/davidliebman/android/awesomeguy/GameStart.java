@@ -58,7 +58,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     private TableLayout mTLayout ;
     private FrameLayout mFLayoutBot ;
     private Panel mPanelBot ;
-	//private GameKeys mKeysView;
+	private PanelHandler mHandler;
     
     private View mSpaceView, mSpaceViewSecond,mSpaceViewThird;
     private TableLayout mGameRow;
@@ -92,7 +92,6 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
 	private Record mHighScores;
 	private SpriteInfo mGuySprite;
     private Scores mScores;
-    private boolean mUsedSavedRoom;
     private boolean mLookForXml;
 	
 	/* old GameLoop - prepare timer */
@@ -237,18 +236,22 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     	
     	// Stop Game Loop Thread
     	gameRunning = false;
+    	mGameV.setGameRunning(false);
     	Message mEndMessage = new Message();
     	mEndMessage.what = GAMESTOP;
     	mHandler.sendMessageAtFrontOfQueue(mEndMessage);
     	
-    	try {
-    		mGameLoopBot.join();//100
-    		
-    	}
-    	catch (Exception e) {
-    		//
-       	}
+    	boolean retry = false;
+    	while (retry) {
     	
+	    	try {
+	    		mGameLoopBot.join();//100
+	    		retry = true;
+	    	}
+	    	catch (InterruptedException e) {
+	    		//
+	       	}
+    	}
     	if(!mScreenOrientationChange) {
 	    	// save high scores if they rank
 	    	if(mHighScores.getScore() > mGameV.getOldGuyScore()) {
@@ -298,12 +301,19 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     
     @Override
     public void onResume() {
-        	    	
+        
+    	
+    	
+    	/* setup handler */
+    	mHandler = new PanelHandler();
+        mGameV.setHandler(mHandler);
+        mGameV.setMovementValues(mMovementV);
+        
     	/* retrieve Record mHighScores */
     	mHighScores = new Record();
         SharedPreferences preferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.getFromPreferences(preferences);
-                
+        mGameV.setGuyScore(mHighScores);
         /* retrieve other saved preferences */	
         
         mLookForXml = preferences.getBoolean(Options.SAVED_LOOK_FOR_XML, false);
@@ -319,7 +329,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     	/* init background */
     	
     	this.setOrientationVars();
-    	mPanelBot = new Panel(this,  mGameV, this, mMovementV, mHighScores);
+    	mPanelBot = new Panel(this,  mGameV, this, mMovementV);//, mHighScores);
     	
     	if( mConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
     		mButtonManager = new ButtonManager(this, mMovementV, mGameV,ButtonManager.MODE_PORTRAIT);
@@ -331,25 +341,28 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     		//TODO: check that this works on landscape AND portrait
     	}
     	
+    	mGameV.setHolder(mPanelBot.getHolder());
+		mGameV.setPanel(mPanelBot);
     	
     	mBackground = new InitBackground(mGameV, this, mLookForXml);
-
+    	mGameV.setBackground(mBackground);
+    	
     	mFLayoutBot.addView((View)mPanelBot);
     	
     	mPanelBot.setEnableSounds(mHighScores.isSound());
     	
     	
     	/* create game loop thread */
-    	mGameLoopBot = new InnerGameLoop(this); 
+    	mGameLoopBot = new InnerGameLoop(this, mGameV, mPanelBot); 
     	
     	/* set loop to 'endless' */
-    	mGameLoopBot.setGameRunning(true);
+    	mGameV.setGameRunning(true);
     	
     	this.getSavedRoom();
 
     	
     	/* start game loop thread */
-    	mGameLoopBot.start();
+    	//mGameLoopBot.start();
     	super.onResume();
     	
     	
@@ -516,13 +529,13 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
 	
 	
 
-    
-    
-    public Handler mHandler = new Handler() {
+    class PanelHandler extends Handler {
+    	
+
     	public void handleMessage(Message msg) {
     		if(msg.what == GAMEVALUES) {
     		
-	    		mPanelBot.invalidate();
+	    		//mPanelBot.invalidate();
 	       		
     		}
     		else if(msg.what == STARTLEVEL) {
@@ -538,8 +551,9 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     		    mPanelBot.setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
     		    mPanelBot.setGuySprite(mGameV.getSpriteStart()); //must refresh reference to guySprite
     		    
+    		    mGameLoopBot.start();
     			
-    			mPanelBot.invalidate();
+    			//mPanelBot.invalidate();
     			
     		}
     		else if (msg.what == REORIENTATION) {
@@ -560,19 +574,19 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
 
     		    
     			
-    			mPanelBot.invalidate();
+    			//mPanelBot.invalidate();
     			
     			
     		}
     		else if(msg.what == MOVEMENTVALUES) {
-    			mPanelBot.setHighScores((Record)msg.obj);
+    			//mPanelBot.setHighScores((Record)msg.obj);
     			
-    			mPanelBot.setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
+//    			mPanelBot.setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
+//    			
+//    			if (mMovementV.getLetterKeyB() > 0) mPanelBot.setKeyB(true);
+//    			else mPanelBot.setKeyB(false);
     			
-    			if (mMovementV.getLetterKeyB() > 0) mPanelBot.setKeyB(true);
-    			else mPanelBot.setKeyB(false);
-    			
-    			mPanelBot.invalidate();
+    			//mPanelBot.invalidate();
     			
     		}
     		
@@ -616,221 +630,221 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     
     
     
-    class InnerGameLoop extends Thread {
-    	//private SoundPoolManager mSounds;
-
-    	public InnerGameLoop (GameStart game) {
-    		//Log.v("InnerGameLoop", "init");
-    		
-    	}
-    	
-    	@Override
-    	public void run() {
-    		
-    		gameRunning = true;
-    		//prepare timer
-    		Date startDate = new Date();
-    		nextGameTick = startDate.getTime();
-    		
-    		boolean mSavedRoomFlag = false;
-			
-    		
-    		
-    		  ///////////////////////////////////////////////////////
-    		  // PLAY THE GAME
-    		  while(mPlayAgain && gameRunning) {
-    		    mPlayAgain = false;
-    		
-    		  //do something here.
-    		    
-    			
-    			// new score ?? SAVE OLD SCORE!!
-    		    mGameV.setOldGuyScore(mHighScores.getScore());
-    			
-    		    ////////////////////////////////////////////////////////
-    		    // PREP FOR GAME PLAY
-    		    // set lives
-    		    
-    		    if (!mUseSavedBundle) mGameV.setLives(3);
-    		    // set room num
-    		    
-    		    if (mSavedRoomFlag == true) mGameV.setRoomNo(1);
-    		    mSavedRoomFlag = true;
-    		    
-    		    //getSavedRoom();
-    		    
-    		    if (!mUseSavedBundle) mGameV.setScore(10);
-    		    
-    		    mGameV.setEndGame(false);
-    		    
-    		    while(mGameV.getRoomNo() <= mGameV.getLevelList().size()  && !mGameV.isEndGame() && gameRunning && mGameV.getLives() > 0) {
-
-       
-    		     // advance through rooms
-
-    		      
-    		    if (!mUseSavedBundle) {
-    		    	mHandler.sendEmptyMessage(GameStart.STARTLEVEL);
-    		    }
-    		    else {
-    		    	mHandler.sendEmptyMessage(GameStart.REORIENTATION);
-    		    }
-    		    
-    		    
-        		mHandler.removeMessages(GameStart.MOVEMENTVALUES);
-
-    		    //init room
-    		    mBackground.setLevel(mGameV.getLevelList().getNum(mGameV.getRoomNo()-1));
-
-    		    if (!mUseSavedBundle) {
-    		    	mMovementV.setScrollX(0);
-    		    	mMovementV.setScrollY(0);
-    		    	
-    		    	mBackground.initLevel(mMovementV);
-    		    
-    		    	//jni  !!
-    		    
-    		    	mPanelBot.setLevelData(mGameV.getLevelArray(), mGameV.getObjectsArray(), mGameV.getMapH(), mGameV.getMapV());
-    		    
-    		    	mPanelBot.addMonstersJNI();
-    		    	mPanelBot.addPlatformsJNI();
-    		    }
-    		    
-    		    
-		    	//mPanelBot.setLevelData(mGameV.getLevelArray(), mGameV.getObjectsArray(), mGameV.getMapH(), mGameV.getMapV());
-
-    		    
-    		    //end of restore from bundle
-    		    mUseSavedBundle = false;
-    		    mGameV.setXmlMode(GameValues.XML_USE_BOTH);
-    		    
-    		    //get guy sprite reference 
-    			mGuySprite = mGameV.getSpriteStart();
-    		    mPanelBot.setGuySprite(mGuySprite);
-    	    	
-    		    //
-    			
-    		    mGameV.setEndLevel(false);
-    		    mGameV.setGameDeath(false);
-    		    
-    			mLoop = true;
-    		    while(mLoop && gameRunning && !mGameV.isEndLevel()) { // GAME PLAY LOOP
-    		       
-    		    	if (gameRunning) gameSpeedRegulator(); //call inside 'game play' loop
-    		    	
-    		    
-    		    	
-    		    	// ** ALWAYS SEND THIS MESSAGE **	
-    		    	Message mM = new Message();
-    		    	mM.what = GameStart.MOVEMENTVALUES;
-    		    	mM.obj = mHighScores;
-    		    	mHandler.sendMessageAtFrontOfQueue(mM);
-    				
-        			
-    		    } // end of gameplay loop
-
-    		   
-    		    
-    	    	mHandler.sendEmptyMessage(GameStart.GAMESTOP);
-    		    // *** ANIMATE SPINNING GUY ***
-    	    	if (gameRunning) {
-    	    		try {
-    	    			Thread.sleep(1000);
-    	    		} catch (InterruptedException e) {
-    	    			//
-    	    		} 
-    	    	}
-    		      // ** CHECK IF LEVEL IS OVER ***
-    		      // * advance the room count if it is
-    		      // * necessary.
-    		      //
-    		      if (!mGameV.isGameDeath()) {
-    		        mGameV.incrementRoomNo();
-    		        
-    		        //saveRoomNo();
-
-    		        mGameV.setEndGame(false);
-    		        mGameV.setEndLevel(false);
-    		      }
-    		      else {
-    		        mGameV.setEndLevel(true);
-    		      }
-    		      
-    		     
-    		      // increment cycle count and set room to 1...
-    		      if( mGameV.getRoomNo() > mGameV.getTotNumRooms() &&  !mGameV.isEndLevel() ) {
-    		        
-    		    	  mGameV.setRoomNo(1);
-    		    	  //saveRoomNo();
-
-    		      }
-
-    		      
-    		      if (!mGameV.isGameDeath() && gameRunning ) {
-    		    	  mHandler.sendEmptyMessage(GameStart.CONGRATS);
-    		    	  
-    		      }
-    		      
-    		    } /////////// while NUM_ROOMS loop
-
-    		    if (gameRunning) {
-    		    	mHandler.sendEmptyMessage(GameStart.PLAYAGAIN);
-    		    	
-    		    	// this basically saves high scores...
-      		      	// duplicated in 'onPause()'
-	      		      if(mHighScores.getScore() > mGameV.getOldGuyScore()) {
-	      		    	  
-	      		    	  mScores.insertRecordIfRanks(mHighScores);
-	      		    	  mHighScores.setNewRecord(false);
-	      		    	  mGameV.setOldGuyScore(mHighScores.getScore());
-	
-	      		      }
-      		        mScores.insertHighInTableIfRanks(mHighScores);
-
-    		    	
-    		    }
-    		    
-    		    
-    		    mPlayAgain = true;
-
-    		  } // playAgain
-
-    		
-
-    	}
-    	
-    	public void setGameRunning(boolean isRunning) {
-    		gameRunning = isRunning;
-    	}
-    	
-    	public   void gameSpeedRegulator() {
-    		
-    		Date newDate = new Date();
-    		ticksElapsed = newDate.getTime();
-    		nextGameTick += skipTicks;
-    		sleepTime = nextGameTick - ticksElapsed;
-    		if ( sleepTime >= 0 && gameRunning) {
-    		
-    			//Log.v("InnerGameLoop", "---Passing time");
-    			try {
-    	            Thread.sleep(sleepTime);
-    	    	} catch (InterruptedException e) {
-    	    		//
-    	    	} 
-    	    	
-    		}
-    		else {
-    			//Log.v("InnerGameLoop", "Running behind");
-    			newDate = new Date();
-    			nextGameTick = newDate.getTime();
-    			//ticksElapsed = newDate.getTime();
-    		}
-    	}
-    	
-    	
-    	
-    	
-    };
+//    class InnerGameLoop extends Thread {
+//    	//private SoundPoolManager mSounds;
+//
+//    	public InnerGameLoop (GameStart game) {
+//    		//Log.v("InnerGameLoop", "init");
+//    		
+//    	}
+//    	
+//    	@Override
+//    	public void run() {
+//    		
+//    		gameRunning = true;
+//    		//prepare timer
+//    		Date startDate = new Date();
+//    		nextGameTick = startDate.getTime();
+//    		
+//    		boolean mSavedRoomFlag = false;
+//			
+//    		
+//    		
+//    		  ///////////////////////////////////////////////////////
+//    		  // PLAY THE GAME
+//    		  while(mPlayAgain && gameRunning) {
+//    		    mPlayAgain = false;
+//    		
+//    		  //do something here.
+//    		    
+//    			
+//    			// new score ?? SAVE OLD SCORE!!
+//    		    mGameV.setOldGuyScore(mHighScores.getScore());
+//    			
+//    		    ////////////////////////////////////////////////////////
+//    		    // PREP FOR GAME PLAY
+//    		    // set lives
+//    		    
+//    		    if (!mUseSavedBundle) mGameV.setLives(3);
+//    		    // set room num
+//    		    
+//    		    if (mSavedRoomFlag == true) mGameV.setRoomNo(1);
+//    		    mSavedRoomFlag = true;
+//    		    
+//    		    //getSavedRoom();
+//    		    
+//    		    if (!mUseSavedBundle) mGameV.setScore(10);
+//    		    
+//    		    mGameV.setEndGame(false);
+//    		    
+//    		    while(mGameV.getRoomNo() <= mGameV.getLevelList().size()  && !mGameV.isEndGame() && gameRunning && mGameV.getLives() > 0) {
+//
+//       
+//    		     // advance through rooms
+//
+//    		      
+//    		    if (!mUseSavedBundle) {
+//    		    	mHandler.sendEmptyMessage(GameStart.STARTLEVEL);
+//    		    }
+//    		    else {
+//    		    	mHandler.sendEmptyMessage(GameStart.REORIENTATION);
+//    		    }
+//    		    
+//    		    
+//        		mHandler.removeMessages(GameStart.MOVEMENTVALUES);
+//
+//    		    //init room
+//    		    mBackground.setLevel(mGameV.getLevelList().getNum(mGameV.getRoomNo()-1));
+//
+//    		    if (!mUseSavedBundle) {
+//    		    	mMovementV.setScrollX(0);
+//    		    	mMovementV.setScrollY(0);
+//    		    	
+//    		    	mBackground.initLevel(mMovementV);
+//    		    
+//    		    	//jni  !!
+//    		    
+//    		    	mPanelBot.setLevelData(mGameV.getLevelArray(), mGameV.getObjectsArray(), mGameV.getMapH(), mGameV.getMapV());
+//    		    
+//    		    	mPanelBot.addMonstersJNI();
+//    		    	mPanelBot.addPlatformsJNI();
+//    		    }
+//    		    
+//    		    
+//		    	//mPanelBot.setLevelData(mGameV.getLevelArray(), mGameV.getObjectsArray(), mGameV.getMapH(), mGameV.getMapV());
+//
+//    		    
+//    		    //end of restore from bundle
+//    		    mUseSavedBundle = false;
+//    		    mGameV.setXmlMode(GameValues.XML_USE_BOTH);
+//    		    
+//    		    //get guy sprite reference 
+//    			mGuySprite = mGameV.getSpriteStart();
+//    		    mPanelBot.setGuySprite(mGuySprite);
+//    	    	
+//    		    //
+//    			
+//    		    mGameV.setEndLevel(false);
+//    		    mGameV.setGameDeath(false);
+//    		    
+//    			mLoop = true;
+//    		    while(mLoop && gameRunning && !mGameV.isEndLevel()) { // GAME PLAY LOOP
+//    		       
+//    		    	if (gameRunning) gameSpeedRegulator(); //call inside 'game play' loop
+//    		    	
+//    		    
+//    		    	
+//    		    	// ** ALWAYS SEND THIS MESSAGE **	
+//    		    	Message mM = new Message();
+//    		    	mM.what = GameStart.MOVEMENTVALUES;
+//    		    	mM.obj = mHighScores;
+//    		    	mHandler.sendMessageAtFrontOfQueue(mM);
+//    				
+//        			
+//    		    } // end of gameplay loop
+//
+//    		   
+//    		    
+//    	    	mHandler.sendEmptyMessage(GameStart.GAMESTOP);
+//    		    // *** ANIMATE SPINNING GUY ***
+//    	    	if (gameRunning) {
+//    	    		try {
+//    	    			Thread.sleep(1000);
+//    	    		} catch (InterruptedException e) {
+//    	    			//
+//    	    		} 
+//    	    	}
+//    		      // ** CHECK IF LEVEL IS OVER ***
+//    		      // * advance the room count if it is
+//    		      // * necessary.
+//    		      //
+//    		      if (!mGameV.isGameDeath()) {
+//    		        mGameV.incrementRoomNo();
+//    		        
+//    		        //saveRoomNo();
+//
+//    		        mGameV.setEndGame(false);
+//    		        mGameV.setEndLevel(false);
+//    		      }
+//    		      else {
+//    		        mGameV.setEndLevel(true);
+//    		      }
+//    		      
+//    		     
+//    		      // increment cycle count and set room to 1...
+//    		      if( mGameV.getRoomNo() > mGameV.getTotNumRooms() &&  !mGameV.isEndLevel() ) {
+//    		        
+//    		    	  mGameV.setRoomNo(1);
+//    		    	  //saveRoomNo();
+//
+//    		      }
+//
+//    		      
+//    		      if (!mGameV.isGameDeath() && gameRunning ) {
+//    		    	  mHandler.sendEmptyMessage(GameStart.CONGRATS);
+//    		    	  
+//    		      }
+//    		      
+//    		    } /////////// while NUM_ROOMS loop
+//
+//    		    if (gameRunning) {
+//    		    	mHandler.sendEmptyMessage(GameStart.PLAYAGAIN);
+//    		    	
+//    		    	// this basically saves high scores...
+//      		      	// duplicated in 'onPause()'
+//	      		      if(mHighScores.getScore() > mGameV.getOldGuyScore()) {
+//	      		    	  
+//	      		    	  mScores.insertRecordIfRanks(mHighScores);
+//	      		    	  mHighScores.setNewRecord(false);
+//	      		    	  mGameV.setOldGuyScore(mHighScores.getScore());
+//	
+//	      		      }
+//      		        mScores.insertHighInTableIfRanks(mHighScores);
+//
+//    		    	
+//    		    }
+//    		    
+//    		    
+//    		    mPlayAgain = true;
+//
+//    		  } // playAgain
+//
+//    		
+//
+//    	}
+//    	
+//    	public void setGameRunning(boolean isRunning) {
+//    		gameRunning = isRunning;
+//    	}
+//    	
+//    	public   void gameSpeedRegulator() {
+//    		
+//    		Date newDate = new Date();
+//    		ticksElapsed = newDate.getTime();
+//    		nextGameTick += skipTicks;
+//    		sleepTime = nextGameTick - ticksElapsed;
+//    		if ( sleepTime >= 0 && gameRunning) {
+//    		
+//    			//Log.v("InnerGameLoop", "---Passing time");
+//    			try {
+//    	            Thread.sleep(sleepTime);
+//    	    	} catch (InterruptedException e) {
+//    	    		//
+//    	    	} 
+//    	    	
+//    		}
+//    		else {
+//    			//Log.v("InnerGameLoop", "Running behind");
+//    			newDate = new Date();
+//    			nextGameTick = newDate.getTime();
+//    			//ticksElapsed = newDate.getTime();
+//    		}
+//    	}
+//    	
+//    	
+//    	
+//    	
+//    };
 
     public void saveRoomNo() {
     	// this function doesn't seem to work from inside the 'InnerGameLoop'
@@ -856,13 +870,13 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
 		this.mHighScores = mHighScores;
 	}
 
-	public boolean isGameDeath() {
-		return mGameDeath;
-	}
-
-	public void setGameDeath(boolean mGameDeath) {
-		this.mGameDeath = mGameDeath;
-	}
+//	public boolean isGameDeath() {
+//		return mGameDeath;
+//	}
+//
+//	public void setGameDeath(boolean mGameDeath) {
+//		this.mGameDeath = mGameDeath;
+//	}
     
 	protected Dialog onCreateDialog(int id) {
 	    Dialog dialog;
