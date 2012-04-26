@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.lang.*;
 import android.content.*;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 //import android.util.Log;
 
 
@@ -45,6 +48,7 @@ public class GameValues {
 	public static final int ORIENTATION_LANDSCAPE = 1;
 	public static final int ORIENTATION_PORTRAIT = 2;
 	
+	private boolean mUseSavedBundle;
 	private int mScreenOrientation;
 	private boolean mPutGameKeys = false;
 	private float mScaleH = 1; 
@@ -55,15 +59,22 @@ public class GameValues {
 	
 	/* game progress */
 	private Record mGuyScore = new Record();
+	private int mLives = 0;
 	private int mRoom = 1;
 	private boolean mEndLevel = false;
 	private boolean mEndGame = false;
 	private boolean mGameDeath = false;
+	private boolean mGameRunning = true;
 	private int mUsernum = 4;
 	//public static int NUM_ROOMS = 10;
 	private int mOldGuyScore;
 	//private boolean mLevelLoading;
 	private int mScrollX, mScrollY;
+	
+	private Handler mHandler;
+	private MovementValues mMovementV;
+	private Panel mPanel;
+	private SurfaceHolder mHolder;
 	
 	/* sprites */
 	private ArrayList<SpriteInfo> mSprites = new ArrayList<SpriteInfo>();
@@ -79,6 +90,7 @@ public class GameValues {
 	private ArrayList<Integer> mXmlLevel = new ArrayList<Integer>();
 	private InitBackground.LevelList mLevelList;
 	private int mXmlMode = XML_USE_BOTH;
+	private InitBackground mBackground;
 	
 	/* Bundle stuff */
 	public static final String BUNDLE_NUM_OF_SPRITES = new String("sprites");
@@ -233,6 +245,13 @@ public class GameValues {
 		mRoom ++;
 	}
 	
+	public Record getGuyScore() {
+		return mGuyScore;
+	}
+	public void setGuyScore(Record mGuyScore) {
+		this.mGuyScore = mGuyScore;
+		this.mGuyScore.setLives(mLives);
+	}
 	public int getScore() {
 		return mGuyScore.getScore();
 	}
@@ -259,14 +278,18 @@ public class GameValues {
 
 	public void setLives(int mLives) {
 		this.mGuyScore.setLives(mLives);
+		this.mLives = mLives;
 	}
 	
 	public void incrementLives() {
+		
 		this.mGuyScore.incrementLives();
+		this.mLives = this.mGuyScore.getLives();
 	}
 	
 	public void decrementLives() {
 		this.mGuyScore.decrementLives();
+		this.mLives = this.mGuyScore.getLives();
 	}
 	
 	public boolean isEndGame() {
@@ -283,6 +306,15 @@ public class GameValues {
 	public void setGameDeath(boolean mGameDeath) {
 		this.mGameDeath = mGameDeath;
 	}
+	
+	
+	
+	public boolean isGameRunning() {
+		return mGameRunning;
+	}
+	public void setGameRunning(boolean mGameRunning) {
+		this.mGameRunning = mGameRunning;
+	}
 	public int getUsernum() {
 		return mUsernum;
 	}
@@ -297,10 +329,38 @@ public class GameValues {
 	public void setOldGuyScore(int mOldGuyScore) {
 		this.mOldGuyScore = mOldGuyScore;
 	}
+	/* movement values */
+	public MovementValues getMovementValues() {
+		return mMovementV;
+	}
+	public void setMovementValues(MovementValues mMovementV) {
+		this.mMovementV = mMovementV;
+	}
 	
+	/* handler */
 	
+	public Handler getHandler() {
+		return mHandler;
+	}
+	
+	public void setHandler(Handler mHandler) {
+		this.mHandler = mHandler;
+	}
+	
+	/* panel and holder */
+	public Panel getPanel() {
+		return mPanel;
+	}
+	public void setPanel(Panel mPanel) {
+		this.mPanel = mPanel;
+	}
+	public SurfaceHolder getHolder() {
+		return mHolder;
+	}
+	public void setHolder(SurfaceHolder mHolder) {
+		this.mHolder = mHolder;
+	}
 	/* screen scroll */
-	
 	public int getScrollX() {
 		return mScrollX;
 	}
@@ -415,6 +475,16 @@ public class GameValues {
 	public void setXmlMode(int mXmlMode) {
 		this.mXmlMode = mXmlMode;
 	}
+	
+	
+	
+	public InitBackground getBackground() {
+		return mBackground;
+	}
+	public void setBackground(InitBackground mBackground) {
+		this.mBackground = mBackground;
+	}
+	
 	/*  screen orientation */
 	public int getScreenOrientation() {
 		return mScreenOrientation;
@@ -621,4 +691,14 @@ public class GameValues {
 		mInitial.putBoolean(BUNDLE_INITIAL, true);
 		return mInitial;
 	}
+	
+	/* use saved bundle */
+	public boolean isUseSavedBundle() {
+		return mUseSavedBundle;
+	}
+	public void setUseSavedBundle(boolean mUseSavedBundle) {
+		this.mUseSavedBundle = mUseSavedBundle;
+	}
+	
+	
 }
