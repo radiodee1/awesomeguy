@@ -271,9 +271,9 @@ public  class Panel  extends SurfaceView implements SurfaceHolder.Callback {
 		}
 		else {
 			/* JNI Monster Collision setting */
-			int monsters = 0;
-			if(mHighScores.isEnableMonsters()) monsters = 1;
-			setMonsterPreferences(monsters, 0);
+			int monsters = JNI_FALSE;
+			if(mHighScores.isEnableMonsters()) monsters = JNI_TRUE;
+			setMonsterPreferences(monsters, JNI_FALSE);
 		}
 		/** animate items **/
 //		animateItems();
