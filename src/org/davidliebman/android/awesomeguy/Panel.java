@@ -1260,7 +1260,7 @@ public  class Panel  extends SurfaceView implements SurfaceHolder.Callback, GLSu
 }
 
 class PanelGLSurfaceView extends GLSurfaceView {
-	Panel mPanel;
+	Panel mPanel; // this is our renderer!!
 	
     public PanelGLSurfaceView(Context context,  GameValues gameValues, GameStart parent, MovementValues movementValues) {
         super(context);
@@ -1278,7 +1278,5 @@ class PanelGLSurfaceView extends GLSurfaceView {
     public Panel getPanel() {
     	return mPanel;
     }
-    //DemoRenderer mRenderer;
 
-    //private static native void nativePause();
 }
