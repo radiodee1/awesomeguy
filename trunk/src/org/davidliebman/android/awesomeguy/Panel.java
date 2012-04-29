@@ -15,7 +15,7 @@ import android.view.*;
 //import android.util.Log;
 import android.graphics.*;
 
-public  class Panel  extends SurfaceView implements SurfaceHolder.Callback, GLSurfaceView.Renderer {
+public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callback, */ GLSurfaceView.Renderer {
 	private GameValues mGameV;
 	private Canvas mCanvas;
 
@@ -112,10 +112,10 @@ public  class Panel  extends SurfaceView implements SurfaceHolder.Callback, GLSu
 	private boolean mAnimationOnly;
 	
 	public Panel(Context context,  GameValues gameValues, GameStart parent, MovementValues movementValues) {//, Record highScores) {
-		super(context);
-		this.setWillNotDraw(false);
-		
-		this.getHolder().addCallback(this);
+//		super(context);
+//		this.setWillNotDraw(false);
+//		
+//		this.getHolder().addCallback(this);
 		
 		mGameV = gameValues;
 		mMovementV = movementValues;
@@ -204,23 +204,23 @@ public  class Panel  extends SurfaceView implements SurfaceHolder.Callback, GLSu
 		int [] d = new int[16*16];
 
 		Bitmap mSprite;
-		mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy0, mOptionsSprite);
+		mSprite = BitmapFactory.decodeResource(context.getResources(),R.drawable.guy0, mOptionsSprite);
 		mSprite.getPixels(a, 0, 16, 0, 0, 16, 16);
-		mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy1, mOptionsSprite);
+		mSprite = BitmapFactory.decodeResource(context.getResources(),R.drawable.guy1, mOptionsSprite);
 		mSprite.getPixels(b, 0, 16, 0, 0, 16, 16);
-		mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy2, mOptionsSprite);
+		mSprite = BitmapFactory.decodeResource(context.getResources(),R.drawable.guy2, mOptionsSprite);
 		mSprite.getPixels(c, 0, 16, 0, 0, 16, 16);
-		mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.guy3, mOptionsSprite);
+		mSprite = BitmapFactory.decodeResource(context.getResources(),R.drawable.guy3, mOptionsSprite);
 		mSprite.getPixels(d, 0, 16, 0, 0, 16, 16);
 		setGuyData(a, b, c, d);
 
-		mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_r0, mOptionsSprite);
+		mSprite = BitmapFactory.decodeResource(context.getResources(),R.drawable.monster_r0, mOptionsSprite);
 		mSprite.getPixels(a, 0, 16, 0, 0, 16, 16);
-		mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_r1, mOptionsSprite);
+		mSprite = BitmapFactory.decodeResource(context.getResources(),R.drawable.monster_r1, mOptionsSprite);
 		mSprite.getPixels(b, 0, 16, 0, 0, 16, 16);
-		mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_l0, mOptionsSprite);
+		mSprite = BitmapFactory.decodeResource(context.getResources(),R.drawable.monster_l0, mOptionsSprite);
 		mSprite.getPixels(c, 0, 16, 0, 0, 16, 16);
-		mSprite = BitmapFactory.decodeResource(getResources(),R.drawable.monster_l1, mOptionsSprite);
+		mSprite = BitmapFactory.decodeResource(context.getResources(),R.drawable.monster_l1, mOptionsSprite);
 		mSprite.getPixels(d, 0, 16, 0, 0, 16, 16);
 		setMonsterData(a, b, c, d);
 
@@ -230,19 +230,19 @@ public  class Panel  extends SurfaceView implements SurfaceHolder.Callback, GLSu
 		int [] tiles_d = new int [128 * 224];
 
 		Bitmap mTiles;
-		mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles1, mOptionsTile);
+		mTiles = BitmapFactory.decodeResource(context.getResources(), R.drawable.tiles1, mOptionsTile);
 		mTiles.getPixels(tiles_a, 0, 224, 0, 0, 224, 128);
-		mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles2, mOptionsTile);
+		mTiles = BitmapFactory.decodeResource(context.getResources(), R.drawable.tiles2, mOptionsTile);
 		mTiles.getPixels(tiles_b, 0, 224, 0, 0, 224, 128);
-		mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles3, mOptionsTile);
+		mTiles = BitmapFactory.decodeResource(context.getResources(), R.drawable.tiles3, mOptionsTile);
 		mTiles.getPixels(tiles_c, 0, 224, 0, 0, 224, 128);
-		mTiles = BitmapFactory.decodeResource(getResources(), R.drawable.tiles4, mOptionsTile);
+		mTiles = BitmapFactory.decodeResource(context.getResources(), R.drawable.tiles4, mOptionsTile);
 		mTiles.getPixels(tiles_d, 0, 224, 0, 0, 224, 128);
 		this.setTileMapData(tiles_a, tiles_b, tiles_c, tiles_d);
 		
 		int [] platform_a = new int [8 * 40];
 		Bitmap mPlatform;
-		mPlatform = BitmapFactory.decodeResource(getResources(), R.drawable.concrete, mOptionsPlat);
+		mPlatform = BitmapFactory.decodeResource(context.getResources(), R.drawable.concrete, mOptionsPlat);
 		mPlatform.getPixels(platform_a, 0, 40, 0, 0, 40, 8);
 		this.setMovingPlatformData(platform_a);
 		
@@ -260,36 +260,29 @@ public  class Panel  extends SurfaceView implements SurfaceHolder.Callback, GLSu
 	}
 
 
-	@Override
-	public void onDraw(Canvas canvas) {
-		mCanvas = canvas;
+//	@Override
+//	public void onDraw(Canvas canvas) {
+//		mCanvas = canvas;
 		
 //		this.setScoreLives(mGameV.getScore(), mGameV.getLives());
 
-		if (!mAnimationOnly) {
 		
 //			checkRegularCollisions();
 //
 //			checkPhysicsAdjustments();
 //		
 //			scrollBg(); //always call this last!!
-		}
-		else {
-			/* JNI Monster Collision setting */
-			int monsters = JNI_FALSE;
-			if(mHighScores.isEnableMonsters()) monsters = JNI_TRUE;
-			setMonsterPreferences(monsters, JNI_FALSE);
-		}
+	
 		/** animate items **/
 //		animateItems();
 
-		/******* draw background  *********/
-		mCanvas.drawColor(Color.BLACK);
-		
+				
 		/************** test jni *******************/
 //		mMap = Bitmap.createBitmap(drawLevel(newBG + 1), 256, 192, Bitmap.Config.RGB_565);
 //		mTempJNI = Bitmap.createBitmap(mMap, 0, 0, 256, 192, mMatrix, false);
-		mCanvas.drawBitmap(mTempJNI, 0, 0, null);
+
+//		mCanvas.drawBitmap(mTempJNI, 0, 0, null);
+
 //		playSounds();
 		
 		
@@ -305,7 +298,7 @@ public  class Panel  extends SurfaceView implements SurfaceHolder.Callback, GLSu
 //		mHighScores.setScore(getScore());
 //		mGameV.setScore(getScore());
 		
-	}
+//	}
 
 	public void prepareBitmap() {
 		mMap = Bitmap.createBitmap(drawLevel(newBG + 1), 256, 192, Bitmap.Config.RGB_565);
@@ -1088,34 +1081,60 @@ public  class Panel  extends SurfaceView implements SurfaceHolder.Callback, GLSu
 	}
 	
 	@Override
-	public void surfaceChanged(SurfaceHolder holder, int format, int width,
-			int height) {
-		// TODO Auto-generated method stub
+	public void onDrawFrame(GL10 gl) {
+		//TODO Auto-generated method stub
 		
 	}
 
 
 	@Override
-	public void surfaceCreated(SurfaceHolder holder) {
-		// TODO Auto-generated method stub
-		 if (!mGameV.isUseSavedBundle()) {
-				mGameV.getHandler().sendEmptyMessage(GameStart.STARTLEVEL);
-
-			 //mHandler.sendEmptyMessage(GameStart.STARTLEVEL);
-		    }
-		    else {
-		    	mGameV.getHandler().sendEmptyMessage(GameStart.REORIENTATION);
-		    }
+	public void onSurfaceChanged(GL10 gl, int width, int height) {
+		//TODO Auto-generated method stub
 		
-		//mGameV.setGameRunning(true);
 	}
 
 
 	@Override
-	public void surfaceDestroyed(SurfaceHolder holder) {
-		// TODO Auto-generated method stub
-		//mGameV.setGameRunning(false);
+	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+		//TODO Auto-generated method stub
+		if (!mGameV.isUseSavedBundle()) {
+			mGameV.getHandler().sendEmptyMessage(GameStart.STARTLEVEL);
+
+		 //mHandler.sendEmptyMessage(GameStart.STARTLEVEL);
+	    }
+	    else {
+	    	mGameV.getHandler().sendEmptyMessage(GameStart.REORIENTATION);
+	    }
 	}
+//	@Override
+//	public void surfaceChanged(SurfaceHolder holder, int format, int width,
+//			int height) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//
+//	@Override
+//	public void surfaceCreated(SurfaceHolder holder) {
+//		// TODO Auto-generated method stub
+//		 if (!mGameV.isUseSavedBundle()) {
+//				mGameV.getHandler().sendEmptyMessage(GameStart.STARTLEVEL);
+//
+//			 //mHandler.sendEmptyMessage(GameStart.STARTLEVEL);
+//		    }
+//		    else {
+//		    	mGameV.getHandler().sendEmptyMessage(GameStart.REORIENTATION);
+//		    }
+//		
+//		//mGameV.setGameRunning(true);
+//	}
+//
+//
+//	@Override
+//	public void surfaceDestroyed(SurfaceHolder holder) {
+//		// TODO Auto-generated method stub
+//		//mGameV.setGameRunning(false);
+//	}
 
 	public DetectionPattern makeDetectionPattern(int type, int cheat){
 		DetectionPattern mTemp = new DetectionPattern();
@@ -1237,25 +1256,7 @@ public  class Panel  extends SurfaceView implements SurfaceHolder.Callback, GLSu
 		System.loadLibrary("awesomeguy");
 	}
 	
-	@Override
-	public void onDrawFrame(GL10 gl) {
-		//TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void onSurfaceChanged(GL10 gl, int width, int height) {
-		//TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-		//TODO Auto-generated method stub
-		
-	}
+	
 	
 }
 

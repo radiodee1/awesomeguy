@@ -4,7 +4,9 @@
  * native android library
  */
 
+#include "androidgl.h"
 
+/*
 #include <jni.h>
 #include <android/log.h>
 #include <stdio.h> 
@@ -19,6 +21,7 @@
 
 #define TRUE 1
 #define FALSE 0 
+
 
 static int B_START = 5;
 static int B_SPACE = 0;
@@ -193,6 +196,16 @@ void drawMovingPlatform() ;
 void collisionWithMonsters() ;
 
 void drawLevel(int animate_level) ;
+
+*/
+
+// some declarations that are used only in this c file...
+uint32_t number_alpha = 0;
+
+int sprite_num = 0;
+int monster_num = 0;
+int platform_num = -1;
+
 
 //////////////////////////////////////////////////////
 // function definitions

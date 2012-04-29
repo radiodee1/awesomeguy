@@ -37,6 +37,7 @@ public class InnerGameLoop extends Thread {
 		framesPerSec = mHighScores.getGameSpeed();
     	skipTicks = 1000 / framesPerSec;
     	
+    	
 	}
 	
 	@Override
@@ -179,23 +180,23 @@ public class InnerGameLoop extends Thread {
 					mGameV.getPanel().playSounds();
 		    	}
 		    	
-				try {
-					mCanvas = mGameV.getHolder().lockCanvas(null);
-
-					synchronized(mGameV.getHolder()) {
-
-						mGameV.getPanel().postInvalidate();
-
-					}
-			
-					
-				}
-				//catch(Exception e) {e.printStackTrace();}
-				finally {
-					if (mCanvas != null) {
-						mGameV.getHolder().unlockCanvasAndPost(mCanvas);
-					}
-				} // end finally
+//				try {
+//					mCanvas = mGameV.getHolder().lockCanvas(null);
+//
+//					synchronized(mGameV.getHolder()) {
+//
+//						//mGameV.getPanel().postInvalidate();
+//
+//					}
+//			
+//					
+//				}
+//				//catch(Exception e) {e.printStackTrace();}
+//				finally {
+//					if (mCanvas != null) {
+//						mGameV.getHolder().unlockCanvasAndPost(mCanvas);
+//					}
+//				} // end finally
 				
 				
 				

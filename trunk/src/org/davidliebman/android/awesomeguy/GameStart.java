@@ -344,7 +344,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     		//TODO: check that this works on landscape AND portrait
     	}
     	
-    	mGameV.setHolder(mPanelBot.getHolder());
+    	//mGameV.setHolder(mPanelBot.getHolder());
 		mGameV.setPanel(mPanelBot);
     	
     	mBackground = new InitBackground(mGameV, this, mLookForXml);
@@ -611,7 +611,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     			//do something here?
     	    	mPanelBot.setAnimationOnly(true);
     	    	mPanelBot.setJNIAnimateOnly(1); // '1' is true for JNI
-    	    	mPanelBot.invalidate();
+    	    	//mPanelBot.invalidate();
     			this.removeMessages(MOVEMENTVALUES);
     			this.removeMessages(GAMEVALUES);
     			this.removeMessages(INPUTVALUES_KEYUP);
