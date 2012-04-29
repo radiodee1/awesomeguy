@@ -537,12 +537,16 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     	
 
     	public void handleMessage(Message msg) {
-    		if(msg.what == GAMEVALUES) {
+    		switch(msg.what) {
+    		
+    		case GAMEVALUES: {
     		
 	    		//mPanelBot.invalidate();
 	       		
     		}
-    		else if(msg.what == STARTLEVEL) {
+    			break;
+    		
+    		case STARTLEVEL: {
     			
     			this.removeMessages(MOVEMENTVALUES);
     			this.removeMessages(GAMEVALUES);
@@ -560,7 +564,8 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     			//mPanelBot.invalidate();
     			
     		}
-    		else if (msg.what == REORIENTATION) {
+    			break;
+    		case REORIENTATION: {
     			
     			this.removeMessages(MOVEMENTVALUES);
     			this.removeMessages(GAMEVALUES);
@@ -582,7 +587,8 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     			
     			
     		}
-    		else if(msg.what == MOVEMENTVALUES) {
+    			break;
+    		case MOVEMENTVALUES: {
     			//mPanelBot.setHighScores((Record)msg.obj);
     			
 //    			mPanelBot.setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
@@ -593,15 +599,15 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     			//mPanelBot.invalidate();
     			
     		}
-    		
-    		else if(msg.what == INPUTVALUES_TRACKUP) {
+    			break;
+    		case INPUTVALUES_TRACKUP: {
     			mMovementV.clearKeys();
     			mPanelBot.readKeys(0);
     			//Log.v("Handler", "Keyup " );
     		}
     		
-    		
-    		else if (msg.what == GAMESTOP) {
+    			break;
+    		case GAMESTOP: {
     			//do something here?
     	    	mPanelBot.setAnimationOnly(true);
     	    	mPanelBot.setJNIAnimateOnly(1); // '1' is true for JNI
@@ -613,20 +619,25 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     			mMovementV.clearKeys();
     			
     		}
-    		else if (msg.what == CONGRATS) {
+    			break;
+    		case CONGRATS: {
     			//This displays the end-of-level dialog box.
     			showDialog(GameStart.DIALOG_CONGRATS_ID);
     			
     		}
-    		else if (msg.what == PLAYAGAIN) {
+    			break;
+    		case PLAYAGAIN: {
     			//This displays the end-of-GAME dialog box.
         		Toast.makeText(GameStart.this, "PLAY AGAIN!!" , Toast.LENGTH_LONG).show();
     			
     		}
+    			break;
+    		default:{
+    			super.handleMessage(msg);
+    		}
+    			break;
+    		}// end case
     		
-
-    		
-    		else super.handleMessage(msg);
     		
     	}
     
