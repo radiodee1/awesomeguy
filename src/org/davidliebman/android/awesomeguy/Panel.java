@@ -1,16 +1,21 @@
 package org.davidliebman.android.awesomeguy;
 
+
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.opengl.GLSurfaceView;
 import android.view.*;
 //import android.util.Log;
 import android.graphics.*;
 
-public  class Panel  extends SurfaceView implements SurfaceHolder.Callback {
+public  class Panel  extends SurfaceView implements SurfaceHolder.Callback, GLSurfaceView.Renderer {
 	private GameValues mGameV;
 	private Canvas mCanvas;
 
@@ -259,7 +264,7 @@ public  class Panel  extends SurfaceView implements SurfaceHolder.Callback {
 	public void onDraw(Canvas canvas) {
 		mCanvas = canvas;
 		
-		this.setScoreLives(mGameV.getScore(), mGameV.getLives());
+//		this.setScoreLives(mGameV.getScore(), mGameV.getLives());
 
 		if (!mAnimationOnly) {
 		
@@ -1232,4 +1237,48 @@ public  class Panel  extends SurfaceView implements SurfaceHolder.Callback {
 		System.loadLibrary("awesomeguy");
 	}
 	
+	@Override
+	public void onDrawFrame(GL10 gl) {
+		//TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onSurfaceChanged(GL10 gl, int width, int height) {
+		//TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+		//TODO Auto-generated method stub
+		
+	}
+	
+}
+
+class PanelGLSurfaceView extends GLSurfaceView {
+	Panel mPanel;
+	
+    public PanelGLSurfaceView(Context context,  GameValues gameValues, GameStart parent, MovementValues movementValues) {
+        super(context);
+        mPanel = new Panel(context, gameValues, parent, movementValues);
+        setRenderer(mPanel);
+    }
+
+    public boolean onTouchEvent(final MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            //nativePause();
+        }
+        return true;
+    }
+
+    public Panel getPanel() {
+    	return mPanel;
+    }
+    //DemoRenderer mRenderer;
+
+    //private static native void nativePause();
 }

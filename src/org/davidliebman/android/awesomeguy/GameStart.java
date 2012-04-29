@@ -58,6 +58,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     private TableLayout mTLayout ;
     private FrameLayout mFLayoutBot ;
     private Panel mPanelBot ;
+    private PanelGLSurfaceView mPanelView;
 	private PanelHandler mHandler;
     
     private View mSpaceView, mSpaceViewSecond,mSpaceViewThird;
@@ -329,7 +330,9 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     	/* init background */
     	
     	this.setOrientationVars();
-    	mPanelBot = new Panel(this,  mGameV, this, mMovementV);//, mHighScores);
+//    	mPanelBot = new Panel(this,  mGameV, this, mMovementV);//, mHighScores);
+    	mPanelView = new PanelGLSurfaceView(this, mGameV, this, mMovementV);
+    	mPanelBot = mPanelView.getPanel();
     	
     	if( mConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
     		mButtonManager = new ButtonManager(this, mMovementV, mGameV,ButtonManager.MODE_PORTRAIT);
@@ -347,7 +350,8 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     	mBackground = new InitBackground(mGameV, this, mLookForXml);
     	mGameV.setBackground(mBackground);
     	
-    	mFLayoutBot.addView((View)mPanelBot);
+    	//mFLayoutBot.addView((View)mPanelBot);//TODO: commented out for testing
+    	mFLayoutBot.addView((View)mPanelView);
     	
     	mPanelBot.setEnableSounds(mHighScores.isSound());
     	
