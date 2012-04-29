@@ -164,6 +164,8 @@ public class InnerGameLoop extends Thread {
 		    		mGameV.setScore(mGameV.getPanel().getScore());
 		    		
 		    		/* formerly above 'draw' */
+		    		mGameV.getPanel().setScoreLives(mGameV.getScore(), mGameV.getLives());
+		    		
 		    		mGameV.getPanel().checkRegularCollisions();
 
 					mGameV.getPanel().checkPhysicsAdjustments();
