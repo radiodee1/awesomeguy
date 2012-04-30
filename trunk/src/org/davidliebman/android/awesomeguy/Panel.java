@@ -1097,6 +1097,7 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
 	@Override
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 		//TODO Auto-generated method stub
+		this.JNIinit();
 		if (!mGameV.isUseSavedBundle()) {
 			mGameV.getHandler().sendEmptyMessage(GameStart.STARTLEVEL);
 
@@ -1252,6 +1253,9 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
 	public native int getSpriteY(int num);
 	public native int getSpriteFacingRight(int num);
 	public native int setJNIScroll(int x, int y);
+	//opengl native methods
+	public native void JNIinit();
+	public native void JNIcopyToTexture();
 	static {
 		System.loadLibrary("awesomeguy");
 	}
