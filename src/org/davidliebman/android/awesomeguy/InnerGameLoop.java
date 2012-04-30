@@ -177,7 +177,11 @@ public class InnerGameLoop extends Thread {
 					
 					mGameV.getPanel().prepareBitmap();
 					
+					mGameV.getPanel().JNIcopyToTexture();
+					
 					mGameV.getPanel().playSounds();
+					
+					//Log.e("InnerGameLoop","call jni");
 		    	}
 		    	
 //				try {

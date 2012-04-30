@@ -8,7 +8,8 @@
 #include <stdio.h> 
 #include <stdlib.h>
 #include <assert.h>
- 
+#include <pthread.h>
+
 #include <GLES/gl.h>
 #include <GLES/glext.h>
 
@@ -18,6 +19,7 @@
 #define  LOG_TAG              "awesomeguy-jni"
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
+#define RGB565(r, g, b)  (((r) << (5+6)) | ((g) << 6) | (b))
 
 #define TRUE 1
 #define FALSE 0 
@@ -25,6 +27,7 @@
 #define VIDEO_WIDTH   320
 #define VIDEO_HEIGHT  240
 
+#define TEX_DIMENSION	512
 
 static int B_START = 5;
 static int B_SPACE = 0;
@@ -133,7 +136,16 @@ static int preferences_collision = FALSE;
 static int animate_only = FALSE;
 
 //////////////////////////////////////////////////////
-// function prototype
+// open gl stuff
+//////////////////////////////////////////////////////
+static long otick = 0;
+static uint16_t *pixbuf = NULL;
+//static uint32_t *pixbuf = NULL;
+static GLuint 	texture;
+const unsigned short default_image[VIDEO_WIDTH * VIDEO_HEIGHT];
+
+//////////////////////////////////////////////////////
+// function prototype: awesomeguy.c
 //////////////////////////////////////////////////////
 
 void setSoundOw() ;
@@ -202,4 +214,11 @@ void collisionWithMonsters() ;
 
 void drawLevel(int animate_level) ;
 
+//////////////////////////////////////////////////////
+// function prototype: androidgl.c
+//////////////////////////////////////////////////////
+
+void init() ;
+
+void copy_to_texture() ;
 #endif

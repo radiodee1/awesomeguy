@@ -1,5 +1,6 @@
-obj/local/armeabi/objs/awesomeguy/androidgl.o: jni/androidgl.c \
- jni/androidgl.h \
+/home/dave/workspace/awesomeguy/obj/local/armeabi/objs/awesomeguy/androidgl.o: \
+ /home/dave/workspace/awesomeguy/jni/androidgl.c \
+ /home/dave/workspace/awesomeguy/jni/androidgl.h \
  /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/jni.h \
  /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/android/log.h \
  /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/stdio.h \
@@ -25,12 +26,28 @@ obj/local/armeabi/objs/awesomeguy/androidgl.o: jni/androidgl.c \
  /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/strings.h \
  /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/memory.h \
  /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/assert.h \
+ /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/pthread.h \
+ /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/time.h \
+ /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/sys/time.h \
+ /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/linux/time.h \
+ /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/asm/siginfo.h \
+ /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/asm-generic/siginfo.h \
+ /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/signal.h \
+ /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/limits.h \
+ /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/sys/limits.h \
+ /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/linux/limits.h \
+ /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/machine/internal_types.h \
+ /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/machine/limits.h \
+ /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/sys/syslimits.h \
+ /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/asm/signal.h \
+ /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/asm-generic/signal.h \
+ /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/sched.h \
  /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/GLES/gl.h \
  /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/GLES/glplatform.h \
  /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/KHR/khrplatform.h \
  /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/GLES/glext.h
 
-jni/androidgl.h:
+/home/dave/workspace/awesomeguy/jni/androidgl.h:
 
 /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/jni.h:
 
@@ -81,6 +98,38 @@ jni/androidgl.h:
 /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/memory.h:
 
 /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/assert.h:
+
+/home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/pthread.h:
+
+/home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/time.h:
+
+/home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/sys/time.h:
+
+/home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/linux/time.h:
+
+/home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/asm/siginfo.h:
+
+/home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/asm-generic/siginfo.h:
+
+/home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/signal.h:
+
+/home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/limits.h:
+
+/home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/sys/limits.h:
+
+/home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/linux/limits.h:
+
+/home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/machine/internal_types.h:
+
+/home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/machine/limits.h:
+
+/home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/sys/syslimits.h:
+
+/home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/asm/signal.h:
+
+/home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/asm-generic/signal.h:
+
+/home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/sched.h:
 
 /home/dave/bin/android-ndk-r7b/platforms/android-5/arch-arm/usr/include/GLES/gl.h:
 
