@@ -24,10 +24,10 @@
 #define TRUE 1
 #define FALSE 0 
 
-#define VIDEO_WIDTH   320
-#define VIDEO_HEIGHT  240
+#define VIDEO_WIDTH   256
+#define VIDEO_HEIGHT  256
 
-#define TEX_DIMENSION	512
+#define TEX_DIMENSION	256
 
 static int B_START = 5;
 static int B_SPACE = 0;
@@ -142,7 +142,7 @@ static long otick = 0;
 static uint16_t *pixbuf = NULL;
 //static uint32_t *pixbuf = NULL;
 static GLuint 	texture;
-const unsigned short default_image[VIDEO_WIDTH * VIDEO_HEIGHT];
+static int screen_width, screen_height;
 
 //////////////////////////////////////////////////////
 // function prototype: awesomeguy.c
