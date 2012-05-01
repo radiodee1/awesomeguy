@@ -11,6 +11,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.opengl.GLSurfaceView;
+import android.util.Log;
 import android.view.*;
 //import android.util.Log;
 import android.graphics.*;
@@ -1083,7 +1084,7 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
 	@Override
 	public void onDrawFrame(GL10 gl) {
 		//TODO Auto-generated method stub
-		
+		Log.e("tag", " code " + mGameV.getDisplayHeight());
 	}
 
 
