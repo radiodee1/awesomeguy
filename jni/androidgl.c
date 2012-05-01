@@ -12,12 +12,11 @@
 void init(void)
 {
     int tex_width, tex_height;
-    GLint crop[4] = { 0, SCREEN_HEIGHT, SCREEN_WIDTH, - SCREEN_HEIGHT };
+    GLint crop[4] = { 0, screen_height, screen_width, - screen_height };
 
-    // FIXME: this should be computed (smallest power of 2 > dimension)
     tex_width = TEX_DIMENSION;
     tex_height = TEX_DIMENSION;
-    otick = 0;
+    //otick = 0;
 
     if (!pixbuf) {
 	pixbuf = malloc(tex_width * tex_height * 2);
@@ -74,8 +73,8 @@ void init(void)
 	glDisable(GL_CULL_FACE);
 
 
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-
+	glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+	//glColor4x(0xfffff, 0x10000, 0x10000, 0x10000);
 
 	glShadeModel(GL_FLAT);
 
@@ -85,8 +84,8 @@ void init(void)
 }
 
 void copy_to_texture() {
-	int screen_width = 100;
-	int screen_height = 100;
+	//int screen_width = 256;
+	//int screen_height = 256;
 	int tex_height = TEX_DIMENSION;
 	int tex_width = TEX_DIMENSION;
 	int i,j;
@@ -97,13 +96,15 @@ void copy_to_texture() {
 	//		pixbuf[( i * tex_height * 2 ) + ( j * 2 ) + 1] = 0xff;
 	//	}
 	//}
-	//test
+	//glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+
+	//glClear(GL_COLOR_BUFFER_BIT);	//test
 	pthread_mutex_t lock;
 	pthread_mutex_init(&lock, NULL);
 
 	pthread_mutex_lock(&lock);
 	for (i = 0; i < TEX_DIMENSION * TEX_DIMENSION ; i ++ ) {
-		pixbuf[i] = RGB565(0xf,0xf,0);
+		pixbuf[i] = RGB565(0xf,0xf,0xf);
 
 	}
 
@@ -114,7 +115,7 @@ void copy_to_texture() {
 		pixbuf);
 
 
-	glDrawTexiOES(0, 0, 0, tex_width, tex_height);
+	glDrawTexiOES(0, 0, 0, screen_width, screen_height);
 	if (glGetError() != GL_NO_ERROR) exit(3);
 	LOGE("2: code");
 	pthread_mutex_unlock(&lock);	
@@ -153,8 +154,10 @@ void copy_to_texture() {
  *	@param	obj				required by all java jni
  *	@return					void
  */
-JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIinit(JNIEnv * env, jobject  obj)
+JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIinit(JNIEnv * env, jobject  obj, jint w, jint h)
 {
+	screen_width = w;
+	screen_height = h;
 	init();
 
 }
@@ -168,8 +171,7 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIinit(JN
  */
 JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIcopyToTexture(JNIEnv * env, jobject  obj)
 {
-	int tex_height = TEX_DIMENSION;
-	int tex_width = TEX_DIMENSION;
+	
 	copy_to_texture();
 
 	//glBindTexture(GL_TEXTURE_2D, 0);
