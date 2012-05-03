@@ -60,6 +60,20 @@ void resize(int w, int h) {
 		0.1f, 100.0f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
+	glGenTextures(1, &texture_id);
+
+	glBindTexture(GL_TEXTURE_2D, texture_id);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+		GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
+		GL_NEAREST);
+
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
+		GL_CLAMP_TO_EDGE);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
+		GL_REPEAT);
+
 }
 
 void copy_to_texture() {
@@ -77,18 +91,6 @@ void copy_to_texture() {
 	}
 
 
-	glGenTextures(1, &texture_id);
-
-	glBindTexture(GL_TEXTURE_2D, texture_id);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-		GL_NEAREST);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
-		GL_NEAREST);
-
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
-		GL_CLAMP_TO_EDGE);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
-		GL_REPEAT);
 
 	glTexImage2D(GL_TEXTURE_2D, 0, 
 	        GL_RGB, 
