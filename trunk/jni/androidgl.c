@@ -39,7 +39,12 @@ void init(void)
 {
 	int i;
 	//int tex_width, tex_height;
+	int tex_width = TEX_WIDTH;
+	int tex_height = TEX_HEIGHT;
 
+	if (!pixbuf) {
+		pixbuf = malloc(tex_width * tex_height * 2);
+	}
 
 	//tex_width = TEX_WIDTH;
 	//tex_height = TEX_HEIGHT;
@@ -59,6 +64,10 @@ void init(void)
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
+
+	
+
 /*
 	//onsurface changed
 	//glViewport(0,0,tex_width, tex_height);
@@ -98,16 +107,51 @@ void init(void)
 }
 
 void resize(int w, int h) {
-		glViewport(0, 0, w, h);
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		gluPerspective( 45.0f, (float) w/ (float) h, 
-				0.1f, 100.0f);
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
+	glViewport(0, 0, w, h);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective( 45.0f, (float) w/ (float) h, 
+		0.1f, 100.0f);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 }
 
 void copy_to_texture() {
+
+	int tex_width = TEX_WIDTH;
+	int tex_height = TEX_HEIGHT;
+	int i;
+
+	
+        for (i = 0; i < TEX_DIMENSION * TEX_DIMENSION ; i ++ ) {
+		pixbuf[i] = RGB565(0xf,0,0);
+	}
+
+	
+	int textures[] =  {0};
+	glGenTextures(1, textures);
+	texture_id = textures[0];
+
+	glBindTexture(GL_TEXTURE_2D, texture_id);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+		GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
+		GL_NEAREST);
+
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
+		GL_CLAMP_TO_EDGE);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
+		GL_REPEAT);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, 
+	        GL_RGB, 
+	        tex_width, tex_height, 
+	        0, 
+	        GL_RGB,
+	        GL_UNSIGNED_SHORT_5_6_5, 
+	        pixbuf);
+
+	
 
 }
 
@@ -120,10 +164,6 @@ void draw() {
 
 	//LOGE("here");
 
-
-	//glMatrixMode(GL_MODELVIEW);
-	//glLoadIdentity();
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	float vertices[] = {
@@ -134,24 +174,35 @@ void draw() {
 	};
 	short indices[] = { 0, 1, 2, 0, 2, 3 };
 
-	glColor4f(0.5f, 0.5f, 1.0f, 1.0f);
+	float tex_coords[] = {
+		0.0f, 1.0f,
+		1.0f, 1.0f,
+		0.0f, 0.0f,
+		1.0f, 0.0f };
+
+
+	//glColor4f(0.5f, 0.5f, 1.0f, 1.0f);
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 
 	glFrontFace(GL_CCW);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
+	glEnable(GL_TEXTURE_2D);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);// GL_VERTEX_ARRAY);
 	glEnableClientState(GL_VERTEX_ARRAY);
+	glTexCoordPointer(2, GL_FLOAT, 0, tex_coords);
+	glBindTexture(GL_TEXTURE_2D, texture_id);
+
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 	glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);//GL_VERTEX_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisable(GL_CULL_FACE);
 
 	//glColor4f(0.5f, 0.5f, 1.0f, 1.0f);
 	glLoadIdentity();
 	glTranslatef(0,0,-4);
-	
-
 
 }
 
@@ -184,7 +235,7 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIinit(JN
  */
 JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIdraw(JNIEnv * env, jobject  obj)
 {
-	
+	copy_to_texture();
 	draw();
 	//LOGE("draw");
 	//glBindTexture(GL_TEXTURE_2D, 0);
@@ -204,7 +255,7 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIdestroy
 	//screen_width = w;
 	//screen_height = h;
 	free(pixbuf);
-
+	pixbuf = NULL;
 }
 
 JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIresize(JNIEnv * env, jobject  obj, jint w, jint h)

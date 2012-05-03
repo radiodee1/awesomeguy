@@ -142,7 +142,7 @@ static int animate_only = FALSE;
 //static long otick = 0;
 static uint16_t *pixbuf = NULL;
 //static uint32_t *pixbuf = NULL;
-static GLuint 	texture;
+static GLuint 	texture_id;
 static int screen_width, screen_height;
 static GLuint framebuffer, colorRenderbuffer;
 //////////////////////////////////////////////////////
@@ -222,4 +222,8 @@ void drawLevel(int animate_level) ;
 void init() ;
 
 void copy_to_texture() ;
+
+void draw();
+
+void resize(int w, int h);
 #endif
