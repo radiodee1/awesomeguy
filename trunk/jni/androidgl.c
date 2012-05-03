@@ -6,132 +6,156 @@
 
 #include "androidgl.h"
 
+static void check_gl_error(const char* op)
+{
+	GLint error;
+	for (error = glGetError(); error; error = glGetError())
+	LOGE("after %s() glError (0x%x)\n", op, error);
+}
+
+static void gluPerspective(GLfloat fovy, GLfloat aspect,
+               GLfloat zNear, GLfloat zFar)//android ndk lacks glu tool kit (unbelievable)
+{
+    #define PI 3.1415926535897932f
+    GLfloat xmin, xmax, ymin, ymax;
+
+    ymax = zNear * (GLfloat)tan(fovy * PI / 360);
+    ymin = -ymax;
+    xmin = ymin * aspect;
+    xmax = ymax * aspect;
+
+    glFrustumx((GLfixed)(xmin * 65536), (GLfixed)(xmax * 65536),
+               (GLfixed)(ymin * 65536), (GLfixed)(ymax * 65536),
+               (GLfixed)(zNear * 65536), (GLfixed)(zFar * 65536));
+    #undef PI
+}
+
+
 /**
  *	initialize opengles
  */
+
 void init(void)
 {
-    int tex_width, tex_height;
-    GLint crop[4] = { 0, screen_height, screen_width, - screen_height };
+	int i;
+	//int tex_width, tex_height;
 
-    tex_width = TEX_DIMENSION;
-    tex_height = TEX_DIMENSION;
 
-	if (!pixbuf) {
-		pixbuf = malloc(tex_width * tex_height * 2);
-	
-		assert(pixbuf);
-        
+	//tex_width = TEX_WIDTH;
+	//tex_height = TEX_HEIGHT;
+
+	//GLint crop[4] = { 0, 0, tex_width, tex_height };
+/*
+	pixbuf = malloc(tex_width * tex_height * 2);
+		for (i = 0; i < TEX_DIMENSION * TEX_DIMENSION ; i ++ ) {
+		pixbuf[i] = 0xffff;//RGB565(0xf,0,0);
 	}
-
-	glEnable(GL_TEXTURE_2D);
-	
-	//glDeleteTextures(1, &texture);
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
-
-	glTexParameterf( GL_TEXTURE_2D,
-			GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-	glTexParameterf( GL_TEXTURE_2D,
-			GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	glTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_CROP_RECT_OES, crop);
-
-	glShadeModel(GL_FLAT);
-
-	glTexImage2D(GL_TEXTURE_2D, 0, 
-		GL_RGB, 
-		tex_width, tex_height, 
-		0, 
-		GL_RGB,
-		GL_UNSIGNED_SHORT_5_6_5, 
-		NULL);
-
-
-	//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-
-
-
-	glDisable(GL_BLEND);
-	glDisable(GL_DITHER);
-	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_FOG);
-	glDisable(GL_LIGHTING);
-	glDisable(GL_ALPHA_TEST);
-	glDisable(GL_COLOR_LOGIC_OP);
-	glDisable(GL_COLOR_MATERIAL);
-	glDisable(GL_STENCIL_TEST);
-
-	glDepthMask(GL_FALSE);
-	glDisable(GL_CULL_FACE);
-
-
+*/	
 	//glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
-
 	//glClear(GL_COLOR_BUFFER_BIT);
 
+	glShadeModel(GL_SMOOTH);
+	glClearDepthf(1.0f);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+/*
+	//onsurface changed
+	//glViewport(0,0,tex_width, tex_height);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	//gluPerspective (45.0f, (float)tex_width/(float) tex_height, 0.1f, 100.0f);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	float vertices[] = {
+	      -1.0f,  1.0f, 0.0f,  // 0, Top Left
+	      -1.0f, -1.0f, 0.0f,  // 1, Bottom Left
+	       1.0f, -1.0f, 0.0f,  // 2, Bottom Right
+	       1.0f,  1.0f, 0.0f,  // 3, Top Right
+	};
+	short indices[] = { 0, 1, 2, 0, 2, 3 };
+
+	glColor4f(0.5f, 0.5f, 1.0f, 1.0f);
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	//glVertexPointer(3, GL_FLOAT, 0, vertices);
+	glFrontFace(GL_CCW);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	glVertexPointer(3, GL_FLOAT, 0, vertices);
+	glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisable(GL_CULL_FACE);
+
+	glColor4f(0.5f, 0.5f, 1.0f, 1.0f);
+
+	if (glGetError() != GL_NO_ERROR) exit(3);
+*/
+
+}
+
+void resize(int w, int h) {
+		glViewport(0, 0, w, h);
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		gluPerspective( 45.0f, (float) w/ (float) h, 
+				0.1f, 100.0f);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
 }
 
 void copy_to_texture() {
-	//int screen_width = 256;
-	//int screen_height = 256;
-	int tex_height = TEX_DIMENSION;
-	int tex_width = TEX_DIMENSION;
-	int i,j;
-	//for (i = 0; i < SCREEN_HEIGHT; i ++ ) {
-	//	for(j = 0; j < SCREEN_WIDTH; j ++ ) {
-			//pixbuf[( i * tex_height * 2 ) + j] = screen[i][j];
-	//		pixbuf[( i * tex_height * 2 ) + ( j * 2 )] = 0xff;
-	//		pixbuf[( i * tex_height * 2 ) + ( j * 2 ) + 1] = 0xff;
-	//	}
-	//}
-
-	pthread_mutex_t lock;
-	pthread_mutex_init(&lock, NULL);
-
-	pthread_mutex_lock(&lock);
-	for (i = 0; i < TEX_DIMENSION * TEX_DIMENSION ; i ++ ) {
-		pixbuf[i] = RGB565(31,31,0);
-
-	}
-
-	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT,
-		GL_RGB, 
-		//GL_UNSIGNED_SHORT_5_5_5_1,//
-		GL_UNSIGNED_SHORT_5_6_5, 
-		pixbuf);
-
-
-	glDrawTexiOES(0, 0, 0, screen_width, screen_height);
-	if (glGetError() != GL_NO_ERROR) exit(3);
-	//LOGE("2: code");
-	pthread_mutex_unlock(&lock);	
-	
-	glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
-	glClear(GL_COLOR_BUFFER_BIT);	//test
-
-	//glBindTexture(GL_TEXTURE_2D, 0);
-	//glBindTexture(GL_TEXTURE_2D, texture);
-
-	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tex_width, tex_height, 0, GL_RGB,
-	//	GL_UNSIGNED_SHORT_5_6_5, pixbuf);
-
-
-	
-	
-	
-	//glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, VIDEO_WIDTH, VIDEO_HEIGHT,
-	//	GL_RGB, GL_UNSIGNED_SHORT_5_6_5, pixbuf);
-
-			//vp_os_mutex_lock( &config->mutex );
-			//glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, VIDEO_WIDTH, VIDEO_HEIGHT,
-			//		GL_RGB, GL_UNSIGNED_SHORT_5_6_5, config->data );
-			//num = config->num_picture_decoded;
-
-			//vp_os_mutex_unlock( &config->mutex );
 
 }
+
+void draw() {
+	int screen_width = TEX_WIDTH;
+	int screen_height = TEX_HEIGHT;
+	//int tex_height = TEX_HEIGHT;
+	//int tex_width = TEX_WIDTH;
+	int i,j;
+
+	//LOGE("here");
+
+
+	//glMatrixMode(GL_MODELVIEW);
+	//glLoadIdentity();
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	float vertices[] = {
+	      -1.0f,  1.0f, 0.0f,  // 0, Top Left
+	      -1.0f, -1.0f, 0.0f,  // 1, Bottom Left
+	       1.0f, -1.0f, 0.0f,  // 2, Bottom Right
+	       1.0f,  1.0f, 0.0f,  // 3, Top Right
+	};
+	short indices[] = { 0, 1, 2, 0, 2, 3 };
+
+	glColor4f(0.5f, 0.5f, 1.0f, 1.0f);
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+
+	glFrontFace(GL_CCW);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glVertexPointer(3, GL_FLOAT, 0, vertices);
+	glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisable(GL_CULL_FACE);
+
+	//glColor4f(0.5f, 0.5f, 1.0f, 1.0f);
+	glLoadIdentity();
+	glTranslatef(0,0,-4);
+	
+
+
+}
+
+
 
 /////////////////////////////////////////////////////
 // JNI methods for androidgl.c
@@ -144,31 +168,51 @@ void copy_to_texture() {
  *	@param	obj				required by all java jni
  *	@return					void
  */
-JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIinit(JNIEnv * env, jobject  obj, jint w, jint h)
+JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIinit(JNIEnv * env, jobject  obj)
 {
-	screen_width = w;
-	screen_height = h;
-	init();
 
+	init();
+	
 }
 
 /**
- *	Used to set JNI opengl library
+ *	Used to copy info from the game screen to the opengl texture.
  *
  *	@param	env				required by all java jni
  *	@param	obj				required by all java jni
  *	@return					void
  */
-JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIcopyToTexture(JNIEnv * env, jobject  obj)
+JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIdraw(JNIEnv * env, jobject  obj)
 {
 	
-	copy_to_texture();
-
+	draw();
+	//LOGE("draw");
 	//glBindTexture(GL_TEXTURE_2D, 0);
 	//glBindTexture(GL_TEXTURE_2D, texture);
 
+}
 
+/**
+ *	Used to destroy the JNI resources.
+ *
+ *	@param	env				required by all java jni
+ *	@param	obj				required by all java jni
+ *	@return					void
+ */
+JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIdestroy(JNIEnv * env, jobject  obj)
+{
+	//screen_width = w;
+	//screen_height = h;
+	free(pixbuf);
 
+}
 
+JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIresize(JNIEnv * env, jobject  obj, jint w, jint h)
+{
+	screen_width = w;
+	screen_height = h;
+	//free(pixbuf);
 
+	LOGE("resize");
+	resize(w,h);
 }
