@@ -42,22 +42,6 @@ void init(void)
 	int tex_width = TEX_WIDTH;
 	int tex_height = TEX_HEIGHT;
 
-	if (!pixbuf) {
-		pixbuf = malloc(tex_width * tex_height * 2);
-	}
-
-	//tex_width = TEX_WIDTH;
-	//tex_height = TEX_HEIGHT;
-
-	//GLint crop[4] = { 0, 0, tex_width, tex_height };
-/*
-	pixbuf = malloc(tex_width * tex_height * 2);
-		for (i = 0; i < TEX_DIMENSION * TEX_DIMENSION ; i ++ ) {
-		pixbuf[i] = 0xffff;//RGB565(0xf,0,0);
-	}
-*/	
-	//glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
-	//glClear(GL_COLOR_BUFFER_BIT);
 
 	glShadeModel(GL_SMOOTH);
 	glClearDepthf(1.0f);
@@ -65,44 +49,6 @@ void init(void)
 	glDepthFunc(GL_LEQUAL);
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
-
-	
-
-/*
-	//onsurface changed
-	//glViewport(0,0,tex_width, tex_height);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	//gluPerspective (45.0f, (float)tex_width/(float) tex_height, 0.1f, 100.0f);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	float vertices[] = {
-	      -1.0f,  1.0f, 0.0f,  // 0, Top Left
-	      -1.0f, -1.0f, 0.0f,  // 1, Bottom Left
-	       1.0f, -1.0f, 0.0f,  // 2, Bottom Right
-	       1.0f,  1.0f, 0.0f,  // 3, Top Right
-	};
-	short indices[] = { 0, 1, 2, 0, 2, 3 };
-
-	glColor4f(0.5f, 0.5f, 1.0f, 1.0f);
-
-	glEnableClientState(GL_VERTEX_ARRAY);
-	//glVertexPointer(3, GL_FLOAT, 0, vertices);
-	glFrontFace(GL_CCW);
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
-	glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
-
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisable(GL_CULL_FACE);
-
-	glColor4f(0.5f, 0.5f, 1.0f, 1.0f);
-
-	if (glGetError() != GL_NO_ERROR) exit(3);
-*/
 
 }
 
@@ -122,15 +68,16 @@ void copy_to_texture() {
 	int tex_height = TEX_HEIGHT;
 	int i;
 
-	
+	//pthread_mutex_t lock;
+	//pthread_mutex_init(&lock, NULL);
+	//pthread_mutex_lock(&lock);
+
         for (i = 0; i < TEX_DIMENSION * TEX_DIMENSION ; i ++ ) {
 		pixbuf[i] = RGB565(0xf,0,0);
 	}
 
-	
-	int textures[] =  {0};
-	glGenTextures(1, textures);
-	texture_id = textures[0];
+
+	glGenTextures(1, &texture_id);
 
 	glBindTexture(GL_TEXTURE_2D, texture_id);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
@@ -150,9 +97,9 @@ void copy_to_texture() {
 	        GL_RGB,
 	        GL_UNSIGNED_SHORT_5_6_5, 
 	        pixbuf);
+	check_gl_error("glTexImage2D");
 
-	
-
+	//pthread_mutex_unlock(&lock);
 }
 
 void draw() {
@@ -166,44 +113,28 @@ void draw() {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	float vertices[] = {
-	      -1.0f,  1.0f, 0.0f,  // 0, Top Left
-	      -1.0f, -1.0f, 0.0f,  // 1, Bottom Left
-	       1.0f, -1.0f, 0.0f,  // 2, Bottom Right
-	       1.0f,  1.0f, 0.0f,  // 3, Top Right
-	};
-	short indices[] = { 0, 1, 2, 0, 2, 3 };
-
-	float tex_coords[] = {
-		0.0f, 1.0f,
-		1.0f, 1.0f,
-		0.0f, 0.0f,
-		1.0f, 0.0f };
-
-
-	//glColor4f(0.5f, 0.5f, 1.0f, 1.0f);
-
 	glEnableClientState(GL_VERTEX_ARRAY);
 
 	glFrontFace(GL_CCW);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 	glEnable(GL_TEXTURE_2D);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);// GL_VERTEX_ARRAY);
-	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	//glEnableClientState(GL_VERTEX_ARRAY);
 	glTexCoordPointer(2, GL_FLOAT, 0, tex_coords);
-	glBindTexture(GL_TEXTURE_2D, texture_id);
+	//glBindTexture(GL_TEXTURE_2D, texture_id);
 
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
 	glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);//GL_VERTEX_ARRAY);
-	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	//glDisableClientState(GL_VERTEX_ARRAY);
 	glDisable(GL_CULL_FACE);
 
 	//glColor4f(0.5f, 0.5f, 1.0f, 1.0f);
 	glLoadIdentity();
 	glTranslatef(0,0,-4);
 
+	if (glGetError() != GL_NO_ERROR) exit(3);
 }
 
 
@@ -238,8 +169,6 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIdraw(JN
 	copy_to_texture();
 	draw();
 	//LOGE("draw");
-	//glBindTexture(GL_TEXTURE_2D, 0);
-	//glBindTexture(GL_TEXTURE_2D, texture);
 
 }
 
@@ -254,15 +183,14 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIdestroy
 {
 	//screen_width = w;
 	//screen_height = h;
-	free(pixbuf);
-	pixbuf = NULL;
+	
 }
 
 JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIresize(JNIEnv * env, jobject  obj, jint w, jint h)
 {
 	screen_width = w;
 	screen_height = h;
-	//free(pixbuf);
+
 
 	LOGE("resize");
 	resize(w,h);
