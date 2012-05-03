@@ -1160,6 +1160,7 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
 	@Override
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 		//TODO Auto-generated method stub
+		this.JNIdestroy();
 		this.JNIinit();
 		
 		if (!mGameV.isUseSavedBundle()) {
