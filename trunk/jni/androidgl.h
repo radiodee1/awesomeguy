@@ -139,12 +139,26 @@ static int animate_only = FALSE;
 //////////////////////////////////////////////////////
 // open gl stuff
 //////////////////////////////////////////////////////
-//static long otick = 0;
-static uint16_t *pixbuf = NULL;
-//static uint32_t *pixbuf = NULL;
+
+static uint16_t pixbuf[TEX_WIDTH * TEX_HEIGHT] ;
 static GLuint 	texture_id;
 static int screen_width, screen_height;
-static GLuint framebuffer, colorRenderbuffer;
+//static GLuint framebuffer, colorRenderbuffer;
+
+	static float vertices[] = {
+	      -1.0f,  1.0f, 0.0f,  // 0, Top Left
+	      -1.0f, -1.0f, 0.0f,  // 1, Bottom Left
+	       1.0f, -1.0f, 0.0f,  // 2, Bottom Right
+	       1.0f,  1.0f, 0.0f,  // 3, Top Right
+	};
+	static short indices[] = { 0, 1, 2, 0, 2, 3 };
+
+	static float tex_coords[] = {
+		0.0f, 1.0f,
+		1.0f, 1.0f,
+		0.0f, 0.0f,
+		1.0f, 0.0f };
+
 //////////////////////////////////////////////////////
 // function prototype: awesomeguy.c
 //////////////////////////////////////////////////////
