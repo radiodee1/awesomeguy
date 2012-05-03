@@ -69,29 +69,29 @@ static int SCREEN_HEIGHT = 192;
 static int PAINT_SOLID = 0;
 static int PAINT_TRANSPARENT = 1;
  
-static uint32_t tiles_a[128][224];
-static uint32_t tiles_b[128][224];
-static uint32_t tiles_c[128][224];
-static uint32_t tiles_d[128][224];
+static uint16_t tiles_a[128][224];
+static uint16_t tiles_b[128][224];
+static uint16_t tiles_c[128][224];
+static uint16_t tiles_d[128][224];
  
-static uint32_t guy_a[16][16];
-static uint32_t guy_b[16][16];
-static uint32_t guy_c[16][16];
-static uint32_t guy_d[16][16];
+static uint16_t guy_a[16][16];
+static uint16_t guy_b[16][16];
+static uint16_t guy_c[16][16];
+static uint16_t guy_d[16][16];
  
-static uint32_t monster_a[16][16];
-static uint32_t monster_b[16][16];
-static uint32_t monster_c[16][16];
-static uint32_t monster_d[16][16];
+static uint16_t monster_a[16][16];
+static uint16_t monster_b[16][16];
+static uint16_t monster_c[16][16];
+static uint16_t monster_d[16][16];
  
-static uint32_t platform_a[8][40];
+static uint16_t platform_a[8][40];
  
 static int map_level [96][96];
 static int map_objects[96][96];
  
-uint32_t screen [192][256];
- 
-//uint32_t number_alpha = 0; // moved to awesomeguy.c
+uint16_t screen [192][256];
+//uint16_t screen [192][256];
+//uint16_t number_alpha = 0; // moved to awesomeguy.c
  
 static int tilesWidthMeasurement = 32;
 static int tilesHeightMeasurement = 32;
@@ -143,6 +143,7 @@ static int animate_only = FALSE;
 static uint16_t pixbuf[TEX_WIDTH * TEX_HEIGHT] ;
 static GLuint 	texture_id;
 static int screen_width, screen_height;
+static GLint my_format = GL_RGB; // GL_RGB;
 //static GLuint framebuffer, colorRenderbuffer;
 
 	static float vertices[] = {
@@ -154,9 +155,9 @@ static int screen_width, screen_height;
 	static short indices[] = { 0, 1, 2, 0, 2, 3 };
 
 	static float tex_coords[] = {
+		0.0f, 0.0f,
 		0.0f, 1.0f,
 		1.0f, 1.0f,
-		0.0f, 0.0f,
 		1.0f, 0.0f };
 
 //////////////////////////////////////////////////////
@@ -201,21 +202,21 @@ int collisionSimple(BoundingBox boxA, BoundingBox boxB) ;
 
 int collisionHelper(BoundingBox boxA, BoundingBox boxB) ;
 
-void copyScreenCompress(uint32_t from[SCREEN_WIDTH][SCREEN_HEIGHT],  uint32_t to[]) ;
+void copyScreenCompress(uint16_t from[SCREEN_WIDTH][SCREEN_HEIGHT],  uint16_t to[]) ;
 
-void copyArraysExpand_16(jint from[], int size_l,  uint32_t to[GUY_WIDTH][GUY_HEIGHT]) ;
+void copyArraysExpand_16(jint from[], int size_l,  uint16_t to[GUY_WIDTH][GUY_HEIGHT]) ;
 
-void copyArraysExpand_8_40(jint from[], int size_l, uint32_t to[PLATFORM_WIDTH][PLATFORM_HEIGHT]);
+void copyArraysExpand_8_40(jint from[], int size_l, uint16_t to[PLATFORM_WIDTH][PLATFORM_HEIGHT]);
 
-void copyArraysExpand_tileset (jint from[], int size_l, uint32_t to[TILEMAP_HEIGHT][TILEMAP_WIDTH]) ;
+void copyArraysExpand_tileset (jint from[], int size_l, uint16_t to[TILEMAP_HEIGHT][TILEMAP_WIDTH]) ;
 
-void drawSprite_16(uint32_t from[GUY_WIDTH][GUY_HEIGHT], int x, int y, int scroll_x, int scroll_y, int paint_all, uint32_t extra) ;
+void drawSprite_16(uint16_t from[GUY_WIDTH][GUY_HEIGHT], int x, int y, int scroll_x, int scroll_y, int paint_all, uint16_t extra) ;
 
-void drawSprite_40_8(uint32_t from[PLATFORM_WIDTH][PLATFORM_HEIGHT], int x, int y, int scroll_x, int scroll_y, int paint_all, uint32_t extra) ;
+void drawSprite_40_8(uint16_t from[PLATFORM_WIDTH][PLATFORM_HEIGHT], int x, int y, int scroll_x, int scroll_y, int paint_all, uint16_t extra) ;
 
-void drawTile_8(uint32_t tile[TILE_WIDTH][TILE_HEIGHT], int x, int y, int scroll_x, int scroll_y, int paint_all, uint32_t extra) ;
+void drawTile_8(uint16_t tile[TILE_WIDTH][TILE_HEIGHT], int x, int y, int scroll_x, int scroll_y, int paint_all, uint16_t extra) ;
 
-void cutTile(uint32_t tileset[TILEMAP_WIDTH][TILEMAP_HEIGHT], uint32_t tile[TILE_WIDTH][TILE_HEIGHT], int num) ;
+void cutTile(uint16_t tileset[TILEMAP_WIDTH][TILEMAP_HEIGHT], uint16_t tile[TILE_WIDTH][TILE_HEIGHT], int num) ;
 
 void drawScoreWords() ;
 
