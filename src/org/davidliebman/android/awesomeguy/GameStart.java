@@ -352,6 +352,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     	
     	//mFLayoutBot.addView((View)mPanelBot);//TODO: commented out for testing
     	mFLayoutBot.addView((View)mPanelView);
+    	//mFLayoutBot.addView(mPanelView);
     	
     	mPanelBot.setEnableSounds(mHighScores.isSound());
     	

@@ -7,6 +7,7 @@
 #include <android/log.h>
 #include <stdio.h> 
 #include <stdlib.h>
+#include <math.h>
 #include <assert.h>
 #include <pthread.h>
 
@@ -24,8 +25,8 @@
 #define TRUE 1
 #define FALSE 0 
 
-#define VIDEO_WIDTH   256
-#define VIDEO_HEIGHT  256
+#define TEX_WIDTH   256
+#define TEX_HEIGHT  256
 
 #define TEX_DIMENSION	256
 
@@ -138,12 +139,12 @@ static int animate_only = FALSE;
 //////////////////////////////////////////////////////
 // open gl stuff
 //////////////////////////////////////////////////////
-static long otick = 0;
+//static long otick = 0;
 static uint16_t *pixbuf = NULL;
 //static uint32_t *pixbuf = NULL;
 static GLuint 	texture;
 static int screen_width, screen_height;
-
+static GLuint framebuffer, colorRenderbuffer;
 //////////////////////////////////////////////////////
 // function prototype: awesomeguy.c
 //////////////////////////////////////////////////////
