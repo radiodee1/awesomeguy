@@ -82,13 +82,7 @@ void copy_to_texture() {
 	int tex_height = TEX_HEIGHT;
 	int i, j;
 	uint8_t r,g,b;
-	//pthread_mutex_t lock;
-	//pthread_mutex_init(&lock, NULL);
-	//pthread_mutex_lock(&lock);
-
-        //for (i = 0; i < TEX_DIMENSION * TEX_DIMENSION ; i ++ ) {
-	//	pixbuf[i] = RGB565(0xf,0,0);
-	//}
+	
 	memset(pixbuf, 0, TEX_DIMENSION * TEX_DIMENSION * 2);
 
 	for (i = 0; i < SCREEN_WIDTH; i ++) {
@@ -98,19 +92,17 @@ void copy_to_texture() {
 			g = ( screen[j][i] << 5 ) >> (2);
 			b = ( screen[j][i] << (5+6) ) >> 3;
 */
-			pixbuf[(j * TEX_WIDTH) + i ] =   ( screen[j][i] << 0 )  ; /* // RGB565(r,g,b)  ;*/ //1 
+			pixbuf[(j * TEX_WIDTH) + i ] =  (uint16_t) (  screen[j][i] << 1 ) ; /* // RGB565(r,g,b)  ;*/ //1 
 		}
 	}
 
 
 	glTexImage2D(GL_TEXTURE_2D, 0, 
-	        my_format,//GL_RGB, 
+	        GL_RGB, 
 	        tex_width, tex_height, 
 	        0, 
-	        my_format,//GL_RGB,
+	        GL_RGB,
 	        GL_UNSIGNED_SHORT_5_6_5,
-		//GL_UNSIGNED_SHORT_4_4_4_4,//*
-		//GL_UNSIGNED_SHORT_5_5_5_1, 
 	        pixbuf);
 	check_gl_error("glTexImage2D");
 
