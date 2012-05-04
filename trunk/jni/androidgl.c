@@ -54,9 +54,10 @@ void init(void)
 
 void resize(int w, int h) {
 
-	float w_h_ratio = (float) w/ (float) h;
-	float h_w_ratio = (float) h/ (float) w;
+	float w_h_ratio = (float) w/ (float) h; // specifically for vertices
+	float h_w_ratio =  3.0f/  4.0f; // specifically for texture
 	
+	/* vertices array */
 	vertices[0] = -0.5f;  
 	vertices[1] = 0.5f; 
 	vertices[2] = 0.0f;  // 0, Top Left
@@ -73,6 +74,7 @@ void resize(int w, int h) {
 	vertices[10] = 0.5f; 
 	vertices[11] = 0.0f;  // 3, Top Right
 	
+	/* texture coordinates array */
 	tex_coords[0] = 0.0f;
 	tex_coords[1] = 0.0f; //1
 	
