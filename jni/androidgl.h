@@ -145,19 +145,12 @@ static GLuint 	texture_id;
 static int screen_width, screen_height;
 
 
-	static float vertices[] = {
-	      -1.0f,  1.0f, 0.0f,  // 0, Top Left
-	      -1.0f, -1.0f, 0.0f,  // 1, Bottom Left
-	       1.0f, -1.0f, 0.0f,  // 2, Bottom Right
-	       1.0f,  1.0f, 0.0f,  // 3, Top Right
-	};
+	static float vertices[12] ;
+	
 	static short indices[] = { 0, 1, 2, 0, 2, 3 };
 
-	static float tex_coords[] = {
-		0.0f, 0.0f,
-		0.0f, 1.0f,
-		1.0f, 1.0f,
-		1.0f, 0.0f };
+	static float tex_coords[8] ; 
+	
 
 //////////////////////////////////////////////////////
 // function prototype: awesomeguy.c
