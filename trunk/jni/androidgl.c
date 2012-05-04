@@ -53,7 +53,40 @@ void init(void)
 }
 
 void resize(int w, int h) {
-	glViewport(0, 0, w, h);
+
+	float w_h_ratio = (float) w/ (float) h;
+	float h_w_ratio = (float) h/ (float) w;
+	
+	vertices[0] = -0.5f;  
+	vertices[1] = 0.5f; 
+	vertices[2] = 0.0f;  // 0, Top Left
+	
+	vertices[3] = -0.5f; 
+	vertices[4] = -0.5f; 
+	vertices[5] = 0.0f;  // 1, Bottom Left
+	
+	vertices[6] = (w_h_ratio) - 0.5f; 
+	vertices[7] = -0.5f; 
+	vertices[8] = 0.0f;  // 2, Bottom Right
+	
+	vertices[9] = (w_h_ratio) - 0.5f;  
+	vertices[10] = 0.5f; 
+	vertices[11] = 0.0f;  // 3, Top Right
+	
+	tex_coords[0] = 0.0f;
+	tex_coords[1] = 0.0f; //1
+	
+	tex_coords[2] = 0.0f; 
+	tex_coords[3] = h_w_ratio;//1.0f; //2
+	
+	tex_coords[4] = 1.0f; 
+	tex_coords[5] = h_w_ratio;//1.0f; //3
+	
+	tex_coords[6] = 1.0f; 
+	tex_coords[7] = 0.0f; //4
+	
+	
+	glViewport(0, 0, w, h);	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective( 45.0f, (float) w/ (float) h, 
@@ -81,17 +114,13 @@ void copy_to_texture() {
 	int tex_width = TEX_WIDTH;
 	int tex_height = TEX_HEIGHT;
 	int i, j;
-	uint8_t r,g,b;
+//	uint8_t r,g,b;
 	
-	memset(pixbuf, 0, TEX_DIMENSION * TEX_DIMENSION * 2);
+	memset(pixbuf, 0xffff, TEX_DIMENSION * TEX_DIMENSION * 2);
 
 	for (i = 0; i < SCREEN_WIDTH; i ++) {
 		for (j = 0; j < SCREEN_HEIGHT; j ++) {
-/*
-			r = ( screen[j][i] >> (5+6) ) ;
-			g = ( screen[j][i] << 5 ) >> (2);
-			b = ( screen[j][i] << (5+6) ) >> 3;
-*/
+
 			pixbuf[(j * TEX_WIDTH) + i ] =  (uint16_t) (  screen[j][i] << 1 ) ; /* // RGB565(r,g,b)  ;*/ //1 
 		}
 	}
