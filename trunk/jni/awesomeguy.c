@@ -569,7 +569,7 @@ void copyArraysExpand_tileset (jint from[], int size_l, uint16_t to[TILEMAP_HEIG
 		for (j = 0; j < TILEMAP_WIDTH; j ++ ) {
 			k =( i * TILEMAP_WIDTH ) + j;
 			if ( k < size_l ) {
-				to[i][j] = from[k];
+				to[i][j] = (uint16_t) from[k];
 			}
 		}
 	}
