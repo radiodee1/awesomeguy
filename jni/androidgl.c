@@ -94,11 +94,11 @@ void copy_to_texture() {
 	for (i = 0; i < SCREEN_WIDTH; i ++) {
 		for (j = 0; j < SCREEN_HEIGHT; j ++) {
 /*
-			r = ( screen[j][i] >> 3 ) ;
+			r = ( screen[j][i] >> (5+6) ) ;
 			g = ( screen[j][i] << 5 ) >> (2);
 			b = ( screen[j][i] << (5+6) ) >> 3;
 */
-			pixbuf[(j * TEX_WIDTH) + i ] =  (uint16_t) screen[j][i] << 1;// RGB565(r,g,b)  ; 1 is good
+			pixbuf[(j * TEX_WIDTH) + i ] =   ( screen[j][i] << 1 )  ; /* // RGB565(r,g,b)  ;*/ //1 
 		}
 	}
 
