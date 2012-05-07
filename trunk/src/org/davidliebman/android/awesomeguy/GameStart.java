@@ -671,13 +671,6 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
 		this.mHighScores = mHighScores;
 	}
 
-//	public boolean isGameDeath() {
-//		return mGameDeath;
-//	}
-//
-//	public void setGameDeath(boolean mGameDeath) {
-//		this.mGameDeath = mGameDeath;
-//	}
     
 	protected Dialog onCreateDialog(int id) {
 	    Dialog dialog;

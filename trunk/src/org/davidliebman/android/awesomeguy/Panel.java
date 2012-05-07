@@ -308,8 +308,10 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
 //	}
 
 	public void prepareBitmap() {
-		mMap = Bitmap.createBitmap(drawLevel(newBG + 1), 256, 192, Bitmap.Config.RGB_565);
-		mTempJNI = Bitmap.createBitmap(mMap, 0, 0, 256, 192, mMatrix, false);
+		drawLevel(newBG + 1);
+		
+		//mMap = Bitmap.createBitmap(drawLevel(newBG + 1), 256, 192, Bitmap.Config.RGB_565);
+		//mTempJNI = Bitmap.createBitmap(mMap, 0, 0, 256, 192, mMatrix, false);
 	}
 	
 	public void setInitialBackgroundGraphics() {
@@ -1286,7 +1288,7 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
     public native void setMonsterPreferences(int monsters, int collision);
     public native void setJNIAnimateOnly(int animate);
     public native void setScreenData(int screenH, int screenV);
-	public native int[] drawLevel(int num);
+	public native void drawLevel(int num);
 	public native int getSoundBoom();
 	public native int getSoundOw();
 	public native int getSoundPrize();

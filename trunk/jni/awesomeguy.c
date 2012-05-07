@@ -1455,13 +1455,16 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_setObjects
  *					animation of the rings.
  *	@return			the 1D representation of the 2D array of screen data.					
  */
-JNIEXPORT jintArray JNICALL Java_org_davidliebman_android_awesomeguy_Panel_drawLevel(JNIEnv * env, jobject  obj, jint animate)
+JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_drawLevel(JNIEnv * env, jobject  obj, jint animate)
 {
+	/*
 	int j,k;
 	jint size = SCREEN_WIDTH * SCREEN_HEIGHT;
 	jint fill[size]; 
 	jintArray graphic;
+	*/
 	drawLevel(animate);
+	/*
 	graphic = (*env)->NewIntArray(env, size);
 	if(graphic == NULL) {
 		LOGE("ARRAY NOT CREATED");
@@ -1476,6 +1479,7 @@ JNIEXPORT jintArray JNICALL Java_org_davidliebman_android_awesomeguy_Panel_drawL
 	
 	(*env)->SetIntArrayRegion(env, graphic,0, size, fill);
 	return graphic;
+	*/
 }
 
 

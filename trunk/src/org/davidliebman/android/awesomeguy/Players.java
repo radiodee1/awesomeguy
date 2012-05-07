@@ -436,6 +436,9 @@ public class Players extends ListActivity {
     	if (mHighScores.getGameSpeed() == Record.SPEED_FAST) {
     		menu.findItem(R.id.menu_options_speed_fast_item).setChecked(true);
     	}
+    	if (mHighScores.getGameSpeed() == Record.SPEED_SYSTEM) {
+    		menu.findItem(R.id.menu_options_speed_system_item).setChecked(true);
+    	}
     	//play game sound
     	if (!mHighScores.isSound()) {
     		menu.findItem(R.id.menu_options_sound_no_item).setChecked(true);
@@ -531,6 +534,13 @@ public class Players extends ListActivity {
     		if (!item.isChecked()) {
     			item.setChecked(true);
     			mHighScores.setGameSpeed(Record.SPEED_FAST);
+    		}
+    		break;
+
+    	case R.id.menu_options_speed_system_item:
+    		if (!item.isChecked()) {
+    			item.setChecked(true);
+    			mHighScores.setGameSpeed(Record.SPEED_SYSTEM);
     		}
     		break;
     	case R.id.menu_options_players_fifty_item:

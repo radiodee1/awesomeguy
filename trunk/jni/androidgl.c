@@ -122,6 +122,10 @@ void copy_to_texture() {
 	int i, j;
 //	uint8_t r,g,b;
 	
+	//pthread_mutex_t lock;
+	//pthread_mutex_init(&lock, NULL);
+	//pthread_mutex_lock(&lock);
+	
 	memset(pixbuf, 0xffff, TEX_DIMENSION * TEX_DIMENSION * 2);
 
 	for (i = 0; i < SCREEN_WIDTH; i ++) {
@@ -133,11 +137,11 @@ void copy_to_texture() {
 			uint16_t g = (temp & 0x07e0) >> 5;
 			uint16_t b = (temp & 0x001f) ;
 			
-			if (temp != 0x0 && (r & 0x80) >> 3 == 0 && r + g + b < 0x0f) {//temp = (temp << 1);//+ 0x8000;
-				pixbuf[(j * TEX_WIDTH) + i ] =  RGB565 (0xff , g, b);//(temp << 1 ) + 0x8000;
+			if (temp != 0x0 && (r & 0x80) >> 3 == 0 && r + g + b < 0x0f) {
+				pixbuf[(j * TEX_WIDTH) + i ] =  RGB565 (0xff , g, b);
 			}
 			else {
-				pixbuf[(j * TEX_WIDTH) + i ] = temp ;//<< 1;// RGB565(r << 1, g, b);
+				pixbuf[(j * TEX_WIDTH) + i ] = temp ;
 			}
 		}
 	}
