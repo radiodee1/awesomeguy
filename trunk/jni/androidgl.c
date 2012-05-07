@@ -58,19 +58,19 @@ void resize(int w, int h) {
 	float h_w_ratio =  3.0f/  4.0f; // specifically for texture
 	
 	/* vertices array */
-	vertices[0] = -0.5f;  
+	vertices[0] =  - (w_h_ratio / 2.0f) ;
 	vertices[1] = 0.5f; 
 	vertices[2] = 0.0f;  // 0, Top Left
 	
-	vertices[3] = -0.5f; 
+	vertices[3] =  - (w_h_ratio / 2.0f) ;
 	vertices[4] = -0.5f; 
 	vertices[5] = 0.0f;  // 1, Bottom Left
 	
-	vertices[6] = (w_h_ratio) - 0.5f; 
+	vertices[6] = (w_h_ratio / 2.0f) ;
 	vertices[7] = -0.5f; 
 	vertices[8] = 0.0f;  // 2, Bottom Right
 	
-	vertices[9] = (w_h_ratio) - 0.5f;  
+	vertices[9] = (w_h_ratio / 2.0f) ;
 	vertices[10] = 0.5f; 
 	vertices[11] = 0.0f;  // 3, Top Right
 	
@@ -109,6 +109,10 @@ void resize(int w, int h) {
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
 		GL_REPEAT);
 
+	LOGE("number %f", - (float)((float) w/ (float) h) );
+	LOGE("float %f", w_h_ratio);
+	screen_width = w;
+	screen_height = h;
 }
 
 void copy_to_texture() {
@@ -170,7 +174,8 @@ void draw() {
 
 	//glColor4f(0.5f, 0.5f, 1.0f, 1.0f);
 	glLoadIdentity();
-	glTranslatef(0,0,-4);
+	glTranslatef(0,0, - 1.25f) ;
+	LOGE( "float height %f float width %f",(float)screen_height, (float)screen_width );
 
 	if (glGetError() != GL_NO_ERROR) exit(3);
 }
@@ -226,10 +231,8 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIdestroy
 
 JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIresize(JNIEnv * env, jobject  obj, jint w, jint h)
 {
-	screen_width = w;
-	screen_height = h;
+	//screen_width = w;
+	//screen_height = h;
 
-
-	LOGE("resize");
 	resize(w,h);
 }
