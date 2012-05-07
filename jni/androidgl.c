@@ -175,7 +175,7 @@ void draw() {
 	//glColor4f(0.5f, 0.5f, 1.0f, 1.0f);
 	glLoadIdentity();
 	glTranslatef(0,0, - 1.25f) ;
-	LOGE( "float height %f float width %f",(float)screen_height, (float)screen_width );
+
 
 	if (glGetError() != GL_NO_ERROR) exit(3);
 }
