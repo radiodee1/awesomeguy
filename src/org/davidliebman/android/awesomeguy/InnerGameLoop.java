@@ -37,7 +37,7 @@ public class InnerGameLoop extends Thread {
 		mHighScores = mGameV.getGuyScore();
 		framesPerSec = mHighScores.getGameSpeed();
     	skipTicks = 1000 / framesPerSec;
-    	
+    	if (framesPerSec < 0 || skipTicks < 0) skipTicks = 1;
     	
 	}
 	
@@ -277,11 +277,13 @@ public class InnerGameLoop extends Thread {
 		ticksElapsed = newDate.getTime();
 		nextGameTick += skipTicks;
 		sleepTime = nextGameTick - ticksElapsed;
-		if ( sleepTime >= 0 && mGameV.isGameRunning()) {
+
+		
+		if ( (sleepTime >= 0 && mGameV.isGameRunning()) || framesPerSec < 0 ) {
 		
 			//Log.e("InnerGameLoop", "---Passing time");
 			try {
-	            Thread.sleep(sleepTime);
+	            if (framesPerSec > 0) Thread.sleep(sleepTime);
 	    	} catch (InterruptedException e) {
 	    		//
 	    	} 
