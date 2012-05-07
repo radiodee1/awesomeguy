@@ -323,7 +323,8 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
         
         
     	mScores = new Scores(this, mHighScores);
-        
+        mGameV.setScores(mScores);
+    	
     	framesPerSec = mHighScores.getGameSpeed();
     	skipTicks = 1000 / framesPerSec;
     	

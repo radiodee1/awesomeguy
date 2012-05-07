@@ -109,8 +109,8 @@ void resize(int w, int h) {
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
 		GL_REPEAT);
 
-	LOGE("number %f", - (float)((float) w/ (float) h) );
-	LOGE("float %f", w_h_ratio);
+
+
 	screen_width = w;
 	screen_height = h;
 }
@@ -126,8 +126,19 @@ void copy_to_texture() {
 
 	for (i = 0; i < SCREEN_WIDTH; i ++) {
 		for (j = 0; j < SCREEN_HEIGHT; j ++) {
-
-			pixbuf[(j * TEX_WIDTH) + i ] =  (uint16_t) (  screen[j][i] << 1 ) ; /* // RGB565(r,g,b)  ;*/ //1 
+		
+			uint16_t temp = (uint16_t) screen[j][i] << 1;
+			
+			uint16_t r = (temp & 0xf800) >> 11;
+			uint16_t g = (temp & 0x07e0) >> 5;
+			uint16_t b = (temp & 0x001f) ;
+			
+			if (temp != 0x0 && (r & 0x80) >> 3 == 0 && r + g + b < 0x0f) {//temp = (temp << 1);//+ 0x8000;
+				pixbuf[(j * TEX_WIDTH) + i ] =  RGB565 (0xff , g, b);//(temp << 1 ) + 0x8000;
+			}
+			else {
+				pixbuf[(j * TEX_WIDTH) + i ] = temp ;//<< 1;// RGB565(r << 1, g, b);
+			}
 		}
 	}
 

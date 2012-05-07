@@ -32,6 +32,7 @@ public class InnerGameLoop extends Thread {
 		mMovementV = mValues.getMovementValues();
 		mHandler = (GameStart.PanelHandler) mValues.getHandler();
 		mPanel = mPanelBot;
+		mScores = mGameV.getScores();
 		
 		mHighScores = mGameV.getGuyScore();
 		framesPerSec = mHighScores.getGameSpeed();
@@ -47,7 +48,7 @@ public class InnerGameLoop extends Thread {
 		Date startDate = new Date();
 		nextGameTick = startDate.getTime();
 		
-		boolean mSavedRoomFlag = false;
+//		boolean mSavedRoomFlag = false;
 		Canvas mCanvas;
 		
 		
@@ -56,7 +57,6 @@ public class InnerGameLoop extends Thread {
 		  while(mPlayAgain && mGameV.isGameRunning()) {
 		    mPlayAgain = false;
 		
-		  //do something here.
 			
 			// new score ?? SAVE OLD SCORE!!
 		    mGameV.setOldGuyScore(mHighScores.getScore());
@@ -68,10 +68,9 @@ public class InnerGameLoop extends Thread {
 		    if (!mGameV.isUseSavedBundle()) mGameV.setLives(3);
 		    // set room num
 		    
-		    if (mSavedRoomFlag == true) mGameV.setRoomNo(1);
-		    mSavedRoomFlag = true;
+//		    if (mSavedRoomFlag == true) mGameV.setRoomNo(1);
+//		    mSavedRoomFlag = true;
 		    
-		    //getSavedRoom();
 		    
 		    if (!mGameV.isUseSavedBundle()) mGameV.setScore(10);
 		    
@@ -209,7 +208,6 @@ public class InnerGameLoop extends Thread {
 		   
 		    
 	    	mHandler.sendEmptyMessage(GameStart.GAMESTOP);
-		    // *** ANIMATE SPINNING GUY ***
 	    	
 		      // ** CHECK IF LEVEL IS OVER ***
 		      // * advance the room count if it is
@@ -218,7 +216,6 @@ public class InnerGameLoop extends Thread {
 		      if (!mGameV.isGameDeath()) {
 		        mGameV.incrementRoomNo();
 		        
-		        //saveRoomNo();
 
 		        mGameV.setEndGame(false);
 		        mGameV.setEndLevel(false);

@@ -72,6 +72,7 @@ public class GameValues {
 	private int mScrollX, mScrollY;
 	
 	private Handler mHandler;
+	private Scores mScores;
 	private MovementValues mMovementV;
 	private Panel mPanel;
 	private SurfaceHolder mHolder;
@@ -360,6 +361,16 @@ public class GameValues {
 	public void setHolder(SurfaceHolder mHolder) {
 		this.mHolder = mHolder;
 	}
+	
+	/* scores */	
+	
+	public Scores getScores() {
+		return mScores;
+	}
+	public void setScores(Scores mScores) {
+		this.mScores = mScores;
+	}
+	
 	/* screen scroll */
 	public int getScrollX() {
 		return mScrollX;
