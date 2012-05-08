@@ -21,6 +21,7 @@
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
 #define RGB565(r, g, b)  (((r) << (5+6)) | ((g) << 6) | (b))
+#define RGBA4444(r, g, b, a )  ((( r) << 12) | ((g) << 8) | ((b) << 4) | (a))
 
 #define TRUE 1
 #define FALSE 0 
