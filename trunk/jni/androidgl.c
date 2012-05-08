@@ -131,17 +131,23 @@ void copy_to_texture() {
 	for (i = 0; i < SCREEN_WIDTH; i ++) {
 		for (j = 0; j < SCREEN_HEIGHT; j ++) {
 		
-			uint16_t temp = (uint16_t) screen[j][i] << 1;
+			uint16_t temp = (uint16_t) screen[j][i];// << 1;
 			
-			uint16_t r = (temp & 0xf800) >> 11;
-			uint16_t g = (temp & 0x07e0) >> 5;
-			uint16_t b = (temp & 0x001f) ;
+			//uint16_t r = (temp & 0xf800) >> 11;
+			//uint16_t g = (temp & 0x07e0) >> 5;
+			//uint16_t b = (temp & 0x001f) ;
 			
-			if (temp != 0x0 && (r & 0x80) >> 3 == 0 && r + g + b < 0x0f) {
+			uint16_t a = (temp & 0xff000000) >> 24;
+			uint16_t r = (temp & 0x00ff0000) >> 16;
+			uint16_t g = (temp & 0x0000ff00) >> 8;
+			uint16_t b = (temp & 0x000000ff) ;
+			
+			if ( FALSE && temp != 0x0 && (r & 0x80) >> 3 == 0 && r + g + b < 0x0f) {
 				pixbuf[(j * TEX_WIDTH) + i ] =  RGB565 (0xff , g, b);
 			}
 			else {
-				pixbuf[(j * TEX_WIDTH) + i ] = temp ;
+				//pixbuf[(j * TEX_WIDTH) + i ] = temp ;
+				pixbuf[(j * TEX_WIDTH) + i] = RGB565(r,g,b);
 			}
 		}
 	}
