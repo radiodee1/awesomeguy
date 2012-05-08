@@ -137,28 +137,28 @@ void copy_to_texture() {
 			//uint16_t g = (temp & 0x07e0) >> 5;
 			//uint16_t b = (temp & 0x001f) ;
 			
-			uint16_t a = (temp & 0xff000000) >> 24;
-			uint16_t r = (temp & 0x00ff0000) >> 16;
-			uint16_t g = (temp & 0x0000ff00) >> 8;
-			uint16_t b = (temp & 0x000000ff) ;
+			uint16_t a = (temp & 0xf000) >> 12;
+			uint16_t r = (temp & 0x0f00) >> 8;
+			uint16_t g = (temp & 0x00f0) >> 4;
+			uint16_t b = (temp & 0x000f) ;
 			
-			if ( FALSE && temp != 0x0 && (r & 0x80) >> 3 == 0 && r + g + b < 0x0f) {
-				pixbuf[(j * TEX_WIDTH) + i ] =  RGB565 (0xff , g, b);
+			if (temp != 0x0 && (r & 0x80) >> 3 == 0 && r + g + b < 0x0f) {
+				pixbuf[(j * TEX_WIDTH) + i ] =  RGBA4444(0xff , g, b, 0);
 			}
 			else {
-				//pixbuf[(j * TEX_WIDTH) + i ] = temp ;
-				pixbuf[(j * TEX_WIDTH) + i] = RGB565(r,g,b);
+				pixbuf[(j * TEX_WIDTH) + i ] = temp ;
+				//pixbuf[(j * TEX_WIDTH) + i] = RGBA4444(r,g,b,a);
 			}
 		}
 	}
 
 
 	glTexImage2D(GL_TEXTURE_2D, 0, 
-	        GL_RGB, 
+	        GL_RGBA,//GL_RGB, 
 	        tex_width, tex_height, 
 	        0, 
-	        GL_RGB,
-	        GL_UNSIGNED_SHORT_5_6_5,
+	        GL_RGBA,//GL_RGB,
+	        GL_UNSIGNED_SHORT_4_4_4_4,//GL_UNSIGNED_SHORT_5_6_5,
 	        pixbuf);
 	check_gl_error("glTexImage2D");
 
