@@ -164,24 +164,28 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
 		mOptionsSprite.inScaled = false;
 		mOptionsSprite.outHeight = 16;
 		mOptionsSprite.outWidth = 16;
+		mOptionsSprite.inPreferredConfig = Bitmap.Config.ARGB_8888;
 		
 		mOptionsTile.inScaled = false;
 		mOptionsTile.outHeight = 128;
 		mOptionsTile.outWidth = 224;
 		mOptionsTile.inDensity = 0;
 		mOptionsTile.inTargetDensity = 0;
+		mOptionsTile.inPreferredConfig = Bitmap.Config.ARGB_8888;
 		
 		mOptionsNum.inScaled = false;
 		mOptionsNum.outHeight = 16;//16
 		mOptionsNum.outWidth = 160;// 160
 		mOptionsNum.inDensity = 0;//0
 		mOptionsNum.inTargetDensity = 0;//0
+		mOptionsNum.inPreferredConfig = Bitmap.Config.ARGB_8888;
 		
 		mOptionsPlat.inScaled = false;
 		mOptionsPlat.outHeight = 16;//16
 		mOptionsPlat.outWidth = 160;// 160
 		mOptionsPlat.inDensity = 0;//0
 		mOptionsPlat.inTargetDensity = 0;//0
+		mOptionsPlat.inPreferredConfig = Bitmap.Config.ARGB_8888;
 		
 		mP = new Paint();
 		mP.setAlpha(0xff);
