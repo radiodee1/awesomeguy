@@ -142,12 +142,12 @@ void copy_to_texture() {
 			uint16_t g = (temp & 0x00f0) >> 4;
 			uint16_t b = (temp & 0x000f) ;
 			
-			if (temp != 0x0 && (r & 0x80) >> 3 == 0 && r + g + b < 0x0f) {
-				pixbuf[(j * TEX_WIDTH) + i ] =  RGBA4444(0xff , g, b, 0);
+			if (temp != 0x0 && (r & 0x80) >> 3 == 0 && (r + g + b) < 0x03 ) {
+				pixbuf[(j * TEX_WIDTH) + i ] =  RGBA4444( 0xff , g, b, 0);
 			}
 			else {
-				pixbuf[(j * TEX_WIDTH) + i ] = temp ;
-				//pixbuf[(j * TEX_WIDTH) + i] = RGBA4444(r,g,b,a);
+				//pixbuf[(j * TEX_WIDTH) + i ] = temp ;
+				pixbuf[(j * TEX_WIDTH) + i] = RGBA4444(r,g,b,0);
 			}
 		}
 	}
