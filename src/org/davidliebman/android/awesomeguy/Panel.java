@@ -267,7 +267,7 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
 		if(mHighScores.isEnableCollision()) collision = 1;
 		setMonsterPreferences(monsters, collision);
 		
-		this.prepareBitmap();
+		this.callJNIdrawLevel();
 	}
 
 
@@ -311,7 +311,7 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
 		
 //	}
 
-	public void prepareBitmap() {
+	public void callJNIdrawLevel() {
 		drawLevel(newBG + 1);
 		
 		//mMap = Bitmap.createBitmap(drawLevel(newBG + 1), 256, 192, Bitmap.Config.RGB_565);

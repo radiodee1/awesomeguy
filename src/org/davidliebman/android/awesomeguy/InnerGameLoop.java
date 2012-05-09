@@ -151,17 +151,6 @@ public class InnerGameLoop extends Thread {
     			
 		    	if (mIsNotLate ) {
 		    		
-		    		/* at end of level */
-		    		if(mGameV.getPanel().getEndLevel() == 1) {
-		    			mGameV.setEndLevel(true);
-		    			mGameV.decrementLives();
-		    			mGameV.setGameDeath(true);
-		    		}
-		    		
-		    		/* changes during level */
-		    		mHighScores.setLives(mGameV.getPanel().getLives());
-		    		mHighScores.setScore(mGameV.getPanel().getScore());
-		    		mGameV.setScore(mGameV.getPanel().getScore());
 		    		
 		    		/* formerly above 'draw' */
 		    		mGameV.getPanel().setScoreLives(mGameV.getScore(), mGameV.getLives());
@@ -174,13 +163,24 @@ public class InnerGameLoop extends Thread {
 				
 					mGameV.getPanel().scrollBg(); //always call this last!!
 					
-					mGameV.getPanel().prepareBitmap();
+					/* this crucial method calls 'drawLevel()' with animate var */
+					mGameV.getPanel().callJNIdrawLevel();
 					
-					//mGameV.getPanel().JNIcopyToTexture();
+					/* at end of level -- call after 'drawLevel()' */
+		    		if(mGameV.getPanel().getEndLevel() == 1) {
+		    			mGameV.setEndLevel(true);
+		    			mGameV.decrementLives();
+		    			mGameV.setGameDeath(true);
+		    		}
+		    		
+		    		/* changes during level -- call after 'drawLevel()' */
+		    		mHighScores.setLives(mGameV.getPanel().getLives());
+		    		mHighScores.setScore(mGameV.getPanel().getScore());
+		    		mGameV.setScore(mGameV.getPanel().getScore());
 					
+		    		/* call after 'drawLevel()' */
 					mGameV.getPanel().playSounds();
 					
-					//Log.e("InnerGameLoop","call jni");
 		    	}
 		    	
 //				try {
