@@ -19,6 +19,7 @@
     	<string name="menu_text_speed_slow">Speed = 16</string>
     	<string name="menu_text_speed_medium">Speed = 20</string>
     	<string name="menu_text_speed_fast">Speed = 24</string>
+    	<string name="menu_text_speed_faster">Speed = 32</string>
     	<string name="menu_text_speed_system">System Determined</string>
     	
     	<string name="menu_text_sound_item">Play No Sound</string>

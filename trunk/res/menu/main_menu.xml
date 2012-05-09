@@ -48,6 +48,9 @@
                 			 <item android:id="@+id/menu_options_speed_fast_item"
                 				android:title="@string/menu_text_speed_fast">
                 			 </item>
+                			  <item android:id="@+id/menu_options_speed_faster_item"
+                				android:title="@string/menu_text_speed_faster">
+                			 </item>
                 			 <item android:id="@+id/menu_options_speed_system_item"
                 				android:title="@string/menu_text_speed_system">
                 			 </item>
