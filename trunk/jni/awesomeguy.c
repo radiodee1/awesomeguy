@@ -569,14 +569,22 @@ void copyArraysExpand_tileset (jint from[], int size_l, uint32_t to[TILEMAP_HEIG
 		for (j = 0; j < TILEMAP_WIDTH; j ++ ) {
 			k =( i * TILEMAP_WIDTH ) + j;
 			if ( k < size_l ) {
-				to[i][j] =  from[k];
+			
+			uint16_t temp = from[k];
+			uint16_t a = (temp & 0xf000) >> 12;
+			uint16_t r = (temp & 0x0f00) >> 8;
+			uint16_t g = (temp & 0x00f0) >> 4;
+			uint16_t b = (temp & 0x000f) ;
+			
+			to[i][j] =  RGBA4444(b,a,r,g);
+			//to[i][j] =  from[k];
 			}
 		}
 	}
 	n = TILEMAP_WIDTH / TILE_HEIGHT; // 224/8 = 28
 	num = 374;
 	k = (num / n); // y pos 
-    l = num - (k * n); // x pos
+	l = num - (k * n); // x pos
 	number_alpha = to[k * 8][l * 8];
 	return;
 }
@@ -689,6 +697,7 @@ void drawTile_8(uint32_t tile[TILE_WIDTH][TILE_HEIGHT], int screen_x, int screen
     				//
     			}
     			else {
+    			
 	    			screen[i + n ][j + m] = tile[i][j];
 	    			//LOGE("drawing tile %i", tile[i][j]);
 	    		}
