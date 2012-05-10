@@ -8,11 +8,11 @@ import android.content.*;
 
 public  class Record  {
 	
-	public final static int SPEED_SLOW = 16;
-	public final static int SPEED_MEDIUM = 20;
-	public final static int SPEED_FAST = 24;
-	public final static int SPEED_FASTER = 32;
-	public final static int SPEED_SYSTEM = -1;
+	public final static int SPEED_SLOW = 	16;
+	public final static int SPEED_MEDIUM = 	20;
+	public final static int SPEED_FAST = 	24;
+	public final static int SPEED_FASTER = 	32;
+	public final static int SPEED_SYSTEM = 	-1;
 	
 	public static int RADIO_PLAYERS_TEN = 10;
 	public static int RADIO_PLAYERS_FIVE = 5;
@@ -31,8 +31,8 @@ public  class Record  {
 	private int mNumRecords;
 	private boolean mSound;
 	private boolean mEnableJNI;
-	private boolean mEnableMonsters;
-	private boolean mEnableCollision;
+	private Boolean mEnableMonsters;
+	private Boolean mEnableCollision;
 	
 	
 	Record() {

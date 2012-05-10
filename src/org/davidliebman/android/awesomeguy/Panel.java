@@ -261,10 +261,10 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
 		setScreenData(mGameV.getScreenTilesHMod(), 24);
 		
 		/* JNI Monster Collision setting */
-		int monsters = 0;
-		int collision = 0;
-		if(mHighScores.isEnableMonsters()) monsters = 1;
-		if(mHighScores.isEnableCollision()) collision = 1;
+		int monsters = JNI_FALSE;
+		int collision = JNI_FALSE;
+		if(mHighScores.isEnableMonsters()) monsters = JNI_TRUE;
+		if(mHighScores.isEnableCollision()) collision = JNI_TRUE;
 		setMonsterPreferences(monsters, collision);
 		
 		this.callJNIdrawLevel();
@@ -319,8 +319,10 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
 	}
 	
 	public void setInitialBackgroundGraphics() {
-		/*** set initial scroll positions ***/
+		mHighScores = mGameV.getGuyScore();
 
+		
+		/*** set initial scroll positions ***/ 
 		scrollX = mMovementV.getScrollX();
 		scrollY = mMovementV.getScrollY();
 
@@ -330,16 +332,17 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
 		mGameV.adjustSpriteStartPos();
 
 		/* JNI Monster Collision setting */
-		int monsters = 0;
-		int collision = 0;
-		if(mHighScores.isEnableMonsters()) monsters = 1;
-		if(mHighScores.isEnableCollision()) collision = 1;
+		int monsters = JNI_FALSE;
+		int collision = JNI_FALSE;
+		if(mHighScores.isEnableMonsters()) monsters = JNI_TRUE;
+		if(mHighScores.isEnableCollision()) collision = JNI_TRUE;
 		setMonsterPreferences(monsters, collision);
 	}
 
 	public void setReturnBackgroundGraphics() {
-		/*** jni lives and score ***/
+		mHighScores = mGameV.getGuyScore();
 		
+		/*** jni lives and score ***/
 		setScoreLives(mGameV.getScore(), mGameV.getLives());
 		mHighScores.setLives(mGameV.getLives());
 		mHighScores.setScore(mGameV.getScore());
@@ -353,10 +356,10 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
 		mGuySprite = mGameV.getSpriteStart();
 
 		/*** JNI Monster Collision setting ***/
-		int monsters = 0;
-		int collision = 0;
-		if(mHighScores.isEnableMonsters()) monsters = 1;
-		if(mHighScores.isEnableCollision()) collision = 1;
+		int monsters = JNI_FALSE;
+		int collision = JNI_FALSE;
+		if(mHighScores.isEnableMonsters()) monsters = JNI_TRUE;
+		if(mHighScores.isEnableCollision()) collision = JNI_TRUE;
 		setMonsterPreferences(monsters, collision);
 	}
 

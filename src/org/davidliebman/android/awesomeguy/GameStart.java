@@ -561,9 +561,8 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     		    mPanelBot.setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
     		    mPanelBot.setGuySprite(mGameV.getSpriteStart()); //must refresh reference to guySprite
     		    
-    		    mGameLoopBot.start();
+    		    if (!mGameLoopBot.isAlive()) mGameLoopBot.start();
     			
-    			//mPanelBot.invalidate();
     			
     		}
     			break;
@@ -576,7 +575,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
         		mGameV.useBundleInfo(mBundle, mMovementV);
     			
     		    mPanelBot.setAnimationOnly(false);
-    		    mPanelBot.setJNIAnimateOnly(0); // '0' is false for JNI
+    		    mPanelBot.setJNIAnimateOnly(Panel.JNI_FALSE); // '0' is false for JNI
     		    
     		    
     		    mPanelBot.setReturnBackgroundGraphics();

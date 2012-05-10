@@ -49,7 +49,7 @@ public class InnerGameLoop extends Thread {
 		nextGameTick = startDate.getTime();
 		
 //		boolean mSavedRoomFlag = false;
-		Canvas mCanvas;
+//		Canvas mCanvas;
 		
 		
 		  ///////////////////////////////////////////////////////
@@ -111,8 +111,6 @@ public class InnerGameLoop extends Thread {
 		    }
 		    
 		    
-
-		    
 		    //end of restore from bundle
 		    mGameV.setUseSavedBundle(false);
 		    mGameV.setXmlMode(GameValues.XML_USE_BOTH);
@@ -125,11 +123,13 @@ public class InnerGameLoop extends Thread {
 			
 		    mGameV.setEndLevel(false);
 		    mGameV.setGameDeath(false);
+
+		    mPanel.setJNIAnimateOnly(Panel.JNI_FALSE);
 		    
 			mLoop = true;
 		    while(mLoop && mGameV.isGameRunning() && !mGameV.isEndLevel()) { // GAME PLAY LOOP
 		       boolean mIsNotLate = false;
-		    	mCanvas = null;
+		    	//mCanvas = null;
 		    	if (mGameV.isGameRunning()) mIsNotLate = gameSpeedRegulator(); //call inside 'game play' loop
 
 		    	
@@ -181,6 +181,15 @@ public class InnerGameLoop extends Thread {
 		    		/* call after 'drawLevel()' */
 					mGameV.getPanel().playSounds();
 					
+					/* JNI Monster Collision setting */
+//					int monsters = Panel.JNI_FALSE;
+//					int collision = Panel.JNI_FALSE;
+//					if(mHighScores.isEnableMonsters()) monsters = Panel.JNI_TRUE;
+//					if(mHighScores.isEnableCollision()) collision = Panel.JNI_TRUE;
+//					mPanel.setMonsterPreferences(monsters, collision);
+//					
+//					Log.e("TAG","monster info: " + monsters + " -- " + collision);
+					
 		    	}
 		    	
 //				try {
@@ -202,9 +211,10 @@ public class InnerGameLoop extends Thread {
 //				} // end finally
 				
 				
-				
+
 		    } // end of gameplay loop
 
+		    mGameV.getPanel().setReturnBackgroundGraphics();
 		   
 		    
 	    	mHandler.sendEmptyMessage(GameStart.GAMESTOP);
@@ -238,6 +248,8 @@ public class InnerGameLoop extends Thread {
 		    	  mHandler.sendEmptyMessage(GameStart.CONGRATS);
 		    	  
 		      }
+		      
+
 		      
 		    } /////////// while NUM_ROOMS loop
 
