@@ -1196,6 +1196,7 @@ void drawLevel(int animate_level) {
 	    drawSprite_16(guy_d, guy.x, guy.y, scrollx, scrolly, PAINT_TRANSPARENT, 0);	
 	}
 
+	//LOGE("monsters %d -- %d ", preferences_monsters, preferences_collision);
 }
  
 ////////////////////////////////////////
