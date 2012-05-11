@@ -34,10 +34,7 @@ public class Highscores   extends ListActivity {
     private Scores.High mRec =  new Scores.High();
     private SharedPreferences mPreferences;
     private HighAdapter mAadapter;
-    //private TextView mPlayerText;
-    //private TextView mNumPlayers;
-    private int mPreferredNumRecords;
-	
+
     
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,7 +45,6 @@ public class Highscores   extends ListActivity {
     	mHighScores = new Record();
         mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.getFromPreferences(mPreferences);
-        this.mPreferredNumRecords = this.mPreferences.getInt(Players.SAVED_NUM_SCORES, Record.RADIO_PLAYERS_FIFTY);
 
         
         mScores = new Scores(this, mHighScores);
@@ -80,7 +76,6 @@ public class Highscores   extends ListActivity {
 
             	Intent StartGameIntent = new Intent(Highscores.this,Players.class);
         		startActivity(StartGameIntent);
-            	//Toast.makeText(Players.this, "And We're Off", Toast.LENGTH_SHORT).show();
             }
         });
         
@@ -95,13 +90,12 @@ public class Highscores   extends ListActivity {
     	mHighScores = new Record();
         mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.getFromPreferences(mPreferences);
-        this.mPreferredNumRecords = this.mPreferences.getInt(Players.SAVED_NUM_SCORES, Record.RADIO_PLAYERS_FIFTY);
         
         try {
     		mScores.closeAll();
     	}
     	catch (NullPointerException e) {
-    		//Log.e("Awesomeguy", "Null Pointer Highscores");
+    		//
     	}
         
         mScores = new Scores(this, mHighScores);
@@ -115,14 +109,18 @@ public class Highscores   extends ListActivity {
     	
     	int num = mScores.pruneHighList();
     	if (num > 0) {
-    		Toast.makeText(Highscores.this, "You have 51 scores in your list!! One will be dropped!", Toast.LENGTH_LONG).show();
+    		Toast.makeText(Highscores.this, "You have more than 51 scores in your list!! Some will be dropped!", Toast.LENGTH_LONG).show();
+    		temp = mScores.getGameHighList(0);
+    		this.mNames.clear();
+    		this.mNames.addAll(temp);
+            mAadapter = new HighAdapter(this, R.layout.players, mNames);
+    		mAadapter.notifyDataSetChanged();
+    		
     	}
     }
 	
     @Override
     public void onPause() {
-    	//mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
-    	//mHighScores.addToPreferences(mPreferences);
 
     	try {
     		mScores.closeAll();
