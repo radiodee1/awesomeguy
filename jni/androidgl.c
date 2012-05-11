@@ -42,6 +42,8 @@ void init(void)
 	int tex_width = TEX_WIDTH;
 	int tex_height = TEX_HEIGHT;
 
+	//pthread_cond_init(&s_vsync_cond, NULL);
+	//pthread_mutex_init(&s_vsync_mutex, NULL);
 
 	glShadeModel(GL_SMOOTH);
 	glClearDepthf(1.0f);
@@ -126,7 +128,7 @@ void copy_to_texture() {
 	//pthread_mutex_init(&lock, NULL);
 	//pthread_mutex_lock(&lock);
 	
-	memset(pixbuf, 0xffff, TEX_DIMENSION * TEX_DIMENSION * 2);
+	///memset(pixbuf, 0xffff, TEX_DIMENSION * TEX_DIMENSION * 2);
 
 	for (i = 0; i < SCREEN_WIDTH; i ++) {
 		for (j = 0; j < SCREEN_HEIGHT; j ++) {
@@ -162,7 +164,7 @@ void copy_to_texture() {
 	        pixbuf);
 	check_gl_error("glTexImage2D");
 
-	//pthread_mutex_unlock(&lock);
+
 }
 
 void draw() {
@@ -199,9 +201,18 @@ void draw() {
 
 
 	if (glGetError() != GL_NO_ERROR) exit(3);
+	
+	//pthread_cond_signal(&s_vsync_cond);
 }
 
+/////////////////////////////////////////////////////
 
+void wait_vsync()
+{
+       //pthread_mutex_lock(&s_vsync_mutex);
+       //pthread_cond_wait(&s_vsync_cond, &s_vsync_mutex);
+       //pthread_mutex_unlock(&s_vsync_mutex);
+}
 
 /////////////////////////////////////////////////////
 // JNI methods for androidgl.c
@@ -230,6 +241,8 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIinit(JN
  */
 JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIdraw(JNIEnv * env, jobject  obj)
 {
+	animate_vars();
+	drawLevel(newBG + 1);
 	copy_to_texture();
 	draw();
 	//LOGE("draw");
@@ -256,4 +269,10 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIresize(
 	//screen_height = h;
 
 	resize(w,h);
+}
+
+JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIwaitVSync(JNIEnv * env, jobject  obj)
+{
+	//
+	wait_vsync();
 }
