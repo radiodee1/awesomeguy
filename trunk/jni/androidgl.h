@@ -144,7 +144,10 @@ static int animate_only = FALSE;
 static uint16_t pixbuf[TEX_WIDTH * TEX_HEIGHT] ;
 static GLuint 	texture_id;
 static int screen_width, screen_height;
+static int newGuy, newBG, lastGuy, lastBG, animate;
 
+//static pthread_cond_t s_vsync_cond;
+//static pthread_mutex_t s_vsync_mutex;
 
 	static float vertices[12] ;
 	
@@ -221,6 +224,8 @@ void drawMovingPlatform() ;
 
 void collisionWithMonsters() ;
 
+void animate_vars();
+
 void drawLevel(int animate_level) ;
 
 //////////////////////////////////////////////////////
@@ -234,4 +239,6 @@ void copy_to_texture() ;
 void draw();
 
 void resize(int w, int h);
+
+void wait_vsync();
 #endif

@@ -203,6 +203,8 @@ void setLevelData(int a[MAP_HEIGHT * MAP_WIDTH],  int b[MAP_HEIGHT * MAP_WIDTH])
 	sprite_num = 0;
 	platform_num = -1;
 	
+	
+	
 	return;
 }
 
@@ -1096,6 +1098,36 @@ void collisionWithMonsters() {
 }
 
 /**
+ *	Used to set animation vars in JNI code.
+ */
+void animate_vars() {
+
+	int ANIMATE_SPEED = 5;
+	
+	animate ++;
+	if (TRUE) {
+
+		if (animate >= ANIMATE_SPEED) {
+			newGuy ++;
+			newBG ++;
+			animate = 0;
+		}
+		//if (newGuy != lastGuy) {
+			
+			//lastGuy = newGuy;
+			if(newGuy > 3) newGuy = -1;
+		//}
+		
+		//if (newBG != lastBG) {
+			
+		//	lastBG = newBG;
+			if(newBG > 7) newBG = -1;
+		//}
+	}
+}
+
+
+/**
  *	Used to draw all the components of the level on the screen.
  *
  *	@param	animate_level	number used to decide which version of the tileset
@@ -1352,7 +1384,7 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_inactivate
  */
 JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_setGuyPosition(JNIEnv * env, jobject  obj, jint x_pos, jint y_pos, jint scroll_x, jint scroll_y, jint animate)
 {
-	setGuyPosition(x_pos, y_pos, scroll_x, scroll_y, animate);	
+	setGuyPosition(x_pos, y_pos, scroll_x, scroll_y, newGuy);	
 
 }
 

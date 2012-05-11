@@ -268,6 +268,7 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
 		setMonsterPreferences(monsters, collision);
 		
 		this.callJNIdrawLevel();
+		//this.JNIwaitVSync();
 	}
 
 
@@ -1102,7 +1103,7 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
 		//Log.e("tag", " code " + mGameV.getDisplayHeight());
 		//this.JNIcopyToTexture();
 		this.JNIdraw();
-		
+		//this.JNIwaitVSync();
 //		gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT);
 //		
 //		float vertices[] = {
@@ -1312,6 +1313,7 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
 	public native void JNIdraw();
 	public native void JNIdestroy();
 	public native void JNIresize(int w, int h);
+	public native void JNIwaitVSync();
 	static {
 		System.loadLibrary("awesomeguy");
 	}
