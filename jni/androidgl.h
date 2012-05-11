@@ -144,8 +144,10 @@ static int animate_only = FALSE;
 static uint16_t pixbuf[TEX_WIDTH * TEX_HEIGHT] ;
 static GLuint 	texture_id;
 static int screen_width, screen_height;
-static int newGuy, newBG, lastGuy, lastBG, animate;
-
+static int lastGuy, lastBG;
+static int animate_int = 0;
+static int newGuy = 0;
+static int newBG = 0;
 //static pthread_cond_t s_vsync_cond;
 //static pthread_mutex_t s_vsync_mutex;
 
@@ -241,4 +243,5 @@ void draw();
 void resize(int w, int h);
 
 void wait_vsync();
+
 #endif

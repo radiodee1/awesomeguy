@@ -1102,15 +1102,15 @@ void collisionWithMonsters() {
  */
 void animate_vars() {
 
-	int ANIMATE_SPEED = 5;
+	int ANIMATE_SPEED = 3;
 	
-	animate ++;
+	animate_int ++;
 	if (TRUE) {
 
-		if (animate >= ANIMATE_SPEED) {
+		if (animate_int >= ANIMATE_SPEED) {
 			newGuy ++;
 			newBG ++;
-			animate = 0;
+			animate_int = 0;
 		}
 		//if (newGuy != lastGuy) {
 			
@@ -1124,6 +1124,7 @@ void animate_vars() {
 			if(newBG > 7) newBG = -1;
 		//}
 	}
+	//LOGE("animate %d -- %d", newGuy, newBG);
 }
 
 

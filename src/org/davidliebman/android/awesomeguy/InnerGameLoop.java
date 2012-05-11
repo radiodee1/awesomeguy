@@ -163,13 +163,9 @@ public class InnerGameLoop extends Thread {
 				
 					mGameV.getPanel().scrollBg(); //always call this last!!
 					
-					/* this crucial method calls 'drawLevel()' with animate var */
+					/* JNI method now calls 'drawLevel()' with animate var */
 					//mGameV.getPanel().callJNIdrawLevel();
-					
-					//mGameV.getPanel().JNIdraw();
-					
-					mGameV.getPanel().JNIwaitVSync();
-					
+				
 					/* at end of level -- call after 'drawLevel()' */
 		    		if(mGameV.getPanel().getEndLevel() == 1) {
 		    			mGameV.setEndLevel(true);
