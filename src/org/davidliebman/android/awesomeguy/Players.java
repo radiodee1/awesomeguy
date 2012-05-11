@@ -124,7 +124,7 @@ public class Players extends ListActivity {
         
     
         /* init scores object */
-        mScores = new Scores(this, mHighScores);
+//        mScores = new Scores(this, mHighScores);
         
         //////////////////////end SplashScreen
         
