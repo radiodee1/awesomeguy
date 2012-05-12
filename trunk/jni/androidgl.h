@@ -90,8 +90,10 @@ static uint16_t platform_a[8][40];
 static int map_level [96][96];
 static int map_objects[96][96];
  
-uint16_t screen [256][256];
-//uint16_t screen [192][256];
+uint16_t screen [TEX_DIMENSION][TEX_DIMENSION];
+// this array is used as the basis for the opengl texture 
+// which prints the screen contents to the opengl window.
+// it must have dimenstions of powers of 2.
 
  
 static int tilesWidthMeasurement = 32;
@@ -106,11 +108,6 @@ typedef struct {
 } Sprite;
  
 Sprite sprite[100];
-
-//moved to awesomeguy.c ...
-//int sprite_num = 0;
-//int monster_num = 0;
-//int platform_num = -1;
 
 Sprite guy;
 
@@ -148,15 +145,11 @@ static int lastGuy, lastBG;
 static int animate_int = 0;
 static int newGuy = 0;
 static int newBG = 0;
-//static pthread_cond_t s_vsync_cond;
-//static pthread_mutex_t s_vsync_mutex;
 
-	static float vertices[12] ;
-	
-	static short indices[] = { 0, 1, 2, 0, 2, 3 };
+static float vertices[12] ;
+static short indices[] = { 0, 1, 2, 0, 2, 3 };
+static float tex_coords[8] ; 
 
-	static float tex_coords[8] ; 
-	
 
 //////////////////////////////////////////////////////
 // function prototype: awesomeguy.c
@@ -200,8 +193,6 @@ int collisionSimple(BoundingBox boxA, BoundingBox boxB) ;
 
 int collisionHelper(BoundingBox boxA, BoundingBox boxB) ;
 
-void copyScreenCompress(uint16_t from[SCREEN_WIDTH][SCREEN_HEIGHT],  uint16_t to[]) ;
-
 void copyArraysExpand_16(jint from[], int size_l,  uint16_t to[GUY_WIDTH][GUY_HEIGHT]) ;
 
 void copyArraysExpand_8_40(jint from[], int size_l, uint16_t to[PLATFORM_WIDTH][PLATFORM_HEIGHT]);
@@ -236,12 +227,10 @@ void drawLevel(int animate_level) ;
 
 void init() ;
 
-void copy_to_texture() ;
-
 void draw();
 
 void resize(int w, int h);
 
-void wait_vsync();
+uint16_t color_pixel(uint16_t temp) ;
 
 #endif

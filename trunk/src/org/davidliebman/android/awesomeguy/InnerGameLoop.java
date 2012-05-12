@@ -27,7 +27,7 @@ public class InnerGameLoop extends Thread {
 	private GameStart.PanelHandler mHandler;
 	
 	public InnerGameLoop (GameStart game, GameValues mValues, Panel mPanelBot) {
-		//Log.v("InnerGameLoop", "init");
+
 		mGameV = mValues;
 		mMovementV = mValues.getMovementValues();
 		mHandler = (GameStart.PanelHandler) mValues.getHandler();
@@ -48,9 +48,6 @@ public class InnerGameLoop extends Thread {
 		Date startDate = new Date();
 		nextGameTick = startDate.getTime();
 		
-//		boolean mSavedRoomFlag = false;
-//		Canvas mCanvas;
-		
 		
 		  ///////////////////////////////////////////////////////
 		  // PLAY THE GAME
@@ -67,9 +64,6 @@ public class InnerGameLoop extends Thread {
 		    
 		    if (!mGameV.isUseSavedBundle()) mGameV.setLives(3);
 		    // set room num
-		    
-//		    if (mSavedRoomFlag == true) mGameV.setRoomNo(1);
-//		    mSavedRoomFlag = true;
 		    
 		    
 		    if (!mGameV.isUseSavedBundle()) mGameV.setScore(10);
@@ -102,8 +96,6 @@ public class InnerGameLoop extends Thread {
 		    	
 		    	mGameV.getBackground().initLevel(mMovementV);
 		    
-		    	//jni  !!
-		    
 		    	mPanel.setLevelData(mGameV.getLevelArray(), mGameV.getObjectsArray(), mGameV.getMapH(), mGameV.getMapV());
 		    
 		    	mPanel.addMonstersJNI();
@@ -118,8 +110,6 @@ public class InnerGameLoop extends Thread {
 		    //get guy sprite reference 
 			mGuySprite = mGameV.getSpriteStart();
 		    mPanel.setGuySprite(mGuySprite);
-	    	
-		    //Canvas mCanvas;
 			
 		    mGameV.setEndLevel(false);
 		    mGameV.setGameDeath(false);
@@ -132,17 +122,8 @@ public class InnerGameLoop extends Thread {
 		    	//mCanvas = null;
 		    	if (mGameV.isGameRunning()) mIsNotLate = gameSpeedRegulator(); //call inside 'game play' loop
 
-		    	
-		    	// ** ALWAYS SEND THIS MESSAGE **
 		    	mGameV.setGuyScore(mHighScores);
-//		    	Message mM = new Message();
-//		    	mM.what = GameStart.MOVEMENTVALUES;
-//		    	mM.obj = mHighScores;
-//		    	mHandler.sendMessageAtFrontOfQueue(mM);
-				
-		    	//mHandler.sendEmptyMessage(GameStart.MOVEMENTVALUES);
-    			
-		    	//mGameV.getPanel().setAnimationOnly(false);
+
 		    	
 		    	mGameV.getPanel().setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
     			
@@ -158,9 +139,7 @@ public class InnerGameLoop extends Thread {
 		    		mGameV.getPanel().checkRegularCollisions();
 
 					mGameV.getPanel().checkPhysicsAdjustments();
-					
-					//mGameV.getPanel().animateItems();
-				
+									
 					mGameV.getPanel().scrollBg(); //always call this last!!
 					
 					/* JNI method now calls 'drawLevel()' with animate var */
@@ -181,34 +160,10 @@ public class InnerGameLoop extends Thread {
 		    		/* call after 'drawLevel()' */
 					mGameV.getPanel().playSounds();
 					
-					/* JNI Monster Collision setting */
-//					int monsters = Panel.JNI_FALSE;
-//					int collision = Panel.JNI_FALSE;
-//					if(mHighScores.isEnableMonsters()) monsters = Panel.JNI_TRUE;
-//					if(mHighScores.isEnableCollision()) collision = Panel.JNI_TRUE;
-//					mPanel.setMonsterPreferences(monsters, collision);
-//					
-//					Log.e("TAG","monster info: " + monsters + " -- " + collision);
+	
 					
 		    	}
-		    	
-//				try {
-//					mCanvas = mGameV.getHolder().lockCanvas(null);
-//
-//					synchronized(mGameV.getHolder()) {
-//
-//						//mGameV.getPanel().postInvalidate();
-//
-//					}
-//			
-//					
-//				}
-//				//catch(Exception e) {e.printStackTrace();}
-//				finally {
-//					if (mCanvas != null) {
-//						mGameV.getHolder().unlockCanvasAndPost(mCanvas);
-//					}
-//				} // end finally
+		
 				
 				
 

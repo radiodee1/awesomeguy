@@ -487,23 +487,6 @@ int collisionHelper(BoundingBox boxA, BoundingBox boxB) {
   return test;
 }
 
-/**
- *	Used to copy the library's 2D screen array to the 1D array that will be
- *	returned by the library to the java app.
- *
- *	@param	from	the 2D array of screen data
- *	@param	to		the 1D array of screen data prepared for the java app
- */
-void copyScreenCompress(uint16_t from[SCREEN_WIDTH][SCREEN_HEIGHT],  uint16_t to[]) {
-
-
-      int i,j;
-      for (i = 0; i < SCREEN_HEIGHT; i ++ ) {
-      	for (j = 0; j < SCREEN_WIDTH; j ++ ) {
-      		to [( i * SCREEN_WIDTH) + j ] = from[i][j] ;
-      	}
-      }
-}
 
 /**
  *	Used to copy 16x16 pixel sprite information from the 1D representation that
@@ -621,7 +604,7 @@ void drawSprite_16(uint16_t from[GUY_WIDTH][GUY_HEIGHT], int x, int y, int scrol
     				
     			}
     			else {
-	    			screen[i + l][j + k] = from[i][j];
+	    			screen[i + l][j + k] = color_pixel( from[i][j]);
 
 	    		}
 
@@ -659,7 +642,7 @@ void drawSprite_40_8(uint16_t from[PLATFORM_HEIGHT][PLATFORM_WIDTH], int x, int 
     				
     			}
     			else {
-	    			screen[i + l][j + k] = from[i][j];
+	    			screen[i + l][j + k] =color_pixel( from[i][j]);
 					//screen[i + k][j + l] = from[i][j];
 	    		}
 
@@ -700,7 +683,8 @@ void drawTile_8(uint16_t tile[TILE_WIDTH][TILE_HEIGHT], int screen_x, int screen
     			}
     			else {
     			
-	    			screen[i + n ][j + m] = tile[i][j];
+	    			//screen[i + n ][j + m] = tile[i][j];
+	    			screen[i + n ][j + m] = color_pixel( tile[i][j]);
 	    			//LOGE("drawing tile %i", tile[i][j]);
 	    		}
     		} 
@@ -1112,17 +1096,9 @@ void animate_vars() {
 			newBG ++;
 			animate_int = 0;
 		}
-		//if (newGuy != lastGuy) {
-			
-			//lastGuy = newGuy;
-			if(newGuy > 3) newGuy = -1;
-		//}
-		
-		//if (newBG != lastBG) {
-			
-		//	lastBG = newBG;
-			if(newBG > 7) newBG = -1;
-		//}
+		if(newGuy > 3) newGuy = -1;
+		if(newBG > 7) newBG = -1;
+
 	}
 	//LOGE("animate %d -- %d", newGuy, newBG);
 }
@@ -1493,37 +1469,14 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_setObjects
  *	library.
  *
  *	@param	env		required by all java jni
- *	@param	obj		required by all java jni
- *	@param	animate	a number to use as an animation index, used mostly for the 
- *					animation of the rings.
- *	@return			the 1D representation of the 2D array of screen data.					
+ *	@param	obj		required by all java jni				
  */
-JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_drawLevel(JNIEnv * env, jobject  obj, jint animate)
+JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_drawLevel(JNIEnv * env, jobject  obj)
 {
 	animate_vars();
-	/*
-	int j,k;
-	jint size = SCREEN_WIDTH * SCREEN_HEIGHT;
-	jint fill[size]; 
-	jintArray graphic;
-	*/
+	
 	drawLevel(newBG + 1);
-	/*
-	graphic = (*env)->NewIntArray(env, size);
-	if(graphic == NULL) {
-		LOGE("ARRAY NOT CREATED");
-		return NULL;
-	}
-	for (j = 0; j < SCREEN_HEIGHT; j++) {
-		for (k = 0; k < SCREEN_WIDTH ; k ++ ) {
-			fill[ (j * SCREEN_WIDTH) + k ] = (jint) screen[j][k];
-		}
-	}
 	
-	
-	(*env)->SetIntArrayRegion(env, graphic,0, size, fill);
-	return graphic;
-	*/
 }
 
 
