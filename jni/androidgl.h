@@ -90,9 +90,9 @@ static uint16_t platform_a[8][40];
 static int map_level [96][96];
 static int map_objects[96][96];
  
-uint16_t screen [192][256];
+uint16_t screen [256][256];
 //uint16_t screen [192][256];
-//uint16_t number_alpha = 0; // moved to awesomeguy.c
+
  
 static int tilesWidthMeasurement = 32;
 static int tilesHeightMeasurement = 32;
