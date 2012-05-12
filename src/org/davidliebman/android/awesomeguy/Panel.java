@@ -22,7 +22,7 @@ import android.view.*;
 //import android.util.Log;
 import android.graphics.*;
 
-public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callback, */ GLSurfaceView.Renderer {
+public  class Panel  implements  GLSurfaceView.Renderer {
 	private GameValues mGameV;
 	private Canvas mCanvas;
 
@@ -40,7 +40,6 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
 
 	private SpriteInfo mGuySprite;
 	private Paint mP;
-	//private float mScale = 2;
 	private float mScaleH = 2;
 	private float mScaleV = 2;
 
@@ -50,7 +49,6 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
 	/* for scrolling */
 	private final int LR_MARGIN = 80;
 	private final int TB_MARGIN = 40;
-	//private SpriteInfo mGuySprite;
 
 	/* for scrolling, collision, etc. */
 	private boolean canScroll;
@@ -118,11 +116,8 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
 	private boolean mEnableSounds;
 	private boolean mAnimationOnly;
 	
-	public Panel(Context context,  GameValues gameValues, GameStart parent, MovementValues movementValues) {//, Record highScores) {
-//		super(context);
-//		this.setWillNotDraw(false);
-//		
-//		this.getHolder().addCallback(this);
+	public Panel(Context context,  GameValues gameValues, GameStart parent, MovementValues movementValues) {
+
 		
 		mGameV = gameValues;
 		mMovementV = movementValues;
@@ -268,55 +263,13 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
 		setMonsterPreferences(monsters, collision);
 		
 		this.callJNIdrawLevel();
-		//this.JNIwaitVSync();
 	}
 
 
-//	@Override
-//	public void onDraw(Canvas canvas) {
-//		mCanvas = canvas;
-		
-//		this.setScoreLives(mGameV.getScore(), mGameV.getLives());
-
-		
-//			checkRegularCollisions();
-//
-//			checkPhysicsAdjustments();
-//		
-//			scrollBg(); //always call this last!!
-	
-		/** animate items **/
-//		animateItems();
-
-				
-		/************** test jni *******************/
-//		mMap = Bitmap.createBitmap(drawLevel(newBG + 1), 256, 192, Bitmap.Config.RGB_565);
-//		mTempJNI = Bitmap.createBitmap(mMap, 0, 0, 256, 192, mMatrix, false);
-
-//		mCanvas.drawBitmap(mTempJNI, 0, 0, null);
-
-//		playSounds();
-		
-		
-//		/* at end of level */
-//		if(getEndLevel() == 1) {
-//			mGameV.setEndLevel(true);
-//			mGameV.decrementLives();
-//			mGameV.setGameDeath(true);
-//		}
-//		
-//		/* changes during level */
-//		mHighScores.setLives(getLives());
-//		mHighScores.setScore(getScore());
-//		mGameV.setScore(getScore());
-		
-//	}
 
 	public void callJNIdrawLevel() {
-		drawLevel(newBG + 1);
+		drawLevel();
 		
-		//mMap = Bitmap.createBitmap(drawLevel(newBG + 1), 256, 192, Bitmap.Config.RGB_565);
-		//mTempJNI = Bitmap.createBitmap(mMap, 0, 0, 256, 192, mMatrix, false);
 	}
 	
 	public void setInitialBackgroundGraphics() {
@@ -385,34 +338,7 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
 
 	}
 
-	
-	public void animateItems() {
 
-		if (ANIMATE_SPEED != 0) animate ++;
-		if (this.mGuySprite.getAnimate() == true) {
-
-			if (animate == ANIMATE_SPEED) {
-				newGuy ++;
-				newBG ++;
-				animate = 0;
-			}
-			if (newGuy != lastGuy) {
-				//setSwapGuy(newGuy);
-				lastGuy = newGuy;
-				if(newGuy > 3) newGuy = -1;
-			}
-			//animate tiles
-			if (newBG != lastBG) {
-				//if (!useJNI) setTilesheet(newBG + 1);
-				lastBG = newBG;
-				if(newBG > 7) newBG = -1;
-			}
-
-		} 
-
-
-	}
-	
 	
 	
 	
@@ -1100,92 +1026,32 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
 	@Override
 	public void onDrawFrame(GL10 gl) {
 		//TODO Auto-generated method stub
-		//Log.e("tag", " code " + mGameV.getDisplayHeight());
-		//this.JNIcopyToTexture();
+		
 		this.JNIdraw();
-		//this.JNIwaitVSync();
-//		gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT);
-//		
-//		float vertices[] = {
-//			      -1.0f,  1.0f, 0.0f,  // 0, Top Left
-//			      -1.0f, -1.0f, 0.0f,  // 1, Bottom Left
-//			       1.0f, -1.0f, 0.0f,  // 2, Bottom Right
-//			       1.0f,  1.0f, 0.0f,  // 3, Top Right
-//			};
-//			ByteBuffer vbb = ByteBuffer.allocateDirect(vertices.length * 4	);
-//			vbb.order(ByteOrder.nativeOrder());
-//			FloatBuffer vertexBuffer = vbb.asFloatBuffer();
-//			vertexBuffer.put(vertices);
-//			vertexBuffer.position(0);
-//			
-//			short indices[] = { 0, 1, 2, 0, 2, 3 };
-//
-//			ByteBuffer ibb = ByteBuffer.allocateDirect(indices.length * 2);
-//			ibb.order(ByteOrder.nativeOrder());
-//			ShortBuffer indexBuffer = ibb.asShortBuffer();
-//			indexBuffer.put(indices);
-//			indexBuffer.position(0);
-//			
-//			gl.glColor4f(0.5f, 0.5f, 1.0f, 1.0f);
-//
-//			//glVertexPointer(3, GL_FLOAT, 0, vertices);
-//			gl.glFrontFace(gl.GL_CCW);
-//			gl.glEnable(gl.GL_CULL_FACE);
-//			gl.glCullFace(gl.GL_BACK);
-//			gl.glEnableClientState(gl.GL_VERTEX_ARRAY);
-//			
-//			gl.glVertexPointer(3, gl.GL_FLOAT, 0, vertexBuffer);
-//			gl.glDrawElements( gl.GL_TRIANGLES, 6, gl.GL_UNSIGNED_SHORT, indexBuffer);
-//
-//			gl.glDisableClientState(gl.GL_VERTEX_ARRAY);
-//			gl.glDisable(gl.GL_CULL_FACE);
-//
-//			gl.glLoadIdentity();
-//			gl.glTranslatef(0, 0, -4);
-
-			
-			//gl.glColor4f(0.5f, 0.5f, 1.0f, 1.0f);
-			
-			//gl.glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
-			//gl.glClear(gl.GL_COLOR_BUFFER_BIT);
+	
 	}
 
 
 	@Override
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
 		//TODO Auto-generated method stub
-		//this.JNIdestroy();
 		this.JNIresize(width, height);
-		//this.JNIinit(width, height);
-//		gl.glViewport(0, 0, width, height);
-//		gl.glMatrixMode(gl.GL_PROJECTION);
-//		gl.glLoadIdentity();
-//		GLU.gluPerspective(gl, 45.0f, (float) width/ (float) height, 
-//				0.1f, 100.0f);
-//		gl.glMatrixMode(gl.GL_MODELVIEW);
-//		gl.glLoadIdentity();
+
 	}
 
 
 	@Override
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 		//TODO Auto-generated method stub
-		this.JNIdestroy();
 		this.JNIinit();
 		
 		if (!mGameV.isUseSavedBundle()) {
 			mGameV.getHandler().sendEmptyMessage(GameStart.STARTLEVEL);
 
-		 //mHandler.sendEmptyMessage(GameStart.STARTLEVEL);
 	    }
 	    else {
 	    	mGameV.getHandler().sendEmptyMessage(GameStart.REORIENTATION);
 	    }
-//		gl.glShadeModel(gl.GL_SMOOTH);
-//		gl.glClearDepthf(1.0f);
-//		gl.glEnable(gl.GL_DEPTH_TEST);
-//		gl.glDepthFunc(gl.GL_LEQUAL);
-//		gl.glHint(gl.GL_PERSPECTIVE_CORRECTION_HINT, gl.GL_NICEST);
 
 
 		
@@ -1296,7 +1162,7 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
     public native void setMonsterPreferences(int monsters, int collision);
     public native void setJNIAnimateOnly(int animate);
     public native void setScreenData(int screenH, int screenV);
-	public native void drawLevel(int num);
+	public native void drawLevel();
 	public native int getSoundBoom();
 	public native int getSoundOw();
 	public native int getSoundPrize();
@@ -1311,9 +1177,7 @@ public  class Panel  /* extends SurfaceView */ implements /*SurfaceHolder.Callba
 	//opengl native methods
 	public native void JNIinit();
 	public native void JNIdraw();
-	public native void JNIdestroy();
 	public native void JNIresize(int w, int h);
-	public native void JNIwaitVSync();
 	static {
 		System.loadLibrary("awesomeguy");
 	}

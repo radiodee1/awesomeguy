@@ -6,12 +6,7 @@
 
 #include "androidgl.h"
 
-static void check_gl_error(const char* op)
-{
-	GLint error;
-	for (error = glGetError(); error; error = glGetError())
-	LOGE("after %s() glError (0x%x)\n", op, error);
-}
+
 
 static void gluPerspective(GLfloat fovy, GLfloat aspect,
                GLfloat zNear, GLfloat zFar)//android ndk lacks glu tool kit (unbelievable)
@@ -54,6 +49,9 @@ void init(void)
 
 }
 
+/**
+ *	Set screen size for opengles
+ */
 void resize(int w, int h) {
 
 	float w_h_ratio = (float) w/ (float) h; // specifically for vertices
@@ -111,70 +109,29 @@ void resize(int w, int h) {
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
 		GL_REPEAT);
 
-
-
 	screen_width = w;
 	screen_height = h;
 }
 
-void copy_to_texture() {
+/**
+ *	Opengles specific draw function.
+ */
+void draw() {
 
 	int tex_width = TEX_WIDTH;
 	int tex_height = TEX_HEIGHT;
-	int i, j;
-//	uint8_t r,g,b;
-	
-	//pthread_mutex_t lock;
-	//pthread_mutex_init(&lock, NULL);
-	//pthread_mutex_lock(&lock);
-	
-	///memset(pixbuf, 0xffff, TEX_DIMENSION * TEX_DIMENSION * 2);
 
-	for (i = 0; i < SCREEN_WIDTH; i ++) {
-		for (j = 0; j < SCREEN_HEIGHT; j ++) {
-		
-			uint16_t temp = (uint16_t) screen[j][i];// << 1;
-			
-			//uint16_t r = (temp & 0xf800) >> 11;
-			//uint16_t g = (temp & 0x07e0) >> 5;
-			//uint16_t b = (temp & 0x001f) ;
-			
-			uint16_t a = (temp & 0xf000) >> 12;
-			uint16_t r = (temp & 0x0f00) >> 8;
-			uint16_t g = (temp & 0x00f0) >> 4;
-			uint16_t b = (temp & 0x000f) ;
-			
-			if (temp != 0x0 && (r & 0x80) >> 3 == 0 && (r + g + b) < 0x03 ) {
-				pixbuf[(j * TEX_WIDTH) + i ] =  RGBA4444( 0xff , g, b, 0);
-			}
-			else {
-				//pixbuf[(j * TEX_WIDTH) + i ] = temp ;
-				pixbuf[(j * TEX_WIDTH) + i] = RGBA4444(r,g,b,0);
-			}
-		}
-	}
-
-
-	glTexImage2D(GL_TEXTURE_2D, 0, 
-	        GL_RGBA,//GL_RGB, 
-	        tex_width, tex_height, 
-	        0, 
-	        GL_RGBA,//GL_RGB,
-	        GL_UNSIGNED_SHORT_4_4_4_4,//GL_UNSIGNED_SHORT_5_6_5,
-	        screen);//pixbuf);
-	check_gl_error("glTexImage2D");
-
-
-}
-
-void draw() {
-	int screen_width = TEX_WIDTH;
-	int screen_height = TEX_HEIGHT;
-	//int tex_height = TEX_HEIGHT;
-	//int tex_width = TEX_WIDTH;
-	int i,j;
 
 	//LOGE("here");
+	
+	glTexImage2D(GL_TEXTURE_2D, 0, 
+	        GL_RGBA,//
+	        tex_width, tex_height, 
+	        0, 
+	        GL_RGBA,//
+	        GL_UNSIGNED_SHORT_4_4_4_4,//
+	        screen);//
+
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -199,20 +156,34 @@ void draw() {
 	glLoadIdentity();
 	glTranslatef(0,0, - 1.25f) ;
 
-
-	if (glGetError() != GL_NO_ERROR) exit(3);
 	
-	//pthread_cond_signal(&s_vsync_cond);
+
 }
 
-/////////////////////////////////////////////////////
+/**
+ * 	Used by draw functions to rearrange pixels before opengl sends them to the 
+ *	screen.
+ */
+uint16_t color_pixel(uint16_t temp) {
 
-void wait_vsync()
-{
-       //pthread_mutex_lock(&s_vsync_mutex);
-       //pthread_cond_wait(&s_vsync_cond, &s_vsync_mutex);
-       //pthread_mutex_unlock(&s_vsync_mutex);
+	uint16_t p = 0;
+	
+	uint16_t a = (temp & 0xf000) >> 12;
+	uint16_t r = (temp & 0x0f00) >> 8;
+	uint16_t g = (temp & 0x00f0) >> 4;
+	uint16_t b = (temp & 0x000f) ;
+	
+	if (temp != 0x0 && (r & 0x80) >> 3 == 0 && (r + g + b) < 0x03 ) {
+		p =  RGBA4444( 0xff , g, b, 0);
+	}
+	else {
+		p = RGBA4444(r,g,b,0);
+	}
+	return p;
 }
+
+
+
 
 /////////////////////////////////////////////////////
 // JNI methods for androidgl.c
@@ -241,27 +212,21 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIinit(JN
  */
 JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIdraw(JNIEnv * env, jobject  obj)
 {
-	//animate_vars();
-	//drawLevel(newBG + 1);
-	copy_to_texture();
+	
 	draw();
 	//LOGE("draw");
 
 }
 
 /**
- *	Used to destroy the JNI resources.
+ *	Used to resize the opengl texture whenever the device screen resizes.
  *
  *	@param	env				required by all java jni
  *	@param	obj				required by all java jni
+ *	@param	w				screen width
+ *	@param	h				screen height
  *	@return					void
  */
-JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIdestroy(JNIEnv * env, jobject  obj)
-{
-	//screen_width = w;
-	//screen_height = h;
-	
-}
 
 JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIresize(JNIEnv * env, jobject  obj, jint w, jint h)
 {
@@ -271,8 +236,4 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIresize(
 	resize(w,h);
 }
 
-JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIwaitVSync(JNIEnv * env, jobject  obj)
-{
-	//
-	wait_vsync();
-}
+
