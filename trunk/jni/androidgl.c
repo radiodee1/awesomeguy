@@ -161,7 +161,7 @@ void copy_to_texture() {
 	        0, 
 	        GL_RGBA,//GL_RGB,
 	        GL_UNSIGNED_SHORT_4_4_4_4,//GL_UNSIGNED_SHORT_5_6_5,
-	        pixbuf);
+	        screen);//pixbuf);
 	check_gl_error("glTexImage2D");
 
 
