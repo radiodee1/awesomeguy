@@ -9,7 +9,7 @@
 
 
 // some declarations that are used only in this c file...
-uint32_t number_alpha = 0;
+uint16_t number_alpha = 0;
 
 int sprite_num = 0;
 int monster_num = 0;
@@ -494,7 +494,7 @@ int collisionHelper(BoundingBox boxA, BoundingBox boxB) {
  *	@param	from	the 2D array of screen data
  *	@param	to		the 1D array of screen data prepared for the java app
  */
-void copyScreenCompress(uint32_t from[SCREEN_WIDTH][SCREEN_HEIGHT],  uint32_t to[]) {
+void copyScreenCompress(uint16_t from[SCREEN_WIDTH][SCREEN_HEIGHT],  uint16_t to[]) {
 
 
       int i,j;
@@ -514,7 +514,7 @@ void copyScreenCompress(uint32_t from[SCREEN_WIDTH][SCREEN_HEIGHT],  uint32_t to
  *	@param	size_l	size in pixels of 'from' array
  *	@param	to		2D array of sprite data used by library
  */
-void copyArraysExpand_16(jint from[], int size_l, uint32_t to[GUY_WIDTH][GUY_HEIGHT]) {
+void copyArraysExpand_16(jint from[], int size_l, uint16_t to[GUY_WIDTH][GUY_HEIGHT]) {
 
 
 	int i,j, k;
@@ -522,7 +522,7 @@ void copyArraysExpand_16(jint from[], int size_l, uint32_t to[GUY_WIDTH][GUY_HEI
 		for (j = 0; j < GUY_WIDTH; j ++ ) {
 			k =( i * GUY_WIDTH ) + j;
 			if ( k < size_l ) {
-				to[i][j] = (uint32_t) from[k];
+				to[i][j] = (uint16_t) from[k];
 				//LOGE("many assignments here %i", from[k]);
 			}
 		}
@@ -539,7 +539,7 @@ void copyArraysExpand_16(jint from[], int size_l, uint32_t to[GUY_WIDTH][GUY_HEI
  *	@param	size_l	size in pixels of 'from' array
  *	@param	to		2D array of sprite data used by library
  */
-void copyArraysExpand_8_40(jint from[], int size_l, uint32_t to[PLATFORM_HEIGHT][PLATFORM_WIDTH]) {
+void copyArraysExpand_8_40(jint from[], int size_l, uint16_t to[PLATFORM_HEIGHT][PLATFORM_WIDTH]) {
 
 	int i,j, k;
 	for (i = 0; i< PLATFORM_HEIGHT; i ++ ) {
@@ -563,7 +563,7 @@ void copyArraysExpand_8_40(jint from[], int size_l, uint32_t to[PLATFORM_HEIGHT]
  *	@param	size_l	size in pixels of 'from' array
  *	@param	to		2D array of tilesheet data used by library
  */
-void copyArraysExpand_tileset (jint from[], int size_l, uint32_t to[TILEMAP_HEIGHT][TILEMAP_WIDTH]) {
+void copyArraysExpand_tileset (jint from[], int size_l, uint16_t to[TILEMAP_HEIGHT][TILEMAP_WIDTH]) {
 
 	int num, n, l;
 	int i,j, k;
@@ -605,7 +605,7 @@ void copyArraysExpand_tileset (jint from[], int size_l, uint32_t to[TILEMAP_HEIG
  *						painted
  *	@param	extra		color value to skip if 'paint_all' function is used
  */
-void drawSprite_16(uint32_t from[GUY_WIDTH][GUY_HEIGHT], int x, int y, int scroll_x, int scroll_y, int paint_all, uint32_t extra) {
+void drawSprite_16(uint16_t from[GUY_WIDTH][GUY_HEIGHT], int x, int y, int scroll_x, int scroll_y, int paint_all, uint16_t extra) {
 
 
 
@@ -646,7 +646,7 @@ void drawSprite_16(uint32_t from[GUY_WIDTH][GUY_HEIGHT], int x, int y, int scrol
  *						painted
  *	@param	extra		color value to skip if 'paint_all' function is used
  */
-void drawSprite_40_8(uint32_t from[PLATFORM_HEIGHT][PLATFORM_WIDTH], int x, int y, int scroll_x, int scroll_y, int paint_all, uint32_t extra) {
+void drawSprite_40_8(uint16_t from[PLATFORM_HEIGHT][PLATFORM_WIDTH], int x, int y, int scroll_x, int scroll_y, int paint_all, uint16_t extra) {
 	
 	int i,j,k,l;
     k = x - scroll_x;
@@ -683,7 +683,7 @@ void drawSprite_40_8(uint32_t from[PLATFORM_HEIGHT][PLATFORM_WIDTH], int x, int 
  *						painted
  *	@param	extra		color value to skip if 'paint_all' function is used
  */
-void drawTile_8(uint32_t tile[TILE_WIDTH][TILE_HEIGHT], int screen_x, int screen_y, int scroll_x, int scroll_y, int paint_all, uint32_t extra) {
+void drawTile_8(uint16_t tile[TILE_WIDTH][TILE_HEIGHT], int screen_x, int screen_y, int scroll_x, int scroll_y, int paint_all, uint16_t extra) {
    
     int i,j,m,n;
 
@@ -718,7 +718,7 @@ void drawTile_8(uint32_t tile[TILE_WIDTH][TILE_HEIGHT], int screen_x, int screen
  *	@param	num		the number that indicates which tile to copy from the 
  *					tileset image
  */
-void cutTile(uint32_t tileset[TILEMAP_HEIGHT][TILEMAP_WIDTH], uint32_t tile[TILE_HEIGHT][TILE_WIDTH], int num) {
+void cutTile(uint16_t tileset[TILEMAP_HEIGHT][TILEMAP_WIDTH], uint16_t tile[TILE_HEIGHT][TILE_WIDTH], int num) {
 
 
     int i,j,k,l,m,n, p;
@@ -754,7 +754,7 @@ void drawScoreWords() {
     	int scorePos, livesPos;
     	scorePos = 2 ;
     	livesPos = 16  ;
-        uint32_t square[TILE_HEIGHT][TILE_WIDTH];
+        uint16_t square[TILE_HEIGHT][TILE_WIDTH];
     	//mTiles = new TileCutter(bMapNum);
 		
 		
@@ -812,7 +812,7 @@ void drawScoreNumbers( int pos, int num, int p) {
     	int places[] = {0,0,0,0,0,0,0,0,0,0};//ten spots
     	int topNumbers[] = {364,365,366, 367, 368, 369, 370, 371, 372, 373};
     	int showZeros = 0;
-        uint32_t square[TILE_HEIGHT][TILE_WIDTH];
+        uint16_t square[TILE_HEIGHT][TILE_WIDTH];
     	//mTiles = new TileCutter(bMapNum);
 
     	for (i = 0; i < 10; i ++) {
@@ -1140,17 +1140,17 @@ void drawLevel(int animate_level) {
     int baseX, baseY;//, startX, startY;
     int mapcheat = 1;
     int levelcheat = 1;
-    uint32_t square[TILE_HEIGHT][TILE_WIDTH];
+    uint16_t square[TILE_HEIGHT][TILE_WIDTH];
     
     animate = animate_level;
-    
+    memset(screen, 0x0, SCREEN_HEIGHT * SCREEN_WIDTH * 2);
     /* clear screen */
-    for (i = 0 ; i < (SCREEN_HEIGHT ); i ++ ) {
-    	for( j = 0; j < SCREEN_WIDTH; j ++ ) {
-    	
-	    	screen[i][j] = (uint32_t) 0x0000;// = -1;
-	    }
-    }
+    //for (i = 0 ; i < (SCREEN_HEIGHT ); i ++ ) {
+    //	for( j = 0; j < SCREEN_WIDTH; j ++ ) {
+    //	
+    //	    	screen[i][j] = (uint16_t) 0x0000;// = -1;
+    //   }
+    //}
     
     /* draw background */
     baseX = scrollx / TILE_WIDTH;
@@ -1500,13 +1500,14 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_setObjects
  */
 JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_drawLevel(JNIEnv * env, jobject  obj, jint animate)
 {
+	animate_vars();
 	/*
 	int j,k;
 	jint size = SCREEN_WIDTH * SCREEN_HEIGHT;
 	jint fill[size]; 
 	jintArray graphic;
 	*/
-	drawLevel(animate);
+	drawLevel(newBG + 1);
 	/*
 	graphic = (*env)->NewIntArray(env, size);
 	if(graphic == NULL) {

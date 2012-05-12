@@ -241,8 +241,8 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIinit(JN
  */
 JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIdraw(JNIEnv * env, jobject  obj)
 {
-	animate_vars();
-	drawLevel(newBG + 1);
+	//animate_vars();
+	//drawLevel(newBG + 1);
 	copy_to_texture();
 	draw();
 	//LOGE("draw");
