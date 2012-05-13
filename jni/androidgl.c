@@ -54,6 +54,8 @@ void init(void)
  */
 void resize(int w, int h) {
 
+
+
 	float w_h_ratio = (float) w/ (float) h; // specifically for vertices
 	float h_w_ratio =  3.0f/  4.0f; // specifically for texture
 	
@@ -121,7 +123,10 @@ void draw() {
 	int tex_width = TEX_WIDTH;
 	int tex_height = TEX_HEIGHT;
 
-
+	pthread_mutex_t lock;
+	pthread_mutex_init(&lock, NULL);
+	pthread_mutex_lock(&lock);
+	
 	//LOGE("here");
 	
 	glTexImage2D(GL_TEXTURE_2D, 0, 
@@ -156,7 +161,7 @@ void draw() {
 	glLoadIdentity();
 	glTranslatef(0,0, - 1.25f) ;
 
-	
+	pthread_mutex_unlock(&lock);
 
 }
 
