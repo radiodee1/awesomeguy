@@ -1,5 +1,5 @@
-obj/local/armeabi/objs/awesomeguy/awesomeguy.o: jni/awesomeguy.c \
- jni/androidgl.h \
+obj/local/armeabi/objs/awesomeguy/awesomeguy/androidgl.o: \
+ jni/awesomeguy/androidgl.c jni/awesomeguy/androidgl.h \
  /home/dave/bin/android-ndk-r7b/platforms/android-8/arch-arm/usr/include/jni.h \
  /home/dave/bin/android-ndk-r7b/platforms/android-8/arch-arm/usr/include/android/log.h \
  /home/dave/bin/android-ndk-r7b/platforms/android-8/arch-arm/usr/include/stdio.h \
@@ -47,7 +47,7 @@ obj/local/armeabi/objs/awesomeguy/awesomeguy.o: jni/awesomeguy.c \
  /home/dave/bin/android-ndk-r7b/platforms/android-8/arch-arm/usr/include/KHR/khrplatform.h \
  /home/dave/bin/android-ndk-r7b/platforms/android-8/arch-arm/usr/include/GLES/glext.h
 
-jni/androidgl.h:
+jni/awesomeguy/androidgl.h:
 
 /home/dave/bin/android-ndk-r7b/platforms/android-8/arch-arm/usr/include/jni.h:
 

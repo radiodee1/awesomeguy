@@ -1,6 +1,6 @@
 
-#ifndef ANDROIDGL_H
-#define ANDROIDGL_H
+#ifndef ANDROIDGL1_H
+#define ANDROIDGL1_H
 
 
 #include <jni.h>
@@ -11,8 +11,16 @@
 #include <assert.h>
 #include <pthread.h>
 
+#ifdef GL2
+
+#include <GLES2/gl2.h>
+#include <GLES2/gl2ext.h>
+
+#else
 #include <GLES/gl.h>
 #include <GLES/glext.h>
+
+#endif
 
 // include program libraries
 // include loge and logi definitions
@@ -30,6 +38,7 @@
 #define TEX_HEIGHT  256
 
 #define TEX_DIMENSION	256
+#define BOOL int
 
 static int B_START = 5;
 static int B_SPACE = 0;
@@ -138,7 +147,9 @@ static int animate_only = FALSE;
 // open gl stuff
 //////////////////////////////////////////////////////
 
-static uint16_t pixbuf[TEX_WIDTH * TEX_HEIGHT] ;
+static int use_gl2 = FALSE;
+
+//static uint16_t pixbuf[TEX_WIDTH * TEX_HEIGHT] ;
 static GLuint 	texture_id;
 static int screen_width, screen_height;
 static int lastGuy, lastBG;
