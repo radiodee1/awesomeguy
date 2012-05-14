@@ -1,26 +1,19 @@
 package org.davidliebman.android.awesomeguy;
 
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
-import java.nio.ShortBuffer;
-
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+import android.opengl.GLES20;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.opengl.GLSurfaceView;
-import android.opengl.GLU;
-import android.util.Log;
-import android.view.*;
-//import android.util.Log;
-import android.graphics.*;
+import android.view.Display;
+import android.view.WindowManager;
 
 public  class Panel  implements  GLSurfaceView.Renderer {
 	private GameValues mGameV;
@@ -115,9 +108,12 @@ public  class Panel  implements  GLSurfaceView.Renderer {
 	SoundPoolManager mSounds;
 	private boolean mEnableSounds;
 	private boolean mAnimationOnly;
+	public static int mSDKVersion;
 	
 	public Panel(Context context,  GameValues gameValues, GameStart parent, MovementValues movementValues) {
-
+		
+		mSDKVersion = new Integer(android.os.Build.VERSION.SDK).intValue();
+		this.JNIsetVersion(mSDKVersion);
 		
 		mGameV = gameValues;
 		mMovementV = movementValues;
@@ -1178,32 +1174,18 @@ public  class Panel  implements  GLSurfaceView.Renderer {
 	public native void JNIinit();
 	public native void JNIdraw();
 	public native void JNIresize(int w, int h);
+	public native void JNIsetVersion(int v);
 	static {
-		System.loadLibrary("awesomeguy");
+		mSDKVersion = new Integer(android.os.Build.VERSION.SDK).intValue();
+
+		if (mSDKVersion >= 10) {
+			System.loadLibrary("awesomeguy-gl2");
+		}
+		else {
+			System.loadLibrary("awesomeguy");
+		}
 	}
 	
 	
 	
-}
-
-class PanelGLSurfaceView extends GLSurfaceView {
-	Panel mPanel; // this is our renderer!!
-	
-    public PanelGLSurfaceView(Context context,  GameValues gameValues, GameStart parent, MovementValues movementValues) {
-        super(context);
-        mPanel = new Panel(context, gameValues, parent, movementValues);
-        setRenderer(mPanel);
-    }
-
-    public boolean onTouchEvent(final MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            //nativePause();
-        }
-        return true;
-    }
-
-    public Panel getPanel() {
-    	return mPanel;
-    }
-
 }

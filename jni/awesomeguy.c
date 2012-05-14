@@ -1119,14 +1119,9 @@ void drawLevel(int animate_level) {
     uint16_t square[TILE_HEIGHT][TILE_WIDTH];
     
     animate = animate_level;
-    memset(screen, 0x0, SCREEN_HEIGHT * SCREEN_WIDTH * 2);
+    
     /* clear screen */
-    //for (i = 0 ; i < (SCREEN_HEIGHT ); i ++ ) {
-    //	for( j = 0; j < SCREEN_WIDTH; j ++ ) {
-    //	
-    //	    	screen[i][j] = (uint16_t) 0x0000;// = -1;
-    //   }
-    //}
+    memset(screen, 0x0, SCREEN_HEIGHT * SCREEN_WIDTH * 2);
     
     /* draw background */
     baseX = scrollx / TILE_WIDTH;
@@ -1141,7 +1136,8 @@ void drawLevel(int animate_level) {
     				cutTile(tiles_a, square, map_level[j][i] - levelcheat);
     				drawTile_8(square, j * TILE_WIDTH, i * TILE_HEIGHT , 
     					scrollx , scrolly, PAINT_SOLID, 0);
-				}
+			}
+			
 				// special animated tiles
 				k = map_objects[j][i];
 				if ( k != B_START && k != B_MONSTER && k != B_DEATH
