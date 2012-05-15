@@ -20,3 +20,12 @@ LOCAL_LDLIBS    := -llog -lGLESv1_CM
 #LOCAL_CFLAGS	:= -DGL1
 
 include $(BUILD_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE    := test
+LOCAL_CFLAGS    := -Werror 
+LOCAL_SRC_FILES := test.c
+LOCAL_LDLIBS    := -llog 
+
+include $(BUILD_SHARED_LIBRARY)
