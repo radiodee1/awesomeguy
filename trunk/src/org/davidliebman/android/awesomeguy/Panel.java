@@ -1024,7 +1024,7 @@ public  class Panel  implements  GLSurfaceView.Renderer {
 		//TODO Auto-generated method stub
 		
 		this.JNIdraw();
-	
+		Log.e("tag","score" + this.JNItestScore());
 	}
 
 
@@ -1175,9 +1175,11 @@ public  class Panel  implements  GLSurfaceView.Renderer {
 	public native void JNIdraw();
 	public native void JNIresize(int w, int h);
 	public native void JNIsetVersion(int v);
+	public native int JNItestScore();
 	static {
 		mSDKVersion = new Integer(android.os.Build.VERSION.SDK).intValue();
-
+		System.loadLibrary("test");
+		
 		if (mSDKVersion >= 10) {
 			System.loadLibrary("awesomeguy-gl2");
 		}
