@@ -1,6 +1,6 @@
 
-#ifndef ANDROIDGL1_H
-#define ANDROIDGL1_H
+#ifndef ANDROIDGL_H
+#define ANDROIDGL_H
 
 
 #include <jni.h>

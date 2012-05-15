@@ -1,5 +1,4 @@
-obj/local/armeabi/objs/awesomeguy-gl2/androidgl2.o: jni/androidgl2.c \
- jni/androidgl.h \
+obj/local/armeabi/objs/test/test.o: jni/test.c jni/androidgl.h \
  /home/dave/bin/android-ndk-r7c/platforms/android-8/arch-arm/usr/include/jni.h \
  /home/dave/bin/android-ndk-r7c/platforms/android-8/arch-arm/usr/include/android/log.h \
  /home/dave/bin/android-ndk-r7c/platforms/android-8/arch-arm/usr/include/stdio.h \
@@ -42,10 +41,10 @@ obj/local/armeabi/objs/awesomeguy-gl2/androidgl2.o: jni/androidgl2.c \
  /home/dave/bin/android-ndk-r7c/platforms/android-8/arch-arm/usr/include/asm/signal.h \
  /home/dave/bin/android-ndk-r7c/platforms/android-8/arch-arm/usr/include/asm-generic/signal.h \
  /home/dave/bin/android-ndk-r7c/platforms/android-8/arch-arm/usr/include/sched.h \
- /home/dave/bin/android-ndk-r7c/platforms/android-8/arch-arm/usr/include/GLES2/gl2.h \
- /home/dave/bin/android-ndk-r7c/platforms/android-8/arch-arm/usr/include/GLES2/gl2platform.h \
+ /home/dave/bin/android-ndk-r7c/platforms/android-8/arch-arm/usr/include/GLES/gl.h \
+ /home/dave/bin/android-ndk-r7c/platforms/android-8/arch-arm/usr/include/GLES/glplatform.h \
  /home/dave/bin/android-ndk-r7c/platforms/android-8/arch-arm/usr/include/KHR/khrplatform.h \
- /home/dave/bin/android-ndk-r7c/platforms/android-8/arch-arm/usr/include/GLES2/gl2ext.h
+ /home/dave/bin/android-ndk-r7c/platforms/android-8/arch-arm/usr/include/GLES/glext.h
 
 jni/androidgl.h:
 
@@ -133,10 +132,10 @@ jni/androidgl.h:
 
 /home/dave/bin/android-ndk-r7c/platforms/android-8/arch-arm/usr/include/sched.h:
 
-/home/dave/bin/android-ndk-r7c/platforms/android-8/arch-arm/usr/include/GLES2/gl2.h:
+/home/dave/bin/android-ndk-r7c/platforms/android-8/arch-arm/usr/include/GLES/gl.h:
 
-/home/dave/bin/android-ndk-r7c/platforms/android-8/arch-arm/usr/include/GLES2/gl2platform.h:
+/home/dave/bin/android-ndk-r7c/platforms/android-8/arch-arm/usr/include/GLES/glplatform.h:
 
 /home/dave/bin/android-ndk-r7c/platforms/android-8/arch-arm/usr/include/KHR/khrplatform.h:
 
-/home/dave/bin/android-ndk-r7c/platforms/android-8/arch-arm/usr/include/GLES2/gl2ext.h:
+/home/dave/bin/android-ndk-r7c/platforms/android-8/arch-arm/usr/include/GLES/glext.h:
