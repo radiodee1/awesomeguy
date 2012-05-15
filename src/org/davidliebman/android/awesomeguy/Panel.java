@@ -12,6 +12,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.opengl.GLSurfaceView;
+import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
