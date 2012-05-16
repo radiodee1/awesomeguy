@@ -12,7 +12,7 @@ public class PanelGLSurfaceView extends GLSurfaceView {
     public PanelGLSurfaceView(Context context,  GameValues gameValues, GameStart parent, MovementValues movementValues) {
         super(context);
         mPanel = new Panel(context, gameValues, parent, movementValues);
-        Log.e("PanelGLSurfaceView", "version" + mPanel.mSDKVersion);
+        //Log.e("PanelGLSurfaceView", "version" + mPanel.mSDKVersion);
         
         if (mPanel.mSDKVersion >= 10 ) {
         	setEGLContextClientVersion(2);

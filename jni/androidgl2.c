@@ -435,3 +435,18 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIsetVers
 	////////////////////////
 }
 
+/**
+ *	Used to build the screen pixbuf. Replaces 'drawLevel()'
+ *
+ *	@param	env				required by all java jni
+ *	@param	obj				required by all java jni
+ *	@return					void
+ */
+JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIbuildLevel(JNIEnv * env, jobject  obj)
+{
+	
+	animate_vars();
+	
+	drawLevel(newBG + 1);
+	////////////////////////
+}
