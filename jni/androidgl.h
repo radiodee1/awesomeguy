@@ -130,7 +130,7 @@ typedef struct {
 
 ///////////////////////////////////
 
-static int level_h, level_w, score, lives, scrollx, scrolly, animate;
+static int level_h, level_w, lives, scrollx, scrolly, animate , score;
 
 static int endlevel = FALSE;
 
