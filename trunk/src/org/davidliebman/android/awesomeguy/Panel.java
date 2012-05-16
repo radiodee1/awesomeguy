@@ -265,8 +265,8 @@ public  class Panel  implements  GLSurfaceView.Renderer {
 
 
 	public void callJNIdrawLevel() {
-		drawLevel();
-		
+		//drawLevel();
+		this.JNIbuildLevel();
 	}
 	
 	public void setInitialBackgroundGraphics() {
@@ -1025,7 +1025,7 @@ public  class Panel  implements  GLSurfaceView.Renderer {
 		//TODO Auto-generated method stub
 		
 		this.JNIdraw();
-		Log.e("tag","score " + this.JNItestScore());
+		//Log.e("tag","score " + this.JNItestScore());
 	}
 
 
@@ -1159,7 +1159,7 @@ public  class Panel  implements  GLSurfaceView.Renderer {
     public native void setMonsterPreferences(int monsters, int collision);
     public native void setJNIAnimateOnly(int animate);
     public native void setScreenData(int screenH, int screenV);
-	public native void drawLevel();
+	public native void drawLevel(); // <-- remove me!!
 	public native int getSoundBoom();
 	public native int getSoundOw();
 	public native int getSoundPrize();
@@ -1176,7 +1176,7 @@ public  class Panel  implements  GLSurfaceView.Renderer {
 	public native void JNIdraw();
 	public native void JNIresize(int w, int h);
 	public native void JNIsetVersion(int v);
-	
+	public native void JNIbuildLevel();
 	static {
 		mSDKVersion = new Integer(android.os.Build.VERSION.SDK).intValue();
 		
