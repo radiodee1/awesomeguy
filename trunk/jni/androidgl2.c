@@ -128,7 +128,7 @@ typedef struct {
     float Color[4];
 } Vertex;
 
-const Vertex Vertices[] = {
+static Vertex Vertices[] = {
     {{1, -1, 0}, {1, 0, 0, 1}},
     {{1, 1, 0}, {0, 1, 0, 1}},
     {{-1, 1, 0}, {0, 0, 1, 1}},
@@ -218,22 +218,22 @@ BOOL resize_gl2(int w, int h) {
 	float h_w_ratio =  3.0f/  4.0f; // specifically for texture
 	
 	
-	vertices[0] =  - (w_h_ratio / 2.0f) ;
-	vertices[1] = 0.5f; 
-	vertices[2] = -4.0f;  // 0, Top Left
 	
-	vertices[3] =  - (w_h_ratio / 2.0f) ;
-	vertices[4] = -0.5f; 
-	vertices[5] = -4.0f;  // 1, Bottom Left
+	Vertices[0].Position[0] = (w_h_ratio / 2.0f);
+	Vertices[0].Position[1] = - 0.5f;
+	Vertices[0].Position[2] = 0.0f; // Bottom Right **
 	
-	vertices[6] = (w_h_ratio / 2.0f) ;
-	vertices[7] = -0.5f; 
-	vertices[8] = -4.0f;  // 2, Bottom Right
+	Vertices[1].Position[0] = (w_h_ratio / 2.0f);
+	Vertices[1].Position[1] = 0.5f;
+	Vertices[1].Position[2] = 0.0f; // Top Right
 	
-	vertices[9] = (w_h_ratio / 2.0f) ;
-	vertices[10] = 0.5f; 
-	vertices[11] = -4.0f;  // 3, Top Right
+	Vertices[2].Position[0] = - (w_h_ratio / 2.0f);
+	Vertices[2].Position[1] = 0.5f;
+	Vertices[2].Position[2] = 0.0f; // Top Left
 	
+	Vertices[3].Position[0] = - (w_h_ratio / 2.0f);
+	Vertices[3].Position[1] =  -0.5f;
+	Vertices[3].Position[2] = 0.0f; // Bottom Left
 	
 	glGenBuffers(1, &_vertexBuffer);
     	glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
