@@ -27,16 +27,35 @@ static void gluPerspective(GLfloat fovy, GLfloat aspect,
 
 static void printGLString(const char *name, GLenum s) {
     const char *v = (const char *) glGetString(s);
-    LOGI("GL %s = %s\n", name, v);
+    LOGE("GL %s = %s\n", name, v);
 }
 
 static void checkGlError(const char* op) {
 	GLint error;
     for (error = glGetError(); error; error
             = glGetError()) {
-        LOGI("after %s() glError (0x%x)\n", op, error);
+        LOGE("after %s() glError (0x%x)\n", op, error);
     }
 }
+
+/*
+static const char gVertexShader[] = 
+    "attribute vec4 vPosition;\n"
+    "attribute vec4 SourceColor; \n"
+    "varying vec4 DestinationColor; \n"
+    "uniform mat4 Projection; \n"
+    "uniform mat4 Modelview; \n"
+    "attribute vec4 TexCoordIn; \n"
+    "varying vec4 TexCoordOut; \n"
+    "void main() {\n"
+    "  DestinationColor = SourceColor; \n"
+    //"  gl_Position = Projection * Modelview * vPosition;\n"
+    "  gl_Position =  vPosition; \n"
+    "  TexCoordOut = TexCoordIn;\n"
+    "}\n";
+*/
+
+/*
 
 static const char gVertexShader[] = 
     "attribute vec4 vPosition;\n"
@@ -50,6 +69,33 @@ static const char gFragmentShader[] =
     "  gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);\n"
     "}\n";
 
+*/
+
+
+static const char gVertexShader[] = 
+	"attribute vec4 Position; \n"
+	"attribute vec4 SourceColor; \n"
+	"varying vec4 DestinationColor; \n" 
+ 
+	"void main(void) { \n"
+    	"  DestinationColor = SourceColor; \n" 
+    	"  gl_Position = Position; \n"
+	"} \n";
+
+
+
+
+
+
+static const char gFragmentShader[] = 
+	"varying lowp vec4 DestinationColor;\n" 
+	"void main(void) {\n" 
+	"  gl_FragColor = DestinationColor;\n" 
+	"} \n";
+
+  
+  
+/*
 static const char vertexShaderCode[] = 
         // This matrix member variable provides a hook to manipulate
         // the coordinates of the objects that use this vertex shader
@@ -60,9 +106,39 @@ static const char vertexShaderCode[] =
         " gl_Position = uMVPMatrix * vPosition; \n" 
         
         "}  \n";
+*/
 
-GLuint gProgram;
-GLuint gvPositionHandle;
+static GLuint gProgram;
+static GLuint gvPositionHandle;
+
+static GLuint _vertexBuffer;
+static GLuint _indexBuffer;
+
+static GLuint _colorRenderBuffer;
+static GLuint _floorTexture;
+static GLuint _fishTexture;
+static GLuint _texCoordSlot;
+static GLuint _positionSlot;
+static GLuint _colorSlot;
+static GLuint _textureUniform;
+static GLuint _projectionUniform;
+
+typedef struct {
+    float Position[3];
+    float Color[4];
+} Vertex;
+
+const Vertex Vertices[] = {
+    {{1, -1, 0}, {1, 0, 0, 1}},
+    {{1, 1, 0}, {0, 1, 0, 1}},
+    {{-1, 1, 0}, {0, 0, 1, 1}},
+    {{-1, -1, 0}, {0, 0, 0, 1}}
+};
+ 
+const GLubyte Indices[] = {
+     0, 1, 2,
+     2, 3, 0
+};
 
 GLuint loadShader(GLenum shaderType, const char* pSource) {
     GLuint shader = glCreateShader(shaderType);
@@ -132,6 +208,54 @@ BOOL resize_gl2(int w, int h) {
 
 	//eglCreateContext(GL_CONTEXT_CLIENT_VERSION, 2);
 	
+	screen_width = w;
+	screen_height = h;
+	
+	int tex_width = TEX_WIDTH;
+	int tex_height = TEX_HEIGHT;
+    
+    	float w_h_ratio = (float) screen_width / (float) screen_height ; // specifically for vertices
+	float h_w_ratio =  3.0f/  4.0f; // specifically for texture
+	
+	
+	vertices[0] =  - (w_h_ratio / 2.0f) ;
+	vertices[1] = 0.5f; 
+	vertices[2] = -4.0f;  // 0, Top Left
+	
+	vertices[3] =  - (w_h_ratio / 2.0f) ;
+	vertices[4] = -0.5f; 
+	vertices[5] = -4.0f;  // 1, Bottom Left
+	
+	vertices[6] = (w_h_ratio / 2.0f) ;
+	vertices[7] = -0.5f; 
+	vertices[8] = -4.0f;  // 2, Bottom Right
+	
+	vertices[9] = (w_h_ratio / 2.0f) ;
+	vertices[10] = 0.5f; 
+	vertices[11] = -4.0f;  // 3, Top Right
+	
+	
+	glGenBuffers(1, &_vertexBuffer);
+    	glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+    	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices) , Vertices, GL_STATIC_DRAW);
+ 
+    	glGenBuffers(1, &_indexBuffer);
+    	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+    	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Indices), Indices, GL_STATIC_DRAW);
+	
+	
+	/*
+	glGenRenderbuffers(1, &_colorRenderBuffer);
+	glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderBuffer);
+	
+	GLuint framebuffer;
+    glGenFramebuffers(1, &framebuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, 
+        GL_RENDERBUFFER, _colorRenderBuffer);
+        */
+        
+	
     printGLString("Version", GL_VERSION);
     printGLString("Vendor", GL_VENDOR);
     printGLString("Renderer", GL_RENDERER);
@@ -144,51 +268,171 @@ BOOL resize_gl2(int w, int h) {
         LOGE("Could not create program.");
         return FALSE;
     }
+    else {
+    	LOGE("program %d ", gProgram);
+    }
+    
+
+    	//checkGlError("glUseProgram");
+	_positionSlot = glGetAttribLocation(gProgram, "Position");
+	_colorSlot = glGetAttribLocation(gProgram, "SourceColor");
+	glEnableVertexAttribArray(_positionSlot);
+	glEnableVertexAttribArray(_colorSlot);
+	
     gvPositionHandle = glGetAttribLocation(gProgram, "vPosition");
-    checkGlError("glGetAttribLocation");
-    LOGI("glGetAttribLocation(\"vPosition\") = %d\n",
+
+    LOGE("glGetAttribLocation(\"vPosition\") = %d\n",
             gvPositionHandle);
 
-    glViewport(0, 0, w, h);
-    checkGlError("glViewport");
+
+	//_texCoordSlot = glGetAttribLocation(gProgram, "TexCoordIn");
+	//glEnableVertexAttribArray(_texCoordSlot);
+	//_textureUniform = glGetUniformLocation(gProgram, "Texture");
+	//_projectionUniform = glGetUniformLocation(gProgram, "Projection");
+	//glActiveTexture(GL_TEXTURE0);
+	//glUniform1i(_textureUniform, 0);
+
+    	//glViewport(0, 0, w, h);
+
+    /*
+	glGenTextures(1, &texture_id);
+
+	//glBindTexture(GL_TEXTURE_2D, texture_id);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+		GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
+		GL_NEAREST);
+
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
+		GL_CLAMP_TO_EDGE);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
+		GL_REPEAT);
+*/
+    
     return TRUE;
 }
 
 
-const GLfloat gTriangleVertices[] = { 
-	0.0f, 0.5f, 
-	-0.5f, -0.5f,
-	0.5f, -0.5f };
-
-GLfloat triangleCoords[] = {
-            // X, Y, Z
-            -0.5f, -0.25f, 0,
-             0.5f, -0.25f, 0,
-             0.0f,  0.559016994f, 0
-        }; 
-
 
 void draw_gl2() {
-    static float grey;
-    grey += 0.01f;
-    if (grey > 1.0f) {
-        grey = 0.0f;
-    }
-    glClearColor(grey, grey, grey, 1.0f);
-    checkGlError("glClearColor");
-    glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-    checkGlError("glClear");
 
-    glUseProgram(gProgram);
-    checkGlError("glUseProgram");
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	
+    	static float grey;
+    	grey += 0.01f;
+    	if (grey > 1.0f) {
+        	grey = 0.0f;
+    	}
+    
+    	int w = screen_width;
+    	int h = screen_height;
 
-    glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, gTriangleVertices);
-    //glVertexAttribPointer(gvPositionHandle, 3, GL_FLOAT, GL_FALSE, 0, triangleCoords);
-    checkGlError("glVertexAttribPointer");
-    glEnableVertexAttribArray(gvPositionHandle);
-    checkGlError("glEnableVertexAttribArray");
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-    checkGlError("glDrawArrays");
+	glViewport(0, 0, w, h);	
+	
+	int tex_width = TEX_WIDTH;
+	int tex_height = TEX_HEIGHT;
+    
+	
+ 
+
+	/*
+    	float w_h_ratio = (float) screen_width / (float) screen_height ; // specifically for vertices
+	float h_w_ratio =  3.0f/  4.0f; // specifically for texture
+	
+	// vertices array 
+	vertices[0] =  - (w_h_ratio / 2.0f) ;
+	vertices[1] = 0.5f; 
+	vertices[2] = -4.0f;  // 0, Top Left
+	
+	vertices[3] =  - (w_h_ratio / 2.0f) ;
+	vertices[4] = -0.5f; 
+	vertices[5] = -4.0f;  // 1, Bottom Left
+	
+	vertices[6] = (w_h_ratio / 2.0f) ;
+	vertices[7] = -0.5f; 
+	vertices[8] = -4.0f;  // 2, Bottom Right
+	
+	
+	vertices[9] = (w_h_ratio / 2.0f) ;
+	vertices[10] = 0.5f; 
+	vertices[11] = -4.0f;  // 3, Top Right
+	*/
+	/*
+	vertices[12] = (w_h_ratio / 2.0f) ;
+	vertices[13] = -0.5f; 
+	vertices[14] = 0.0f;  // 2, Bottom Right
+	
+	
+	vertices[15] = (w_h_ratio / 2.0f) ;
+	vertices[16] = 0.5f; 
+	vertices[17] = 0.0f;  // 3, Top Right
+	*/
+	
+	/* texture coordinates array */
+	/*
+	tex_coords[0] = 0.0f;
+	tex_coords[1] = 0.0f; //1
+	
+	tex_coords[2] = 0.0f; 
+	tex_coords[3] = h_w_ratio;//1.0f; //2
+	
+	tex_coords[4] = 1.0f; 
+	tex_coords[5] = h_w_ratio;//1.0f; //3
+	
+	tex_coords[6] = 1.0f; 
+	tex_coords[7] = 0.0f; //4
+    	*/
+    
+    	//glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+    	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+    	
+    
+    	glClearColor(grey, grey, grey, 1.0f);
+    	checkGlError("glClearColor");
+    	glClear( GL_COLOR_BUFFER_BIT);
+    	checkGlError("glClear");
+    	
+	glUseProgram(gProgram);
+    	checkGlError("glUseProgram");
+    	
+	glVertexAttribPointer(_positionSlot, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+	glVertexAttribPointer(_colorSlot, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*) (sizeof(float) * 3));
+	
+	glDrawElements(GL_TRIANGLES, 
+		sizeof(Indices)/ sizeof (Indices[0]), 
+		GL_UNSIGNED_BYTE, 0);
+
+
+    
+
+	glUniform1i(_textureUniform, 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture_id);
+	
+	glTexImage2D(GL_TEXTURE_2D, 0, 
+	        GL_RGBA,//
+	        tex_width, tex_height, 
+	        0, 
+	        GL_RGBA,//
+	        GL_UNSIGNED_SHORT_4_4_4_4,//
+	        screen);//
+    
+	
+	
+	
+}
+
+void init_gl2(void) {
+	glGenRenderbuffers(1, &_colorRenderBuffer);
+	glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderBuffer);
+	
+	GLuint framebuffer;
+	glGenFramebuffers(1, &framebuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, 
+		GL_COLOR_ATTACHMENT0, 
+		GL_RENDERBUFFER, 
+		_colorRenderBuffer);
 }
 
 
@@ -198,20 +442,6 @@ void draw_gl2() {
 
 void init(void)
 {
-	int i;
-	//int tex_width, tex_height;
-	int tex_width = TEX_WIDTH;
-	int tex_height = TEX_HEIGHT;
-
-	//pthread_cond_init(&s_vsync_cond, NULL);
-	//pthread_mutex_init(&s_vsync_mutex, NULL);
-	/*
-	glShadeModel(GL_SMOOTH);
-	glClearDepthf(1.0f);
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LEQUAL);
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-	*/
 
 }
 
@@ -255,30 +485,7 @@ void resize(int w, int h) {
 	tex_coords[6] = 1.0f; 
 	tex_coords[7] = 0.0f; //4
 	
-	/*
-	glViewport(0, 0, w, h);	
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective( 45.0f, (float) w/ (float) h, 
-		0.1f, 100.0f);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	glGenTextures(1, &texture_id);
-
-	glBindTexture(GL_TEXTURE_2D, texture_id);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-		GL_NEAREST);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
-		GL_NEAREST);
-
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
-		GL_CLAMP_TO_EDGE);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
-		GL_REPEAT);
-
-	*/
-
+	
 	screen_width = w;
 	screen_height = h;
 }
@@ -288,51 +495,6 @@ void resize(int w, int h) {
  */
 void draw() {
 
-	int tex_width = TEX_WIDTH;
-	int tex_height = TEX_HEIGHT;
-
-	pthread_mutex_t lock;
-	pthread_mutex_init(&lock, NULL);
-	pthread_mutex_lock(&lock);
-	
-	//LOGE("here");
-	/*
-	glTexImage2D(GL_TEXTURE_2D, 0, 
-	        GL_RGBA,//
-	        tex_width, tex_height, 
-	        0, 
-	        GL_RGBA,//
-	        GL_UNSIGNED_SHORT_4_4_4_4,//
-	        screen);//
-
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glEnableClientState(GL_VERTEX_ARRAY);
-
-	glFrontFace(GL_CCW);
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
-	glEnable(GL_TEXTURE_2D);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-	glTexCoordPointer(2, GL_FLOAT, 0, tex_coords);
-
-
-	glVertexPointer(3, GL_FLOAT, 0, vertices);
-	glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
-	glDisable(GL_CULL_FACE);
-
-
-	glLoadIdentity();
-	glTranslatef(0,0, - 1.25f) ;
-
-	glFinish();
-	glFlush();
-	*/
-	pthread_mutex_unlock(&lock);
 
 }
 
@@ -376,6 +538,9 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIinit(JN
 {
 	if (! use_gl2) {
 		init();
+	}
+	else {
+		init_gl2();
 	}
 }
 
