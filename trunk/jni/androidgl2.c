@@ -38,48 +38,24 @@ static void checkGlError(const char* op) {
     }
 }
 
-/*
-static const char gVertexShader[] = 
-    "attribute vec4 vPosition;\n"
-    "attribute vec4 SourceColor; \n"
-    "varying vec4 DestinationColor; \n"
-    "uniform mat4 Projection; \n"
-    "uniform mat4 Modelview; \n"
-    "attribute vec4 TexCoordIn; \n"
-    "varying vec4 TexCoordOut; \n"
-    "void main() {\n"
-    "  DestinationColor = SourceColor; \n"
-    //"  gl_Position = Projection * Modelview * vPosition;\n"
-    "  gl_Position =  vPosition; \n"
-    "  TexCoordOut = TexCoordIn;\n"
-    "}\n";
-*/
-
-/*
-
-static const char gVertexShader[] = 
-    "attribute vec4 vPosition;\n"
-    "void main() {\n"
-    "  gl_Position = vPosition;\n"
-    "}\n";
-
-static const char gFragmentShader[] = 
-    "precision mediump float;\n"
-    "void main() {\n"
-    "  gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);\n"
-    "}\n";
-
-*/
 
 
 static const char gVertexShader[] = 
 	"attribute vec4 Position; \n"
 	"attribute vec4 SourceColor; \n"
+	
 	"varying vec4 DestinationColor; \n" 
  
+ 	"uniform mat4 Projection; \n"
+ 	"uniform mat4 Modelview; \n"
+ 	
+ 	"attribute vec2 TexCoordIn; \n"
+ 	"varying vec2 TexCoordOut; \n"
 	"void main(void) { \n"
-    	"  DestinationColor = SourceColor; \n" 
-    	"  gl_Position = Position; \n"
+    	"  DestinationColor = SourceColor; \n"
+    	// gl_Position = Projection * Modelview * Position; 
+    	"  gl_Position =  Position; \n"
+    	"  TexCoordOut = TexCoordIn; \n"
 	"} \n";
 
 
@@ -89,8 +65,11 @@ static const char gVertexShader[] =
 
 static const char gFragmentShader[] = 
 	"varying lowp vec4 DestinationColor;\n" 
+	"varying lowp vec2 TexCoordOut; \n"
+	"uniform sampler2D Texture; \n"
 	"void main(void) {\n" 
-	"  gl_FragColor = DestinationColor;\n" 
+	//"  gl_FragColor = DestinationColor * texture2D(Texture, TexCoordOut);\n" 
+	"  gl_FragColor =  texture2D(Texture, TexCoordOut);\n" 
 	"} \n";
 
   
@@ -110,9 +89,11 @@ static const char vertexShaderCode[] =
 
 static GLuint gProgram;
 static GLuint gvPositionHandle;
+static GLuint gameTexture;
 
 static GLuint _vertexBuffer;
 static GLuint _indexBuffer;
+static GLuint _depthRenderBuffer;
 
 static GLuint _colorRenderBuffer;
 static GLuint _floorTexture;
@@ -126,15 +107,26 @@ static GLuint _projectionUniform;
 typedef struct {
     float Position[3];
     float Color[4];
+    float TexCoord[2];
 } Vertex;
 
 static Vertex Vertices[] = {
-    {{1, -1, 0}, {1, 0, 0, 1}},
-    {{1, 1, 0}, {0, 1, 0, 1}},
-    {{-1, 1, 0}, {0, 0, 1, 1}},
-    {{-1, -1, 0}, {0, 0, 0, 1}}
+    {{1, -1, 0}, {1, 0, 0, 1}, {1, 0}},
+    {{1, 1, 0}, {1, 0, 0, 1}, {1, 1}},
+    {{-1, 1, 0}, {0, 1, 0, 1}, {0, 1}},
+    {{-1, -1, 0}, {0, 1, 0, 1}, {0, 0}},
+    {{1, -1, -1}, {1, 0, 0, 1}, {1, 0}},
+    {{1, 1, -1}, {1, 0, 0, 1}, {1, 1}},
+    {{-1, 1, -1}, {0, 1, 0, 1}, {0, 1}},
+    {{-1, -1, -1}, {0, 1, 0, 1}, {0, 0}}
 };
  
+static const GLfloat identityMatrix[] = { 
+	1.0f, 0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 0.0f, 1.0f };
+
 const GLubyte Indices[] = {
      0, 1, 2,
      2, 3, 0
@@ -235,6 +227,30 @@ BOOL resize_gl2(int w, int h) {
 	Vertices[3].Position[1] =  -0.5f;
 	Vertices[3].Position[2] = 0.0f; // Bottom Left
 	
+	//GLuint gameTexture;
+	glGenTextures(1, &gameTexture);
+	glBindTexture(GL_TEXTURE_2D, gameTexture);
+	
+	//
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+		GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
+		GL_NEAREST);
+
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
+		GL_CLAMP_TO_EDGE);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
+		GL_REPEAT);
+		
+	glTexImage2D(GL_TEXTURE_2D, 0, 
+	        GL_RGBA,//
+	        tex_width, tex_height, 
+	        0, 
+	        GL_RGBA,//
+	        GL_UNSIGNED_SHORT_4_4_4_4,//
+	        screen);//
+    
+	
 	glGenBuffers(1, &_vertexBuffer);
     	glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
     	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices) , Vertices, GL_STATIC_DRAW);
@@ -243,6 +259,11 @@ BOOL resize_gl2(int w, int h) {
     	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Indices), Indices, GL_STATIC_DRAW);
 	
+	glGenRenderbuffers(1, &_depthRenderBuffer);
+	glBindRenderbuffer( GL_RENDERBUFFER, _depthRenderBuffer);
+	glRenderbufferStorage( GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, w, h);
+	
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
 	
 	/*
 	glGenRenderbuffers(1, &_colorRenderBuffer);
@@ -272,14 +293,19 @@ BOOL resize_gl2(int w, int h) {
     	LOGE("program %d ", gProgram);
     }
     
+	//_projectionUniform = glGetUniformLocation(gProgram, "Projection");
 
-    	//checkGlError("glUseProgram");
 	_positionSlot = glGetAttribLocation(gProgram, "Position");
 	_colorSlot = glGetAttribLocation(gProgram, "SourceColor");
+	_texCoordSlot = glGetAttribLocation(gProgram, "TexCoordIn");
+	_textureUniform = glGetUniformLocation(gProgram, "Texture");
+	glEnableVertexAttribArray(_texCoordSlot);
 	glEnableVertexAttribArray(_positionSlot);
 	glEnableVertexAttribArray(_colorSlot);
 	
-    gvPositionHandle = glGetAttribLocation(gProgram, "vPosition");
+	glUniformMatrix4fv(_projectionUniform, 1, 0, identityMatrix);
+	
+    	gvPositionHandle = glGetAttribLocation(gProgram, "vPosition");
 
     LOGE("glGetAttribLocation(\"vPosition\") = %d\n",
             gvPositionHandle);
@@ -298,15 +324,7 @@ BOOL resize_gl2(int w, int h) {
 	glGenTextures(1, &texture_id);
 
 	//glBindTexture(GL_TEXTURE_2D, texture_id);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-		GL_NEAREST);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
-		GL_NEAREST);
-
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
-		GL_CLAMP_TO_EDGE);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
-		GL_REPEAT);
+	
 */
     
     return TRUE;
@@ -386,28 +404,9 @@ void draw_gl2() {
     	//glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
     	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     	
-    
-    	glClearColor(grey, grey, grey, 1.0f);
-    	checkGlError("glClearColor");
-    	glClear( GL_COLOR_BUFFER_BIT);
-    	checkGlError("glClear");
-    	
-	glUseProgram(gProgram);
-    	checkGlError("glUseProgram");
-    	
-	glVertexAttribPointer(_positionSlot, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-	glVertexAttribPointer(_colorSlot, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*) (sizeof(float) * 3));
-	
-	glDrawElements(GL_TRIANGLES, 
-		sizeof(Indices)/ sizeof (Indices[0]), 
-		GL_UNSIGNED_BYTE, 0);
-
-
-    
-
-	glUniform1i(_textureUniform, 0);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture_id);
+    	//glUniform1i(_textureUniform, 0);
+	//glActiveTexture(GL_TEXTURE0);
+	//glBindTexture(GL_TEXTURE_2D, texture_id);
 	
 	glTexImage2D(GL_TEXTURE_2D, 0, 
 	        GL_RGBA,//
@@ -417,6 +416,32 @@ void draw_gl2() {
 	        GL_UNSIGNED_SHORT_4_4_4_4,//
 	        screen);//
     
+    
+    	glClearColor(grey, grey, grey, 1.0f);
+    	checkGlError("glClearColor");
+    	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    	glEnable( GL_DEPTH_TEST);
+    	checkGlError("glClear");
+    	
+	glUseProgram(gProgram);
+    	checkGlError("glUseProgram");
+    	
+	glVertexAttribPointer(_positionSlot, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+	glVertexAttribPointer(_colorSlot, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*) (sizeof(float) * 3));
+	glVertexAttribPointer(_texCoordSlot, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*) (sizeof(float) * 7 ));
+	
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture( GL_TEXTURE_2D, gameTexture);
+	glUniform1i(_textureUniform, 0);
+	
+	glDrawElements(GL_TRIANGLES, 
+		sizeof(Indices)/ sizeof (Indices[0]), 
+		GL_UNSIGNED_BYTE, 0);
+
+
+    
+
+	
 	
 	
 	
