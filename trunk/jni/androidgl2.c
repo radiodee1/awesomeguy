@@ -112,13 +112,13 @@ typedef struct {
 
 static Vertex Vertices[] = {
     {{1, -1, 0}, {1, 0, 0, 1}, {1, 0}},
-    {{1, 1, 0}, {1, 0, 0, 1}, {1, 1}},
-    {{-1, 1, 0}, {0, 1, 0, 1}, {0, 1}},
+    {{1, 1, 0}, {1, 0, 0, 1}, {1, -1}},
+    {{-1, 1, 0}, {0, 1, 0, 1}, {0, -1}},
     {{-1, -1, 0}, {0, 1, 0, 1}, {0, 0}},
-    {{1, -1, -1}, {1, 0, 0, 1}, {1, 0}},
-    {{1, 1, -1}, {1, 0, 0, 1}, {1, 1}},
-    {{-1, 1, -1}, {0, 1, 0, 1}, {0, 1}},
-    {{-1, -1, -1}, {0, 1, 0, 1}, {0, 0}}
+    //{{1, -1, -1}, {1, 0, 0, 1}, {1, 0}},
+    //{{1, 1, -1}, {1, 0, 0, 1}, {1, 1}},
+    //{{-1, 1, -1}, {0, 1, 0, 1}, {0, 1}},
+    //{{-1, -1, -1}, {0, 1, 0, 1}, {0, 0}}
 };
  
 static const GLfloat identityMatrix[] = { 
@@ -215,17 +215,29 @@ BOOL resize_gl2(int w, int h) {
 	Vertices[0].Position[1] = - 0.5f;
 	Vertices[0].Position[2] = 0.0f; // Bottom Right **
 	
+	Vertices[0].TexCoord[0] = 1;
+	Vertices[0].TexCoord[1] = -0.25f;
+	
 	Vertices[1].Position[0] = (w_h_ratio / 2.0f);
 	Vertices[1].Position[1] = 0.5f;
 	Vertices[1].Position[2] = 0.0f; // Top Right
+	
+	Vertices[1].TexCoord[0] = 1;
+	Vertices[1].TexCoord[1] = -1;
 	
 	Vertices[2].Position[0] = - (w_h_ratio / 2.0f);
 	Vertices[2].Position[1] = 0.5f;
 	Vertices[2].Position[2] = 0.0f; // Top Left
 	
+	Vertices[2].TexCoord[0] = 0;
+	Vertices[2].TexCoord[1] = -1;
+	
 	Vertices[3].Position[0] = - (w_h_ratio / 2.0f);
 	Vertices[3].Position[1] =  -0.5f;
 	Vertices[3].Position[2] = 0.0f; // Bottom Left
+	
+	Vertices[3].TexCoord[0] = 0;
+	Vertices[3].TexCoord[1] = -0.25f;
 	
 	//GLuint gameTexture;
 	glGenTextures(1, &gameTexture);
@@ -284,14 +296,7 @@ BOOL resize_gl2(int w, int h) {
 
     LOGI("setupGraphics(%d, %d)", w, h);
     gProgram = createProgram(gVertexShader, gFragmentShader);
-    //gProgram = createProgram(vertexShaderCode, gFragmentShader);
-    if (!gProgram) {
-        LOGE("Could not create program.");
-        return FALSE;
-    }
-    else {
-    	LOGE("program %d ", gProgram);
-    }
+   
     
 	//_projectionUniform = glGetUniformLocation(gProgram, "Projection");
 
@@ -350,41 +355,6 @@ void draw_gl2() {
 	int tex_width = TEX_WIDTH;
 	int tex_height = TEX_HEIGHT;
     
-	
- 
-
-	/*
-    	float w_h_ratio = (float) screen_width / (float) screen_height ; // specifically for vertices
-	float h_w_ratio =  3.0f/  4.0f; // specifically for texture
-	
-	// vertices array 
-	vertices[0] =  - (w_h_ratio / 2.0f) ;
-	vertices[1] = 0.5f; 
-	vertices[2] = -4.0f;  // 0, Top Left
-	
-	vertices[3] =  - (w_h_ratio / 2.0f) ;
-	vertices[4] = -0.5f; 
-	vertices[5] = -4.0f;  // 1, Bottom Left
-	
-	vertices[6] = (w_h_ratio / 2.0f) ;
-	vertices[7] = -0.5f; 
-	vertices[8] = -4.0f;  // 2, Bottom Right
-	
-	
-	vertices[9] = (w_h_ratio / 2.0f) ;
-	vertices[10] = 0.5f; 
-	vertices[11] = -4.0f;  // 3, Top Right
-	*/
-	/*
-	vertices[12] = (w_h_ratio / 2.0f) ;
-	vertices[13] = -0.5f; 
-	vertices[14] = 0.0f;  // 2, Bottom Right
-	
-	
-	vertices[15] = (w_h_ratio / 2.0f) ;
-	vertices[16] = 0.5f; 
-	vertices[17] = 0.0f;  // 3, Top Right
-	*/
 	
 	/* texture coordinates array */
 	/*
