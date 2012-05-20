@@ -453,7 +453,7 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIbuildLe
 	
 	animate_vars();
 	
-	drawLevel(newBG + 1);
+	drawLevel(0);
 	////////////////////////
 }
 

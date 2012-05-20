@@ -155,7 +155,7 @@ static int screen_width, screen_height;
 static int lastGuy, lastBG;
 static int animate_int = 0;
 static int newGuy = 0;
-static int newBG = 0;
+static int newBG =0;
 
 static float vertices[12] ;
 static short indices[] = { 0, 1, 2, 0, 2, 3 };
