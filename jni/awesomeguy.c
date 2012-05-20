@@ -1098,7 +1098,7 @@ void animate_vars() {
 		}
 		if(newGuy > 3) newGuy = -1;
 		if(newBG > 7) newBG = -1;
-
+		LOGE("animate vars %d " , newBG);
 	}
 	//LOGE("animate %d -- %d", newGuy, newBG);
 }
@@ -1107,10 +1107,10 @@ void animate_vars() {
 /**
  *	Used to draw all the components of the level on the screen.
  *
- *	@param	animate_level	number used to decide which version of the tileset
+ *	@param	unused	formerly a number used to decide which version of the tileset
  *							is used, providing animated appearance of rings
  */
-void drawLevel(int animate_level) {
+void drawLevel(int unused) {
     
     int i,j,k,l;
     int baseX, baseY;//, startX, startY;
@@ -1118,7 +1118,8 @@ void drawLevel(int animate_level) {
     int levelcheat = 1;
     uint16_t square[TILE_HEIGHT][TILE_WIDTH];
     
-    animate = animate_level;
+    //animate = animate_level;
+    animate = newBG + 1;
     
     /* clear screen */
     memset(screen, 0x0, SCREEN_HEIGHT * SCREEN_WIDTH * 2);

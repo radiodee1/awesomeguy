@@ -54,7 +54,7 @@ static const char gVertexShader[] =
 	"void main(void) { \n"
     	"  DestinationColor = SourceColor; \n"
     	// gl_Position = Projection * Modelview * Position; 
-    	"  gl_Position =  Position; \n"
+    	"  gl_Position =    Position; \n"
     	"  TexCoordOut = TexCoordIn; \n"
 	"} \n";
 
@@ -96,8 +96,8 @@ static GLuint _indexBuffer;
 static GLuint _depthRenderBuffer;
 
 static GLuint _colorRenderBuffer;
-static GLuint _floorTexture;
-static GLuint _fishTexture;
+
+
 static GLuint _texCoordSlot;
 static GLuint _positionSlot;
 static GLuint _colorSlot;
@@ -126,6 +126,39 @@ static const GLfloat identityMatrix[] = {
         0.0f, 1.0f, 0.0f, 0.0f,
         0.0f, 0.0f, 1.0f, 0.0f,
         0.0f, 0.0f, 0.0f, 1.0f };
+        
+static const GLfloat identityMatrix2[] = { 
+	0.0f, 0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f, 0.0f };
+        
+        
+/*
+static const Mat4 identityMatrix2 = Mat4( 
+	1.0f, 0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 0.0f, 1.0f );
+      
+Mat4 Ortho2D(float left, float right, float bottom, T top, float zNear, float zFar)
+{
+    float dx = right - left;
+    float dy = top - bottom;
+    float dz = zFar - zNear;
+
+    // avoid division by zero
+    float tx = (dx != 0) ? -(right + left) / dx : 0;
+    float ty = (dy != 0) ? -(top + bottom) / dy : 0;
+    float tz = (dz != 0) ? -(zFar + zNear) / dz : 0;
+
+    return Mat4(2.0f / dx, 0,           0,          tx,
+                0,          2.0f / dy, 0,           ty,
+                0,          0,          -2.0f / dz, tz,
+                0,          0,          0,          1);
+}
+*/
+
 
 const GLubyte Indices[] = {
      0, 1, 2,
@@ -198,7 +231,6 @@ GLuint createProgram(const char* pVertexSource, const char* pFragmentSource) {
 
 BOOL resize_gl2(int w, int h) {
 
-	//eglCreateContext(GL_CONTEXT_CLIENT_VERSION, 2);
 	
 	screen_width = w;
 	screen_height = h;
@@ -207,37 +239,37 @@ BOOL resize_gl2(int w, int h) {
 	int tex_height = TEX_HEIGHT;
     
     	float w_h_ratio = (float) screen_width / (float) screen_height ; // specifically for vertices
-	float h_w_ratio =  3.0f/  4.0f; // specifically for texture
+	float h_w_ratio = 4.0f/ 3.0f;// 3.0f/  4.0f; // specifically for texture
+	float depth = 0.0f;
 	
 	
-	
-	Vertices[0].Position[0] = (w_h_ratio / 2.0f);
-	Vertices[0].Position[1] = - 0.5f;
-	Vertices[0].Position[2] = 0.0f; // Bottom Right **
+	Vertices[0].Position[0] = (w_h_ratio / 2.0f) * h_w_ratio;
+	Vertices[0].Position[1] = - 0.5f * h_w_ratio;
+	Vertices[0].Position[2] = depth; // Bottom Right **
 	
 	Vertices[0].TexCoord[0] = 1;
-	Vertices[0].TexCoord[1] = -0.25f;
+	Vertices[0].TexCoord[1] = - 0.25;
 	
-	Vertices[1].Position[0] = (w_h_ratio / 2.0f);
-	Vertices[1].Position[1] = 0.5f;
-	Vertices[1].Position[2] = 0.0f; // Top Right
+	Vertices[1].Position[0] = (w_h_ratio / 2.0f) * h_w_ratio;
+	Vertices[1].Position[1] = 0.5f * h_w_ratio;
+	Vertices[1].Position[2] = depth; // Top Right
 	
 	Vertices[1].TexCoord[0] = 1;
 	Vertices[1].TexCoord[1] = -1;
 	
-	Vertices[2].Position[0] = - (w_h_ratio / 2.0f);
-	Vertices[2].Position[1] = 0.5f;
-	Vertices[2].Position[2] = 0.0f; // Top Left
+	Vertices[2].Position[0] = - (w_h_ratio / 2.0f) * h_w_ratio;
+	Vertices[2].Position[1] = 0.5f * h_w_ratio;
+	Vertices[2].Position[2] = depth; // Top Left
 	
 	Vertices[2].TexCoord[0] = 0;
 	Vertices[2].TexCoord[1] = -1;
 	
-	Vertices[3].Position[0] = - (w_h_ratio / 2.0f);
-	Vertices[3].Position[1] =  -0.5f;
-	Vertices[3].Position[2] = 0.0f; // Bottom Left
+	Vertices[3].Position[0] = - (w_h_ratio / 2.0f) * h_w_ratio;
+	Vertices[3].Position[1] =  -0.5f * h_w_ratio;
+	Vertices[3].Position[2] = depth; // Bottom Left
 	
 	Vertices[3].TexCoord[0] = 0;
-	Vertices[3].TexCoord[1] = -0.25f;
+	Vertices[3].TexCoord[1] = - 0.25;
 	
 	//GLuint gameTexture;
 	glGenTextures(1, &gameTexture);
@@ -298,7 +330,7 @@ BOOL resize_gl2(int w, int h) {
     gProgram = createProgram(gVertexShader, gFragmentShader);
    
     
-	//_projectionUniform = glGetUniformLocation(gProgram, "Projection");
+	_projectionUniform = glGetUniformLocation(gProgram, "Projection");
 
 	_positionSlot = glGetAttribLocation(gProgram, "Position");
 	_colorSlot = glGetAttribLocation(gProgram, "SourceColor");
@@ -308,7 +340,7 @@ BOOL resize_gl2(int w, int h) {
 	glEnableVertexAttribArray(_positionSlot);
 	glEnableVertexAttribArray(_colorSlot);
 	
-	glUniformMatrix4fv(_projectionUniform, 1, 0, identityMatrix);
+	glUniformMatrix4fv(_projectionUniform, 1, 0, identityMatrix2);
 	
     	gvPositionHandle = glGetAttribLocation(gProgram, "vPosition");
 
@@ -386,7 +418,9 @@ void draw_gl2() {
 	        GL_UNSIGNED_SHORT_4_4_4_4,//
 	        screen);//
     
-    
+    	//glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
+    	//checkGlError("glFramebufferRenderbuffer");
+    	
     	glClearColor(grey, grey, grey, 1.0f);
     	checkGlError("glClearColor");
     	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -407,16 +441,12 @@ void draw_gl2() {
 	glDrawElements(GL_TRIANGLES, 
 		sizeof(Indices)/ sizeof (Indices[0]), 
 		GL_UNSIGNED_BYTE, 0);
-
-
-    
-
-	
-	
-	
 	
 }
 
+/**
+ * Opengles 2.0 initialize function.
+ */
 void init_gl2(void) {
 	glGenRenderbuffers(1, &_colorRenderBuffer);
 	glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderBuffer);
@@ -441,52 +471,15 @@ void init(void)
 }
 
 /**
- *	Set screen size for opengles
+ *	Set screen size for opengles 1.0
  */
 void resize(int w, int h) {
 
 
-
-	float w_h_ratio = (float) w/ (float) h; // specifically for vertices
-	float h_w_ratio =  3.0f/  4.0f; // specifically for texture
-	
-	/* vertices array */
-	vertices[0] =  - (w_h_ratio / 2.0f) ;
-	vertices[1] = 0.5f; 
-	vertices[2] = 0.0f;  // 0, Top Left
-	
-	vertices[3] =  - (w_h_ratio / 2.0f) ;
-	vertices[4] = -0.5f; 
-	vertices[5] = 0.0f;  // 1, Bottom Left
-	
-	vertices[6] = (w_h_ratio / 2.0f) ;
-	vertices[7] = -0.5f; 
-	vertices[8] = 0.0f;  // 2, Bottom Right
-	
-	vertices[9] = (w_h_ratio / 2.0f) ;
-	vertices[10] = 0.5f; 
-	vertices[11] = 0.0f;  // 3, Top Right
-	
-	/* texture coordinates array */
-	tex_coords[0] = 0.0f;
-	tex_coords[1] = 0.0f; //1
-	
-	tex_coords[2] = 0.0f; 
-	tex_coords[3] = h_w_ratio;//1.0f; //2
-	
-	tex_coords[4] = 1.0f; 
-	tex_coords[5] = h_w_ratio;//1.0f; //3
-	
-	tex_coords[6] = 1.0f; 
-	tex_coords[7] = 0.0f; //4
-	
-	
-	screen_width = w;
-	screen_height = h;
 }
 
 /**
- *	Opengles specific draw function.
+ *	Opengles 1.0 specific draw function.
  */
 void draw() {
 
@@ -607,6 +600,7 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIbuildLe
 	
 	animate_vars();
 	
-	drawLevel(newBG + 1);
+	
+	drawLevel(0);
 	////////////////////////
 }
