@@ -309,25 +309,15 @@ BOOL resize_gl2(int w, int h) {
 	
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
 	
-	/*
-	glGenRenderbuffers(1, &_colorRenderBuffer);
-	glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderBuffer);
-	
-	GLuint framebuffer;
-    glGenFramebuffers(1, &framebuffer);
-    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, 
-        GL_RENDERBUFFER, _colorRenderBuffer);
-        */
         
 	
-    printGLString("Version", GL_VERSION);
-    printGLString("Vendor", GL_VENDOR);
-    printGLString("Renderer", GL_RENDERER);
-    printGLString("Extensions", GL_EXTENSIONS);
+    	printGLString("Version", GL_VERSION);
+    	printGLString("Vendor", GL_VENDOR);
+    	printGLString("Renderer", GL_RENDERER);
+    	printGLString("Extensions", GL_EXTENSIONS);
 
-    LOGI("setupGraphics(%d, %d)", w, h);
-    gProgram = createProgram(gVertexShader, gFragmentShader);
+    
+    	gProgram = createProgram(gVertexShader, gFragmentShader);
    
     
 	_projectionUniform = glGetUniformLocation(gProgram, "Projection");
@@ -344,25 +334,6 @@ BOOL resize_gl2(int w, int h) {
 	
     	gvPositionHandle = glGetAttribLocation(gProgram, "vPosition");
 
-    LOGE("glGetAttribLocation(\"vPosition\") = %d\n",
-            gvPositionHandle);
-
-
-	//_texCoordSlot = glGetAttribLocation(gProgram, "TexCoordIn");
-	//glEnableVertexAttribArray(_texCoordSlot);
-	//_textureUniform = glGetUniformLocation(gProgram, "Texture");
-	//_projectionUniform = glGetUniformLocation(gProgram, "Projection");
-	//glActiveTexture(GL_TEXTURE0);
-	//glUniform1i(_textureUniform, 0);
-
-    	//glViewport(0, 0, w, h);
-
-    /*
-	glGenTextures(1, &texture_id);
-
-	//glBindTexture(GL_TEXTURE_2D, texture_id);
-	
-*/
     
     return TRUE;
 }
@@ -388,27 +359,6 @@ void draw_gl2() {
 	int tex_height = TEX_HEIGHT;
     
 	
-	/* texture coordinates array */
-	/*
-	tex_coords[0] = 0.0f;
-	tex_coords[1] = 0.0f; //1
-	
-	tex_coords[2] = 0.0f; 
-	tex_coords[3] = h_w_ratio;//1.0f; //2
-	
-	tex_coords[4] = 1.0f; 
-	tex_coords[5] = h_w_ratio;//1.0f; //3
-	
-	tex_coords[6] = 1.0f; 
-	tex_coords[7] = 0.0f; //4
-    	*/
-    
-    	//glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-    	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
-    	
-    	//glUniform1i(_textureUniform, 0);
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, texture_id);
 	
 	glTexImage2D(GL_TEXTURE_2D, 0, 
 	        GL_RGBA,//
@@ -418,8 +368,7 @@ void draw_gl2() {
 	        GL_UNSIGNED_SHORT_4_4_4_4,//
 	        screen);//
     
-    	//glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
-    	//checkGlError("glFramebufferRenderbuffer");
+    	
     	
     	glClearColor(grey, grey, grey, 1.0f);
     	checkGlError("glClearColor");
