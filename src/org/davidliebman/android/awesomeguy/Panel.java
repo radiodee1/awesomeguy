@@ -1180,7 +1180,6 @@ public  class Panel  implements  GLSurfaceView.Renderer {
 	static {
 		mSDKVersion = new Integer(android.os.Build.VERSION.SDK).intValue();
 		
-		
 		if (mSDKVersion >= 10) {
 			System.loadLibrary("awesomeguy-gl2");
 		}

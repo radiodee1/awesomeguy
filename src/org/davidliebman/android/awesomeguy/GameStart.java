@@ -297,6 +297,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     	
     	if(mBundle.getInt(GameValues.BUNDLE_LAST_ORIENTATION) != mGameV.getScreenOrientation()) {
     		mScreenOrientationChange = true;
+    		mGameV.setUseSavedBundle(true);
     	}
     }
     
@@ -582,7 +583,8 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     		    mPanelBot.setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
     		    mPanelBot.setGuySprite(mGameV.getSpriteStart()); //must refresh reference to guySprite
 
-    		    
+    		    if (!mGameLoopBot.isAlive()) mGameLoopBot.start();
+
     			
     			//mPanelBot.invalidate();
     			
