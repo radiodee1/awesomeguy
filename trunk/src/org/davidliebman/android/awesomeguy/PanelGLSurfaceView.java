@@ -16,6 +16,7 @@ public class PanelGLSurfaceView extends GLSurfaceView {
         
         if (mPanel.mSDKVersion >= 10 ) {
         	setEGLContextClientVersion(2);
+        	//setRenderMode(RENDERMODE_WHEN_DIRTY);
         }
         setRenderer(mPanel);
 
