@@ -238,34 +238,34 @@ BOOL resize_gl2(int w, int h) {
 	int tex_width = TEX_WIDTH;
 	int tex_height = TEX_HEIGHT;
     
-    	float w_h_ratio = (float) screen_width / (float) screen_height ; // specifically for vertices
-	float h_w_ratio = 2.0f;// 4.0f/ 3.0f;// 3.0f/  4.0f; // specifically for texture
+    	//float w_h_ratio = (float) screen_width / (float) screen_height ; // specifically for vertices
+	float local_mult = 2.0f;
 	float depth = 0.0f;
 	
 	
-	Vertices[0].Position[0] = 0.5f * h_w_ratio;//(w_h_ratio / 2.0f) * h_w_ratio;
-	Vertices[0].Position[1] = - 0.5f * h_w_ratio;
+	Vertices[0].Position[0] = 0.5f * local_mult;
+	Vertices[0].Position[1] = - 0.5f * local_mult;
 	Vertices[0].Position[2] = depth; // Bottom Right **
 	
 	Vertices[0].TexCoord[0] = 1;
 	Vertices[0].TexCoord[1] = - 0.25;
 	
-	Vertices[1].Position[0] = 0.5f * h_w_ratio;//(w_h_ratio / 2.0f) * h_w_ratio;
-	Vertices[1].Position[1] = 0.5f * h_w_ratio;
+	Vertices[1].Position[0] = 0.5f * local_mult;
+	Vertices[1].Position[1] = 0.5f * local_mult;
 	Vertices[1].Position[2] = depth; // Top Right
 	
 	Vertices[1].TexCoord[0] = 1;
 	Vertices[1].TexCoord[1] = -1;
 	
-	Vertices[2].Position[0] = -0.5f * h_w_ratio;//- (w_h_ratio / 2.0f) * h_w_ratio;
-	Vertices[2].Position[1] = 0.5f * h_w_ratio;
+	Vertices[2].Position[0] = -0.5f * local_mult;
+	Vertices[2].Position[1] = 0.5f * local_mult;
 	Vertices[2].Position[2] = depth; // Top Left
 	
 	Vertices[2].TexCoord[0] = 0;
 	Vertices[2].TexCoord[1] = -1;
 	
-	Vertices[3].Position[0] = -0.5f * h_w_ratio;//- (w_h_ratio / 2.0f) * h_w_ratio;
-	Vertices[3].Position[1] =  -0.5f * h_w_ratio;
+	Vertices[3].Position[0] = -0.5f * local_mult;
+	Vertices[3].Position[1] =  -0.5f * local_mult;
 	Vertices[3].Position[2] = depth; // Bottom Left
 	
 	Vertices[3].TexCoord[0] = 0;
