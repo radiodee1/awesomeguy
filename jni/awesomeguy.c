@@ -1098,7 +1098,7 @@ void animate_vars() {
 		}
 		if(newGuy > 3) newGuy = -1;
 		if(newBG > 7) newBG = -1;
-		LOGE("animate vars %d " , newBG);
+		
 	}
 	//LOGE("animate %d -- %d", newGuy, newBG);
 }

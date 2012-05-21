@@ -96,7 +96,7 @@ static GLuint _indexBuffer;
 static GLuint _depthRenderBuffer;
 
 static GLuint _colorRenderBuffer;
-
+static GLint _frameBuffer[2];
 
 static GLuint _texCoordSlot;
 static GLuint _positionSlot;
@@ -400,9 +400,10 @@ void init_gl2(void) {
 	glGenRenderbuffers(1, &_colorRenderBuffer);
 	glBindRenderbuffer(GL_RENDERBUFFER, _colorRenderBuffer);
 	
-	GLuint framebuffer;
-	glGenFramebuffers(1, &framebuffer);
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+	//GLuint framebuffer;
+	//glGenFramebuffers(1, &framebuffer);
+	glGenFramebuffers(2, _frameBuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer[0]);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, 
 		GL_COLOR_ATTACHMENT0, 
 		GL_RENDERBUFFER, 
