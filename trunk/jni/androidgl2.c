@@ -77,14 +77,13 @@ static const char gFragmentShader[] =
 static GLuint gProgram;
 static GLuint gvPositionHandle;
 static GLuint gameTexture;
-static GLuint screencounter;
 
 static GLuint _vertexBuffer;
 static GLuint _indexBuffer;
 static GLuint _depthRenderBuffer;
 
 static GLuint _colorRenderBuffer;
-static GLint _frameBuffer[2];
+static GLint _frameBuffer;
 static GLint framebufferIndex;
 
 static GLuint _texCoordSlot;
@@ -257,7 +256,17 @@ BOOL resize_gl2(int w, int h) {
 	        GL_RGBA,//
 	        GL_UNSIGNED_SHORT_4_4_4_4,//
 	        0);//screen);//
-    
+    	/*
+	glBindTexture(GL_TEXTURE_2D, gameTexture[1]);
+	
+	glTexImage2D(GL_TEXTURE_2D, 0, 
+	        GL_RGBA,//
+	        tex_width, tex_height, 
+	        0, 
+	        GL_RGBA,//
+	        GL_UNSIGNED_SHORT_4_4_4_4,//
+	        0);//screen);//
+	*/
 	//glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gameTexture, 0);
 	
 	glGenBuffers(1, &_vertexBuffer);
@@ -275,7 +284,7 @@ BOOL resize_gl2(int w, int h) {
 		w, h);//GL_DEPTH_COMPONENT16
 	checkGlError("glRenderbufferStorage");
 	
-	glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer[0]);
+	glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer);
 	
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
 	
@@ -319,7 +328,7 @@ BOOL resize_gl2(int w, int h) {
 
 void draw_gl2() {
 
-	GLint local_index = (screencounter + 1) %2;
+	//GLint local_index = (screencounter + 1) %2;
 
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -350,7 +359,7 @@ void draw_gl2() {
 	        GL_RGBA,//
 	        GL_UNSIGNED_SHORT_4_4_4_4,//
 	        screen);//screen
-    
+    	
     	
     	
     	glClearColor(grey, grey, grey, 1.0f);
@@ -388,8 +397,8 @@ void init_gl2(void) {
 	
 	//GLuint framebuffer;
 	//glGenFramebuffers(1, &framebuffer);
-	glGenFramebuffers(2, _frameBuffer);
-	glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer[0]);
+	glGenFramebuffers(1, &_frameBuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, 
 		GL_COLOR_ATTACHMENT0, 
 		GL_RENDERBUFFER, 
@@ -539,18 +548,24 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIbuildLe
 	
 	drawLevel(0);
 	////////////////////////
-	screencounter ++;
+	//draw_gl2();
+
+	//screencounter ++;
+	/*
+	glBindTexture(GL_TEXTURE_2D, gameTexture[screencounter]);
+	glTexImage2D(GL_TEXTURE_2D, 0, 
+	        GL_RGBA,//
+	        TEX_WIDTH, TEX_HEIGHT, 
+	        0, 
+	        GL_RGBA,//
+	        GL_UNSIGNED_SHORT_4_4_4_4,//
+	        screen);//screen
+    	*/
+
 	
-	//glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer[0]);
-	framebufferIndex = screencounter % 2;
-	glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer[framebufferIndex]);
-	//glDrawBuffer(GL_BACK);
-	if (framebufferIndex == 1) {
-		//glDrawBuffer(GL_BACK);
-		//glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer[1]);
-	}
-	else {
-		//glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer[0]);
-	}
+
+	//glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer[framebufferIndex]);
+
+
 	
 }

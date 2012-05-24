@@ -41,6 +41,9 @@
 #define TEX_DIMENSION	256
 #define BOOL int
 
+#define MY_SCREEN_FRONT 0
+#define MY_SCREEN_BACK  1
+
 static int B_START = 5;
 static int B_SPACE = 0;
 static int B_LADDER = 444;
@@ -101,10 +104,12 @@ static int map_level [96][96];
 static int map_objects[96][96];
  
 uint16_t screen [TEX_DIMENSION][TEX_DIMENSION];
+uint16_t screen_0 [TEX_DIMENSION][TEX_DIMENSION];
+uint16_t screen_1 [TEX_DIMENSION][TEX_DIMENSION];
 // this array is used as the basis for the opengl texture 
 // which prints the screen contents to the opengl window.
 // it must have dimenstions of powers of 2.
-
+static uint16_t screencounter = 0;
  
 static int tilesWidthMeasurement = 32;
 static int tilesHeightMeasurement = 32;
@@ -233,6 +238,9 @@ void animate_vars();
 
 void drawLevel(int animate_level) ;
 
+uint16_t **  getScreenPointer(int screen_enum) ;
+
+void incrementScreenCounter() ;
 //////////////////////////////////////////////////////
 // function prototype: androidgl.c
 //////////////////////////////////////////////////////
