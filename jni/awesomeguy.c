@@ -591,7 +591,7 @@ void copyArraysExpand_tileset (jint from[], int size_l, uint16_t to[TILEMAP_HEIG
 void drawSprite_16(uint16_t from[GUY_WIDTH][GUY_HEIGHT], int x, int y, int scroll_x, int scroll_y, int paint_all, uint16_t extra) {
 
 
-    //uint16_t  **  screen = (getScreenPointer(MY_SCREEN_BACK));
+    uint16_t  **  screen_local = (getScreenPointer(MY_SCREEN_BACK));
 
     int i,j,k,l;
     k = x - scroll_x;
