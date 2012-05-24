@@ -1204,7 +1204,15 @@ void drawLevel(int unused) {
 
 	//LOGE("monsters %d -- %d ", preferences_monsters, preferences_collision);
 }
+
+/**
+ * test out this pointer returning function
+ */
  
+uint16_t **  getScreenPointer() {
+	return  (void *)screen;
+}
+
 ////////////////////////////////////////
 // Java interfaces here
 ////////////////////////////////////////
