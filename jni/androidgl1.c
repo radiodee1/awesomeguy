@@ -63,6 +63,7 @@ static const char vertexShaderCode[] =
 
 GLuint gProgram;
 GLuint gvPositionHandle;
+
 /*
 GLuint loadShader(GLenum shaderType, const char* pSource) {
     GLuint shader = glCreateShader(shaderType);
@@ -210,8 +211,7 @@ void init(void)
 	int tex_width = TEX_WIDTH;
 	int tex_height = TEX_HEIGHT;
 
-	//pthread_cond_init(&s_vsync_cond, NULL);
-	//pthread_mutex_init(&s_vsync_mutex, NULL);
+	
 	
 	glShadeModel(GL_SMOOTH);
 	glClearDepthf(1.0f);

@@ -73,23 +73,11 @@ static const char gFragmentShader[] =
 	"} \n";
 
   
-  
-/*
-static const char vertexShaderCode[] = 
-        // This matrix member variable provides a hook to manipulate
-        // the coordinates of the objects that use this vertex shader
-        "uniform mat4 uMVPMatrix;   \n" 
-        "attribute vec4 vPosition;  \n" 
-        "void main(){               \n" 
-        // the matrix must be included as a modifier of gl_Position
-        " gl_Position = uMVPMatrix * vPosition; \n" 
-        
-        "}  \n";
-*/
 
 static GLuint gProgram;
 static GLuint gvPositionHandle;
 static GLuint gameTexture;
+static GLuint screencounter;
 
 static GLuint _vertexBuffer;
 static GLuint _indexBuffer;
@@ -97,6 +85,7 @@ static GLuint _depthRenderBuffer;
 
 static GLuint _colorRenderBuffer;
 static GLint _frameBuffer[2];
+static GLint framebufferIndex;
 
 static GLuint _texCoordSlot;
 static GLuint _positionSlot;
@@ -133,32 +122,7 @@ static const GLfloat identityMatrix2[] = {
         0.0f, 1.0f, 0.0f, 0.0f,
         1.0f, 0.0f, 0.0f, 0.0f };
         
-        
-/*
-static const Mat4 identityMatrix2 = Mat4( 
-	1.0f, 0.0f, 0.0f, 0.0f,
-        0.0f, 1.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 0.0f, 1.0f );
-      
-Mat4 Ortho2D(float left, float right, float bottom, T top, float zNear, float zFar)
-{
-    float dx = right - left;
-    float dy = top - bottom;
-    float dz = zFar - zNear;
-
-    // avoid division by zero
-    float tx = (dx != 0) ? -(right + left) / dx : 0;
-    float ty = (dy != 0) ? -(top + bottom) / dy : 0;
-    float tz = (dz != 0) ? -(zFar + zNear) / dz : 0;
-
-    return Mat4(2.0f / dx, 0,           0,          tx,
-                0,          2.0f / dy, 0,           ty,
-                0,          0,          -2.0f / dz, tz,
-                0,          0,          0,          1);
-}
-*/
-
+ 
 
 const GLubyte Indices[] = {
      0, 1, 2,
@@ -292,8 +256,9 @@ BOOL resize_gl2(int w, int h) {
 	        0, 
 	        GL_RGBA,//
 	        GL_UNSIGNED_SHORT_4_4_4_4,//
-	        screen);//
+	        0);//screen);//
     
+	//glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gameTexture, 0);
 	
 	glGenBuffers(1, &_vertexBuffer);
     	glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
@@ -305,11 +270,22 @@ BOOL resize_gl2(int w, int h) {
 	
 	glGenRenderbuffers(1, &_depthRenderBuffer);
 	glBindRenderbuffer( GL_RENDERBUFFER, _depthRenderBuffer);
-	glRenderbufferStorage( GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, w, h);
+	glRenderbufferStorage( GL_RENDERBUFFER, 
+		GL_RGBA4, //GL_RGBA4
+		w, h);//GL_DEPTH_COMPONENT16
+	checkGlError("glRenderbufferStorage");
+	
+	glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer[0]);
 	
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
 	
-        
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gameTexture, 0);
+	//glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, gameTexture, 0);
+	//GLenum DrawBuffers[2] = {GL_COLOR_ATTACHMENT0};
+	//glDrawBuffer( DrawBuffers[0]);
+	
+	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+    	LOGE("status %d", status);
 	
     	printGLString("Version", GL_VERSION);
     	printGLString("Vendor", GL_VENDOR);
@@ -334,7 +310,8 @@ BOOL resize_gl2(int w, int h) {
 	
     	gvPositionHandle = glGetAttribLocation(gProgram, "vPosition");
 
-    
+    	
+    	
     return TRUE;
 }
 
@@ -342,7 +319,13 @@ BOOL resize_gl2(int w, int h) {
 
 void draw_gl2() {
 
+	GLint local_index = (screencounter + 1) %2;
+
+
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	//glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer[local_index]);
+	//glPushAttrib (GL_VIEWPORT);
+	checkGlError("glBindFramebuffer");
 	
     	static float grey;
     	grey += 0.01f;
@@ -366,7 +349,7 @@ void draw_gl2() {
 	        0, 
 	        GL_RGBA,//
 	        GL_UNSIGNED_SHORT_4_4_4_4,//
-	        screen);//
+	        screen);//screen
     
     	
     	
@@ -375,6 +358,7 @@ void draw_gl2() {
     	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     	glEnable( GL_DEPTH_TEST);
     	checkGlError("glClear");
+    	glDepthFunc(GL_LEQUAL);
     	
 	glUseProgram(gProgram);
     	checkGlError("glUseProgram");
@@ -391,6 +375,8 @@ void draw_gl2() {
 		sizeof(Indices)/ sizeof (Indices[0]), 
 		GL_UNSIGNED_BYTE, 0);
 	
+	//glPopAttrib();
+	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 /**
@@ -553,4 +539,18 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIbuildLe
 	
 	drawLevel(0);
 	////////////////////////
+	screencounter ++;
+	
+	//glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer[0]);
+	framebufferIndex = screencounter % 2;
+	glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer[framebufferIndex]);
+	//glDrawBuffer(GL_BACK);
+	if (framebufferIndex == 1) {
+		//glDrawBuffer(GL_BACK);
+		//glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer[1]);
+	}
+	else {
+		//glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer[0]);
+	}
+	
 }
