@@ -1118,6 +1118,9 @@ void drawLevel(int unused) {
     int levelcheat = 1;
     uint16_t square[TILE_HEIGHT][TILE_WIDTH];
     
+    uint16_t  **  screenie
+     = (void *)(getScreenPointer(MY_SCREEN_BACK));
+    
     //animate = animate_level;
     animate = newBG + 1;
     
@@ -1209,10 +1212,30 @@ void drawLevel(int unused) {
  * test out this pointer returning function
  */
  
-uint16_t **  getScreenPointer() {
-	return  (void *)screen;
+uint16_t **  getScreenPointer(int screen_enum) {
+	//return screen;
+	return  (uint16_t **)screen;
+	///////////////////////////
+	int local_index = 0;
+	if (screen_enum == MY_SCREEN_FRONT) {
+		local_index = screencounter;
+	}
+	else if (screen_enum == MY_SCREEN_BACK) {
+		local_index = (screencounter + 1) &1;
+	}
+	//////////////////////////
+	if (local_index) {
+		return (uint16_t **) screen_0;
+	}
+	else {
+		return (uint16_t **) screen_1;
+	}
 }
 
+void incrementScreenCounter() {
+	screencounter = (screencounter + 1)& 1;
+	LOGE("screencounter %d",screencounter);
+}
 ////////////////////////////////////////
 // Java interfaces here
 ////////////////////////////////////////
