@@ -591,7 +591,7 @@ void copyArraysExpand_tileset (jint from[], int size_l, uint16_t to[TILEMAP_HEIG
 void drawSprite_16(uint16_t from[GUY_WIDTH][GUY_HEIGHT], int x, int y, int scroll_x, int scroll_y, int paint_all, uint16_t extra) {
 
 
-
+    //uint16_t  **  screen = (getScreenPointer(MY_SCREEN_BACK));
 
     int i,j,k,l;
     k = x - scroll_x;
@@ -632,6 +632,8 @@ void drawSprite_16(uint16_t from[GUY_WIDTH][GUY_HEIGHT], int x, int y, int scrol
 void drawSprite_40_8(uint16_t from[PLATFORM_HEIGHT][PLATFORM_WIDTH], int x, int y, int scroll_x, int scroll_y, int paint_all, uint16_t extra) {
 	
 	int i,j,k,l;
+    //uint16_t  **  screen = (getScreenPointer(MY_SCREEN_BACK));
+	
     k = x - scroll_x;
     l = y - scroll_y;
     for (i = 0; i < PLATFORM_HEIGHT; i ++ ) {
@@ -669,7 +671,8 @@ void drawSprite_40_8(uint16_t from[PLATFORM_HEIGHT][PLATFORM_WIDTH], int x, int 
 void drawTile_8(uint16_t tile[TILE_WIDTH][TILE_HEIGHT], int screen_x, int screen_y, int scroll_x, int scroll_y, int paint_all, uint16_t extra) {
    
     int i,j,m,n;
-
+    //uint16_t  **  screen = (getScreenPointer(MY_SCREEN_BACK));
+    
 	m = (screen_x ) - scroll_x;
 
 	n = (screen_y ) - scroll_y;
@@ -1118,8 +1121,7 @@ void drawLevel(int unused) {
     int levelcheat = 1;
     uint16_t square[TILE_HEIGHT][TILE_WIDTH];
     
-    uint16_t  **  screenie
-     = (void *)(getScreenPointer(MY_SCREEN_BACK));
+    uint16_t  **  screen = (getScreenPointer(MY_SCREEN_BACK));
     
     //animate = animate_level;
     animate = newBG + 1;
@@ -1213,7 +1215,7 @@ void drawLevel(int unused) {
  */
  
 uint16_t **  getScreenPointer(int screen_enum) {
-	//return screen;
+
 	return  (uint16_t **)screen;
 	///////////////////////////
 	int local_index = 0;
