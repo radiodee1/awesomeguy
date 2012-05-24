@@ -310,7 +310,7 @@ void draw() {
 	        0, 
 	        GL_RGBA,//
 	        GL_UNSIGNED_SHORT_4_4_4_4,//
-	        screen);//
+	        getScreenPointer(MY_SCREEN_FRONT));//screen
 
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

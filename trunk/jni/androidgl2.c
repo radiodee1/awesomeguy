@@ -358,7 +358,7 @@ void draw_gl2() {
 	        0, 
 	        GL_RGBA,//
 	        GL_UNSIGNED_SHORT_4_4_4_4,//
-	        screen);//screen
+	        getScreenPointer(MY_SCREEN_FRONT));//screen
     	
     	
     	
