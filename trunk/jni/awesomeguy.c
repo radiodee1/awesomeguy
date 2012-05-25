@@ -591,7 +591,8 @@ void copyArraysExpand_tileset (jint from[], int size_l, uint16_t to[TILEMAP_HEIG
 void drawSprite_16(uint16_t from[GUY_WIDTH][GUY_HEIGHT], int x, int y, int scroll_x, int scroll_y, int paint_all, uint16_t extra) {
 
 
-    uint16_t  **  screen_local = (getScreenPointer(MY_SCREEN_BACK));
+    	uint16_t  * screen =(void *) getScreenPointer(MY_SCREEN_BACK);
+
 
     int i,j,k,l;
     k = x - scroll_x;
@@ -604,8 +605,8 @@ void drawSprite_16(uint16_t from[GUY_WIDTH][GUY_HEIGHT], int x, int y, int scrol
     				
     			}
     			else {
-	    			screen[i + l][j + k] = color_pixel( from[i][j]);
-
+	    			//screen[i + l][j + k] = color_pixel( from[i][j]);
+				screen[((l + i) * SCREEN_WIDTH )  +(j +k ) ] = color_pixel(from[i][j]);
 	    		}
 
     		}
@@ -1215,8 +1216,8 @@ void drawLevel(int unused) {
  */
  
 uint16_t **  getScreenPointer(int screen_enum) {
-
-	return  (uint16_t **)screen;
+	return (uint16_t **)screen;
+	//return  (uint16_t **)screen;
 	///////////////////////////
 	int local_index = 0;
 	if (screen_enum == MY_SCREEN_FRONT) {
