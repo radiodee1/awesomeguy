@@ -633,7 +633,7 @@ void drawSprite_16(uint16_t from[GUY_WIDTH][GUY_HEIGHT], int x, int y, int scrol
 void drawSprite_40_8(uint16_t from[PLATFORM_HEIGHT][PLATFORM_WIDTH], int x, int y, int scroll_x, int scroll_y, int paint_all, uint16_t extra) {
 	
 	int i,j,k,l;
-    //uint16_t  **  screen = (getScreenPointer(MY_SCREEN_BACK));
+    	uint16_t  * screen =(void *) getScreenPointer(MY_SCREEN_BACK);
 	
     k = x - scroll_x;
     l = y - scroll_y;
@@ -645,8 +645,8 @@ void drawSprite_40_8(uint16_t from[PLATFORM_HEIGHT][PLATFORM_WIDTH], int x, int 
     				
     			}
     			else {
-	    			screen[i + l][j + k] =color_pixel( from[i][j]);
-					//screen[i + k][j + l] = from[i][j];
+	    			//screen[i + l][j + k] =color_pixel( from[i][j]);
+				screen[((l + i) * SCREEN_WIDTH )  +(j +k ) ] = color_pixel(from[i][j]);
 	    		}
 
     		}
@@ -672,7 +672,7 @@ void drawSprite_40_8(uint16_t from[PLATFORM_HEIGHT][PLATFORM_WIDTH], int x, int 
 void drawTile_8(uint16_t tile[TILE_WIDTH][TILE_HEIGHT], int screen_x, int screen_y, int scroll_x, int scroll_y, int paint_all, uint16_t extra) {
    
     int i,j,m,n;
-    //uint16_t  **  screen = (getScreenPointer(MY_SCREEN_BACK));
+    uint16_t  *  screen =(void *) (getScreenPointer(MY_SCREEN_BACK));
     
 	m = (screen_x ) - scroll_x;
 
@@ -688,7 +688,8 @@ void drawTile_8(uint16_t tile[TILE_WIDTH][TILE_HEIGHT], int screen_x, int screen
     			else {
     			
 	    			//screen[i + n ][j + m] = tile[i][j];
-	    			screen[i + n ][j + m] = color_pixel( tile[i][j]);
+	    			//screen[i + n ][j + m] = color_pixel( tile[i][j]);
+				screen[((n + i) * SCREEN_WIDTH )  +(j +m ) ] = color_pixel(tile[i][j]);
 	    			//LOGE("drawing tile %i", tile[i][j]);
 	    		}
     		} 
