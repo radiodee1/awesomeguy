@@ -455,5 +455,6 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIbuildLe
 	
 	drawLevel(0);
 	////////////////////////
+	incrementScreenCounter();
 }
 

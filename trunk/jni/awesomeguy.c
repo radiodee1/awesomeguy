@@ -1217,7 +1217,7 @@ void drawLevel(int unused) {
  */
  
 uint16_t **  getScreenPointer(int screen_enum) {
-	return (uint16_t **)screen;
+	//return (uint16_t **)screen;
 	//return  (uint16_t **)screen;
 	///////////////////////////
 	int local_index = 0;
