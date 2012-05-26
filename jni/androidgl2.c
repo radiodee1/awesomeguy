@@ -102,11 +102,8 @@ static Vertex Vertices[] = {
     {{1, -1, 0}, {1, 0, 0, 1}, {1, 0}},
     {{1, 1, 0}, {1, 0, 0, 1}, {1, -1}},
     {{-1, 1, 0}, {0, 1, 0, 1}, {0, -1}},
-    {{-1, -1, 0}, {0, 1, 0, 1}, {0, 0}},
-    //{{1, -1, -1}, {1, 0, 0, 1}, {1, 0}},
-    //{{1, 1, -1}, {1, 0, 0, 1}, {1, 1}},
-    //{{-1, 1, -1}, {0, 1, 0, 1}, {0, 1}},
-    //{{-1, -1, -1}, {0, 1, 0, 1}, {0, 0}}
+    {{-1, -1, 0}, {0, 1, 0, 1}, {0, 0}}
+   
 };
  
 static const GLfloat identityMatrix[] = { 
@@ -549,6 +546,7 @@ JNIEXPORT void JNICALL Java_org_davidliebman_android_awesomeguy_Panel_JNIbuildLe
 	drawLevel(0);
 	////////////////////////
 	//draw_gl2();
+	incrementScreenCounter();
 
 	//screencounter ++;
 	/*

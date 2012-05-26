@@ -103,7 +103,7 @@ static uint16_t platform_a[8][40];
 static int map_level [96][96];
 static int map_objects[96][96];
  
-static uint16_t screen [TEX_DIMENSION][TEX_DIMENSION];
+
 static uint16_t screen_0 [TEX_DIMENSION][TEX_DIMENSION];
 static uint16_t screen_1 [TEX_DIMENSION][TEX_DIMENSION];
 // this array is used as the basis for the opengl texture 
