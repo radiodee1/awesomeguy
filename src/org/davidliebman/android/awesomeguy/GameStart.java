@@ -556,7 +556,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     			this.removeMessages(INPUTVALUES_KEYUP);
     			    			
     		    mPanelBot.setAnimationOnly(false);
-    		    mPanelBot.setJNIAnimateOnly(0); // '0' is false for JNI
+    		    mPanelBot.setJNIAnimateOnly(Panel.JNI_FALSE); // '0' is false for JNI
     		    
     		    mPanelBot.setInitialBackgroundGraphics();
     		    mPanelBot.setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
@@ -583,7 +583,11 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     		    mPanelBot.setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
     		    mPanelBot.setGuySprite(mGameV.getSpriteStart()); //must refresh reference to guySprite
 
-    		    if (!mGameLoopBot.isAlive()) mGameLoopBot.start();
+    		    if (!mGameLoopBot.isAlive()) {
+    		    	//mGameLoopBot = new InnerGameLoop(GameStart.this, mGameV, mPanelBot); 
+
+    		    	mGameLoopBot.start();
+    		    }
 
     			
     			//mPanelBot.invalidate();
