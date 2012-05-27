@@ -1209,7 +1209,7 @@ void drawLevel(int unused) {
 	    drawSprite_16(guy_d, guy.x, guy.y, scrollx, scrolly, PAINT_TRANSPARENT, 0);	
 	}
 
-	//LOGE("monsters %d -- %d ", preferences_monsters, preferences_collision);
+	//LOGE("level_w / h %d -- %d", level_w, level_h);
 }
 
 /**
@@ -1238,7 +1238,7 @@ uint16_t **  getScreenPointer(int screen_enum) {
 
 void incrementScreenCounter() {
 	screencounter = (screencounter + 1)& 1;
-	LOGE("screencounter %d",screencounter);
+	//LOGE("screencounter %d",screencounter);
 }
 ////////////////////////////////////////
 // Java interfaces here

@@ -142,14 +142,14 @@ public  class Panel  implements  GLSurfaceView.Renderer {
 			if (!mGameV.isDoubleScreen()) {
 				mScaleH = mGameV.getScaleH();
 				mScaleV = 1;
-				mDisplayViewWidth = 256;
+
 			}
 			
     	}
     	else if(mGameV.getScreenOrientation() == GameValues.ORIENTATION_LANDSCAPE) {
 			mScaleH = mGameV.getScaleH();
 			mScaleV = mGameV.getScaleV();
-			
+			mDisplayViewWidth = 256;
 		}
 		
 		/* paint options BitmapFactory.Options */
@@ -585,10 +585,12 @@ public  class Panel  implements  GLSurfaceView.Renderer {
 			if (tilesMeasurement > 32 ) tilesMeasurement = 32;
 			this.mScreenW = tilesMeasurement * 8;
 			//if (tilesMeasurement * 16 < this.mDisplayWidth) tilesMeasurement ++;
+
 		}
 		else {
 			this.mScreenW = this.mDisplayViewWidth;
 			tilesMeasurement = 32;
+			//tilesMeasurement = this.mDisplayViewWidth /8 ;// TODO: test me!!
 		}
 		
 		/* 

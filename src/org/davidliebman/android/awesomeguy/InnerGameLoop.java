@@ -79,6 +79,10 @@ public class InnerGameLoop extends Thread {
 		      
 		    if (!mGameV.isUseSavedBundle()) {
 		    	mHandler.sendEmptyMessage(GameStart.STARTLEVEL);
+		    	//init room
+			    mGameV.getBackground().setLevel(mGameV.getLevelList().getNum(mGameV.getRoomNo()-1));
+
+		    	
 		    }
 		    else {
 		    	mHandler.sendEmptyMessage(GameStart.REORIENTATION);
@@ -87,10 +91,7 @@ public class InnerGameLoop extends Thread {
 		    
     		mHandler.removeMessages(GameStart.MOVEMENTVALUES);
 
-		    //init room
-		    mGameV.getBackground().setLevel(mGameV.getLevelList().getNum(mGameV.getRoomNo()-1));
-
-//	    	mPanel.setLevelData(mGameV.getLevelArray(), mGameV.getObjectsArray(), mGameV.getMapH(), mGameV.getMapV());
+		   
 
 		    
 		    if (!mGameV.isUseSavedBundle() ) {
