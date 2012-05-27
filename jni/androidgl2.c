@@ -75,7 +75,7 @@ static const char gFragmentShader[] =
   
 
 static GLuint gProgram;
-static GLuint gvPositionHandle;
+//static GLuint gvPositionHandle;
 static GLuint gameTexture;
 
 static GLuint _vertexBuffer;
@@ -198,7 +198,6 @@ BOOL resize_gl2(int w, int h) {
 	int tex_width = TEX_WIDTH;
 	int tex_height = TEX_HEIGHT;
     
-    	//float w_h_ratio = (float) screen_width / (float) screen_height ; // specifically for vertices
 	float local_mult = 2.0f;
 	float depth = 0.0f;
 	
@@ -253,18 +252,7 @@ BOOL resize_gl2(int w, int h) {
 	        GL_RGBA,//
 	        GL_UNSIGNED_SHORT_4_4_4_4,//
 	        0);//screen);//
-    	/*
-	glBindTexture(GL_TEXTURE_2D, gameTexture[1]);
-	
-	glTexImage2D(GL_TEXTURE_2D, 0, 
-	        GL_RGBA,//
-	        tex_width, tex_height, 
-	        0, 
-	        GL_RGBA,//
-	        GL_UNSIGNED_SHORT_4_4_4_4,//
-	        0);//screen);//
-	*/
-	//glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gameTexture, 0);
+    	
 	
 	glGenBuffers(1, &_vertexBuffer);
     	glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
@@ -286,9 +274,7 @@ BOOL resize_gl2(int w, int h) {
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRenderBuffer);
 	
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gameTexture, 0);
-	//glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, gameTexture, 0);
-	//GLenum DrawBuffers[2] = {GL_COLOR_ATTACHMENT0};
-	//glDrawBuffer( DrawBuffers[0]);
+	
 	
 	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
     	LOGE("status %d", status);
@@ -302,7 +288,7 @@ BOOL resize_gl2(int w, int h) {
     	gProgram = createProgram(gVertexShader, gFragmentShader);
    
     
-	_projectionUniform = glGetUniformLocation(gProgram, "Projection");
+	//_projectionUniform = glGetUniformLocation(gProgram, "Projection");
 
 	_positionSlot = glGetAttribLocation(gProgram, "Position");
 	_colorSlot = glGetAttribLocation(gProgram, "SourceColor");
@@ -312,9 +298,9 @@ BOOL resize_gl2(int w, int h) {
 	glEnableVertexAttribArray(_positionSlot);
 	glEnableVertexAttribArray(_colorSlot);
 	
-	glUniformMatrix4fv(_projectionUniform, 1, 0, identityMatrix2);
+	//glUniformMatrix4fv(_projectionUniform, 1, 0, identityMatrix2);
 	
-    	gvPositionHandle = glGetAttribLocation(gProgram, "vPosition");
+    	//gvPositionHandle = glGetAttribLocation(gProgram, "vPosition");
 
     	
     	
@@ -381,8 +367,7 @@ void draw_gl2() {
 		sizeof(Indices)/ sizeof (Indices[0]), 
 		GL_UNSIGNED_BYTE, 0);
 	
-	//glPopAttrib();
-	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	
 }
 
 /**
