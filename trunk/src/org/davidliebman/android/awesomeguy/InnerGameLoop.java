@@ -78,7 +78,7 @@ public class InnerGameLoop extends Thread {
 
 		      
 		    if (!mGameV.isUseSavedBundle()) {
-		    	//mHandler.sendEmptyMessage(GameStart.STARTLEVEL);
+		    	mHandler.sendEmptyMessage(GameStart.STARTLEVEL);
 		    }
 		    else {
 		    	mHandler.sendEmptyMessage(GameStart.REORIENTATION);
@@ -90,7 +90,10 @@ public class InnerGameLoop extends Thread {
 		    //init room
 		    mGameV.getBackground().setLevel(mGameV.getLevelList().getNum(mGameV.getRoomNo()-1));
 
-		    if (!mGameV.isUseSavedBundle()) {
+//	    	mPanel.setLevelData(mGameV.getLevelArray(), mGameV.getObjectsArray(), mGameV.getMapH(), mGameV.getMapV());
+
+		    
+		    if (!mGameV.isUseSavedBundle() ) {
 		    	mMovementV.setScrollX(0);
 		    	mMovementV.setScrollY(0);
 		    	
@@ -100,6 +103,10 @@ public class InnerGameLoop extends Thread {
 		    
 		    	mPanel.addMonstersJNI();
 		    	mPanel.addPlatformsJNI();
+		    }
+		    else {
+		    	
+		    	
 		    }
 		    
 		    
