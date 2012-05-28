@@ -76,7 +76,8 @@ public class InnerGameLoop extends Thread {
    
 		     // advance through rooms
 
-		      
+
+		    
 		    if (!mGameV.isUseSavedBundle()) {
 		    	mHandler.sendEmptyMessage(GameStart.STARTLEVEL);
 		    	//init room
@@ -85,7 +86,10 @@ public class InnerGameLoop extends Thread {
 		    	
 		    }
 		    else {
+			   mGameV.getBackground().setLevel(mGameV.getLevelList().getNum(mGameV.getRoomNo() -1));
+			   
 		    	mHandler.sendEmptyMessage(GameStart.REORIENTATION);
+		    	//mGameV.incrementRoomNo();
 		    }
 		    
 		    
@@ -112,7 +116,7 @@ public class InnerGameLoop extends Thread {
 		    
 		    
 		    //end of restore from bundle
-		    mGameV.setUseSavedBundle(false);
+		    //mGameV.setUseSavedBundle(false);
 		    mGameV.setXmlMode(GameValues.XML_USE_BOTH);
 		    
 		    //get guy sprite reference 
@@ -173,9 +177,10 @@ public class InnerGameLoop extends Thread {
 		    	}
 		
 				
-				
+		    	Log.e("tag", "room " + mGameV.getRoomNo());
 
 		    } // end of gameplay loop
+		    
 
 		    mGameV.getPanel().setReturnBackgroundGraphics();
 		   
@@ -186,30 +191,34 @@ public class InnerGameLoop extends Thread {
 		      // * advance the room count if it is
 		      // * necessary.
 		      //
-		      if (!mGameV.isGameDeath()) {
-		        mGameV.incrementRoomNo();
-		        
+	    	//if (!mGameV.isUseSavedBundle()) {
+			      if (!mGameV.isGameDeath()) {
+			        mGameV.incrementRoomNo();
+			        
+	
+			        mGameV.setEndGame(false);
+			        mGameV.setEndLevel(false);
+			      }
+			      else {
+			        mGameV.setEndLevel(true);
+			      }
+	    	//}
+	    	
 
-		        mGameV.setEndGame(false);
-		        mGameV.setEndLevel(false);
-		      }
-		      else {
-		        mGameV.setEndLevel(true);
-		      }
 		      
-		     
 		      // increment cycle count and set room to 1...
-		      if( mGameV.getRoomNo() > mGameV.getTotNumRooms() &&  !mGameV.isEndLevel() ) {
+		      if( mGameV.getRoomNo() > mGameV.getTotNumRooms() &&  !mGameV.isEndLevel() && !mGameV.isUseSavedBundle() ) {
 		        
 		    	  mGameV.setRoomNo(1);
 		    	  //saveRoomNo();
 
 		      }
+			   mGameV.setUseSavedBundle(false);
 
 		      
 		      if (!mGameV.isGameDeath() && mGameV.isGameRunning() ) {
+
 		    	  mHandler.sendEmptyMessage(GameStart.CONGRATS);
-		    	  
 		      }
 		      
 
