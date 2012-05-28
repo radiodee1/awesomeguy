@@ -177,7 +177,6 @@ public class InnerGameLoop extends Thread {
 		    	}
 		
 				
-		    	Log.e("tag", "room " + mGameV.getRoomNo());
 
 		    } // end of gameplay loop
 		    
