@@ -190,18 +190,16 @@ public class InnerGameLoop extends Thread {
 		      // * advance the room count if it is
 		      // * necessary.
 		      //
-	    	//if (!mGameV.isUseSavedBundle()) {
-			      if (!mGameV.isGameDeath()) {
-			        mGameV.incrementRoomNo();
-			        
-	
-			        mGameV.setEndGame(false);
-			        mGameV.setEndLevel(false);
-			      }
-			      else {
-			        mGameV.setEndLevel(true);
-			      }
-	    	//}
+		      if (!mGameV.isGameDeath()) {
+		        mGameV.incrementRoomNo();
+		        
+
+		        mGameV.setEndGame(false);
+		        mGameV.setEndLevel(false);
+		      }
+		      else {
+		        mGameV.setEndLevel(true);
+		      }
 	    	
 
 		      
