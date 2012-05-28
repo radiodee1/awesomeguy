@@ -1,9 +1,6 @@
 package org.davidliebman.android.awesomeguy;
 
 
-
-
-
 public class Options {
 	
 	public static final String AWESOME_NAME = new String("org.awesomeguy");
