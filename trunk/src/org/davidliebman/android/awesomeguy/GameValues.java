@@ -94,6 +94,7 @@ public class GameValues {
 	private InitBackground mBackground;
 	
 	/* Bundle stuff */
+	public static final String BUNDLE_ROOM_NUM = new String("room_num");
 	public static final String BUNDLE_NUM_OF_SPRITES = new String("sprites");
 	public static final String BUNDLE_SPRITES_X_ARRAY = new String("sprites_x_array");
 	public static final String BUNDLE_SPRITES_Y_ARRAY = new String("sprites_y_array");
@@ -245,7 +246,9 @@ public class GameValues {
 	public void incrementRoomNo() {
 		mRoom ++;
 	}
-	
+	public void decrementRoomNo() {
+		mRoom --;
+	}
 	public Record getGuyScore() {
 		return mGuyScore;
 	}
@@ -623,6 +626,7 @@ public class GameValues {
 		mBundle.putInt(BUNDLE_LIVES, this.getLives());
 		
 		mBundle.putInt(BUNDLE_LAST_ORIENTATION, this.getScreenOrientation());
+		mBundle.putInt(BUNDLE_ROOM_NUM, this.getRoomNo() );
 	}
 	public Bundle getBundle() {
 		return mBundle;
@@ -694,6 +698,7 @@ public class GameValues {
 		
 		this.setScore(mBundle.getInt(BUNDLE_SCORE));
 		this.setLives(mBundle.getInt(BUNDLE_LIVES));
+		this.setRoomNo(mBundle.getInt(BUNDLE_ROOM_NUM));
 		//Log.e("GameValues","scroll x " + mScrollX + " num of sprites " + mSpritesSize);
 		// end of restoring GameValues from Bundle. //
 	}

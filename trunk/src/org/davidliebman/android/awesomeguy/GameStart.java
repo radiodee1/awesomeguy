@@ -291,6 +291,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     	if(!mBundle.getBoolean(GameValues.BUNDLE_INITIAL)) {
     		mGameV.useBundleInfo(mBundle, mMovementV);
     		mUseSavedBundle = true;
+    		mGameV.setUseSavedBundle(true);
     		mGameV.setXmlMode(GameValues.XML_USE_LEVEL);
     	}
     	
@@ -319,7 +320,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
         /* retrieve other saved preferences */	
         
         mLookForXml = preferences.getBoolean(Options.SAVED_LOOK_FOR_XML, false);
-        mGameV.setRoomNo(preferences.getInt(Options.SAVED_ROOM_NUM, 1));
+        if (!mGameV.isUseSavedBundle()) mGameV.setRoomNo(preferences.getInt(Options.SAVED_ROOM_NUM, 1));
         mGameV.setLookForXml(mLookForXml);
         
         
@@ -365,7 +366,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     	/* set loop to 'endless' */
     	mGameV.setGameRunning(true);
     	
-    	this.getSavedRoom();
+    	if (!mGameV.isUseSavedBundle()) this.getSavedRoom();
 
     	
     	/* start game loop thread */

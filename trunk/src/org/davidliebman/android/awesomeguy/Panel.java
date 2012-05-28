@@ -1044,14 +1044,14 @@ public  class Panel  implements  GLSurfaceView.Renderer {
 		//TODO Auto-generated method stub
 		this.JNIinit();
 		
-		if (!mGameV.isUseSavedBundle()) {
-			mGameV.getHandler().sendEmptyMessage(GameStart.STARTLEVEL);
-
-	    }
-	    else {
-	    	mGameV.getHandler().sendEmptyMessage(GameStart.REORIENTATION);
-	    }
-
+//		if (!mGameV.isUseSavedBundle()) {
+//			mGameV.getHandler().sendEmptyMessage(GameStart.STARTLEVEL);
+//
+//	    }
+//	    else {
+//	    	mGameV.getHandler().sendEmptyMessage(GameStart.REORIENTATION);
+//	    }
+		mGameV.getHandler().sendEmptyMessage(GameStart.STARTLEVEL);
 
 		
 	}
