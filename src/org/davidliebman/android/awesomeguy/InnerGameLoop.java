@@ -137,13 +137,14 @@ public class InnerGameLoop extends Thread {
 		    	mGameV.setGuyScore(mHighScores);
 
 		    	
-		    	mGameV.getPanel().setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
+//		    	mGameV.getPanel().setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
     			
     			if (mMovementV.getLetterKeyB() > 0) mGameV.getPanel().setKeyB(true);
     			else mGameV.getPanel().setKeyB(false);
     			
 		    	if (mIsNotLate ) {
 		    		
+			    	mGameV.getPanel().setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
 		    		
 		    		/* formerly above 'draw' */
 		    		mGameV.getPanel().setScoreLives(mGameV.getScore(), mGameV.getLives());

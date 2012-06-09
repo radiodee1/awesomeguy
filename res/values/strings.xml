@@ -51,7 +51,8 @@
     	<string name="menu_text_collision_no">No Collision Detection</string>
     	<string name="menu_text_collision_yes">Regular Collision</string>
     	    
-        <string name="app_legal">LEGAL \n This version of Awesomeguy can report your game usage statistics to Google Analytics. 
+        <string name="app_legal">LEGAL \n This version of Awesomeguy can report your game usage statistics to Google 
+            Analytics. 
 This allows the developers to track
 how many users actually play the game. Google Analytics does not change any aspect of game play, and it does not report
 the identity of the users in any way. It DOES encourage the developers of the game to add features for future releases.
@@ -59,20 +60,27 @@ Google Analytics is enabled by default, but can be disabled easily from the Opti
 \n\nFEATURES \n This version of Awesomeguy supports game play in landscape mode. In this
 mode the D-pad is re-arranged on the bottom of the screen in a single row. Awesomeguy should automatically re-orient
 itself when the phone is turned. 
-\n\nThis version of Awesomeguy also has revamped Players and Highscores screens, and it even has a new splash screen. Also the options
-menu has been totally reorganized. All the old options are still available, but they are found by pressing the menu key from the 
-Players page.</string>
+\n\nThis version of Awesomeguy also has revamped Players and Highscores screens, and it even has a new splash screen.
+ Also the options
+menu has been totally reorganized. All the old options are still available, but they are found by pressing the 
+menu key from the 
+Players page. This version also uses OpenGL to display its graphics, and so is a little bit faster to play. Also the 
+color scheme for the levels has changed slightly. Ladders and platforms are still in the same places, but they may
+look a little different.</string>
 		<string name="app_helptext">MOVEMENT: Use the arrow keys on the touch screen to move the character in the four basic directions. =B= is the jump key. On some phones the trackball can also be used for the four directions. You can climb the ladders and jump from the platforms. You can fall any distance without hurting yourself. Monsters
-can kill you unless you jump right on top of them. Green blocks with red dots are extra lives. The white crystal takes you to the next level.\n\n
-PLAYERS: Choose the =Players= option from the main menu. Here you can enter the name of your own player, used for high scores and also for 
+can kill you unless you jump right on top of them. Gold blocks with red dots are extra lives. The white crystal 
+takes you to the next level.\n\n
+PLAYERS: Choose the =Stay-On-This-Screen= option from the start screen. Here you can enter the name of your own player, 
+used for high scores and also for 
 saving all your game preferences. Touch the edit area to enter a name. Use the pop-up keyboard to type in letters, then press ENTER when 
 you are done. Press enter a second time to accept the new name and use it for all your high scores. The first time you make a high score the 
 new name will be saved in the Players table with all the others. After that, touch the entry in the Players table to select a different player,
-or use the game =Remember Me= setting to use the same player over and over.</string>
+or use the game =Remember-Me= setting to use the same player over and over.</string>
 		<string name="app_storytext">THE STORY: 
  \nIn the future, evil robot aligators take over the planet. AWESOMEGUY, the hero, must find his way around the world, transporting to different places, collecting points and stopping the alien aligators. Look out for platforms, 
 pyramids, mazes, castles, and flying steaks. \n\nYou are AWESOMEGUY. Run away 
   from the aligators. Jump on them to kill them. Get the crystal to go to the 
-  next level. The key is a checkpoint and the rings and gold bricks are worth points. There is also a life or two out there and they are green. Have fun.
+  next level. The key is a checkpoint and the rings and gold bricks are worth points. There is also a life or two 
+  out there and they are gold too. Have fun.
 </string>
 </resources>
