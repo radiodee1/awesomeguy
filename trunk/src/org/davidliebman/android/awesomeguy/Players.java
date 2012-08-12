@@ -10,6 +10,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 //import android.text.InputType;
 //import android.util.Log;
 import android.view.View.OnKeyListener;
@@ -101,12 +102,7 @@ public class Players extends ListActivity {
         mRememberPlayer = mPreferences.getBoolean(Players.SAVED_REMEMBER_PLAYER, true);
         mHighScores = new Record();
 
-//        if(!mRememberPlayer) {
-//        	mHighScores.addToPreferences(mPreferences);
-//        }
-//        else {
-//        	mHighScores.getFromPreferences(mPreferences);
-//        }
+
         
         /* if 'anonymous' then blank out record. */
         if(mHighScores.getName().contentEquals(new Record().getName())) {
@@ -121,13 +117,10 @@ public class Players extends ListActivity {
         if (mGoogleAnalytics) {
             tracker.trackPageView("/SplashScreen");
             tracker.dispatch();
-            //Log.d("Awesomeguy","Google Analytics-----------------");
+            //Log.e("Awesomeguy","Google Analytics-----------------");
         }
         
-    
-        /* init scores object */
-//        mScores = new Scores(this, mHighScores);
-        
+            
         //////////////////////end SplashScreen
         
         /* retrieve Record mHighScores */
