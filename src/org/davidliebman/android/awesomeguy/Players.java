@@ -114,6 +114,8 @@ public class Players extends ListActivity {
         }
         
         /* google analytics tracker */
+        mGoogleAnalytics = mPreferences.getBoolean(Players.SAVED_ANALYTICS, true);
+
         tracker = GoogleAnalyticsTracker.getInstance();
         tracker.start(UA_NUMBER, 5, this);
         if (mGoogleAnalytics) {
