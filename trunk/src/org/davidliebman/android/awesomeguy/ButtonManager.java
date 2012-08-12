@@ -34,7 +34,7 @@ public class ButtonManager extends FrameLayout {
 	private MovementValues mMovementV;
     private GameValues mGameV;
 	
-    public BoundingBox mLargeBox;
+    public BoundingBox mLargeBox = new BoundingBox();
     
  
 	private RelativeLayout mParent;
