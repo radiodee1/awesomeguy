@@ -584,7 +584,7 @@ public class GameStart extends Activity  implements KeyEvent.Callback{
     		    mPanelBot.setPanelScroll(mMovementV.getScrollX(), mMovementV.getScrollY());
     		    mPanelBot.setGuySprite(mGameV.getSpriteStart()); //must refresh reference to guySprite
 
-    		    if (!mGameLoopBot.isAlive()) {
+    		    if (!mGameLoopBot.isAlive() ) {
     		    	//mGameLoopBot = new InnerGameLoop(GameStart.this, mGameV, mPanelBot); 
 
     		    	mGameLoopBot.start();
