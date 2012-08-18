@@ -48,6 +48,7 @@ public class Players extends ListActivity {
     private Animation myFadeInAnimation;
     private TextView mPlayerText;
     private TextView mNumPlayers;
+    private EditText mEdittext;
     private int mPreferredNumRecords;
     private int mRoomNumSelected = 1;
     private boolean mLookForXml;
@@ -193,33 +194,18 @@ public class Players extends ListActivity {
         
         
         /* edit text field*/
-        final EditText edittext = (EditText) findViewById(R.id.edittext_name);
+        //final EditText 
+        mEdittext = (EditText) findViewById(R.id.edittext_name);
         
-        edittext.setOnKeyListener(new OnKeyListener() {
+        mEdittext.setOnKeyListener(new OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 // If the event is a key-down event on the "enter" button
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                     (keyCode == KeyEvent.KEYCODE_ENTER)) {
                   // Perform action on key press
-                  mRec = new Record();
-                  mRec.setName(edittext.getText().toString().trim());
-                  mRec.setNumRecords(mHighScores.getNumRecords());
-                  if ( isNameTaken(mNames, mRec.getName())) {
-                      Toast.makeText(Players.this, "This name is already taken: " + edittext.getText(), Toast.LENGTH_LONG).show();
 
-                  }
-                  else {
-                      Toast.makeText(Players.this, "Player Selected: " + edittext.getText(), Toast.LENGTH_SHORT).show();
-                	  mHighScores = mRec;
-                	  mHighScores.setNewRecord(true);
-                	  
-                	  mHighScores.addToPreferences(mPreferences);
-                	  mPlayerText.setText("Player Chosen: " +mHighScores.getName());
-                      mNumPlayers.setText("This is where you choose from a list of " + mHighScores.getNumRecords() + " players.");
-                      SharedPreferences.Editor edit = mPreferences.edit();
-                      edit.putInt(Players.SAVED_ROOM_NUM, mHighScores.getLevel());
-                      edit.commit();
-                  }
+
+                	setNewName();
                   return true;
                 }
                 return false;
@@ -233,6 +219,7 @@ public class Players extends ListActivity {
         final Button button = (Button) findViewById(R.id.button_players);
         button.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
+            	setNewName();
             	Intent StartGameIntent = new Intent(Players.this,GameStart.class);
         		startActivity(StartGameIntent);
             	//Toast.makeText(Players.this, "And We're Off", Toast.LENGTH_SHORT).show();
@@ -379,6 +366,28 @@ public class Players extends ListActivity {
     		showView(Players.VIEW_PLAYERS);
     		showDialog(Players.DIALOG_STARTGAME);
     	}
+    }
+    
+    public void setNewName() {
+        mRec = new Record();
+        mRec.setName(mEdittext.getText().toString().trim());
+        mRec.setNumRecords(mHighScores.getNumRecords());
+        if ( isNameTaken(mNames, mRec.getName())) {
+            Toast.makeText(Players.this, "This name is already taken: " + mEdittext.getText(), Toast.LENGTH_LONG).show();
+
+        }
+        else {
+            Toast.makeText(Players.this, "Player Selected: " + mEdittext.getText(), Toast.LENGTH_SHORT).show();
+      	  mHighScores = mRec;
+      	  mHighScores.setNewRecord(true);
+      	  
+      	  mHighScores.addToPreferences(mPreferences);
+      	  mPlayerText.setText("Player Chosen: " +mHighScores.getName());
+            mNumPlayers.setText("This is where you choose from a list of " + mHighScores.getNumRecords() + " players.");
+            SharedPreferences.Editor edit = mPreferences.edit();
+            edit.putInt(Players.SAVED_ROOM_NUM, mHighScores.getLevel());
+            edit.commit();
+        }
     }
     
     @Override
