@@ -60,7 +60,13 @@ public class Scores {
 		mOpenHelper = new ScoreOpenHelper(mContext);
 		
 		try {
-    		mDatabase.close();
+			if(!mPlayerListC.isClosed()) {
+				mPlayerListC.close();
+			}
+			
+			if (mDatabase.isOpen()) {
+				mDatabase.close();
+			}
     	}
     	catch (NullPointerException e) {
     		//Log.e("Awesomeguy", "Null Pointer mDatabase");
