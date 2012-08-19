@@ -13,8 +13,8 @@ import android.util.Log;
 import java.util.*;
 
 public class Scores {
-	private static final String DATABASE_NAME = "AwesomeguyScores.db";
-	private static final int DATABASE_VERSION = 16;
+	private static final String DATABASE_NAME = "AwesomeeguyScores.db";
+	private static final int DATABASE_VERSION = 19;
 	private static final String TABLE_SCORES_NAME = "scores";
 	private static final String TABLE_HIGHS_NAME = "highs";
 	
@@ -60,13 +60,14 @@ public class Scores {
 		mOpenHelper = new ScoreOpenHelper(mContext);
 		
 		try {
-			if(!mPlayerListC.isClosed()) {
+			if (!mPlayerListC.isClosed()) {
 				mPlayerListC.close();
 			}
 			
 			if (mDatabase.isOpen()) {
 				mDatabase.close();
 			}
+			
     	}
     	catch (NullPointerException e) {
     		//Log.e("Awesomeguy", "Null Pointer mDatabase");
@@ -325,6 +326,12 @@ public class Scores {
 
 			mTempRec.setInternetKey(mGameHighC.getInt(mGameHighC.getColumnIndex("internet_key")));
 			mTempRec.setSave(mGameHighC.getInt(mGameHighC.getColumnIndex("save")));
+			
+			mTempRec.setGameSpeed(mGameHighC.getInt(mGameHighC.getColumnIndex("game_speed")));
+			mTempRec.setSoundOn(new Boolean(mGameHighC.getString(mGameHighC.getColumnIndex("sound"))).booleanValue());
+			mTempRec.setEnableMonsters(new Boolean(mGameHighC.getString(mGameHighC.getColumnIndex("enable_monsters"))).booleanValue());
+			mTempRec.setMonsterCollision(new Boolean(mGameHighC.getString(mGameHighC.getColumnIndex("enable_collision"))).booleanValue());
+			
 			mList.add(mTempRec);
 			mGameHighC.moveToNext();
 			//Log.e("Scores","____"+ mTempRec.getRecordIdNum());
@@ -398,7 +405,11 @@ public class Scores {
 				" high, " +
 				" date, " +
 				" internet_key, " +
-				" save " +
+				" save, " +
+				" game_speed, " +
+				" sound, " +
+				" enable_monsters, " +
+				" enable_collision " +
 				" ) " +
 				" VALUES " +
 				" ( " +
@@ -406,8 +417,12 @@ public class Scores {
 				mScoreKey + ", " +
 				mHighScores.getScore() + ", " +
 				" \"" + System.currentTimeMillis() + "\", " +
-				0 + ", " +
-				0 +
+				0 + ", " + // internet_key
+				0 + ", " + // save
+				mHighScores.getGameSpeed() + ", " +
+				" \"" + new Boolean(mHighScores.isSound()).toString() + "\", " +
+				" \"" + new Boolean(mHighScores.isEnableMonsters()).toString() + "\", " +
+				" \"" + new Boolean(mHighScores.isEnableCollision()).toString() + "\" " + 
 				" ) ");
 	}
 	
@@ -463,7 +478,12 @@ public class Scores {
 					" high INTEGER , " +
 					" date TEXT , " +
 					" internet_key INTEGER, " +
-					" save INTEGER " +
+					" save INTEGER , " +
+
+					" game_speed INTEGER , " +
+					" sound TEXT , " +
+					" enable_monsters TEXT , " +
+					" enable_collision TEXT  " +
 					" ) "
 					);
 		}
@@ -483,6 +503,11 @@ public class Scores {
 		private int mInternetKey;
 		private int mSave;
 		
+		private int mGameSpeed;
+		private boolean mSoundOn;
+		private boolean mEnableMonsters;
+		private boolean mMonsterCollision;
+		
 		public High () {
 			mKey = 0;
 			mName = "anonymous";
@@ -491,6 +516,11 @@ public class Scores {
 			mDate = System.currentTimeMillis();
 			mInternetKey = 0;
 			mSave = 0;
+			
+			mGameSpeed = 0;
+			mSoundOn = true;
+			mEnableMonsters = true;
+			mMonsterCollision = true;
 		}
 
 		public int getKey() {
@@ -547,6 +577,38 @@ public class Scores {
 
 		public void setSave(int mSave) {
 			this.mSave = mSave;
+		}
+
+		public int getGameSpeed() {
+			return mGameSpeed;
+		}
+
+		public void setGameSpeed(int mGameSpeed) {
+			this.mGameSpeed = mGameSpeed;
+		}
+
+		public boolean isSoundOn() {
+			return mSoundOn;
+		}
+
+		public void setSoundOn(boolean mSoundOn) {
+			this.mSoundOn = mSoundOn;
+		}
+
+		public boolean isEnableMonsters() {
+			return mEnableMonsters;
+		}
+
+		public void setEnableMonsters(boolean mEnableMonsters) {
+			this.mEnableMonsters = mEnableMonsters;
+		}
+
+		public boolean isMonsterCollision() {
+			return mMonsterCollision;
+		}
+
+		public void setMonsterCollision(boolean mMonsterCollision) {
+			this.mMonsterCollision = mMonsterCollision;
 		}
 		
 	}
