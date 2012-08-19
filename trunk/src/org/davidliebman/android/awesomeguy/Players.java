@@ -22,6 +22,8 @@ import android.view.animation.AnimationUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.app.AlertDialog;
@@ -52,7 +54,7 @@ public class Players extends ListActivity {
     private int mPreferredNumRecords;
     private int mRoomNumSelected = 1;
     private boolean mLookForXml;
-    
+    private boolean mIsNewRecord;
     
     public static final int VIEW_SPLASH = 0;
     public static final int VIEW_PLAYERS = 1;
@@ -175,6 +177,8 @@ public class Players extends ListActivity {
                 
                 /* adjust number of high scores shown */
                 mScores.pruneScoresList();
+                
+                mIsNewRecord = false;
         	 }
         	
         	
@@ -215,11 +219,24 @@ public class Players extends ListActivity {
             
         });
         
+        mEdittext.setOnFocusChangeListener( new OnFocusChangeListener () {
+
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				// 
+				if (hasFocus) {
+					mIsNewRecord = true;
+				}
+				
+			} 
+        	
+        });
+        
         /* button at bottom of view */
         final Button button = (Button) findViewById(R.id.button_players);
         button.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-            	setNewName();
+            	if ( mIsNewRecord ) setNewName();
             	Intent StartGameIntent = new Intent(Players.this,GameStart.class);
         		startActivity(StartGameIntent);
             	//Toast.makeText(Players.this, "And We're Off", Toast.LENGTH_SHORT).show();
