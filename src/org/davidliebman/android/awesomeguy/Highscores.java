@@ -2,9 +2,12 @@ package org.davidliebman.android.awesomeguy;
 
 import java.util.ArrayList;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ListActivity;
 //import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,6 +26,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+
 import android.util.Log;
 
 public class Highscores   extends ListActivity {
@@ -35,6 +40,7 @@ public class Highscores   extends ListActivity {
     private SharedPreferences mPreferences;
     private HighAdapter mAadapter;
 
+    public static final int DIALOG_PREFERENCES = 1;
     
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,7 +67,9 @@ public class Highscores   extends ListActivity {
         	
         	@Override
         	 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        		
+        		// fire dialog here....
+        		mRec = mNames.get(position);
+        		showDialog(Highscores.DIALOG_PREFERENCES);
         	 }
         	
         	
@@ -130,6 +138,72 @@ public class Highscores   extends ListActivity {
     	}
     	super.onPause();
     }
+    
+    /////////////////////////////
+    protected Dialog onCreateDialog(int mId) {
+    	Dialog  dialog = new Dialog(Highscores.this);
+    	AlertDialog.Builder builder;
+    	AlertDialog alertDialog;
+    	LayoutInflater mInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+    	View mLayout;
+    	
+    	mLayout = mInflater.inflate(R.layout.congrats, 
+    			(ViewGroup) findViewById(R.id.layout_root));
+    	mLayout.findViewById(R.id.image).setBackgroundResource(R.drawable.guy_icon);
+    	
+    	switch (mId) {
+    	/////////////////////////////////////
+    	
+
+    	////////////////////////////////////
+    	case Highscores.DIALOG_PREFERENCES:
+    		
+    		builder = new AlertDialog.Builder(Highscores.this);
+    		builder.setView(mLayout);
+    		
+    		String mPart = new Integer(mRec.getGameSpeed()).toString();
+    		if (mRec.getGameSpeed() >= Record.SPEED_SYSTEM) mPart = "System Defined";
+    		
+    		
+   	    	String mAMessage = new String("Score: " + mRec.getHigh() +"*\n" + 
+   	    			"This player uses the handle \'" + mRec.getName() +
+   	    			"\'. They got this score with these special settings:" +
+   	    			"\nGame Speed: " +
+   	    			mPart +
+   	    			"\nGame Sound: " +
+   	    			new Boolean(mRec.isSoundOn()).toString() +
+   	    			"\nEnable Monsters: " +
+   	    			new Boolean(mRec.isEnableMonsters()).toString()) ;
+   	    	if(mRec.isEnableMonsters()) {
+   	    			mAMessage = mAMessage + "\nMonster Collision: " +
+   	    			new Boolean(mRec.isMonsterCollision()).toString();
+   	    	}
+   	    	((TextView)mLayout.findViewById(R.id.congrats_text)).setText(mAMessage);
+
+   	    	String mPositive = new String("OK"  );
+   	    	//String mNegative = new String("Stay on this screen." );
+   	    	builder.setCancelable(false)
+   	    	       .setPositiveButton(mPositive, new DialogInterface.OnClickListener() {
+   	    	    	   public void onClick(DialogInterface dialog, int id) {
+   	    	    		   mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+   	    	    		   removeDialog(Highscores.DIALOG_PREFERENCES);
+   	    	    		   dialog.cancel();
+   	    	        	   //removeDialog(Highscores.DIALOG_PREFERENCES);
+   	    	           }
+   	    	       });
+   	    	AlertDialog alert = builder.create();
+   	    	dialog = (Dialog) alert;
+    		
+    		break;
+    	
+    	////////////////////////////////////
+    		default:
+    			dialog = null;
+    	}
+    	
+    	return dialog;
+    }
+    /////////////////////////////
     
 	/* special adapter for displaying list from ArrayList */
     public class HighAdapter extends ArrayAdapter<Scores.High> {
