@@ -208,8 +208,9 @@ public class Players extends ListActivity {
                     (keyCode == KeyEvent.KEYCODE_ENTER)) {
                   // Perform action on key press
 
-
-                	setNewName();
+                	if( ! mEdittext.getText().toString().contentEquals("")) {
+                		setNewName();
+                	}
                   return true;
                 }
                 return false;
@@ -236,9 +237,11 @@ public class Players extends ListActivity {
         final Button button = (Button) findViewById(R.id.button_players);
         button.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-            	if ( mIsNewRecord ) setNewName();
-            	Intent StartGameIntent = new Intent(Players.this,GameStart.class);
-        		startActivity(StartGameIntent);
+            	if (! mEdittext.getText().toString().contentEquals("")) {
+            		if ( mIsNewRecord ) setNewName();
+            		Intent StartGameIntent = new Intent(Players.this,GameStart.class);
+            		startActivity(StartGameIntent);
+            	}
             	//Toast.makeText(Players.this, "And We're Off", Toast.LENGTH_SHORT).show();
             }
         });
