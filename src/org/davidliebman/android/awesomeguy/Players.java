@@ -239,9 +239,11 @@ public class Players extends ListActivity {
             public void onClick(View v) {
             	if (! mEdittext.getText().toString().contentEquals("")) {
             		if ( mIsNewRecord ) setNewName();
-            		Intent StartGameIntent = new Intent(Players.this,GameStart.class);
-            		startActivity(StartGameIntent);
+            		
             	}
+            	Intent StartGameIntent = new Intent(Players.this,GameStart.class);
+        		startActivity(StartGameIntent);
+            	
             	//Toast.makeText(Players.this, "And We're Off", Toast.LENGTH_SHORT).show();
             }
         });
