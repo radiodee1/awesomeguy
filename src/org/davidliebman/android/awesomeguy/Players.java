@@ -208,7 +208,8 @@ public class Players extends ListActivity {
                     (keyCode == KeyEvent.KEYCODE_ENTER)) {
                   // Perform action on key press
 
-                	if( ! mEdittext.getText().toString().contentEquals("")) {
+                	if( ! mEdittext.getText().toString().contentEquals("")  &&
+                			! mEdittext.getText().toString().contentEquals(mHighScores.getName())) {
                 		setNewName();
                 	}
                   return true;
@@ -237,7 +238,8 @@ public class Players extends ListActivity {
         final Button button = (Button) findViewById(R.id.button_players);
         button.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-            	if (! mEdittext.getText().toString().contentEquals("")) {
+            	if (! mEdittext.getText().toString().contentEquals("") && 
+            			! mEdittext.getText().toString().contentEquals(mHighScores.getName())) {
             		if ( mIsNewRecord ) setNewName();
             		
             	}
@@ -432,6 +434,11 @@ public class Players extends ListActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
     	
+    	if (! mEdittext.getText().toString().contentEquals("") && 
+    			! mEdittext.getText().toString().contentEquals(mHighScores.getName())) {
+    		if ( mIsNewRecord ) setNewName();
+    		
+    	}
     	
     	mList = new InitBackground.LevelList();
     	mList = mParser.getLevelList(mLookForXml);
