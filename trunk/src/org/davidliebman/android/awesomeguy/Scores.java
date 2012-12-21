@@ -413,7 +413,9 @@ public class Scores {
 				" game_speed, " +
 				" sound, " +
 				" enable_monsters, " +
-				" enable_collision " +
+				" enable_collision, " +
+				" level, " + 
+				" lives " +
 				" ) " +
 				" VALUES " +
 				" ( " +
@@ -426,7 +428,9 @@ public class Scores {
 				mHighScores.getGameSpeed() + ", " +
 				" \"" + new Boolean(mHighScores.isSound()).toString() + "\", " +
 				" \"" + new Boolean(mHighScores.isEnableMonsters()).toString() + "\", " +
-				" \"" + new Boolean(mHighScores.isEnableCollision()).toString() + "\" " + 
+				" \"" + new Boolean(mHighScores.isEnableCollision()).toString() + "\", " +
+				mHighScores.getLevel() + ", " +
+				mHighScores.getLives() + " " +
 				" ) ");
 	}
 	
