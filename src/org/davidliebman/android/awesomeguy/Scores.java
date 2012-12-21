@@ -332,6 +332,10 @@ public class Scores {
 			mTempRec.setEnableMonsters(new Boolean(mGameHighC.getString(mGameHighC.getColumnIndex("enable_monsters"))).booleanValue());
 			mTempRec.setMonsterCollision(new Boolean(mGameHighC.getString(mGameHighC.getColumnIndex("enable_collision"))).booleanValue());
 			
+			mTempRec.setLevel(mGameHighC.getInt(mGameHighC.getColumnIndex("level")));
+			mTempRec.setLives(mGameHighC.getInt(mGameHighC.getColumnIndex("lives")));
+			
+			
 			mList.add(mTempRec);
 			mGameHighC.moveToNext();
 			//Log.e("Scores","____"+ mTempRec.getRecordIdNum());
