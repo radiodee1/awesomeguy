@@ -11,9 +11,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -63,18 +67,18 @@ public class Highscores   extends ListActivity {
     	setListAdapter(mAadapter);
         ListView lv = getListView();
         lv.setTextFilterEnabled(true);
-        lv.setOnItemClickListener(new OnItemClickListener () {
-        	
-        	@Override
-        	 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        		// fire dialog here....
-        		mRec = mNames.get(position);
-        		showDialog(Highscores.DIALOG_PREFERENCES);
-        	 }
-        	
-        	
-        });
-        
+//        lv.setOnItemClickListener(new OnItemClickListener () {
+//        	
+//        	@Override
+//        	 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//        		// fire dialog here....
+//        		mRec = mNames.get(position);
+//        		showDialog(Highscores.DIALOG_PREFERENCES);
+//        	 }
+//        	
+//        	
+//        });
+        registerForContextMenu(lv);
         /* button at bottom of view */
         final Button button = (Button) findViewById(R.id.button_highscores);
         button.setOnClickListener(new OnClickListener() {
@@ -137,6 +141,48 @@ public class Highscores   extends ListActivity {
     		Log.e("Awesomeguy", "Null Pointer Highscores");
     	}
     	super.onPause();
+    }
+    
+    
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+        ContextMenuInfo menuInfo) {
+    	//if (v.getId() == R.id.)
+          AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
+
+          mRec = mNames.get(info.position);
+          menu.setHeaderTitle(mNames.get(info.position).getName() + " - " + mNames.get(info.position).getHigh());
+          
+          menu.add(Menu.NONE, 0, 0 , "Show Extra Info");
+          menu.add(Menu.NONE, 1, 1 , "Send Score To Online List");
+          menu.add(Menu.NONE, 2, 2 , "Exit Menu");
+    }
+    
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+      AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+      int menuItemIndex = item.getItemId();
+      
+      switch (menuItemIndex) {
+      case 0:
+    	  if ( mRec != null) {
+    		  showDialog(Highscores.DIALOG_PREFERENCES);
+    	  }
+    	  break;
+      case 1:
+    	  if (mRec != null ) {
+    		  addScoreToOnlineList(mRec);
+    	  }
+    	  break;
+      case 2:
+    	  //do nothing here.
+    	  break;
+      }
+      
+      return true;
+    }
+    public void addScoreToOnlineList(Scores.High in) {
+    	
     }
     
     /////////////////////////////
