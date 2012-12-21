@@ -503,6 +503,9 @@ public class Scores {
 		private int mInternetKey;
 		private int mSave;
 		
+		private int mLevel;
+		private int mLives;
+		
 		private int mGameSpeed;
 		private boolean mSoundOn;
 		private boolean mEnableMonsters;
@@ -516,6 +519,9 @@ public class Scores {
 			mDate = System.currentTimeMillis();
 			mInternetKey = 0;
 			mSave = 0;
+			
+			mLives = 0;
+			mLevel = 0;
 			
 			mGameSpeed = 0;
 			mSoundOn = true;
@@ -610,6 +616,23 @@ public class Scores {
 		public void setMonsterCollision(boolean mMonsterCollision) {
 			this.mMonsterCollision = mMonsterCollision;
 		}
+
+		public int getLevel() {
+			return mLevel;
+		}
+
+		public void setLevel(int mLevel) {
+			this.mLevel = mLevel;
+		}
+
+		public int getLives() {
+			return mLives;
+		}
+
+		public void setLives(int mLives) {
+			this.mLives = mLives;
+		}
+		
 		
 	}
 }

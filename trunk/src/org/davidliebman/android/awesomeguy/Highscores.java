@@ -190,8 +190,8 @@ public class Highscores   extends ListActivity {
     	rec.setEnableCollision(in.isMonsterCollision());
     	rec.setEnableMonsters(in.isEnableMonsters());
     	rec.setGameSpeed(in.getGameSpeed());
-    	rec.setLevel(0);
-    	rec.setLives(0);
+    	rec.setLevel(in.getLevel());
+    	rec.setLives(in.getLives());
     	rec.setName(in.getName());
     	
     }
