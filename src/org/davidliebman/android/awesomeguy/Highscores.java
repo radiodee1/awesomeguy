@@ -1,6 +1,7 @@
 package org.davidliebman.android.awesomeguy;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -43,7 +44,7 @@ public class Highscores   extends ListActivity {
     private Scores.High mRec =  new Scores.High();
     private SharedPreferences mPreferences;
     private HighAdapter mAadapter;
-
+    
     public static final int DIALOG_PREFERENCES = 1;
     
 	@Override
@@ -182,6 +183,16 @@ public class Highscores   extends ListActivity {
       return true;
     }
     public void addScoreToOnlineList(Scores.High in) {
+    	RecordJson rec = new RecordJson();
+    	rec.setCountry("");
+    	rec.setDate(new Date(in.getDate()));
+    	rec.setEmail("");
+    	rec.setEnableCollision(in.isMonsterCollision());
+    	rec.setEnableMonsters(in.isEnableMonsters());
+    	rec.setGameSpeed(in.getGameSpeed());
+    	rec.setLevel(0);
+    	rec.setLives(0);
+    	rec.setName(in.getName());
     	
     }
     
