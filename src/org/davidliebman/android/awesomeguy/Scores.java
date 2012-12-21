@@ -14,7 +14,7 @@ import java.util.*;
 
 public class Scores {
 	private static final String DATABASE_NAME = "AwesomeeguyScores.db";
-	private static final int DATABASE_VERSION = 19;
+	private static final int DATABASE_VERSION = 20;
 	private static final String TABLE_SCORES_NAME = "scores";
 	private static final String TABLE_HIGHS_NAME = "highs";
 	
@@ -483,7 +483,10 @@ public class Scores {
 					" date TEXT , " +
 					" internet_key INTEGER, " +
 					" save INTEGER , " +
-
+					
+					" level INTEGER , " +
+					" lives INTEGER , " +
+					
 					" game_speed INTEGER , " +
 					" sound TEXT , " +
 					" enable_monsters TEXT , " +
