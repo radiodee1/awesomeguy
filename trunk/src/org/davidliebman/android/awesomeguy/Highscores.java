@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -32,6 +33,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+//import org.davidliebman.android.androidawesomescores.WebScoreUpload;
+
 
 import android.util.Log;
 
@@ -44,6 +47,8 @@ public class Highscores   extends ListActivity {
     private Scores.High mRec =  new Scores.High();
     private SharedPreferences mPreferences;
     private HighAdapter mAadapter;
+	private WebScoreUpload web ;
+
     
     public static final int DIALOG_PREFERENCES = 1;
     public static final int DIALOG_WEB_SUCCESS = 2;
@@ -59,7 +64,7 @@ public class Highscores   extends ListActivity {
     	mHighScores = new Record();
         mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.getFromPreferences(mPreferences);
-
+        web = new WebScoreUpload(this);
         
         mScores = new Scores(this, mHighScores);
 
@@ -196,7 +201,41 @@ public class Highscores   extends ListActivity {
     	rec.setLevel(in.getLevel());
     	rec.setLives(in.getLives());
     	rec.setName(in.getName());
-    	showDialog(Highscores.DIALOG_WEB_SUCCESS);
+    	//showDialog(Highscores.DIALOG_WEB_SUCCESS);
+    	
+    	new AsyncTask <RecordJson, Object, ReturnJson>() {
+
+    		@Override
+    		protected void onPreExecute() {
+
+    			
+    		}
+
+    		@Override
+    		protected ReturnJson doInBackground(RecordJson... params) {
+    			
+    			web.setUrl(WebScoreUpload.MY_URL);
+    			return web.sendRecord(params[0]);
+    		}
+
+    		@Override
+    		protected void onPostExecute(ReturnJson result) {
+
+    			if (result == null ) {
+    				showDialog(Highscores.DIALOG_WEB_FAILURE);
+    				return;
+    			}
+    			else {
+    				//change scores sql
+    				showDialog(Highscores.DIALOG_WEB_SUCCESS);
+    		        Toast.makeText(Highscores.this, result.getMessage() + " - " + result.getKey(), Toast.LENGTH_LONG).show();
+
+    				return;
+    			}
+    			
+    		}
+    	}.execute(rec);
+    	
     }
     
     /////////////////////////////
