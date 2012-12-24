@@ -235,6 +235,8 @@ public class Highscores   extends ListActivity {
    	    			mAMessage = mAMessage + "\nMonster Collision: " +
    	    			new Boolean(mRec.isMonsterCollision()).toString();
    	    	}
+   	    	mAMessage = mAMessage + "\nAlso: " +
+   	    			"\nLives: " + mRec.getLives() ;
    	    	((TextView)mLayout.findViewById(R.id.congrats_text)).setText(mAMessage);
 
    	    	String mPositive = new String("OK"  );
