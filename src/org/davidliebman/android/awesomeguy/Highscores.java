@@ -46,6 +46,9 @@ public class Highscores   extends ListActivity {
     private HighAdapter mAadapter;
     
     public static final int DIALOG_PREFERENCES = 1;
+    public static final int DIALOG_WEB_SUCCESS = 2;
+    public static final int DIALOG_WEB_FAILURE = 3;
+    
     
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -193,16 +196,20 @@ public class Highscores   extends ListActivity {
     	rec.setLevel(in.getLevel());
     	rec.setLives(in.getLives());
     	rec.setName(in.getName());
-    	
+    	showDialog(Highscores.DIALOG_WEB_SUCCESS);
     }
     
     /////////////////////////////
     protected Dialog onCreateDialog(int mId) {
     	Dialog  dialog = new Dialog(Highscores.this);
     	AlertDialog.Builder builder;
-    	AlertDialog alertDialog;
+    	//AlertDialog alertDialog;
+    	AlertDialog alert;
     	LayoutInflater mInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
     	View mLayout;
+    	String mAMessage = new String();
+    	String mPositive = new String();
+    	
     	
     	mLayout = mInflater.inflate(R.layout.congrats, 
     			(ViewGroup) findViewById(R.id.layout_root));
@@ -222,7 +229,7 @@ public class Highscores   extends ListActivity {
     		if (mRec.getGameSpeed() >= Record.SPEED_SYSTEM) mPart = "System Defined";
     		
     		
-   	    	String mAMessage = new String("Score: " + mRec.getHigh() +"*\n" + 
+   	    	mAMessage = new String("Score: " + mRec.getHigh() +"*\n" + 
    	    			"This player uses the handle \'" + mRec.getName() +
    	    			"\'. They got this score with these special settings:" +
    	    			"\nGame Speed: " +
@@ -239,7 +246,7 @@ public class Highscores   extends ListActivity {
    	    			"\nLives: " + mRec.getLives() ;
    	    	((TextView)mLayout.findViewById(R.id.congrats_text)).setText(mAMessage);
 
-   	    	String mPositive = new String("OK"  );
+   	    	mPositive = new String("OK"  );
    	    	//String mNegative = new String("Stay on this screen." );
    	    	builder.setCancelable(false)
    	    	       .setPositiveButton(mPositive, new DialogInterface.OnClickListener() {
@@ -250,11 +257,59 @@ public class Highscores   extends ListActivity {
    	    	        	   //removeDialog(Highscores.DIALOG_PREFERENCES);
    	    	           }
    	    	       });
-   	    	AlertDialog alert = builder.create();
+   	    	alert = builder.create();
    	    	dialog = (Dialog) alert;
     		
     		break;
-    	
+    	////////////////////////////////////
+    	case Highscores.DIALOG_WEB_FAILURE:
+    		builder = new AlertDialog.Builder(Highscores.this);
+    		builder.setView(mLayout);
+    		
+   	    	mAMessage = new String("Connection to the internet failed, or the server is down. Try again later.") ;
+   	    	
+   	    	((TextView)mLayout.findViewById(R.id.congrats_text)).setText(mAMessage);
+
+   	    	mPositive = new String("OK"  );
+   	    	//String mNegative = new String("Stay on this screen." );
+   	    	builder.setCancelable(false)
+   	    	       .setPositiveButton(mPositive, new DialogInterface.OnClickListener() {
+   	    	    	   public void onClick(DialogInterface dialog, int id) {
+   	    	    		   //mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+   	    	    		   removeDialog(Highscores.DIALOG_WEB_FAILURE);
+   	    	    		   dialog.cancel();
+   	    	        	   //removeDialog(Highscores.DIALOG_PREFERENCES);
+   	    	           }
+   	    	       });
+   	    	alert = builder.create();
+   	    	dialog = (Dialog) alert;
+    		break;
+    		
+    	case Highscores.DIALOG_WEB_SUCCESS:
+    		builder = new AlertDialog.Builder(Highscores.this);
+    		builder.setView(mLayout);
+    		
+   	    	mAMessage = new String("Your score has been submitted to the online database. " +
+   	    	"You will not be able to submit any score twice.") ;
+   	    	
+   	    	
+   	    	((TextView)mLayout.findViewById(R.id.congrats_text)).setText(mAMessage);
+
+   	    	mPositive = new String("OK"  );
+   	    	//String mNegative = new String("Stay on this screen." );
+   	    	builder.setCancelable(false)
+   	    	       .setPositiveButton(mPositive, new DialogInterface.OnClickListener() {
+   	    	    	   public void onClick(DialogInterface dialog, int id) {
+   	    	    		   //mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+   	    	    		   removeDialog(Highscores.DIALOG_WEB_SUCCESS);
+   	    	    		   dialog.cancel();
+   	    	        	   //removeDialog(Highscores.DIALOG_PREFERENCES);
+   	    	           }
+   	    	       });
+   	    	alert = builder.create();
+   	    	dialog = (Dialog) alert;
+    		break;
+    		
     	////////////////////////////////////
     		default:
     			dialog = null;
