@@ -163,7 +163,9 @@ public class Highscores   extends ListActivity {
           menu.setHeaderTitle(mNames.get(info.position).getName() + " - " + mNames.get(info.position).getHigh());
           
           menu.add(Menu.NONE, 0, 0 , "Show Extra Info");
-          menu.add(Menu.NONE, 1, 1 , "Send Score To Online List");
+          if (mRec.getInternetKey() == 0) {
+        	  menu.add(Menu.NONE, 1, 1 , "Send Score To Online List");
+          }
           menu.add(Menu.NONE, 2, 2 , "Exit Menu");
     }
     
@@ -179,8 +181,17 @@ public class Highscores   extends ListActivity {
     	  }
     	  break;
       case 1:
-    	  if (mRec != null ) {
+    	  if (mRec != null && mRec.getInternetKey() == 0) {
     		  addScoreToOnlineList(mRec);
+    		  
+    	  }
+    	  else if (mRec.getInternetKey() != 0 ) {
+    		  showDialog(Highscores.DIALOG_WEB_FAILURE);
+    		  
+    		  
+    		  Toast mPrevious = Toast.makeText(this, 
+    				  "You have already sent that record!!", Toast.LENGTH_LONG);
+    		  mPrevious.show();
     	  }
     	  break;
       case 2:
@@ -201,6 +212,8 @@ public class Highscores   extends ListActivity {
     	rec.setLevel(in.getLevel());
     	rec.setLives(in.getLives());
     	rec.setName(in.getName());
+    	rec.setRecordIdNum(in.getKey());
+    	rec.setScore(in.getHigh());
     	//showDialog(Highscores.DIALOG_WEB_SUCCESS);
     	
     	new AsyncTask <RecordJson, Object, ReturnJson>() {
@@ -213,9 +226,18 @@ public class Highscores   extends ListActivity {
 
     		@Override
     		protected ReturnJson doInBackground(RecordJson... params) {
-    			
+    			ReturnJson returnRecord = null;
+    			RecordJson sendRecord = params[0];
     			web.setUrl(WebScoreUpload.MY_URL);
-    			return web.sendRecord(params[0]);
+    			returnRecord = web.sendRecord(params[0]);
+    			if (returnRecord != null ) {
+    				Scores.High mHigh = new Scores.High();
+    				mHigh.setInternetKey(returnRecord.getKey());
+    				mHigh.setKey(sendRecord.getRecordIdNum());
+    				mScores.updateInternetKey(mHigh);
+    			}
+    			
+    			return returnRecord;
     		}
 
     		@Override
@@ -229,7 +251,10 @@ public class Highscores   extends ListActivity {
     				//change scores sql
     				showDialog(Highscores.DIALOG_WEB_SUCCESS);
     		        Toast.makeText(Highscores.this, result.getMessage() + " - " + result.getKey(), Toast.LENGTH_LONG).show();
-
+    		        mNames = mScores.getGameHighList(0);
+//    		        mAadapter = new HighAdapter(this, R.layout.players, mNames);
+//    		        mAadapter.setNotifyOnChange(true);
+    		    	
     				return;
     			}
     			

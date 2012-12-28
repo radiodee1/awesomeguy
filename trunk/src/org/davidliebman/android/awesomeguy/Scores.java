@@ -187,6 +187,20 @@ public class Scores {
 		//Log.e("Scores", "at Options save");
 	}
 	
+	//TODO: test this code
+	public void updateInternetKey(High mHigh) {
+		
+		mOpenHelper = new ScoreOpenHelper(mContext);
+		SQLiteDatabase mDatabase = mOpenHelper.getWritableDatabase();
+		//Cursor c ;
+		mUpdateOptionsC = mDatabase.rawQuery(this.getUpdateHighsInternetKeyString(mHigh), null);
+		mUpdateOptionsC.getCount();
+		mUpdateOptionsC.close();
+		mDatabase.close();
+		
+		Log.e("Scores", "at InternetKey save");
+	}
+	
 	public int pruneScoresList() {
 		ArrayList<Record> mList = this.getHighScorePlayerList(-1);
 		mOpenHelper = new ScoreOpenHelper(mContext);
@@ -260,6 +274,14 @@ public class Scores {
 							" level=" + mHighScores.getLevel() + " " + // note: level is used for checkpoints
 							" WHERE id=" + id);
 	}
+	
+	//TODO: test this method!!
+	public String getUpdateHighsInternetKeyString (Scores.High mHigh) {
+		return new String ("UPDATE " + TABLE_HIGHS_NAME + " " +
+							"SET internet_key=" + mHigh.getInternetKey() + " " +
+							"WHERE id=" + mHigh.getKey());
+	}
+	
 	
 	public String getUpdateNumOfRecordsString(int id) {
 		return new String("UPDATE " + TABLE_SCORES_NAME + " " +
@@ -511,7 +533,7 @@ public class Scores {
 		private int mScoreKey;
 		private int mHigh;
 		private long mDate;
-		private int mInternetKey;
+		private long mInternetKey;
 		private int mSave;
 		
 		private int mLevel;
@@ -580,11 +602,11 @@ public class Scores {
 			this.mDate = mDate;
 		}
 
-		public int getInternetKey() {
+		public long getInternetKey() {
 			return mInternetKey;
 		}
 
-		public void setInternetKey(int mInternetKey) {
+		public void setInternetKey(long mInternetKey) {
 			this.mInternetKey = mInternetKey;
 		}
 
