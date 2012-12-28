@@ -229,7 +229,7 @@ public class Highscores   extends ListActivity {
     		protected ReturnJson doInBackground(RecordJson... params) {
     			ReturnJson returnRecord = null;
     			RecordJson sendRecord = params[0];
-    			web.setUrl(WebScoreUpload.MY_URL);
+    			web.setUrl(WebScoreUpload.MY_URL + WebScoreUpload.MY_PATH_GAME);
     			returnRecord = web.sendRecord(params[0]);
     			if (returnRecord != null ) {
     				Scores.High mHigh = new Scores.High();

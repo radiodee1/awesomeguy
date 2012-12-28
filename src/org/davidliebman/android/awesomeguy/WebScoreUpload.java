@@ -20,9 +20,12 @@ import com.google.gson.Gson;
 
 public class WebScoreUpload {
 
-	public static final String MY_URL = new String("http://10.0.2.2:8888/game.html");
+	//public static final String MY_URL = new String("http://10.0.2.2:8888");
+	public static final String MY_URL = new String("http://awesomescores.appspot.com");
+	public static final String MY_PATH_GAME = new String ("/game.html");
+	public static final String MY_PATH_INDEX = new String ("/index.html");
 	
-	private String url = MY_URL;
+	private String url = MY_URL + MY_PATH_GAME;
 	
 	private long key;
 	private String message = new String();
@@ -38,26 +41,17 @@ public class WebScoreUpload {
 	
 	public String prepareAndSendRecord(RecordJson rec)  {
 		
-//		Gson gson = new Gson();
-//		String cmd = gson.toJson(rec);
-//        String res = null;
+
         String keyString = null;
         String msg = null;
         try {
         		ReturnJson result = sendRecord(rec);
 
-//                res = sendToJsonClient(cmd);
-//                Gson gsonResult = new Gson();
-//                ReturnJson result = gsonResult.fromJson(res, ReturnJson.class);
+
                 keyString = new String(new Long(result.getKey()).toString());
                 msg = new String(result.getMessage());
                 
-//                this.key = result.getKey();
-//                this.errorCode = result.getError();
-//                this.message = result.getMessage();
-//                this.serverVersion = result.getVersion();
-                
-                
+
                 
         } catch (Exception e) {
                 e.printStackTrace();
@@ -75,21 +69,20 @@ public class WebScoreUpload {
 		Gson gson = new Gson();
 		String cmd = gson.toJson(rec);
         String res = null;
-        //String keyString = null;
-        //String msg = null;
+       
         ReturnJson result = null;
         try {
                 res = sendToJsonClient(cmd);
                 Gson gsonResult = new Gson();
                 result = gsonResult.fromJson(res, ReturnJson.class);
-                //keyString = new String(new Long(result.getKey()).toString());
-                //msg = new String(result.getMessage());
+              
                 
                 this.raw = res;
                 this.key = result.getKey();
                 this.errorCode = result.getError();
                 this.message = result.getMessage();
                 this.serverVersion = result.getVersion();
+                
                 
         } catch (Exception e) {
                 e.printStackTrace();
@@ -103,15 +96,11 @@ public class WebScoreUpload {
 		String responseString = new String();
 
 		
-		//Log.e("org.davidliebman", "command="+cmd);
-
-		
 		HttpClient httpclient = new DefaultHttpClient();
 		
 		HttpPost httppost = new HttpPost();
 		httppost.setURI(new URI(url));
 
-		//httppost.setHeader("User-Agent", "");
 		httppost.setHeader("Content-type", "application/json");
 		StringEntity entity = new StringEntity(cmd,HTTP.UTF_8 );
 		
@@ -124,7 +113,7 @@ public class WebScoreUpload {
 	        response.getEntity().writeTo(out);
 	        out.close();
 	        responseString = out.toString();
-	        //..more logic
+	        
 	    } else{
 	        //Closes the connection.
 	        response.getEntity().getContent().close();
