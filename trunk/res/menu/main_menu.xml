@@ -33,7 +33,11 @@
       
     </item>
     
-        
+    <item android:id="@+id/menu_url_item"
+          android:icon="@drawable/ic_menu_default"
+          android:title="@string/app_url" >
+      
+    </item>
             
             <item android:id="@+id/menu_options_speed_item"  android:icon="@drawable/ic_menu_default"
                 android:title="@string/menu_text_speed_item">

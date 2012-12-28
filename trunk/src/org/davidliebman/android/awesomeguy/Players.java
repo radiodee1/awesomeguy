@@ -2,6 +2,7 @@ package org.davidliebman.android.awesomeguy;
 
 import android.app.Dialog;
 import android.app.ListActivity;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.*;
@@ -678,6 +679,12 @@ public class Players extends ListActivity {
     			item.setChecked(true);
     			this.mHighScores.setEnableCollision(false);
     		}
+    		break;
+    	case R.id.menu_url_item:
+    		String url = WebScoreUpload.MY_URL + WebScoreUpload.MY_PATH_INDEX;
+    		Intent i = new Intent(Intent.ACTION_VIEW);
+    		i.setData(Uri.parse(url));
+    		startActivity(i);
     		break;
     	}
     	

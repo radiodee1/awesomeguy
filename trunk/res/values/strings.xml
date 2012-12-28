@@ -11,6 +11,7 @@
         <string name="app_players">Players</string>
         <string name="app_highscores">High Scores</string>
     	<string name="app_story">Read Story</string>
+    	<string name="app_url">Web Scores</string>
     	
     	<string name="menu_text_greeting">Options for </string>
     	<string name="menu_text_room_item">Starting Room</string>
