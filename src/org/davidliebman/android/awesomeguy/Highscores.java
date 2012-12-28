@@ -253,9 +253,9 @@ public class Highscores   extends ListActivity {
     				showDialog(Highscores.DIALOG_WEB_SUCCESS);
     		        Toast.makeText(Highscores.this, result.getMessage() + " - " + result.getKey(), Toast.LENGTH_LONG).show();
     		        mNames = mScores.getGameHighList(0);
-//    		        mAadapter = new HighAdapter(this, R.layout.players, mNames);
-//    		        mAadapter.setNotifyOnChange(true);
-    		    	
+    		        mAadapter = new HighAdapter(Highscores.this, R.layout.highscores, mNames);
+    		        mAadapter.setNotifyOnChange(true);
+    		    	setListAdapter(mAadapter);
     				return;
     			}
     			
