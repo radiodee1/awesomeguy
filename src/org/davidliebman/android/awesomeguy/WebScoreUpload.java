@@ -103,7 +103,7 @@ public class WebScoreUpload {
 		String responseString = new String();
 
 		
-		Log.e("org.davidliebman", "command="+cmd);
+		//Log.e("org.davidliebman", "command="+cmd);
 
 		
 		HttpClient httpclient = new DefaultHttpClient();
