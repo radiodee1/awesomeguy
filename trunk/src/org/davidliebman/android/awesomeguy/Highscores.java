@@ -37,6 +37,7 @@ import java.util.Calendar;
 //import org.davidliebman.android.androidawesomescores.WebScoreUpload;
 
 
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 public class Highscores   extends ListActivity {
@@ -49,7 +50,7 @@ public class Highscores   extends ListActivity {
     private SharedPreferences mPreferences;
     private HighAdapter mAadapter;
 	private WebScoreUpload web ;
-
+	private String mCountry = new String("");
     
     public static final int DIALOG_PREFERENCES = 1;
     public static final int DIALOG_WEB_SUCCESS = 2;
@@ -61,6 +62,9 @@ public class Highscores   extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.highscores);      
 
+        TelephonyManager mService = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        mCountry = mService.getNetworkCountryIso();
+        
         /* retrieve Record mHighScores */
     	mHighScores = new Record();
         mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
@@ -204,7 +208,7 @@ public class Highscores   extends ListActivity {
     }
     public void addScoreToOnlineList(Scores.High in) {
     	RecordJson rec = new RecordJson();
-    	rec.setCountry("");
+    	rec.setCountry(mCountry);
     	rec.setDate(new Date(in.getDate()));
     	rec.setEmail("");
     	rec.setEnableCollision(in.isMonsterCollision());
