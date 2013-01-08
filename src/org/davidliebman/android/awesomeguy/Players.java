@@ -58,6 +58,7 @@ public class Players extends ListActivity {
     private int mRoomNumSelected = 1;
     private boolean mLookForXml;
     private boolean mIsNewRecord;
+    private boolean mShowMenu = false;
     
     public static final int VIEW_SPLASH = 0;
     public static final int VIEW_PLAYERS = 1;
@@ -532,7 +533,7 @@ public class Players extends ListActivity {
     		menu.findItem(R.id.menu_options_collision_no_item).setChecked(true);
     	}
     	
-    	return true;
+    	return this.mShowMenu;
     }
     
     @Override
@@ -891,6 +892,7 @@ public class Players extends ListActivity {
     	this.findViewById(R.id.view_players).setVisibility(View.GONE);
     	this.findViewById(R.id.view_text).setEnabled(false);
     	this.findViewById(R.id.view_text).setVisibility(View.GONE);
+    	this.mShowMenu = false;
     	// show selected view
     	switch (mViewToShow) {
     	case Players.VIEW_SPLASH:
@@ -900,6 +902,7 @@ public class Players extends ListActivity {
     	case Players.VIEW_PLAYERS:
     		this.findViewById(R.id.view_players).setEnabled(true);
     		this.findViewById(R.id.view_players).setVisibility(View.VISIBLE);
+    		this.mShowMenu = true;
     		break;
     	case Players.VIEW_TEXT:
     		this.findViewById(R.id.view_text).scrollTo(0, 0);
