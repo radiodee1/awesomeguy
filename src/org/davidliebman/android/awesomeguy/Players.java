@@ -1,5 +1,6 @@
 package org.davidliebman.android.awesomeguy;
 
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.net.Uri;
@@ -7,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.*;
 import android.content.*;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -681,10 +683,26 @@ public class Players extends ListActivity {
     		}
     		break;
     	case R.id.menu_url_item:
-    		String url = WebScoreUpload.MY_URL + WebScoreUpload.MY_PATH_INDEX;
-    		Intent i = new Intent(Intent.ACTION_VIEW);
-    		i.setData(Uri.parse(url));
-    		startActivity(i);
+    		
+    		try {
+	    		ActivityManager actMngr = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+	    		String runningPkg = actMngr.getRunningTasks(1).get(0).topActivity.getPackageName();
+	
+	    		PackageManager pm = getPackageManager();
+	    		ApplicationInfo ai = pm.getApplicationInfo(runningPkg , 0);
+	    		
+	    		String url = WebScoreUpload.MY_URL + WebScoreUpload.MY_PATH_INDEX + "?game=" +
+	    				ai.packageName;
+	    		
+	    		//Log.e("Players ----","package: " +ai.packageName);
+	    		
+	    		Intent i = new Intent(Intent.ACTION_VIEW);
+	    		i.setData(Uri.parse(url));
+	    		startActivity(i);
+    		}
+    		catch (Exception e ) {
+    			e.printStackTrace();
+    		}
     		break;
     	}
     	
