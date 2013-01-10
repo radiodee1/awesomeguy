@@ -21,7 +21,7 @@ import com.google.gson.Gson;
 public class WebScoreUpload {
 
 	//public static final String MY_URL = new String("http://10.0.2.2:8888");
-	public static final String MY_URL = new String("http://awesomescores.appspot.com");
+	public static final String MY_URL = new String("https://awesomescores.appspot.com");
 	public static final String MY_PATH_GAME = new String ("/game.html");
 	public static final String MY_PATH_INDEX = new String ("/index.html");
 	
