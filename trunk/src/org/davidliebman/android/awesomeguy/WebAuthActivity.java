@@ -131,7 +131,7 @@ public class WebAuthActivity extends Activity {
 			case WebAuth.TASK_NAME_AND_SCORE:
 				mRec = this.extractScoreFromIntent(extras);
 
-				break;
+				
 			case WebAuth.TASK_USERNAME:
 				showDialog(DIALOG_ACCOUNTS);
 			
