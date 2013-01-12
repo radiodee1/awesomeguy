@@ -207,64 +207,70 @@ public class Highscores   extends ListActivity {
       return true;
     }
     public void addScoreToOnlineList(Scores.High in) {
-    	RecordJson rec = new RecordJson();
-    	rec.setCountry(mCountry);
-    	rec.setDate(new Date(in.getDate()));
-    	rec.setEmail("");
-    	rec.setEnableCollision(in.isMonsterCollision());
-    	rec.setEnableMonsters(in.isEnableMonsters());
-    	rec.setGameSpeed(in.getGameSpeed());
-    	rec.setLevel(in.getLevel());
-    	rec.setLives(in.getLives());
-    	rec.setName(in.getName());
-    	rec.setRecordIdNum(in.getKey());
-    	rec.setScore(in.getHigh());
-    	//showDialog(Highscores.DIALOG_WEB_SUCCESS);
     	
-    	new AsyncTask <RecordJson, Object, ReturnJson>() {
-
-    		@Override
-    		protected void onPreExecute() {
-
-    			
-    		}
-
-    		@Override
-    		protected ReturnJson doInBackground(RecordJson... params) {
-    			ReturnJson returnRecord = null;
-    			RecordJson sendRecord = params[0];
-    			web.setUrl(WebScoreUpload.MY_URL + WebScoreUpload.MY_PATH_GAME);
-    			returnRecord = web.sendRecord(params[0]);
-    			if (returnRecord != null ) {
-    				Scores.High mHigh = new Scores.High();
-    				mHigh.setInternetKey(returnRecord.getKey());
-    				mHigh.setKey(sendRecord.getRecordIdNum());
-    				mScores.updateInternetKey(mHigh);
-    			}
-    			
-    			return returnRecord;
-    		}
-
-    		@Override
-    		protected void onPostExecute(ReturnJson result) {
-
-    			if (result == null ) {
-    				showDialog(Highscores.DIALOG_WEB_FAILURE);
-    				return;
-    			}
-    			else {
-    				//change scores sql
-    				showDialog(Highscores.DIALOG_WEB_SUCCESS);
-    		        Toast.makeText(Highscores.this, result.getMessage() + " - " + result.getKey(), Toast.LENGTH_LONG).show();
-    		        mNames = mScores.getGameHighList(0);
-    		        mAadapter = new HighAdapter(Highscores.this, R.layout.highscores, mNames);
-    		        mAadapter.setNotifyOnChange(true);
-    		    	setListAdapter(mAadapter);
-    				return;
-    			}
-    			
-    		}
-    	}.execute(rec);
+    	Intent intent = new Intent(this, WebAuthActivity.class);
+		intent.putExtra(WebAuth.EXTRA_NAME, WebAuth.TASK_NAME_AND_SCORE);
+		intent = addRecordToIntent(intent, in);
+		startActivity(intent);
+    	
+//    	RecordJson rec = new RecordJson();
+//    	rec.setCountry(mCountry);
+//    	rec.setDate(new Date(in.getDate()));
+//    	rec.setEmail("");
+//    	rec.setEnableCollision(in.isMonsterCollision());
+//    	rec.setEnableMonsters(in.isEnableMonsters());
+//    	rec.setGameSpeed(in.getGameSpeed());
+//    	rec.setLevel(in.getLevel());
+//    	rec.setLives(in.getLives());
+//    	rec.setName(in.getName());
+//    	rec.setRecordIdNum(in.getKey());
+//    	rec.setScore(in.getHigh());
+//    	//showDialog(Highscores.DIALOG_WEB_SUCCESS);
+//    	
+//    	new AsyncTask <RecordJson, Object, ReturnJson>() {
+//
+//    		@Override
+//    		protected void onPreExecute() {
+//
+//    			
+//    		}
+//
+//    		@Override
+//    		protected ReturnJson doInBackground(RecordJson... params) {
+//    			ReturnJson returnRecord = null;
+//    			RecordJson sendRecord = params[0];
+//    			web.setUrl(WebScoreUpload.MY_URL + WebScoreUpload.MY_PATH_GAME);
+//    			returnRecord = web.sendRecord(params[0]);
+//    			if (returnRecord != null ) {
+//    				Scores.High mHigh = new Scores.High();
+//    				mHigh.setInternetKey(returnRecord.getKey());
+//    				mHigh.setKey(sendRecord.getRecordIdNum());
+//    				mScores.updateInternetKey(mHigh);
+//    			}
+//    			
+//    			return returnRecord;
+//    		}
+//
+//    		@Override
+//    		protected void onPostExecute(ReturnJson result) {
+//
+//    			if (result == null ) {
+//    				showDialog(Highscores.DIALOG_WEB_FAILURE);
+//    				return;
+//    			}
+//    			else {
+//    				//change scores sql
+//    				showDialog(Highscores.DIALOG_WEB_SUCCESS);
+//    		        Toast.makeText(Highscores.this, result.getMessage() + " - " + result.getKey(), Toast.LENGTH_LONG).show();
+//    		        mNames = mScores.getGameHighList(0);
+//    		        mAadapter = new HighAdapter(Highscores.this, R.layout.highscores, mNames);
+//    		        mAadapter.setNotifyOnChange(true);
+//    		    	setListAdapter(mAadapter);
+//    				return;
+//    			}
+//    			
+//    		}
+//    	}.execute(rec);
     	
     }
     public Intent addRecordToIntent(Intent mIntent, Scores.High mIn ) {
