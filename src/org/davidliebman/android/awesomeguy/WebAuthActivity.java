@@ -262,18 +262,18 @@ public class WebAuthActivity extends Activity {
 
 	private RecordJson extractScoreFromIntent(Bundle mBundle) {
 		RecordJson mRec = new RecordJson();
-		mRec.setAndroidAppname(mBundle.getString(WebAuth.INTENT_APPNAME, ""));
-		mRec.setCountry(mBundle.getString(WebAuth.INTENT_COUNTRY, ""));
+		mRec.setAndroidAppname(mBundle.getString(WebAuth.INTENT_APPNAME));
+		mRec.setCountry(mBundle.getString(WebAuth.INTENT_COUNTRY));
 		mRec.setEnableCollision(mBundle.getBoolean(WebAuth.INTENT_COLLISION, true));
 		mRec.setCycles(1);
 		mRec.setDate(new Date(mBundle.getLong(WebAuth.INTENT_DATE, System.currentTimeMillis())));
-		mRec.setEmail(mBundle.getString(WebAuth.INTENT_EMAIL, ""));
+		mRec.setEmail(mBundle.getString(WebAuth.INTENT_EMAIL));
 		mRec.setEnableMonsters(mBundle.getBoolean(WebAuth.INTENT_MONSTERS, true));
 		mRec.setGameSpeed(mBundle.getInt(WebAuth.INTENT_SPEED, 30));
 		mRec.setKey(mBundle.getLong(WebAuth.INTENT_LOCAL_ID, 0));
 		mRec.setLevel(mBundle.getInt(WebAuth.INTENT_LEVEL, 1));
 		mRec.setLives(mBundle.getInt(WebAuth.INTENT_LIVES, 3));
-		mRec.setName(mBundle.getString(WebAuth.INTENT_NAME, ""));
+		mRec.setName(mBundle.getString(WebAuth.INTENT_NAME));
 		mRec.setScore(mBundle.getInt(WebAuth.INTENT_SCORE, 10));
 		mRec.setSound(mBundle.getBoolean(WebAuth.INTENT_SOUND, true));
 		return mRec;
