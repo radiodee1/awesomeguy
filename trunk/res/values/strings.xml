@@ -12,6 +12,9 @@
         <string name="app_highscores">High Scores</string>
     	<string name="app_story">Read Story</string>
     	<string name="app_url">Web Scores</string>
+    	
+    	<string name="hello_world">Hello world!</string>
+    	<string name="menu_settings">Settings</string>
     	<string name="title_activity_web_auth">Authentication</string>
     	
     	<string name="menu_text_greeting">Options for </string>
