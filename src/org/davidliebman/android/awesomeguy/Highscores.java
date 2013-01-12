@@ -267,7 +267,23 @@ public class Highscores   extends ListActivity {
     	}.execute(rec);
     	
     }
-    
+    public Intent addRecordToIntent(Intent mIntent, Scores.High mIn ) {
+		mIntent.putExtra(WebAuth.INTENT_DATE, mIn.getDate());
+		mIntent.putExtra(WebAuth.INTENT_COUNTRY, mCountry);
+		mIntent.putExtra(WebAuth.INTENT_COLLISION, mIn.isMonsterCollision());
+		mIntent.putExtra(WebAuth.INTENT_EMAIL, "");
+		mIntent.putExtra(WebAuth.INTENT_LEVEL, mIn.getLevel());
+		mIntent.putExtra(WebAuth.INTENT_LIVES, mIn.getLives());
+		mIntent.putExtra(WebAuth.INTENT_LOCAL_ID, mIn.getKey());
+		mIntent.putExtra(WebAuth.INTENT_MONSTERS, mIn.isEnableMonsters());
+		mIntent.putExtra(WebAuth.INTENT_NAME, mIn.getName());
+		mIntent.putExtra(WebAuth.INTENT_SCORE, mIn.getScoreKey());
+		mIntent.putExtra(WebAuth.INTENT_SOUND, mIn.isSoundOn());
+		mIntent.putExtra(WebAuth.INTENT_SPEED, mIn.getGameSpeed());
+		mIntent.putExtra(WebAuth.INTENT_APPNAME, "");
+		return mIntent;
+	}
+	
     /////////////////////////////
     protected Dialog onCreateDialog(int mId) {
     	Dialog  dialog = new Dialog(Highscores.this);
