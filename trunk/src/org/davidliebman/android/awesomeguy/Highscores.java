@@ -283,7 +283,7 @@ public class Highscores   extends ListActivity {
 		mIntent.putExtra(WebAuth.INTENT_LOCAL_ID, mIn.getKey());
 		mIntent.putExtra(WebAuth.INTENT_MONSTERS, mIn.isEnableMonsters());
 		mIntent.putExtra(WebAuth.INTENT_NAME, mIn.getName());
-		mIntent.putExtra(WebAuth.INTENT_SCORE, mIn.getScoreKey());
+		mIntent.putExtra(WebAuth.INTENT_SCORE, mIn.getHigh());
 		mIntent.putExtra(WebAuth.INTENT_SOUND, mIn.isSoundOn());
 		mIntent.putExtra(WebAuth.INTENT_SPEED, mIn.getGameSpeed());
 		mIntent.putExtra(WebAuth.INTENT_APPNAME, "");
