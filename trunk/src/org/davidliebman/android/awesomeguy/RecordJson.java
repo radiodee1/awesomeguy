@@ -25,6 +25,7 @@ public  class RecordJson  {
 	private String mEmail;
 	private String mName = new String();
 	private String mCountry;
+	private String mAuthToken;
 	
 	private boolean mNewRecord;
 	private int mRecordIdNum;
@@ -51,6 +52,7 @@ public  class RecordJson  {
 		mEmail = new String("");
 		mCountry = new String("");
 		mAndroidAppname = new String("");
+		mAuthToken = new String("");
 		
 		mNewRecord = false;
 		mRecordIdNum = 0;
@@ -228,6 +230,16 @@ public  class RecordJson  {
 
 	public void setKey(long mKey) {
 		this.mKey = mKey;
+	}
+
+
+	public String getAuthToken() {
+		return mAuthToken;
+	}
+
+
+	public void setAuthToken(String mAuthToken) {
+		this.mAuthToken = mAuthToken;
 	}
 	
 	
