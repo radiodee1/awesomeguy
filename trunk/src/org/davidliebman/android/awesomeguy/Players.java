@@ -391,6 +391,7 @@ public class Players extends ListActivity {
         	edit.commit();
     	}
     	else {
+    		//this.checkAccountStartAuth();
     		showView(Players.VIEW_PLAYERS);
     		showDialog(Players.DIALOG_STARTGAME);
     	}
@@ -929,6 +930,18 @@ public class Players extends ListActivity {
     		break;
     	}
     }
+    
+//    public void checkAccountStartAuth() {
+//    	WebAuth auth = new WebAuth(this, null);
+//    	if (! auth.isAccountSet()) {
+//    	
+//    		Intent intent = new Intent(this, WebAuthActivity.class);
+//    		intent.putExtra(WebAuth.EXTRA_NAME, WebAuth.TASK_USERNAME);
+//    		//intent = addRecordToIntent(intent, in);
+//    		startActivity(intent);
+//    		//startActivityForResult(intent, 999);
+//    	}
+//    }
     
     /* special adapter for displaying list from ArrayList */
     public class RecordAdapter extends ArrayAdapter<Record> {

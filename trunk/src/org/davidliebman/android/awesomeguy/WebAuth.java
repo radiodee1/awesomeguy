@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Date;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -49,7 +50,9 @@ public class WebAuth {
 	
 	public static final String AUTH_WEB_PREFIX = new String ("audience:server:client_id:");
 	public static final String AUTH_MY_TOKEN = new String ("");
-	public static final String AUTH_WEB_TOKEN = new String ("459132469396-sgj3aegqkhfagm8n9ao08987jgpvel61.apps.googleusercontent.com");
+	//public static final String AUTH_WEB_TOKEN = new String ("459132469396-sgj3aegqkhfagm8n9ao08987jgpvel61.apps.googleusercontent.com");//awesomeguy
+	public static final String AUTH_WEB_TOKEN = new String ("459132469396-99er3ba7o4ukn0ttdm5pil6au9h4fvid.apps.googleusercontent.com");//test-app
+
 	
 	public static final String PREFS_USRENAME = "user_name_chosen";
 	public static final String PREFS_CONNECTION_WORKS = "connection_works";
@@ -71,21 +74,30 @@ public class WebAuth {
 	public static final String INTENT_DATE = "date";
 	
 	private Context mContext = null;
+	private Activity mActivity = null;
 	private Account mAccount = null;
 	private SharedPreferences mPrefs;
 	private WebAuthActivity.MyHandler mHandle;
 	
 	private String mOAuthToken = new String ("");	
 	private String mSendString = new String("");
+	private String mName = "";
 	
-	public WebAuth( Context c,  WebAuthActivity.MyHandler h) {
+	public WebAuth(Context c, WebAuthActivity.MyHandler h) {
 		mContext = c;
+		mHandle = h;
+	}
+	
+	
+	public WebAuth( Context c, Activity a,   WebAuthActivity.MyHandler h) {
+		mContext = c;
+		mActivity = a;
 		mHandle = h;
 	}
 	
 	public void setAccount(Account mAccount ) {
 		this.mAccount = mAccount;
-		
+		this.mName = mAccount.name;
 	
 	}
 	
@@ -107,11 +119,14 @@ public class WebAuth {
 			protected String doInBackground(String... params) {
 				String token = null;
 				try {
-					Log.e("WebAuth ---","name: " + mAccount.name);
-				    token = GoogleAuthUtil.getToken((Activity) mContext, mAccount.name, mSendString);
+					Log.e("WebAuth ---","name: " + mName);
+					Log.e("WebAuth ---", "send string " + mSendString);
+				    token = GoogleAuthUtil.getToken(mActivity, mName, mSendString);
 				}
 				catch (Exception e) {
+					
 					e.printStackTrace();
+					
 				}
 				return token;
 			}
@@ -156,6 +171,26 @@ public class WebAuth {
 		
 		return ;
 		
+	}
+	
+	public static RecordJson extractScoreFromIntent(Bundle mBundle) {
+		RecordJson mRec = new RecordJson();
+		mRec.setAndroidAppname(mBundle.getString(WebAuth.INTENT_APPNAME));
+		mRec.setCountry(mBundle.getString(WebAuth.INTENT_COUNTRY));
+		mRec.setEnableCollision(mBundle.getBoolean(WebAuth.INTENT_COLLISION, true));
+		mRec.setCycles(1);
+		mRec.setDate(new Date(mBundle.getLong(WebAuth.INTENT_DATE, System.currentTimeMillis())));
+		mRec.setEmail(mBundle.getString(WebAuth.INTENT_EMAIL));
+		mRec.setEnableMonsters(mBundle.getBoolean(WebAuth.INTENT_MONSTERS, true));
+		mRec.setGameSpeed(mBundle.getInt(WebAuth.INTENT_SPEED, 30));
+		//mRec.setKey(mBundle.getLong(WebAuth.INTENT_LOCAL_ID, 0));
+		mRec.setLevel(mBundle.getInt(WebAuth.INTENT_LEVEL, 1));
+		mRec.setLives(mBundle.getInt(WebAuth.INTENT_LIVES, 3));
+		mRec.setName(mBundle.getString(WebAuth.INTENT_NAME));
+		mRec.setScore(mBundle.getInt(WebAuth.INTENT_SCORE, 10));
+		mRec.setSound(mBundle.getBoolean(WebAuth.INTENT_SOUND, true));
+		mRec.setRecordIdNum(mBundle.getInt(WebAuth.INTENT_LOCAL_ID, 0));
+		return mRec;
 	}
 
 	public String getRecentToken() {
@@ -210,7 +245,13 @@ public class WebAuth {
 		return mAccount;
 	}
 
-
+	public String getAccountFromPreferences() {
+		String mName = "";
+		mPrefs = mContext.getSharedPreferences(WebAuth.PREFS_PREFERENCES_NAME, 0);
+		mName = mPrefs.getString(WebAuth.PREFS_USRENAME, "");
+		this.mName = mName;
+		return mName;
+	}
 
 	
 	

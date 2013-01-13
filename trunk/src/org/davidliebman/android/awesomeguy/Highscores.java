@@ -51,7 +51,8 @@ public class Highscores   extends ListActivity {
     private HighAdapter mAadapter;
 	private WebScoreUpload web ;
 	private String mCountry = new String("");
-    
+    private WebAuth auth;
+	
     public static final int DIALOG_PREFERENCES = 1;
     public static final int DIALOG_WEB_SUCCESS = 2;
     public static final int DIALOG_WEB_FAILURE = 3;
@@ -70,6 +71,7 @@ public class Highscores   extends ListActivity {
         mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
         mHighScores.getFromPreferences(mPreferences);
         web = new WebScoreUpload(this);
+        auth = new WebAuth(this, null);
         
         mScores = new Scores(this, mHighScores);
 
@@ -81,17 +83,8 @@ public class Highscores   extends ListActivity {
     	setListAdapter(mAadapter);
         ListView lv = getListView();
         lv.setTextFilterEnabled(true);
-//        lv.setOnItemClickListener(new OnItemClickListener () {
-//        	
-//        	@Override
-//        	 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        		// fire dialog here....
-//        		mRec = mNames.get(position);
-//        		showDialog(Highscores.DIALOG_PREFERENCES);
-//        	 }
-//        	
-//        	
-//        });
+
+
         registerForContextMenu(lv);
         /* button at bottom of view */
         final Button button = (Button) findViewById(R.id.button_highscores);
@@ -208,71 +201,40 @@ public class Highscores   extends ListActivity {
     }
     public void addScoreToOnlineList(Scores.High in) {
     	
-    	Intent intent = new Intent(this, WebAuthActivity.class);
-		intent.putExtra(WebAuth.EXTRA_NAME, WebAuth.TASK_NAME_AND_SCORE);
-		intent = addRecordToIntent(intent, in);
-		startActivity(intent);
+    	int task = 0;
+    	if (auth.isAccountSet()) {
+    		task = WebAuth.TASK_SEND_SCORE;
+    	}
+    	else {
+    		task = WebAuth.TASK_NAME_AND_SCORE;
+    	}
     	
-//    	RecordJson rec = new RecordJson();
-//    	rec.setCountry(mCountry);
-//    	rec.setDate(new Date(in.getDate()));
-//    	rec.setEmail("");
-//    	rec.setEnableCollision(in.isMonsterCollision());
-//    	rec.setEnableMonsters(in.isEnableMonsters());
-//    	rec.setGameSpeed(in.getGameSpeed());
-//    	rec.setLevel(in.getLevel());
-//    	rec.setLives(in.getLives());
-//    	rec.setName(in.getName());
-//    	rec.setRecordIdNum(in.getKey());
-//    	rec.setScore(in.getHigh());
-//    	//showDialog(Highscores.DIALOG_WEB_SUCCESS);
-//    	
-//    	new AsyncTask <RecordJson, Object, ReturnJson>() {
-//
-//    		@Override
-//    		protected void onPreExecute() {
-//
-//    			
-//    		}
-//
-//    		@Override
-//    		protected ReturnJson doInBackground(RecordJson... params) {
-//    			ReturnJson returnRecord = null;
-//    			RecordJson sendRecord = params[0];
-//    			web.setUrl(WebScoreUpload.MY_URL + WebScoreUpload.MY_PATH_GAME);
-//    			returnRecord = web.sendRecord(params[0]);
-//    			if (returnRecord != null ) {
-//    				Scores.High mHigh = new Scores.High();
-//    				mHigh.setInternetKey(returnRecord.getKey());
-//    				mHigh.setKey(sendRecord.getRecordIdNum());
-//    				mScores.updateInternetKey(mHigh);
-//    			}
-//    			
-//    			return returnRecord;
-//    		}
-//
-//    		@Override
-//    		protected void onPostExecute(ReturnJson result) {
-//
-//    			if (result == null ) {
-//    				showDialog(Highscores.DIALOG_WEB_FAILURE);
-//    				return;
-//    			}
-//    			else {
-//    				//change scores sql
-//    				showDialog(Highscores.DIALOG_WEB_SUCCESS);
-//    		        Toast.makeText(Highscores.this, result.getMessage() + " - " + result.getKey(), Toast.LENGTH_LONG).show();
-//    		        mNames = mScores.getGameHighList(0);
-//    		        mAadapter = new HighAdapter(Highscores.this, R.layout.highscores, mNames);
-//    		        mAadapter.setNotifyOnChange(true);
-//    		    	setListAdapter(mAadapter);
-//    				return;
-//    			}
-//    			
-//    		}
-//    	}.execute(rec);
+    	Intent intent = new Intent(this, WebAuthActivity.class);
+		intent.putExtra(WebAuth.EXTRA_NAME, task);
+		intent = addRecordToIntent(intent, in);
+		//startActivity(intent);
+    	startActivityForResult(intent, 999);
+		
+
     	
     }
+    
+
+    
+    
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+    	//Log.e("Highscores", "--- "+ requestCode +" "+ resultCode);
+
+    	ArrayList<Scores.High> temp = mScores.getGameHighList(0);
+		this.mNames.clear();
+		this.mNames.addAll(temp);
+        mAadapter = new HighAdapter(this, R.layout.players, mNames);
+		mAadapter.notifyDataSetChanged();
+		setListAdapter(mAadapter);
+    }
+    
+    
     public Intent addRecordToIntent(Intent mIntent, Scores.High mIn ) {
 		mIntent.putExtra(WebAuth.INTENT_DATE, mIn.getDate());
 		mIntent.putExtra(WebAuth.INTENT_COUNTRY, mCountry);
