@@ -45,7 +45,7 @@ public class WebAuthActivity extends Activity {
 	
 	private int mTask = WebAuth.TASK_USERNAME;
 	private boolean mPrerequisites = true;
-	private TextView mText = null;
+	//private TextView mText = null;
 	private String mOAuthToken = new String("");
 	
 	public static final int SDK_INT_PRE = 14;
@@ -62,33 +62,17 @@ public class WebAuthActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		//mWebview = new WebView(this);
-		//setContentView(mWebview);
 		
 		setContentView(R.layout.activity_web_auth);
 		
 		mContext = this;
 		
-		mText = (TextView) this.findViewById(R.id.text_output2);
 		
-		//mText.setText(new Integer(Build.VERSION.SDK_INT).toString());
-		//mText.setText("mesage: " + mTask);
 		
 		mHandle = new MyHandler();		
-		auth = new WebAuth(this, mHandle);
+		auth = new WebAuth(this,this, mHandle);
 		web = new WebScoreUpload(this);
-		mScores = new Scores(this, new Record());
-		
-		Button mGoButton = (Button) findViewById(R.id.button_auth);
-		mGoButton.setOnClickListener(new OnClickListener () {
 
-			@Override
-			public void onClick(View v) {
-				
-				
-			}
-			
-		});
 		
 	}
 
@@ -124,21 +108,24 @@ public class WebAuthActivity extends Activity {
 			//finish();
 		}
 		
+		auth.buildOAuthTokenString();
+		
 		if (mPrerequisites == true  ) {
 			switch (mTask ) {
 			
 			
 			case WebAuth.TASK_NAME_AND_SCORE:
-				mRec = this.extractScoreFromIntent(extras);
+				mRec = WebAuth.extractScoreFromIntent(extras);
+				//auth.getTokenWithAccount();
 
-				
+				//break;
 			case WebAuth.TASK_USERNAME:
 				showDialog(DIALOG_ACCOUNTS);
 			
 				break;
 			case WebAuth.TASK_SEND_SCORE:
-				mRec = this.extractScoreFromIntent(extras);
-
+				mRec = WebAuth.extractScoreFromIntent(extras);
+				auth.getAccountFromPreferences();
 				auth.getTokenWithAccount();
 				//mRec.setAuthToken(this.mOAuthToken);
 				//finish();
@@ -190,6 +177,7 @@ public class WebAuthActivity extends Activity {
  	    	    		   removeDialog(WebAuthActivity.DIALOG_WEB_FAILURE);
  	    	    		   dialog.cancel();
  	    	        	   //removeDialog(Highscores.DIALOG_PREFERENCES);
+ 	    	    		   finish();
  	    	           }
  	    	       });
  	    	alert = builder.create();
@@ -215,6 +203,7 @@ public class WebAuthActivity extends Activity {
  	    	    		   removeDialog(WebAuthActivity.DIALOG_WEB_SUCCESS);
  	    	    		   dialog.cancel();
  	    	        	   //removeDialog(Highscores.DIALOG_PREFERENCES);
+ 	    	    		   finish();
  	    	           }
  	    	       });
  	    	alert = builder.create();
@@ -249,7 +238,8 @@ public class WebAuthActivity extends Activity {
 	        	if (mTask == WebAuth.TASK_USERNAME) {
 	        		finish();
 	        	}
-	        	mHandle.sendEmptyMessage(WebAuth.HANDLE_FINISH);
+	        	auth.getTokenWithAccount();
+	        	//mHandle.sendEmptyMessage(WebAuth.HANDLE_FINISH);
 	        	
 	        }
 	      });
@@ -260,70 +250,56 @@ public class WebAuthActivity extends Activity {
 	}
 	
 
-	private RecordJson extractScoreFromIntent(Bundle mBundle) {
-		RecordJson mRec = new RecordJson();
-		mRec.setAndroidAppname(mBundle.getString(WebAuth.INTENT_APPNAME));
-		mRec.setCountry(mBundle.getString(WebAuth.INTENT_COUNTRY));
-		mRec.setEnableCollision(mBundle.getBoolean(WebAuth.INTENT_COLLISION, true));
-		mRec.setCycles(1);
-		mRec.setDate(new Date(mBundle.getLong(WebAuth.INTENT_DATE, System.currentTimeMillis())));
-		mRec.setEmail(mBundle.getString(WebAuth.INTENT_EMAIL));
-		mRec.setEnableMonsters(mBundle.getBoolean(WebAuth.INTENT_MONSTERS, true));
-		mRec.setGameSpeed(mBundle.getInt(WebAuth.INTENT_SPEED, 30));
-		mRec.setKey(mBundle.getLong(WebAuth.INTENT_LOCAL_ID, 0));
-		mRec.setLevel(mBundle.getInt(WebAuth.INTENT_LEVEL, 1));
-		mRec.setLives(mBundle.getInt(WebAuth.INTENT_LIVES, 3));
-		mRec.setName(mBundle.getString(WebAuth.INTENT_NAME));
-		mRec.setScore(mBundle.getInt(WebAuth.INTENT_SCORE, 10));
-		mRec.setSound(mBundle.getBoolean(WebAuth.INTENT_SOUND, true));
-		return mRec;
-	}
 	
-	public void addScoreToOnlineList(RecordJson rec) {
-    	
-    	
-    	new AsyncTask <RecordJson, Object, ReturnJson>() {
-
-    		@Override
-    		protected void onPreExecute() {
-
-    			
-    		}
-
-    		@Override
-    		protected ReturnJson doInBackground(RecordJson... params) {
-    			ReturnJson returnRecord = null;
-    			RecordJson sendRecord = params[0];
-    			web.setUrl(WebScoreUpload.MY_URL + WebScoreUpload.MY_PATH_GAME);
-    			returnRecord = web.sendRecord(params[0]);
-    			if (returnRecord != null ) {
-    				Scores.High mHigh = new Scores.High();
-    				mHigh.setInternetKey(returnRecord.getKey());
-    				mHigh.setKey(sendRecord.getRecordIdNum());
-    				mScores.updateInternetKey(mHigh);
-    			}
-    			
-    			return returnRecord;
-    		}
-
-    		@Override
-    		protected void onPostExecute(ReturnJson result) {
-
-    			if (result == null ) {
-    				showDialog(WebAuthActivity.DIALOG_WEB_FAILURE);
-    				return;
-    			}
-    			else {
-    				showDialog(WebAuthActivity.DIALOG_WEB_SUCCESS);
-    		        Toast.makeText(WebAuthActivity.this, result.getMessage() + " - " + result.getKey(), Toast.LENGTH_LONG).show();
-
-    				return;
-    			}
-    			
-    		}
-    	}.execute(rec);
-    	
-    }
+//	public void addScoreToOnlineList(RecordJson rec) {
+//    	
+//    	
+//    	new AsyncTask <RecordJson, Object, ReturnJson>() {
+//
+//    		@Override
+//    		protected void onPreExecute() {
+//
+//
+//    		}
+//
+//    		@Override
+//    		protected ReturnJson doInBackground(RecordJson... params) {
+//    			ReturnJson returnRecord = null;
+//    			RecordJson sendRecord = params[0];
+//    			web.setUrl(WebScoreUpload.MY_URL + WebScoreUpload.MY_PATH_GAME);
+//    			returnRecord = web.sendRecord(params[0]);
+//    			if (returnRecord != null ) {
+//    				Scores.High mHigh = new Scores.High();
+//    				mHigh.setInternetKey(returnRecord.getKey());
+//    				mHigh.setKey(sendRecord.getRecordIdNum());
+//    				mScores = new Scores(WebAuthActivity.this, new Record());
+//    				
+//    				mScores.updateInternetKey(mHigh);
+//    				//mScores.closeAll();
+//    				
+//    			}
+//    			
+//    			return returnRecord;
+//    		}
+//
+//    		@Override
+//    		protected void onPostExecute(ReturnJson result) {
+//
+//    			if (result == null ) {
+//    				showDialog(WebAuthActivity.DIALOG_WEB_FAILURE);
+//    				return;
+//    			}
+//    			else {
+//    				showDialog(WebAuthActivity.DIALOG_WEB_SUCCESS);
+//    		        Toast.makeText(WebAuthActivity.this, result.getMessage() + " - " + result.getKey(), Toast.LENGTH_LONG).show();
+//
+//    				return;
+//    			}
+//    			
+//    		}
+//    	}.execute(rec);
+//    	
+//    }
 	
 
 
@@ -352,7 +328,10 @@ public class WebAuthActivity extends Activity {
 				if (mTask == WebAuth.TASK_USERNAME) {
 					finish();
 				}
-				mRec = extractScoreFromIntent(extras);
+				
+				
+				
+				mRec = WebAuth.extractScoreFromIntent(extras);
 
 				mRec.setAuthToken(mOAuthToken);
 				//web.setUrl(WebScoreUpload.MY_URL + WebScoreUpload.MY_PATH_GAME);
@@ -376,7 +355,9 @@ public class WebAuthActivity extends Activity {
 		    				Scores.High mHigh = new Scores.High();
 		    				mHigh.setInternetKey(returnRecord.getKey());
 		    				mHigh.setKey(sendRecord.getRecordIdNum());
+		    				mScores = new Scores(WebAuthActivity.this, new Record());
 		    				mScores.updateInternetKey(mHigh);
+		    				//mScores.closeAll();
 		    			}
 		    			
 		    			return returnRecord;
@@ -387,19 +368,22 @@ public class WebAuthActivity extends Activity {
 
 			    			if (result == null ) {
 			    				showDialog(WebAuthActivity.DIALOG_WEB_FAILURE);
+			    				setResult(0);
 			    				return;
 			    			}
 			    			else {
 			    				//change scores sql
 			    				showDialog(WebAuthActivity.DIALOG_WEB_SUCCESS);
 			    		        Toast.makeText(WebAuthActivity.this, result.getMessage() + " - " + result.getKey(), Toast.LENGTH_LONG).show();
-
+			    		        setResult((int) result.getKey());
 			    				return;
 			    			}
 				        }
 	    		}.execute(mRec);
+	    		
+				//setResult(1111);
 				
-				finish();
+				//finish();
 				break;
 			}
 		}
