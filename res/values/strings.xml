@@ -11,7 +11,10 @@
         <string name="app_players">Players</string>
         <string name="app_highscores">High Scores</string>
     	<string name="app_story">Read Story</string>
-    	<string name="app_url">Web Scores</string>
+    	
+    	<string name="menu_url_choices">Web Scores</string>
+    	<string name="menu_url">Web Scores Online</string>
+    	<string name="menu_username">Change Account</string>
     	
     	<string name="hello_world">Hello world!</string>
     	<string name="menu_settings">Settings</string>

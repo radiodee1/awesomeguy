@@ -33,10 +33,18 @@
       
     </item>
     
-    <item android:id="@+id/menu_url_item"
+    <item android:id="@+id/menu_url_choices_item"
           android:icon="@drawable/ic_menu_default"
-          android:title="@string/app_url" >
-      
+          android:title="@string/menu_url_choices" >
+      <menu >
+          <item android:id="@+id/menu_url_item"
+          	android:title="@string/menu_url" >
+          </item>
+          
+          <item android:id="@+id/menu_username_item"
+          	android:title="@string/menu_username" >
+          </item>
+      </menu>
     </item>
             
             <item android:id="@+id/menu_options_speed_item"  android:icon="@drawable/ic_menu_default"
