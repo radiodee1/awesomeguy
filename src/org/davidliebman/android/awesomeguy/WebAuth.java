@@ -112,7 +112,10 @@ public class WebAuth {
 
 			@Override
 			protected void onPreExecute() {
-				
+				mPrefs = mContext.getSharedPreferences(WebAuth.PREFS_PREFERENCES_NAME, 0);
+				SharedPreferences.Editor ed = mPrefs.edit();
+		        ed.putString(WebAuth.PREFS_TEMP_TOKEN_STORE, "");
+		        ed.commit();
 			}
 			
 			@Override
@@ -121,7 +124,7 @@ public class WebAuth {
 				try {
 					Log.e("WebAuth ---","name: " + mName);
 					Log.e("WebAuth ---", "send string " + mSendString);
-				    token = GoogleAuthUtil.getToken(mActivity, mName, mSendString);
+				    token = GoogleAuthUtil.getToken(mContext, mName, mSendString);
 				}
 				catch (Exception e) {
 					

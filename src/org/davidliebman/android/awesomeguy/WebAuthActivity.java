@@ -4,6 +4,7 @@ package org.davidliebman.android.awesomeguy;
 
 import java.util.Date;
 
+import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
@@ -218,7 +219,7 @@ public class WebAuthActivity extends Activity {
 	      //GoogleAccountManager googleAccountManager = new GoogleAccountManager(mContext);
 	      //final Account[] accounts = googleAccountManager.getAccounts();
 	      AccountManager accountManager = AccountManager.get(WebAuthActivity.this);
-	      final Account[] accounts = accountManager.getAccountsByType(null);//"com.gmail");
+	      final Account[] accounts = accountManager.getAccountsByType(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);//
 
 	      final int size = accounts.length;
 	      String[] names = new String[size + 1];
@@ -238,7 +239,9 @@ public class WebAuthActivity extends Activity {
 	        	if (mTask == WebAuth.TASK_USERNAME) {
 	        		finish();
 	        	}
-	        	auth.getTokenWithAccount();
+	        	if (mTask != WebAuth.TASK_USERNAME) {
+	        		auth.getTokenWithAccount();
+	        	}
 	        	//mHandle.sendEmptyMessage(WebAuth.HANDLE_FINISH);
 	        	
 	        }
@@ -250,57 +253,6 @@ public class WebAuthActivity extends Activity {
 	}
 	
 
-	
-//	public void addScoreToOnlineList(RecordJson rec) {
-//    	
-//    	
-//    	new AsyncTask <RecordJson, Object, ReturnJson>() {
-//
-//    		@Override
-//    		protected void onPreExecute() {
-//
-//
-//    		}
-//
-//    		@Override
-//    		protected ReturnJson doInBackground(RecordJson... params) {
-//    			ReturnJson returnRecord = null;
-//    			RecordJson sendRecord = params[0];
-//    			web.setUrl(WebScoreUpload.MY_URL + WebScoreUpload.MY_PATH_GAME);
-//    			returnRecord = web.sendRecord(params[0]);
-//    			if (returnRecord != null ) {
-//    				Scores.High mHigh = new Scores.High();
-//    				mHigh.setInternetKey(returnRecord.getKey());
-//    				mHigh.setKey(sendRecord.getRecordIdNum());
-//    				mScores = new Scores(WebAuthActivity.this, new Record());
-//    				
-//    				mScores.updateInternetKey(mHigh);
-//    				//mScores.closeAll();
-//    				
-//    			}
-//    			
-//    			return returnRecord;
-//    		}
-//
-//    		@Override
-//    		protected void onPostExecute(ReturnJson result) {
-//
-//    			if (result == null ) {
-//    				showDialog(WebAuthActivity.DIALOG_WEB_FAILURE);
-//    				return;
-//    			}
-//    			else {
-//    				showDialog(WebAuthActivity.DIALOG_WEB_SUCCESS);
-//    		        Toast.makeText(WebAuthActivity.this, result.getMessage() + " - " + result.getKey(), Toast.LENGTH_LONG).show();
-//
-//    				return;
-//    			}
-//    			
-//    		}
-//    	}.execute(rec);
-//    	
-//    }
-	
 
 
 	public int getTask() {
@@ -319,17 +271,24 @@ public class WebAuthActivity extends Activity {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case WebAuth.HANDLE_SEND_SCORE:
-				auth.getTokenWithAccount();
-				//finish();
-				break;
+//			case WebAuth.HANDLE_SEND_SCORE:
+//				auth.getTokenWithAccount();
+//				//finish();
+//				break;
 			case WebAuth.HANDLE_FINISH:
 				
 				if (mTask == WebAuth.TASK_USERNAME) {
 					finish();
 				}
 				
+				mOAuthToken = auth.getOAuthToken();
 				
+				if (mOAuthToken == null || mOAuthToken.contentEquals("")) {
+					showDialog(WebAuthActivity.DIALOG_WEB_FAILURE);
+    		        Toast.makeText(WebAuthActivity.this, "wrong account??", Toast.LENGTH_LONG).show();
+
+					break; // don't do anything!!
+				}
 				
 				mRec = WebAuth.extractScoreFromIntent(extras);
 
@@ -342,7 +301,7 @@ public class WebAuthActivity extends Activity {
 	    		    protected void onPreExecute() {
 	    		        
 	    		        //super.onPostExecute(result);
-	    		        Toast.makeText(WebAuthActivity.this, "task started.", Toast.LENGTH_LONG).show();
+	    		        //Toast.makeText(WebAuthActivity.this, "task started.", Toast.LENGTH_LONG).show();
 	    		    }
 	    			
 					@Override

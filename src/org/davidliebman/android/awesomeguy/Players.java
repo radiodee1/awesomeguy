@@ -706,6 +706,12 @@ public class Players extends ListActivity {
     			e.printStackTrace();
     		}
     		break;
+    	case R.id.menu_username_item:
+    		Intent intent = new Intent(this, WebAuthActivity.class);
+    		intent.putExtra(WebAuth.EXTRA_NAME, WebAuth.TASK_USERNAME);
+    		startActivity(intent);
+    		break;
+    		
     	}
     	
     	for (int x = 0; x < mList.size(); x ++ ) {
