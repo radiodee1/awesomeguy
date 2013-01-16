@@ -50,8 +50,8 @@ public class WebAuth {
 	
 	public static final String AUTH_WEB_PREFIX = new String ("audience:server:client_id:");
 	public static final String AUTH_MY_TOKEN = new String ("");
-	public static final String AUTH_WEB_TOKEN = new String ("459132469396-sgj3aegqkhfagm8n9ao08987jgpvel61.apps.googleusercontent.com");//awesomeguy
-	//public static final String AUTH_WEB_TOKEN = new String ("459132469396-99er3ba7o4ukn0ttdm5pil6au9h4fvid.apps.googleusercontent.com");//web-app / WRONG
+	//public static final String AUTH_WEB_TOKEN = new String ("459132469396-sgj3aegqkhfagm8n9ao08987jgpvel61.apps.googleusercontent.com");//awesomeguy
+	public static final String AUTH_WEB_TOKEN = new String ("459132469396-99er3ba7o4ukn0ttdm5pil6au9h4fvid.apps.googleusercontent.com");//web-app / WRONG
 
 	
 	public static final String PREFS_USRENAME = "user_name_chosen";
