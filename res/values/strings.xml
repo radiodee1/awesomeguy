@@ -61,7 +61,10 @@
     	    
         <string name="app_legal">LEGAL 
             \n This version of Awesomeguy can submit your scores to an online database. For instructions on
-submitting your scores in this way, please see the HELP page.
+submitting your scores in this way, please see the HELP page. 
+			\n\n NOTE: The server for this database is operated for free and 
+could be disabled at any time if volume is too high. Also, scores submitted to the database
+can be erased by administrators at any time if the game-name is inapropriate or objectionable. 
             \n\n This version of Awesomeguy can report your game usage statistics to Google Analytics. 
 This allows the developers to track
 how many users actually play the game. Google Analytics does not change any aspect of game play, and it does not report
