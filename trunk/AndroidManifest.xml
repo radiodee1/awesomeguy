@@ -53,7 +53,8 @@
 
         <activity
             android:name="org.davidliebman.android.awesomeguy.WebAuthActivity"
-            android:label="@string/title_activity_web_auth" >
+            android:label="@string/title_activity_web_auth" 
+            android:screenOrientation="portrait">
         </activity>
 
 	</application>
