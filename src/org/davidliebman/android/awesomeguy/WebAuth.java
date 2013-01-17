@@ -1,22 +1,22 @@
 package org.davidliebman.android.awesomeguy;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLConnection;
+//import java.io.ByteArrayOutputStream;
+//import java.io.IOException;
+//import java.net.HttpURLConnection;
+//import java.net.URI;
+//import java.net.URL;
+//import java.net.URLConnection;
 import java.util.Date;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.HTTP;
+//import org.apache.http.HttpResponse;
+//import org.apache.http.HttpStatus;
+//import org.apache.http.StatusLine;
+//import org.apache.http.client.HttpClient;
+//import org.apache.http.client.methods.HttpGet;
+//import org.apache.http.client.methods.HttpPost;
+//import org.apache.http.entity.StringEntity;
+//import org.apache.http.impl.client.DefaultHttpClient;
+//import org.apache.http.protocol.HTTP;
 
 import com.google.android.gms.auth.GoogleAuthUtil;
 
@@ -26,18 +26,18 @@ import com.google.android.gms.auth.GoogleAuthUtil;
 
 
 import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.accounts.AccountManagerCallback;
-import android.accounts.AccountManagerFuture;
-import android.accounts.OperationCanceledException;
+//import android.accounts.AccountManager;
+//import android.accounts.AccountManagerCallback;
+//import android.accounts.AccountManagerFuture;
+//import android.accounts.OperationCanceledException;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
+//import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
+//import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+//import android.util.Log;
 
 public class WebAuth {
 	
@@ -50,8 +50,7 @@ public class WebAuth {
 	
 	public static final String AUTH_WEB_PREFIX = new String ("audience:server:client_id:");
 	public static final String AUTH_MY_TOKEN = new String ("");
-	//public static final String AUTH_WEB_TOKEN = new String ("459132469396-sgj3aegqkhfagm8n9ao08987jgpvel61.apps.googleusercontent.com");//awesomeguy
-	public static final String AUTH_WEB_TOKEN = new String ("459132469396-99er3ba7o4ukn0ttdm5pil6au9h4fvid.apps.googleusercontent.com");//web-app / WRONG
+	public static final String AUTH_WEB_TOKEN = new String ("459132469396-99er3ba7o4ukn0ttdm5pil6au9h4fvid.apps.googleusercontent.com");//web-app 
 
 	
 	public static final String PREFS_USRENAME = "user_name_chosen";
@@ -122,8 +121,8 @@ public class WebAuth {
 			protected String doInBackground(String... params) {
 				String token = null;
 				try {
-					Log.e("WebAuth ---","name: " + mName);
-					Log.e("WebAuth ---", "send string " + mSendString);
+					//Log.e("WebAuth ---","name: " + mName);
+					//Log.e("WebAuth ---", "send string " + mSendString);
 				    token = GoogleAuthUtil.getToken(mContext, mName, mSendString);
 				}
 				catch (Exception e) {
@@ -136,7 +135,7 @@ public class WebAuth {
 			
 			@Override
 			protected void onPostExecute(String mResult) {
-				Log.e("WebAuth ---", "token: " + mResult);
+				//Log.e("WebAuth ---", "token: " + mResult);
 				mOAuthToken = mResult;
 				
 				mPrefs = mContext.getSharedPreferences(WebAuth.PREFS_PREFERENCES_NAME, 0);
@@ -241,7 +240,7 @@ public class WebAuth {
 
 	public void setOAuthToken(String mOAuthToken) {
 		this.mOAuthToken = mOAuthToken;
-		Log.e("WebAuth", "token " + this.mOAuthToken);
+		//Log.e("WebAuth", "token " + this.mOAuthToken);
 	}
 
 	public Account getAccount() {

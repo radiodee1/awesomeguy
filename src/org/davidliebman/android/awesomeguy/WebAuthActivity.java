@@ -1,6 +1,5 @@
 package org.davidliebman.android.awesomeguy;
 
-//import com.google.api.client.googleapis.extensions.android.accounts.GoogleAccountManager;
 
 import java.util.Date;
 
@@ -21,7 +20,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
+//import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -94,10 +93,10 @@ public class WebAuthActivity extends Activity {
 		
 		extras = getIntent().getExtras();
 		mTask = extras.getInt(WebAuth.EXTRA_NAME);
-		Log.e("WebAuthActivity", "--- " + mTask);
+		//Log.e("WebAuthActivity", "--- " + mTask);
 		
 		int mGoogleResults = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-		Log.e("WebAuthActivity", "play: " + mGoogleResults);
+		//Log.e("WebAuthActivity", "play: " + mGoogleResults);
 		
 		if (mGoogleResults == ConnectionResult.SUCCESS || mTask == WebAuth.TASK_USERNAME) {
 			mPrerequisites = true;
