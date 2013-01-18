@@ -8,6 +8,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -45,16 +46,17 @@ public class WebAuthActivity extends Activity {
 	
 	private int mTask = WebAuth.TASK_USERNAME;
 	private boolean mPrerequisites = true;
-	//private TextView mText = null;
+	private boolean mSdkOk = false;
 	private String mOAuthToken = new String("");
 	
-	public static final int SDK_INT_PRE = 14;
+	public static final int SDK_INT_PRE = 7;
 	
 	public static final int DIALOG_ACCOUNTS = 4;
 	public static final int DIALOG_PREFERENCES = 1;
     public static final int DIALOG_WEB_SUCCESS = 2;
     public static final int DIALOG_WEB_FAILURE = 3;
-	
+	public static final int DIALOG_TOO_OLD = 5;
+    
 	public WebAuth auth = null;
 	
 	@SuppressWarnings("deprecation")
@@ -94,6 +96,14 @@ public class WebAuthActivity extends Activity {
 		extras = getIntent().getExtras();
 		mTask = extras.getInt(WebAuth.EXTRA_NAME);
 		//Log.e("WebAuthActivity", "--- " + mTask);
+		if (Build.VERSION.SDK_INT > SDK_INT_PRE) {
+			this.mSdkOk = true;
+		}
+		else {
+			showDialog(DIALOG_TOO_OLD);
+			return;
+		}
+		
 		
 		int mGoogleResults = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
 		//Log.e("WebAuthActivity", "play: " + mGoogleResults);
@@ -246,6 +256,34 @@ public class WebAuthActivity extends Activity {
 	        }
 	      });
 	      break;
+	      ////
+	    case WebAuthActivity.DIALOG_TOO_OLD:
+	    	builder = new AlertDialog.Builder(WebAuthActivity.this);
+	  		builder.setView(mLayout);
+	  		
+	 	    	mAMessage = new String("Your OS is SDK 7 or older, and too old to use the online database.") ;
+	 	    	
+	 	    	
+	 	    	((TextView)mLayout.findViewById(R.id.congrats_text)).setText(mAMessage);
+
+	 	    	mPositive = new String("OK"  );
+	 	    	//String mNegative = new String("Stay on this screen." );
+	 	    	builder.setCancelable(false)
+	 	    	       .setPositiveButton(mPositive, new DialogInterface.OnClickListener() {
+	 	    	    	   public void onClick(DialogInterface dialog, int id) {
+	 	    	    		   //mPreferences = getSharedPreferences(AWESOME_NAME, MODE_PRIVATE);
+	 	    	    		   removeDialog(WebAuthActivity.DIALOG_TOO_OLD);
+	 	    	    		   dialog.cancel();
+	 	    	        	   //removeDialog(Highscores.DIALOG_PREFERENCES);
+	 	    	    		   finish();
+	 	    	           }
+	 	    	       });
+	 	    	alert = builder.create();
+	 	    	dialog = (Dialog) alert;
+	    	break;
+	      
+	      ////
+	      
 	      
 	  }
 	  return builder.create();
