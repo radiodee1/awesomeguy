@@ -1,4 +1,4 @@
-obj/local/armeabi/objs/awesomeguy/awesomeguy.o: jni/awesomeguy.c \
+obj/local/armeabi-v7a/objs/awesomeguy/awesomeguy.o: jni/awesomeguy.c \
  jni/androidgl.h \
  /home/dave/bin/android-ndk-r8/platforms/android-8/arch-arm/usr/include/jni.h \
  /home/dave/bin/android-ndk-r8/platforms/android-8/arch-arm/usr/include/android/log.h \
