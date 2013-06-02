@@ -112,7 +112,7 @@ public class WebAuthActivity extends Activity {
 			mPrerequisites = true;
 		}
 		else {
-			Dialog mDialog = GooglePlayServicesUtil.getErrorDialog(mGoogleResults, this, -1);
+			Dialog mDialog = GooglePlayServicesUtil.getErrorDialog(mGoogleResults, this, 0);
 			mDialog.show();
 			//setResult(RESULT_OK, new Intent());
 			//finish();
