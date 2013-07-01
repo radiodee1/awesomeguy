@@ -16,8 +16,8 @@
 	public static var R_SOUND:int = 2;
 	public static var R_XML:int = 3;
 		
-	var res1:Array = new Array (R_SPRITE, "./bitmap/test.png");
-	var res2:Array = new Array (R_SPRITE, "./bitmap/test2.png");
+	var res1:Array = new Array (R_SPRITE, "bitmap/test.png");
+	var res2:Array = new Array (R_SPRITE, "bitmap/test2.png");
 		
 	var i:int = 0;
 		
@@ -42,8 +42,12 @@
 		//}
 		
 		public function importRes():void {
-			if (i >= neededRes.length) launchNextPhase();
-			getRes(neededRes[i][0], neededRes[i][1]);
+			if (i >= neededRes.length) {
+				launchNextPhase();
+			}
+			else {
+				getRes(neededRes[i][0], neededRes[i][1]);
+			}
 		}
 		
 		public function getRes(resType:int, resUrl:String) {
@@ -53,6 +57,7 @@
 			r_type = resType;
 
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, finishRes);
+			//loader.addEventListener(Event.COMPLETE, finishRes);
 
 			loader.load(new URLRequest(r_url));//, loaderContext);
 			trace(r_url + " - stop here.");
