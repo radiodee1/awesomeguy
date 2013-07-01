@@ -9,6 +9,7 @@
 		
 		public function Game() {
 			trace ("import worked. " );
+			var getter:AGResources = new AGResources();
 		}
 
 		public function setKeyValues(left:Boolean, right:Boolean, up:Boolean, down:Boolean) {
@@ -19,7 +20,7 @@
 		}
 		
 		public function doAnimation() {
-			trace ("down " + K_DOWN);
+			//trace ("down " + K_DOWN);
 		}
 	}
 	
