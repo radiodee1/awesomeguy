@@ -9,8 +9,9 @@
 	public class AGResources {
 
 	var neededRes:Array = new Array();
-	var collectedRes:Array = new Array();
-		
+	//var collectedRes:Array = new Array();
+	var loader:Loader = new Loader();
+
 	public static var R_SPRITE:int = 1;
 	public static var R_SOUND:int = 2;
 	public static var R_XML:int = 3;
@@ -31,6 +32,7 @@
 			//trace ("import worked. " );
 			i = 0;
 			neededRes.push(res1);
+			neededRes.push(res2);
 			importRes();
 		}
 
@@ -40,13 +42,12 @@
 		//}
 		
 		public function importRes():void {
-			if (i >= neededRes.length) return;
+			if (i >= neededRes.length) launchNextPhase();
 			getRes(neededRes[i][0], neededRes[i][1]);
 		}
 		
 		public function getRes(resType:int, resUrl:String) {
 
-			var loader:Loader = new Loader();
 
 			r_url = resUrl;
 			r_type = resType;
@@ -83,6 +84,9 @@
 			this.importRes();
 		}
 		
+		public function launchNextPhase():void {
+			trace("really done");
+		}
 		
 	}
 	
