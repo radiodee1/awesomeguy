@@ -5,7 +5,16 @@
 	
 	public class AGKeys extends Sprite {
 	
-	var array:Array = new Array( KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN, KEY_SHOOT, KEY_JUMP );
+	var KEY_VAL_LEFT:KeyValue = new KeyValue();
+	var KEY_VAL_RIGHT:KeyValue = new KeyValue();
+	var KEY_VAL_UP:KeyValue = new KeyValue();
+	var KEY_VAL_DOWN:KeyValue = new KeyValue();
+	var KEY_VAL_SHOOT:KeyValue = new KeyValue();
+	var KEY_VAL_JUMP:KeyValue = new KeyValue();
+
+	
+	var array:Array =  new Array( KEY_VAL_LEFT, KEY_VAL_RIGHT, KEY_VAL_UP, 
+								 KEY_VAL_DOWN, KEY_VAL_SHOOT , KEY_VAL_JUMP );
 
 	static var BUTTON_LEFT:int = 0;
 	static var BUTTON_RIGHT:int = 1;
@@ -76,8 +85,12 @@
 		}
 		
 		public function setAllKeys():void {
-			array = new Array( KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN, KEY_SHOOT, KEY_JUMP );
-
+			 KEY_VAL_LEFT.setValBool(KEY_LEFT);
+			 KEY_VAL_RIGHT.setValBool(KEY_RIGHT);
+			 KEY_VAL_UP.setValBool(KEY_UP);
+			 KEY_VAL_DOWN.setValBool(KEY_DOWN);
+			 KEY_VAL_SHOOT.setValBool(KEY_SHOOT);
+			 KEY_VAL_JUMP.setValBool(KEY_JUMP);
 		}
 		
 		public function launchNextPhase():void {

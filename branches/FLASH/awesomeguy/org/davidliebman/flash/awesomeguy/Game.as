@@ -27,8 +27,9 @@
 		}
 
 		public function setKeys(e:Event) {
-			setKeyValues(myButtons[AGKeys.BUTTON_LEFT], myButtons[AGKeys.BUTTON_RIGHT], myButtons[AGKeys.BUTTON_UP],
-						 myButtons[AGKeys.BUTTON_DOWN], myButtons[AGKeys.BUTTON_SHOOT], myButtons[AGKeys.BUTTON_JUMP]);
+			setKeyValues(myButtons[AGKeys.BUTTON_LEFT].getValBool() , myButtons[AGKeys.BUTTON_RIGHT].getValBool(),
+						 myButtons[AGKeys.BUTTON_UP].getValBool(), myButtons[AGKeys.BUTTON_DOWN].getValBool(), 
+						 myButtons[AGKeys.BUTTON_SHOOT].getValBool(), myButtons[AGKeys.BUTTON_JUMP].getValBool());
 		}
 
 		public function setKeyValues(left:Boolean, right:Boolean, up:Boolean, down:Boolean, shoot:Boolean, jump:Boolean) {
