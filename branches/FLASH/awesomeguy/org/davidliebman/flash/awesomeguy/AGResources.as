@@ -8,9 +8,12 @@
 
 	public class AGResources {
 
+	var myStage:Stage;
 	var neededRes:Array = new Array();
 	//var collectedRes:Array = new Array();
 	var loader:Loader = new Loader();
+	var myButtons:Array;
+	var myRes:Array = null;
 
 	public static var R_SPRITE:int = 1;
 	public static var R_SOUND:int = 2;
@@ -28,8 +31,12 @@
 	var r_sprite:Sprite = new Sprite();
 		
 		
-		public function AGResources() {
+		public function AGResources(mystage:Stage, buttons:Array) {
 			//trace ("import worked. " );
+			myStage = mystage;
+			myButtons = buttons;
+			
+			// list resources needed...
 			i = 0;
 			neededRes.push(res1);
 			neededRes.push(res2);
@@ -91,6 +98,7 @@
 		
 		public function launchNextPhase():void {
 			trace("really done");
+			var game:Game = new Game(myStage, myButtons, myRes);
 		}
 		
 	}
