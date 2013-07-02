@@ -2,7 +2,7 @@
 	import flash.display.Stage;
 	import flash.events.Event;
 	
-	public class AGGame {
+	public class AGMode {
 
 	var K_LEFT:Boolean = false;
 	var K_RIGHT:Boolean = false;
@@ -15,37 +15,20 @@
 	var myButtons:Array;
 	var myRes:Array;
 	
-	public static var MODE_FLYER:int = 0;
-	public static var MODE_GUY:int = 1;
-	var gameMode:int = 1;
-	
-	var modeObj:AGMode ;
-	
-	var guy:Guy = new Guy();
-	var flyer:Flyer = new Flyer();
+
+		public function AGMode() {
+			// constructor code
+		}
 		
-		public function AGGame(mystage:Stage, mybuttons:Array, myresources:Array) {
+		public function setValues(mystage:Stage, mybuttons:Array, myresources:Array) {
 			
 			myStage = mystage;
 			myButtons = mybuttons;
 			myRes = myresources;
 			
-			myStage.addEventListener(Event.ENTER_FRAME, setKeys );
-			//trace ("import worked. " );
-			//var getter:AGResources = new AGResources();
-			
-			if (gameMode == MODE_FLYER) {
-				modeObj = flyer;
-				modeObj.setValues(myStage, myButtons, myRes);
-			}
-			else if (gameMode == MODE_GUY) {
-				modeObj = guy;
-				modeObj.setValues(myStage, myButtons, myRes);
-			}
-			
 		}
-
-		public function setKeys(e:Event) {
+		
+		public function setKeys() {
 			setKeyValues(myButtons[AGKeys.BUTTON_LEFT].getValBool() , myButtons[AGKeys.BUTTON_RIGHT].getValBool(),
 						 myButtons[AGKeys.BUTTON_UP].getValBool(), myButtons[AGKeys.BUTTON_DOWN].getValBool(), 
 						 myButtons[AGKeys.BUTTON_SHOOT].getValBool(), myButtons[AGKeys.BUTTON_JUMP].getValBool());
@@ -58,13 +41,15 @@
 			K_DOWN = down;
 			K_JUMP = jump;
 			K_SHOOT = shoot;
-			doAnimation();
+			//doAnimation();
 		}
 		
-		public function doAnimation() {
+		public function innerGameLoop() {
+			setKeys();
+			componentsInOrder();
+		}
+		public function componentsInOrder():void {
 			
-			modeObj.innerGameLoop();
-			trace ("down " + K_DOWN);
 		}
 	}
 	

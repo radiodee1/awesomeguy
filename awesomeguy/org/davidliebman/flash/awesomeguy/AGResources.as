@@ -13,7 +13,7 @@
 	//var collectedRes:Array = new Array();
 	var loader:Loader = new Loader();
 	var myButtons:Array;
-	var myRes:Array = null;
+	var myRes:Array = new Array();
 
 	public static var R_SPRITE:int = 1;
 	public static var R_SOUND:int = 2;
@@ -81,6 +81,8 @@
 					r_sprite.graphics.beginBitmapFill(bitmap, null, false, false);
 					r_sprite.graphics.drawRect(0,0, bitmap.width, bitmap.height);
 					r_sprite.graphics.endFill();
+					
+					myRes.push(r_sprite);
 				break;
 			
 				case AGResources.R_SOUND:
