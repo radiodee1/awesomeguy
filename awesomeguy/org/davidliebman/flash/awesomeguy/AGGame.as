@@ -2,7 +2,7 @@
 	import flash.display.Stage;
 	import flash.events.Event;
 	
-	public class Game {
+	public class AGGame {
 
 	var K_LEFT:Boolean = false;
 	var K_RIGHT:Boolean = false;
@@ -15,7 +15,7 @@
 	var myButtons:Array;
 	var myRes:Array;
 		
-		public function Game(mystage:Stage, mybuttons:Array, myresources:Array) {
+		public function AGGame(mystage:Stage, mybuttons:Array, myresources:Array) {
 			
 			myStage = mystage;
 			myButtons = mybuttons;
