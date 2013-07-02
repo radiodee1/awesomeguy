@@ -1,0 +1,90 @@
+﻿package  org.davidliebman.flash.awesomeguy {
+	import flash.display.*;
+	import flash.events.KeyboardEvent;
+	import flash.events.*;
+	
+	public class AGKeys extends Sprite {
+	
+	var array:Array = new Array( KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN, KEY_SHOOT, KEY_JUMP );
+
+	static var BUTTON_LEFT:int = 0;
+	static var BUTTON_RIGHT:int = 1;
+	static var BUTTON_UP:int = 2;
+	static var BUTTON_DOWN:int = 3;
+	static var BUTTON_SHOOT:int = 4;
+	static var BUTTON_JUMP:int = 5;
+
+	var KEY_LEFT:Boolean = false;
+	var KEY_RIGHT:Boolean = false;
+	var KEY_UP:Boolean = false;
+	var KEY_DOWN:Boolean = false;
+	var KEY_SHOOT:Boolean = false;
+	var KEY_JUMP:Boolean = false;
+
+	var keycodeLeft:int = 37;
+	var keycodeRight:int = 39;
+	var keycodeUp:int = 38;
+	var keycodeDown:int = 40;
+	var keycodeShoot:int = 16;
+	var keycodeJump:int = 32;
+	
+	var myScreen:Stage;
+
+		public function AGKeys(mystage:Stage) {
+			myScreen = mystage;
+			this.addEventListener(Event.ADDED_TO_STAGE, setCallbacks);
+			//setCallbacks();
+			trace("constructor...");
+		}
+		
+		public function setCallbacks(e:Event):void {
+			
+			myScreen.addEventListener(KeyboardEvent.KEY_DOWN, keyboardDownHandler);
+			myScreen.addEventListener(KeyboardEvent.KEY_UP, keyboardUpHandler);
+			myScreen.removeEventListener(Event.ADDED_TO_STAGE, setCallbacks);
+			trace("callbacks...");
+			launchNextPhase();
+		}
+		
+		public function keyboardDownHandler(event:KeyboardEvent):void {
+			// Start your custom code
+			if (event.keyCode == keycodeLeft) KEY_LEFT = true;
+			if (event.keyCode == keycodeRight) KEY_RIGHT = true;
+			if (event.keyCode == keycodeUp) KEY_UP = true;
+			if (event.keyCode == keycodeDown) KEY_DOWN = true;
+			if (event.keyCode == keycodeShoot) KEY_SHOOT = true;
+			if (event.keyCode == keycodeJump) KEY_JUMP = true;
+
+			setAllKeys();
+
+			trace("Key Code DOWN: " + event.keyCode);
+		}
+		
+		public function keyboardUpHandler(event:KeyboardEvent):void{
+			// Start your custom code
+			if (event.keyCode == keycodeLeft) KEY_LEFT = false;
+			if (event.keyCode == keycodeRight) KEY_RIGHT = false;
+			if (event.keyCode == keycodeUp) KEY_UP = false;
+			if (event.keyCode == keycodeDown) KEY_DOWN = false;
+			if (event.keyCode == keycodeShoot) KEY_SHOOT = false;
+			if (event.keyCode == keycodeJump) KEY_JUMP = false;
+
+			setAllKeys();
+
+			trace("Key Code UP: " + event.keyCode);
+
+		}
+		
+		public function setAllKeys():void {
+			array = new Array( KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN, KEY_SHOOT, KEY_JUMP );
+
+		}
+		
+		public function launchNextPhase():void {
+			var resources:AGResources = new AGResources(myScreen, array);
+			trace("next phase...");
+		}
+
+	}
+	
+}
