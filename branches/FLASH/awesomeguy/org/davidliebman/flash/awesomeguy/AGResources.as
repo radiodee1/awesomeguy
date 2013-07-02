@@ -98,7 +98,7 @@
 		
 		public function launchNextPhase():void {
 			trace("really done");
-			var game:Game = new Game(myStage, myButtons, myRes);
+			var game:AGGame = new AGGame(myStage, myButtons, myRes);
 		}
 		
 	}
