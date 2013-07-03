@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<game>
+	<planet>
+	<horizon>
+		<visible>
+			array data
+		</visible>
+		<invisible>
+			array data
+		</invisible>
+	</horizon>
+	
+	<special> 
+		<block> </block>
+		<block> </block>
+	</special>
+	
+	<challenges>
+		<invaders> </invaders>
+		<invaders> </invaders>
+	</challenges>
+
+	<maze>
+		<visible>
+			array data
+		</visible>
+		<invisible>
+			array data
+		</invisible>
+		<special> 
+			<block> </block>
+			<block> </block>
+		</special>
+		
+	</maze>
+	
+	<maze>
+		<visible>
+			array data
+		</visible>
+		<invisible>
+			array data
+		</invisible>
+		
+		<special> 
+			<block> </block>
+			<block> </block>
+		</special>
+	</maze>
+	
+	</planet>
+</game>
