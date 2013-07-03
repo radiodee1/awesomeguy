@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<game>
+<level number="1">
+<use_bg>2</use_bg>
+
+<!-- comment out first challenge set for release -->  
+
+<!--    
+<challenge> 0,1,0,0,0,1,0,1 ,0,0,0,0,0,0,0,0</challenge>
+-->
+
+<challenge> 5,0,1,2,0,0,0,1 ,0,0,0,0,0,0,0,0</challenge>
+
+<challenge> 2,3,0,0,0,0,0,1 ,0,0,0,0,0,0,0,0</challenge>
+
+
+<challenge> 1,1,0,0,1,0,0,1 ,0,0,0,0,0,0,0,0</challenge>
+
+ </level>
+  
+ <level number="2">
+<use_bg>1</use_bg>
+
+  
+<challenge> 1,2,0,0,0,0,0,1 ,0,0,0,0,0,0,0,0</challenge>
+  
+<challenge> 2,2,0,0,1,0,0,1 ,0,0,0,0,0,0,0,0</challenge>
+
+<challenge> 3,2,0,0,1,0,0,1 ,0,0,0,0,0,0,0,0</challenge>
+
+ </level>
+ 
+ 
+ </game>
+ 
