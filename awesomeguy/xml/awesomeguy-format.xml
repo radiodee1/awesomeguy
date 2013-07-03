@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <game>
-	<planet>
+	<planet number="1">
 	<horizon>
+
+		<horizontal>192</horizontal>
+		<vertical>32</vertical>
+
 		<visible>
 			array data
 		</visible>
@@ -20,7 +24,10 @@
 		<invaders> </invaders>
 	</challenges>
 
-	<maze>
+	<maze number="1">
+		<horizontal>192</horizontal>
+		<vertical>32</vertical>
+
 		<visible>
 			array data
 		</visible>
@@ -34,7 +41,11 @@
 		
 	</maze>
 	
-	<maze>
+	<maze number="2">
+
+		<horizontal>192</horizontal>
+		<vertical>32</vertical>
+
 		<visible>
 			array data
 		</visible>
