@@ -14,18 +14,18 @@
 	var myStage:Stage;
 	var myButtons:Array;
 	var myRes:Array;
-	
+	var myGame:AGGame;
 
 		public function AGMode() {
 			// constructor code
 		}
 		
-		public function setValues(mystage:Stage, mybuttons:Array, myresources:Array) {
+		public function setValues(mystage:Stage, mybuttons:Array, myresources:Array, mygame:AGGame) {
 			
 			myStage = mystage;
 			myButtons = mybuttons;
 			myRes = myresources;
-			
+			myGame = mygame;
 		}
 		
 		public function setKeys() {

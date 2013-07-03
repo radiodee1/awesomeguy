@@ -17,12 +17,14 @@
 	
 	public static var MODE_FLYER:int = 0;
 	public static var MODE_GUY:int = 1;
-	var gameMode:int = 1;
+	public var gameMode:int = 0;
+	
+	public var gamePlanet:int = 0;
+	public var gameMaze:int = 0;
 	
 	var modeObj:AGMode ;
-	
-	var guy:Guy = new Guy();
-	var flyer:Flyer = new Flyer();
+	var guy:ModeGuy = new ModeGuy();
+	var flyer:ModeFlyer = new ModeFlyer();
 		
 		public function AGGame(mystage:Stage, mybuttons:Array, myresources:Array) {
 			
@@ -36,11 +38,11 @@
 			
 			if (gameMode == MODE_FLYER) {
 				modeObj = flyer;
-				modeObj.setValues(myStage, myButtons, myRes);
+				modeObj.setValues(myStage, myButtons, myRes, this);
 			}
 			else if (gameMode == MODE_GUY) {
 				modeObj = guy;
-				modeObj.setValues(myStage, myButtons, myRes);
+				modeObj.setValues(myStage, myButtons, myRes, this);
 			}
 			
 		}
@@ -64,7 +66,7 @@
 		public function doAnimation() {
 			
 			modeObj.innerGameLoop();
-			trace ("down " + K_DOWN);
+			//trace ("down " + K_DOWN);
 		}
 	}
 	

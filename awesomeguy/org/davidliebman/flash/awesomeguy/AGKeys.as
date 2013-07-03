@@ -43,7 +43,7 @@
 			myScreen = mystage;
 			this.addEventListener(Event.ADDED_TO_STAGE, setCallbacks);
 			//setCallbacks();
-			trace("constructor...");
+			//trace("constructor...");
 		}
 		
 		public function setCallbacks(e:Event):void {
@@ -51,7 +51,7 @@
 			myScreen.addEventListener(KeyboardEvent.KEY_DOWN, keyboardDownHandler);
 			myScreen.addEventListener(KeyboardEvent.KEY_UP, keyboardUpHandler);
 			myScreen.removeEventListener(Event.ADDED_TO_STAGE, setCallbacks);
-			trace("callbacks...");
+			//trace("callbacks...");
 			launchNextPhase();
 		}
 		
@@ -66,7 +66,7 @@
 
 			setAllKeys();
 
-			trace("Key Code DOWN: " + event.keyCode);
+			//trace("Key Code DOWN: " + event.keyCode);
 		}
 		
 		public function keyboardUpHandler(event:KeyboardEvent):void{
@@ -80,7 +80,7 @@
 
 			setAllKeys();
 
-			trace("Key Code UP: " + event.keyCode);
+			//trace("Key Code UP: " + event.keyCode);
 
 		}
 		
@@ -95,7 +95,7 @@
 		
 		public function launchNextPhase():void {
 			var resources:AGResources = new AGResources(myScreen, array);
-			trace("next phase...");
+			//trace("next phase...");
 		}
 
 	}
