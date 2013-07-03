@@ -8,6 +8,7 @@
 		
 		public override function componentsInOrder():void {
 			myStage.addChild(myRes[0]);
+			myRes[3].play();
 		}
 	}
 	

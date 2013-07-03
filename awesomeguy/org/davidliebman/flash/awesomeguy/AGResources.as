@@ -25,6 +25,7 @@
 	var res1:Array = new Array (R_SPRITE, "bitmap/test.png");
 	var res2:Array = new Array (R_SPRITE, "bitmap/test2.png");
 	var res3:Array = new Array (R_XML, "xml/test.xml");
+	var res4:Array = new Array (R_SOUND, "sound/explosion.mp3");
 		
 	var i:int = 0;
 		
@@ -50,6 +51,7 @@
 			neededRes.push(res2);
 			//res3.push(2);
 			neededRes.push(res3);
+			neededRes.push(res4);
 			
 			importRes();
 		}
