@@ -22,11 +22,18 @@
 	public static var R_SOUND:int = 2;
 	public static var R_XML:int = 3;
 		
-	var res1:Array = new Array (R_SPRITE, "bitmap/test.png");
-	var res2:Array = new Array (R_SPRITE, "bitmap/test2.png");
-	var res3:Array = new Array (R_XML, "xml/test.xml");
-	var res4:Array = new Array (R_SOUND, "sound/explosion.mp3");
-		
+	public static var NAME_AWESOMEGUY_XML:int = 0;
+	public static var NAME_TEST2_PNG:int = 1;
+	//public static var NAME_TEST_XML:int = 2;
+	//public static var NAME_EXPLOSION_MP3:int = 3;
+
+
+	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
+	var res01:Array = new Array (R_SPRITE, "bitmap/test2.png");
+	//var res02:Array = new Array (R_XML, "xml/test.xml");
+	//var res03:Array = new Array (R_SOUND, "sound/explosion.mp3");
+
+
 	var i:int = 0;
 		
 	var r_url:String = "";
@@ -41,17 +48,14 @@
 			//trace ("import worked. " );
 			myStage = mystage;
 			myButtons = buttons;
-			
-			// list resources needed...
 			i = 0;
 			
-			//res1.push(0); //always group together
-			neededRes.push(res1);
-			//res2.push(1); //always group together
-			neededRes.push(res2);
-			//res3.push(2);
-			neededRes.push(res3);
-			neededRes.push(res4);
+			// list resources needed...
+			neededRes.push(res00);
+			neededRes.push(res01);
+			//neededRes.push(res02);
+			//neededRes.push(res03);
+			//neededRes.push(res04);
 			
 			importRes();
 		}
