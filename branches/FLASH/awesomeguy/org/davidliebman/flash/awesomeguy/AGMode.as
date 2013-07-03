@@ -15,6 +15,9 @@
 	var myButtons:Array;
 	var myRes:Array;
 	var myGame:AGGame;
+	
+	public var myVisible:Array;
+	public var myInvisible:Array;
 
 		public function AGMode() {
 			// constructor code
@@ -61,7 +64,9 @@
 			
 		}
 		
-		
+		public function prepTiles():void {
+			
+		}
 	}
 	
 }

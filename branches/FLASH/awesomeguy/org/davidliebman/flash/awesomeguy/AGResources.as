@@ -130,8 +130,9 @@
 					//trace("r_xml");
 					r_xml.ignoreWhite = true;
 					r_xml.parseXML(e.target.data);
-					trace(r_xml);
+					//trace(r_xml);
 					myRes.push(r_xml);
+					
 				break;
 				
 			}
@@ -140,7 +141,8 @@
 		}
 		
 		public function launchNextPhase():void {
-			//trace("really done");
+			trace("really done");
+			
 			var game:AGGame = new AGGame(myStage, myButtons, myRes);
 		}
 		
