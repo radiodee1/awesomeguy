@@ -14,6 +14,7 @@
 	var neededRes:Array = new Array();
 	//var collectedRes:Array = new Array();
 	var loader:Loader = new Loader();
+	var uloader:URLLoader = new URLLoader();
 	var myButtons:Array;
 	var myRes:Array = new Array();
 
@@ -29,7 +30,7 @@
 		
 	var r_url:String = "";
 	var r_type:int = 0;
-	//var loader:Loader = new Loader();
+	
 	
 	var r_sprite:Sprite = new Sprite();
 	var r_sound:Sound = new Sound();
@@ -71,7 +72,7 @@
 			
 			switch(r_type) {
 				case AGResources.R_SPRITE:
-				case AGResources.R_XML:
+				//case AGResources.R_XML:
 					loader.contentLoaderInfo.addEventListener(Event.COMPLETE, finishRes);
 					//loader.addEventListener(Event.COMPLETE, finishRes);
 
@@ -84,7 +85,11 @@
 					finishRes(null);
 				break;
 				////////////////////////////////////
-				
+				case AGResources.R_XML:
+					uloader.addEventListener(Event.COMPLETE, finishRes);
+					uloader.load(new URLRequest(r_url));
+					
+				break;
 				
 				
 			}
@@ -116,10 +121,10 @@
 				case AGResources.R_XML:
 				//xml
 					r_xml = new XMLDocument();
-					trace("r_xml");
+					//trace("r_xml");
 					r_xml.ignoreWhite = true;
 					r_xml.parseXML(e.target.data);
-					//trace(r_xml);
+					trace(r_xml);
 					myRes.push(r_xml);
 				break;
 				
