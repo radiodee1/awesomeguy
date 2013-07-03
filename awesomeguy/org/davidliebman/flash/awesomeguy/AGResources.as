@@ -22,16 +22,22 @@
 	public static var R_SOUND:int = 2;
 	public static var R_XML:int = 3;
 		
-	public static var NAME_AWESOMEGUY_XML:int = 0;
-	public static var NAME_TEST2_PNG:int = 1;
-	//public static var NAME_TEST_XML:int = 2;
-	//public static var NAME_EXPLOSION_MP3:int = 3;
+	public static var RES_INDEX:int = 6;
+		
+	public static var NAME_AWESOMEGUY_XML:int =  0;
+	public static var NAME_TEST2_PNG:int =  1;
+	public static var NAME_TILES1_PNG:int = 2;
+	public static var NAME_TILES2_PNG:int = 3;
+	public static var NAME_TILES3_PNG:int = 4;
+	public static var NAME_TILES4_PNG:int = 5;
 
 
 	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
 	var res01:Array = new Array (R_SPRITE, "bitmap/test2.png");
-	//var res02:Array = new Array (R_XML, "xml/test.xml");
-	//var res03:Array = new Array (R_SOUND, "sound/explosion.mp3");
+	var res02:Array = new Array (R_SPRITE, "bitmap/agtiles1.png");
+	var res03:Array = new Array (R_SPRITE, "bitmap/agtiles2.png");
+	var res04:Array = new Array (R_SPRITE, "bitmap/agtiles3.png");
+	var res05:Array = new Array (R_SPRITE, "bitmap/agtiles4.png");
 
 
 	var i:int = 0;
@@ -49,13 +55,14 @@
 			myStage = mystage;
 			myButtons = buttons;
 			i = 0;
-			
+			myRes = new Array();
 			// list resources needed...
 			neededRes.push(res00);
 			neededRes.push(res01);
-			//neededRes.push(res02);
-			//neededRes.push(res03);
-			//neededRes.push(res04);
+			neededRes.push(res02);
+			neededRes.push(res03);
+			neededRes.push(res04);
+			neededRes.push(res05);
 			
 			importRes();
 		}
@@ -65,7 +72,7 @@
 				launchNextPhase();
 			}
 			else {
-				//trace(neededRes[i][2]);
+				//trace(neededRes[i][1]);
 				getRes(neededRes[i][0], neededRes[i][1]);
 			}
 		}
@@ -110,7 +117,7 @@
 				//sprite
 					var bitmap:BitmapData;
 					bitmap = Bitmap(LoaderInfo(e.target).content).bitmapData;
-					
+					r_sprite = new Sprite();
 					r_sprite.graphics.beginBitmapFill(bitmap, null, false, false);
 					r_sprite.graphics.drawRect(0,0, bitmap.width, bitmap.height);
 					r_sprite.graphics.endFill();
