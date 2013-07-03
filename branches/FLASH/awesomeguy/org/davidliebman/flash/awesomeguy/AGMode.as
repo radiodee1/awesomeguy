@@ -26,6 +26,8 @@
 			myButtons = mybuttons;
 			myRes = myresources;
 			myGame = mygame;
+			
+			doOnce();
 		}
 		
 		public function setKeys() {
@@ -41,16 +43,25 @@
 			K_DOWN = down;
 			K_JUMP = jump;
 			K_SHOOT = shoot;
-			//doAnimation();
+			
 		}
 		
 		public function innerGameLoop() {
+			// this happens every frame because it is called in AGGame.as once every 
+			// frame by 'doAnimation()'...
 			setKeys();
 			componentsInOrder();
 		}
+		
+		public function doOnce():void {
+			
+		}
+		
 		public function componentsInOrder():void {
 			
 		}
+		
+		
 	}
 	
 }

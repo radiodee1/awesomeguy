@@ -7,8 +7,13 @@
 		}
 		
 		public override function componentsInOrder():void {
-			myStage.addChild(myRes[0]);
-			myRes[3].play();
+			//myStage.addChild(myRes[AGResources.NAME_TEST_PNG]);
+			
+		}
+		
+		public override function doOnce():void {
+			myStage.addChild(myRes[AGResources.NAME_TEST2_PNG]);
+			//myRes[AGResources.NAME_EXPLOSION_MP3].play();
 		}
 	}
 	

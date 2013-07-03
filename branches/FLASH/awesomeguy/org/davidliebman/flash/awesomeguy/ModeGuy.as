@@ -9,6 +9,10 @@
 		public override function componentsInOrder():void {
 			
 		}
+		
+		public override function doOnce():void {
+			myStage.addChild(myRes[AGResources.NAME_TEST2_PNG]);
+		}
 	}
 	
 }
