@@ -29,8 +29,10 @@
 			var stringVisible:String;
 			var stringInvisible:String;
 			var myXML:XMLDocument = myRes[AGResources.NAME_AWESOMEGUY_XML];
+			
 			myHoriz = int (myXML.firstChild.firstChild.firstChild.firstChild.toString());
 			myVert = int (myXML.firstChild.firstChild.firstChild.nextSibling.firstChild.toString());
+			
 			stringVisible = myXML.firstChild.firstChild.firstChild.nextSibling.nextSibling.firstChild.firstChild.toString();// visible
 			stringInvisible = myXML.firstChild.firstChild.firstChild.nextSibling.nextSibling.firstChild.nextSibling.firstChild.toString();// invisible
 			
