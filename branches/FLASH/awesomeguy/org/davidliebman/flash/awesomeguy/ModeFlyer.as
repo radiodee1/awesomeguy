@@ -9,10 +9,12 @@
 		
 		public override function componentsInOrder():void {
 			//myStage.addChild(myRes[AGResources.NAME_TEST_PNG]);
-			
+			super.componentsInOrder();
+			myRes[AGResources.NAME_FLYER_L0_PNG].x = xpos - scrollBGX;
 		}
 		
 		public override function doOnce():void {
+			
 			myStage.addChild(myRes[AGResources.NAME_FLYER_L0_PNG]);
 			prepTiles() ;
 			
