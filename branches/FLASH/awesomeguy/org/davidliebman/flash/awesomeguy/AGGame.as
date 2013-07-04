@@ -10,6 +10,7 @@
 	var K_DOWN:Boolean = false;		
 	var K_SHOOT:Boolean = false;
 	var K_JUMP:Boolean = false;
+	var K_PAUSE:Boolean = false;
 	
 	var myStage:Stage;
 	var myButtons:Array;
