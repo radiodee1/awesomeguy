@@ -30,7 +30,7 @@
 	var yy:int = 0;
 	public static var X_MOVE = 3 * 2;
 	public static var Y_MOVE = 3 * 2;
-	var xpos:int = 0;
+	var xpos:int = 100;
 	var ypos:int = 0;
 	
 	public var myVisible:Array;
@@ -91,9 +91,9 @@
 		
 		public function scrollBackground():void {
 			myField.top = 0;
-			myField.bottom = myVert * 2;
+			myField.bottom = myVert * 8 *2;
 			myField.left = 0;
-			myField.right = myHoriz * 2;
+			myField.right = myHoriz * 8 * 2;
 			
 			myScreen.top = scrollBGY;
 			myScreen.bottom = scrollBGY + 384;
@@ -108,21 +108,44 @@
 			var newx:int = xpos;
 			var newy:int = ypos;
 			
-			var newscrollx:int = scrollBGX;
-			var newscrolly:int = scrollBGY;
+			var newscrollx:int = myScreen.left;
+			var newscrolly:int = myScreen.top;
 			
 			//change values
-			if (xx > 0) {
-				if (myScreen.right < myField.right) {
-					if (newx > myBoundaries.left) {
-						newx = newx + X_MOVE;
+			if (xx > 0) { // going right
+				if (newx + xx >= myField.right) { //wrap
+					newx = newx - myField.right;
+				}
+				if (myScreen.right + xx >= myField.right) { //wrap
+					newscrollx = newscrollx - myField.right;
+				}
+				if (newx +xx > myBoundaries.left) {
+					if (myScreen.right < myField.right) {
 						newscrollx = newscrollx + X_MOVE;
 					}
+					newx = newx + X_MOVE;
+				}
+				if (newx + xx <=  myBoundaries.left ) {
+					newx = newx + X_MOVE;
 				}
 				
 			}
-			if (xx < 0) {
-				
+			if (xx < 0) { //going left
+				if (newx + xx <= myField.left) { //wrap
+					newx = newx + myField.right;
+				}
+				if (myScreen.left + xx <= myField.left) { // wrap
+					newscrollx = newscrollx + myField.right;
+				}
+				if (newx +xx < myBoundaries.right) {
+					if (myScreen.left < myField.left) {
+						newscrollx = newscrollx + X_MOVE;
+					}
+					newx = newx + X_MOVE;
+				}
+				if (newx  + xx >=  myBoundaries.right ) {
+					newx = newx + X_MOVE;
+				}
 			}
 			if (yy > 0) {
 				
@@ -140,9 +163,11 @@
 		public function detectMovement():void {
 			if (K_LEFT ) {
 				xx = - X_MOVE;				
+				trace(xx);
 			}
-			if (K_LEFT ) {
+			if (K_RIGHT ) {
 				xx = + X_MOVE;
+				trace(xx);
 			}
 			if (K_UP ) {
 				yy = - Y_MOVE;

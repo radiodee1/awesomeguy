@@ -71,7 +71,7 @@
 
 			setAllKeys();
 
-			//trace("Key Code DOWN: " + event.keyCode);
+			trace("Key Code DOWN: " + event.keyCode);
 		}
 		
 		public function keyboardUpHandler(event:KeyboardEvent):void{
