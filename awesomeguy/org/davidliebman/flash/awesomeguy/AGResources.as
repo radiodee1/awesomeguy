@@ -30,7 +30,10 @@
 	public static var NAME_TILES2_PNG:int = 3;
 	public static var NAME_TILES3_PNG:int = 4;
 	public static var NAME_TILES4_PNG:int = 5;
-
+	public static var NAME_FLYER_L0_PNG:int = 6;
+	public static var NAME_FLYER_L1_PNG:int = 7;
+	public static var NAME_FLYER_R0_PNG:int = 8;
+	public static var NAME_FLYER_R1_PNG:int = 9;
 
 	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
 	var res01:Array = new Array (R_SPRITE, "bitmap/test2.png");
@@ -38,6 +41,12 @@
 	var res03:Array = new Array (R_SPRITE, "bitmap/agtiles2.png");
 	var res04:Array = new Array (R_SPRITE, "bitmap/agtiles3.png");
 	var res05:Array = new Array (R_SPRITE, "bitmap/agtiles4.png");
+	
+	var res06:Array = new Array (R_SPRITE, "bitmap/flyer_l0.png");
+	var res07:Array = new Array (R_SPRITE, "bitmap/flyer_l1.png");
+	var res08:Array = new Array (R_SPRITE, "bitmap/flyer_r0.png");
+	var res09:Array = new Array (R_SPRITE, "bitmap/flyer_r1.png");
+
 
 
 	var i:int = 0;
@@ -63,6 +72,11 @@
 			neededRes.push(res03);
 			neededRes.push(res04);
 			neededRes.push(res05);
+			neededRes.push(res06);
+			neededRes.push(res07);
+			neededRes.push(res08);
+			neededRes.push(res09);
+			
 			
 			importRes();
 		}

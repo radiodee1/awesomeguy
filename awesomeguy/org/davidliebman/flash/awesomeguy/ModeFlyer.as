@@ -13,7 +13,7 @@
 		}
 		
 		public override function doOnce():void {
-			myStage.addChild(myRes[AGResources.NAME_TEST2_PNG]);
+			myStage.addChild(myRes[AGResources.NAME_FLYER_L0_PNG]);
 			prepTiles() ;
 			
 			//myRes[AGResources.NAME_EXPLOSION_MP3].play();
@@ -24,8 +24,8 @@
 			var smallArray:Array = new Array();
 			var visibleArray:Array = new Array();
 			var invisibleArray:Array = new Array();
-			var myHoriz:int = 0;
-			var myVert:int = 0;
+			//var myHoriz:int = 0;
+			//var myVert:int = 0;
 			var stringVisible:String;
 			var stringInvisible:String;
 			var myXML:XMLDocument = myRes[AGResources.NAME_AWESOMEGUY_XML];
