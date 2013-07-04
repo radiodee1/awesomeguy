@@ -27,6 +27,7 @@
 	public var gameLives:int = 3;
 	
 	
+	
 	var modeObj:AGMode ;
 	var guy:ModeGuy = new ModeGuy();
 	var flyer:ModeFlyer = new ModeFlyer();
