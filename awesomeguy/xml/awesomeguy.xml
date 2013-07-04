@@ -873,6 +873,10 @@
 			<block> </block>
 		</special>
 		
+		<challenges>
+			<invaders> </invaders>
+			<invaders> </invaders>
+		</challenges>
 	</maze>
 	
 	<maze number="2">
@@ -890,6 +894,11 @@
 			<block> </block>
 			<block> </block>
 		</special>
+		
+		<challenges>
+			<invaders> </invaders>
+			<invaders> </invaders>
+		</challenges>
 	</maze>
 	
 	</planet>
