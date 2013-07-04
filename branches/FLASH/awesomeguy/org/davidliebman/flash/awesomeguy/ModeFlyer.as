@@ -30,11 +30,15 @@
 			var stringInvisible:String;
 			var myXML:XMLDocument = myRes[AGResources.NAME_AWESOMEGUY_XML];
 			
-			myHoriz = int (myXML.firstChild.firstChild.firstChild.firstChild.toString());
-			myVert = int (myXML.firstChild.firstChild.firstChild.nextSibling.firstChild.toString());
+			var tree:XML = new XML(myXML);
+			//trace (tree.planet[myGame.gamePlanet].horizontal);
 			
-			stringVisible = myXML.firstChild.firstChild.firstChild.nextSibling.nextSibling.firstChild.firstChild.toString();// visible
-			stringInvisible = myXML.firstChild.firstChild.firstChild.nextSibling.nextSibling.firstChild.nextSibling.firstChild.toString();// invisible
+			myHoriz = int (tree.planet[myGame.gamePlanet].horizontal.toString());
+			myVert = int (tree.planet[myGame.gamePlanet].vertical.toString());
+			
+
+			stringVisible = tree.planet[myGame.gamePlanet].visible.toString();
+			stringInvisible = tree.planet[myGame.gamePlanet].invisible.toString();
 			
 			var i:int = 0;
 			var j:int = 0;

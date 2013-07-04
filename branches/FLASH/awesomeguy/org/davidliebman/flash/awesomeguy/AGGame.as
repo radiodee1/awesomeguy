@@ -21,6 +21,7 @@
 	
 	public var gamePlanet:int = 0;
 	public var gameMaze:int = 0;
+	public var gameChallenge:int = 0;
 	public var gameScore:int = 0;
 	public var gameLives:int = 3;
 	
