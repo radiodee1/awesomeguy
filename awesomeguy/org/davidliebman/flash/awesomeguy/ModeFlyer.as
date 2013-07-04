@@ -1,22 +1,48 @@
 ﻿package org.davidliebman.flash.awesomeguy {
 	import flash.xml.XMLDocument;
+	import flash.display.Sprite;
 	
 	public class ModeFlyer extends AGMode{
+
+		var sprite:Sprite = new Sprite();
 
 		public function ModeFlyer() {
 			// constructor code
 		}
 		
 		public override function componentsInOrder():void {
-			//myStage.addChild(myRes[AGResources.NAME_TEST_PNG]);
+			//
 			super.componentsInOrder();
-			myRes[AGResources.NAME_FLYER_L0_PNG].y = ypos - scrollBGY;
-			myRes[AGResources.NAME_FLYER_L0_PNG].x = xpos - scrollBGX;
+			
+			if (facingRight) {
+				if (animate %2 == 1 ) {
+					sprite = myRes[AGResources.NAME_FLYER_R0_PNG];
+
+				}
+				else {
+					sprite = myRes[AGResources.NAME_FLYER_R1_PNG];
+
+				}
+			}
+			else {
+				if (animate %2 == 1) {
+					sprite = myRes[AGResources.NAME_FLYER_L0_PNG];
+
+				}
+				else {
+					sprite = myRes[AGResources.NAME_FLYER_L1_PNG];
+
+				}
+			}
+			sprite.x = xpos - scrollBGX;
+			sprite.y = ypos - scrollBGY;
+			myStage.addChild(sprite);
 		}
 		
 		public override function doOnce():void {
 			
 			myStage.addChild(myRes[AGResources.NAME_FLYER_L0_PNG]);
+			
 			prepTiles() ;
 			
 			//myRes[AGResources.NAME_EXPLOSION_MP3].play();
@@ -27,8 +53,7 @@
 			var smallArray:Array = new Array();
 			var visibleArray:Array = new Array();
 			var invisibleArray:Array = new Array();
-			//var myHoriz:int = 0;
-			//var myVert:int = 0;
+			
 			var stringVisible:String;
 			var stringInvisible:String;
 			var myXML:XMLDocument = myRes[AGResources.NAME_AWESOMEGUY_XML];

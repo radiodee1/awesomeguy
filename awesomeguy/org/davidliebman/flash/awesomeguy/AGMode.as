@@ -35,6 +35,8 @@
 	var xpos:int = 100;
 	var ypos:int = 100;
 	
+	public var facingRight:Boolean = false;
+	public var animate:int = 0;
 	public var wrapHorizontal:Boolean = true;
 	
 	public var myVisible:Array;
@@ -76,6 +78,10 @@
 		public function innerGameLoop() {
 			// this happens every frame because it is called in AGGame.as once every 
 			// frame by 'doAnimation()'...
+			animate ++
+			if (animate > 4) animate = 0;
+			
+			myStage.removeChildren();
 			setKeys();
 			componentsInOrder();
 		}
@@ -215,19 +221,19 @@
 			yy = 0;
 			if ( K_LEFT  ) {
 				xx = - X_MOVE;				
-				trace(xx);
+				facingRight = false;
 			}
 			if (K_RIGHT ) {
 				xx = + X_MOVE;
-				trace(xx);
+				facingRight = true;
 			}
 			if (K_UP ) {
 				yy = - Y_MOVE;
-				trace (yy);
+
 			}
 			if (K_DOWN ) {
 				yy = + Y_MOVE;
-				trace ("y"+yy);
+			
 			}
 		}
 	}
