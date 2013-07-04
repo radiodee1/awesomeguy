@@ -19,6 +19,8 @@
 	var myGame:AGGame;
 	
 	//scroll variables
+	public var spriteHeight:int = 40;
+	public var spriteWidth:int = 90;
 	var myField:Rectangle = new Rectangle();
 	var myScreen:Rectangle = new Rectangle();
 	var myBoundaries:Rectangle = new Rectangle();
@@ -31,7 +33,9 @@
 	public static var X_MOVE = 3 * 2;
 	public static var Y_MOVE = 3 * 2;
 	var xpos:int = 100;
-	var ypos:int = 0;
+	var ypos:int = 100;
+	
+	public var wrapHorizontal:Boolean = true;
 	
 	public var myVisible:Array;
 	public var myInvisible:Array;
@@ -100,10 +104,10 @@
 			myScreen.left = scrollBGX;
 			myScreen.right = scrollBGX + 512;
 			
-			myBoundaries.top = myScreen.top + 20;
-			myBoundaries.bottom = myScreen.bottom - 20;
-			myBoundaries.left = myScreen.left + 20;
-			myBoundaries.right = myScreen.right - 20;
+			myBoundaries.top = myScreen.top + 20 + 0;
+			myBoundaries.bottom = myScreen.bottom - 20 - spriteHeight;
+			myBoundaries.left = myScreen.left + (5 * 8 * 2) + 0;
+			myBoundaries.right = myScreen.right - (5 * 8 * 2) - spriteWidth;
 			
 			var newx:int = xpos;
 			var newy:int = ypos;
@@ -112,46 +116,92 @@
 			var newscrolly:int = myScreen.top;
 			
 			//change values
-			if (xx > 0) { // going right
-				if (newx + xx >= myField.right) { //wrap
-					newx = newx - myField.right;
+			if (xx > 0) { // going right - drift left
+				if (newx + xx >= myField.right && wrapHorizontal) { //wrap
+					newx = newx - myField.right + xx;
 				}
-				if (myScreen.right + xx >= myField.right) { //wrap
-					newscrollx = newscrollx - myField.right;
+				if (myScreen.right + xx >= myField.right && wrapHorizontal) { //wrap
+					newscrollx = newscrollx - myField.right + xx;
 				}
-				if (newx +xx > myBoundaries.left) {
+				if (newx + xx > myBoundaries.left) {
 					if (myScreen.right < myField.right) {
 						newscrollx = newscrollx + X_MOVE;
 					}
-					newx = newx + X_MOVE;
+					else {
+						newx = newx + X_MOVE;
+					}
 				}
-				if (newx + xx <=  myBoundaries.left ) {
-					newx = newx + X_MOVE;
+				else if (newx + xx <=  myBoundaries.left ) {
+					newx = newx + xx;
+					newscrollx = newscrollx + xx;
 				}
 				
 			}
-			if (xx < 0) { //going left
-				if (newx + xx <= myField.left) { //wrap
-					newx = newx + myField.right;
+			if (xx < 0) { //going left - drift right
+				if (newx + xx <= myField.left && wrapHorizontal) { //wrap
+					newx = newx + myField.right + xx;
 				}
-				if (myScreen.left + xx <= myField.left) { // wrap
-					newscrollx = newscrollx + myField.right;
+				if (myScreen.left + xx <= myField.left && wrapHorizontal) { // wrap
+					newscrollx = newscrollx + myField.right + xx;
 				}
 				if (newx +xx < myBoundaries.right) {
 					if (myScreen.left < myField.left) {
 						newscrollx = newscrollx + X_MOVE;
 					}
-					newx = newx + X_MOVE;
+					else {
+						newx = newx + X_MOVE;
+					}
 				}
-				if (newx  + xx >=  myBoundaries.right ) {
+				else if (newx  + xx >=  myBoundaries.right ) {
 					newx = newx + X_MOVE;
+					newscrollx = newscrollx + X_MOVE;
 				}
 			}
-			if (yy > 0) {
+			if (yy > 0) { // going down
+				if (newy + yy >= myField.bottom) { //clip
+					newy = myField.bottom ;
+				}
+				//if (myScreen.bottom + yy >= myField.bottom) { //wrap
+				//	newscrolly = newscrolly - myField.bottom + yy;
+				//}
+				if (newy + yy > myBoundaries.top) {
+					if (myScreen.bottom < myField.bottom) {
+						newscrolly = newscrolly + yy;
+					}
+					else {
+						newy = newy - yy;
+					}
+				}
+				else if (newy + yy <=  myBoundaries.top ) {
+					newy = newy + yy;
+					if (myScreen.top < myField.top) {
+						newscrolly = newscrolly + yy;
+					}
+				}
+			
 				
 			}
-			if (yy < 0 ) {
-				
+			if (yy < 0 ) { // up - drift down
+				if (newy + yy <= myField.top) { //clip
+					newy = myField.top;
+				}
+				//if (myScreen.top + yy <= myField.top) { // wrap
+				//	newscrolly = newscrolly + myField.bottom + yy;
+				//}
+				if (newy + yy < myBoundaries.bottom) {
+					if (myScreen.top < myField.top) {
+						newscrolly = newscrolly + yy;
+					}
+					else {
+						newy = newy - yy;
+					}
+				}
+				else if (newy  + yy >=  myBoundaries.bottom ) {
+					newy = newy + yy;
+					if (myScreen.bottom > myField.bottom) {
+						newscrolly = newscrolly + yy;
+					}
+				}
 			}
 			
 			scrollBGX = newscrollx;
@@ -161,7 +211,9 @@
 		}
 		
 		public function detectMovement():void {
-			if (K_LEFT ) {
+			xx = 0;
+			yy = 0;
+			if ( K_LEFT  ) {
 				xx = - X_MOVE;				
 				trace(xx);
 			}
@@ -171,9 +223,11 @@
 			}
 			if (K_UP ) {
 				yy = - Y_MOVE;
+				trace (yy);
 			}
 			if (K_DOWN ) {
 				yy = + Y_MOVE;
+				trace ("y"+yy);
 			}
 		}
 	}
