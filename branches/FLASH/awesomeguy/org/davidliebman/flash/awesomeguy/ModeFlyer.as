@@ -10,6 +10,7 @@
 		public override function componentsInOrder():void {
 			//myStage.addChild(myRes[AGResources.NAME_TEST_PNG]);
 			super.componentsInOrder();
+			myRes[AGResources.NAME_FLYER_L0_PNG].y = ypos - scrollBGY;
 			myRes[AGResources.NAME_FLYER_L0_PNG].x = xpos - scrollBGX;
 		}
 		
