@@ -2,6 +2,8 @@
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
+	import flash.display.Sprite;
+	import flash.display.Bitmap;
 	
 	public class AGMode {
 
@@ -33,6 +35,13 @@
 	static var B_BIBPRIZE:int = 440 ;
 	static var B_PLATFORM:int = 437 ; 
 	
+	var TILEMAP_HEIGHT:int = 128 * 2;
+	var TILEMAP_WIDTH:int = 224 * 2;
+	var TILE_HEIGHT:int = 16;
+	var TILE_WIDTH:int = 16;
+	
+	
+	
 	//scroll variables
 	public var spriteHeight:int = 40;
 	public var spriteWidth:int = 90;
@@ -42,8 +51,8 @@
 	var mySweetspot:Rectangle = new Rectangle();
 	var myHoriz:int = 0;
 	var myVert:int = 0;
-	var scrollBGX:int = 0;
-	var scrollBGY:int = 0;
+	public var scrollBGX:int = 0;
+	public var scrollBGY:int = 0;
 	var xx:int = 0;
 	var yy:int = 0;
 	public static var X_MOVE = 3 * 2;
@@ -55,8 +64,8 @@
 	public var animate:int = 0;
 	public var wrapHorizontal:Boolean = true;
 	
-	public var myVisible:Array;
-	public var myInvisible:Array;
+	public var myVisible:Array ;
+	public var myInvisible:Array ;
 
 		public function AGMode() {
 			// constructor code
@@ -256,6 +265,28 @@
 				yy = + Y_MOVE;
 			
 			}
+		}
+	
+		public function cutTile(tileset:Sprite, num:int):Bitmap {
+			var newsprite:Bitmap = new Bitmap();
+			
+			var i:int ,j:int, k:int,l:int, m:int,n:int, p:int ;
+
+			m = TILEMAP_HEIGHT / TILE_HEIGHT; // 128 * 2 /16 = 16
+			n = TILEMAP_WIDTH / TILE_HEIGHT; // 224 * 2 /16 = 28
+    
+			tileset.cacheAsBitmap = true;
+    
+			k = (num / n); // y pos 
+			l = num - (k * n); // x pos
+			//var tiles_a:Sprite = new Sprite();
+			//tiles_a.clone(myRes[AGResources.NAME_TILES1_PNG]);
+			tileset.scrollRect = new Rectangle( k * TILE_WIDTH, l * TILE_HEIGHT, 
+													TILE_HEIGHT, TILE_HEIGHT);
+			
+			//var newsprite:Sprite = new Sprite();
+			
+			return newsprite;
 		}
 	}
 	
