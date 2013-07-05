@@ -24,6 +24,7 @@
 	var myField:Rectangle = new Rectangle();
 	var myScreen:Rectangle = new Rectangle();
 	var myBoundaries:Rectangle = new Rectangle();
+	var mySweetspot:Rectangle = new Rectangle();
 	var myHoriz:int = 0;
 	var myVert:int = 0;
 	var scrollBGX:int = 0;
@@ -115,6 +116,11 @@
 			myBoundaries.left = myScreen.left + (5 * 8 * 2) + 0;
 			myBoundaries.right = myScreen.right - (5 * 8 * 2) - spriteWidth;
 			
+			mySweetspot.top = myBoundaries.top;
+			mySweetspot.bottom = myBoundaries.bottom;
+			mySweetspot.left = myBoundaries.left + 8;
+			mySweetspot.right = myBoundaries.right - 8;
+			
 			var newx:int = xpos;
 			var newy:int = ypos;
 			
@@ -137,7 +143,7 @@
 						newx = newx + X_MOVE;
 					}
 				}
-				else if (newx + xx <=  myBoundaries.left ) {
+				else if (newx + xx <=  mySweetspot.left ) {
 					newx = newx + xx;
 					newscrollx = newscrollx + xx;
 				}
@@ -158,7 +164,7 @@
 						newx = newx + X_MOVE;
 					}
 				}
-				else if (newx  + xx >=  myBoundaries.right ) {
+				else if (newx  + xx >=  mySweetspot.right ) {
 					newx = newx + X_MOVE;
 					newscrollx = newscrollx + X_MOVE;
 				}
@@ -178,7 +184,7 @@
 						newy = newy - yy;
 					}
 				}
-				else if (newy + yy <=  myBoundaries.top ) {
+				else if (newy + yy <=  mySweetspot.top ) {
 					newy = newy + yy;
 					if (myScreen.top < myField.top) {
 						newscrolly = newscrolly + yy;
@@ -202,7 +208,7 @@
 						newy = newy - yy;
 					}
 				}
-				else if (newy  + yy >=  myBoundaries.bottom ) {
+				else if (newy  + yy >=  mySweetspot.bottom ) {
 					newy = newy + yy;
 					if (myScreen.bottom > myField.bottom) {
 						newscrolly = newscrolly + yy;
