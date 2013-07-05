@@ -14,6 +14,8 @@
 			//
 			super.componentsInOrder();
 			
+			drawLevel();
+			
 			if (facingRight) {
 				if (animate %2 == 1 ) {
 					sprite = myRes[AGResources.NAME_FLYER_R0_PNG];
@@ -114,10 +116,10 @@
     //uint16_t  **  screen = (getScreenPointer(MY_SCREEN_BACK));
     var map_level:Array = myVisible;
 	var map_objects:Array = myInvisible;
-    var LONG_MAP_H:int =	192
-	var LONG_MAP_V:int =	32
+    var LONG_MAP_H:int =	192;
+	var LONG_MAP_V:int =	32;
     //animate = newBG + 1;
-    
+    var animate:int = 0;
     /* clear screen */
     //alertOnScreen();
     //memset(screen, alert_color, (SCREEN_HEIGHT + LONG_MAP_V)* SCREEN_WIDTH * 2);
@@ -138,19 +140,22 @@
     		
     		if (i >= 0 && j >= 0  && i < LONG_MAP_V && j < LONG_MAP_H) { 
     			//LOGE("map_level %d", map_level[j][i] );
-    			if(  map_level[j][i] != 0  && map_level[j][i] != B_GOAL  ) { //is tile blank??
-    				//cutTile(tiles_a, square, map_level[j][i] - levelcheat);
-    				var tiles_a:Sprite = new Sprite();
-					
+    			if(  myVisible[i][j] != 0  && myVisible[i][j] != AGMode.B_GOAL  ) { //is tile blank??
+    				
+//					var square:Bitmap = cutTile( myRes[AGResources.NAME_TILES1_PNG], myVisible[i][j] - levelcheat);
+//    				square.x = (i * TILE_WIDTH ) - scrollBGX;
+//					square.y = (j * TILE_HEIGHT) - scrollBGY;
+//					myStage.addChild(square);
     				//drawTile_8(square, j * TILE_WIDTH, i * TILE_HEIGHT , 
     				//	scrollx , scrolly, PAINT_TRANSPARENT, 0);
-			}
-			
+					
+				}
+				/*
 				// special animated tiles
-				k = map_objects[j][i];
-				if ( k != B_START && k != B_MONSTER && k != B_DEATH
-    				&& k != B_PLATFORM && k != B_MARKER && k != B_BLOCK
-    				&& k != B_LADDER  && k != B_SPACE && k != B_GOAL) {
+				k = myInvisible[j][i];
+				if ( k != AGMode.B_START && k != AGMode.B_MONSTER && k != AGMode.B_DEATH
+    				&& k != AGMode.B_PLATFORM && k != AGMode.B_MARKER && k != AGMode.B_BLOCK
+    				&& k != AGMode.B_LADDER  && k != AGMode.B_SPACE && k != AGMode.B_GOAL) {
     				
     				
     				if (animate == 0 || animate == 1 || animate == 8) {
@@ -177,11 +182,12 @@
 
     			
     			}
-
+				*/	
 
 
 			} // if i,j > 0, etc...
-			
+		
+			/*
 			if (j  >= LONG_MAP_H ) {
 				//draw all of level again.
 				m =  (LONG_MAP_H  );
@@ -225,7 +231,7 @@
 
 
 			}
-		
+			*/
     	}
     }
     
@@ -275,7 +281,7 @@
 }
 		///////////////////////////////////////////
 		
-		
+	
 	}
 	
 }
