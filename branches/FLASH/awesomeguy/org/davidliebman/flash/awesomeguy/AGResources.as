@@ -21,8 +21,9 @@
 	public static var R_SPRITE:int = 1;
 	public static var R_SOUND:int = 2;
 	public static var R_XML:int = 3;
+	public static var R_BITMAP:int = 4;
 		
-	public static var RES_INDEX:int = 6;
+	//public static var RES_INDEX:int = 6;
 		
 	public static var NAME_AWESOMEGUY_XML:int =  0;
 	public static var NAME_TEST2_PNG:int =  1;
@@ -37,10 +38,10 @@
 
 	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
 	var res01:Array = new Array (R_SPRITE, "bitmap/test2.png");
-	var res02:Array = new Array (R_SPRITE, "bitmap/agtiles1.png");
-	var res03:Array = new Array (R_SPRITE, "bitmap/agtiles2.png");
-	var res04:Array = new Array (R_SPRITE, "bitmap/agtiles3.png");
-	var res05:Array = new Array (R_SPRITE, "bitmap/agtiles4.png");
+	var res02:Array = new Array (R_BITMAP, "bitmap/agtiles1.png");
+	var res03:Array = new Array (R_BITMAP, "bitmap/agtiles2.png");
+	var res04:Array = new Array (R_BITMAP, "bitmap/agtiles3.png");
+	var res05:Array = new Array (R_BITMAP, "bitmap/agtiles4.png");
 	
 	var res06:Array = new Array (R_SPRITE, "bitmap/flyer_l0.png");
 	var res07:Array = new Array (R_SPRITE, "bitmap/flyer_l1.png");
@@ -58,6 +59,7 @@
 	var r_sprite:Sprite = new Sprite();
 	var r_sound:Sound = new Sound();
 	var r_xml:XMLDocument = new XMLDocument();
+	var r_bitmap:Bitmap = new Bitmap();
 		
 		public function AGResources(mystage:Stage, buttons:Array) {
 			//trace ("import worked. " );
@@ -99,6 +101,7 @@
 			
 			switch(r_type) {
 				case AGResources.R_SPRITE:
+				case AGResources.R_BITMAP:
 				//case AGResources.R_XML:
 					loader.contentLoaderInfo.addEventListener(Event.COMPLETE, finishRes);
 					//loader.addEventListener(Event.COMPLETE, finishRes);
@@ -138,7 +141,11 @@
 					
 					myRes.push(r_sprite);
 				break;
-			
+				case AGResources.R_BITMAP:
+					r_bitmap = Bitmap(LoaderInfo(e.target).content);
+					myRes.push(r_bitmap);
+				break;
+				
 				case AGResources.R_SOUND:
 				//sound
 					myRes.push(r_sound);
