@@ -18,7 +18,7 @@
 			
 		
 			
-			var screenBitmap:Bitmap = drawLevel();
+			drawLevel();
 
 
 			
@@ -105,12 +105,12 @@
 		}
 		
 		///////////////////////////////////////////
-		public function drawLevel():Bitmap {
+		public function drawLevel():void {
     var  i:int,j:int,k:int,l:int,m:int;
 	
     var baseX:int, baseY:int;//, startX, startY;
-    var mapcheat:int = 1;
-    var levelcheat:int = 1;
+    var mapcheat:int = -3;
+    var levelcheat:int = -3;
 	var TILE_WIDTH:int = 16;
 	var TILE_HEIGHT:int = 16;
 	
@@ -126,9 +126,9 @@
     //animate = newBG + 1;
     var animate:int = 0;
 			
-	var screenBitmap:Bitmap = new Bitmap( new BitmapData(LONG_MAP_H * TILE_WIDTH, LONG_MAP_V * TILE_HEIGHT,
-										false, 0xff6666));
-
+	//var screenBitmap:Bitmap = new Bitmap( new BitmapData(LONG_MAP_H * TILE_WIDTH, LONG_MAP_V * TILE_HEIGHT,
+	//									false, 0xff6666));
+	var square:Bitmap;
 
     /* clear screen */
     //alertOnScreen();
@@ -153,7 +153,7 @@
 				//LOGE("map_level %d", map_level[j][i] );
     			if(  myVisible[i][j] != 0  && myVisible[i][j] != AGMode.B_GOAL  ) { //is tile blank??
     				//trace(myVisible);
-					var square:Bitmap = cutTile(  myRes[AGResources.NAME_TILES1_PNG], 
+					square = cutTile(  myRes[AGResources.NAME_TILES1_PNG], 
 							myVisible[i][j] - levelcheat,
 							AGMode.TILE_TOP);
 					
@@ -164,58 +164,75 @@
     				//	scrollx , scrolly, PAINT_TRANSPARENT, 0);
 					
 				}
-				/*
+				
 				// special animated tiles
-				k = myInvisible[j][i];
+				k = myInvisible[i][j] ;
 				if ( k != AGMode.B_START && k != AGMode.B_MONSTER && k != AGMode.B_DEATH
     				&& k != AGMode.B_PLATFORM && k != AGMode.B_MARKER && k != AGMode.B_BLOCK
-    				&& k != AGMode.B_LADDER  && k != AGMode.B_SPACE && k != AGMode.B_GOAL) {
+    				&& k != AGMode.B_LADDER  && k != AGMode.B_SPACE  && k != AGMode.B_GOAL) {
     				
     				
     				if (animate == 0 || animate == 1 || animate == 8) {
 
     		    		//cutTile(tiles_a, square, k - mapcheat);
+						square = cutTile(  myRes[AGResources.NAME_TILES1_PNG], 
+							myInvisible[i][j] - levelcheat,
+							AGMode.TILE_TOP);
     				}
     				else if (animate == 2 || animate == 4 || animate == 6) {
 
     		    		//cutTile(tiles_b, square, k - mapcheat);
+						square = cutTile(  myRes[AGResources.NAME_TILES2_PNG], 
+							myInvisible[i][j] - levelcheat,
+							AGMode.TILE_TOP);
     				}
     				else if (animate == 3 || animate == 7) {
 
     		    		//cutTile(tiles_c, square, k - mapcheat);
+						square = cutTile(  myRes[AGResources.NAME_TILES3_PNG], 
+							myInvisible[i][j] - levelcheat,
+							AGMode.TILE_TOP);
     				}
     				else if (animate == 5) {
 
     		    		//cutTile(tiles_d, square, k - mapcheat);
+						square = cutTile(  myRes[AGResources.NAME_TILES4_PNG], 
+							myInvisible[i][j] - levelcheat,
+							AGMode.TILE_TOP);
     				}
     				
+					square.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
+					square.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
+					myStage.addChild(square);
 
     				//drawTile_8(square, j * TILE_WIDTH, i * TILE_HEIGHT , 
     				//	scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
-
-
-    			
     			}
-				*/	
+				
 
 
 			} // if i,j > 0, etc...
 		
-			/*
+			
 			if (j  >= LONG_MAP_H ) {
 				//draw all of level again.
 				m =  (LONG_MAP_H  );
 				
 				
-				if(  map_level[j - m][i] != 0 && map_level[j-m][i] != B_GOAL  ) { //is tile blank??
+				if(  myVisible[i][j-m] != 0 && myVisible[i][j-m] != B_GOAL  ) { //is tile blank??
     				//cutTile(tiles_a, square, map_level[j-m][i] - levelcheat);
-    				
+    				square = cutTile(  myRes[AGResources.NAME_TILES1_PNG], 
+							myVisible[i][j-m] - levelcheat,
+							AGMode.TILE_TOP);
     				//drawTile_8(square, j  * TILE_WIDTH, i * TILE_HEIGHT , 
     				//	scrollx , scrolly, PAINT_TRANSPARENT, 0);
+					square.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
+					square.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
+					myStage.addChild(square);
 				}
 				
 				// special animated tiles
-				k = map_objects[j-m][i];
+				k = myInvisible[i][ j-m] - levelcheat;
 				if ( k != B_START && k != B_MONSTER && k != B_DEATH
     				&& k != B_PLATFORM && k != B_MARKER && k != B_BLOCK
     				&& k != B_LADDER  && k != B_SPACE && k != B_GOAL) {
@@ -224,28 +241,43 @@
     				if (animate == 0 || animate == 1 || animate == 8) {
 
     		    		//cutTile(tiles_a, square, k - mapcheat);
+						square = cutTile(  myRes[AGResources.NAME_TILES1_PNG], 
+							k - levelcheat,
+							AGMode.TILE_TOP);
     				}
     				else if (animate == 2 || animate == 4 || animate == 6) {
 
     		    		//cutTile(tiles_b, square, k - mapcheat);
+						square = cutTile(  myRes[AGResources.NAME_TILES2_PNG], 
+							k - levelcheat,
+							AGMode.TILE_TOP);
     				}
     				else if (animate == 3 || animate == 7) {
 
     		    		//cutTile(tiles_c, square, k - mapcheat);
+						square = cutTile(  myRes[AGResources.NAME_TILES3_PNG], 
+							k - levelcheat,
+							AGMode.TILE_TOP);
     				}
     				else if (animate == 5) {
 
     		    		//cutTile(tiles_d, square, k - mapcheat);
+						square = cutTile(  myRes[AGResources.NAME_TILES4_PNG], 
+							k - levelcheat,
+							AGMode.TILE_TOP);
     				}
     				
 
     				//drawTile_8(square, j * TILE_WIDTH, i * TILE_HEIGHT , 
     				//	scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
+					square.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
+					square.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
+					myStage.addChild(square);
 				}
 
 
 			}
-			*/
+			
     	}
     }
     
@@ -293,7 +325,7 @@
 
 	//checkRegularCollision();
 	
-	return screenBitmap;
+	return ;
 }
 		///////////////////////////////////////////
 		

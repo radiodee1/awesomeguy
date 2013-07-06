@@ -22,20 +22,22 @@
 	var myRes:Array;
 	var myGame:AGGame;
 	
-	static var B_NONE:int = -1;
-	static var B_START:int = 5;
-	static var B_SPACE:int = 0;
-	static var B_LADDER:int = 444;
-	static var B_BLOCK:int = 442;
-	static var B_GOAL:int = 446;
-	static var B_KEY:int = 445; 
-	static var B_PRIZE:int =  447;
-	static var B_MONSTER:int = 443;
-	static var B_MARKER:int = 441; 
-	static var B_DEATH:int = 439 ;
-	static var B_ONEUP:int = 438 ;
-	static var B_BIBPRIZE:int = 440 ;
-	static var B_PLATFORM:int = 437 ; 
+	static var change:int = 0;
+		
+	static var B_NONE:int = -1 +change;
+	static var B_START:int = 5 +change;
+	static var B_SPACE:int = 0 ;
+	static var B_LADDER:int = 444 +change;
+	static var B_BLOCK:int = 442 +change;
+	static var B_GOAL:int = 446 +change;
+	static var B_KEY:int = 445 +change; 
+	static var B_PRIZE:int =  447 +change;
+	static var B_MONSTER:int = 443 +change;
+	static var B_MARKER:int = 441 +change; 
+	static var B_DEATH:int = 439 +change;
+	static var B_ONEUP:int = 438 +change;
+	static var B_BIBPRIZE:int = 440 +change;
+	static var B_PLATFORM:int = 437 +change; 
 	
 	var TILEMAP_HEIGHT:int = 128 * 2;
 	var TILEMAP_WIDTH:int = 224 * 2;
@@ -274,7 +276,7 @@
 			n = TILEMAP_WIDTH / TILE_WIDTH; // 224 * 2 /16 = 28
     
 			k = int ((num / n) + m  ); // y pos 
-			l = int (num - (k * n) + 4 ); // x pos
+			l = int (num - (k * n)  ); // x pos + 4
 			
 			//trace(n + "copy l="+ l + " k=" + k + " num=" + num + " bits=" + tileset);
 			var b:BitmapData = new BitmapData(  TILE_WIDTH, TILE_HEIGHT, true, 0x0);
@@ -291,6 +293,9 @@
 			
 			return bitmap;
 		}
+		
+		
+		
 	}
 	
 }
