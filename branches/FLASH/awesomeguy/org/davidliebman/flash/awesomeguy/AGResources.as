@@ -7,7 +7,9 @@
 	import flash.system.ApplicationDomain;
 	import flash.media.Sound;
 	import flash.xml.XMLDocument;
-
+	import flash.geom.*;
+	import fl.motion.Color;
+	
 	public class AGResources {
 
 	var myStage:Stage;
@@ -143,6 +145,16 @@
 				break;
 				case AGResources.R_BITMAP:
 					r_bitmap = Bitmap(LoaderInfo(e.target).content);
+					var bitmapdata1:BitmapData = r_bitmap.bitmapData;
+					var bitmapdata2:BitmapData = new BitmapData(r_bitmap.width, r_bitmap.height, true, 0x000000ff);
+					//switch black to alpha
+					var pt:Point = new Point(0,0);
+					var rect:Rectangle = new Rectangle(0, 0, r_bitmap.width, r_bitmap.height);
+					var threshold:uint = 0x00000000;
+					var maskcolor:uint = 0x000000ff;
+					var color:uint = 0x00000000;
+					bitmapdata2.threshold(bitmapdata1, rect, pt, "==", threshold, color, maskcolor, true);
+					r_bitmap = new Bitmap(bitmapdata2);
 					myRes.push(r_bitmap);
 				break;
 				
