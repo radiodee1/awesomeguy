@@ -4,11 +4,11 @@
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	
-	public class ModeFlyer extends AGMode{
+	public class AGModeFlyer extends AGMode{
 
 		var sprite:Sprite = new Sprite();
 
-		public function ModeFlyer() {
+		public function AGModeFlyer() {
 			// constructor code
 		}
 		
@@ -153,11 +153,12 @@
 				//LOGE("map_level %d", map_level[j][i] );
     			if(  myVisible[i][j] != 0  && myVisible[i][j] != AGMode.B_GOAL  ) { //is tile blank??
     				//trace(myVisible);
-					var square:Bitmap = cutTile(  i * TILE_WIDTH, j * TILE_HEIGHT , 
-							myRes[AGResources.NAME_TILES1_PNG], myVisible[i][j] - levelcheat);
+					var square:Bitmap = cutTile(  myRes[AGResources.NAME_TILES1_PNG], 
+							myVisible[i][j] - levelcheat,
+							AGMode.TILE_TOP);
 					
-					square.x = new Number ((i * TILE_WIDTH ) - scrollBGX);
-					square.y = new Number ((j * TILE_HEIGHT) - scrollBGY);
+					square.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
+					square.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
 					myStage.addChild(square);
     				//drawTile_8(square, j * TILE_WIDTH, i * TILE_HEIGHT , 
     				//	scrollx , scrolly, PAINT_TRANSPARENT, 0);

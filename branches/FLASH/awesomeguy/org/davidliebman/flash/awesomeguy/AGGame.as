@@ -29,8 +29,8 @@
 	
 	
 	var modeObj:AGMode ;
-	var guy:ModeGuy = new ModeGuy();
-	var flyer:ModeFlyer = new ModeFlyer();
+	var guy:AGModeGuy = new AGModeGuy();
+	var flyer:AGModeFlyer = new AGModeFlyer();
 		
 		public function AGGame(mystage:Stage, mybuttons:Array, myresources:Array) {
 			

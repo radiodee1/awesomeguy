@@ -1,8 +1,8 @@
 ﻿package org.davidliebman.flash.awesomeguy {
 	
-	public class ModeGuy extends AGMode{
+	public class AGModeGuy extends AGMode{
 
-		public function ModeGuy() {
+		public function AGModeGuy() {
 			// constructor code
 		}
 		
