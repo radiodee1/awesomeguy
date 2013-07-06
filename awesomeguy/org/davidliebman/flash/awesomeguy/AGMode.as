@@ -1,9 +1,11 @@
 ﻿package  org.davidliebman.flash.awesomeguy {
 	import flash.display.Stage;
 	import flash.events.Event;
-	import flash.geom.Rectangle;
+	import flash.geom.*;
 	import flash.display.Sprite;
 	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.*;
 	
 	public class AGMode {
 
@@ -126,9 +128,9 @@
 		
 		public function scrollBackground():void {
 			myField.top = 0;
-			myField.bottom = myVert * 8 *2;
+			myField.bottom = myVert * TILE_HEIGHT;
 			myField.left = 0;
-			myField.right = myHoriz * 8 * 2;
+			myField.right = myHoriz * TILE_WIDTH;
 			
 			myScreen.top = scrollBGY;
 			myScreen.bottom = scrollBGY + 384;
@@ -160,11 +162,11 @@
 					newscrollx = newscrollx - myField.right + xx;
 				}
 				if (newx + xx > myBoundaries.left) {
-					if (myScreen.right < myField.right) {
+					if (myScreen.right < myField.right || true) {
 						newscrollx = newscrollx + X_MOVE;
 					}
 					else {
-						newx = newx + X_MOVE;
+						newx = newx  + xx;
 					}
 				}
 				else if (newx + xx <=  mySweetspot.left ) {
@@ -267,26 +269,35 @@
 			}
 		}
 	
-		public function cutTile(tileset:Sprite, num:int):Bitmap {
-			var newsprite:Bitmap = new Bitmap();
+		public function cutTile( xx:int, yy:int, tileset:Bitmap, num:int):Bitmap {
+			//var newsprite:Bitmap = new Bitmap();
 			
 			var i:int ,j:int, k:int,l:int, m:int,n:int, p:int ;
 
 			m = TILEMAP_HEIGHT / TILE_HEIGHT; // 128 * 2 /16 = 16
 			n = TILEMAP_WIDTH / TILE_HEIGHT; // 224 * 2 /16 = 28
     
-			tileset.cacheAsBitmap = true;
+			//tileset.cacheAsBitmap = true;
     
 			k = (num / n); // y pos 
 			l = num - (k * n); // x pos
-			//var tiles_a:Sprite = new Sprite();
-			//tiles_a.clone(myRes[AGResources.NAME_TILES1_PNG]);
-			tileset.scrollRect = new Rectangle( k * TILE_WIDTH, l * TILE_HEIGHT, 
-													TILE_HEIGHT, TILE_HEIGHT);
+			xx = 0;
+			yy = 0;
 			
-			//var newsprite:Sprite = new Sprite();
+			//trace("copy l="+ l + " k=" + k + " num=" + num + " bits=" + tileset);
+			var b:BitmapData = new BitmapData(  TILE_WIDTH, TILE_HEIGHT, true, 0x0);
+			//b.draw(tileset);
+			//var bits:Bitmap = new Bitmap(b);
+			var bitmap:Bitmap = new Bitmap(b);
+			bitmap.bitmapData.copyPixels(tileset.bitmapData,
+							new Rectangle ( l * TILE_WIDTH, k * TILE_HEIGHT, 
+							TILE_HEIGHT, TILE_HEIGHT),
+							new Point (xx,yy) , null, null, true );
 			
-			return newsprite;
+			
+			
+			
+			return bitmap;
 		}
 	}
 	

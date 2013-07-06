@@ -1,6 +1,8 @@
 ﻿package org.davidliebman.flash.awesomeguy {
 	import flash.xml.XMLDocument;
 	import flash.display.Sprite;
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	
 	public class ModeFlyer extends AGMode{
 
@@ -14,7 +16,11 @@
 			//
 			super.componentsInOrder();
 			
-			drawLevel();
+		
+			
+			var screenBitmap:Bitmap = drawLevel();
+
+
 			
 			if (facingRight) {
 				if (animate %2 == 1 ) {
@@ -43,7 +49,7 @@
 		
 		public override function doOnce():void {
 			
-			myStage.addChild(myRes[AGResources.NAME_FLYER_L0_PNG]);
+			//myStage.addChild(myRes[AGResources.NAME_FLYER_L0_PNG]);
 			
 			prepTiles() ;
 			
@@ -67,9 +73,9 @@
 			myVert = int (tree.planet[myGame.gamePlanet].vertical.toString());
 			
 
-			stringVisible = tree.planet[myGame.gamePlanet].visible.toString();
-			stringInvisible = tree.planet[myGame.gamePlanet].invisible.toString();
-			
+			stringVisible = tree.planet[myGame.gamePlanet].horizon.visible.toString();
+			stringInvisible = tree.planet[myGame.gamePlanet].horizon.invisible.toString();
+
 			var i:int = 0;
 			var j:int = 0;
 			
@@ -95,12 +101,11 @@
 				myInvisible.push(smallArray);
 			}
 			
-			//trace(myInvisible);
+			//trace(myVisible);
 		}
 		
 		///////////////////////////////////////////
-		public function drawLevel():void {
-    
+		public function drawLevel():Bitmap {
     var  i:int,j:int,k:int,l:int,m:int;
 	
     var baseX:int, baseY:int;//, startX, startY;
@@ -114,12 +119,17 @@
     //uint16_t square[TILE_HEIGHT][TILE_WIDTH];
     
     //uint16_t  **  screen = (getScreenPointer(MY_SCREEN_BACK));
-    var map_level:Array = myVisible;
-	var map_objects:Array = myInvisible;
+    //var map_level:Array = myVisible;
+	//var map_objects:Array = myInvisible;
     var LONG_MAP_H:int =	192;
 	var LONG_MAP_V:int =	32;
     //animate = newBG + 1;
     var animate:int = 0;
+			
+	var screenBitmap:Bitmap = new Bitmap( new BitmapData(LONG_MAP_H * TILE_WIDTH, LONG_MAP_V * TILE_HEIGHT,
+										false, 0xff6666));
+
+
     /* clear screen */
     //alertOnScreen();
     //memset(screen, alert_color, (SCREEN_HEIGHT + LONG_MAP_V)* SCREEN_WIDTH * 2);
@@ -137,15 +147,18 @@
 	for ( j = baseX - 1 ; j < baseX + tilesWidthMeasurement + 3; j++) { //32
     	for ( i = baseY - 1 ; i < baseY + tilesHeightMeasurement + 3; i ++ ) { //24
     		
-    		
     		if (i >= 0 && j >= 0  && i < LONG_MAP_V && j < LONG_MAP_H) { 
-    			//LOGE("map_level %d", map_level[j][i] );
+    		//trace("i"+i+" j" + j + " = " + myVisible[i][j]);
+    			
+				//LOGE("map_level %d", map_level[j][i] );
     			if(  myVisible[i][j] != 0  && myVisible[i][j] != AGMode.B_GOAL  ) { //is tile blank??
-    				
-//					var square:Bitmap = cutTile( myRes[AGResources.NAME_TILES1_PNG], myVisible[i][j] - levelcheat);
-//    				square.x = (i * TILE_WIDTH ) - scrollBGX;
-//					square.y = (j * TILE_HEIGHT) - scrollBGY;
-//					myStage.addChild(square);
+    				//trace(myVisible);
+					var square:Bitmap = cutTile(  i * TILE_WIDTH, j * TILE_HEIGHT , 
+							myRes[AGResources.NAME_TILES1_PNG], myVisible[i][j] - levelcheat);
+					
+					square.x = new Number ((i * TILE_WIDTH ) - scrollBGX);
+					square.y = new Number ((j * TILE_HEIGHT) - scrollBGY);
+					myStage.addChild(square);
     				//drawTile_8(square, j * TILE_WIDTH, i * TILE_HEIGHT , 
     				//	scrollx , scrolly, PAINT_TRANSPARENT, 0);
 					
@@ -278,6 +291,8 @@
 	//drawTorpedo();
 
 	//checkRegularCollision();
+	
+	return screenBitmap;
 }
 		///////////////////////////////////////////
 		
