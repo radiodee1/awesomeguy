@@ -55,8 +55,8 @@
 	var mySweetspot:Rectangle = new Rectangle();
 	var myHoriz:int = 0;
 	var myVert:int = 0;
-	public var scrollBGX:int = 0;
-	public var scrollBGY:int = 0;
+	public var scrollBGX:int = 50;
+	public var scrollBGY:int = 50;
 	var xx:int = 0;
 	var yy:int = 0;
 	public static var X_MOVE = 3 * 2;
@@ -155,34 +155,34 @@
 			var newscrollx:int = myScreen.left;
 			var newscrolly:int = myScreen.top;
 			
+			var wrappingNow:Boolean = false;
+			
+			if (myScreen.right > myField.right || myScreen.left < myField.left) wrappingNow = true;
+			
 			//change values
 			if (xx > 0) { // going right - drift left
 				if (newx + xx >= myField.right && wrapHorizontal) { //wrap
 					newx = newx - myField.right + xx;
+				
 				}
 				if (myScreen.right + xx >= myField.right && wrapHorizontal) { //wrap
 					newscrollx = newscrollx - myField.right + xx;
+					
 				}
 				
 				newx = newx + xx;
 				newscrollx = newscrollx + xx;
-				/*
-				if (newx + xx > myBoundaries.left) {
-					if (myScreen.right < myField.right ) {
-						newscrollx = newscrollx + X_MOVE;
-					}
-					else {
-						newx = newx  + xx;
-					}
+				
+				
+				if (newx < mySweetspot.left && !wrappingNow) { //drift
+					newscrollx = newscrollx - xx;
 				}
-				else if (newx + xx <=  mySweetspot.left ) {
-					newx = newx + xx;
+				if (newx > myBoundaries.left && !wrappingNow) { //drift
 					newscrollx = newscrollx + xx;
 				}
-				*/
 				
 			}
-			if (xx < 0) { //going left - drift right
+			if (xx < 0) { //going left 
 				if (newx + xx <= myField.left && wrapHorizontal) { //wrap
 					newx = newx + myField.right + xx;
 				}
@@ -192,72 +192,56 @@
 				
 				newx = newx + xx;
 				newscrollx = newscrollx + xx;
-				/*
-				if (newx +xx < myBoundaries.right) {
-					if (myScreen.left < myField.left) {
-						newscrollx = newscrollx + X_MOVE;
-					}
-					else {
-						newx = newx + X_MOVE;
-					}
+				
+				if (newx > mySweetspot.right && !wrappingNow) { //drift
+					newscrollx = newscrollx - xx;
 				}
-				else if (newx  + xx >=  mySweetspot.right ) {
-					newx = newx + X_MOVE;
-					newscrollx = newscrollx + X_MOVE;
+				if (newx < myBoundaries.right && !wrappingNow) { //drift
+					newscrollx = newscrollx + xx;
 				}
-				*/
+				
 			}
 			if (yy > 0) { // going down
-				if (newy + yy >= myField.bottom) { //clip
-					newy = myField.bottom ;
+				if (newy + yy >= myField.bottom - spriteHeight) { //clip
+					newy = myField.bottom - spriteHeight;
+					
+					//newscrolly = myField.bottom - myScreen.bottom;
 				}
-				//if (myScreen.bottom + yy >= myField.bottom) { //wrap
-				//	newscrolly = newscrolly - myField.bottom + yy;
-				//}
-				if (newy + yy > myBoundaries.top) {
-					if (myScreen.bottom < myField.bottom) {
-						newscrolly = newscrolly + yy;
-					}
-					else {
-						newy = newy - yy;
-					}
-				}
-				else if (newy + yy <=  mySweetspot.top ) {
+				if (newy + yy < myField.bottom - spriteHeight) {
 					newy = newy + yy;
-					if (myScreen.top < myField.top) {
+					
+					if (myScreen.bottom <= myField.bottom ) {
 						newscrolly = newscrolly + yy;
 					}
 				}
-			
+				
+				//////////////////////////
+				
 				
 			}
 			if (yy < 0 ) { // up - drift down
 				if (newy + yy <= myField.top) { //clip
 					newy = myField.top;
+					//newscrolly = myField.top;
 				}
-				//if (myScreen.top + yy <= myField.top) { // wrap
-				//	newscrolly = newscrolly + myField.bottom + yy;
-				//}
-				if (newy + yy < myBoundaries.bottom) {
-					if (myScreen.top < myField.top) {
-						newscrolly = newscrolly + yy;
-					}
-					else {
-						newy = newy - yy;
-					}
-				}
-				else if (newy  + yy >=  mySweetspot.bottom ) {
+				if (newy + yy > myField.top ) {
 					newy = newy + yy;
-					if (myScreen.bottom > myField.bottom) {
+					
+					if (myScreen.top >= myField.top ) {
 						newscrolly = newscrolly + yy;
 					}
 				}
+				
+				//////////////////////////////
+				
 			}
 			
 			scrollBGX = newscrollx;
 			scrollBGY = newscrolly;
 			xpos = newx;
 			ypos = newy;
+			
+			trace(newscrolly);
 		}
 		
 		public function detectMovement():void {
@@ -290,7 +274,7 @@
 			n = TILEMAP_WIDTH / TILE_WIDTH; // 224 * 2 /16 = 28
     
 			k = int ((num / n) + m  ); // y pos 
-			l = int (num - (k * n) + 4  ); // x pos
+			l = int (num - (k * n) + 4 ); // x pos
 			
 			//trace(n + "copy l="+ l + " k=" + k + " num=" + num + " bits=" + tileset);
 			var b:BitmapData = new BitmapData(  TILE_WIDTH, TILE_HEIGHT, true, 0x0);
