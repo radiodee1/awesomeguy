@@ -23,7 +23,8 @@
 	var myGame:AGGame;
 	
 	static var change:int = 0;
-		
+	
+	//blocks	
 	static var B_NONE:int = -1 +change;
 	static var B_START:int = 5 +change;
 	static var B_SPACE:int = 0 ;
@@ -38,6 +39,24 @@
 	static var B_ONEUP:int = 438 +change;
 	static var B_BIBPRIZE:int = 440 +change;
 	static var B_PLATFORM:int = 437 +change; 
+	
+	//sprites
+	static var  S_NONE:int =  0;
+	static var  S_GUY:int =  1;
+	static var  S_FLYER:int =  2;
+	static var  S_GATOR:int =  3;
+	static var  S_CLOUD:int =  4;
+	static var  S_TORPEDO:int =  5;
+	static var S_BUBBLE_0:int =  6;
+	static var S_BUBBLE_1:int =  7;
+	static var S_BUBBLE_2:int =  8;
+	static var S_BUBBLE_3:int =  9;
+	static var S_INVADER_1:int =  10;
+	static var S_INVADER_2:int =  11;
+	static var S_INVADER_3:int =  12;
+	static var S_LINE:int =	13;
+	static var S_LINE_2:int = 14;
+	static var S_EXPLOSION_SPRITE:int = 15;
 	
 	var TILEMAP_HEIGHT:int = 128 * 2;
 	var TILEMAP_WIDTH:int = 224 * 2;
@@ -72,6 +91,8 @@
 	
 	public var myVisible:Array ;
 	public var myInvisible:Array ;
+	
+	var sprite:Sprite = new Sprite();
 
 		public function AGMode() {
 			// constructor code
@@ -167,7 +188,7 @@
 					newx = newx - myField.right + xx;
 				
 				}
-				if (myScreen.right + xx >= myField.right && wrapHorizontal) { //wrap
+				if (myScreen.left + xx >= myField.right && wrapHorizontal) { //wrap
 					newscrollx = newscrollx - myField.right + xx;
 					
 				}
@@ -216,8 +237,6 @@
 						newscrolly = newscrolly + yy;
 					}
 				}
-				
-				//////////////////////////
 				
 				
 			}
@@ -268,7 +287,6 @@
 		}
 	
 		public function cutTile(  tileset:Bitmap, num:int , tilebracket:int ):Bitmap {
-			//var newsprite:Bitmap = new Bitmap();
 			
 			var i:int ,j:int, k:int,l:int, m:int,n:int, p:int ;
 
@@ -278,10 +296,9 @@
 			k = int ((num / n) + m  ); // y pos 
 			l = int (num - (k * n)  ); // x pos + 4
 			
-			//trace(n + "copy l="+ l + " k=" + k + " num=" + num + " bits=" + tileset);
+			
 			var b:BitmapData = new BitmapData(  TILE_WIDTH, TILE_HEIGHT, true, 0x0);
-			//b.draw(tileset);
-			//var bits:Bitmap = new Bitmap(b);
+			
 			var bitmap:Bitmap = new Bitmap(b);
 			bitmap.bitmapData.copyPixels(tileset.bitmapData,
 							new Rectangle ( l * TILE_WIDTH, k * TILE_HEIGHT, 
@@ -294,7 +311,54 @@
 			return bitmap;
 		}
 		
-		
+		public function drawBasicSprite(spriteNum:int, kind:int):void {
+			// init some vars here
+			var add:int, add_radar:int;
+			
+			
+			switch (kind) {
+				case AGMode.S_FLYER:
+					
+				add = 0;
+				add_radar = 0;
+
+				
+				if (scrollBGX >= xpos  ) {
+					add = myHoriz * TILE_WIDTH;
+					add_radar =  (xpos - scrollBGX) - xpos ;
+				}
+				
+				
+				
+				
+				
+				if (facingRight) {
+					if (animate %2 == 1 ) {
+						sprite = myRes[AGResources.NAME_FLYER_R0_PNG];
+
+					}
+					else {
+						sprite = myRes[AGResources.NAME_FLYER_R1_PNG];
+	
+					}
+				}
+				else {
+					if (animate %2 == 1) {
+						sprite = myRes[AGResources.NAME_FLYER_L0_PNG];
+
+					}
+					else {
+						sprite = myRes[AGResources.NAME_FLYER_L1_PNG];
+	
+					}
+				}
+				sprite.x = add + xpos - scrollBGX;
+				sprite.y = ypos - scrollBGY;
+				myStage.addChild(sprite);
+			
+				break;
+			}
+		}
 		
 	}
 	

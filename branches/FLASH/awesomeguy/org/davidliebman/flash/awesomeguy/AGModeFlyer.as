@@ -6,7 +6,6 @@
 	
 	public class AGModeFlyer extends AGMode{
 
-		var sprite:Sprite = new Sprite();
 
 		public function AGModeFlyer() {
 			// constructor code
@@ -21,30 +20,8 @@
 			drawLevel();
 
 
+			drawBasicSprite(0, AGMode.S_FLYER);
 			
-			if (facingRight) {
-				if (animate %2 == 1 ) {
-					sprite = myRes[AGResources.NAME_FLYER_R0_PNG];
-
-				}
-				else {
-					sprite = myRes[AGResources.NAME_FLYER_R1_PNG];
-
-				}
-			}
-			else {
-				if (animate %2 == 1) {
-					sprite = myRes[AGResources.NAME_FLYER_L0_PNG];
-
-				}
-				else {
-					sprite = myRes[AGResources.NAME_FLYER_L1_PNG];
-
-				}
-			}
-			sprite.x = xpos - scrollBGX;
-			sprite.y = ypos - scrollBGY;
-			myStage.addChild(sprite);
 		}
 		
 		public override function doOnce():void {
