@@ -63,6 +63,9 @@
 	var TILE_HEIGHT:int = 16;
 	var TILE_WIDTH:int = 16;
 	
+	public var SCREEN_HEIGHT:int = (512 * 3/4 ) - 64;
+	public var SCREEN_WIDTH:int = 512;
+	
 	static var TILE_TOP:int = 0;
 	static var TILE_MID:int = 1;
 	static var TILE_BOT:int = 3;
@@ -162,9 +165,9 @@
 			myField.right = myHoriz * TILE_WIDTH;
 			
 			myScreen.top = scrollBGY;
-			myScreen.bottom = scrollBGY + 384;
+			myScreen.bottom = scrollBGY + SCREEN_HEIGHT;
 			myScreen.left = scrollBGX;
-			myScreen.right = scrollBGX + 512;
+			myScreen.right = scrollBGX + SCREEN_WIDTH;
 			
 			myBoundaries.top = myScreen.top + 20 + 0;
 			myBoundaries.bottom = myScreen.bottom - 20 - spriteHeight;
