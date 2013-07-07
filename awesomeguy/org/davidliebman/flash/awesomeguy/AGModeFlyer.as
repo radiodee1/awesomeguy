@@ -92,7 +92,7 @@
 	var TILE_HEIGHT:int = 16;
 	
 	var tilesWidthMeasurement:int = 32;
-	var tilesHeightMeasurement:int = 32;
+	var tilesHeightMeasurement:int = 24;//32;
     //uint16_t square[TILE_HEIGHT][TILE_WIDTH];
     
     //uint16_t  **  screen = (getScreenPointer(MY_SCREEN_BACK));
