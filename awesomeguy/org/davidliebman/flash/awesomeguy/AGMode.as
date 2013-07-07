@@ -89,6 +89,7 @@
 	public var animate:int = 0;
 	public var wrapHorizontal:Boolean = true;
 	public var verticalWrapPref:Boolean = false;// unused?
+	public var flyerGrounded:Boolean = false;
 	
 	public var myVisible:Array ;
 	public var myInvisible:Array ;
@@ -230,7 +231,7 @@
 			if (yy > 0) { // going down
 				if (newy + yy >= myField.bottom - spriteHeight) { //clip
 					newy = myField.bottom - spriteHeight;
-					
+					flyerGrounded = true;// ??
 					//newscrolly = myField.bottom - myScreen.bottom;
 				}
 				if (newy + yy < myField.bottom - spriteHeight) {
@@ -365,7 +366,7 @@
 		
 		////////////////////////
 		public function physicsAdjustments():void {
-				//this version for
+				//this version for overriding
 		}
 		
 	}
