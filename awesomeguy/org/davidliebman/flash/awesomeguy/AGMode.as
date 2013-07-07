@@ -58,6 +58,11 @@
 	static var S_LINE_2:int = 14;
 	static var S_EXPLOSION_SPRITE:int = 15;
 	
+	//radar ping types
+	static var PING_FLYER:int = 0;
+	static var PING_OTHER:int =  1;
+	static var PING_ROCK:int = 2;	
+	
 	var TILEMAP_HEIGHT:int = 128 * 2;
 	var TILEMAP_WIDTH:int = 224 * 2;
 	var TILE_HEIGHT:int = 16;
@@ -87,12 +92,16 @@
 	public static var Y_MOVE = 3 * 2;
 	var xpos:int = 100;
 	var ypos:int = 100;
+	var radar_start:int = 0;
+	var radar_start_scroll:int = 0;
 	
 	public var facingRight:Boolean = false;
 	public var animate:int = 0;
 	public var wrapHorizontal:Boolean = true;
 	public var verticalWrapPref:Boolean = false;// unused?
 	public var flyerGrounded:Boolean = false;
+	
+	public var radar:Rectangle = new Rectangle(0,0,SCREEN_WIDTH - 128, 64);
 	
 	public var myVisible:Array ;
 	public var myInvisible:Array ;
@@ -371,6 +380,132 @@
 		public function physicsAdjustments():void {
 				//this version for overriding
 		}
+		
+
+		public function drawRadarPing(box:Rectangle, bits:Bitmap, oldx:int, oldy:int , kind:int,  color:uint):void {
+	//uint16_t  *  screen =(void *) (getScreenPointer(MY_SCREEN_BACK));
+
+	//LOGE("RADAR_BOX %d", box.left);
+		var b:BitmapData;
+		var oldxx:int = 0;
+		var oldyy:int = 0;
+		var ii:int = 0;
+		var jj:int = 0;
+
+		ii =  radar_start_scroll;
+		jj = adjust_x (radar_start);
+		oldyy = oldy;
+
+		if ( oldx  > scrollBGX  && kind == PING_FLYER  && false) {
+			oldxx = oldx - scrollBGX  - (  ii);
+			if (oldxx < 0) oldxx = oldxx % (myHoriz * TILE_WIDTH *2 );
+
+		}
+		else if (oldx  < scrollBGX && kind == PING_FLYER && false ) {
+			oldxx = oldx - ii + (myHoriz * TILE_WIDTH );
+
+		}
+		if (kind == PING_FLYER) {
+			oldxx =  (((oldx - scrollBGX )  ) + (myHoriz * TILE_WIDTH/2)  - 256 + (ii ) )  % (myHoriz * TILE_WIDTH  );// this might be OK...
+			oldxx = adjust_x(oldxx) * 2;
+		}
+		else  {
+			oldxx = (oldx - scrollBGX + (myHoriz * TILE_WIDTH/2)  + ii) % (myHoriz * TILE_WIDTH );// this might be OK...
+			oldxx = adjust_x(oldxx);
+		}
+
+		//trace ("PING " + myHoriz + " " + TILE_WIDTH);
+	
+		oldyy = oldyy * 2;
+	
+		b = new BitmapData( 2, 2, true, color);
+		bits.bitmapData.copyPixels(b,
+							new Rectangle (0, 0, 
+							2, 2),
+							new Point (box.left + (oldxx/16 ), box.top + (oldyy/16 ) ) , null, null, true );
+	
+		//screen[(( (yy/8) + box.top   ) * SCREEN_WIDTH )  +
+		//       (  ( (xx /8) + box.left  ) ) ] = color;
+
+	if (kind == PING_ROCK) return;
+
+		b = new BitmapData( 2, 2, true, color);
+		bits.bitmapData.copyPixels(b,
+							new Rectangle (0, 0, 
+							2, 2),
+							new Point (box.left + 1 +(oldxx/16 ), box.top + (oldyy/16 ) ) , null, null, true );
+	
+		//screen[(( (yy/8) + box.top  + 1 ) * SCREEN_WIDTH )  +
+		//       (  ( (xx /8) + box.left  ) ) ] = color;
+
+		b = new BitmapData( 2, 2, true, color);
+		bits.bitmapData.copyPixels(b,
+							new Rectangle (0, 0, 
+							2, 2),
+							new Point (box.left + (oldxx/16 ), box.top + 1+(oldyy/16 ) ) , null, null, true );
+
+		//screen[(( (yy/8) + box.top   ) * SCREEN_WIDTH )  +
+		//       (  ( (xx /8) + box.left + 1 ) ) ] = color;
+
+		b = new BitmapData( 2, 2, true, color);
+		bits.bitmapData.copyPixels(b,
+							new Rectangle (0, 0, 
+							2, 2),
+							new Point (box.left + 1 + (oldxx/16 ), box.top + 1+ (oldyy/16 ) ) , null, null, true );
+
+		//screen[(( (yy/8) + box.top + 1  ) * SCREEN_WIDTH )  +
+		//		(  ( (xx /8) + box.left + 1 ) ) ] = color;
+
+	if (kind != PING_OTHER) return;
+
+		b = new BitmapData( 2, 2, true, color);
+		bits.bitmapData.copyPixels(b,
+							new Rectangle (0, 0, 
+							2, 2),
+							new Point (box.left -2 + (oldxx/16 ), box.top + (oldyy/16 ) ) , null, null, true );
+
+		//screen[(( (yy/8) + box.top - 2 ) * SCREEN_WIDTH )  +
+		//	   (  ( (xx /8) + box.left  ) ) ] = color;
+
+		b = new BitmapData( 2, 2, true, color);
+		bits.bitmapData.copyPixels(b,
+							new Rectangle (0, 0, 
+							2, 2),
+							new Point (box.left -2 + (oldxx/16 ), box.top +1+ (oldyy/16 ) ) , null, null, true );
+
+		//screen[(( (yy/8) + box.top  - 2 ) * SCREEN_WIDTH )  +
+		//	   (  ( (xx /8) + box.left  + 1) ) ] = color;
+
+		b = new BitmapData( 2, 2, true, color);
+		bits.bitmapData.copyPixels(b,
+							new Rectangle (0, 0, 
+							2, 2),
+							new Point (box.left -1 + (oldxx/16 ), box.top + (oldyy/16 ) ) , null, null, true );
+
+		//screen[(( (yy/8) + box.top  - 1 ) * SCREEN_WIDTH )  +
+		//	   (  ( (xx /8) + box.left  ) ) ] = color;
+
+		b = new BitmapData( 2, 2, true, color);
+		bits.bitmapData.copyPixels(b,
+							new Rectangle (0, 0, 
+							2, 2),
+							new Point (box.left -1+ (oldxx/16 ), box.top +1 + (oldyy/16 ) ) , null, null, true );
+
+		//screen[(( (yy/8) + box.top  - 1 ) * SCREEN_WIDTH )  +
+		//	   (  ( (xx /8) + box.left  + 1) ) ] = color;
+
+		}
+		
+public function adjust_x( xxx:int ):int {
+	if (xxx > myHoriz *  TILE_WIDTH ) {
+		//x = 0;
+		xxx = xxx - (myHoriz * TILE_WIDTH);
+	}
+	if (xxx < 0 ) {
+		xxx = xxx + (myHoriz * TILE_WIDTH);
+	}
+	return xxx;
+}		
 		
 	}
 	

@@ -15,13 +15,23 @@
 			//
 			super.componentsInOrder();
 			
-		
 			
 			drawLevel();
 
 
 			drawBasicSprite(0, AGMode.S_FLYER);
+			var screenframe:Bitmap = new Bitmap (new BitmapData (SCREEN_WIDTH, 64, false, 0x66666666));
+			screenframe.x = 0;
+			screenframe.y = SCREEN_HEIGHT;
+			myStage.addChild(screenframe);
 			
+			var screenBitmap:Bitmap = new Bitmap( new BitmapData(SCREEN_WIDTH - 128, 64,
+										false, 0x00000000));
+			drawRadarPing(radar,screenBitmap,xpos,ypos,AGMode.PING_FLYER,0xffffffff);
+			
+			screenBitmap.x = 64;
+			screenBitmap.y = SCREEN_HEIGHT;
+			myStage.addChild(screenBitmap);
 		}
 		
 		public override function doOnce():void {
@@ -29,7 +39,9 @@
 			//myStage.addChild(myRes[AGResources.NAME_FLYER_L0_PNG]);
 			
 			prepTiles() ;
-			
+			radar_start = xpos - scrollBGX;
+			radar_start_scroll =  scrollBGX;
+			//trace (radar_start + " scroll:" + scrollBGX);
 			//myRes[AGResources.NAME_EXPLOSION_MP3].play();
 		}
 		
@@ -103,8 +115,7 @@
     //animate = newBG + 1;
     //var animate:int = 0;
 			
-	//var screenBitmap:Bitmap = new Bitmap( new BitmapData(LONG_MAP_H * TILE_WIDTH, LONG_MAP_V * TILE_HEIGHT,
-	//									false, 0xff6666));
+	
 	var square:Bitmap;
 
     /* clear screen */
