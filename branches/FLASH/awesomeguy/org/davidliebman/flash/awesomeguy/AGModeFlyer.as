@@ -83,7 +83,7 @@
 		
 		///////////////////////////////////////////
 		public function drawLevel():void {
-    var  i:int,j:int,k:int,l:int,m:int;
+    var  i:int,j:int,k:int,l:int,m:int, zz:int;
 	
     var baseX:int, baseY:int;//, startX, startY;
     var mapcheat:int = -3;
@@ -101,7 +101,7 @@
     var LONG_MAP_H:int =	192;
 	var LONG_MAP_V:int =	32;
     //animate = newBG + 1;
-    var animate:int = 0;
+    //var animate:int = 0;
 			
 	//var screenBitmap:Bitmap = new Bitmap( new BitmapData(LONG_MAP_H * TILE_WIDTH, LONG_MAP_V * TILE_HEIGHT,
 	//									false, 0xff6666));
@@ -144,9 +144,10 @@
 				
 				// special animated tiles
 				k = myInvisible[i][j] ;
-				if ( k != AGMode.B_START && k != AGMode.B_MONSTER && k != AGMode.B_DEATH
-    				&& k != AGMode.B_PLATFORM && k != AGMode.B_MARKER && k != AGMode.B_BLOCK
-    				&& k != AGMode.B_LADDER  && k != AGMode.B_SPACE  && k != AGMode.B_GOAL) {
+				zz = k - levelcheat;
+				if ( zz != AGMode.B_START && zz != AGMode.B_MONSTER && zz != AGMode.B_DEATH
+    				&& zz != AGMode.B_PLATFORM && zz != AGMode.B_MARKER && zz != AGMode.B_BLOCK
+    				&& zz != AGMode.B_LADDER  && k != AGMode.B_SPACE  && zz != AGMode.B_GOAL) {
     				
     				
     				if (animate == 0 || animate == 1 || animate == 8) {
@@ -211,9 +212,10 @@
 				
 				// special animated tiles
 				k = myInvisible[i][ j-m] ;//- levelcheat;
-				if ( k != B_START && k != B_MONSTER && k != B_DEATH
-    				&& k != B_PLATFORM && k != B_MARKER && k != B_BLOCK
-    				&& k != B_LADDER  && k != B_SPACE && k != B_GOAL) {
+				zz = k - levelcheat;
+				if ( zz != B_START && zz != B_MONSTER && zz != B_DEATH
+    				&& zz != B_PLATFORM && zz != B_MARKER && zz != B_BLOCK
+    				&& zz != B_LADDER  && k != B_SPACE && zz != B_GOAL) {
     				
     				
     				if (animate == 0 || animate == 1 || animate == 8) {
@@ -276,9 +278,10 @@
 				/////////////////////////////////////////////
 					// special animated tiles
 				k = myInvisible[i][ j+m] ;//- levelcheat;
-				if ( k != B_START && k != B_MONSTER && k != B_DEATH
-    				&& k != B_PLATFORM && k != B_MARKER && k != B_BLOCK
-    				&& k != B_LADDER  && k != B_SPACE && k != B_GOAL) {
+				zz = k - levelcheat;
+				if ( zz != B_START && zz != B_MONSTER && zz != B_DEATH
+    				&& zz != B_PLATFORM && zz != B_MARKER && zz != B_BLOCK
+    				&& zz != B_LADDER  && k != B_SPACE && zz != B_GOAL) {
     				
     				
     				if (animate == 0 || animate == 1 || animate == 8) {
@@ -373,6 +376,10 @@
 }
 		///////////////////////////////////////////
 		public override function physicsAdjustments():void {
+			if (yy < 0) flyerGrounded = false;
+			
+			if (flyerGrounded) return;
+			
 			if (xx + yy == 0 ) {
 				//ypos = ypos + 
 				yy = (Y_MOVE / 2);
