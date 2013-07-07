@@ -208,7 +208,7 @@
 					square.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
 					myStage.addChild(square);
 				}
-				////////////////----------------------------
+				
 				// special animated tiles
 				k = myInvisible[i][ j-m] ;//- levelcheat;
 				if ( k != B_START && k != B_MONSTER && k != B_DEATH
@@ -252,7 +252,7 @@
 					square.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
 					myStage.addChild(square);
 				}
-				//------------------------------------
+				
 			}// if j-m > 0 etc.
 
 			}
@@ -372,7 +372,20 @@
 	return ;
 }
 		///////////////////////////////////////////
-		
+		public override function physicsAdjustments():void {
+			if (xx + yy == 0 ) {
+				//ypos = ypos + 
+				yy = (Y_MOVE / 2);
+				if (facingRight) {
+					//xpos = xpos + 
+					xx = (X_MOVE / 2);
+				}
+				else {
+					//xpos = xpos 
+					xx = - (X_MOVE / 2);
+				}
+			}
+		}
 	
 	}
 	

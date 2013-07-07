@@ -80,7 +80,7 @@
 	public var scrollBGY:int = 50;
 	var xx:int = 0;
 	var yy:int = 0;
-	public static var X_MOVE = 3 * 2;
+	public static var X_MOVE = 10 * 2;
 	public static var Y_MOVE = 3 * 2;
 	var xpos:int = 100;
 	var ypos:int = 100;
@@ -88,6 +88,7 @@
 	public var facingRight:Boolean = false;
 	public var animate:int = 0;
 	public var wrapHorizontal:Boolean = true;
+	public var verticalWrapPref:Boolean = false;// unused?
 	
 	public var myVisible:Array ;
 	public var myInvisible:Array ;
@@ -144,6 +145,8 @@
 		
 		public function componentsInOrder():void {
 			detectMovement();
+			physicsAdjustments();
+			
 			scrollBackground();
 		}
 		
@@ -169,8 +172,8 @@
 			
 			mySweetspot.top = myBoundaries.top;
 			mySweetspot.bottom = myBoundaries.bottom;
-			mySweetspot.left = myBoundaries.left + 8;
-			mySweetspot.right = myBoundaries.right - 8;
+			mySweetspot.left = myBoundaries.left + (X_MOVE * 3/2) ;
+			mySweetspot.right = myBoundaries.right - (X_MOVE * 3/2);
 			
 			var newx:int = xpos;
 			var newy:int = ypos;
@@ -358,6 +361,11 @@
 			
 				break;
 			}
+		}
+		
+		////////////////////////
+		public function physicsAdjustments():void {
+				//this version for
 		}
 		
 	}
