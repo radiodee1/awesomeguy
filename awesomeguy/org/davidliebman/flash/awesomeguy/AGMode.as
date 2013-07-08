@@ -98,7 +98,7 @@
 	public var facingRight:Boolean = false;
 	public var animate:int = 0;
 	public var levelcheat:int = 3;
-	public var mapcheat:int = - 3;
+	public var mapcheat:int = - 4;
 	public var wrapHorizontal:Boolean = true;
 	public var verticalWrapPref:Boolean = false;// unused?
 	public var flyerGrounded:Boolean = false;
