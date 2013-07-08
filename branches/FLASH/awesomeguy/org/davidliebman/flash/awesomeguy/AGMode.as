@@ -97,11 +97,14 @@
 	
 	public var facingRight:Boolean = false;
 	public var animate:int = 0;
+	public var levelcheat:int = 3;
+	public var mapcheat:int = - 3;
 	public var wrapHorizontal:Boolean = true;
 	public var verticalWrapPref:Boolean = false;// unused?
 	public var flyerGrounded:Boolean = false;
 	
 	public var radar:Rectangle = new Rectangle(0,0,SCREEN_WIDTH - 128, 64);
+	public var radarscreen:Bitmap = new Bitmap();
 	
 	public var myVisible:Array ;
 	public var myInvisible:Array ;
@@ -396,22 +399,15 @@
 		jj = adjust_x (radar_start);
 		oldyy = oldy;
 
-		if ( oldx  > scrollBGX  && kind == PING_FLYER  && false) {
-			oldxx = oldx - scrollBGX  - (  ii);
-			if (oldxx < 0) oldxx = oldxx % (myHoriz * TILE_WIDTH *2 );
-
-		}
-		else if (oldx  < scrollBGX && kind == PING_FLYER && false ) {
-			oldxx = oldx - ii + (myHoriz * TILE_WIDTH );
-
-		}
+		
+			
 		if (kind == PING_FLYER) {
 			oldxx =  (((oldx - scrollBGX )  ) + (myHoriz * TILE_WIDTH/2)  - 256 + (ii ) )  % (myHoriz * TILE_WIDTH  );// this might be OK...
 			oldxx = adjust_x(oldxx) * 2;
 		}
 		else  {
 			oldxx = (oldx - scrollBGX + (myHoriz * TILE_WIDTH/2)  + ii) % (myHoriz * TILE_WIDTH );// this might be OK...
-			oldxx = adjust_x(oldxx);
+			oldxx = adjust_x(oldxx) * 2;
 		}
 
 		//trace ("PING " + myHoriz + " " + TILE_WIDTH);

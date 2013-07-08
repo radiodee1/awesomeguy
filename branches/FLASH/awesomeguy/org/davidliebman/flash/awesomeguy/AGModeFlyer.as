@@ -6,7 +6,7 @@
 	
 	public class AGModeFlyer extends AGMode{
 
-
+		
 		public function AGModeFlyer() {
 			// constructor code
 		}
@@ -14,24 +14,24 @@
 		public override function componentsInOrder():void {
 			//
 			super.componentsInOrder();
-			
+			var screenframe:Bitmap = new Bitmap (new BitmapData (SCREEN_WIDTH, 64, false, 0x66666666));
+			radarscreen = new Bitmap( new BitmapData(SCREEN_WIDTH - 128, 64,
+										false, 0x00000000));
 			
 			drawLevel();
-
+			drawRadarRock();
 
 			drawBasicSprite(0, AGMode.S_FLYER);
-			var screenframe:Bitmap = new Bitmap (new BitmapData (SCREEN_WIDTH, 64, false, 0x66666666));
 			screenframe.x = 0;
 			screenframe.y = SCREEN_HEIGHT;
 			myStage.addChild(screenframe);
 			
-			var screenBitmap:Bitmap = new Bitmap( new BitmapData(SCREEN_WIDTH - 128, 64,
-										false, 0x00000000));
-			drawRadarPing(radar,screenBitmap,xpos,ypos,AGMode.PING_FLYER,0xffffffff);
 			
-			screenBitmap.x = 64;
-			screenBitmap.y = SCREEN_HEIGHT;
-			myStage.addChild(screenBitmap);
+			drawRadarPing(radar, radarscreen ,xpos,ypos,AGMode.PING_FLYER,0xffffffff);
+			
+			radarscreen.x = 64;
+			radarscreen.y = SCREEN_HEIGHT;
+			myStage.addChild(radarscreen);
 		}
 		
 		public override function doOnce():void {
@@ -405,6 +405,29 @@
 			}
 		}
 	
+
+		public function drawRadarRock():void {
+
+	var xx:int,yy:int;
+	for (xx = 0; xx < myHoriz; xx ++ ) {
+		for(yy = 0; yy < myVert; yy ++ ) {
+
+			if (myInvisible[yy][xx] + levelcheat == B_BLOCK) {
+				//trace ("lost");
+				drawRadarPing(radar, radarscreen, xx * TILE_WIDTH, yy * TILE_HEIGHT, PING_ROCK, 0xffffffff);
+			}
+			else if (myVisible[yy][xx]  != B_SPACE) {
+				drawRadarPing(radar, radarscreen, xx * TILE_WIDTH, yy * TILE_HEIGHT, PING_ROCK, 0xa6a6a6a6);
+				//trace("lost2");
+			}
+			if (myInvisible[yy][xx] + levelcheat == B_PRIZE) {
+				drawRadarPing(radar, radarscreen, xx * TILE_WIDTH, yy * TILE_HEIGHT, PING_OTHER, 0xf0000000);
+				//trace("lost3");
+			}
+		}
+	}
+}
+		
 	}
 	
 }
