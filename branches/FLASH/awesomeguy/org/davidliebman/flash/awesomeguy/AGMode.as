@@ -9,6 +9,7 @@
 	
 	public class AGMode {
 
+	// keys
 	var K_LEFT:Boolean = false;
 	var K_RIGHT:Boolean = false;
 	var K_UP:Boolean = false;
@@ -21,24 +22,30 @@
 	var myButtons:Array;
 	var myRes:Array;
 	var myGame:AGGame;
-	
-	static var change:int = 0;
-	
+
+	var mySprite:Array = new Array();
+	var myTimer:Array = new Array();
+	var myTorpedo:Array = new Array();
+		
+	static var TOTAL_SPRITE:int = 50;
+	static var TOTAL_TORPEDOS:int = 5;
+	static var TOTAL_TIMER:int = 10;
+		
 	//blocks	
-	static var B_NONE:int = -1 +change;
-	static var B_START:int = 5 +change;
+	static var B_NONE:int = -1 ;
+	static var B_START:int = 5 ;
 	static var B_SPACE:int = 0 ;
-	static var B_LADDER:int = 444 +change;
-	static var B_BLOCK:int = 442 +change;
-	static var B_GOAL:int = 446 +change;
-	static var B_KEY:int = 445 +change; 
-	static var B_PRIZE:int =  447 +change;
-	static var B_MONSTER:int = 443 +change;
-	static var B_MARKER:int = 441 +change; 
-	static var B_DEATH:int = 439 +change;
-	static var B_ONEUP:int = 438 +change;
-	static var B_BIBPRIZE:int = 440 +change;
-	static var B_PLATFORM:int = 437 +change; 
+	static var B_LADDER:int = 444 ;
+	static var B_BLOCK:int = 442 ;
+	static var B_GOAL:int = 446 ;
+	static var B_KEY:int = 445 ; 
+	static var B_PRIZE:int =  447 ;
+	static var B_MONSTER:int = 443 ;
+	static var B_MARKER:int = 441 ; 
+	static var B_DEATH:int = 439 ;
+	static var B_ONEUP:int = 438 ;
+	static var B_BIBPRIZE:int = 440 ;
+	static var B_PLATFORM:int = 437 ; 
 	
 	//sprites
 	static var  S_NONE:int =  0;
@@ -62,6 +69,18 @@
 	static var PING_FLYER:int = 0;
 	static var PING_OTHER:int =  1;
 	static var PING_ROCK:int = 2;	
+	
+	static var TIMER_00:int = 0;
+	static var TIMER_01:int = 1;
+	static var TIMER_02:int = 2;
+	static var TIMER_03:int = 3;
+	static var TIMER_04:int = 4;
+	static var TIMER_05:int = 5;
+	static var TIMER_06:int = 6;
+	static var TIMER_07:int = 7;
+	static var TIMER_08:int = 8;
+	static var TIMER_09:int = 9;
+	
 	
 	var TILEMAP_HEIGHT:int = 128 * 2;
 	var TILEMAP_WIDTH:int = 224 * 2;
@@ -184,6 +203,23 @@
 		
 		public function prepTiles():void {
 			
+		}
+		
+		public function initAGSprite():void {
+			var ii:int = 0;
+			for (ii = 0; ii < TOTAL_SPRITE; ii ++ ) {
+				mySprite.push(new AGSprite());
+			}
+			for (ii = 0; ii < TOTAL_TORPEDOS; ii ++ ) {
+				myTorpedo.push(new AGSprite());
+			}
+			
+		}
+		
+		public function initAGTimer():void {
+			for (var ii:int = 0; ii < TOTAL_TIMER; ii ++ ) {
+				myTimer.push(new AGTimer());
+			}
 		}
 		
 		public function scrollBackground():void {
