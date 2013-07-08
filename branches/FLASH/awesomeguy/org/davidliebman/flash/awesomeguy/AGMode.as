@@ -84,13 +84,13 @@
 	var mySweetspot:Rectangle = new Rectangle();
 	var myHoriz:int = 0;
 	var myVert:int = 0;
-	public var scrollBGX:int = 50;
+	public var scrollBGX:int = 0;
 	public var scrollBGY:int = 50;
 	var xx:int = 0;
 	var yy:int = 0;
 	public static var X_MOVE = 10 * 2;
 	public static var Y_MOVE = 3 * 2;
-	var xpos:int = 100;
+	var xpos:int = scrollBGX + 100;
 	var ypos:int = 100;
 	var radar_start:int = 0;
 	var radar_start_scroll:int = 0;
@@ -281,7 +281,7 @@
 			xpos = newx;
 			ypos = newy;
 			
-			trace(newscrolly);
+
 		}
 		
 		public function detectMovement():void {
@@ -386,9 +386,7 @@
 		
 
 		public function drawRadarPing(box:Rectangle, bits:Bitmap, oldx:int, oldy:int , kind:int,  color:uint):void {
-	//uint16_t  *  screen =(void *) (getScreenPointer(MY_SCREEN_BACK));
-
-	//LOGE("RADAR_BOX %d", box.left);
+	
 		var b:BitmapData;
 		var oldxx:int = 0;
 		var oldyy:int = 0;
@@ -401,16 +399,10 @@
 
 		
 			
-		if (kind == PING_FLYER) {
-			oldxx =  (((oldx - scrollBGX )  ) + (myHoriz * TILE_WIDTH/2)  - 256 + (ii ) )  % (myHoriz * TILE_WIDTH  );// this might be OK...
+		
+			oldxx = (oldx - scrollBGX + (myHoriz * TILE_WIDTH/2) -256 + ii) % (myHoriz * TILE_WIDTH );// this might be OK...
 			oldxx = adjust_x(oldxx) * 2;
-		}
-		else  {
-			oldxx = (oldx - scrollBGX + (myHoriz * TILE_WIDTH/2)  + ii) % (myHoriz * TILE_WIDTH );// this might be OK...
-			oldxx = adjust_x(oldxx) * 2;
-		}
-
-		//trace ("PING " + myHoriz + " " + TILE_WIDTH);
+		
 	
 		oldyy = oldyy * 2;
 	
@@ -420,8 +412,7 @@
 							2, 2),
 							new Point (box.left + (oldxx/16 ), box.top + (oldyy/16 ) ) , null, null, true );
 	
-		//screen[(( (yy/8) + box.top   ) * SCREEN_WIDTH )  +
-		//       (  ( (xx /8) + box.left  ) ) ] = color;
+		
 
 	if (kind == PING_ROCK) return;
 
@@ -431,8 +422,7 @@
 							2, 2),
 							new Point (box.left + 1 +(oldxx/16 ), box.top + (oldyy/16 ) ) , null, null, true );
 	
-		//screen[(( (yy/8) + box.top  + 1 ) * SCREEN_WIDTH )  +
-		//       (  ( (xx /8) + box.left  ) ) ] = color;
+	
 
 		b = new BitmapData( 2, 2, true, color);
 		bits.bitmapData.copyPixels(b,
@@ -440,8 +430,7 @@
 							2, 2),
 							new Point (box.left + (oldxx/16 ), box.top + 1+(oldyy/16 ) ) , null, null, true );
 
-		//screen[(( (yy/8) + box.top   ) * SCREEN_WIDTH )  +
-		//       (  ( (xx /8) + box.left + 1 ) ) ] = color;
+		
 
 		b = new BitmapData( 2, 2, true, color);
 		bits.bitmapData.copyPixels(b,
@@ -449,8 +438,7 @@
 							2, 2),
 							new Point (box.left + 1 + (oldxx/16 ), box.top + 1+ (oldyy/16 ) ) , null, null, true );
 
-		//screen[(( (yy/8) + box.top + 1  ) * SCREEN_WIDTH )  +
-		//		(  ( (xx /8) + box.left + 1 ) ) ] = color;
+	
 
 	if (kind != PING_OTHER) return;
 
@@ -460,48 +448,40 @@
 							2, 2),
 							new Point (box.left -2 + (oldxx/16 ), box.top + (oldyy/16 ) ) , null, null, true );
 
-		//screen[(( (yy/8) + box.top - 2 ) * SCREEN_WIDTH )  +
-		//	   (  ( (xx /8) + box.left  ) ) ] = color;
-
+		
 		b = new BitmapData( 2, 2, true, color);
 		bits.bitmapData.copyPixels(b,
 							new Rectangle (0, 0, 
 							2, 2),
 							new Point (box.left -2 + (oldxx/16 ), box.top +1+ (oldyy/16 ) ) , null, null, true );
 
-		//screen[(( (yy/8) + box.top  - 2 ) * SCREEN_WIDTH )  +
-		//	   (  ( (xx /8) + box.left  + 1) ) ] = color;
-
+		
 		b = new BitmapData( 2, 2, true, color);
 		bits.bitmapData.copyPixels(b,
 							new Rectangle (0, 0, 
 							2, 2),
 							new Point (box.left -1 + (oldxx/16 ), box.top + (oldyy/16 ) ) , null, null, true );
 
-		//screen[(( (yy/8) + box.top  - 1 ) * SCREEN_WIDTH )  +
-		//	   (  ( (xx /8) + box.left  ) ) ] = color;
-
+		
 		b = new BitmapData( 2, 2, true, color);
 		bits.bitmapData.copyPixels(b,
 							new Rectangle (0, 0, 
 							2, 2),
 							new Point (box.left -1+ (oldxx/16 ), box.top +1 + (oldyy/16 ) ) , null, null, true );
 
-		//screen[(( (yy/8) + box.top  - 1 ) * SCREEN_WIDTH )  +
-		//	   (  ( (xx /8) + box.left  + 1) ) ] = color;
-
+		
 		}
 		
-public function adjust_x( xxx:int ):int {
-	if (xxx > myHoriz *  TILE_WIDTH ) {
-		//x = 0;
-		xxx = xxx - (myHoriz * TILE_WIDTH);
-	}
-	if (xxx < 0 ) {
-		xxx = xxx + (myHoriz * TILE_WIDTH);
-	}
-	return xxx;
-}		
+		public function adjust_x( xxx:int ):int {
+			if (xxx > myHoriz *  TILE_WIDTH ) {
+				//x = 0;
+				xxx = xxx - (myHoriz * TILE_WIDTH);
+			}
+			if (xxx < 0 ) {
+				xxx = xxx + (myHoriz * TILE_WIDTH);
+			}
+			return xxx;
+		}		
 		
 	}
 	
