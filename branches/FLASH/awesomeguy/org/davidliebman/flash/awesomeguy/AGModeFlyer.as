@@ -36,6 +36,7 @@
 		
 		public override function doOnce():void {
 			initAGSprite();
+			initChallenges();
 			initAGTimer();
 			//myStage.addChild(myRes[AGResources.NAME_FLYER_L0_PNG]);
 			

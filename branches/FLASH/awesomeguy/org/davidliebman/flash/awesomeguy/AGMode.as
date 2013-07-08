@@ -26,10 +26,12 @@
 	var mySprite:Array = new Array();
 	var myTimer:Array = new Array();
 	var myTorpedo:Array = new Array();
+	var myChallenge:Array = new Array();
 		
 	static var TOTAL_SPRITE:int = 50;
 	static var TOTAL_TORPEDOS:int = 5;
 	static var TOTAL_TIMER:int = 10;
+	static var TOTAL_CHALLENGE:int = 10;
 		
 	//blocks	
 	static var B_NONE:int = -1 ;
@@ -70,6 +72,10 @@
 	static var PING_OTHER:int =  1;
 	static var PING_ROCK:int = 2;	
 	
+	static var TORPEDO_FLYING:int = 1;
+	static var TORPEDO_HIT:int =  2;
+	static var TORPEDO_UNUSED:int = 0;	
+	
 	static var TIMER_00:int = 0;
 	static var TIMER_01:int = 1;
 	static var TIMER_02:int = 2;
@@ -81,6 +87,14 @@
 	static var TIMER_08:int = 8;
 	static var TIMER_09:int = 9;
 	
+	var total_rings:int = 0;
+	var total_bubble_0:int = 0;
+	var total_bubble_1:int = 0;
+	var total_bubble_2:int = 0;
+	var total_bubble_3:int = 0;
+	var total_invader_1:int = 0;
+	var total_invader_2:int = 0;
+	var total_invader_3:int = 0;
 	
 	var TILEMAP_HEIGHT:int = 128 * 2;
 	var TILEMAP_WIDTH:int = 224 * 2;
@@ -208,14 +222,18 @@
 		public function initAGSprite():void {
 			var ii:int = 0;
 			for (ii = 0; ii < TOTAL_SPRITE; ii ++ ) {
-				mySprite.push(new AGSprite());
+				mySprite.push(new AGSprite(S_NONE));
 			}
 			for (ii = 0; ii < TOTAL_TORPEDOS; ii ++ ) {
-				myTorpedo.push(new AGSprite());
+				myTorpedo.push(new AGSprite(TORPEDO_UNUSED));
 			}
 			
 		}
-		
+		public function initChallenges():void {
+			for (var ii:int = 0; ii < TOTAL_CHALLENGE; ii ++ ) {
+				myChallenge.push(new AGChallenge());
+			}
+		}
 		public function initAGTimer():void {
 			for (var ii:int = 0; ii < TOTAL_TIMER; ii ++ ) {
 				myTimer.push(new AGTimer());
