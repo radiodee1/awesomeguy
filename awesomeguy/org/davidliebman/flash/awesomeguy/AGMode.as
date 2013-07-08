@@ -16,7 +16,7 @@
 	var K_SHOOT:Boolean = false;
 	var K_JUMP:Boolean = false;
 	var K_PAUSE:Boolean = false;
-	
+		
 	var myStage:Stage;
 	var myButtons:Array;
 	var myRes:Array;
@@ -100,6 +100,7 @@
 	public var levelcheat:int = 3;
 	public var mapcheat:int = - 4;
 	public var wrapHorizontal:Boolean = true;
+	public var gamePaused:Boolean = false;
 	public var verticalWrapPref:Boolean = false;// unused?
 	public var flyerGrounded:Boolean = false;
 	
@@ -147,11 +148,26 @@
 		public function innerGameLoop() {
 			// this happens every frame because it is called in AGGame.as once every 
 			// frame by 'doAnimation()'...
+			if (K_PAUSE) {
+				if ( gamePaused) {
+					gamePaused = false;
+				}
+				else if ( !gamePaused) {
+					gamePaused = true;
+				}
+				K_PAUSE = false;
+				myButtons[AGKeys.BUTTON_PAUSE].setValBool(false);
+				
+			}
+			
 			animate ++
 			if (animate > 4) animate = 0;
 			
-			myStage.removeChildren();
 			setKeys();
+			if (gamePaused) return;			
+			
+			myStage.removeChildren();
+			
 			componentsInOrder();
 		}
 		
