@@ -35,7 +35,8 @@
 		}
 		
 		public override function doOnce():void {
-			
+			initAGSprite();
+			initAGTimer();
 			//myStage.addChild(myRes[AGResources.NAME_FLYER_L0_PNG]);
 			
 			prepTiles() ;
