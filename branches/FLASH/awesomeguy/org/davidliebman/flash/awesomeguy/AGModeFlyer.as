@@ -121,10 +121,10 @@
 				challengeBody = new String();
 			
 				challengeBody = tree.planet[myGame.gamePlanet].challenges.invaders[ii].toString();
-				trace(challengeBody);
+
 				tempArray = new Array();
 				tempArray = challengeBody.split(",");
-				trace(tempArray);
+
 				var ch:AGChallenge = new AGChallenge();
 				ch.rings = int (tempArray[0]);
 				ch.bubble_1 = int (tempArray[1]);
@@ -134,7 +134,7 @@
 				ch.invader_2 = int (tempArray[5]);
 				ch.invader_3 = int (tempArray[6]);
 				ch.speed = int (tempArray[tempArray.length - 1]);
-				trace (ch.speed);
+				
 				myChallenge.push(ch);
 			}
 		}
@@ -143,7 +143,7 @@
 			var candidate:Array = new Array();
 			
 			var candidate_num:int = 0;
-			var i:int, j:int, k:int;
+			var i:int, j:int, k:int, cheat:int;
 			
 			for (i = 0 ; i < myVert ; i ++ ) {
 				for (j = 0; j < myHoriz ; j ++ ) {
@@ -155,8 +155,8 @@
 						
 						myCandidate.x = j;
 						myCandidate.y = i;
-						myCandidate.value = B_SPACE;
-						myCandidate.type = B_PRIZE;
+						myCandidate.value = B_SPACE ;
+						myCandidate.type = B_PRIZE ;
 						myInvisible[i][j] = myCandidate.value;
 						candidate.push(myCandidate);
 						candidate_num ++;
@@ -176,9 +176,9 @@
 		
 			for (i = 0; i < num_rings; i ++ ) {
 		
-				//j = getRand(0, num_spaces - ( i ) );
+				j = getRand(0, num_spaces - ( i ) );
 		
-				j = 0;// remove and fix getRand();!!
+				
 				for (k = 0; k <= j; k ++) {
 		
 					while (candidate[k].value != B_SPACE ) {
@@ -203,14 +203,13 @@
 				}
 			}
 			for (i = 0; i< num_spaces; i ++ ) {
-				myInvisible[candidate[i].y][candidate[i].x] = candidate[i].value;
+				
+				if (candidate[i].value != B_SPACE ) cheat = levelcheat +2;
+				else cheat = 0;
+				myInvisible[candidate[i].y][candidate[i].x] = candidate[i].value - cheat;
 				if (candidate[i].value == B_PRIZE) total_rings ++;
 			}
-			//for( i = 0; i < 20; i ++ ) {
-		
-			//	candidate[i].value = B_SPACE;
-			//	candidate[i].type = B_PRIZE;
-			//}
+			
 			candidate = null;
 			/////////////////////////////
 		}
