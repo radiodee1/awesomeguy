@@ -106,7 +106,7 @@
 	
 	static var TILE_TOP:int = 0;
 	static var TILE_MID:int = 1;
-	static var TILE_BOT:int = 3;
+	static var TILE_BOT:int = 2;
 	
 	//scroll variables
 	public var spriteHeight:int = 40;
@@ -552,6 +552,9 @@
 			return xxx;
 		}		
 		
+		public function getRand(min:int, max:int):int {
+			return min + ( max - min ) * Math.random();
+		}
 	}
 	
 }
