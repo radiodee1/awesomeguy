@@ -1,4 +1,4 @@
-
+﻿
 #ifndef ANDROIDGL_H
 #define ANDROIDGL_H
 

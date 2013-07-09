@@ -6,6 +6,14 @@
 	
 	public class AGModeFlyer extends AGMode{
 
+		public var total_rings:int;
+		public var total_bubble_0:int, total_bubble_1:int, total_bubble_2:int, total_bubble_3:int;
+		public var total_invader_1:int, total_invader_2:int, total_invader_3:int;
+
+		public var total_placed_bubble_1:int, total_placed_bubble_2:int, total_placed_bubble_3:int;
+		public var total_placed_invader_1:int, total_placed_invader_2:int, total_placed_invader_3:int;
+
+		public var total_held_rings:int;
 		
 		public function AGModeFlyer() {
 			// constructor code
@@ -36,11 +44,15 @@
 		
 		public override function doOnce():void {
 			initAGSprite();
-			initChallenges();
+			initChallenges();// this just creates the array!!
 			initAGTimer();
 			//myStage.addChild(myRes[AGResources.NAME_FLYER_L0_PNG]);
+
+			fillChallenges();
 			
 			prepTiles() ;
+			prepRings() ;
+			
 			radar_start = xpos - scrollBGX;
 			radar_start_scroll =  scrollBGX;
 			//trace (radar_start + " scroll:" + scrollBGX);
@@ -94,6 +106,91 @@
 			
 			//trace(myInvisible);
 		}
+		
+		public function fillChallenges():void {
+			var challengeBody:String = new String();
+			var challengeLength:int = 0;
+			var tree:XML = new XML(new XMLDocument(myRes[AGResources.NAME_AWESOMEGUY_XML]));
+			trace(tree.planet[myGame.gamePlanet].challenges.invaders.length());
+		}
+		
+		public function prepRings():void {
+			var candidate:Array = new Array();
+			
+			var candidate_num:int = 0;
+			var i:int, j:int, k:int;
+			
+			for (i = 0 ; i < myVert ; i ++ ) {
+				for (j = 0; j < myHoriz ; j ++ ) {
+					//map_level[j][i] = a[ (j * LONG_MAP_V ) + i] ;
+					//map_objects[j][i] = b[ (j * LONG_MAP_V ) + i] ;
+					//LOGE("level data %i ", map_level[i][j]);
+
+					if (myInvisible[i][j] - mapcheat == B_PRIZE) {
+						var myCandidate:Candidate = new Candidate();
+						
+						myCandidate.x = j;
+						myCandidate.y = i;
+						myCandidate.value = B_SPACE;
+						myCandidate.type = B_PRIZE;
+						myInvisible[i][j] = myCandidate.value;
+						candidate.push(myCandidate);
+						candidate_num ++;
+					}
+				}
+			}
+			////////////////////////////
+			
+			//int i,j, k;
+			var num_rings:int, num_spaces:int;
+		
+			total_held_rings = 0;
+			
+			//the first challenges to place are the rings.
+			num_rings = myChallenge[myGame.gameChallenge].rings;
+			num_spaces = candidate_num;
+		
+			for (i = 0; i < num_rings; i ++ ) {
+		
+				//j = getRand(0, num_spaces - ( i ) );
+		
+				j = 0;// remove and fix getRand();!!
+				for (k = 0; k <= j; k ++) {
+		
+					while (candidate[k].value != B_SPACE ) {
+						k ++;
+					}
+					if ( candidate[k ].value == B_SPACE && k == j ){//-1) {
+						candidate[k].value = B_PRIZE;
+		
+					}
+		
+					else if (candidate[k ].value != B_SPACE && k == j ){
+						while (candidate[k].value != B_SPACE ) {
+							k++;
+		
+						}
+						if ( candidate[k ].value == B_SPACE  ){//-1) {
+							candidate[k].value = B_PRIZE;
+		
+						}
+						//LOGE("else condition");
+					}
+				}
+			}
+			for (i = 0; i< num_spaces; i ++ ) {
+				myInvisible[candidate[i].y][candidate[i].x] = candidate[i].value;
+				if (candidate[i].value == B_PRIZE) total_rings ++;
+			}
+			for( i = 0; i < 20; i ++ ) {
+		
+				candidate[i].value = B_SPACE;
+				candidate[i].type = B_PRIZE;
+			}
+			
+			/////////////////////////////
+		}
+				
 		
 		///////////////////////////////////////////
 		public function drawLevelTiles():void {
@@ -419,7 +516,7 @@
 						drawRadarPing(radar, radarscreen, xxx * TILE_WIDTH, yyy * TILE_HEIGHT, PING_ROCK, 0xffffffff);
 					}
 					else if (myVisible[yyy][xxx]  != B_SPACE) {
-						drawRadarPing(radar, radarscreen, xxx * TILE_WIDTH, yyy * TILE_HEIGHT, PING_ROCK, 0xa6a6a6a6);
+						drawRadarPing(radar, radarscreen, xxx * TILE_WIDTH, yyy * TILE_HEIGHT, PING_ROCK, 0xff903590);//0xff889be7);
 						
 					}
 					if (myInvisible[yyy][xxx] - levelcheat == B_PRIZE) {
