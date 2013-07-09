@@ -110,8 +110,33 @@
 		public function fillChallenges():void {
 			var challengeBody:String = new String();
 			var challengeLength:int = 0;
+			var ii:int, jj:int;
 			var tree:XML = new XML(new XMLDocument(myRes[AGResources.NAME_AWESOMEGUY_XML]));
-			trace(tree.planet[myGame.gamePlanet].challenges.invaders.length());
+			challengeLength = tree.planet[myGame.gamePlanet].challenges.invaders.length();
+
+			myChallenge = new Array();
+			
+			var tempArray:Array ;
+			for (ii = 0; ii < challengeLength; ii ++ ) {
+				challengeBody = new String();
+			
+				challengeBody = tree.planet[myGame.gamePlanet].challenges.invaders[ii].toString();
+				trace(challengeBody);
+				tempArray = new Array();
+				tempArray = challengeBody.split(",");
+				trace(tempArray);
+				var ch:AGChallenge = new AGChallenge();
+				ch.rings = int (tempArray[0]);
+				ch.bubble_1 = int (tempArray[1]);
+				ch.bubble_2 = int (tempArray[2]);
+				ch.bubble_3 = int (tempArray[3]);
+				ch.invader_1 = int (tempArray[4]);
+				ch.invader_2 = int (tempArray[5]);
+				ch.invader_3 = int (tempArray[6]);
+				ch.speed = int (tempArray[tempArray.length - 1]);
+				
+				myChallenge.push(ch);
+			}
 		}
 		
 		public function prepRings():void {
