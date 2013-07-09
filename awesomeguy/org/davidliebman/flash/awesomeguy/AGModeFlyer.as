@@ -134,7 +134,7 @@
 				ch.invader_2 = int (tempArray[5]);
 				ch.invader_3 = int (tempArray[6]);
 				ch.speed = int (tempArray[tempArray.length - 1]);
-				
+				trace (ch.speed);
 				myChallenge.push(ch);
 			}
 		}
@@ -147,9 +147,8 @@
 			
 			for (i = 0 ; i < myVert ; i ++ ) {
 				for (j = 0; j < myHoriz ; j ++ ) {
-					//map_level[j][i] = a[ (j * LONG_MAP_V ) + i] ;
-					//map_objects[j][i] = b[ (j * LONG_MAP_V ) + i] ;
-					//LOGE("level data %i ", map_level[i][j]);
+					
+					
 
 					if (myInvisible[i][j] - mapcheat == B_PRIZE) {
 						var myCandidate:Candidate = new Candidate();
@@ -207,12 +206,12 @@
 				myInvisible[candidate[i].y][candidate[i].x] = candidate[i].value;
 				if (candidate[i].value == B_PRIZE) total_rings ++;
 			}
-			for( i = 0; i < 20; i ++ ) {
+			//for( i = 0; i < 20; i ++ ) {
 		
-				candidate[i].value = B_SPACE;
-				candidate[i].type = B_PRIZE;
-			}
-			
+			//	candidate[i].value = B_SPACE;
+			//	candidate[i].type = B_PRIZE;
+			//}
+			candidate = null;
 			/////////////////////////////
 		}
 				
@@ -222,7 +221,7 @@
 			var  i:int,j:int,k:int,l:int,m:int, zz:int;
 			
 			var baseX:int, baseY:int;//, startX, startY;
-			var mapcheat:int = -4;
+			var mapcheat:int = -3;
 			var levelcheat:int = -3;
 			var TILE_WIDTH:int = 16;
 			var TILE_HEIGHT:int = 16;
@@ -279,7 +278,7 @@
 						
 						// special animated tiles
 						k = myInvisible[i][j] ;
-						zz = k - levelcheat;
+						zz = k - mapcheat;
 						if ( zz != AGMode.B_START && zz != AGMode.B_MONSTER && zz != AGMode.B_DEATH
 							&& zz != AGMode.B_PLATFORM && zz != AGMode.B_MARKER && zz != AGMode.B_BLOCK
 							&& zz != AGMode.B_LADDER  && k != AGMode.B_SPACE  && zz != AGMode.B_GOAL) {
@@ -347,7 +346,7 @@
 						
 						// special animated tiles
 						k = myInvisible[i][ j-m] ;//- levelcheat;
-						zz = k - levelcheat;
+						zz = k - mapcheat;
 						if ( zz != B_START && zz != B_MONSTER && zz != B_DEATH
 							&& zz != B_PLATFORM && zz != B_MARKER && zz != B_BLOCK
 							&& zz != B_LADDER  && k != B_SPACE && zz != B_GOAL) {
@@ -413,7 +412,7 @@
 						/////////////////////////////////////////////
 							// special animated tiles
 						k = myInvisible[i][ j+m] ;//- levelcheat;
-						zz = k - levelcheat;
+						zz = k - mapcheat;
 						if ( zz != B_START && zz != B_MONSTER && zz != B_DEATH
 							&& zz != B_PLATFORM && zz != B_MARKER && zz != B_BLOCK
 							&& zz != B_LADDER  && k != B_SPACE && zz != B_GOAL) {
