@@ -87,14 +87,14 @@
 	static var TIMER_08:int = 8;
 	static var TIMER_09:int = 9;
 	
-	var total_rings:int = 0;
-	var total_bubble_0:int = 0;
-	var total_bubble_1:int = 0;
-	var total_bubble_2:int = 0;
-	var total_bubble_3:int = 0;
-	var total_invader_1:int = 0;
-	var total_invader_2:int = 0;
-	var total_invader_3:int = 0;
+	//var total_rings:int = 0;
+	//var total_bubble_0:int = 0;
+	//var total_bubble_1:int = 0;
+	//var total_bubble_2:int = 0;
+	//var total_bubble_3:int = 0;
+	//var total_invader_1:int = 0;
+	//var total_invader_2:int = 0;
+	//var total_invader_3:int = 0;
 	
 	var TILEMAP_HEIGHT:int = 128 * 2;
 	var TILEMAP_WIDTH:int = 224 * 2;
@@ -134,7 +134,6 @@
 	public var mapcheat:int = - 4;
 	public var wrapHorizontal:Boolean = true;
 	public var gamePaused:Boolean = false;
-	public var verticalWrapPref:Boolean = false;// unused?
 	public var flyerGrounded:Boolean = false;
 	
 	public var radar:Rectangle = new Rectangle(0,0,SCREEN_WIDTH - 128, 64);
