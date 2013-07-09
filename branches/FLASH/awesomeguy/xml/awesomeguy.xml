@@ -854,8 +854,17 @@
 	</special>
 	
 	<challenges>
-		<invaders> </invaders>
-		<invaders> </invaders>
+		<invaders> 5,0,1,2,0,0,0,1 ,0,0,0,0,0,0,0,0 </invaders>
+		<invaders> 2,3,0,0,0,0,0,1 ,0,0,0,0,0,0,0,0 </invaders>
+		<invaders> 1,1,0,0,1,0,0,1 ,0,0,0,0,0,0,0,0 </invaders>
+		
+		<invaders> 1,2,0,0,0,0,0,1 ,0,0,0,0,0,0,0,0 </invaders>
+  
+		<invaders> 2,2,0,0,1,0,0,1 ,0,0,0,0,0,0,0,0 </invaders>
+
+		<invaders> 3,2,0,0,1,0,0,1 ,0,0,0,0,0,0,0,0 </invaders>
+		
+		
 	</challenges>
 
 	<maze number="1">
