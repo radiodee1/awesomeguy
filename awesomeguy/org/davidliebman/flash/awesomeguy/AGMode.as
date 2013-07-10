@@ -257,8 +257,8 @@
 			myBoundaries.left = myScreen.left + (5 * 8 * 2) + 0;
 			myBoundaries.right = myScreen.right - (5 * 8 * 2) - spriteWidth;
 			
-			mySweetspot.top = myBoundaries.top;
-			mySweetspot.bottom = myBoundaries.bottom;
+			mySweetspot.top = myBoundaries.top + (Y_MOVE * 3/2);
+			mySweetspot.bottom = myBoundaries.bottom - (Y_MOVE * 3/2) ;
 			mySweetspot.left = myBoundaries.left + (X_MOVE * 3/2) ;
 			mySweetspot.right = myBoundaries.right - (X_MOVE * 3/2);
 			
@@ -335,13 +335,20 @@
 					newy = myField.top;
 					//newscrolly = myField.top;
 				}
+				
+				
 				if (newy + yy > myField.top ) {
 					newy = newy + yy;
 					
 					if (myScreen.top >= myField.top ) {
 						newscrolly = newscrolly + yy;
 					}
+					if (newy + yy > myBoundaries.top ) {
+						newscrolly -= yy;
+					}
+					
 				}
+				
 				
 				//////////////////////////////
 				
