@@ -22,14 +22,24 @@
 		public override function componentsInOrder():void {
 			//
 			super.componentsInOrder();
-			var screenframe:Bitmap = new Bitmap (new BitmapData (SCREEN_WIDTH, 64, false, 0x66666666));
+			
+			myScreenBG = new Bitmap (new BitmapData (SCREEN_WIDTH, SCREEN_HEIGHT , false, 0x00000000));
+			myScreenBG.x = 0;
+			myScreenBG.y = 0;
+			myStage.addChild(myScreenBG);
+			
+			var screenframe:Bitmap= new Bitmap (new BitmapData (SCREEN_WIDTH, 64, false, 0x66666666));
 			radarscreen = new Bitmap( new BitmapData(SCREEN_WIDTH - 128, 64,
 										false, 0x00000000));
 			
 			drawLevelTiles();
 			drawRadarRock();
 
-			drawBasicSprite(0, AGMode.S_FLYER);
+			//drawBasicSprite(0, AGMode.S_FLYER);
+			var flyersprite:AGSprite = new AGSprite(AGMode.S_FLYER);
+			flyersprite.sprite = this.sprite;
+			myDraw.drawRes(flyersprite,xpos,ypos,facingRight,AGMode.S_FLYER,animate);
+
 			screenframe.x = 0;
 			screenframe.y = SCREEN_HEIGHT;
 			myStage.addChild(screenframe);
@@ -43,6 +53,8 @@
 		}
 		
 		public override function doOnce():void {
+			myDraw = new AGDrawFlyer(this, myRes, myStage, myScreenBG);
+			
 			initAGSprite();
 			initChallenges();// this just creates the array!!
 			initAGTimer();

@@ -22,6 +22,8 @@
 	var myButtons:Array;
 	var myRes:Array;
 	var myGame:AGGame;
+	var myDraw:AGDraw;
+	var myScreenBG:Bitmap;
 
 	var mySprite:Array = new Array();
 	var myTimer:Array = new Array();
@@ -399,54 +401,8 @@
 			return bitmap;
 		}
 		
-		public function drawBasicSprite(spriteNum:int, kind:int):void {
-			// init some vars here
-			var add:int, add_radar:int;
-			
-			
-			switch (kind) {
-				case AGMode.S_FLYER:
-					
-				add = 0;
-				add_radar = 0;
-
-				
-				if (scrollBGX >= xpos  ) {
-					add = myHoriz * TILE_WIDTH;
-					add_radar =  (xpos - scrollBGX) - xpos ;
-				}
-				
-				
-				
-				
-				
-				if (facingRight) {
-					if (animate %2 == 1 ) {
-						sprite = myRes[AGResources.NAME_FLYER_R0_PNG];
-
-					}
-					else {
-						sprite = myRes[AGResources.NAME_FLYER_R1_PNG];
-	
-					}
-				}
-				else {
-					if (animate %2 == 1) {
-						sprite = myRes[AGResources.NAME_FLYER_L0_PNG];
-
-					}
-					else {
-						sprite = myRes[AGResources.NAME_FLYER_L1_PNG];
-	
-					}
-				}
-				sprite.x = add + xpos - scrollBGX;
-				sprite.y = ypos - scrollBGY;
-				myStage.addChild(sprite);
-			
-				break;
-			}
-		}
+		
+		
 		
 		////////////////////////
 		public function physicsAdjustments():void {
