@@ -563,10 +563,8 @@
  /////////////////////////////////
  
 	public function drawScoreNumbers( pos:int,  num:int,  p:int):void {
-		trace("score " + num );
-	
 		
-		var i:int, a:int, b:int, c:int, placesValue:int;
+			var i:int, a:int, b:int, c:int, placesValue:int;
 			var places:Array = new Array(0,0,0,0,0,0,0,0,0,0);//ten spots
 			var topNumbers:Array = new Array (364,365,366, 367, 368, 369, 370, 371, 372, 373);
 			var showZeros:int = 0;
