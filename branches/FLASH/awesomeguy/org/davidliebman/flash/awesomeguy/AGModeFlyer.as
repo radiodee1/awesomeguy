@@ -52,8 +52,9 @@
 			screenframe.x = 0;
 			screenframe.y = SCREEN_HEIGHT;
 			myStage.addChild(screenframe);
-			
+			drawScoreWords();
 			myStage.addChild(myShape);
+			//drawScoreWords();
 			
 			drawRadarPing(radar, radarscreen ,xpos,ypos,AGMode.PING_FLYER,0xffffffff);
 			
