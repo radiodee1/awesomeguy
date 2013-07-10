@@ -204,12 +204,12 @@
 			}
 			for (i = 0; i< num_spaces; i ++ ) {
 				
-				if (candidate[i].value == B_PRIZE ) cheat =   ( mapcheat );
+				if (candidate[i].value == B_PRIZE ) cheat =   ( mapcheat );//+ 1 );
 				else cheat = 0;
 				myInvisible[candidate[i].y][candidate[i].x] = candidate[i].value - cheat;
 				if (candidate[i].value == B_PRIZE) {
 					total_rings ++;
-					trace ("PRIZE " + (candidate[i].value - cheat));
+					//trace ("PRIZE " + (candidate[i].value - cheat));
 				}
 			}
 			
@@ -284,7 +284,7 @@
 						if ( zz != AGMode.B_START && zz != AGMode.B_MONSTER && zz != AGMode.B_DEATH
 							&& zz != AGMode.B_PLATFORM && zz != AGMode.B_MARKER && zz != AGMode.B_BLOCK
 							&& zz != AGMode.B_LADDER  && k != AGMode.B_SPACE  && zz != AGMode.B_GOAL) {
-							
+							//if (zz == AGMode.B_PRIZE) trace("prize here");
 							
 							if (animate == 0 || animate == 1 || animate == 8) {
 		

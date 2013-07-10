@@ -151,7 +151,7 @@
 					var pt:Point = new Point(0,0);
 					var rect:Rectangle = new Rectangle(0, 0, r_bitmap.width, r_bitmap.height);
 					var threshold:uint = 0x00000000;
-					var maskcolor:uint = 0x000000ff;
+					var maskcolor:uint = 0x00ffffff;// 0x000000ff;
 					var color:uint = 0x00000000;
 					bitmapdata2.threshold(bitmapdata1, rect, pt, "==", threshold, color, maskcolor, true);
 					r_bitmap = new Bitmap(bitmapdata2);

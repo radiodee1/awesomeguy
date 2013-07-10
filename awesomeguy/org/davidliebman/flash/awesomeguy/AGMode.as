@@ -130,8 +130,8 @@
 	
 	public var facingRight:Boolean = false;
 	public var animate:int = 0;
-	public var levelcheat:int = 3;
-	public var mapcheat:int = 4; // 3
+	public var levelcheat:int = 4;
+	public var mapcheat:int = 4; 
 	public var wrapHorizontal:Boolean = true;
 	public var gamePaused:Boolean = false;
 	public var flyerGrounded:Boolean = false;
@@ -378,11 +378,11 @@
 			
 			var i:int ,j:int, k:int,l:int, m:int,n:int, p:int ;
 
-			m = TILEMAP_HEIGHT / TILE_HEIGHT * tilebracket; // 128 * 2 /16 = 16
-			n = TILEMAP_WIDTH / TILE_WIDTH; // 224 * 2 /16 = 28
+			m = int (TILEMAP_HEIGHT / TILE_HEIGHT * tilebracket) ; // 128 * 2 /16 = 16
+			n = int ( TILEMAP_WIDTH / TILE_WIDTH) ; // 224 * 2 /16 = 28
     
 			k = int ((num / n)   ); // y pos 
-			l = int (num - (k * n)  ); // x pos + 4
+			l = int (num - (k * n) -1  ); // x pos + 4
 			k = k + m; // must come after!!
 			
 			var b:BitmapData = new BitmapData(  TILE_WIDTH, TILE_HEIGHT, true, 0x0);
@@ -393,7 +393,7 @@
 							TILE_HEIGHT, TILE_HEIGHT),
 							new Point (0,0) , null, null, true );
 			
-			
+			//trace("nums m:" + m + " n:" + n + " k:" + k + " l:" + l);
 			
 			
 			return bitmap;
