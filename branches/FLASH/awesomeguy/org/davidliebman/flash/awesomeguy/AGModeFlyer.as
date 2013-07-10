@@ -3,6 +3,7 @@
 	import flash.display.Sprite;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.Shape;
 	
 	public class AGModeFlyer extends AGMode{
 
@@ -22,6 +23,14 @@
 		public override function componentsInOrder():void {
 			//
 			super.componentsInOrder();
+			
+			var myShape:Shape = new Shape();
+			myShape.graphics.lineStyle(2, 0xffffffff, 1);
+			myShape.graphics.moveTo(0,0);
+			myShape.graphics.lineTo(0,SCREEN_HEIGHT );
+			myShape.graphics.lineTo(SCREEN_WIDTH, SCREEN_HEIGHT );
+			myShape.graphics.lineTo(SCREEN_WIDTH, 0);
+			myShape.graphics.lineTo(0,0);
 			
 			myScreenBG = new Bitmap (new BitmapData (SCREEN_WIDTH, SCREEN_HEIGHT , false, 0x00000000));
 			myScreenBG.x = 0;
@@ -44,6 +53,7 @@
 			screenframe.y = SCREEN_HEIGHT;
 			myStage.addChild(screenframe);
 			
+			myStage.addChild(myShape);
 			
 			drawRadarPing(radar, radarscreen ,xpos,ypos,AGMode.PING_FLYER,0xffffffff);
 			
