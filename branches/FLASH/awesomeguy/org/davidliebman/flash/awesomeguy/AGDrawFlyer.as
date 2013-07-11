@@ -79,7 +79,7 @@
 		
 						if(sprite.facingRight == true) {
 							if(z == 0) {
-		
+								
 								//drawSprite_16(monster_a, sprite[i].x, sprite[i].y,
 								//	scrollx, scrolly, PAINT_TRANSPARENT, 0);
 								sprite.bitmap = myRes[AGResources.NAME_MONSTER_R0_PNG];
@@ -89,7 +89,7 @@
 		
 							}
 							else if (z == 1) {
-		
+								
 								//drawSprite_16(monster_b, sprite[i].x, sprite[i].y,
 								//	scrollx, scrolly, PAINT_TRANSPARENT, 0);
 								sprite.bitmap = myRes[AGResources.NAME_MONSTER_R1_PNG];

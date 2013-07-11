@@ -125,8 +125,8 @@
 				for (j = 0 ; j < myHoriz; j ++ ) {
 					k = int (tempArray[ (i * myHoriz) + j ] );
 					smallArray.push(int (tempArray[ (i * myHoriz) + j ] ) );
-					if (k + mapcheat == AGMode.B_MONSTER) addMonster(j,i,1);
-					if (k + mapcheat == AGMode.B_PLATFORM) addPlatform(j,i);
+					if (k + mapcheat == AGMode.B_MONSTER) addMonster(j,i ,1);
+					if (k + mapcheat == AGMode.B_PLATFORM) addPlatform(j , i );
 				}
 				myInvisible.push(smallArray);
 			}
@@ -274,8 +274,8 @@
 
 
 
-			mySprite[sprite_num].x = monster_x ;
-			mySprite[sprite_num].y = monster_y ;
+			mySprite[sprite_num].x = monster_x * TILE_WIDTH;
+			mySprite[sprite_num].y = monster_y * TILE_HEIGHT;
 			mySprite[sprite_num].animate = monster_animate;
 			mySprite[sprite_num].facingRight = true;
 			mySprite[sprite_num].active = true;
@@ -287,9 +287,10 @@
 			mySprite[sprite_num].rightBB = 16 * 2;
 		
 			mySprite[sprite_num].sprite_type = S_GATOR;
-			  
+			//mySprite[sprite_num].type = S_GATOR;
 			sprite_num ++;
 			monster_num = sprite_num;
+			trace(sprite_num);
 			platform_num = 0;
 		}
 		
@@ -310,6 +311,8 @@
 			mySprite[sprite_num].sprite_type = S_CLOUD;
 			  
 			sprite_num ++;
+			
+			trace(sprite_num);
 			platform_num = sprite_num;
 		}
 		
@@ -317,12 +320,12 @@
 			//draw all monsters
 			var anim_speed:int = 5;
 			var i:int;
-			var x:int,y:int,z:int;
+			var xx:int,yy:int,z:int;
 			var move:int = 3 *2;//3
-			var markerTest:Boolean = false;//FALSE;
-			var hide:Boolean = true;//TRUE;
-			var show:Boolean = false;//FALSE;
-			var visibility:Boolean = false;//FALSE;
+			var markerTest:Boolean = false;
+			var hide:Boolean = true;
+			var show:Boolean = false;
+			var visibility:Boolean = false;
 			//int index_num = 0;
 			
 			//if (sprite_num >= monster_num) index_num = sprite_num;
@@ -330,70 +333,82 @@
 			
 			//for each monster...
 			if(monster_num > 0) {
-				for (i =  0 ; i < monster_num   ; i++) {   
-					markerTest = false;//FALSE; 
-		
+				for (i =  0 ; i < mySprite.length   ; i++) {   
 					
-					if (mySprite[i].active ==true   ) {
-						x = mySprite[i].x / 16;
-						y = mySprite[i].y / 16;
-						// Must move and stop monsters when they hit bricks or
-						// markers or the end of the screen/room/level.
-		
-						if(mySprite[i].facingRight == true ) {
-		
-							mySprite[i].x = mySprite[i].x + move;
-							// marker test
-							if( myInvisible[x+2][y] == B_BLOCK  ) markerTest = true;//TRUE;
-							if( myInvisible[x+2][y] == B_MARKER ) markerTest = true;// TRUE;
-							if( myInvisible[ x+2][y+1] == 0) markerTest = true;//TRUE;
-							// turn monster
-							if (mySprite[i].x > myHoriz * 16  - 32 || markerTest == true ) {
-		
-								mySprite[i].facingRight=false;//FALSE;
+					if (mySprite[i].sprite_type == S_GATOR) {
+						markerTest = false;//FALSE; 
+						
+						if (mySprite[i].active ==true  ) {
+							xx = Math.floor(int ( mySprite[i].x / 16));
+							yy = Math.floor(int ( mySprite[i].y / 16)) ;
+							
+							
+							// Must move and stop monsters when they hit bricks or
+							// markers or the end of the screen/room/level.
+							//if (xx < 0 || yy < 0 ) return;
+							//if (xx > myHoriz || yy > myVert) return;
+							
+							if(mySprite[i].facingRight == true ) {
+			
+								mySprite[i].x = mySprite[i].x + move;
+								// marker test
+								if (xx + 3 < myHoriz && yy + 2 < myVert ) {
+									
+									if(myInvisible[yy][xx+2] + mapcheat == B_BLOCK  ) markerTest = true;//TRUE;
+									if(myInvisible[yy][xx+2] + mapcheat == B_MARKER ) markerTest = true;// TRUE;
+									if(myInvisible[yy+1][xx+2]  == 0) markerTest = true;//TRUE;
+								}
+								// turn monster
+								if (mySprite[i].x > myHoriz * 16  - 32 || markerTest == true ) {
+			
+									mySprite[i].facingRight=false;//FALSE;
+								}
+							}
+							else {
+			
+								mySprite[i].x = mySprite[i].x - move;
+								// marker test
+								if (xx -1 > 0 && yy + 2 < myVert) {
+									if(myInvisible[yy][xx] + mapcheat == B_BLOCK) markerTest = true;//TRUE;
+									if(myInvisible[yy][xx] + mapcheat == B_MARKER) markerTest =true;// TRUE;
+									if(myInvisible[yy+1][xx-1] == 0) markerTest = true;//TRUE;
+								}
+								// turn monster
+								if (mySprite[i].x < 0 || markerTest == true ) {
+			
+									mySprite[i].facingRight= true;//TRUE;
+								}
+							}
+			
+							//Only show monsters that are on the screen properly
+			
+			
+							//default is to show monster
+							visibility = show;
+							//hide monster if...
+							if(mySprite[i].x > scrollBGX + 64 * 16 + 32 ) {
+								visibility = hide;
+							}
+							if (mySprite[i].x < scrollBGX - 32) {
+								visibility = hide;
+							}
+							if (mySprite[i].y > scrollBGY + 48 * 16 + 32) {
+								visibility = hide;
+							}
+							if ( mySprite[i].y < scrollBGY  - 32) {
+								visibility = hide;
 							}
 						}
-						else {
-		
-							mySprite[i].x = mySprite[i].x - move;
-							// marker test
-							if(myInvisible[x][y] == B_BLOCK) markerTest = true;//TRUE;
-							if(myInvisible[x][y] == B_MARKER) markerTest =true;// TRUE;
-							if(myInvisible[x-1][y+1] == 0) markerTest = true;//TRUE;
-							// turn monster
-							if (mySprite[i].x < 0 || markerTest == true ) {
-		
-								mySprite[i].facingRight= true;//TRUE;
-							}
-						}
-		
-						//Only show monsters that are on the screen properly
-		
-		
-						//default is to show monster
-						visibility = show;
-						//hide monster if...
-						if(mySprite[i].x > scrollBGX + 64 * 16 + 32 ) {
-							visibility = hide;
-						}
-						if (mySprite[i].x < scrollBGX - 32) {
-							visibility = hide;
-						}
-						if (mySprite[i].y > scrollBGY + 48 * 16 + 32) {
-							visibility = hide;
-						}
-						if ( mySprite[i].y < scrollBGY  - 32) {
-							visibility = hide;
-						}
+						
+						//swap monsters
+						if (mySprite[i].visible && visibility == show) mySprite[i].visible = true;// TRUE;
+						
+						//drawBasicSprite(i, D_GATOR);
+					
+						myDraw.drawBasicSprite(mySprite[i], D_GATOR);
 					}
 					
-					//swap monsters
-					if (mySprite[i].visible && visibility == show) mySprite[i].visible = true;// TRUE;
-					
-					//drawBasicSprite(i, D_GATOR);
-					//myDraw.drawRes(mySprite[i], mySprite[i].x,mySprite[i].y, mySprite[i].facingRight, D_GATOR, 0);
-					myDraw.drawBasicSprite(mySprite[i], D_GATOR);
-				}
+				} // for i < sprite_num
 		
 			}
 			return;
