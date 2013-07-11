@@ -462,7 +462,8 @@
 					//inactivateMonster(i);
 					//animate_only = TRUE;
 					//setSoundOw();
-					
+					sprite.active = false;
+					sprite.visible = false;
 				}
 
 		        
