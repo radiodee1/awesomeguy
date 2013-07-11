@@ -104,6 +104,7 @@
 
 			var i:int = 0;
 			var j:int = 0;
+			var k:int = 0;
 			
 			myVisible = new Array();
 			tempArray = new Array();
@@ -122,7 +123,10 @@
 			for (i = 0; i < myVert; i ++ ) {
 				smallArray = new Array();
 				for (j = 0 ; j < myHoriz; j ++ ) {
+					k = int (tempArray[ (i * myHoriz) + j ] );
 					smallArray.push(int (tempArray[ (i * myHoriz) + j ] ) );
+					if (k + mapcheat == AGMode.B_MONSTER) addMonster(j,i,1);
+					if (k + mapcheat == AGMode.B_PLATFORM) addPlatform(j,i);
 				}
 				myInvisible.push(smallArray);
 			}
@@ -160,6 +164,32 @@
 				
 				myChallenge.push(ch);
 			}
+			
+			total_rings = 0;
+			total_bubble_0 = 0;
+			total_bubble_1 = 0;
+			total_bubble_2 = 0;
+			total_bubble_3 = 0;
+			total_invader_1 = 0;
+			total_invader_2 = 0;
+			total_invader_3 = 0;
+			
+			myTimer[AGMode.TIMER_00].timerStart(3 ); // a few seconds
+			myTimer[AGMode.TIMER_01].timerStart( 3/30 ); // 3 refreshes
+			myTimer[AGMode.TIMER_08].timerStart( 5/30); // torpedos
+			
+			//placeChallengesBubble1();
+			total_placed_bubble_1 = 0;
+			myTimer[AGMode.TIMER_02].timerStart(  1); // about a second
+			//placeChallengesBubble2();
+			total_placed_bubble_2 = 0;
+			myTimer[AGMode.TIMER_03].timerStart( 2); // about 2 sec
+			//placeChallengesInvader1();
+			total_placed_invader_1 = 0;
+			myTimer[AGMode.TIMER_04].timerStart( 2);// 2 sec
+			//placeChallengesInvader2();
+			total_placed_invader_2 = 0;
+			myTimer[AGMode.TIMER_06].timerStart( 2); // 2 sec
 		}
 		
 		public function prepRings():void {
@@ -240,6 +270,136 @@
 			/////////////////////////////
 		}
 				
+		public function addMonster(monster_x:int, monster_y:int,  monster_animate:int):void {
+
+
+
+			mySprite[sprite_num].x = monster_x ;
+			mySprite[sprite_num].y = monster_y ;
+			mySprite[sprite_num].animate = monster_animate;
+			mySprite[sprite_num].facingRight = true;
+			mySprite[sprite_num].active = true;
+			mySprite[sprite_num].visible = true;
+			  
+			mySprite[sprite_num].topBB = 3 *2; 
+			mySprite[sprite_num].bottomBB = 8 *2;
+			mySprite[sprite_num].leftBB = 0;
+			mySprite[sprite_num].rightBB = 16 * 2;
+		
+			mySprite[sprite_num].sprite_type = S_GATOR;
+			  
+			sprite_num ++;
+			monster_num = sprite_num;
+			platform_num = 0;
+		}
+		
+		public function addPlatform( platform_x:int, platform_y:int):void {
+
+			mySprite[sprite_num].x = platform_x ;
+			mySprite[sprite_num].y = platform_y ;
+			mySprite[sprite_num].animate = 0;
+			mySprite[sprite_num].facingRight = true;
+			mySprite[sprite_num].active = true;
+			mySprite[sprite_num].visible = true;
+			  
+			mySprite[sprite_num].topBB = 0; 
+			mySprite[sprite_num].bottomBB = 8* 2;
+			mySprite[sprite_num].leftBB = 0;
+			mySprite[sprite_num].rightBB = 40*2;
+		
+			mySprite[sprite_num].sprite_type = S_CLOUD;
+			  
+			sprite_num ++;
+			platform_num = sprite_num;
+		}
+		
+		public function drawMonsters():void {
+			//draw all monsters
+			var anim_speed:int = 5;
+			var i:int;
+			var x:int,y:int,z:int;
+			var move:int = 3;//3
+			var markerTest:Boolean = false;//FALSE;
+			var hide:Boolean = true;//TRUE;
+			var show:Boolean = false;//FALSE;
+			var visibility:Boolean = false;//FALSE;
+			//int index_num = 0;
+			
+			//if (sprite_num >= monster_num) index_num = sprite_num;
+			//else index_num = monster_num;
+			
+			//for each monster...
+			if(monster_num > 0) {
+				for (i =  0 ; i < monster_num   ; i++) {   
+					markerTest = false;//FALSE; 
+		
+					
+					if (mySprite[i].active ==true   ) {
+						x = mySprite[i].x / 8;
+						y = mySprite[i].y / 8;
+						// Must move and stop monsters when they hit bricks or
+						// markers or the end of the screen/room/level.
+		
+						if(mySprite[i].facingRight == true ) {
+		
+							mySprite[i].x = mySprite[i].x + move;
+							// marker test
+							if( myInvisible[x+2][y] == B_BLOCK  ) markerTest = true;//TRUE;
+							if( myInvisible[x+2][y] == B_MARKER ) markerTest = true;// TRUE;
+							if( myInvisible[ x+2][y+1] == 0) markerTest = true;//TRUE;
+							// turn monster
+							if (mySprite[i].x > myHoriz * 8  - 16 || markerTest == true ) {
+		
+								mySprite[i].facingRight=false;//FALSE;
+							}
+						}
+						else {
+		
+							mySprite[i].x = sprite[i].x - move;
+							// marker test
+							if(myInvisible[x][y] == B_BLOCK) markerTest = true;//TRUE;
+							if(myInvisible[x][y] == B_MARKER) markerTest =true;// TRUE;
+							if(myInvisible[x-1][y+1] == 0) markerTest = true;//TRUE;
+							// turn monster
+							if (mySprite[i].x < 0 || markerTest == true ) {
+		
+								mySprite[i].facingRight= true;//TRUE;
+							}
+						}
+		
+						//Only show monsters that are on the screen properly
+		
+		
+						//default is to show monster
+						visibility = show;
+						//hide monster if...
+						if(mySprite[i].x > scrollBGX + 32 * 8 + 16 ) {
+							visibility = hide;
+						}
+						if (mySprite[i].x < scrollBGX - 16) {
+							visibility = hide;
+						}
+						if (mySprite[i].y > scrollBGY + 24 * 8 + 16) {
+							visibility = hide;
+						}
+						if ( mySprite[i].y < scrollBGY  - 16) {
+							visibility = hide;
+						}
+					}
+					
+					//swap monsters
+					if (mySprite[i].visible && visibility == show) mySprite[i].visible = true;// TRUE;
+					
+					//drawBasicSprite(i, D_GATOR);
+		
+		
+				}
+		
+			}
+			return;
+			
+			
+		}
 		
 		///////////////////////////////////////////
 		public function drawLevelTiles():void {
