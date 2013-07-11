@@ -318,7 +318,7 @@
 		
 		public function drawMonsters():void {
 			//draw all monsters
-			var anim_speed:int = 5;
+			
 			var i:int;
 			var xx:int,yy:int,z:int;
 			var move:int = 3 *2;//3
@@ -352,7 +352,7 @@
 			
 								mySprite[i].x = mySprite[i].x + move;
 								// marker test
-								if (xx + 3 < myHoriz && yy + 2 < myVert ) {
+								if (xx + 3 < myHoriz && yy + 2 < myVert || true ) {
 									
 									if(myInvisible[yy][xx+2] + mapcheat == B_BLOCK  ) markerTest = true;//TRUE;
 									if(myInvisible[yy][xx+2] + mapcheat == B_MARKER ) markerTest = true;// TRUE;
@@ -368,7 +368,7 @@
 			
 								mySprite[i].x = mySprite[i].x - move;
 								// marker test
-								if (xx -1 > 0 && yy + 2 < myVert) {
+								if (xx -1 > 0 && yy + 2 < myVert || true) {
 									if(myInvisible[yy][xx] + mapcheat == B_BLOCK) markerTest = true;//TRUE;
 									if(myInvisible[yy][xx] + mapcheat == B_MARKER) markerTest =true;// TRUE;
 									if(myInvisible[yy+1][xx-1] == 0) markerTest = true;//TRUE;

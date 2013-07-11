@@ -66,22 +66,20 @@
 				break;
 				
 				case AGMode.D_GATOR:
-		//
-		//		i = spriteNum;
+		
+		
 				sprite.animate ++;
-				if (sprite.animate > anim_speed * 4) sprite.animate=0;
+				if (sprite.animate > (anim_speed * 4) ) sprite.animate=0;
 				if (sprite.animate > anim_speed * 2) z = 1;
 				else z = 0;
-		
+				
 		
 				if(sprite.visible == true ) {
-					if (scrollx < sprite.x + AGMode.PLATFORM_WIDTH) {
+					if (scrollx < sprite.x + 32 ) {
 		
 						if(sprite.facingRight == true) {
 							if(z == 0) {
 								
-								//drawSprite_16(monster_a, sprite[i].x, sprite[i].y,
-								//	scrollx, scrolly, PAINT_TRANSPARENT, 0);
 								sprite.bitmap = myRes[AGResources.NAME_MONSTER_R0_PNG];
 								sprite.bitmap.x = sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
@@ -90,8 +88,6 @@
 							}
 							else if (z == 1) {
 								
-								//drawSprite_16(monster_b, sprite[i].x, sprite[i].y,
-								//	scrollx, scrolly, PAINT_TRANSPARENT, 0);
 								sprite.bitmap = myRes[AGResources.NAME_MONSTER_R1_PNG];
 								sprite.bitmap.x = sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
@@ -101,8 +97,6 @@
 						else if (!sprite.facingRight == true) {
 							if(z == 0) {
 		
-								//drawSprite_16(monster_c, sprite[i].x, sprite[i].y,
-								//	scrollx, scrolly, PAINT_TRANSPARENT, 0);
 								sprite.bitmap = myRes[AGResources.NAME_MONSTER_L0_PNG];
 								sprite.bitmap.x = sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
@@ -110,8 +104,6 @@
 							}
 							else if (z == 1) {
 		
-								//drawSprite_16(monster_d, sprite[i].x, sprite[i].y,
-								//	scrollx, scrolly, PAINT_TRANSPARENT, 0);
 								sprite.bitmap = myRes[AGResources.NAME_MONSTER_L1_PNG];
 								sprite.bitmap.x = sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
@@ -119,12 +111,10 @@
 							}
 						}
 					}
-					else if (scrollx >= sprite.x ) {
+					else if (scrollx >= sprite.x  ) {
 						if(sprite.facingRight == true) {
 							if(z == 0) {
 		
-								//drawSprite_16(monster_a,(level_w * 8) + sprite[i].x, sprite[i].y,
-								//	scrollx, scrolly, PAINT_TRANSPARENT, 0);
 								sprite.bitmap = myRes[AGResources.NAME_MONSTER_R0_PNG];
 								sprite.bitmap.x = (myMode.myHoriz * 16 ) + sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
@@ -132,8 +122,6 @@
 							}
 							else if (z == 1) {
 		
-								//drawSprite_16(monster_b,(level_w * 8) + sprite[i].x, sprite[i].y,
-								//	scrollx, scrolly, PAINT_TRANSPARENT, 0);
 								sprite.bitmap = myRes[AGResources.NAME_MONSTER_R1_PNG];
 								sprite.bitmap.x = (myMode.myHoriz * 16 ) + sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
@@ -143,8 +131,6 @@
 						else if (!sprite.facingRight == true) {
 							if(z == 0) {
 		
-								//drawSprite_16(monster_c,(level_w * 8) + sprite[i].x, sprite[i].y,
-								//	scrollx, scrolly, PAINT_TRANSPARENT, 0);
 								sprite.bitmap = myRes[AGResources.NAME_MONSTER_L0_PNG];
 								sprite.bitmap.x = (myMode.myHoriz * 16 ) + sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
@@ -152,8 +138,6 @@
 							}
 							else if (z == 1) {
 		
-								//drawSprite_16(monster_d,(level_w * 8) + sprite[i].x, sprite[i].y,
-								//	scrollx, scrolly, PAINT_TRANSPARENT, 0);
 								sprite.bitmap = myRes[AGResources.NAME_MONSTER_L1_PNG];
 								sprite.bitmap.x = (myMode.myHoriz * 16 ) + sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
