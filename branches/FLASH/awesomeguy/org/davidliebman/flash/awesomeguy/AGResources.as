@@ -44,16 +44,16 @@
 	public static var NAME_MONSTER_R1_PNG:int = 13;
 
 	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
-	var res01:Array = new Array (R_SPRITE, "bitmap/test2.png");
+	var res01:Array = new Array (R_BITMAP, "bitmap/test2.png");
 	var res02:Array = new Array (R_BITMAP, "bitmap/agtiles1.png");
 	var res03:Array = new Array (R_BITMAP, "bitmap/agtiles2.png");
 	var res04:Array = new Array (R_BITMAP, "bitmap/agtiles3.png");
 	var res05:Array = new Array (R_BITMAP, "bitmap/agtiles4.png");
 	
-	var res06:Array = new Array (R_SPRITE, "bitmap/flyer_l0.png");
-	var res07:Array = new Array (R_SPRITE, "bitmap/flyer_l1.png");
-	var res08:Array = new Array (R_SPRITE, "bitmap/flyer_r0.png");
-	var res09:Array = new Array (R_SPRITE, "bitmap/flyer_r1.png");
+	var res06:Array = new Array (R_BITMAP, "bitmap/flyer_l0.png");
+	var res07:Array = new Array (R_BITMAP, "bitmap/flyer_l1.png");
+	var res08:Array = new Array (R_BITMAP, "bitmap/flyer_r0.png");
+	var res09:Array = new Array (R_BITMAP, "bitmap/flyer_r1.png");
 	
 	var res10:Array = new Array (R_BITMAP, "bitmap/monster_l0.png");
 	var res11:Array = new Array (R_BITMAP, "bitmap/monster_l1.png");

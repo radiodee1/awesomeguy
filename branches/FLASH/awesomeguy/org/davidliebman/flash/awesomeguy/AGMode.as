@@ -147,6 +147,7 @@
 	public var wrapHorizontal:Boolean = true;
 	public var gamePaused:Boolean = false;
 	public var flyerGrounded:Boolean = false;
+	public var preferences_collision:Boolean = true;
 	
 	public var radar:Rectangle = new Rectangle(0,0,SCREEN_WIDTH - 128, 64);
 	public var radarscreen:Bitmap = new Bitmap();
@@ -155,6 +156,8 @@
 	public var myInvisible:Array ;
 	
 	var sprite:Sprite = new Sprite();
+	public var flyersprite:Bitmap;
+
 
 		public function AGMode() {
 			// constructor code
@@ -639,6 +642,15 @@
 		
 		public function getRand(min:int, max:int):int {
 			return min + ( max - min ) * Math.random();
+		}
+		
+		public function collisionSimple( a:Bitmap, b:Bitmap ):Boolean {
+			var arect:Rectangle = a.getBounds(myStage);
+			var brect:Rectangle = b.getBounds(myStage);
+			var apt:Point = new Point(a.x, a.y);
+			var bpt:Point = new Point(b.x, b.y);
+			return a.bitmapData.hitTest(apt,128,b.bitmapData,bpt,128);
+			
 		}
 	}
 	

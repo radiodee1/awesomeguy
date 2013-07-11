@@ -4,6 +4,7 @@
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Shape;
+	import flash.geom.Rectangle;
 	
 	public class AGModeFlyer extends AGMode{
 
@@ -15,6 +16,7 @@
 		public var total_placed_invader_1:int, total_placed_invader_2:int, total_placed_invader_3:int;
 
 		public var total_held_rings:int;
+		
 		
 		public function AGModeFlyer() {
 			// constructor code
@@ -55,6 +57,7 @@
 			drawScoreWords();
 			myStage.addChild(myShape);
 			drawMonsters();
+			collisionWithMonsters();
 			
 			drawRadarPing(radar, radarscreen ,xpos,ypos,AGMode.PING_FLYER,0xffffffff);
 			
@@ -288,7 +291,7 @@
 			//mySprite[sprite_num].type = S_GATOR;
 			sprite_num ++;
 			monster_num = sprite_num;
-			trace(sprite_num);
+			
 			platform_num = 0;
 		}
 		
@@ -310,7 +313,7 @@
 			  
 			sprite_num ++;
 			
-			trace(sprite_num);
+			
 			platform_num = sprite_num;
 		}
 		
@@ -398,7 +401,7 @@
 						//visibility = show;
 						//swap monsters
 						if (mySprite[i].visible && visibility == show) mySprite[i].visible = true;// TRUE;
-						trace(i);
+						
 						//drawBasicSprite(i, D_GATOR);
 					
 						myDraw.drawBasicSprite(mySprite[i], D_GATOR);
@@ -412,6 +415,65 @@
 			
 		}
 		
+		
+		public function collisionWithMonsters():void {
+
+			var i:int;
+	
+	
+		  //BoundingBox guyBox = makeSpriteBox( flyer , 0, 0 );
+
+		  trace("monster collision");
+		  for (i = 0  ; i < mySprite.length ; i++) {
+			  if(mySprite[i].sprite_type == AGMode.S_GATOR) {
+			  
+			 
+			 var sprite:AGSprite = mySprite[i];
+			  
+			  
+			  
+		    //BoundingBox monsterBox = makeSpriteBox(sprite[i] , 0, 0 );
+		    var test:Boolean =  collisionSimple(flyersprite, sprite.bitmap);
+			
+			trace(test);
+		    if (test && sprite.active   == true) {
+		    
+		      if (flyersprite.getBounds(myStage).bottom < sprite.bitmap.getBounds(myStage).bottom ) {
+		    	
+		    	myGame.gameScore  = myGame.gameScore  + 10;
+		    	trace("score!");
+					  
+		    	if (preferences_collision == true) {
+					sprite.active = false;
+					sprite.visible = false;
+		    		//inactivateMonsterView(i);
+		    		//inactivateMonster(i);
+		    		//setSoundBoom();
+		    	}
+
+
+				//setSoundBoom();
+		        
+		        
+		      }
+		      else {
+				//endlevel = TRUE;
+				if (preferences_collision == true) {
+					//inactivateMonster(i);
+					//animate_only = TRUE;
+					//setSoundOw();
+					
+				}
+
+		        
+
+		      }
+		    }
+			
+			  }
+		  }
+
+		}
 		///////////////////////////////////////////
 		public function drawLevelTiles():void {
 			var  i:int,j:int,k:int,l:int,m:int, zz:int;

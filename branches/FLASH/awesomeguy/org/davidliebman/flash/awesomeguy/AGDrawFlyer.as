@@ -40,28 +40,28 @@
 				
 				if (facingRight) {
 					if (animate %2 == 1 ) {
-						sprite.sprite = myRes[AGResources.NAME_FLYER_R0_PNG];
+						sprite.bitmap = myRes[AGResources.NAME_FLYER_R0_PNG];
 
 					}
 					else {
-						sprite.sprite = myRes[AGResources.NAME_FLYER_R1_PNG];
+						sprite.bitmap = myRes[AGResources.NAME_FLYER_R1_PNG];
 	
 					}
 				}
 				else {
 					if (animate %2 == 1) {
-						sprite.sprite = myRes[AGResources.NAME_FLYER_L0_PNG];
+						sprite.bitmap = myRes[AGResources.NAME_FLYER_L0_PNG];
 
 					}
 					else {
-						sprite.sprite = myRes[AGResources.NAME_FLYER_L1_PNG];
+						sprite.bitmap = myRes[AGResources.NAME_FLYER_L1_PNG];
 	
 					}
 				}
-				sprite.sprite.x = add + xx - scrollx;
-				sprite.sprite.y = yy - scrolly;
-				myStage.addChild(sprite.sprite);
-			
+				sprite.bitmap.x = add + xx - scrollx;
+				sprite.bitmap.y = yy - scrolly;
+				myStage.addChild(sprite.bitmap);
+				myMode.flyersprite = sprite.bitmap;
 				break;
 				
 				case AGMode.D_GATOR:
