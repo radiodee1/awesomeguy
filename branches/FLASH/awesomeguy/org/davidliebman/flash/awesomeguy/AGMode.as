@@ -35,6 +35,9 @@
 	static var TOTAL_TIMER:int = 10;
 	static var TOTAL_CHALLENGE:int = 10;
 		
+	static var PLATFORM_WIDTH:int = 40*2;
+	static var PLATFORM_HEIGHT:int = 8*2;
+		
 	//blocks	
 	static var B_NONE:int = -1 ;
 	static var B_START:int = 5 ;
@@ -68,6 +71,18 @@
 	static var S_LINE:int =	13;
 	static var S_LINE_2:int = 14;
 	static var S_EXPLOSION_SPRITE:int = 15;
+	
+	//draw enumeration
+	static var D_NONE:int = 0;
+	static var  D_FLYER:int =  1;
+	static var  D_EXPLOSION:int =  2;
+	static var  D_EXPLOSION_SPRITE:int =  3;
+	static var  D_CLOUD:int =  4;
+	static var  D_GATOR:int =  5;
+	static var  D_INVADER_1:int =  6;
+	static var  D_INVADER_2:int =  7;
+	static var  D_INVADER_3:int =  8;
+	static var  D_FLYER_RINGS:int =  9;
 	
 	//radar ping types
 	static var PING_FLYER:int = 0;
