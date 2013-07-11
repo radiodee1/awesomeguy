@@ -47,14 +47,14 @@
 			//drawBasicSprite(0, AGMode.S_FLYER);
 			var flyersprite:AGSprite = new AGSprite(AGMode.S_FLYER);
 			flyersprite.sprite = this.sprite;
-			myDraw.drawRes(flyersprite,xpos,ypos,facingRight,AGMode.S_FLYER,animate);
+			myDraw.drawRes(flyersprite,xpos,ypos,facingRight,AGMode.D_FLYER ,animate);
 
 			screenframe.x = 0;
 			screenframe.y = SCREEN_HEIGHT;
 			myStage.addChild(screenframe);
 			drawScoreWords();
 			myStage.addChild(myShape);
-			//drawScoreWords();
+			drawMonsters();
 			
 			drawRadarPing(radar, radarscreen ,xpos,ypos,AGMode.PING_FLYER,0xffffffff);
 			
@@ -318,7 +318,7 @@
 			var anim_speed:int = 5;
 			var i:int;
 			var x:int,y:int,z:int;
-			var move:int = 3;//3
+			var move:int = 3 *2;//3
 			var markerTest:Boolean = false;//FALSE;
 			var hide:Boolean = true;//TRUE;
 			var show:Boolean = false;//FALSE;
@@ -335,8 +335,8 @@
 		
 					
 					if (mySprite[i].active ==true   ) {
-						x = mySprite[i].x / 8;
-						y = mySprite[i].y / 8;
+						x = mySprite[i].x / 16;
+						y = mySprite[i].y / 16;
 						// Must move and stop monsters when they hit bricks or
 						// markers or the end of the screen/room/level.
 		
@@ -348,14 +348,14 @@
 							if( myInvisible[x+2][y] == B_MARKER ) markerTest = true;// TRUE;
 							if( myInvisible[ x+2][y+1] == 0) markerTest = true;//TRUE;
 							// turn monster
-							if (mySprite[i].x > myHoriz * 8  - 16 || markerTest == true ) {
+							if (mySprite[i].x > myHoriz * 16  - 32 || markerTest == true ) {
 		
 								mySprite[i].facingRight=false;//FALSE;
 							}
 						}
 						else {
 		
-							mySprite[i].x = sprite[i].x - move;
+							mySprite[i].x = mySprite[i].x - move;
 							// marker test
 							if(myInvisible[x][y] == B_BLOCK) markerTest = true;//TRUE;
 							if(myInvisible[x][y] == B_MARKER) markerTest =true;// TRUE;
@@ -373,16 +373,16 @@
 						//default is to show monster
 						visibility = show;
 						//hide monster if...
-						if(mySprite[i].x > scrollBGX + 32 * 8 + 16 ) {
+						if(mySprite[i].x > scrollBGX + 64 * 16 + 32 ) {
 							visibility = hide;
 						}
-						if (mySprite[i].x < scrollBGX - 16) {
+						if (mySprite[i].x < scrollBGX - 32) {
 							visibility = hide;
 						}
-						if (mySprite[i].y > scrollBGY + 24 * 8 + 16) {
+						if (mySprite[i].y > scrollBGY + 48 * 16 + 32) {
 							visibility = hide;
 						}
-						if ( mySprite[i].y < scrollBGY  - 16) {
+						if ( mySprite[i].y < scrollBGY  - 32) {
 							visibility = hide;
 						}
 					}
@@ -391,8 +391,8 @@
 					if (mySprite[i].visible && visibility == show) mySprite[i].visible = true;// TRUE;
 					
 					//drawBasicSprite(i, D_GATOR);
-		
-		
+					//myDraw.drawRes(mySprite[i], mySprite[i].x,mySprite[i].y, mySprite[i].facingRight, D_GATOR, 0);
+					myDraw.drawBasicSprite(mySprite[i], D_GATOR);
 				}
 		
 			}
