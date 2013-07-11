@@ -16,9 +16,8 @@
 		
 		public override function drawRes(sprite:AGSprite, xx:int, yy:int, facingRight:Boolean, kind:int, animate:int):void {
 			// all drawing goes here!!
-		//}
-
-		//public function drawBasicSprite(spriteNum:int, kind:int):void {
+		
+		
 			// init some vars here
 			var add:int, add_radar:int, z:int;
 			var scrollx:int = myMode.scrollBGX;
@@ -74,21 +73,23 @@
 				else z = 0;
 				
 		
-				if(sprite.visible == true ) {
+				if(sprite.visible == true) {
 					if (scrollx < sprite.x + 32 ) {
-		
+						//trace (sprite.animate);
 						if(sprite.facingRight == true) {
 							if(z == 0) {
 								
-								sprite.bitmap = myRes[AGResources.NAME_MONSTER_R0_PNG];
+								sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_MONSTER_R0_PNG].bitmapData.clone());
 								sprite.bitmap.x = sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
 								myStage.addChild(sprite.bitmap);
 		
 							}
-							else if (z == 1) {
+							else if (z == 1 ) {
 								
-								sprite.bitmap = myRes[AGResources.NAME_MONSTER_R1_PNG];
+								sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_MONSTER_R1_PNG].bitmapData.clone());//
 								sprite.bitmap.x = sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
 								myStage.addChild(sprite.bitmap);
@@ -97,14 +98,16 @@
 						else if (!sprite.facingRight == true) {
 							if(z == 0) {
 		
-								sprite.bitmap = myRes[AGResources.NAME_MONSTER_L0_PNG];
+								sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_MONSTER_L0_PNG].bitmapData.clone());//
 								sprite.bitmap.x = sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
 								myStage.addChild(sprite.bitmap);
 							}
 							else if (z == 1) {
 		
-								sprite.bitmap = myRes[AGResources.NAME_MONSTER_L1_PNG];
+								sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_MONSTER_L1_PNG].bitmapData.clone());//
 								sprite.bitmap.x = sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
 								myStage.addChild(sprite.bitmap);
@@ -112,17 +115,20 @@
 						}
 					}
 					else if (scrollx >= sprite.x  ) {
+						//trace(sprite.animate);
 						if(sprite.facingRight == true) {
 							if(z == 0) {
 		
-								sprite.bitmap = myRes[AGResources.NAME_MONSTER_R0_PNG];
+								sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_MONSTER_R0_PNG].bitmapData.clone());//
 								sprite.bitmap.x = (myMode.myHoriz * 16 ) + sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
 								myStage.addChild(sprite.bitmap);
 							}
-							else if (z == 1) {
+							else if (z == 1 ) {
 		
-								sprite.bitmap = myRes[AGResources.NAME_MONSTER_R1_PNG];
+								sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_MONSTER_R1_PNG].bitmapData.clone());//
 								sprite.bitmap.x = (myMode.myHoriz * 16 ) + sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
 								myStage.addChild(sprite.bitmap);
@@ -131,14 +137,16 @@
 						else if (!sprite.facingRight == true) {
 							if(z == 0) {
 		
-								sprite.bitmap = myRes[AGResources.NAME_MONSTER_L0_PNG];
+								sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_MONSTER_L0_PNG].bitmapData.clone());//
 								sprite.bitmap.x = (myMode.myHoriz * 16 ) + sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
 								myStage.addChild(sprite.bitmap);
 							}
-							else if (z == 1) {
+							else if (z == 1 ) {
 		
-								sprite.bitmap = myRes[AGResources.NAME_MONSTER_L1_PNG];
+								sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_MONSTER_L1_PNG].bitmapData.clone());//
 								sprite.bitmap.x = (myMode.myHoriz * 16 ) + sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
 								myStage.addChild(sprite.bitmap);

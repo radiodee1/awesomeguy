@@ -125,7 +125,7 @@
 				for (j = 0 ; j < myHoriz; j ++ ) {
 					k = int (tempArray[ (i * myHoriz) + j ] );
 					smallArray.push(int (tempArray[ (i * myHoriz) + j ] ) );
-					if (k + mapcheat == AGMode.B_MONSTER) addMonster(j,i ,1);
+					if (k + mapcheat == AGMode.B_MONSTER) addMonster(j,i ,0);
 					if (k + mapcheat == AGMode.B_PLATFORM) addPlatform(j , i );
 				}
 				myInvisible.push(smallArray);
@@ -272,8 +272,6 @@
 				
 		public function addMonster(monster_x:int, monster_y:int,  monster_animate:int):void {
 
-
-
 			mySprite[sprite_num].x = monster_x * TILE_WIDTH;
 			mySprite[sprite_num].y = monster_y * TILE_HEIGHT;
 			mySprite[sprite_num].animate = monster_animate;
@@ -328,13 +326,11 @@
 			var visibility:Boolean = false;
 			//int index_num = 0;
 			
-			//if (sprite_num >= monster_num) index_num = sprite_num;
-			//else index_num = monster_num;
 			
 			//for each monster...
-			if(monster_num > 0) {
+			if(monster_num > 0 || true) {
 				for (i =  0 ; i < mySprite.length   ; i++) {   
-					
+					//if (i == 5) return;
 					if (mySprite[i].sprite_type == S_GATOR) {
 						markerTest = false;//FALSE; 
 						
@@ -399,10 +395,10 @@
 								visibility = hide;
 							}
 						}
-						
+						//visibility = show;
 						//swap monsters
 						if (mySprite[i].visible && visibility == show) mySprite[i].visible = true;// TRUE;
-						
+						trace(i);
 						//drawBasicSprite(i, D_GATOR);
 					
 						myDraw.drawBasicSprite(mySprite[i], D_GATOR);
