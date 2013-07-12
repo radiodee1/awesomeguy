@@ -486,11 +486,11 @@
 		
 		public function drawSpriteExplosion():void {
 			var i:int;
-			for (i = 0 ; i < mySprite.length; i ++ ) {
-				if (mySprite[i].sprite_type == S_EXPLOSION_SPRITE && mySprite[i].active == true) {
-					myDraw.drawBasicSprite(mySprite[i], AGMode.D_EXPLOSION_SPRITE );
-				}
+			
+			if (explosionsprite.sprite_type == S_EXPLOSION_SPRITE && explosionsprite.active == true) {
+				myDraw.drawBasicSprite(explosionsprite, AGMode.D_EXPLOSION_SPRITE );
 			}
+			
 		
 		}
 		
