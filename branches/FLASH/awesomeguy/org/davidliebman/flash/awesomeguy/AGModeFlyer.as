@@ -449,10 +449,6 @@
 					myGame.gameScore = myGame.gameScore + 10;
 		    	}
 
-
-				//setSoundBoom();
-		        
-		        
 		      }
 		      else {
 				//endlevel = TRUE;
@@ -774,11 +770,11 @@
 			if (xx + yy == 0 ) {
 				//ypos = ypos + 
 				yy = (Y_MOVE / 2);
-				if (facingRight) {
+				if (facingRight && ypos < SCREEN_HEIGHT -64) {
 					//xpos = xpos + 
 					xx = (X_MOVE / 2);
 				}
-				else {
+				else if (ypos < SCREEN_HEIGHT -64) {
 					//xpos = xpos 
 					xx = - (X_MOVE / 2);
 				}
