@@ -160,6 +160,7 @@
 				break;
 				////////////////////////////////////
 				case AGResources.R_SOUND:
+					r_sound = new Sound();
 					r_sound.load( new URLRequest(r_url));
 					finishRes(null);
 				break;
@@ -207,7 +208,7 @@
 				
 				case AGResources.R_SOUND:
 				//sound
-					trace(r_url);
+					
 					myRes.push(r_sound);
 					
 				break;
