@@ -42,6 +42,18 @@
 	public static var NAME_MONSTER_L1_PNG:int = 11;
 	public static var NAME_MONSTER_R0_PNG:int = 12;
 	public static var NAME_MONSTER_R1_PNG:int = 13;
+	
+	public static var NAME_BOOM_MP3:int = 14;
+	public static var NAME_ENTER_1_MP3:int = 15;
+	public static var NAME_ENTER_2_MP3:int = 16;
+	public static var NAME_ENTER_3_MP3:int = 17;
+	public static var NAME_ENTER_4_MP3:int = 18;
+	public static var NAME_EXPLOSION_MP3:int = 19;
+	public static var NAME_EXPLOSION_BIG_MP3:int = 20;
+	public static var NAME_GOAL_MP3:int = 21;
+	public static var NAME_OW_MP3:int = 22;
+	public static var NAME_PRIZE_MP3:int = 23;
+
 
 	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
 	var res01:Array = new Array (R_BITMAP, "bitmap/test2.png");
@@ -60,6 +72,16 @@
 	var res12:Array = new Array (R_BITMAP, "bitmap/monster_r0.png");
 	var res13:Array = new Array (R_BITMAP, "bitmap/monster_r1.png");
 
+	var res14:Array = new Array (R_SOUND, "sound/boom.mp3");
+	var res15:Array = new Array (R_SOUND, "sound/enter_1.mp3");
+	var res16:Array = new Array (R_SOUND, "sound/enter_2.mp3");
+	var res17:Array = new Array (R_SOUND, "sound/enter_3.mp3");
+	var res18:Array = new Array (R_SOUND, "sound/enter_4.mp3");
+	var res19:Array = new Array (R_SOUND, "sound/explosion.mp3");
+	var res20:Array = new Array (R_SOUND, "sound/explosion_big.mp3");
+	var res21:Array = new Array (R_SOUND, "sound/goal.mp3");
+	var res22:Array = new Array (R_SOUND, "sound/ow.mp3");
+	var res23:Array = new Array (R_SOUND, "sound/prize.mp3");
 
 
 	var i:int = 0;
@@ -95,7 +117,17 @@
 			neededRes.push(res12);
 			neededRes.push(res13);
 
-			
+			neededRes.push(res14);
+			neededRes.push(res15);
+			neededRes.push(res16);
+			neededRes.push(res17);
+			neededRes.push(res18);
+			neededRes.push(res19);
+			neededRes.push(res20);
+			neededRes.push(res21);
+			neededRes.push(res22);
+			neededRes.push(res23);
+
 			
 			importRes();
 		}
@@ -175,6 +207,7 @@
 				
 				case AGResources.R_SOUND:
 				//sound
+					trace(r_url);
 					myRes.push(r_sound);
 					
 				break;
