@@ -156,7 +156,9 @@
 	public var myInvisible:Array ;
 	
 	var sprite:Sprite = new Sprite();
-	public var flyersprite:Bitmap;
+	public var flyersprite:Bitmap; // for collision detection
+	public var explosionsprite:AGSprite; // for display of explosion
+	var agflyer:AGSprite = new AGSprite(AGMode.S_FLYER);
 
 
 		public function AGMode() {

@@ -60,7 +60,7 @@
 				}
 				sprite.bitmap.x = add + xx - scrollx;
 				sprite.bitmap.y = yy - scrolly;
-				myStage.addChild(sprite.bitmap);
+				if (sprite.active == true) myStage.addChild(sprite.bitmap);
 				myMode.flyersprite = sprite.bitmap;
 				break;
 				
@@ -156,6 +156,84 @@
 				}
 				//
 				break;
+				//////////////////////////////////////////
+				case AGMode.D_EXPLOSION_SPRITE:
+				
+				
+				//i = spriteNum;
+				var x:int, y:int ;
+				var wait:int = 2;
+				y = sprite.y - 32;
+				x = sprite.x;
+		
+				
+		
+				add = 0;
+		
+				if(scrollx < sprite.x + 64*2) {
+					add = 0;
+				}
+				else if (scrollx >= sprite.x ) {
+					add = myMode.myHoriz * 8;
+				}
+		
+		
+				if (sprite.timerDone()) {
+		
+					//LOGE("explosion %d ", flyer_explosion);
+		
+					switch (sprite.quality_3) {
+					case 0:
+						//drawSprite_64(explosion_a, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+		
+						break;
+					case 1:
+						//drawSprite_64(explosion_b, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+		
+						break;
+		
+					case 2:
+						//drawSprite_64(explosion_c, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+		
+						break;
+					case 3:
+						//drawSprite_64(explosion_d, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+		
+						break;
+					case 4:
+						//drawSprite_64(explosion_e, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+		
+						break;
+					case 5:
+						//drawSprite_64(explosion_f, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+		
+						break;
+		
+					case 6:
+						//drawSprite_64(explosion_g, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+		
+						break;
+					case 7:
+						//drawSprite_64(explosion_h, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+						//sprite[i].active = FALSE;
+						break;
+					}
+					if (sprite.quality_3 > 7) {
+						//sprite[i].quality_3 = -1;
+						//endlevel = TRUE;
+						//gamedeath = TRUE;
+						sprite.active = false;
+						sprite.sprite_type = AGMode.S_NONE;
+					}
+					sprite.quality_3 ++;
+					sprite.timerStart( wait/ 1000);
+					//}
+				}
+				
+				break;
+				///////////
+
+				
 			}
 		}
 

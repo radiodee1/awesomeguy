@@ -17,6 +17,7 @@
 
 		public var total_held_rings:int;
 		
+		public var animate_explosion:Boolean = false;
 		
 		public function AGModeFlyer() {
 			// constructor code
@@ -45,11 +46,12 @@
 			
 			drawLevelTiles();
 			drawRadarRock();
+			drawSpriteExplosion();
+
 
 			//drawBasicSprite(0, AGMode.S_FLYER);
-			var flyersprite:AGSprite = new AGSprite(AGMode.S_FLYER);
-			flyersprite.sprite = this.sprite;
-			myDraw.drawRes(flyersprite,xpos,ypos,facingRight,AGMode.D_FLYER ,animate);
+			agflyer.sprite = this.sprite;
+			myDraw.drawRes(agflyer,xpos,ypos,facingRight,AGMode.D_FLYER ,animate);
 
 			screenframe.x = 0;
 			screenframe.y = SCREEN_HEIGHT;
@@ -69,11 +71,16 @@
 		public override function doOnce():void {
 			myDraw = new AGDrawFlyer(this, myRes, myStage, myScreenBG);
 			
+			explosionsprite = new AGSprite(AGMode.S_EXPLOSION_SPRITE);
+			explosionsprite.active = false;
+			
 			initAGSprite();
 			initChallenges();// this just creates the array!!
 			initAGTimer();
-			//myStage.addChild(myRes[AGResources.NAME_FLYER_L0_PNG]);
-
+			
+			mySprite[0] = explosionsprite;
+			sprite_num ++;
+			
 			fillChallenges();
 			
 			prepTiles() ;
@@ -83,6 +90,9 @@
 			radar_start_scroll =  scrollBGX;
 			//trace (radar_start + " scroll:" + scrollBGX);
 			//myRes[AGResources.NAME_EXPLOSION_MP3].play();
+			agflyer = new AGSprite(AGMode.S_FLYER);
+			agflyer.active = true;
+			
 		}
 		
 		public override function prepTiles():void {
@@ -428,8 +438,6 @@
 			 var sprite:AGSprite = mySprite[i];
 			  
 			  
-			  
-		    //BoundingBox monsterBox = makeSpriteBox(sprite[i] , 0, 0 );
 		    var test:Boolean =  collisionSimple(flyersprite, sprite.bitmap);
 			
 			//trace(test);
@@ -446,6 +454,7 @@
 		    		//inactivateMonsterView(i);
 		    		//inactivateMonster(i);
 		    		//setSoundBoom();
+					myRes[AGResources.NAME_BOOM_MP3].play();
 					myGame.gameScore = myGame.gameScore + 10;
 		    	}
 
@@ -456,8 +465,13 @@
 					//inactivateMonster(i);
 					//animate_only = TRUE;
 					//setSoundOw();
+					myRes[AGResources.NAME_OW_MP3].play();
 					sprite.active = false;
 					sprite.visible = false;
+					animate_explosion = true;
+					explosionsprite.active = true;
+					agflyer.active = false;
+					
 				}
 
 		        
@@ -469,6 +483,18 @@
 		  }
 
 		}
+		
+		public function drawSpriteExplosion():void {
+			var i:int;
+			for (i = 0 ; i < mySprite.length; i ++ ) {
+				if (mySprite[i].sprite_type == S_EXPLOSION_SPRITE && mySprite[i].active == true) {
+					myDraw.drawBasicSprite(mySprite[i], AGMode.D_EXPLOSION_SPRITE );
+				}
+			}
+		
+		}
+		
+		
 		///////////////////////////////////////////
 		public function drawLevelTiles():void {
 			var  i:int,j:int,k:int,l:int,m:int, zz:int;
