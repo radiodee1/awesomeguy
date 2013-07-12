@@ -32,6 +32,7 @@
 			quality_0 = 0;
 			quality_1 = 0;
 			quality_2 = 0;
+			quality_3 = 0;
 			radius = 0;
 		}
 

@@ -470,6 +470,8 @@
 					sprite.visible = false;
 					animate_explosion = true;
 					explosionsprite.active = true;
+					explosionsprite.x = xpos;
+					explosionsprite.y = ypos;
 					agflyer.active = false;
 					
 				}
@@ -489,6 +491,7 @@
 			
 			if (explosionsprite.sprite_type == S_EXPLOSION_SPRITE && explosionsprite.active == true) {
 				myDraw.drawBasicSprite(explosionsprite, AGMode.D_EXPLOSION_SPRITE );
+				
 			}
 			
 		
