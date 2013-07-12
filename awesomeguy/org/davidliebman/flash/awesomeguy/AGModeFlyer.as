@@ -420,10 +420,7 @@
 
 			var i:int;
 	
-	
-		  //BoundingBox guyBox = makeSpriteBox( flyer , 0, 0 );
-
-		  trace("monster collision");
+		  //trace("monster collision");
 		  for (i = 0  ; i < mySprite.length ; i++) {
 			  if(mySprite[i].sprite_type == AGMode.S_GATOR) {
 			  
@@ -435,13 +432,13 @@
 		    //BoundingBox monsterBox = makeSpriteBox(sprite[i] , 0, 0 );
 		    var test:Boolean =  collisionSimple(flyersprite, sprite.bitmap);
 			
-			trace(test);
+			//trace(test);
 		    if (test && sprite.active   == true) {
 		    
 		      if (flyersprite.getBounds(myStage).bottom < sprite.bitmap.getBounds(myStage).bottom ) {
 		    	
-		    	myGame.gameScore  = myGame.gameScore  + 10;
-		    	trace("score!");
+		    	//myGame.gameScore  = myGame.gameScore  + 10;
+		    	//trace("score!");
 					  
 		    	if (preferences_collision == true) {
 					sprite.active = false;
@@ -449,6 +446,7 @@
 		    		//inactivateMonsterView(i);
 		    		//inactivateMonster(i);
 		    		//setSoundBoom();
+					myGame.gameScore = myGame.gameScore + 10;
 		    	}
 
 
