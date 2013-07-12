@@ -4,10 +4,10 @@
 	
 	public class AGTimer {
 
-			public var myTimer:Timer;
+			public var myTimer:Timer ;
 			public var done:Boolean = false;
 			public var timer_disable:Boolean = false;
-		
+			public var started:Boolean = false;
 		
 		public function AGTimer() {
 			// constructor code
@@ -17,6 +17,7 @@
 			myTimer = new Timer(num * 1000, 1);
 			myTimer.addEventListener(TimerEvent.TIMER, runOnce);
 			myTimer.start();
+			started = true;
 		}
 		
 		public function runOnce(e:TimerEvent):void {

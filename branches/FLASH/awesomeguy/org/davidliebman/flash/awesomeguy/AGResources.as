@@ -54,6 +54,15 @@
 	public static var NAME_OW_MP3:int = 22;
 	public static var NAME_PRIZE_MP3:int = 23;
 
+	public static var NAME_EXPLOSION_A:int = 24;
+	public static var NAME_EXPLOSION_B:int = 25;
+	public static var NAME_EXPLOSION_C:int = 26;
+	public static var NAME_EXPLOSION_D:int = 27;
+	public static var NAME_EXPLOSION_E:int = 28;
+	public static var NAME_EXPLOSION_F:int = 29;
+	public static var NAME_EXPLOSION_G:int = 30;
+	public static var NAME_EXPLOSION_H:int = 31;
+	
 
 	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
 	var res01:Array = new Array (R_BITMAP, "bitmap/test2.png");
@@ -83,7 +92,16 @@
 	var res22:Array = new Array (R_SOUND, "sound/ow.mp3");
 	var res23:Array = new Array (R_SOUND, "sound/prize.mp3");
 
-
+	var res24:Array = new Array (R_BITMAP, "bitmap/explosion_a.png");
+	var res25:Array = new Array (R_BITMAP, "bitmap/explosion_b.png");
+	var res26:Array = new Array (R_BITMAP, "bitmap/explosion_c.png");
+	var res27:Array = new Array (R_BITMAP, "bitmap/explosion_d.png");
+	var res28:Array = new Array (R_BITMAP, "bitmap/explosion_e.png");
+	var res29:Array = new Array (R_BITMAP, "bitmap/explosion_f.png");
+	var res30:Array = new Array (R_BITMAP, "bitmap/explosion_g.png");
+	var res31:Array = new Array (R_BITMAP, "bitmap/explosion_h.png");
+	
+	
 	var i:int = 0;
 		
 	var r_url:String = "";
@@ -127,8 +145,17 @@
 			neededRes.push(res21);
 			neededRes.push(res22);
 			neededRes.push(res23);
-
 			
+			neededRes.push(res24);
+			neededRes.push(res25);
+			neededRes.push(res26);
+			neededRes.push(res27);
+			neededRes.push(res28);
+			neededRes.push(res29);
+			neededRes.push(res30);
+			neededRes.push(res31);
+
+
 			importRes();
 		}
 		

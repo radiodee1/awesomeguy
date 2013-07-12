@@ -162,10 +162,11 @@
 				
 				//i = spriteNum;
 				var x:int, y:int ;
-				var wait:int = 2;
+				var wait:int = 1;
 				y = sprite.y - 32;
 				x = sprite.x;
 		
+				//trace("boom start");
 				
 		
 				add = 0;
@@ -174,50 +175,66 @@
 					add = 0;
 				}
 				else if (scrollx >= sprite.x ) {
-					add = myMode.myHoriz * 8;
+					add = myMode.myHoriz * 16;
 				}
-		
-		
-				if (sprite.timerDone()) {
+				
+				//trace (sprite.timerDone());
+				
+				if (sprite.timerDone() || sprite.timer.started == false) {
 		
 					//LOGE("explosion %d ", flyer_explosion);
 		
 					switch (sprite.quality_3) {
 					case 0:
+						//trace("boom");
 						//drawSprite_64(explosion_a, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
-		
+						sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_A];
 						break;
 					case 1:
 						//drawSprite_64(explosion_b, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
-		
+						sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_B];
+
 						break;
 		
 					case 2:
 						//drawSprite_64(explosion_c, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+						sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_C];
 		
 						break;
 					case 3:
 						//drawSprite_64(explosion_d, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+						sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_D];
 		
 						break;
 					case 4:
 						//drawSprite_64(explosion_e, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+						sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_E];
 		
 						break;
 					case 5:
 						//drawSprite_64(explosion_f, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+						sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_F];
 		
 						break;
 		
 					case 6:
 						//drawSprite_64(explosion_g, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+						sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_G];
 		
 						break;
 					case 7:
 						//drawSprite_64(explosion_h, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
 						//sprite[i].active = FALSE;
+						sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_H];
+
 						break;
 					}
+					
+					sprite.bitmap.x = x - scrollx + add;
+					sprite.bitmap.y = y - scrolly;
+					myStage.addChild(sprite.bitmap);
+					//trace("boom again" + sprite.quality_3);
+					
 					if (sprite.quality_3 > 7) {
 						//sprite[i].quality_3 = -1;
 						//endlevel = TRUE;
@@ -226,7 +243,7 @@
 						sprite.sprite_type = AGMode.S_NONE;
 					}
 					sprite.quality_3 ++;
-					sprite.timerStart( wait/ 1000);
+					sprite.timerStart( wait/15 );/// 100);
 					//}
 				}
 				
