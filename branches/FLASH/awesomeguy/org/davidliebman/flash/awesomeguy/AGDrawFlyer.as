@@ -233,7 +233,7 @@
 					sprite.bitmap.x = x - scrollx + add;
 					sprite.bitmap.y = y - scrolly;
 					myStage.addChild(sprite.bitmap);
-					//trace("boom again" + sprite.quality_3);
+					
 					
 					if (sprite.quality_3 > 7) {
 						//sprite[i].quality_3 = -1;
