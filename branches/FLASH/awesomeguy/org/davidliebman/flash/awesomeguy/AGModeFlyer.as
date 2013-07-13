@@ -52,14 +52,15 @@
 			agflyer.sprite = this.sprite;
 			myDraw.drawRes(agflyer,xpos,ypos,facingRight,AGMode.D_FLYER ,animate);
 
-			screenframe.x = 0;
-			screenframe.y = SCREEN_HEIGHT;
-			myStage.addChild(screenframe);
 			drawScoreWords();
 			myStage.addChild(myShape);
 			//
 			updateSprites();
 			collisionWithMonsters();
+			
+			screenframe.x = 0;
+			screenframe.y = SCREEN_HEIGHT;
+			myStage.addChild(screenframe);
 			
 			drawRadarPing(radar, radarscreen ,xpos,ypos,AGMode.PING_FLYER,0xffffffff);
 			
@@ -322,7 +323,7 @@
 			mySprite[sprite_num].sprite_type = S_CLOUD;
 			  
 			sprite_num ++;
-			trace("addPlatform");
+			
 			
 			platform_num = sprite_num;
 		}
