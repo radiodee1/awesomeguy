@@ -144,7 +144,7 @@
 	public var game_death:Boolean = false;
 	public var game_over:Boolean = false;
 	public var game_advance_challenge:Boolean = false;
-	public var game_advance:Boolean = false;
+	public var game_reset_start:Boolean = false;
 	public var game_advance_planet:Boolean = false;
 	public var game_advance_maze:Boolean = false;
 	public var game_enter_maze:Boolean = false;
@@ -230,13 +230,25 @@
 			if (game_death) {
 				myGame.gameLives --;
 				game_death = false;
+				game_reset_start = true;
 				this.doOnce();
+				if (myGame.gameLives <= 0 ) {
+					game_over = true;
+				}
+			}
+			if (game_advance_challenge) {
+				myGame.gameChallenge ++;
+				
 			}
 			
 			componentsInOrder();
 		}
 		
 		public function doOnce():void {
+			
+		}
+		
+		public function advanceChallenge():void {
 			
 		}
 		
@@ -262,6 +274,8 @@
 		
 		public function initAGSprite():void {
 			var ii:int = 0;
+			mySprite = new Array();
+			myTorpedo = new Array();
 			for (ii = 0; ii < TOTAL_SPRITE; ii ++ ) {
 				mySprite.push(new AGSprite(this,S_NONE));
 			}
@@ -271,11 +285,13 @@
 			
 		}
 		public function initChallenges():void {
+			myChallenge = new Array();
 			for (var ii:int = 0; ii < TOTAL_CHALLENGE; ii ++ ) {
 				myChallenge.push(new AGChallenge());
 			}
 		}
 		public function initAGTimer():void {
+			myTimer = new Array();
 			for (var ii:int = 0; ii < TOTAL_TIMER; ii ++ ) {
 				myTimer.push(new AGTimer());
 			}

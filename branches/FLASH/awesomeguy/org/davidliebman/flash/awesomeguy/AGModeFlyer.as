@@ -74,7 +74,11 @@
 		public override function doOnce():void {
 			myDraw = new AGDrawFlyer(this, myRes, myStage, myScreenBG);
 			
-			setStartingVars();
+			if(game_reset_start == true) {
+				setStartingVars();
+				game_reset_start = false;
+			}
+			else advanceChallenge();
 			
 			explosionsprite = new AGSprite(this, AGMode.S_EXPLOSION_SPRITE);
 			explosionsprite.active = false;
@@ -98,6 +102,10 @@
 			agflyer = new AGSprite(this,AGMode.S_FLYER);
 			agflyer.active = true;
 			
+		}
+		
+		public override function advanceChallenge():void {
+			super.advanceChallenge();
 		}
 		
 		public override function setStartingVars():void {
