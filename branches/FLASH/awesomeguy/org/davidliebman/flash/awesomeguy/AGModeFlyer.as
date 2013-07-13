@@ -22,11 +22,13 @@
 		public function AGModeFlyer() {
 			// constructor code
 		}
-		
+
+
 		public override function componentsInOrder():void {
 			//
 			super.componentsInOrder();
 			
+			//physicsAdjustments();
 			var myShape:Shape = new Shape();
 			myShape.graphics.lineStyle(2, 0xffffffff, 1);
 			myShape.graphics.moveTo(0,0);
@@ -72,6 +74,8 @@
 		public override function doOnce():void {
 			myDraw = new AGDrawFlyer(this, myRes, myStage, myScreenBG);
 			
+			setStartingVars();
+			
 			explosionsprite = new AGSprite(this, AGMode.S_EXPLOSION_SPRITE);
 			explosionsprite.active = false;
 			
@@ -94,6 +98,10 @@
 			agflyer = new AGSprite(this,AGMode.S_FLYER);
 			agflyer.active = true;
 			
+		}
+		
+		public override function setStartingVars():void {
+			super.setStartingVars();
 		}
 		
 		public override function prepTiles():void {
@@ -367,9 +375,8 @@
 		    	if (preferences_collision == true) {
 					sprite.active = false;
 					sprite.visible = false;
-		    		//inactivateMonsterView(i);
-		    		//inactivateMonster(i);
-		    		//setSoundBoom();
+		    		
+					
 					myRes[AGResources.NAME_BOOM_MP3].play();
 					myGame.gameScore = myGame.gameScore + 10;
 		    	}
@@ -378,9 +385,7 @@
 		      else {
 				//endlevel = TRUE;
 				if (preferences_collision == true) {
-					//inactivateMonster(i);
-					//animate_only = TRUE;
-					//setSoundOw();
+					
 					myRes[AGResources.NAME_EXPLOSION_MP3].play();
 					sprite.active = false;
 					sprite.visible = false;
@@ -708,6 +713,8 @@
 		}
 		///////////////////////////////////////////
 		public override function physicsAdjustments():void {
+			//super.physicsAdjustments();
+			
 			if (yy < 0) flyerGrounded = false;
 			
 			if (flyerGrounded) return;
