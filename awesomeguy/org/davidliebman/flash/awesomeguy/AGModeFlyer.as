@@ -380,7 +380,7 @@
 					//inactivateMonster(i);
 					//animate_only = TRUE;
 					//setSoundOw();
-					myRes[AGResources.NAME_OW_MP3].play();
+					myRes[AGResources.NAME_EXPLOSION_MP3].play();
 					sprite.active = false;
 					sprite.visible = false;
 					animate_explosion = true;
