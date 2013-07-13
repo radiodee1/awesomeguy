@@ -48,8 +48,7 @@
 			drawRadarRock();
 			drawSpriteExplosion();
 
-
-			//drawBasicSprite(0, AGMode.S_FLYER);
+			//
 			agflyer.sprite = this.sprite;
 			myDraw.drawRes(agflyer,xpos,ypos,facingRight,AGMode.D_FLYER ,animate);
 
@@ -58,7 +57,7 @@
 			myStage.addChild(screenframe);
 			drawScoreWords();
 			myStage.addChild(myShape);
-			//drawMonsters();
+			//
 			updateSprites();
 			collisionWithMonsters();
 			
@@ -307,9 +306,9 @@
 		}
 		
 		public function addPlatform( platform_x:int, platform_y:int):void {
-
-			mySprite[sprite_num].x = platform_x ;
-			mySprite[sprite_num].y = platform_y ;
+			mySprite[sprite_num] = new AGSpriteCloud(this,AGMode.S_CLOUD);
+			mySprite[sprite_num].x = platform_x * TILE_WIDTH ;
+			mySprite[sprite_num].y = platform_y * TILE_HEIGHT ;
 			mySprite[sprite_num].animate = 0;
 			mySprite[sprite_num].facingRight = true;
 			mySprite[sprite_num].active = true;
@@ -323,7 +322,7 @@
 			mySprite[sprite_num].sprite_type = S_CLOUD;
 			  
 			sprite_num ++;
-			
+			trace("addPlatform");
 			
 			platform_num = sprite_num;
 		}
@@ -336,6 +335,7 @@
 				if (mySprite[i].active == true) {
 					mySprite[i].updateSprite();
 					if (mySprite[i].sprite_type == AGMode.S_GATOR) myDraw.drawBasicSprite(mySprite[i], D_GATOR);
+					if (mySprite[i].sprite_type == AGMode.S_CLOUD) myDraw.drawBasicSprite(mySprite[i], D_CLOUD);
 				}
 				
 			}

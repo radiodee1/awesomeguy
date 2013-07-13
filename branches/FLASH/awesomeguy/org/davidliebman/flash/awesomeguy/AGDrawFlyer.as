@@ -249,7 +249,29 @@
 				
 				break;
 				///////////
-
+				case AGMode.D_CLOUD:
+		
+					if(scrollx < sprite.x + 80) {
+						//drawSprite_40_8(platform_a, sprite[i].x, sprite[i].y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+				  		sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_CLOUD_PNG].bitmapData.clone());//
+								sprite.bitmap.x = (myMode.myHoriz * 16 ) + sprite.x - scrollx;
+								sprite.bitmap.y = sprite.y - scrolly;
+								//myStage.addChild(sprite.bitmap);
+				  
+				  }
+				  else if (scrollx >= sprite.x ) {
+						//drawSprite_40_8(platform_a, (level_w * 8) + sprite[i].x, sprite[i].y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+						sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_CLOUD_PNG].bitmapData.clone());//
+								sprite.bitmap.x = (myMode.myHoriz * 16 ) + sprite.x - scrollx;
+								sprite.bitmap.y = sprite.y - scrolly;
+								//myStage.addChild(sprite.bitmap);
+				  }
+					trace("on screen");
+					myStage.addChild(sprite.bitmap);
+					
+				break;
 				
 			}
 		}

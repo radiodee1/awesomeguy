@@ -62,7 +62,7 @@
 	public static var NAME_EXPLOSION_F:int = 29;
 	public static var NAME_EXPLOSION_G:int = 30;
 	public static var NAME_EXPLOSION_H:int = 31;
-	
+	public static var NAME_CLOUD_PNG:int = 32;
 
 	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
 	var res01:Array = new Array (R_BITMAP, "bitmap/test2.png");
@@ -101,6 +101,7 @@
 	var res30:Array = new Array (R_BITMAP, "bitmap/explosion_g.png");
 	var res31:Array = new Array (R_BITMAP, "bitmap/explosion_h.png");
 	
+	var res32:Array = new Array (R_BITMAP, "bitmap/cloud.png");
 	
 	var i:int = 0;
 		
@@ -154,7 +155,7 @@
 			neededRes.push(res29);
 			neededRes.push(res30);
 			neededRes.push(res31);
-
+			neededRes.push(res32);
 
 			importRes();
 		}
