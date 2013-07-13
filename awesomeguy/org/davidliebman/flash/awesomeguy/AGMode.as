@@ -158,7 +158,7 @@
 	var sprite:Sprite = new Sprite();
 	public var flyersprite:Bitmap; // for collision detection
 	public var explosionsprite:AGSprite; // for display of explosion
-	var agflyer:AGSprite = new AGSprite(AGMode.S_FLYER);
+	var agflyer:AGSprite;// = new AGSprite(this,AGMode.S_FLYER);
 
 
 		public function AGMode() {
@@ -238,10 +238,10 @@
 		public function initAGSprite():void {
 			var ii:int = 0;
 			for (ii = 0; ii < TOTAL_SPRITE; ii ++ ) {
-				mySprite.push(new AGSprite(S_NONE));
+				mySprite.push(new AGSprite(this,S_NONE));
 			}
 			for (ii = 0; ii < TOTAL_TORPEDOS; ii ++ ) {
-				myTorpedo.push(new AGSprite(TORPEDO_UNUSED));
+				myTorpedo.push(new AGSprite(this, TORPEDO_UNUSED));
 			}
 			
 		}

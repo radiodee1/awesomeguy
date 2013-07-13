@@ -58,7 +58,8 @@
 			myStage.addChild(screenframe);
 			drawScoreWords();
 			myStage.addChild(myShape);
-			drawMonsters();
+			//drawMonsters();
+			updateSprites();
 			collisionWithMonsters();
 			
 			drawRadarPing(radar, radarscreen ,xpos,ypos,AGMode.PING_FLYER,0xffffffff);
@@ -71,7 +72,7 @@
 		public override function doOnce():void {
 			myDraw = new AGDrawFlyer(this, myRes, myStage, myScreenBG);
 			
-			explosionsprite = new AGSprite(AGMode.S_EXPLOSION_SPRITE);
+			explosionsprite = new AGSprite(this, AGMode.S_EXPLOSION_SPRITE);
 			explosionsprite.active = false;
 			
 			initAGSprite();
@@ -90,7 +91,7 @@
 			radar_start_scroll =  scrollBGX;
 			//trace (radar_start + " scroll:" + scrollBGX);
 			//myRes[AGResources.NAME_EXPLOSION_MP3].play();
-			agflyer = new AGSprite(AGMode.S_FLYER);
+			agflyer = new AGSprite(this,AGMode.S_FLYER);
 			agflyer.active = true;
 			
 		}
@@ -284,7 +285,7 @@
 		}
 				
 		public function addMonster(monster_x:int, monster_y:int,  monster_animate:int):void {
-
+			mySprite[sprite_num] = new AGSpriteMonster(this,AGMode.S_GATOR);
 			mySprite[sprite_num].x = monster_x * TILE_WIDTH;
 			mySprite[sprite_num].y = monster_y * TILE_HEIGHT;
 			mySprite[sprite_num].animate = monster_animate;
@@ -327,104 +328,18 @@
 			platform_num = sprite_num;
 		}
 		
-		public function drawMonsters():void {
-			//draw all monsters
-			
+		
+		
+		public function updateSprites():void {
 			var i:int;
-			var xx:int,yy:int,z:int;
-			var move:int = 3 *2;//3
-			var markerTest:Boolean = false;
-			var hide:Boolean = true;
-			var show:Boolean = false;
-			var visibility:Boolean = false;
-			//int index_num = 0;
-			
-			
-			//for each monster...
-			if(monster_num > 0 || true) {
-				for (i =  0 ; i < mySprite.length   ; i++) {   
-					//if (i == 5) return;
-					if (mySprite[i].sprite_type == S_GATOR) {
-						markerTest = false;//FALSE; 
-						
-						if (mySprite[i].active ==true  ) {
-							xx = Math.floor(int ( mySprite[i].x / 16));
-							yy = Math.floor(int ( mySprite[i].y / 16)) ;
-							
-							
-							// Must move and stop monsters when they hit bricks or
-							// markers or the end of the screen/room/level.
-							//if (xx < 0 || yy < 0 ) return;
-							//if (xx > myHoriz || yy > myVert) return;
-							
-							if(mySprite[i].facingRight == true ) {
-			
-								mySprite[i].x = mySprite[i].x + move;
-								// marker test
-								if (xx + 3 < myHoriz && yy + 2 < myVert || true ) {
-									
-									if(myInvisible[yy][xx+2] + mapcheat == B_BLOCK  ) markerTest = true;//TRUE;
-									if(myInvisible[yy][xx+2] + mapcheat == B_MARKER ) markerTest = true;// TRUE;
-									if(myInvisible[yy+1][xx+2]  == 0) markerTest = true;//TRUE;
-								}
-								// turn monster
-								if (mySprite[i].x > myHoriz * 16  - 32 || markerTest == true ) {
-			
-									mySprite[i].facingRight=false;//FALSE;
-								}
-							}
-							else {
-			
-								mySprite[i].x = mySprite[i].x - move;
-								// marker test
-								if (xx -1 > 0 && yy + 2 < myVert || true) {
-									if(myInvisible[yy][xx] + mapcheat == B_BLOCK) markerTest = true;//TRUE;
-									if(myInvisible[yy][xx] + mapcheat == B_MARKER) markerTest =true;// TRUE;
-									if(myInvisible[yy+1][xx-1] == 0) markerTest = true;//TRUE;
-								}
-								// turn monster
-								if (mySprite[i].x < 0 || markerTest == true ) {
-			
-									mySprite[i].facingRight= true;//TRUE;
-								}
-							}
-			
-							//Only show monsters that are on the screen properly
-			
-			
-							//default is to show monster
-							visibility = show;
-							//hide monster if...
-							if(mySprite[i].x > scrollBGX + 64 * 16 + 32 ) {
-								visibility = hide;
-							}
-							if (mySprite[i].x < scrollBGX - 32) {
-								visibility = hide;
-							}
-							if (mySprite[i].y > scrollBGY + 48 * 16 + 32) {
-								visibility = hide;
-							}
-							if ( mySprite[i].y < scrollBGY  - 32) {
-								visibility = hide;
-							}
-						}
-						//visibility = show;
-						//swap monsters
-						if (mySprite[i].visible && visibility == show) mySprite[i].visible = true;// TRUE;
-						
-						//drawBasicSprite(i, D_GATOR);
-					
-						myDraw.drawBasicSprite(mySprite[i], D_GATOR);
-					}
-					
-				} // for i < sprite_num
-		
+			for (i = 0; i < mySprite.length; i ++ ) {
+				if (mySprite[i].active == true) {
+					mySprite[i].updateSprite();
+					if (mySprite[i].sprite_type == AGMode.S_GATOR) myDraw.drawBasicSprite(mySprite[i], D_GATOR);
+				}
+				
 			}
-			return;
-			
-			
 		}
-		
 		
 		public function collisionWithMonsters():void {
 
