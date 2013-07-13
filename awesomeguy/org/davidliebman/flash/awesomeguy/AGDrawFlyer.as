@@ -241,6 +241,7 @@
 						//gamedeath = TRUE;
 						sprite.active = false;
 						sprite.sprite_type = AGMode.S_NONE;
+						myMode.game_death = true;
 					}
 					sprite.quality_3 ++;
 					sprite.timerStart( wait/15 );/// 100);

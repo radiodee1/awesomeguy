@@ -43,12 +43,12 @@
 			//var getter:AGResources = new AGResources();
 			
 			if (gameMode == MODE_FLYER) {
-				modeObj = flyer;
-				modeObj.setValues(myStage, myButtons, myRes, this);
+				//modeObj = flyer;
+				flyer.setValues(myStage, myButtons, myRes, this);
 			}
 			else if (gameMode == MODE_GUY) {
-				modeObj = guy;
-				modeObj.setValues(myStage, myButtons, myRes, this);
+				//modeObj = guy;
+				guy.setValues(myStage, myButtons, myRes, this);
 			}
 			
 		}
@@ -71,8 +71,16 @@
 		
 		public function doAnimation() {
 			
-			modeObj.innerGameLoop();
+			//modeObj.innerGameLoop();
 			//trace ("down " + K_DOWN);
+			if (gameMode == MODE_FLYER) {
+				//modeObj = flyer;
+				flyer.innerGameLoop();
+			}
+			else if (gameMode == MODE_GUY) {
+				//modeObj = guy;
+				guy.innerGameLoop();
+			}
 		}
 	}
 	

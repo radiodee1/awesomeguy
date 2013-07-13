@@ -136,9 +136,18 @@
 	public static var X_MOVE = 10 * 2;
 	public static var Y_MOVE = 3 * 2;
 	var xpos:int = scrollBGX + 100;
-	var ypos:int = 100;
+	var ypos:int = scrollBGY + 100;
 	var radar_start:int = 0;
 	var radar_start_scroll:int = 0;
+	
+	//game progress variables
+	public var game_death:Boolean = false;
+	public var game_over:Boolean = false;
+	public var game_advance_challenge:Boolean = false;
+	public var game_advance:Boolean = false;
+	public var game_advance_planet:Boolean = false;
+	public var game_advance_maze:Boolean = false;
+	public var game_enter_maze:Boolean = false;
 	
 	public var facingRight:Boolean = false;
 	public var animate:int = 0;
@@ -160,6 +169,7 @@
 	public var explosionsprite:AGSprite; // for display of explosion
 	var agflyer:AGSprite;// = new AGSprite(this,AGMode.S_FLYER);
 
+	
 
 		public function AGMode() {
 			// constructor code
@@ -217,11 +227,26 @@
 			
 			myStage.removeChildren();
 			
+			if (game_death) {
+				myGame.gameLives --;
+				game_death = false;
+				this.doOnce();
+			}
+			
 			componentsInOrder();
 		}
 		
 		public function doOnce():void {
 			
+		}
+		
+		public function setStartingVars():void {
+			scrollBGX = 0;
+			scrollBGY = 50;
+			xpos = scrollBGX + 100;
+			ypos = scrollBGY + 100;
+			yy=xx=0;
+			flyerGrounded = false;
 		}
 		
 		public function componentsInOrder():void {
