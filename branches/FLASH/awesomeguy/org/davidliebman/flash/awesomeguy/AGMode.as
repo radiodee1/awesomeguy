@@ -84,7 +84,9 @@
 	static var  D_INVADER_3:int =  8;
 	static var  D_FLYER_RINGS:int =  9;
 	static var  D_LINE_1:int = 10;
-	static var  D_BUBBLE_1:int = 11;
+	static var  D_BUBBLE_0:int = 11;
+	static var  D_BUBBLE_1:int = 12;
+	static var  D_BUBBLE_2:int = 13;
 	
 	//radar ping types
 	static var PING_FLYER:int = 0;

@@ -340,14 +340,8 @@
 			platform_num = sprite_num;
 		}
 		
-		public function doTimers():void {
-			
-			
-			if ( myChallenge[myGame.gameChallenge].bubble_1 > myChallenge[myGame.gameChallenge].total_placed_bubble_1 ) {
-				
-				if( myTimer[AGMode.TIMER_02].timerDone()) {
-					
-					// create a line-type object
+		public function addLine(color:uint, linktype:int):AGSprite {
+			// create a line-type object
 					var temp:AGSpriteLine = new AGSpriteLine(this, AGMode.S_LINE);// Sprite temp ;
 					temp.x = getRand(scrollBGX, scrollBGX + ( 256*2));
 					temp.y = 0;
@@ -360,15 +354,43 @@
 					temp.speed = 4 * 2;
 					temp.active = true;
 					temp.quality_0 = 0;
-		
+					temp.color = color;
+					temp.sprite_link = linktype;
 					// add it to the sprite list
 					mySprite.push(temp);
+					return temp;
+		}
+		
+		public function doTimers():void {
+			
+			
+			if ( myChallenge[myGame.gameChallenge].bubble_1 > myChallenge[myGame.gameChallenge].total_placed_bubble_1 ) {
+				
+				if( myTimer[AGMode.TIMER_02].timerDone()) {
+					
+					// create a line-type object
+					addLine(0x00ffffff,AGMode.S_BUBBLE_1);
 					// increment total_placed_bubble_1
 					myChallenge[myGame.gameChallenge].total_placed_bubble_1 ++;
 					//total_bubble_1 ++;
 		
 					// reset timer
 					myTimer[AGMode.TIMER_02].timerStart(1);
+					//timerStart(2, 30 * 1);
+				}
+			}
+		  if ( myChallenge[myGame.gameChallenge].bubble_2 > myChallenge[myGame.gameChallenge].total_placed_bubble_2 ) {
+				
+			if( myTimer[AGMode.TIMER_03].timerDone()) {
+					
+					// create a line-type object
+					var line:AGSprite = addLine(0x00ffffff,AGMode.S_BUBBLE_2);
+					// increment total_placed_bubble_1
+					myChallenge[myGame.gameChallenge].total_placed_bubble_2 ++;
+					//total_bubble_1 ++;
+					line.active = true;
+					// reset timer
+					myTimer[AGMode.TIMER_03].timerStart(2);
 					//timerStart(2, 30 * 1);
 				}
 			}
@@ -383,10 +405,13 @@
 					if (mySprite[i].sprite_type == AGMode.S_CLOUD) myDraw.drawBasicSprite(mySprite[i], D_CLOUD);
 					if (mySprite[i].sprite_type == AGMode.S_LINE ) myDraw.drawBasicSprite(mySprite[i], D_LINE_1);
 					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_1) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_1);
+					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_2) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_2);
 				}
 				
 			}
 		}
+		
+		
 		
 		public function collisionWithMonsters():void {
 

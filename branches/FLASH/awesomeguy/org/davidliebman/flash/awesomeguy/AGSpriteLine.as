@@ -16,7 +16,7 @@
 					var k:int, l:int;//, m;
 					this.shape = new Shape();
 
-					this.shape.graphics.lineStyle(4,0x00ffffff,1.0);
+					this.shape.graphics.lineStyle(4,this.color,1.0);
 					//this.bitmap = new Bitmap();
 					var scrollx:int = myMode.scrollBGX;
 					var scrolly:int = myMode.scrollBGY;
@@ -44,9 +44,31 @@
 							
 						}
 						else {
-							
-							var new1:AGSpriteBubble1 = new AGSpriteBubble1(myMode, AGMode.S_BUBBLE_1);
-							new1.sprite_type = AGMode.S_BUBBLE_1;
+							var new1:AGSpriteBubble1;
+							switch (this.sprite_link) {
+								case AGMode.S_BUBBLE_0:
+								break;
+								
+								case AGMode.S_BUBBLE_1:
+									new1 = new AGSpriteBubble1(myMode, AGMode.S_BUBBLE_1);
+									myMode.myChallenge[myMode.myGame.gameChallenge].total_bubble_1 ++;
+
+								break;
+								
+								case AGMode.S_BUBBLE_2:
+									new1 = new AGSpriteBubble2(myMode, AGMode.S_BUBBLE_2);
+									myMode.myChallenge[myMode.myGame.gameChallenge].total_bubble_2 ++;
+
+								break;
+								
+								case AGMode.S_BUBBLE_3:
+									new1 = new AGSpriteBubble1(myMode, AGMode.S_BUBBLE_1);
+									myMode.myChallenge[myMode.myGame.gameChallenge].total_bubble_3 ++;
+
+								break;
+							}
+							//var new1:AGSpriteBubble1 = new AGSpriteBubble1(myMode, AGMode.S_BUBBLE_1);
+							new1.sprite_type =this.sprite_link;// AGMode.S_BUBBLE_1;
 							new1.x = this.endline_x;
 							new1.y = this.endline_y;
 							new1.limit = 100;
