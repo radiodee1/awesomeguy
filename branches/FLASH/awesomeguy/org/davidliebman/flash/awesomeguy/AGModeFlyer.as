@@ -345,8 +345,9 @@
 			
 			
 			if ( myChallenge[myGame.gameChallenge].bubble_1 > myChallenge[myGame.gameChallenge].total_placed_bubble_1 ) {
+				
 				if( myTimer[AGMode.TIMER_02].timerDone()) {
-					trace("line");
+					
 					// create a line-type object
 					var temp:AGSpriteLine = new AGSpriteLine(this, AGMode.S_LINE);// Sprite temp ;
 					temp.x = getRand(scrollBGX, scrollBGX + ( 256*2));
