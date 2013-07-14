@@ -8,7 +8,7 @@
 		}
 
 		public override function updateSprite():void {
-			
+			/*
 			int i, j, k, l, m;
 			BOOL test = FALSE;
 			int num_strikes = challenge[current_challenge].bubble_1;
@@ -46,7 +46,7 @@
 			for (i = 0; i < 100; i ++ ) {
 		
 				if (sprite[i].sprite_type == S_LINE && sprite[i].active == TRUE ) { // if i is a line
-		
+					
 					if(sprite[i].quality_0 <= sprite[i].endline_y ) {
 						sprite[i].quality_0 = sprite[i].quality_0 + sprite[i].speed;
 					}
@@ -75,7 +75,8 @@
 		
 					}
 					// draw lines ...
-					/*
+					
+					
 					for (l = 0; l < sprite[i].quality_0 ; l ++) {
 						k = ((sprite[i].endline_x - sprite[i].x ) * l) / ( sprite[i].endline_y - sprite[i].y) + sprite[i].x;
 		
@@ -87,12 +88,14 @@
 						}
 		
 					}
-					*/
+					
 		
-				}
-			}
-		}
+				}//function
+				
+			}// 
+			*/
+		}//function
 
-	}
+	}//class
 	
-}
+}// package

@@ -40,7 +40,7 @@
 			var screenframe:Bitmap= new Bitmap (new BitmapData (SCREEN_WIDTH, 64, false, 0x66666666));
 			radarscreen = new Bitmap( new BitmapData(SCREEN_WIDTH - 128, 64,
 										false, 0x00000000));
-			
+			updateSprites();
 			drawLevelTiles();
 			drawRadarRock();
 			drawSpriteExplosion();
@@ -53,7 +53,6 @@
 			myStage.addChild(myShape);
 			//
 			doTimers();
-			updateSprites();
 			collisionWithMonsters();
 			
 			screenframe.x = 0;
@@ -352,13 +351,13 @@
 					var temp:AGSpriteLine = new AGSpriteLine(this, AGMode.S_LINE);// Sprite temp ;
 					temp.x = getRand(scrollBGX, scrollBGX + ( 256*2));
 					temp.y = 0;
-					var angle:int = getRand( 80, 180 - 80) ;
+					var angle:Number = getRand( 80, 180 - 80) ;
 					var value:Number = ( myVert * 16)/  (Math.tan(angle) );
-					temp.endline_x = Math.abs ((( int(value) ) + temp.x) % (myHoriz * 16));
-		
+					temp.endline_x = int(( Math.abs ((( int(value) ) + temp.x)) % (myHoriz * 16)));
+					
 					temp.endline_y = myVert * 16;
 					temp.sprite_type = S_LINE;
-					temp.speed = 2;
+					temp.speed = 4 * 2;
 					temp.active = true;
 					temp.quality_0 = 0;
 		
