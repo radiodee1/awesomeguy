@@ -22,7 +22,7 @@
 					var scrolly:int = myMode.scrollBGY;
 					
 						l = this.quality_0;
-					//for (l = 0; l < this.quality_0 ; l ++) {
+					
 						k = ((this.endline_x - this.x ) * l) / ( this.endline_y - this.y) + this.x;
 		
 						//drawPoint(k,l, 0xffff);

@@ -1,5 +1,7 @@
 ﻿package org.davidliebman.flash.awesomeguy  {
 	import flash.display.Shape;
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	
 	public class AGSpriteBubble1 extends AGSprite {
 
@@ -11,11 +13,16 @@
 		public override function updateSprite():void {
 			this.shape = new Shape();
 			this.shape.graphics.lineStyle(4,this.color,1.0);
+			//var shape2:Shape = new Shape();
+			//shape2.graphics.lineStyle(4, this.color, 1);
 			
 			var scrollx:int = myMode.scrollBGX;
 			var scrolly:int = myMode.scrollBGY;
 			var j:int;
-			var rad:Number = this.radius;
+			var rad:Number = this.radius * 2;
+			var newlimit:int = this.limit * 2;
+			this.bitmap = new Bitmap(new BitmapData(newlimit * 2 , newlimit,true,0x00000000));
+									 
 			// calculate line start and end
 			for(j = 0; j < rad; j ++) { // draw bubble on screen
 				// calculate line start and end
@@ -23,7 +30,7 @@
 				var position:Number =  j;
 				var angle:Number = Math.asin(position/rad);
 				var dist:Number = Math.cos(angle) * rad;
-				trace(dist);
+				
 				//drawRadarPing(radar_box, adjust_x(test.x - (int) dist ), test.y - j, PING_ROCK, color);
 				//drawRadarPing(radar_box, adjust_x(test.x + (int) dist ), test.y - j, PING_ROCK, color);
 				myMode.drawRadarPing( myMode.radar,
@@ -40,31 +47,14 @@
 									 AGMode.PING_ROCK, 
 									 this.color);
 
-				if (myMode.scrollBGX < this.x + int (dist)) {
-					//drawHorizontal(test.y - j, test.x - (int) dist, test.x + (int) dist, color, solid);
-					//drawHorizontal(test.y + j, test.x - (int) dist, test.x + (int) dist, color, solid);
-					this.shape.graphics.moveTo(this.x - int(dist) - scrollx, this.y - j - scrolly);
-					this.shape.graphics.lineTo(this.x + int(dist) - scrollx, this.y - j - scrolly);
-
-					if (this.x + int (dist) > myMode.myHoriz * 16 ) {
-						//drawHorizontal(test.y - j,  (test.x - (int) dist) -( level_w * 8),  (test.x + (int) dist) -(level_w * 8), color, solid);
-						//drawHorizontal(test.y + j,  (test.x - (int) dist) - ( level_w * 8),  (test.x + (int) dist) - (level_w * 8), color, solid);
-						this.shape.graphics.moveTo(this.x - int(dist) - (myMode.myHoriz * 16) - scrollx, this.y - j - scrolly);
-						this.shape.graphics.lineTo(this.x + int(dist) - (myMode.myHoriz * 16) - scrollx, this.y - j - scrolly);
-						
-					}
-
-				}
-				else if (myMode.scrollBGX >= this.x - int (dist )) {
-					//drawHorizontal(test.y - j, (level_w * 8) + test.x - (int) dist, (level_w * 8) + test.x + (int) dist, color, solid);
-					//drawHorizontal(test.y + j, (level_w * 8) + test.x - (int) dist, (level_w * 8) + test.x + (int) dist, color, solid);
-					this.shape.graphics.moveTo(this.x - int(dist) + (myMode.myHoriz * 16) - scrollx, this.y - j - scrolly);
-					this.shape.graphics.lineTo(this.x + int(dist) + (myMode.myHoriz * 16) - scrollx, this.y - j - scrolly);
-
-				}
-
-
+				
+				
+				this.shape.graphics.moveTo( newlimit - int(dist) , newlimit - j );
+				this.shape.graphics.lineTo( (newlimit - int (dist) ) + (2 * int(dist)), newlimit - j );
+				
 			}
+			this.bitmap.bitmapData.draw(this.shape);
+			
 			if (this.radius < this.limit) { // grow bubble on screen
 				this.radius = this.radius + this.speed;
 			}
