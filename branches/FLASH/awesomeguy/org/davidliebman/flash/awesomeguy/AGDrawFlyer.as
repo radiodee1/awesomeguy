@@ -279,7 +279,14 @@
 				break;
 				
 				case AGMode.D_BUBBLE_1:
-					myStage.addChild(sprite.shape);
+					if (scrollx < sprite.x + (sprite.radius * 2)) {
+						sprite.bitmap.x = sprite.x - scrollx - (sprite.limit * 2);
+					}
+					else {
+						sprite.bitmap.x = sprite.x - scrollx - (sprite.limit * 2) + (myMode.myHoriz * 16);
+					}
+					sprite.bitmap.y = sprite.y - (sprite.limit * 2) - scrolly;
+					myStage.addChild(sprite.bitmap);
 				break;
 			}
 		}
