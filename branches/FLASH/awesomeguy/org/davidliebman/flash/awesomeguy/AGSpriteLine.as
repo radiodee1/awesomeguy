@@ -16,7 +16,7 @@
 					var k:int, l:int;//, m;
 					this.shape = new Shape();
 					//var myShape:Shape = new Shape();
-					this.shape.graphics.lineStyle(4,0xffffffff,1.0);
+					this.shape.graphics.lineStyle(4,0x00ffffff,1.0);
 					//this.bitmap = new Bitmap();
 					
 			
