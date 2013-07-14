@@ -277,6 +277,10 @@
 				
 					myStage.addChild(sprite.shape);
 				break;
+				
+				case AGMode.D_BUBBLE_1:
+					myStage.addChild(sprite.shape);
+				break;
 			}
 		}
 

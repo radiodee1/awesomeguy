@@ -1,4 +1,5 @@
 ﻿package org.davidliebman.flash.awesomeguy  {
+	import flash.display.Shape;
 	
 	public class AGSpriteBubble1 extends AGSprite {
 
@@ -8,126 +9,68 @@
 		}
 
 		public override function updateSprite():void {
+			this.shape = new Shape();
+			this.shape.graphics.lineStyle(4,this.color,1.0);
 			
-			rad = this.radius;
+			var scrollx:int = myMode.scrollBGX;
+			var scrolly:int = myMode.scrollBGY;
+			var j:int;
+			var rad:Number = this.radius;
 			// calculate line start and end
 			for(j = 0; j < rad; j ++) { // draw bubble on screen
-				position = (float) j;
-				angle = asin(position/rad);
-				dist = cos(angle) * rad;
+				// calculate line start and end
 
+				var position:Number =  j;
+				var angle:Number = Math.asin(position/rad);
+				var dist:Number = Math.cos(angle) * rad;
+				trace(dist);
 				//drawRadarPing(radar_box, adjust_x(test.x - (int) dist ), test.y - j, PING_ROCK, color);
 				//drawRadarPing(radar_box, adjust_x(test.x + (int) dist ), test.y - j, PING_ROCK, color);
+				myMode.drawRadarPing( myMode.radar,
+									 myMode.radarscreen,
+									 myMode.adjust_x(this.x - int(dist))
+									 ,this.y -j, 
+									 AGMode.PING_ROCK, 
+									 this.color);
+									 
+				myMode.drawRadarPing( myMode.radar,
+									 myMode.radarscreen,
+									 myMode.adjust_x(this.x + int(dist))
+									 ,this.y -j, 
+									 AGMode.PING_ROCK, 
+									 this.color);
 
-				if (scrollx < test.x + (int) dist) {
-					drawHorizontal(test.y - j, test.x - (int) dist, test.x + (int) dist, color, solid);
-					drawHorizontal(test.y + j, test.x - (int) dist, test.x + (int) dist, color, solid);
+				if (myMode.scrollBGX < this.x + int (dist)) {
+					//drawHorizontal(test.y - j, test.x - (int) dist, test.x + (int) dist, color, solid);
+					//drawHorizontal(test.y + j, test.x - (int) dist, test.x + (int) dist, color, solid);
+					this.shape.graphics.moveTo(this.x - int(dist) - scrollx, this.y - j - scrolly);
+					this.shape.graphics.lineTo(this.x + int(dist) - scrollx, this.y - j - scrolly);
 
-
-					if (test.x + (int) dist > level_w * 8  ) {
-						drawHorizontal(test.y - j,  (test.x - (int) dist) -( level_w * 8),  (test.x + (int) dist) -(level_w * 8), color, solid);
-						drawHorizontal(test.y + j,  (test.x - (int) dist) - ( level_w * 8),  (test.x + (int) dist) - (level_w * 8), color, solid);
+					if (this.x + int (dist) > myMode.myHoriz * 16 ) {
+						//drawHorizontal(test.y - j,  (test.x - (int) dist) -( level_w * 8),  (test.x + (int) dist) -(level_w * 8), color, solid);
+						//drawHorizontal(test.y + j,  (test.x - (int) dist) - ( level_w * 8),  (test.x + (int) dist) - (level_w * 8), color, solid);
+						this.shape.graphics.moveTo(this.x - int(dist) - (myMode.myHoriz * 16) - scrollx, this.y - j - scrolly);
+						this.shape.graphics.lineTo(this.x + int(dist) - (myMode.myHoriz * 16) - scrollx, this.y - j - scrolly);
+						
 					}
 
 				}
-				else if (scrollx >= test.x - (int) dist ) {
-					drawHorizontal(test.y - j, (level_w * 8) + test.x - (int) dist, (level_w * 8) + test.x + (int) dist, color, solid);
-					drawHorizontal(test.y + j, (level_w * 8) + test.x - (int) dist, (level_w * 8) + test.x + (int) dist, color, solid);
-
+				else if (myMode.scrollBGX >= this.x - int (dist )) {
+					//drawHorizontal(test.y - j, (level_w * 8) + test.x - (int) dist, (level_w * 8) + test.x + (int) dist, color, solid);
+					//drawHorizontal(test.y + j, (level_w * 8) + test.x - (int) dist, (level_w * 8) + test.x + (int) dist, color, solid);
+					this.shape.graphics.moveTo(this.x - int(dist) + (myMode.myHoriz * 16) - scrollx, this.y - j - scrolly);
+					this.shape.graphics.lineTo(this.x + int(dist) + (myMode.myHoriz * 16) - scrollx, this.y - j - scrolly);
 
 				}
+
+
 			}
-			///////////////////////////////
-			if (sprite[i].radius < sprite[i].limit) { // grow bubble on screen
-				sprite[i].radius = sprite[i].radius + sprite[i].speed;
+			if (this.radius < this.limit) { // grow bubble on screen
+				this.radius = this.radius + this.speed;
 			}
 			
-			/*
-			int i, j, k, l, m;
-			BOOL test = FALSE;
-			int num_strikes = challenge[current_challenge].bubble_1;
-		
-			if ( num_strikes > total_placed_bubble_1 ) {
-				if(timerDone(2)) {
-					// create a line-type object
-					Sprite temp ;
-					temp.x = getRand(scrollx, scrollx + TEX_WIDTH);
-					temp.y = 0;
-					int angle = getRand( 80, 180 - 80) ;
-					float value = ((float) LONG_MAP_V * 8)/ (float) tan(angle) ;
-					temp.endline_x = abs ((( (int) value ) + temp.x) % (LONG_MAP_H * 8));
-		
-					temp.endline_y = LONG_MAP_V * 8;
-					temp.sprite_type = S_LINE;
-					temp.speed = 2;
-					temp.active = TRUE;
-					temp.quality_0 = 0;
-		
-					// add it to the sprite list
-					addSprite(temp);
-		
-					// increment total_placed_bubble_1
-					total_placed_bubble_1 ++;
-					//total_bubble_1 ++;
-		
-					// reset timer
-					timerStart(2, 30 * 1);
-				}
-			}
-			// draw lines... make bubbles...
-		
-			//go through sprites
-			for (i = 0; i < 100; i ++ ) {
-		
-				if (sprite[i].sprite_type == S_LINE && sprite[i].active == TRUE ) { // if i is a line
-					
-					if(sprite[i].quality_0 <= sprite[i].endline_y ) {
-						sprite[i].quality_0 = sprite[i].quality_0 + sprite[i].speed;
-					}
-					else {//if (total_bubble_1 < num_strikes)  {
-						// make bubble
-		
-		
-						////
-						if (TRUE ) {
-							Sprite new;
-							new.sprite_type = S_BUBBLE_1;
-							new.x = sprite[i].endline_x;
-							new.y = sprite[i].endline_y;
-							new.limit = 100;
-							new.radius = 8;
-							new.speed = 1;
-							new.active = TRUE;
-							new.sprite_link = i;
-		
-							sprite[i].active = FALSE;
-		
-							addSprite(new);
-							total_bubble_1 ++;
-						}
-						////
-		
-					}
-					// draw lines ...
-					
-					
-					for (l = 0; l < sprite[i].quality_0 ; l ++) {
-						k = ((sprite[i].endline_x - sprite[i].x ) * l) / ( sprite[i].endline_y - sprite[i].y) + sprite[i].x;
-		
-						drawPoint(k,l, 0xffff);
-		
-						if ( scrollx + SCREEN_WIDTH > (level_w * 8) && k  < SCREEN_WIDTH ) {
-							drawPoint(k + (level_w * 8), l, 0xffff);
-							//LOGE("over edge here");
-						}
-		
-					}
-					
-		
-				}
-				
-			}// 
-			*/
+			
+			
 		}//function
 
 	}//class
