@@ -83,6 +83,7 @@
 	static var  D_INVADER_2:int =  7;
 	static var  D_INVADER_3:int =  8;
 	static var  D_FLYER_RINGS:int =  9;
+	static var  D_LINE_1:int = 10;
 	
 	//radar ping types
 	static var PING_FLYER:int = 0;
@@ -276,9 +277,9 @@
 			var ii:int = 0;
 			mySprite = new Array();
 			myTorpedo = new Array();
-			for (ii = 0; ii < TOTAL_SPRITE; ii ++ ) {
-				mySprite.push(new AGSprite(this,S_NONE));
-			}
+			//for (ii = 0; ii < TOTAL_SPRITE; ii ++ ) {
+			//	mySprite.push(new AGSprite(this,S_NONE));
+			//}
 			for (ii = 0; ii < TOTAL_TORPEDOS; ii ++ ) {
 				myTorpedo.push(new AGSprite(this, TORPEDO_UNUSED));
 			}

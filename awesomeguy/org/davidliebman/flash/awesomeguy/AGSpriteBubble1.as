@@ -75,6 +75,7 @@
 		
 					}
 					// draw lines ...
+					/*
 					for (l = 0; l < sprite[i].quality_0 ; l ++) {
 						k = ((sprite[i].endline_x - sprite[i].x ) * l) / ( sprite[i].endline_y - sprite[i].y) + sprite[i].x;
 		
@@ -86,7 +87,7 @@
 						}
 		
 					}
-		
+					*/
 		
 				}
 			}

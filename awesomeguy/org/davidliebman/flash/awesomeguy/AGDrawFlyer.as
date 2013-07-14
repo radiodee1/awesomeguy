@@ -273,7 +273,10 @@
 					myStage.addChild(sprite.bitmap);
 					
 				break;
+				case AGMode.D_LINE_1:
 				
+					myStage.addChild(sprite.shape);
+				break;
 			}
 		}
 

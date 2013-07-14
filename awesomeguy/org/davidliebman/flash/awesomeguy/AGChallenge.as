@@ -6,6 +6,15 @@
 			public var bubble_1:int, bubble_2:int, bubble_3:int;
 			public var speed:int;
 		
+			public var total_rings:int;
+			public var total_bubble_0:int, total_bubble_1:int, total_bubble_2:int, total_bubble_3:int;
+			public var total_invader_1:int, total_invader_2:int, total_invader_3:int;
+
+			public var total_placed_bubble_1:int, total_placed_bubble_2:int, total_placed_bubble_3:int;
+			public var total_placed_invader_1:int, total_placed_invader_2:int, total_placed_invader_3:int;
+
+			public var total_held_rings:int;
+		
 		public function AGChallenge() {
 			// constructor code
 		}

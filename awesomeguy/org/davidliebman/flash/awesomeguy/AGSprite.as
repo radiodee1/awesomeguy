@@ -1,6 +1,7 @@
 ﻿package  org.davidliebman.flash.awesomeguy {
 	import flash.display.Sprite;
 	import flash.display.Bitmap;
+	import flash.display.Shape;
 	
 	public class AGSprite  {
 		
@@ -9,6 +10,7 @@
 			
 			public var sprite:Sprite;
 			public var bitmap:Bitmap;
+			public var shape:Shape;
 		
 			public var x:int, y:int, animate:int;
 			public var facingRight:Boolean, active:Boolean, visible:Boolean;
