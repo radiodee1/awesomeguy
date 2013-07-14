@@ -5,17 +5,12 @@
 	import flash.display.BitmapData;
 	import flash.display.Shape;
 	import flash.geom.Rectangle;
+	import flashx.textLayout.formats.Float;
 	
 	public class AGModeFlyer extends AGMode{
 
 		public var total_rings:int;
-		public var total_bubble_0:int, total_bubble_1:int, total_bubble_2:int, total_bubble_3:int;
-		public var total_invader_1:int, total_invader_2:int, total_invader_3:int;
-
-		public var total_placed_bubble_1:int, total_placed_bubble_2:int, total_placed_bubble_3:int;
-		public var total_placed_invader_1:int, total_placed_invader_2:int, total_placed_invader_3:int;
-
-		public var total_held_rings:int;
+		
 		
 		public var animate_explosion:Boolean = false;
 		
@@ -57,6 +52,7 @@
 			drawScoreWords();
 			myStage.addChild(myShape);
 			//
+			doTimers();
 			updateSprites();
 			collisionWithMonsters();
 			
@@ -195,30 +191,30 @@
 				myChallenge.push(ch);
 			}
 			
-			total_rings = 0;
-			total_bubble_0 = 0;
-			total_bubble_1 = 0;
-			total_bubble_2 = 0;
-			total_bubble_3 = 0;
-			total_invader_1 = 0;
-			total_invader_2 = 0;
-			total_invader_3 = 0;
+			myChallenge[myGame.gameChallenge].total_rings = 0;
+			myChallenge[myGame.gameChallenge].total_bubble_0 = 0;
+			myChallenge[myGame.gameChallenge].total_bubble_1 = 0;
+			myChallenge[myGame.gameChallenge].total_bubble_2 = 0;
+			myChallenge[myGame.gameChallenge].total_bubble_3 = 0;
+			myChallenge[myGame.gameChallenge].total_invader_1 = 0;
+			myChallenge[myGame.gameChallenge].total_invader_2 = 0;
+			myChallenge[myGame.gameChallenge].total_invader_3 = 0;
 			
 			myTimer[AGMode.TIMER_00].timerStart(3 ); // a few seconds
 			myTimer[AGMode.TIMER_01].timerStart( 3/30 ); // 3 refreshes
 			myTimer[AGMode.TIMER_08].timerStart( 5/30); // torpedos
 			
 			//placeChallengesBubble1();
-			total_placed_bubble_1 = 0;
+			myChallenge[myGame.gameChallenge].total_placed_bubble_1 = 0;
 			myTimer[AGMode.TIMER_02].timerStart(  1); // about a second
 			//placeChallengesBubble2();
-			total_placed_bubble_2 = 0;
+			myChallenge[myGame.gameChallenge].total_placed_bubble_2 = 0;
 			myTimer[AGMode.TIMER_03].timerStart( 2); // about 2 sec
 			//placeChallengesInvader1();
-			total_placed_invader_1 = 0;
+			myChallenge[myGame.gameChallenge].total_placed_invader_1 = 0;
 			myTimer[AGMode.TIMER_04].timerStart( 2);// 2 sec
 			//placeChallengesInvader2();
-			total_placed_invader_2 = 0;
+			myChallenge[myGame.gameChallenge].total_placed_invader_2 = 0;
 			myTimer[AGMode.TIMER_06].timerStart( 2); // 2 sec
 		}
 		
@@ -251,7 +247,7 @@
 			//int i,j, k;
 			var num_rings:int, num_spaces:int;
 		
-			total_held_rings = 0;
+			myChallenge[myGame.gameChallenge].total_held_rings = 0;
 			
 			//the first challenges to place are the rings.
 			num_rings = myChallenge[myGame.gameChallenge].rings;
@@ -301,50 +297,82 @@
 		}
 				
 		public function addMonster(monster_x:int, monster_y:int,  monster_animate:int):void {
-			mySprite[sprite_num] = new AGSpriteMonster(this,AGMode.S_GATOR);
-			mySprite[sprite_num].x = monster_x * TILE_WIDTH;
-			mySprite[sprite_num].y = monster_y * TILE_HEIGHT;
-			mySprite[sprite_num].animate = monster_animate;
-			mySprite[sprite_num].facingRight = true;
-			mySprite[sprite_num].active = true;
-			mySprite[sprite_num].visible = true;
+			var mon:AGSpriteMonster = new AGSpriteMonster(this,AGMode.S_GATOR);
+			mon.x = monster_x * TILE_WIDTH;
+			mon.y = monster_y * TILE_HEIGHT;
+			mon.animate = monster_animate;
+			mon.facingRight = true;
+			mon.active = true;
+			mon.visible = true;
 			  
-			mySprite[sprite_num].topBB = 3 *2; 
-			mySprite[sprite_num].bottomBB = 8 *2;
-			mySprite[sprite_num].leftBB = 0;
-			mySprite[sprite_num].rightBB = 16 * 2;
+			mon.topBB = 3 *2; 
+			mon.bottomBB = 8 *2;
+			mon.leftBB = 0;
+			mon.rightBB = 16 * 2;
 		
-			mySprite[sprite_num].sprite_type = S_GATOR;
+			mon.sprite_type = S_GATOR;
 			//mySprite[sprite_num].type = S_GATOR;
 			sprite_num ++;
 			monster_num = sprite_num;
 			
 			platform_num = 0;
+			mySprite.push(mon);
 		}
 		
 		public function addPlatform( platform_x:int, platform_y:int):void {
-			mySprite[sprite_num] = new AGSpriteCloud(this,AGMode.S_CLOUD);
-			mySprite[sprite_num].x = platform_x * TILE_WIDTH ;
-			mySprite[sprite_num].y = platform_y * TILE_HEIGHT ;
-			mySprite[sprite_num].animate = 0;
-			mySprite[sprite_num].facingRight = true;
-			mySprite[sprite_num].active = true;
-			mySprite[sprite_num].visible = true;
+			var my:AGSpriteCloud = new AGSpriteCloud(this,AGMode.S_CLOUD);
+			my.x = platform_x * TILE_WIDTH ;
+			my.y = platform_y * TILE_HEIGHT ;
+			my.animate = 0;
+			my.facingRight = true;
+			my.active = true;
+			my.visible = true;
 			  
-			mySprite[sprite_num].topBB = 0; 
-			mySprite[sprite_num].bottomBB = 8* 2;
-			mySprite[sprite_num].leftBB = 0;
-			mySprite[sprite_num].rightBB = 40*2;
+			my.topBB = 0; 
+			my.bottomBB = 8* 2;
+			my.leftBB = 0;
+			my.rightBB = 40*2;
 		
-			mySprite[sprite_num].sprite_type = S_CLOUD;
+			my.sprite_type = S_CLOUD;
 			  
 			sprite_num ++;
 			
-			
+			mySprite.push(my);
 			platform_num = sprite_num;
 		}
 		
+		public function doTimers():void {
+			
+			
+			if ( myChallenge[myGame.gameChallenge].bubble_1 > myChallenge[myGame.gameChallenge].total_placed_bubble_1 ) {
+				if( myTimer[AGMode.TIMER_02].timerDone()) {
+					trace("line");
+					// create a line-type object
+					var temp:AGSpriteLine = new AGSpriteLine(this, AGMode.S_LINE);// Sprite temp ;
+					temp.x = getRand(scrollBGX, scrollBGX + ( 256*2));
+					temp.y = 0;
+					var angle:int = getRand( 80, 180 - 80) ;
+					var value:Number = ( myVert * 16)/  (Math.tan(angle) );
+					temp.endline_x = Math.abs ((( int(value) ) + temp.x) % (myHoriz * 16));
 		
+					temp.endline_y = myVert * 16;
+					temp.sprite_type = S_LINE;
+					temp.speed = 2;
+					temp.active = true;
+					temp.quality_0 = 0;
+		
+					// add it to the sprite list
+					mySprite.push(temp);
+					// increment total_placed_bubble_1
+					myChallenge[myGame.gameChallenge].total_placed_bubble_1 ++;
+					//total_bubble_1 ++;
+		
+					// reset timer
+					myTimer[AGMode.TIMER_02].timerStart(1);
+					//timerStart(2, 30 * 1);
+				}
+			}
+		}
 		
 		public function updateSprites():void {
 			var i:int;
@@ -353,6 +381,7 @@
 					mySprite[i].updateSprite();
 					if (mySprite[i].sprite_type == AGMode.S_GATOR) myDraw.drawBasicSprite(mySprite[i], D_GATOR);
 					if (mySprite[i].sprite_type == AGMode.S_CLOUD) myDraw.drawBasicSprite(mySprite[i], D_CLOUD);
+					if (mySprite[i].sprite_type == AGMode.S_LINE ) myDraw.drawBasicSprite(mySprite[i], D_LINE_1);
 				}
 				
 			}
