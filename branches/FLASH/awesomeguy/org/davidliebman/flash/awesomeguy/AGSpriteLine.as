@@ -20,12 +20,13 @@
 					//this.bitmap = new Bitmap();
 					var scrollx:int = myMode.scrollBGX;
 					var scrolly:int = myMode.scrollBGY;
-			
+					
+						l = this.quality_0;
 					//for (l = 0; l < this.quality_0 ; l ++) {
 						k = ((this.endline_x - this.x ) * l) / ( this.endline_y - this.y) + this.x;
 		
 						//drawPoint(k,l, 0xffff);
-						l = this.quality_0;
+						
 							
 						if ( myMode.scrollBGX + 512 > (myMode.myHoriz * 16) && k  < 512 ) {
 							//drawPoint(k + (myHoriz * 16), l, 0xffff);
