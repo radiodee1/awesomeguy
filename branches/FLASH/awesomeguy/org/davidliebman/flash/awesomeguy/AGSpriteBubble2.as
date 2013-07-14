@@ -13,7 +13,7 @@
 			this.color = 0xff00ff00;
 			this.limit = 125;
 			super.updateSprite();
-			trace("here");
+			//trace("here");
 			
 			
 		}

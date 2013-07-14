@@ -7,6 +7,15 @@
 			super(mode,kind);
 		}
 
+		public override function updateSprite():void {
+			this.color = 0xff0000ff;
+			this.limit = 105;
+			super.updateSprite();
+			//trace("here");
+			
+			
+		}
+
 	}
 	
 }
