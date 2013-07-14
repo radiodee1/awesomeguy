@@ -15,7 +15,7 @@
 			
 					var k:int, l:int;//, m;
 					this.shape = new Shape();
-					//var myShape:Shape = new Shape();
+
 					this.shape.graphics.lineStyle(4,0x00ffffff,1.0);
 					//this.bitmap = new Bitmap();
 					var scrollx:int = myMode.scrollBGX;
@@ -53,12 +53,12 @@
 							new1.speed = 1;
 							new1.active = true;
 							//new1.sprite_link = i;
-		
+							new1.color = 0xffff0000;
 							this.active = false;
 		
 							myMode.mySprite.push(new1);
 							myMode.myChallenge[myMode.myGame.gameChallenge].total_bubble_1 ++;
-							trace("line done");						
+												
 						}
 						
 

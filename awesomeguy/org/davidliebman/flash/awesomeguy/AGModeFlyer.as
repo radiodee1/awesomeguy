@@ -382,6 +382,7 @@
 					if (mySprite[i].sprite_type == AGMode.S_GATOR) myDraw.drawBasicSprite(mySprite[i], D_GATOR);
 					if (mySprite[i].sprite_type == AGMode.S_CLOUD) myDraw.drawBasicSprite(mySprite[i], D_CLOUD);
 					if (mySprite[i].sprite_type == AGMode.S_LINE ) myDraw.drawBasicSprite(mySprite[i], D_LINE_1);
+					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_1) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_1);
 				}
 				
 			}
@@ -786,7 +787,7 @@
 						
 					}
 					if (myInvisible[yyy][xxx] + mapcheat == B_PRIZE) {
-						drawRadarPing(radar, radarscreen, xxx * TILE_WIDTH, yyy * TILE_HEIGHT, PING_OTHER, 0x00000000);
+						drawRadarPing(radar, radarscreen, xxx * TILE_WIDTH, yyy * TILE_HEIGHT, PING_OTHER, 0xffff0000);
 						
 					}
 				}

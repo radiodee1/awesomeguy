@@ -2945,41 +2945,39 @@ void drawBubbleWithColor() {
 			for(j = 0; j < rad; j ++) { // draw bubble on screen
 				// calculate line start and end
 
-				position = (float) j;
-				angle = asin(position/rad);
-				dist = cos(angle) * rad;
+				var position:Number =  j;
+				var angle:Number = Math.asin(position/rad);
+				var dist:Number = Math.cos(angle) * rad;
 
-				drawRadarPing(radar_box, adjust_x(test.x - (int) dist ), test.y - j, PING_ROCK, color);
-				drawRadarPing(radar_box, adjust_x(test.x + (int) dist ), test.y - j, PING_ROCK, color);
+				//drawRadarPing(radar_box, adjust_x(test.x - (int) dist ), test.y - j, PING_ROCK, color);
+				//drawRadarPing(radar_box, adjust_x(test.x + (int) dist ), test.y - j, PING_ROCK, color);
 
-				if (scrollx < test.x + (int) dist) {
-					drawHorizontal(test.y - j, test.x - (int) dist, test.x + (int) dist, color, solid);
-					drawHorizontal(test.y + j, test.x - (int) dist, test.x + (int) dist, color, solid);
+				if (scrollBGX < this.x + int (dist)) {
+					//drawHorizontal(test.y - j, test.x - (int) dist, test.x + (int) dist, color, solid);
+					//drawHorizontal(test.y + j, test.x - (int) dist, test.x + (int) dist, color, solid);
 
 
-					if (test.x + (int) dist > level_w * 8  ) {
-						drawHorizontal(test.y - j,  (test.x - (int) dist) -( level_w * 8),  (test.x + (int) dist) -(level_w * 8), color, solid);
-						drawHorizontal(test.y + j,  (test.x - (int) dist) - ( level_w * 8),  (test.x + (int) dist) - (level_w * 8), color, solid);
+					if (this.x + int (dist) > myMode.myHoriz * 16 ) {
+						//drawHorizontal(test.y - j,  (test.x - (int) dist) -( level_w * 8),  (test.x + (int) dist) -(level_w * 8), color, solid);
+						//drawHorizontal(test.y + j,  (test.x - (int) dist) - ( level_w * 8),  (test.x + (int) dist) - (level_w * 8), color, solid);
 					}
 
 				}
-				else if (scrollx >= test.x - (int) dist ) {
-					drawHorizontal(test.y - j, (level_w * 8) + test.x - (int) dist, (level_w * 8) + test.x + (int) dist, color, solid);
-					drawHorizontal(test.y + j, (level_w * 8) + test.x - (int) dist, (level_w * 8) + test.x + (int) dist, color, solid);
+				else if (scrollBGX >= this.x - int (dist )) {
+					//drawHorizontal(test.y - j, (level_w * 8) + test.x - (int) dist, (level_w * 8) + test.x + (int) dist, color, solid);
+					//drawHorizontal(test.y + j, (level_w * 8) + test.x - (int) dist, (level_w * 8) + test.x + (int) dist, color, solid);
 
 
 				}
 
-//				if ( scrollx + SCREEN_WIDTH > (level_w * 8) && k  < SCREEN_WIDTH ) {
-//					drawPoint(k + (level_w * 8), l, 0xffff);
-//					//LOGE("over edge here");
-//				}
+
+
 
 
 
 			}
-			if (sprite[i].radius < sprite[i].limit) { // grow bubble on screen
-				sprite[i].radius = sprite[i].radius + sprite[i].speed;
+			if (this.radius < this.limit) { // grow bubble on screen
+				this.radius = this.radius + this.speed;
 			}
 		}
 	}
