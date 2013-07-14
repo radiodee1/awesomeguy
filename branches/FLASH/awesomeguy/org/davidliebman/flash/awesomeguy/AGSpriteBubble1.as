@@ -8,6 +8,40 @@
 		}
 
 		public override function updateSprite():void {
+			
+			rad = this.radius;
+			// calculate line start and end
+			for(j = 0; j < rad; j ++) { // draw bubble on screen
+				position = (float) j;
+				angle = asin(position/rad);
+				dist = cos(angle) * rad;
+
+				//drawRadarPing(radar_box, adjust_x(test.x - (int) dist ), test.y - j, PING_ROCK, color);
+				//drawRadarPing(radar_box, adjust_x(test.x + (int) dist ), test.y - j, PING_ROCK, color);
+
+				if (scrollx < test.x + (int) dist) {
+					drawHorizontal(test.y - j, test.x - (int) dist, test.x + (int) dist, color, solid);
+					drawHorizontal(test.y + j, test.x - (int) dist, test.x + (int) dist, color, solid);
+
+
+					if (test.x + (int) dist > level_w * 8  ) {
+						drawHorizontal(test.y - j,  (test.x - (int) dist) -( level_w * 8),  (test.x + (int) dist) -(level_w * 8), color, solid);
+						drawHorizontal(test.y + j,  (test.x - (int) dist) - ( level_w * 8),  (test.x + (int) dist) - (level_w * 8), color, solid);
+					}
+
+				}
+				else if (scrollx >= test.x - (int) dist ) {
+					drawHorizontal(test.y - j, (level_w * 8) + test.x - (int) dist, (level_w * 8) + test.x + (int) dist, color, solid);
+					drawHorizontal(test.y + j, (level_w * 8) + test.x - (int) dist, (level_w * 8) + test.x + (int) dist, color, solid);
+
+
+				}
+			}
+			///////////////////////////////
+			if (sprite[i].radius < sprite[i].limit) { // grow bubble on screen
+				sprite[i].radius = sprite[i].radius + sprite[i].speed;
+			}
+			
 			/*
 			int i, j, k, l, m;
 			BOOL test = FALSE;
@@ -90,7 +124,7 @@
 					}
 					
 		
-				}//function
+				}
 				
 			}// 
 			*/
