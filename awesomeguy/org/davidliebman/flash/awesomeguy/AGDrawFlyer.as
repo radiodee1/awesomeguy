@@ -291,8 +291,13 @@
 					myStage.addChild(sprite.bitmap);
 				break;
 				case AGMode.D_RING:
-					sprite.bitmap.x = sprite.x;
-					sprite.bitmap.y = sprite.y;
+					if (scrollx < sprite.x + (16)) {
+						sprite.bitmap.x = (sprite.x - scrollx );
+					}
+					else {
+						sprite.bitmap.x = sprite.x - scrollx  + (myMode.myHoriz * 16);
+					}
+					sprite.bitmap.y = sprite.y - scrolly;
 					myStage.addChild(sprite.bitmap);
 				break;
 				
