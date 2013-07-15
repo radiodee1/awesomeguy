@@ -9,8 +9,10 @@
 
 		public override function updateSprite():void {
 			super.updateSprite();
+			animate ++;
+			if (animate > 7) animate = 0;
 			
-			var zz:int = AGMode.B_PRIZE + myMode.mapcheat;
+			var zz:int = AGMode.B_PRIZE ;
 			if (animate == 0 || animate == 1 || animate == 8) {
 		
 								//cutTile(tiles_a, square, k - mapcheat);

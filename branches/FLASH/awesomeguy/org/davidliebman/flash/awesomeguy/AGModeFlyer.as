@@ -42,6 +42,7 @@
 										false, 0x00000000));
 			updateSprites();
 			drawLevelTiles();
+			drawAnimatedSprites();
 			drawRadarRock();
 			drawSpriteExplosion();
 
@@ -87,7 +88,7 @@
 			
 			fillChallenges();
 			
-			//prepRings();
+			
 			prepTiles() ;
 			prepRings() ;
 			prepRingSprites();
@@ -154,7 +155,6 @@
 					smallArray.push(int (tempArray[ (i * myHoriz) + j ] ) );
 					if (k + mapcheat == AGMode.B_MONSTER) addMonster(j,i ,0);
 					if (k + mapcheat == AGMode.B_PLATFORM) addPlatform(j , i );
-					//if (k + mapcheat == AGMode.B_PRIZE) addRing(j, i );
 				}
 				myInvisible.push(smallArray);
 			}
@@ -306,7 +306,10 @@
 					k = myInvisible[i][j];
 					
 					
-					if (k + mapcheat == AGMode.B_PRIZE) addRing(j, i );
+					if (k + mapcheat == AGMode.B_PRIZE) {
+						addRing(j, i );
+						//trace("add ring");
+					}
 				}
 				
 			}
@@ -438,13 +441,26 @@
 					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_3) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_3);
 					
 					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_2) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_2);
-					if (mySprite[i].sprite_type == AGMode.S_GATOR) myDraw.drawBasicSprite(mySprite[i], D_GATOR);
-					if (mySprite[i].sprite_type == AGMode.S_RING) myDraw.drawBasicSprite(mySprite[i], D_RING);
+					
 				}
 				
 			}
 		}
-		
+		public function drawAnimatedSprites():void {
+			var i:int;
+			for (i = 0; i < mySprite.length; i ++ ) {
+				if (mySprite[i].active == true) {
+					
+					if (mySprite[i].sprite_type == AGMode.S_RING) {
+						myDraw.drawBasicSprite(mySprite[i], D_RING);
+					}
+					if (mySprite[i].sprite_type == AGMode.S_GATOR) {
+						myDraw.drawBasicSprite(mySprite[i], D_GATOR);
+					}
+				}
+				
+			}
+		}
 		
 		
 		public function collisionWithMonsters():void {
