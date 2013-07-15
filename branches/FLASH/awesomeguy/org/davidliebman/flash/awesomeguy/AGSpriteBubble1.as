@@ -48,10 +48,18 @@
 									 this.color);
 
 				
-				
-				this.shape.graphics.moveTo( newlimit - int(dist) , newlimit - j );
-				this.shape.graphics.lineTo( (newlimit - int (dist) ) + (2 * int(dist)), newlimit - j );
-				
+				if (this.sprite_type == AGMode.S_BUBBLE_3) {
+					this.shape.graphics.moveTo( newlimit - int(dist) , newlimit - j );
+					this.shape.graphics.lineTo( newlimit - int (dist) + 2, newlimit - j);
+					this.shape.graphics.moveTo( (newlimit - int (dist) ) + (2 * int(dist)) - 2, newlimit - j );
+					this.shape.graphics.lineTo( (newlimit - int (dist) ) + (2 * int(dist)), newlimit - j );
+					//outline only
+					
+				}
+				else {
+					this.shape.graphics.moveTo( newlimit - int(dist) , newlimit - j );
+					this.shape.graphics.lineTo( (newlimit - int (dist) ) + (2 * int(dist)), newlimit - j );
+				}
 			}
 			this.bitmap.bitmapData.draw(this.shape);
 			

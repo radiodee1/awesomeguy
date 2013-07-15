@@ -9,9 +9,9 @@
 
 		public override function updateSprite():void {
 			this.color = 0xff0000ff;
-			this.limit = 105;
+			this.limit = 130;
 			super.updateSprite();
-			//trace("here");
+			trace("blue");
 			
 			
 		}
