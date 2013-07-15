@@ -87,8 +87,10 @@
 			
 			fillChallenges();
 			
+			//prepRings();
 			prepTiles() ;
 			prepRings() ;
+			prepRingSprites();
 			
 			radar_start = xpos - scrollBGX;
 			radar_start_scroll =  scrollBGX;
@@ -152,6 +154,7 @@
 					smallArray.push(int (tempArray[ (i * myHoriz) + j ] ) );
 					if (k + mapcheat == AGMode.B_MONSTER) addMonster(j,i ,0);
 					if (k + mapcheat == AGMode.B_PLATFORM) addPlatform(j , i );
+					//if (k + mapcheat == AGMode.B_PRIZE) addRing(j, i );
 				}
 				myInvisible.push(smallArray);
 			}
@@ -295,6 +298,20 @@
 			/////////////////////////////
 		}
 				
+		public function prepRingSprites():void {
+			var i:int, j:int , k:int;
+			for (i = 0; i < myVert; i ++ ) {
+				
+				for (j = 0 ; j < myHoriz; j ++ ) {
+					k = myInvisible[i][j];
+					
+					
+					if (k + mapcheat == AGMode.B_PRIZE) addRing(j, i );
+				}
+				
+			}
+		}
+				
 		public function addMonster(monster_x:int, monster_y:int,  monster_animate:int):void {
 			var mon:AGSpriteMonster = new AGSpriteMonster(this,AGMode.S_GATOR);
 			mon.x = monster_x * TILE_WIDTH;
@@ -360,7 +377,20 @@
 					mySprite.push(temp);
 					return temp;
 		}
-		
+		public function addRing(xx:int, yy:int):void {
+			// create a line-type object
+					var temp:AGSpriteRing = new AGSpriteRing(this, AGMode.S_RING);// Sprite temp ;
+					temp.x =xx*16;
+					temp.y = yy *16;
+
+					temp.sprite_type = S_RING;
+					temp.speed = 1;
+					temp.active = true;
+					
+					// add it to the sprite list
+					mySprite.push(temp);
+					//return temp;
+		}
 		public function doTimers():void {
 			
 			
@@ -401,7 +431,6 @@
 			for (i = 0; i < mySprite.length; i ++ ) {
 				if (mySprite[i].active == true) {
 					mySprite[i].updateSprite();
-					if (mySprite[i].sprite_type == AGMode.S_GATOR) myDraw.drawBasicSprite(mySprite[i], D_GATOR);
 					if (mySprite[i].sprite_type == AGMode.S_CLOUD) myDraw.drawBasicSprite(mySprite[i], D_CLOUD);
 					if (mySprite[i].sprite_type == AGMode.S_LINE ) myDraw.drawBasicSprite(mySprite[i], D_LINE_1);
 					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_1) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_1);
@@ -409,6 +438,8 @@
 					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_3) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_3);
 					
 					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_2) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_2);
+					if (mySprite[i].sprite_type == AGMode.S_GATOR) myDraw.drawBasicSprite(mySprite[i], D_GATOR);
+					if (mySprite[i].sprite_type == AGMode.S_RING) myDraw.drawBasicSprite(mySprite[i], D_RING);
 				}
 				
 			}
@@ -584,7 +615,7 @@
 							
 							square.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
 							square.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
-							myStage.addChild(square);
+							//myStage.addChild(square);
 		
 							//drawTile_8(square, j * TILE_WIDTH, i * TILE_HEIGHT , 
 							//	scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
@@ -655,7 +686,7 @@
 							//	scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
 							square.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
 							square.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
-							myStage.addChild(square);
+							//myStage.addChild(square);
 						}
 						
 					}// if j-m > 0 etc.
@@ -721,7 +752,7 @@
 							//	scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
 							square.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
 							square.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
-							myStage.addChild(square);
+							//myStage.addChild(square);
 						}
 						
 					}
