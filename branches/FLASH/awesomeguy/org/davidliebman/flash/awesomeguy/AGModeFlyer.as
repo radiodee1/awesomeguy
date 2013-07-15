@@ -592,52 +592,7 @@
 							
 						}
 						
-						// special animated tiles
-						k = myInvisible[i][j] ;
-						zz = k +  mapcheat;
-						if ( zz != AGMode.B_START && zz != AGMode.B_MONSTER && zz != AGMode.B_DEATH
-							&& zz != AGMode.B_PLATFORM && zz != AGMode.B_MARKER && zz != AGMode.B_BLOCK
-							&& zz != AGMode.B_LADDER  && k != AGMode.B_SPACE  && zz != AGMode.B_GOAL) {
-							//if (zz == AGMode.B_PRIZE) trace("prize here");
-							
-							if (animate == 0 || animate == 1 || animate == 8) {
-		
-								//cutTile(tiles_a, square, k - mapcheat);
-								square = cutTile(  myRes[AGResources.NAME_TILES1_PNG], 
-									zz,//myInvisible[i][j] + mapcheat,
-									AGMode.TILE_TOP);
-							}
-							else if (animate == 2 || animate == 4 || animate == 6) {
-		
-								//cutTile(tiles_b, square, k - mapcheat);
-								square = cutTile(  myRes[AGResources.NAME_TILES2_PNG], 
-									zz,//myInvisible[i][j] + mapcheat,
-									AGMode.TILE_TOP);
-							}
-							else if (animate == 3 || animate == 7) {
-		
-								//cutTile(tiles_c, square, k - mapcheat);
-								square = cutTile(  myRes[AGResources.NAME_TILES3_PNG], 
-									zz,//myInvisible[i][j] + mapcheat,
-									AGMode.TILE_TOP);
-							}
-							else if (animate == 5) {
-		
-								//cutTile(tiles_d, square, k - mapcheat);
-								square = cutTile(  myRes[AGResources.NAME_TILES4_PNG], 
-									zz,//myInvisible[i][j] + mapcheat,
-									AGMode.TILE_TOP);
-							}
-							
-							square.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
-							square.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
-							//myStage.addChild(square);
-		
-							//drawTile_8(square, j * TILE_WIDTH, i * TILE_HEIGHT , 
-							//	scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
-						}
 						
-		
 		
 					} // if i,j > 0, etc...
 				
@@ -660,50 +615,6 @@
 							myStage.addChild(square);
 						}
 						
-						// special animated tiles
-						k = myInvisible[i][ j-m] ;//- levelcheat;
-						zz = k + mapcheat;
-						if ( zz != B_START && zz != B_MONSTER && zz != B_DEATH
-							&& zz != B_PLATFORM && zz != B_MARKER && zz != B_BLOCK
-							&& zz != B_LADDER  && k != B_SPACE && zz != B_GOAL) {
-							
-							
-							if (animate == 0 || animate == 1 || animate == 8) {
-		
-								//cutTile(tiles_a, square, k - mapcheat);
-								square = cutTile(  myRes[AGResources.NAME_TILES1_PNG], 
-									zz,//k + mapcheat,
-									AGMode.TILE_TOP);
-							}
-							else if (animate == 2 || animate == 4 || animate == 6) {
-		
-								//cutTile(tiles_b, square, k - mapcheat);
-								square = cutTile(  myRes[AGResources.NAME_TILES2_PNG], 
-									zz,//k + mapcheat,
-									AGMode.TILE_TOP);
-							}
-							else if (animate == 3 || animate == 7) {
-		
-								//cutTile(tiles_c, square, k - mapcheat);
-								square = cutTile(  myRes[AGResources.NAME_TILES3_PNG], 
-									zz,//k + mapcheat,
-									AGMode.TILE_TOP);
-							}
-							else if (animate == 5) {
-		
-								//cutTile(tiles_d, square, k - mapcheat);
-								square = cutTile(  myRes[AGResources.NAME_TILES4_PNG], 
-									zz,//k + mapcheat,
-									AGMode.TILE_TOP);
-							}
-							
-		
-							//drawTile_8(square, j * TILE_WIDTH, i * TILE_HEIGHT , 
-							//	scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
-							square.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
-							square.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
-							//myStage.addChild(square);
-						}
 						
 					}// if j-m > 0 etc.
 		
@@ -725,51 +636,6 @@
 							myStage.addChild(square);
 						}
 						
-						/////////////////////////////////////////////
-							// special animated tiles
-						k = myInvisible[i][ j+m] ;//- levelcheat;
-						zz = k + mapcheat;
-						if ( zz != B_START && zz != B_MONSTER && zz != B_DEATH
-							&& zz != B_PLATFORM && zz != B_MARKER && zz != B_BLOCK
-							&& zz != B_LADDER  && k != B_SPACE && zz != B_GOAL) {
-							
-							
-							if (animate == 0 || animate == 1 || animate == 8) {
-		
-								//cutTile(tiles_a, square, k - mapcheat);
-								square = cutTile(  myRes[AGResources.NAME_TILES1_PNG], 
-									zz,//k + mapcheat,
-									AGMode.TILE_TOP);
-							}
-							else if (animate == 2 || animate == 4 || animate == 6) {
-		
-								//cutTile(tiles_b, square, k - mapcheat);
-								square = cutTile(  myRes[AGResources.NAME_TILES2_PNG], 
-									zz,//k + mapcheat,
-									AGMode.TILE_TOP);
-							}
-							else if (animate == 3 || animate == 7) {
-		
-								//cutTile(tiles_c, square, k - mapcheat);
-								square = cutTile(  myRes[AGResources.NAME_TILES3_PNG], 
-									zz,//k + levelcheat,
-									AGMode.TILE_TOP);
-							}
-							else if (animate == 5) {
-		
-								//cutTile(tiles_d, square, k - mapcheat);
-								square = cutTile(  myRes[AGResources.NAME_TILES4_PNG], 
-									zz, //k + mapcheat,
-									AGMode.TILE_TOP);
-							}
-							
-		
-							//drawTile_8(square, j * TILE_WIDTH, i * TILE_HEIGHT , 
-							//	scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
-							square.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
-							square.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
-							//myStage.addChild(square);
-						}
 						
 					}
 				

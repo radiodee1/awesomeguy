@@ -11,7 +11,7 @@
 			this.color = 0xff0000ff;
 			this.limit = 130;
 			super.updateSprite();
-			trace("blue");
+			//trace("blue");
 			
 			
 		}
