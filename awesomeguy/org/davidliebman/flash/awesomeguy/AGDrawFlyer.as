@@ -290,6 +290,12 @@
 					sprite.bitmap.y = sprite.y - (sprite.limit * 2) - scrolly;
 					myStage.addChild(sprite.bitmap);
 				break;
+				case AGMode.D_RING:
+					sprite.bitmap.x = sprite.x;
+					sprite.bitmap.y = sprite.y;
+					myStage.addChild(sprite.bitmap);
+				break;
+				
 			}
 		}
 

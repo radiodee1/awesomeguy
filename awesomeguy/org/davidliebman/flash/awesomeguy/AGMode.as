@@ -71,6 +71,7 @@
 	static var S_LINE:int =	13;
 	static var S_LINE_2:int = 14;
 	static var S_EXPLOSION_SPRITE:int = 15;
+	static var S_RING:int = 16;
 	
 	//draw enumeration
 	static var D_NONE:int = 0;
@@ -88,6 +89,7 @@
 	static var  D_BUBBLE_1:int = 12;
 	static var  D_BUBBLE_2:int = 13;
 	static var  D_BUBBLE_3:int = 14;
+	static var  D_RING:int = 15;
 	
 	//radar ping types
 	static var PING_FLYER:int = 0;
