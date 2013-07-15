@@ -55,6 +55,8 @@
 			//
 			doTimers();
 			collisionWithMonsters();
+			checkRegularCollision();
+
 			
 			screenframe.x = 0;
 			screenframe.y = SCREEN_HEIGHT;
@@ -65,6 +67,7 @@
 			radarscreen.x = 64;
 			radarscreen.y = SCREEN_HEIGHT;
 			myStage.addChild(radarscreen);
+			
 		}
 		
 		public override function doOnce():void {
@@ -498,15 +501,15 @@
 		      else {
 				//endlevel = TRUE;
 				if (preferences_collision == true) {
-					
-					myRes[AGResources.NAME_EXPLOSION_MP3].play();
+					flyerDeath();
+					//myRes[AGResources.NAME_EXPLOSION_MP3].play();
 					sprite.active = false;
 					sprite.visible = false;
-					animate_explosion = true;
-					explosionsprite.active = true;
-					explosionsprite.x = xpos;
-					explosionsprite.y = ypos;
-					agflyer.active = false;
+					//animate_explosion = true;
+					//explosionsprite.active = true;
+					//explosionsprite.x = xpos;
+					//explosionsprite.y = ypos;
+					//agflyer.active = false;
 					
 				}
 
@@ -518,6 +521,17 @@
 			  }
 		  }
 
+		}
+		
+		public function flyerDeath():void {
+					myRes[AGResources.NAME_EXPLOSION_MP3].play();
+					//sprite.active = false;
+					//sprite.visible = false;
+					animate_explosion = true;
+					explosionsprite.active = true;
+					explosionsprite.x = xpos;
+					explosionsprite.y = ypos;
+					agflyer.active = false;
 		}
 		
 		public function drawSpriteExplosion():void {
@@ -708,6 +722,40 @@
 				else if (ypos < SCREEN_HEIGHT -64) {
 					//xpos = xpos 
 					xx = - (X_MOVE / 2);
+				}
+			}
+		}
+	
+		public function checkRegularCollision():void {
+			var ii:int;
+			for (ii = 0; ii < mySprite.length ; ii ++ ) {
+				if (mySprite[ii].bitmap != null) {
+					if (this.collisionSimple(mySprite[ii].bitmap, this.flyersprite) 
+						&& mySprite[ii].active == true ) {
+							var sprite:AGSprite = mySprite[ii];
+						switch (sprite.sprite_type) {
+							case AGMode.S_RING:
+								
+								var temp:AGSpriteBubble1 = new AGSpriteBubble1(this, AGMode.S_BUBBLE_1);// Sprite temp ;
+								temp.x = sprite.x;
+								temp.y = myVert * TILE_HEIGHT;
+								temp.limit = 100;
+								temp.color = 0xffff0000;
+								temp.speed =  2;
+								temp.active = true;
+								temp.quality_0 = 0;
+								
+								mySprite.push(temp);
+								myRes[AGResources.NAME_BOOM_MP3].play();
+								sprite.active = false;
+								
+							break;
+							
+							case AGMode.S_BUBBLE_2:
+								flyerDeath();
+							break;
+						}//switch
+					}// collision simple
 				}
 			}
 		}

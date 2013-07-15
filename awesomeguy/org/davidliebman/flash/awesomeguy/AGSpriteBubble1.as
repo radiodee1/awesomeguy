@@ -11,6 +11,7 @@
 		}
 
 		public override function updateSprite():void {
+			
 			this.shape = new Shape();
 			this.shape.graphics.lineStyle(4,this.color,1.0);
 			//var shape2:Shape = new Shape();
