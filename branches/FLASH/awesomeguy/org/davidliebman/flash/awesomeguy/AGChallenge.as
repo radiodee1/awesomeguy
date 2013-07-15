@@ -19,6 +19,27 @@
 			// constructor code
 		}
 
+		public function checkTotals():Boolean {
+			var test:Boolean = true;
+			if ( 	total_rings +
+					total_bubble_0 +
+					total_bubble_1 +
+					total_bubble_2 +
+					total_bubble_3 +
+					total_invader_1 +
+					total_invader_2 +
+					total_invader_3
+					> 0 ||
+					total_placed_bubble_1 < this.bubble_1 ||
+					total_placed_bubble_2 < this.bubble_2 ||
+					total_placed_invader_1 < this.invader_1 ||
+					total_placed_invader_2 < this.invader_2
+					) {
+				test = false;
+			}
+			return test;
+		}
+
 	}
 	
 }
