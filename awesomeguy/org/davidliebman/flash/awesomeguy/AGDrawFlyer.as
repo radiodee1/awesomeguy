@@ -280,6 +280,7 @@
 				
 				case AGMode.D_BUBBLE_1:
 				case AGMode.D_BUBBLE_2:
+				case AGMode.D_BUBBLE_3:
 					if (scrollx < sprite.x + (sprite.radius * 2)) {
 						sprite.bitmap.x = sprite.x - scrollx - (sprite.limit * 2);
 					}

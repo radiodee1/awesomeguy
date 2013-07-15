@@ -87,6 +87,7 @@
 	static var  D_BUBBLE_0:int = 11;
 	static var  D_BUBBLE_1:int = 12;
 	static var  D_BUBBLE_2:int = 13;
+	static var  D_BUBBLE_3:int = 14;
 	
 	//radar ping types
 	static var PING_FLYER:int = 0;

@@ -11,7 +11,7 @@
 
 		public override function updateSprite():void {
 			this.color = 0xff00ff00;
-			this.limit = 125;
+			this.limit = 120;
 			super.updateSprite();
 			//trace("here");
 			
