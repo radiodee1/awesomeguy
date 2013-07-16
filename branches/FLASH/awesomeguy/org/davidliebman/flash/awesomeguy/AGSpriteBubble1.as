@@ -64,7 +64,7 @@
 			}
 			this.bitmap.bitmapData.draw(this.shape);
 			
-			if (this.radius < this.limit) { // grow bubble on screen
+			if (this.radius < this.limit && this.active) { // grow bubble on screen
 				this.radius = this.radius + this.speed;
 			}
 			

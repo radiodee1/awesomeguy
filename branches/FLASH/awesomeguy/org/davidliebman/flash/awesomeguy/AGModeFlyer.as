@@ -434,7 +434,7 @@
 		public function updateSprites():void {
 			var i:int;
 			for (i = 0; i < mySprite.length; i ++ ) {
-				if (mySprite[i].active == true) {
+				if (mySprite[i].active == true || mySprite[i].visible == true) {
 					mySprite[i].updateSprite();
 					if (mySprite[i].sprite_type == AGMode.S_CLOUD) myDraw.drawBasicSprite(mySprite[i], D_CLOUD);
 					if (mySprite[i].sprite_type == AGMode.S_LINE ) myDraw.drawBasicSprite(mySprite[i], D_LINE_1);
@@ -752,6 +752,7 @@
 								this.agflyer.active = false;
 								this.agflyer.visible = false;
 								sprite.active = false;
+								sprite.visible = true;
 								flyerDeath();
 							break;
 						}//switch
