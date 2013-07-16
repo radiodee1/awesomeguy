@@ -162,7 +162,7 @@
 				
 				//i = spriteNum;
 				var x:int, y:int ;
-				var wait:int = 1;
+				var wait:int = 20;
 				y = sprite.y - 32;
 				x = sprite.x;
 		
@@ -178,15 +178,14 @@
 					add = myMode.myHoriz * 16;
 				}
 				
-				//trace (sprite.timerDone());
-				
-				if (sprite.timerDone() || sprite.timer.started == false) {
+				//
+				if (sprite.timerDone() ){// ||  sprite.timer.started == false) {
 		
 					//LOGE("explosion %d ", flyer_explosion);
 		
 					switch (sprite.quality_3) {
 					case 0:
-						//trace("boom");
+						
 						//drawSprite_64(explosion_a, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
 						sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_A];
 						break;
@@ -204,29 +203,30 @@
 					case 3:
 						//drawSprite_64(explosion_d, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
 						sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_D];
-		
+						
 						break;
 					case 4:
 						//drawSprite_64(explosion_e, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
 						sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_E];
-		
+						
 						break;
 					case 5:
 						//drawSprite_64(explosion_f, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
 						sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_F];
-		
+						
 						break;
 		
 					case 6:
 						//drawSprite_64(explosion_g, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
 						sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_G];
-		
+						
 						break;
 					case 7:
 						//drawSprite_64(explosion_h, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
 						//sprite[i].active = FALSE;
 						sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_H];
-
+						//myMode.game_death = true;
+						
 						break;
 					}
 					
@@ -240,11 +240,11 @@
 						//endlevel = TRUE;
 						//gamedeath = TRUE;
 						sprite.active = false;
-						sprite.sprite_type = AGMode.S_NONE;
+						//sprite.sprite_type = AGMode.S_NONE;
 						myMode.game_death = true;
 					}
 					sprite.quality_3 ++;
-					sprite.timerStart( wait/15 );/// 100);
+					sprite.timerStart( wait/1000 );/// 100);
 					//}
 				}
 				

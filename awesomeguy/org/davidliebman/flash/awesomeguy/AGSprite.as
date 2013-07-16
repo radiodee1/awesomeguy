@@ -46,7 +46,7 @@
 			//nothing here...
 		}
 
-		public function timerStart(num:int):void {
+		public function timerStart(num:Number):void {
 			timer.timerStart(num);
 		}
 		
