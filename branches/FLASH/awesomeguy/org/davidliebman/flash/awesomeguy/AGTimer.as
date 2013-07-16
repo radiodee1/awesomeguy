@@ -14,7 +14,7 @@
 			
 		}
 		public function timerStart(num:Number):void {
-			trace(num);
+			
 			myTimer = new Timer(num * 1000, 1);
 			myTimer.addEventListener(TimerEvent.TIMER, runOnce);
 			myTimer.start();
