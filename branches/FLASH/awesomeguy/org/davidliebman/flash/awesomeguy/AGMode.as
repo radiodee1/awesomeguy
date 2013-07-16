@@ -584,7 +584,7 @@
 			//uint16_t square[TILE_HEIGHT][TILE_WIDTH];
 			
 			
-			if (ypos > 16 * 2) {
+			if (ypos - scrollBGY > 16 * 2) {
 					//print SCORE:
 					for (i = 0; i < 6; i ++) {
 						square = cutTile(myRes[AGResources.NAME_TILES1_PNG],  topScore[i] + 1, AGMode.TILE_TOP);

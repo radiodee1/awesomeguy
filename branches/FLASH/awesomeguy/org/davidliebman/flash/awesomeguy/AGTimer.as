@@ -13,11 +13,13 @@
 			// constructor code
 			
 		}
-		public function timerStart(num:int):void {
+		public function timerStart(num:Number):void {
+			trace(num);
 			myTimer = new Timer(num * 1000, 1);
 			myTimer.addEventListener(TimerEvent.TIMER, runOnce);
 			myTimer.start();
 			started = true;
+			done = false;
 		}
 		
 		public function runOnce(e:TimerEvent):void {

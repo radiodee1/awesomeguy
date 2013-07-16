@@ -44,7 +44,6 @@
 			drawLevelTiles();
 			drawAnimatedSprites();
 			drawRadarRock();
-			drawSpriteExplosion();
 
 			//
 			agflyer.sprite = this.sprite;
@@ -209,16 +208,16 @@
 			myTimer[AGMode.TIMER_01].timerStart( 3/30 ); // 3 refreshes
 			myTimer[AGMode.TIMER_08].timerStart( 5/30); // torpedos
 			
-			//placeChallengesBubble1();
+			//
 			myChallenge[myGame.gameChallenge].total_placed_bubble_1 = 0;
 			myTimer[AGMode.TIMER_02].timerStart(  1); // about a second
-			//placeChallengesBubble2();
+			//
 			myChallenge[myGame.gameChallenge].total_placed_bubble_2 = 0;
 			myTimer[AGMode.TIMER_03].timerStart( 2); // about 2 sec
-			//placeChallengesInvader1();
+			//
 			myChallenge[myGame.gameChallenge].total_placed_invader_1 = 0;
 			myTimer[AGMode.TIMER_04].timerStart( 2);// 2 sec
-			//placeChallengesInvader2();
+			//
 			myChallenge[myGame.gameChallenge].total_placed_invader_2 = 0;
 			myTimer[AGMode.TIMER_06].timerStart( 2); // 2 sec
 		}
@@ -460,6 +459,10 @@
 					if (mySprite[i].sprite_type == AGMode.S_GATOR) {
 						myDraw.drawBasicSprite(mySprite[i], D_GATOR);
 					}
+					if (explosionsprite.sprite_type == AGMode.S_EXPLOSION_SPRITE && 
+						explosionsprite.active == true) {
+						myDraw.drawBasicSprite(explosionsprite, AGMode.D_EXPLOSION_SPRITE);
+					}
 				}
 				
 			}
@@ -528,22 +531,16 @@
 					//sprite.active = false;
 					//sprite.visible = false;
 					animate_explosion = true;
+					explosionsprite.quality_3 = 0;
+					explosionsprite.timerStart(10/1000);
 					explosionsprite.active = true;
 					explosionsprite.x = xpos;
 					explosionsprite.y = ypos;
 					agflyer.active = false;
 		}
 		
-		public function drawSpriteExplosion():void {
-			var i:int;
-			
-			if (explosionsprite.sprite_type == S_EXPLOSION_SPRITE && explosionsprite.active == true) {
-				myDraw.drawBasicSprite(explosionsprite, AGMode.D_EXPLOSION_SPRITE );
-				
-			}
-			
 		
-		}
+		
 		
 		
 		///////////////////////////////////////////
@@ -752,6 +749,9 @@
 							break;
 							
 							case AGMode.S_BUBBLE_2:
+								this.agflyer.active = false;
+								this.agflyer.visible = false;
+								sprite.active = false;
 								flyerDeath();
 							break;
 						}//switch
