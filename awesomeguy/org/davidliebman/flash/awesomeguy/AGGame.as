@@ -11,6 +11,7 @@
 	var K_SHOOT:Boolean = false;
 	var K_JUMP:Boolean = false;
 	var K_PAUSE:Boolean = false;
+	var K_ANY:Boolean = false;
 	
 	var myStage:Stage;
 	var myButtons:Array;
@@ -56,16 +57,19 @@
 		public function setKeys(e:Event) {
 			setKeyValues(myButtons[AGKeys.BUTTON_LEFT].getValBool() , myButtons[AGKeys.BUTTON_RIGHT].getValBool(),
 						 myButtons[AGKeys.BUTTON_UP].getValBool(), myButtons[AGKeys.BUTTON_DOWN].getValBool(), 
-						 myButtons[AGKeys.BUTTON_SHOOT].getValBool(), myButtons[AGKeys.BUTTON_JUMP].getValBool());
+						 myButtons[AGKeys.BUTTON_SHOOT].getValBool(), myButtons[AGKeys.BUTTON_JUMP].getValBool(),
+						 myButtons[AGKeys.BUTTON_PAUSE].getValBool() ,myButtons[AGKeys.BUTTON_ANY].getValBool());
 		}
 
-		public function setKeyValues(left:Boolean, right:Boolean, up:Boolean, down:Boolean, shoot:Boolean, jump:Boolean) {
+		public function setKeyValues(left:Boolean, right:Boolean, up:Boolean, down:Boolean, shoot:Boolean, jump:Boolean, bpause:Boolean, any:Boolean) {
 			K_LEFT = left;
 			K_RIGHT = right;
 			K_UP = up;
 			K_DOWN = down;
 			K_JUMP = jump;
 			K_SHOOT = shoot;
+			K_PAUSE = bpause;
+			K_ANY = any;
 			doAnimation();
 		}
 		

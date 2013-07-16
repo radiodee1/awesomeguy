@@ -12,10 +12,11 @@
 	var KEY_VAL_SHOOT:KeyValue = new KeyValue();
 	var KEY_VAL_JUMP:KeyValue = new KeyValue();
 	var KEY_VAL_PAUSE:KeyValue = new KeyValue();
+	var KEY_VAL_ANY:KeyValue = new KeyValue();
 	
 	var array:Array =  new Array( KEY_VAL_LEFT, KEY_VAL_RIGHT, KEY_VAL_UP, 
 								 KEY_VAL_DOWN, KEY_VAL_SHOOT , KEY_VAL_JUMP,
-								 KEY_VAL_PAUSE );
+								 KEY_VAL_PAUSE, KEY_VAL_ANY );
 
 	static var BUTTON_LEFT:int = 0;
 	static var BUTTON_RIGHT:int = 1;
@@ -24,6 +25,7 @@
 	static var BUTTON_SHOOT:int = 4;
 	static var BUTTON_JUMP:int = 5;
 	static var BUTTON_PAUSE:int = 6;
+	static var BUTTON_ANY:int = 7;
 
 	var KEY_LEFT:Boolean = false;
 	var KEY_RIGHT:Boolean = false;
@@ -32,6 +34,7 @@
 	var KEY_SHOOT:Boolean = false;
 	var KEY_JUMP:Boolean = false;
 	var KEY_PAUSE:Boolean = false;
+	var KEY_ANY:Boolean = false;
 
 	var keycodeLeft:int = 37;
 	var keycodeRight:int = 39;
@@ -40,6 +43,8 @@
 	var keycodeShoot:int = 16;
 	var keycodeJump:int = 32;
 	var keycodePause:int = 80;
+	
+	var lastCode:int ;
 	
 	var myScreen:Stage;
 
@@ -68,7 +73,8 @@
 			if (event.keyCode == keycodeShoot) KEY_SHOOT = true;
 			if (event.keyCode == keycodeJump) KEY_JUMP = true;
 			if (event.keyCode == keycodePause) KEY_PAUSE = true;
-
+			if (event.keyCode != keycodePause) KEY_ANY = true;
+			lastCode = event.keyCode;
 			setAllKeys();
 
 			//trace("Key Code DOWN: " + event.keyCode);
@@ -83,7 +89,7 @@
 			if (event.keyCode == keycodeShoot) KEY_SHOOT = false;
 			if (event.keyCode == keycodeJump) KEY_JUMP = false;
 			if (event.keyCode == keycodePause) KEY_PAUSE = false;
-
+			if (lastCode == event.keyCode) KEY_ANY = false;
 			setAllKeys();
 
 			//trace("Key Code UP: " + event.keyCode);
@@ -98,6 +104,7 @@
 			 KEY_VAL_SHOOT.setValBool(KEY_SHOOT);
 			 KEY_VAL_JUMP.setValBool(KEY_JUMP);
 			 KEY_VAL_PAUSE.setValBool(KEY_PAUSE);
+			 KEY_VAL_ANY.setValBool(KEY_ANY);
 		}
 		
 		public function launchNextPhase():void {

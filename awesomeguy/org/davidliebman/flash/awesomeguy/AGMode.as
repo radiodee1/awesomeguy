@@ -17,6 +17,7 @@
 	var K_SHOOT:Boolean = false;
 	var K_JUMP:Boolean = false;
 	var K_PAUSE:Boolean = false;
+	var K_ANY:Boolean = false;
 		
 	var myStage:Stage;
 	var myButtons:Array;
@@ -196,11 +197,11 @@
 			setKeyValues(myButtons[AGKeys.BUTTON_LEFT].getValBool() , myButtons[AGKeys.BUTTON_RIGHT].getValBool(),
 						 myButtons[AGKeys.BUTTON_UP].getValBool(), myButtons[AGKeys.BUTTON_DOWN].getValBool(), 
 						 myButtons[AGKeys.BUTTON_SHOOT].getValBool(), myButtons[AGKeys.BUTTON_JUMP].getValBool(),
-						 myButtons[AGKeys.BUTTON_PAUSE].getValBool());
+						 myButtons[AGKeys.BUTTON_PAUSE].getValBool(), myButtons[AGKeys.BUTTON_ANY].getValBool());
 		}
 
 		public function setKeyValues(left:Boolean, right:Boolean, up:Boolean, down:Boolean, 
-									 shoot:Boolean, jump:Boolean , pause:Boolean) {
+									 shoot:Boolean, jump:Boolean , pause:Boolean, any:Boolean) {
 			K_LEFT = left;
 			K_RIGHT = right;
 			K_UP = up;
@@ -208,24 +209,37 @@
 			K_JUMP = jump;
 			K_SHOOT = shoot;
 			K_PAUSE = pause;
-			
+			K_ANY = any;
 		}
 		
 		public function innerGameLoop() {
 			// this happens every frame because it is called in AGGame.as once every 
 			// frame by 'doAnimation()'...
-			if (K_PAUSE) {
+			if (K_ANY && !K_PAUSE) {
+				if (gamePaused) {
+					gamePaused = false;
+
+				}
+				K_PAUSE = false;
+				K_ANY = false;
+				myButtons[AGKeys.BUTTON_PAUSE].setValBool(false);
+				myButtons[AGKeys.BUTTON_ANY].setValBool(false);
+			}
+			
+			if (K_PAUSE ) {
 				if ( gamePaused) {
 					gamePaused = false;
 				}
-				else if ( !gamePaused) {
+				else if ( !gamePaused ) {
 					gamePaused = true;
 				}
 				K_PAUSE = false;
+				K_ANY = false;
 				myButtons[AGKeys.BUTTON_PAUSE].setValBool(false);
-				
+				myButtons[AGKeys.BUTTON_ANY].setValBool(false);
 			}
 			
+						
 			animate ++
 			if (animate > 4) animate = 0;
 			
