@@ -302,12 +302,14 @@
 				break;
 				
 				case AGMode.D_TORPEDO:
-					
+					if (myMode.xx > 0) sprite.quality_0 = AGMode.X_MOVE * sprite.quality_1;
+					else if (myMode.xx < 0 ) sprite.quality_0 = - (AGMode.X_MOVE * sprite.quality_1);
+					else sprite.quality_0 = 0;
 					if (scrollx < sprite.x + (8)) {
-						sprite.bitmap.x = (sprite.x - scrollx );
+						sprite.bitmap.x = (sprite.x - scrollx ) + sprite.quality_0 ;
 					}
 					else {
-						sprite.bitmap.x = sprite.x - scrollx  + (myMode.myHoriz * 16);
+						sprite.bitmap.x = sprite.x - scrollx  + (myMode.myHoriz * 16) + sprite.quality_0;
 					}
 					sprite.bitmap.y = sprite.y - scrolly + AGMode.LASER_GUN;
 					myStage.addChild(sprite.bitmap);

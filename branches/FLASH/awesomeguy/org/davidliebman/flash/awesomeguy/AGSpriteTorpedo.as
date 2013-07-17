@@ -22,7 +22,7 @@
 				var SCREEN_HEIGHT:int = myMode.SCREEN_HEIGHT;
 				
 				jj = 4;
-				
+				this.quality_1 = jj;
 				this.bitmap = new Bitmap(new BitmapData(jj * 2 * 2,  2, true, 0xffffffff));
 
 				
