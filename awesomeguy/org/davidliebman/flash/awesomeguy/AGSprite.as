@@ -53,6 +53,10 @@
 		public function timerDone():Boolean {
 			return timer.timerDone();
 		}
+		
+		public function pruneSprite():void {
+			//
+		}
 	}
 	
 }

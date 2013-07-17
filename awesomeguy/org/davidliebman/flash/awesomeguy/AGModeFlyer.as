@@ -52,6 +52,7 @@
 			drawScoreWords();
 			myStage.addChild(myShape);
 			//
+			fireButton();
 			doTimers();
 			collisionWithMonsters();
 			checkRegularCollision();
@@ -396,6 +397,23 @@
 					mySprite.push(temp);
 					//return temp;
 		}
+		public function addTorpedo(ii:int, xx:int, yy:int):void {
+					var temp:AGSpriteTorpedo = new AGSpriteTorpedo(this, AGMode.TORPEDO_UNUSED);// Sprite temp ;
+					temp.x =xx;
+					temp.y = yy ;
+					temp.facingRight = facingRight;
+					if (facingRight) {
+						temp.x = temp.x + spriteWidth;
+					}
+					temp.sprite_type = AGMode.S_TORPEDO;
+					temp.speed = 1;
+					temp.active = true;
+					temp.visible = true;
+					temp.limit = 0;
+					myTorpedo[ii] = temp;
+					//trace("new torpedo");
+		}
+		
 		public function doTimers():void {
 			
 			
@@ -431,6 +449,35 @@
 			}
 		}
 		
+		public function fireButton():void {
+			var  ii:int, jj:int, kk:int, ll:int, add:int;
+			var flag:Boolean = false;
+			
+			//jj = LASER_WIDTH / 4;
+			
+			if (K_JUMP) { // using space key
+				trace (myTorpedo);
+				if (myTimer[AGMode.TIMER_08].timerDone() || myTimer[AGMode.TIMER_08].started == false) {
+					
+					ii = 0;
+					while (ii  < TOTAL_TORPEDOS  && flag == false) {
+	
+						if (myTorpedo[ii].active == false ) {
+	
+							
+							this.addTorpedo(ii, xpos, ypos);
+							
+							flag = true;
+						} // if active
+						ii ++;
+					}// while ii
+					if (flag == true) myTimer[AGMode.TIMER_08].timerStart( 0.3);
+				}// if timer done
+	
+	
+			}
+		}
+		
 		public function updateSprites():void {
 			var i:int;
 			for (i = 0; i < mySprite.length; i ++ ) {
@@ -447,6 +494,16 @@
 				}
 				
 			}
+			
+			var sprite:AGSpriteTorpedo;
+			for ( i = 0; i < myTorpedo.length ; i ++ ) {
+				sprite = myTorpedo[i];
+				if (sprite.active) {
+					sprite.updateSprite();
+					myDraw.drawBasicSprite(sprite, AGMode.D_TORPEDO);
+				}
+			}
+			
 		}
 		public function drawAnimatedSprites():void {
 			var i:int;
