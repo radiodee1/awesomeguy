@@ -91,6 +91,7 @@
 	static var  D_BUBBLE_2:int = 13;
 	static var  D_BUBBLE_3:int = 14;
 	static var  D_RING:int = 15;
+	static var  D_TORPEDO:int = 16;
 	
 	//radar ping types
 	static var PING_FLYER:int = 0;
@@ -100,6 +101,9 @@
 	static var TORPEDO_FLYING:int = 1;
 	static var TORPEDO_HIT:int =  2;
 	static var TORPEDO_UNUSED:int = 0;	
+	
+	static var LASER_WIDTH:int = 150 * 2;
+	static var LASER_GUN:int = 12*2;
 	
 	static var TIMER_00:int = 0;
 	static var TIMER_01:int = 1;
@@ -165,6 +169,7 @@
 	public var gamePaused:Boolean = false;
 	public var flyerGrounded:Boolean = false;
 	public var preferences_collision:Boolean = true;
+	public var animate_only:Boolean = false;
 	
 	public var radar:Rectangle = new Rectangle(0,0,SCREEN_WIDTH - 128, 64);
 	public var radarscreen:Bitmap = new Bitmap();
@@ -301,7 +306,7 @@
 			//	mySprite.push(new AGSprite(this,S_NONE));
 			//}
 			for (ii = 0; ii < TOTAL_TORPEDOS; ii ++ ) {
-				myTorpedo.push(new AGSprite(this, TORPEDO_UNUSED));
+				myTorpedo.push(new AGSpriteTorpedo(this, TORPEDO_UNUSED));
 			}
 			
 		}

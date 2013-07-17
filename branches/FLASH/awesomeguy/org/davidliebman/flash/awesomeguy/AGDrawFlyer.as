@@ -301,6 +301,20 @@
 					myStage.addChild(sprite.bitmap);
 				break;
 				
+				case AGMode.D_TORPEDO:
+					
+					if (scrollx < sprite.x + (8)) {
+						sprite.bitmap.x = (sprite.x - scrollx );
+					}
+					else {
+						sprite.bitmap.x = sprite.x - scrollx  + (myMode.myHoriz * 16);
+					}
+					sprite.bitmap.y = sprite.y - scrolly + AGMode.LASER_GUN;
+					myStage.addChild(sprite.bitmap);
+					
+					//sprite.pruneSprite();
+				break;
+				
 			}
 		}
 

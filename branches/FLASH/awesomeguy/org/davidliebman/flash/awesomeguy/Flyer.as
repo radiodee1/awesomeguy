@@ -1404,14 +1404,14 @@ void drawLasers( ) {
 
 						makeTorpedos(ii, flyer.x, flyer.y );
 						flag = TRUE;
-					}
+					} // if active
 					ii ++;
-				}
+				}// while ii
 				if (flag == TRUE) timerStart(8, 10);
-			}
+			}// if timer done
 
 
-		}
+		}// if key B
 		//////////////////////////// remove old torpedos
 		for (ii = 0; ii < TORPEDO_TOTAL; ii ++) {
 			if (torpedosTimerDone(ii)) {
