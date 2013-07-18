@@ -165,7 +165,7 @@
 				launchNextPhase();
 			}
 			else {
-				//trace(neededRes[i][1]);
+				
 				getRes(neededRes[i][0], neededRes[i][1]);
 			}
 		}
@@ -179,18 +179,18 @@
 			switch(r_type) {
 				case AGResources.R_SPRITE:
 				case AGResources.R_BITMAP:
-				//case AGResources.R_XML:
+				
 					loader.contentLoaderInfo.addEventListener(Event.COMPLETE, finishRes);
-					//loader.addEventListener(Event.COMPLETE, finishRes);
-
-					loader.load(new URLRequest(r_url));//, loaderContext);
-					//trace(r_url + " - stop here.");
+					
+					loader.load(new URLRequest(r_url));
+					
 				break;
 				////////////////////////////////////
 				case AGResources.R_SOUND:
 					r_sound = new Sound();
 					r_sound.load( new URLRequest(r_url));
-					finishRes(null);
+					r_sound.addEventListener(Event.COMPLETE, finishRes);
+					
 				break;
 				////////////////////////////////////
 				case AGResources.R_XML:
