@@ -456,7 +456,7 @@
 			//jj = LASER_WIDTH / 4;
 			
 			if (K_JUMP) { // using space key
-				trace (myTorpedo);
+				
 				if (myTimer[AGMode.TIMER_08].timerDone() || myTimer[AGMode.TIMER_08].started == false) {
 					
 					ii = 0;
@@ -495,14 +495,8 @@
 				
 			}
 			
-			var sprite:AGSpriteTorpedo;
-			for ( i = 0; i < myTorpedo.length ; i ++ ) {
-				sprite = myTorpedo[i];
-				if (sprite.active) {
-					sprite.updateSprite();
-					myDraw.drawBasicSprite(sprite, AGMode.D_TORPEDO);
-				}
-			}
+			
+			
 			
 		}
 		public function drawAnimatedSprites():void {
@@ -522,6 +516,14 @@
 					}
 				}
 				
+			}
+			var sprite:AGSpriteTorpedo;
+			for ( i = 0; i < myTorpedo.length ; i ++ ) {
+				sprite = myTorpedo[i];
+				if (sprite.active) {
+					sprite.updateSprite();
+					myDraw.drawBasicSprite(sprite, AGMode.D_TORPEDO);
+				}
 			}
 		}
 		
