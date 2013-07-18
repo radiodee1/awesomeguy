@@ -22,9 +22,7 @@
 				var SCREEN_HEIGHT:int = myMode.SCREEN_HEIGHT;
 				
 				jj = 4;
-				this.quality_1 = jj;
-				this.bitmap = new Bitmap(new BitmapData(jj * 2 * 2,  2, true, 0xffffffff));
-
+				
 				
 				if (! myMode.animate_only ) {
 					if (startedOnce == false) {
@@ -39,6 +37,19 @@
 					}
 					else {
 						return;
+					}
+					
+					this.quality_1 = jj;
+					if (myMode.xx > 0) { 
+						this.quality_0 = AGMode.X_MOVE * this.quality_1;
+						this.x += this.quality_0;
+					}
+					else if (myMode.xx < 0 ){ 
+						this.quality_0 = - (AGMode.X_MOVE * this.quality_1);
+						this.x += this.quality_0;
+					}
+					else {
+						this.quality_0 = 0;
 					}
 					//if (this.limit > AGMode.LASER_WIDTH) {
 					//	this.active = false;
@@ -55,7 +66,10 @@
 						if (startx - x > AGMode.LASER_WIDTH) this.active = false;
 					}
 					
-					
+					if (this.quality_0 == 0) this.quality_0 = 2 * 2 * 2;
+					//this.quality_1 = jj;
+					this.bitmap = new Bitmap(new BitmapData(Math.abs(this.quality_0) ,  2, true, 0xffffffff));
+
 					
 				//}
 			}
