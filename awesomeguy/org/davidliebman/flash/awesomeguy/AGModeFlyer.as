@@ -453,8 +453,6 @@
 			var  ii:int, jj:int, kk:int, ll:int, add:int;
 			var flag:Boolean = false;
 			
-			//jj = LASER_WIDTH / 4;
-			
 			if (K_JUMP) { // using space key
 				
 				if (myTimer[AGMode.TIMER_08].timerDone() || myTimer[AGMode.TIMER_08].started == false) {
@@ -468,11 +466,11 @@
 							this.addTorpedo(ii, xpos, ypos);
 							
 							flag = true;
-						} // if active
+						} 
 						ii ++;
-					}// while ii
+					}
 					if (flag == true) myTimer[AGMode.TIMER_08].timerStart( 0.3);
-				}// if timer done
+				}
 	
 	
 			}
@@ -530,9 +528,8 @@
 		
 		public function collisionWithMonsters():void {
 
-			var i:int;
+		  var i:int;
 	
-		  //trace("monster collision");
 		  for (i = 0  ; i < mySprite.length ; i++) {
 			  if(mySprite[i].sprite_type == AGMode.S_GATOR) {
 			  
@@ -542,13 +539,11 @@
 			  
 		    var test:Boolean =  collisionSimple(flyersprite, sprite.bitmap);
 			
-			//trace(test);
+			
 		    if (test && sprite.active   == true) {
 		    
 		      if (flyersprite.getBounds(myStage).bottom < sprite.bitmap.getBounds(myStage).bottom ) {
 		    	
-		    	//myGame.gameScore  = myGame.gameScore  + 10;
-		    	//trace("score!");
 					  
 		    	if (preferences_collision == true) {
 					sprite.active = false;
@@ -800,7 +795,7 @@
 								temp.speed =  2;
 								temp.active = true;
 								temp.quality_0 = 0;
-								
+								myGame.gameScore += 10;
 								mySprite.push(temp);
 								myRes[AGResources.NAME_BOOM_MP3].play();
 								sprite.active = false;
@@ -816,6 +811,40 @@
 							break;
 						}//switch
 					}// collision simple
+				}
+			}
+			///////////
+			for (ii = 0; ii < myTorpedo.length ; ii ++ ) {
+				for (var jj:int = 0; jj < mySprite.length ; jj ++) {
+					var shot:AGSpriteTorpedo = myTorpedo[ii];
+					var sprite:AGSprite = mySprite[jj];
+					if (sprite.bitmap != null && shot.bitmap != null && 
+						sprite.active && shot.active &&
+						this.collisionSimple( sprite.bitmap, shot.bitmap)) {
+						
+						myRes[AGResources.NAME_BOOM_MP3].play();
+						
+						switch (sprite.sprite_type) {
+							case AGMode.S_BUBBLE_1:
+								sprite.active = false;
+								myGame.gameScore += 10;
+							break;
+							case AGMode.S_BUBBLE_2:
+								sprite.active = false;
+								myGame.gameScore +=10;
+							break;
+							case AGMode.S_BUBBLE_3:
+								sprite.active = false;
+								myGame.gameScore += 10;
+							break;
+							case AGMode.S_GATOR:
+								sprite.active = false;
+								myGame.gameScore += 10;
+							break;
+						}
+							
+						
+					}
 				}
 			}
 		}
