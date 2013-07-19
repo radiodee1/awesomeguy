@@ -72,7 +72,7 @@
 		
 		public override function doOnce():void {
 			myDraw = new AGDrawFlyer(this, myRes, myStage, myScreenBG);
-			
+			this.game_death = false;
 			if(game_reset_start == true) {
 				setStartingVars();
 				game_reset_start = false;
@@ -205,8 +205,8 @@
 			myChallenge[myGame.gameChallenge].total_invader_2 = 0;
 			myChallenge[myGame.gameChallenge].total_invader_3 = 0;
 			
-			myTimer[AGMode.TIMER_00].timerStart(3 ); // a few seconds
-			myTimer[AGMode.TIMER_01].timerStart( 3/30 ); // 3 refreshes
+			myTimer[AGMode.TIMER_00].timerStart(3 ); // a few seconds 
+			myTimer[AGMode.TIMER_01].timerStart( 3/30 ); // 3 refreshes -- screen alert timer
 			myTimer[AGMode.TIMER_08].timerStart( 5/30); // torpedos
 			
 			//
@@ -395,6 +395,7 @@
 					
 					// add it to the sprite list
 					mySprite.push(temp);
+					myChallenge[ myGame.gameChallenge].total_rings ++;
 					//return temp;
 		}
 		public function addTorpedo(ii:int, xx:int, yy:int):void {
@@ -414,8 +415,72 @@
 					//trace("new torpedo");
 		}
 		
-		public function doTimers():void {
+		public function addInvader1(xx:int, yy:int):void {
+			//setSoundEnter1();
+			myRes[ AGResources.NAME_ENTER_1_MP3 ].play();
 			
+			var temp:AGSpriteInvader1 = new AGSpriteInvader1(this, AGMode.S_INVADER_1) ;
+			temp.x = adjust_x(getRand(scrollBGX, scrollBGX + 512));
+			temp.y = 0;
+
+			temp.topBB = 0;
+			temp.leftBB = 0;
+			temp.bottomBB = 15 *2;
+			temp.rightBB = 15*2;
+			temp.sprite_type = S_INVADER_1;
+			temp.speed = get_sprite_speed(S_INVADER_1);//1;
+			temp.active = true;
+			temp.quality_0 = 0;
+			temp.quality_1 = 0;
+			temp.quality_2 = 0;
+			temp.quality_3 = P_NONE;
+			// add it to the sprite list
+			mySprite.push(temp);
+
+			//total_placed_invader_1 ++;
+			//total_invader_1 ++;
+			myChallenge[this.myGame.gameChallenge].total_placed_invader_1 ++;
+			myChallenge[this.myGame.gameChallenge].total_invader_1 ++;
+
+			// reset timer
+			//timerStart(4, 30 * 2);
+			myTimer[AGMode.TIMER_04].timerStart(2);// 2 sec
+		}
+		
+		public function doTimers():void {
+			if (myTimer[AGMode.TIMER_01].timerDone()) {
+				alert_color = 0x00000000;
+			}
+			if (this.game_death) { 
+				return;
+			}
+			// current challenge cleared ???
+			if( myChallenge[ myGame.gameChallenge].checkTotals()  && myGame.gameChallenge  < myChallenge.length ) {
+				if(myTimer[AGMode.TIMER_00].timerDone()) {
+					trace ("increment by timer");
+					myGame.gameChallenge ++;
+					myRes[AGResources.NAME_GOAL_MP3].play();
+					//setSoundGoal();
+					alert_color = 0xffffffff;
+					fillChallenges();
+				}
+			}
+			// end of entire level ???
+			else if (myChallenge[ myGame.gameChallenge].checkTotals()  && myGame.gameChallenge == myChallenge.length && myGame.gameChallenge != 0) {
+				if(myTimer[AGMode.TIMER_00].timerDone() ){
+					//this.game_death = false;
+					this.game_end_level = true;
+					
+					if (this.game_end_level ) {
+						myRes[AGResources.NAME_GOAL_MP3].play();
+						//setSoundGoal();
+						myTimer[AGMode.TIMER_00].timer_disable = true;
+						//timer[0].timer_disable = TRUE;
+					}
+		
+		
+				}
+			}
 			
 			if ( myChallenge[myGame.gameChallenge].bubble_1 > myChallenge[myGame.gameChallenge].total_placed_bubble_1 ) {
 				
@@ -559,6 +624,7 @@
 				//endlevel = TRUE;
 				if (preferences_collision == true) {
 					flyerDeath();
+					
 					//myRes[AGResources.NAME_EXPLOSION_MP3].play();
 					sprite.active = false;
 					sprite.visible = false;
@@ -591,6 +657,7 @@
 					explosionsprite.x = xpos;
 					explosionsprite.y = ypos;
 					agflyer.active = false;
+					this.game_death = true;
 		}
 		
 		
@@ -815,6 +882,7 @@
 					}
 				}
 			}
+			
 		}
 	
 
@@ -828,6 +896,26 @@
 				test = true;
 			}
 			return test;
+		}
+
+		public function get_sprite_speed ( spritetype:int ):int {
+			var value:int = 1;
+			if (getRand(0,2) != 1) return value;
+		
+			switch (spritetype) {
+			case S_INVADER_1:
+			case S_INVADER_2:
+				if ( this.myGame.gamePlanet   <=3 ) {
+					value = this.myGame.gamePlanet;
+				}
+				else {
+					value = 3;
+				}
+				break;
+			case S_INVADER_3:
+				break;
+			}
+			return value;
 		}
 
 		public function drawRadarRock():void {

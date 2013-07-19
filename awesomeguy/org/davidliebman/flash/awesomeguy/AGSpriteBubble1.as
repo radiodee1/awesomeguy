@@ -7,6 +7,9 @@
 
 		public function AGSpriteBubble1(mode:AGMode, kind:int) {
 			super(mode, kind);
+			myMode.myChallenge[myMode.myGame.gameChallenge].total_bubble_1 ++;
+			myMode.myChallenge[myMode.myGame.gameChallenge].total_placed_bubble_1 ++;
+
 			// constructor code
 		}
 
@@ -67,7 +70,6 @@
 			if (this.radius < this.limit && this.active) { // grow bubble on screen
 				this.radius = this.radius + this.speed;
 			}
-			
 			
 			
 		}//function

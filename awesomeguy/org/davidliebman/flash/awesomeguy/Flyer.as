@@ -84,97 +84,7 @@ void setFlyerData(jint a[], jint b[], jint c[], jint d[] ) {
 }
  
  
-/**
- *	Collects 1D arrays representing the two level definition arrays and converts 
- *	them individually to 2D arrays for the later use of the library. Used to 
- *	basically initializes the two background arrays when the Panel is created.
- *
- *	@param	a	1D integer array of background definition level data
- *	@param	b	1D integer array of background definition objects data
- */ 
-void setLevelData(int a[MAP_HEIGHT * MAP_WIDTH],  int b[MAP_HEIGHT * MAP_WIDTH]) {
-
-
-	int i,j;
-	game_level ++;
-	candidate_num = 0;
-	challenge_num = 0;
-	current_challenge = 0;
-	is_landing = FALSE;
-	
-	srand(time(NULL));
-
-	for (i = 0 ; i < LONG_MAP_V ; i ++ ) {
-		for (j = 0; j < LONG_MAP_H ; j ++ ) {
-			map_level[j][i] = a[ (j * LONG_MAP_V ) + i] ;
-			map_objects[j][i] = b[ (j * LONG_MAP_V ) + i] ;
-			//LOGE("level data %i ", map_level[i][j]);
-
-			if (map_objects[j][i] == B_PRIZE) {
-				candidate[candidate_num].x = j;
-				candidate[candidate_num].y = i;
-				candidate[candidate_num].value = B_SPACE;
-				candidate[candidate_num].type = B_PRIZE;
-				map_objects[j][i] = candidate[candidate_num].value;
-				candidate_num ++;
-			}
-		}
-	}
-	
-	for (i = 0; i< 100; i ++) {
-		sprite[i].x = 0;
-		sprite[i].y = 0;
-		sprite[i].animate = 0;
-		sprite[i].facingRight = FALSE;
-		sprite[i].active = FALSE;
-		sprite[i].visible = FALSE;
-		sprite[i].leftBB = 0;
-		sprite[i].rightBB = 0;
-		sprite[i].topBB = 0;
-		sprite[i].bottomBB = 0;
-		sprite[i].sprite_type = S_NONE;
-		sprite[i].quality_0 = 0;
-		sprite[i].quality_1 = 0;
-		sprite[i].quality_2 = 0;
-		sprite[i].radius = 0;
-	}
-	monster_num = 0;
-	sprite_num = 0;
-	platform_num = -1;
-	
-	//some bogus challenge data:
-	challenge_num = 0;
-	current_challenge = 0;
-	endlevel = FALSE;
-	gamedeath = FALSE;
-	//addChallenges(3,0,0,0, 0,0,0,1);
-
-	//clear the total_stuff variables
-	total_rings = 0;
-	total_bubble_0 = 0;
-	total_bubble_1 = 0;
-	total_bubble_2 = 0;
-	total_bubble_3 = 0;
-	total_invader_1 = 0;
-	total_invader_2 = 0;
-	total_invader_3 = 0;
-
-
-	radar_box.left =(256 - LONG_MAP_H)/ 2 ;
-	radar_box.right = ((256 - LONG_MAP_H) / 2) + LONG_MAP_H;
-	radar_box.top = (256 * 3 / 4) - LONG_MAP_V ;
-	radar_box.bottom = (256 * 3 / 4) - 1;
-
-	radar_set = FALSE;
-
-	for (i = 0; i < TORPEDO_TOTAL; i ++ ) {
-		torpedos[i].active = FALSE;
-		torpedos[i].visible = FALSE;
-		torpedos[i].sprite_type = TORPEDO_UNUSED;
-	}
-
-	return;
-}
+ 
 
 /**
  * Used to add challenges to the challenge array
@@ -1244,20 +1154,6 @@ void drawInvaderType2() {
 	}
 }
 
-/**
- * Used by drawInvaderType1() to direct invader.
- */
-BOOL goingRightIsShortest( int spritex, int flyerx ) {
-	BOOL test = FALSE;
-
-	if (abs(flyerx - spritex) < (level_w * 8)/2 && spritex < flyerx) {
-		test = TRUE;
-	}
-	else if (abs(flyerx - spritex ) > (level_w *8 )/2) {
-		test = TRUE;
-	}
-	return test;
-}
 
 /**
  * Used by bubble code to detect torpedo collision with a part of the
@@ -1762,29 +1658,6 @@ void add_explosion( Sprite sprite ) {
 	new.quality_2 = 0;
 	new.active = TRUE;
 	addSprite(new);
-}
-
-/**
- * used to set sprite speed.
- */
-int get_sprite_speed ( int spritetype ) {
-	int value = 1;
-	if (getRand(0,2) != 1) return value;
-
-	switch (spritetype) {
-	case S_INVADER_1:
-	case S_INVADER_2:
-		if (game_level <=3 ) {
-			value = game_level;
-		}
-		else {
-			value = 3;
-		}
-		break;
-	case S_INVADER_3:
-		break;
-	}
-	return value;
 }
 
 

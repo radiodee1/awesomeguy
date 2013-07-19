@@ -27,7 +27,9 @@
 		}
 		
 		public function timerDone():Boolean {
+			
 			if (done && ! timer_disable) return true;
+			else if (!started ) return true;
 			else return false;
 		}
 	}
