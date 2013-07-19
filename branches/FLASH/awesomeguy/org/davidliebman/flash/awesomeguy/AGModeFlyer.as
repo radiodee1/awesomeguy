@@ -392,7 +392,8 @@
 					temp.sprite_type = S_RING;
 					temp.speed = 1;
 					temp.active = true;
-					
+					temp.quality_0 = xx;
+					temp.quality_1 = yy;
 					// add it to the sprite list
 					mySprite.push(temp);
 					myChallenge[ myGame.gameChallenge].total_rings ++;
@@ -455,9 +456,10 @@
 				return;
 			}
 			// current challenge cleared ???
+			
 			if( myChallenge[ myGame.gameChallenge].checkTotals()  && myGame.gameChallenge  < myChallenge.length ) {
 				if(myTimer[AGMode.TIMER_00].timerDone()) {
-					trace ("increment by timer");
+					trace ("increment at timer");
 					myGame.gameChallenge ++;
 					myRes[AGResources.NAME_GOAL_MP3].play();
 					//setSoundGoal();
@@ -488,10 +490,8 @@
 					
 					// create a line-type object
 					addLine(0x00ffffff,AGMode.S_BUBBLE_1);
-					// increment total_placed_bubble_1
-					myChallenge[myGame.gameChallenge].total_placed_bubble_1 ++;
-					//total_bubble_1 ++;
-		
+					
+					
 					// reset timer
 					myTimer[AGMode.TIMER_02].timerStart(1);
 					//timerStart(2, 30 * 1);
@@ -503,9 +503,8 @@
 					
 					// create a line-type object
 					var line:AGSprite = addLine(0x00ffffff,AGMode.S_BUBBLE_2);
-					// increment total_placed_bubble_1
-					myChallenge[myGame.gameChallenge].total_placed_bubble_2 ++;
-					//total_bubble_1 ++;
+					
+					
 					line.active = true;
 					// reset timer
 					myTimer[AGMode.TIMER_03].timerStart(2);
@@ -685,9 +684,6 @@
 			
 			var square:Bitmap;
 		
-			/* clear screen */
-			//alertOnScreen();
-			//memset(screen, alert_color, (SCREEN_HEIGHT + LONG_MAP_V)* SCREEN_WIDTH * 2);
 			
 			
 			
@@ -834,6 +830,9 @@
 								mySprite.push(temp);
 								myRes[AGResources.NAME_BOOM_MP3].play();
 								sprite.active = false;
+								myChallenge[ myGame.gameChallenge].total_held_rings ++;
+								myChallenge[ myGame.gameChallenge].total_bubble_1 ++;
+								myChallenge[ myGame.gameChallenge].total_rings --;
 								
 							break;
 							
@@ -858,19 +857,24 @@
 						this.collisionSimple( sprite.bitmap, shot.bitmap)) {
 						
 						myRes[AGResources.NAME_BOOM_MP3].play();
+						shot.active = false;
+						shot.visible = false;
 						
 						switch (sprite.sprite_type) {
 							case AGMode.S_BUBBLE_1:
 								sprite.active = false;
 								myGame.gameScore += 10;
+								myChallenge[ myGame.gameChallenge].total_bubble_1 --;
 							break;
 							case AGMode.S_BUBBLE_2:
 								sprite.active = false;
 								myGame.gameScore +=10;
+								myChallenge[ myGame.gameChallenge].total_bubble_2 --;
 							break;
 							case AGMode.S_BUBBLE_3:
 								sprite.active = false;
 								myGame.gameScore += 10;
+								myChallenge[ myGame.gameChallenge].total_bubble_3 --;
 							break;
 							case AGMode.S_GATOR:
 								sprite.active = false;
@@ -932,10 +936,7 @@
 						drawRadarPing(radar, radarscreen, xxx * TILE_WIDTH, yyy * TILE_HEIGHT, PING_ROCK, 0xff903590);//0xff889be7);
 						
 					}
-					if (myInvisible[yyy][xxx] + mapcheat == B_PRIZE) {
-						drawRadarPing(radar, radarscreen, xxx * TILE_WIDTH, yyy * TILE_HEIGHT, PING_OTHER, 0xffff0000);
-						
-					}
+					
 				}
 			}
 		}

@@ -41,6 +41,13 @@
 									zz,//myInvisible[i][j] + mapcheat,
 									AGMode.TILE_TOP);
 							}
+							
+			myMode.drawRadarPing(myMode.radar, 
+								 myMode.radarscreen, 
+								 this.x, this.y, 
+								 AGMode.PING_OTHER, 
+								 0xffff0000);
+
 		}
 
 	}
