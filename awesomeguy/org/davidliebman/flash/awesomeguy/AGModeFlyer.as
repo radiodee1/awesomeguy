@@ -205,6 +205,14 @@
 			myChallenge[myGame.gameChallenge].total_invader_2 = 0;
 			myChallenge[myGame.gameChallenge].total_invader_3 = 0;
 			
+			myChallenge[myGame.gameChallenge].total_placed_bubble_1 = 0;
+			myChallenge[myGame.gameChallenge].total_placed_bubble_2 = 0;
+			myChallenge[myGame.gameChallenge].total_placed_bubble_3 = 0;
+			
+			myChallenge[myGame.gameChallenge].total_placed_invader_1 = 0;
+			myChallenge[myGame.gameChallenge].total_placed_invader_2 = 0;
+			myChallenge[myGame.gameChallenge].total_placed_invader_3 = 0;
+			
 			myTimer[AGMode.TIMER_00].timerStart(3 ); // a few seconds 
 			myTimer[AGMode.TIMER_01].timerStart( 3/30 ); // 3 refreshes -- screen alert timer
 			myTimer[AGMode.TIMER_08].timerStart( 5/30); // torpedos
@@ -365,55 +373,55 @@
 		
 		public function addLine(color:uint, linktype:int):AGSprite {
 			// create a line-type object
-					var temp:AGSpriteLine = new AGSpriteLine(this, AGMode.S_LINE);// Sprite temp ;
-					temp.x = getRand(scrollBGX, scrollBGX + ( 256*2));
-					temp.y = 0;
-					var angle:Number = getRand( 80, 180 - 80) ;
-					var value:Number = ( myVert * 16)/  (Math.tan(angle) );
-					temp.endline_x = int(( Math.abs ((( int(value) ) + temp.x)) % (myHoriz * 16)));
-					
-					temp.endline_y = myVert * 16;
-					temp.sprite_type = S_LINE;
-					temp.speed = 4 * 2;
-					temp.active = true;
-					temp.quality_0 = 0;
-					temp.color = color;
-					temp.sprite_link = linktype;
-					// add it to the sprite list
-					mySprite.push(temp);
-					return temp;
+			var temp:AGSpriteLine = new AGSpriteLine(this, AGMode.S_LINE);// Sprite temp ;
+			temp.x = getRand(scrollBGX, scrollBGX + ( 256*2));
+			temp.y = 0;
+			var angle:Number = getRand( 80, 180 - 80) ;
+			var value:Number = ( myVert * 16)/  (Math.tan(angle) );
+			temp.endline_x = int(( Math.abs ((( int(value) ) + temp.x)) % (myHoriz * 16)));
+			
+			temp.endline_y = myVert * 16;
+			temp.sprite_type = S_LINE;
+			temp.speed = 4 * 2;
+			temp.active = true;
+			temp.quality_0 = 0;
+			temp.color = color;
+			temp.sprite_link = linktype;
+			// add it to the sprite list
+			mySprite.push(temp);
+			return temp;
 		}
 		public function addRing(xx:int, yy:int):void {
 			// create a line-type object
-					var temp:AGSpriteRing = new AGSpriteRing(this, AGMode.S_RING);// Sprite temp ;
-					temp.x =xx*16;
-					temp.y = yy *16;
+			var temp:AGSpriteRing = new AGSpriteRing(this, AGMode.S_RING);// Sprite temp ;
+			temp.x =xx*16;
+			temp.y = yy *16;
 
-					temp.sprite_type = S_RING;
-					temp.speed = 1;
-					temp.active = true;
-					temp.quality_0 = xx;
-					temp.quality_1 = yy;
-					// add it to the sprite list
-					mySprite.push(temp);
-					myChallenge[ myGame.gameChallenge].total_rings ++;
-					//return temp;
+			temp.sprite_type = S_RING;
+			temp.speed = 1;
+			temp.active = true;
+			temp.quality_0 = xx;
+			temp.quality_1 = yy;
+			// add it to the sprite list
+			mySprite.push(temp);
+			myChallenge[ myGame.gameChallenge].total_rings ++;
+			//return temp;
 		}
 		public function addTorpedo(ii:int, xx:int, yy:int):void {
-					var temp:AGSpriteTorpedo = new AGSpriteTorpedo(this, AGMode.TORPEDO_UNUSED);// Sprite temp ;
-					temp.x =xx;
-					temp.y = yy ;
-					temp.facingRight = facingRight;
-					if (facingRight) {
-						temp.x = temp.x + spriteWidth;
-					}
-					temp.sprite_type = AGMode.S_TORPEDO;
-					temp.speed = 1;
-					temp.active = true;
-					temp.visible = true;
-					temp.limit = 0;
-					myTorpedo[ii] = temp;
-					//trace("new torpedo");
+			var temp:AGSpriteTorpedo = new AGSpriteTorpedo(this, AGMode.TORPEDO_UNUSED);// Sprite temp ;
+			temp.x =xx;
+			temp.y = yy ;
+			temp.facingRight = facingRight;
+			if (facingRight) {
+				temp.x = temp.x + spriteWidth;
+			}
+			temp.sprite_type = AGMode.S_TORPEDO;
+			temp.speed = 1;
+			temp.active = true;
+			temp.visible = true;
+			temp.limit = 0;
+			myTorpedo[ii] = temp;
+			//trace("new torpedo");
 		}
 		
 		public function addInvader1(xx:int, yy:int):void {
@@ -456,7 +464,7 @@
 				return;
 			}
 			// current challenge cleared ???
-			
+			trace(myGame.gameChallenge);
 			if( myChallenge[ myGame.gameChallenge].checkTotals()  && myGame.gameChallenge  < myChallenge.length ) {
 				if(myTimer[AGMode.TIMER_00].timerDone()) {
 					trace ("increment at timer");
@@ -831,7 +839,7 @@
 								myRes[AGResources.NAME_BOOM_MP3].play();
 								sprite.active = false;
 								myChallenge[ myGame.gameChallenge].total_held_rings ++;
-								myChallenge[ myGame.gameChallenge].total_bubble_1 ++;
+								//myChallenge[ myGame.gameChallenge].total_bubble_1 ++;
 								myChallenge[ myGame.gameChallenge].total_rings --;
 								
 							break;
@@ -851,7 +859,7 @@
 			for (ii = 0; ii < myTorpedo.length ; ii ++ ) {
 				for (var jj:int = 0; jj < mySprite.length ; jj ++) {
 					var shot:AGSpriteTorpedo = myTorpedo[ii];
-					var sprite:AGSprite = mySprite[jj];
+					sprite = mySprite[jj];
 					if (sprite.bitmap != null && shot.bitmap != null && 
 						sprite.active && shot.active &&
 						this.collisionSimple( sprite.bitmap, shot.bitmap)) {
@@ -865,6 +873,7 @@
 								sprite.active = false;
 								myGame.gameScore += 10;
 								myChallenge[ myGame.gameChallenge].total_bubble_1 --;
+								//myChallenge[ myGame.gameChallenge].total_bubble_1 --;
 							break;
 							case AGMode.S_BUBBLE_2:
 								sprite.active = false;

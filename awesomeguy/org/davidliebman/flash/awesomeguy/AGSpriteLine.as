@@ -52,19 +52,22 @@
 								case AGMode.S_BUBBLE_1:
 									new1 = new AGSpriteBubble1(myMode, AGMode.S_BUBBLE_1);
 									myMode.myChallenge[myMode.myGame.gameChallenge].total_bubble_1 ++;
+									myMode.myChallenge[myMode.myGame.gameChallenge].total_placed_bubble_1 ++;
 
 								break;
 								
 								case AGMode.S_BUBBLE_2:
 									new1 = new AGSpriteBubble2(myMode, AGMode.S_BUBBLE_2);
 									myMode.myChallenge[myMode.myGame.gameChallenge].total_bubble_2 ++;
-									
+									myMode.myChallenge[myMode.myGame.gameChallenge].total_placed_bubble_2 ++;
+
 									new2 = new AGSpriteBubble3(myMode, AGMode.S_BUBBLE_3);
 									new2.active = true;
 									new2.x = this.endline_x;
 									new2.y = this.endline_y;
 									new2.speed = 2;
 									myMode.myChallenge[myMode.myGame.gameChallenge].total_bubble_3 ++;
+									myMode.myChallenge[myMode.myGame.gameChallenge].total_placed_bubble_3 ++;
 
 									myMode.mySprite.push(new2);
 								break;
@@ -89,7 +92,8 @@
 		
 							myMode.mySprite.push(new1);
 							myMode.myChallenge[myMode.myGame.gameChallenge].total_bubble_1 ++;
-												
+							myMode.myChallenge[myMode.myGame.gameChallenge].total_placed_bubble_1 ++;
+
 						}
 						
 
