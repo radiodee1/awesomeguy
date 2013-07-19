@@ -73,6 +73,7 @@
 	static var S_LINE_2:int = 14;
 	static var S_EXPLOSION_SPRITE:int = 15;
 	static var S_RING:int = 16;
+	static var S_EXPLOSION:int = 17;
 	
 	//draw enumeration
 	static var D_NONE:int = 0;
@@ -170,6 +171,7 @@
 	public var flyerGrounded:Boolean = false;
 	public var preferences_collision:Boolean = true;
 	public var animate_only:Boolean = false;
+	public var alert_color:uint = 0x00000000;
 	
 	public var radar:Rectangle = new Rectangle(0,0,SCREEN_WIDTH - 128, 64);
 	public var radarscreen:Bitmap = new Bitmap();

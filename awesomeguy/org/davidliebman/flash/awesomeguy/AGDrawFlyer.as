@@ -157,8 +157,8 @@
 				//
 				break;
 				//////////////////////////////////////////
+				case AGMode.D_EXPLOSION:
 				case AGMode.D_EXPLOSION_SPRITE:
-				
 				
 				//i = spriteNum;
 				var x:int, y:int ;

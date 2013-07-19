@@ -64,6 +64,13 @@
 	public static var NAME_EXPLOSION_H:int = 31;
 	public static var NAME_CLOUD_PNG:int = 32;
 
+	public static var NAME_INV1_L_PNG:int = 33;
+	public static var NAME_INV1_R_PNG:int = 34;
+	public static var NAME_ROLLEE_A_PNG:int = 35;
+	public static var NAME_ROLLEE_B_PNG:int = 36;
+
+
+
 	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
 	var res01:Array = new Array (R_BITMAP, "bitmap/test2.png");
 	var res02:Array = new Array (R_BITMAP, "bitmap/agtiles1.png");
@@ -102,6 +109,11 @@
 	var res31:Array = new Array (R_BITMAP, "bitmap/explosion_h.png");
 	
 	var res32:Array = new Array (R_BITMAP, "bitmap/cloud.png");
+	var res33:Array = new Array (R_BITMAP, "bitmap/inv1_l.png");
+	var res34:Array = new Array (R_BITMAP, "bitmap/inv1_r.png");
+	var res35:Array = new Array (R_BITMAP, "bitmap/rollee_a.png");
+	var res36:Array = new Array (R_BITMAP, "bitmap/rollee_b.png");
+	
 	
 	var i:int = 0;
 		
@@ -156,6 +168,12 @@
 			neededRes.push(res30);
 			neededRes.push(res31);
 			neededRes.push(res32);
+			neededRes.push(res33);
+			neededRes.push(res34);
+			neededRes.push(res35);
+			neededRes.push(res36);
+
+
 
 			importRes();
 		}

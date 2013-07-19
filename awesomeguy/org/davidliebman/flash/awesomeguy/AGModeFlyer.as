@@ -32,7 +32,7 @@
 			myShape.graphics.lineTo(SCREEN_WIDTH, 0);
 			myShape.graphics.lineTo(0,0);
 			
-			myScreenBG = new Bitmap (new BitmapData (SCREEN_WIDTH, SCREEN_HEIGHT , false, 0x00000000));
+			myScreenBG = new Bitmap (new BitmapData (SCREEN_WIDTH, SCREEN_HEIGHT , false, alert_color));
 			myScreenBG.x = 0;
 			myScreenBG.y = 0;
 			myStage.addChild(myScreenBG);
@@ -508,9 +508,9 @@
 					if (mySprite[i].sprite_type == AGMode.S_GATOR) {
 						myDraw.drawBasicSprite(mySprite[i], D_GATOR);
 					}
-					if (explosionsprite.sprite_type == AGMode.S_EXPLOSION_SPRITE && 
+					if (explosionsprite.sprite_type == AGMode.S_EXPLOSION && 
 						explosionsprite.active == true) {
-						myDraw.drawBasicSprite(explosionsprite, AGMode.D_EXPLOSION_SPRITE);
+						myDraw.drawBasicSprite(explosionsprite, AGMode.D_EXPLOSION);
 					}
 				}
 				
@@ -603,17 +603,13 @@
 			
 			var baseX:int, baseY:int;//, startX, startY;
 			
-			//var levelcheat:int = -3;
+			
 			var TILE_WIDTH:int = 16;
 			var TILE_HEIGHT:int = 16;
 			
 			var tilesWidthMeasurement:int = 32;
 			var tilesHeightMeasurement:int = 24;//32;
-			//uint16_t square[TILE_HEIGHT][TILE_WIDTH];
 			
-			//uint16_t  **  screen = (getScreenPointer(MY_SCREEN_BACK));
-			//var map_level:Array = myVisible;
-			//var map_objects:Array = myInvisible;
 			var LONG_MAP_H:int =	192;
 			var LONG_MAP_V:int =	32;
 			//animate = newBG + 1;
@@ -626,12 +622,8 @@
 			//alertOnScreen();
 			//memset(screen, alert_color, (SCREEN_HEIGHT + LONG_MAP_V)* SCREEN_WIDTH * 2);
 			
-			/* draw bubbles behind mountains */
-			//drawBubbleType0();
-			//drawBubbleType1();
-			//drawBubbleType2();
-			//drawBubbleWithColor();
-		
+			
+			
 			/* draw background */
 			baseX = scrollBGX / TILE_WIDTH;
 			baseY = scrollBGY / TILE_HEIGHT;
@@ -709,23 +701,8 @@
 				}
 			}
 			
-			//drawRadarRock();
-		
-			/* draw moving platform */
-			//drawMovingPlatform();
 			
-			/* draw score and level */
-			//drawScoreWords();
 			
-		
-			/* draw monsters */
-			//if (preferences_monsters == TRUE) {
-			//    drawMonsters();
-			//}
-			
-			//if (preferences_monsters == TRUE && preferences_collision == TRUE && animate_only == FALSE) {
-			//    collisionWithMonsters();
-			//}
 			
 		
 		
@@ -741,17 +718,8 @@
 			//}
 			
 		
-			//drawBasicSprite(0, D_EXPLOSION);
-		
-			//drawSpriteExplosion();
-		
-			//drawBoundingBox(radar_box, BB_NO_SCROLL, 0xffff);
-		
-			//drawLasers( );
-		
-			//drawTorpedo();
-		
-			//checkRegularCollision();
+			
+			
 			
 			return ;
 		}
@@ -849,6 +817,18 @@
 			}
 		}
 	
+
+		public function goingRightIsShortest(  spritex:int, flyerx:int ):Boolean {
+			var test:Boolean = false;
+		
+			if (Math.abs(flyerx - spritex) < (myHoriz * TILE_WIDTH)/2 && spritex < flyerx) {
+				test = true;
+			}
+			else if (Math.abs(flyerx - spritex ) > (myHoriz  *TILE_WIDTH )/2) {
+				test = true;
+			}
+			return test;
+		}
 
 		public function drawRadarRock():void {
 
