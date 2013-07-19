@@ -99,6 +99,13 @@
 	static var PING_OTHER:int =  1;
 	static var PING_ROCK:int = 2;	
 	
+	// path taken by invader 1
+	static var P_NONE:int = 0;
+	static var P_GOING_LEFT:int = 1;
+	static var P_GOING_RIGHT:int = 2;
+	static var P_GOING_LEFT_ARMED:int = 3;
+	static var P_GOING_RIGHT_ARMED:int = 4;
+	
 	static var TORPEDO_FLYING:int = 1;
 	static var TORPEDO_HIT:int =  2;
 	static var TORPEDO_UNUSED:int = 0;	
@@ -161,6 +168,7 @@
 	public var game_advance_planet:Boolean = false;
 	public var game_advance_maze:Boolean = false;
 	public var game_enter_maze:Boolean = false;
+	public var game_end_level:Boolean = false;
 	
 	public var facingRight:Boolean = false;
 	public var animate:int = 0;
@@ -264,6 +272,12 @@
 					game_over = true;
 				}
 			}
+			if (game_end_level) {
+				game_reset_start = true;
+				myGame.gamePlanet ++;
+				this.doOnce();
+			}
+			
 			if (game_advance_challenge) {
 				myGame.gameChallenge ++;
 				
