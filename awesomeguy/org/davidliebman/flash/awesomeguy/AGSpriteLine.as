@@ -64,6 +64,8 @@
 									new2.x = this.endline_x;
 									new2.y = this.endline_y;
 									new2.speed = 2;
+									myMode.myChallenge[myMode.myGame.gameChallenge].total_bubble_3 ++;
+
 									myMode.mySprite.push(new2);
 								break;
 								
