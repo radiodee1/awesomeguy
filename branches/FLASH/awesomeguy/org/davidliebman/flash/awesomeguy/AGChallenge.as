@@ -114,9 +114,9 @@
 					total_invader_3
 					> 0 ||
 					total_placed_bubble_1 < this.bubble_1 ||
-					total_placed_bubble_2 < this.bubble_2 ||
-					total_placed_invader_1 < this.invader_1 ||
-					total_placed_invader_2 < this.invader_2
+					total_placed_bubble_2 < this.bubble_2 //||
+					//total_placed_invader_1 < this.invader_1 ||
+					//total_placed_invader_2 < this.invader_2
 					) {
 				test = false;
 			}

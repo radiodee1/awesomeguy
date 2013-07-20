@@ -471,7 +471,7 @@
 			// current challenge cleared ???
 			myChallenge[ myGame.gameChallenge ].countTotals(mySprite);
 
-			trace(myGame.gameChallenge);
+			trace(myGame.gameChallenge, myChallenge[myGame.gameChallenge].checkTotals());
 			if( myChallenge[ myGame.gameChallenge].checkTotals()  && myGame.gameChallenge  < myChallenge.length ) {
 				if(myTimer[AGMode.TIMER_00].timerDone()) {
 					trace ("increment at timer");
@@ -499,7 +499,7 @@
 				}
 			}
 			
-			if ( myChallenge[myGame.gameChallenge].bubble_1 > myChallenge[myGame.gameChallenge].total_placed_bubble_1 ) {
+			if ( myChallenge[myGame.gameChallenge].bubble_1 >= myChallenge[myGame.gameChallenge].total_placed_bubble_1 ) {
 				
 				if( myTimer[AGMode.TIMER_02].timerDone()) {
 					
@@ -512,7 +512,7 @@
 					//timerStart(2, 30 * 1);
 				}
 			}
-		  if ( myChallenge[myGame.gameChallenge].bubble_2 > myChallenge[myGame.gameChallenge].total_placed_bubble_2 ) {
+		  if ( myChallenge[myGame.gameChallenge].bubble_2 >= myChallenge[myGame.gameChallenge].total_placed_bubble_2 ) {
 				
 			if( myTimer[AGMode.TIMER_03].timerDone()) {
 					
