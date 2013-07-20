@@ -107,7 +107,6 @@
 		
 		public override function advanceChallenge():void {
 			super.advanceChallenge();
-			myGame.gameChallenge ++;
 
 			prepRings();
 			prepRingSprites();
@@ -217,24 +216,7 @@
 				myChallenge.push(ch);
 				ch.showTrace();
 			}
-			/*
-			myChallenge[myGame.gameChallenge].total_rings = 0;
-			myChallenge[myGame.gameChallenge].total_bubble_0 = 0;
-			myChallenge[myGame.gameChallenge].total_bubble_1 = 0;
-			myChallenge[myGame.gameChallenge].total_bubble_2 = 0;
-			myChallenge[myGame.gameChallenge].total_bubble_3 = 0;
-			myChallenge[myGame.gameChallenge].total_invader_1 = 0;
-			myChallenge[myGame.gameChallenge].total_invader_2 = 0;
-			myChallenge[myGame.gameChallenge].total_invader_3 = 0;
 			
-			myChallenge[myGame.gameChallenge].total_placed_bubble_1 = 0;
-			myChallenge[myGame.gameChallenge].total_placed_bubble_2 = 0;
-			myChallenge[myGame.gameChallenge].total_placed_bubble_3 = 0;
-			
-			myChallenge[myGame.gameChallenge].total_placed_invader_1 = 0;
-			myChallenge[myGame.gameChallenge].total_placed_invader_2 = 0;
-			myChallenge[myGame.gameChallenge].total_placed_invader_3 = 0;
-			*/
 			
 			myTimer[AGMode.TIMER_00].timerStart(3 ); // a few seconds 
 			myTimer[AGMode.TIMER_01].timerStart( 3/30 ); // 3 refreshes -- screen alert timer
@@ -291,7 +273,7 @@
 		
 			for (i = 0; i < num_rings; i ++ ) {
 		
-				j = getRand(0, num_spaces - ( i ) );
+				j = getRand(0, num_spaces - ( i )  );
 		
 				
 				for (k = 0; k <= j; k ++) {

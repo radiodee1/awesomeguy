@@ -291,7 +291,7 @@
 		}
 		
 		public function advanceChallenge():void {
-			
+			myGame.gameChallenge ++;
 		}
 		
 		public function setStartingVars():void {
