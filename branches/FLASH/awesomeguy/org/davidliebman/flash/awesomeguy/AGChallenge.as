@@ -71,6 +71,7 @@
 					break;
 				}
 				if (sprite.sprite_type == AGMode.S_LINE || sprite.sprite_type == AGMode.S_LINE_2) {
+					// ... because lines are misinterpreted.
 					this.total_placed_bubble_1++;
 					this.total_placed_bubble_2++;
 				}
