@@ -18,7 +18,50 @@
 		public function AGChallenge() {
 			// constructor code
 		}
-
+		
+		public function clearTotals():void {
+			this.total_bubble_0 = 0;
+			this.total_bubble_1 = 0;
+			this.total_bubble_2 = 0;
+			this.total_bubble_3 = 0;
+			
+			this.total_invader_1 = 0;
+			this.total_invader_2 = 0;
+			this.total_invader_3 = 0;
+			
+		}
+		
+		public function countTotals(mySprite:Array):void {
+			clearTotals();
+			var sprite:AGSprite;
+			for(var i:int = 0; i < mySprite.length; i ++ ) {
+				sprite = mySprite[i];
+				if (sprite.active == true && sprite.visible == true) {
+					switch( sprite.sprite_type) {
+						case AGMode.S_BUBBLE_1:
+							this.total_bubble_1 ++;
+						break;
+						case AGMode.S_BUBBLE_2:
+							this.total_bubble_2 ++;
+						break;
+						case AGMode.S_BUBBLE_3:
+							this.total_bubble_3 ++;
+						break;
+						case AGMode.S_GATOR:
+						break;
+						case AGMode.S_INVADER_1:
+							this.total_invader_1 ++;
+						break;
+						case AGMode.S_INVADER_2:
+							this.total_invader_2 ++;
+						break;
+						case AGMode.S_INVADER_3:
+							this.total_invader_3 ++;
+						break;
+					}
+				}
+			}
+		}
 		public function checkTotals():Boolean {
 			var test:Boolean = true;
 			if ( 	total_rings +
