@@ -70,7 +70,10 @@
 						
 					break;
 				}
-				
+				if (sprite.sprite_type == AGMode.S_LINE || sprite.sprite_type == AGMode.S_LINE_2) {
+					this.total_placed_bubble_1++;
+					this.total_placed_bubble_2++;
+				}
 				if (sprite.active == true ) {
 					switch( sprite.sprite_type) {
 						case AGMode.S_BUBBLE_1:
@@ -98,8 +101,9 @@
 						break;
 					}
 				}
+				
 			}
-			trace("--",total_rings, total_bubble_1, total_bubble_2, total_bubble_3);
+			//trace("--",total_rings, total_bubble_1, total_bubble_2, total_bubble_3);
 
 		}
 		public function checkTotals():Boolean {
