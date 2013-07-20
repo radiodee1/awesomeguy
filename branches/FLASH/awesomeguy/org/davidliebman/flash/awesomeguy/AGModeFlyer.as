@@ -40,6 +40,7 @@
 			var screenframe:Bitmap= new Bitmap (new BitmapData (SCREEN_WIDTH, 64, false, 0x66666666));
 			radarscreen = new Bitmap( new BitmapData(SCREEN_WIDTH - 128, 64,
 										false, 0x00000000));
+			addSprites();
 			updateSprites();
 			drawLevelTiles();
 			drawAnimatedSprites();
@@ -389,7 +390,7 @@
 			var angle:Number = getRand( 80, 180 - 80) ;
 			var value:Number = ( myVert * 16)/  (Math.tan(angle) );
 			temp.endline_x = int(( Math.abs ((( int(value) ) + temp.x)) % (myHoriz * 16)));
-			
+			temp.active = true;
 			temp.endline_y = myVert * 16;
 			temp.sprite_type = S_LINE;
 			temp.speed = 4 * 2;
@@ -398,7 +399,8 @@
 			temp.color = color;
 			temp.sprite_link = linktype;
 			// add it to the sprite list
-			mySprite.push(temp);
+			myTemp.push(temp);
+			//mySprite.push(temp);
 			return temp;
 		}
 		public function addRing(xx:int, yy:int):void {
@@ -413,7 +415,8 @@
 			temp.quality_0 = xx;
 			temp.quality_1 = yy;
 			// add it to the sprite list
-			mySprite.push(temp);
+			//mySprite.push(temp);
+			myTemp.push(temp);
 			//myChallenge[ myGame.gameChallenge].total_rings ++;
 			//return temp;
 		}
@@ -466,20 +469,27 @@
 			myTimer[AGMode.TIMER_04].timerStart(2);// 2 sec
 		}
 		
+		public function addSprites():void {
+			for(var i:int = 0; i < myTemp.length; i ++ ) {
+				mySprite.push(myTemp[i]);
+			}
+			myTemp = new Array();
+		}
+		
 		public function doTimers():void {
 			if (myTimer[AGMode.TIMER_01].timerDone()) {
 				alert_color = 0x00000000;
 			}
-			if (this.game_death) { 
+			if (this.game_death || myGame.gameChallenge >= myChallenge.length) { 
 				return;
 			}
 			// current challenge cleared ???
 			myChallenge[ myGame.gameChallenge ].countTotals(mySprite);
 
-			trace(myGame.gameChallenge, myChallenge[myGame.gameChallenge].checkTotals());
+			//trace(myGame.gameChallenge, myChallenge[myGame.gameChallenge].checkTotals());
 			if( myChallenge[ myGame.gameChallenge].checkTotals()  && myGame.gameChallenge  < myChallenge.length ) {
 				if(myTimer[AGMode.TIMER_00].timerDone()) {
-					trace ("increment at timer");
+					//trace ("increment at timer");
 					advanceChallenge();
 					myRes[AGResources.NAME_GOAL_MP3].play();
 					//setSoundGoal();
@@ -522,10 +532,11 @@
 			if( myTimer[AGMode.TIMER_03].timerDone()) {
 					
 					// create a line-type object
-					var line:AGSprite = addLine(0x00ffffff,AGMode.S_BUBBLE_2);
+					//var line:AGSprite = 
+					addLine(0x00ffffff,AGMode.S_BUBBLE_2);
 					
 					
-					line.active = true;
+					//line.active = true;
 					// reset timer
 					myTimer[AGMode.TIMER_03].timerStart(2);
 					//timerStart(2, 30 * 1);

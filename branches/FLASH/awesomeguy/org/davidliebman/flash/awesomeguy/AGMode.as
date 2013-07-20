@@ -30,6 +30,7 @@
 	var myTimer:Array = new Array();
 	var myTorpedo:Array = new Array();
 	var myChallenge:Array = new Array();
+	var myTemp:Array = new Array();
 		
 	static var TOTAL_SPRITE:int = 50;
 	static var TOTAL_TORPEDOS:int = 5;
