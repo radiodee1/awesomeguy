@@ -64,8 +64,8 @@
 	public static var NAME_EXPLOSION_H:int = 31;
 	public static var NAME_CLOUD_PNG:int = 32;
 
-	public static var NAME_INV1_L_PNG:int = 33;
-	public static var NAME_INV1_R_PNG:int = 34;
+	public static var NAME_INV2_L_PNG:int = 33;
+	public static var NAME_INV2_R_PNG:int = 34;
 	public static var NAME_ROLLEE_A_PNG:int = 35;
 	public static var NAME_ROLLEE_B_PNG:int = 36;
 
@@ -109,8 +109,8 @@
 	var res31:Array = new Array (R_BITMAP, "bitmap/explosion_h.png");
 	
 	var res32:Array = new Array (R_BITMAP, "bitmap/cloud.png");
-	var res33:Array = new Array (R_BITMAP, "bitmap/inv1_l.png");
-	var res34:Array = new Array (R_BITMAP, "bitmap/inv1_r.png");
+	var res33:Array = new Array (R_BITMAP, "bitmap/inv2_l.png");
+	var res34:Array = new Array (R_BITMAP, "bitmap/inv2_r.png");
 	var res35:Array = new Array (R_BITMAP, "bitmap/rollee_a.png");
 	var res36:Array = new Array (R_BITMAP, "bitmap/rollee_b.png");
 	
