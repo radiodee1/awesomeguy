@@ -20,6 +20,8 @@
 		}
 		
 		public function clearTotals():void {
+			//this.rings = 0;
+			this.total_rings = 0;
 			this.total_bubble_0 = 0;
 			this.total_bubble_1 = 0;
 			this.total_bubble_2 = 0;
@@ -29,6 +31,13 @@
 			this.total_invader_2 = 0;
 			this.total_invader_3 = 0;
 			
+			this.total_placed_bubble_1 = 0;
+			this.total_placed_bubble_2 = 0;
+			this.total_placed_bubble_3 = 0;
+			
+			this.total_placed_invader_1 = 0;
+			this.total_placed_invader_2 = 0;
+			this.total_placed_invader_3 = 0;
 		}
 		
 		public function countTotals(mySprite:Array):void {
@@ -36,7 +45,33 @@
 			var sprite:AGSprite;
 			for(var i:int = 0; i < mySprite.length; i ++ ) {
 				sprite = mySprite[i];
-				if (sprite.active == true && sprite.visible == true) {
+				switch( sprite.sprite_type) {
+					case AGMode.S_BUBBLE_1:
+						this.total_placed_bubble_1 ++;
+					break;
+					case AGMode.S_BUBBLE_2:
+						this.total_placed_bubble_2 ++;
+					break;
+					case AGMode.S_BUBBLE_3:
+						this.total_placed_bubble_3 ++;
+					break;
+					case AGMode.S_GATOR:
+					break;
+					case AGMode.S_INVADER_1:
+						this.total_placed_invader_1 ++;
+					break;
+					case AGMode.S_INVADER_2:
+						this.total_placed_invader_2 ++;
+					break;
+					case AGMode.S_INVADER_3:
+						this.total_placed_invader_3 ++;
+					break;
+					case AGMode.S_RING:
+						
+					break;
+				}
+				
+				if (sprite.active == true ) {
 					switch( sprite.sprite_type) {
 						case AGMode.S_BUBBLE_1:
 							this.total_bubble_1 ++;
@@ -58,9 +93,14 @@
 						case AGMode.S_INVADER_3:
 							this.total_invader_3 ++;
 						break;
+						case AGMode.S_RING:
+							this.total_rings ++;
+						break;
 					}
 				}
 			}
+			trace("--",total_rings, total_bubble_1, total_bubble_2, total_bubble_3);
+
 		}
 		public function checkTotals():Boolean {
 			var test:Boolean = true;
@@ -85,6 +125,10 @@
 			return test;
 		}
 
+		public function showTrace():void {
+			trace(rings, bubble_1, bubble_2, bubble_3, this.invader_1, this.invader_2);
+
+		}
 	}
 	
 }

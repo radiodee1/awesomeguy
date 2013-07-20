@@ -77,7 +77,7 @@
 				setStartingVars();
 				game_reset_start = false;
 			}
-			else advanceChallenge();
+			//else advanceChallenge();
 			
 			explosionsprite = new AGSprite(this, AGMode.S_EXPLOSION_SPRITE);
 			explosionsprite.active = false;
@@ -107,6 +107,27 @@
 		
 		public override function advanceChallenge():void {
 			super.advanceChallenge();
+			myGame.gameChallenge ++;
+
+			prepRings();
+			prepRingSprites();
+			
+			myTimer[AGMode.TIMER_00].timerStart(3 ); // a few seconds 
+			myTimer[AGMode.TIMER_01].timerStart( 3/30 ); // 3 refreshes -- screen alert timer
+			myTimer[AGMode.TIMER_08].timerStart( 5/30); // torpedos
+			
+			//
+			myChallenge[myGame.gameChallenge].total_placed_bubble_1 = 0;
+			myTimer[AGMode.TIMER_02].timerStart(  1); // about a second
+			//
+			myChallenge[myGame.gameChallenge].total_placed_bubble_2 = 0;
+			myTimer[AGMode.TIMER_03].timerStart( 2); // about 2 sec
+			//
+			myChallenge[myGame.gameChallenge].total_placed_invader_1 = 0;
+			myTimer[AGMode.TIMER_04].timerStart( 2);// 2 sec
+			//
+			myChallenge[myGame.gameChallenge].total_placed_invader_2 = 0;
+			myTimer[AGMode.TIMER_06].timerStart( 2); // 2 sec
 		}
 		
 		public override function setStartingVars():void {
@@ -194,8 +215,9 @@
 				ch.speed = int (tempArray[tempArray.length - 1]);
 				
 				myChallenge.push(ch);
+				ch.showTrace();
 			}
-			
+			/*
 			myChallenge[myGame.gameChallenge].total_rings = 0;
 			myChallenge[myGame.gameChallenge].total_bubble_0 = 0;
 			myChallenge[myGame.gameChallenge].total_bubble_1 = 0;
@@ -212,6 +234,7 @@
 			myChallenge[myGame.gameChallenge].total_placed_invader_1 = 0;
 			myChallenge[myGame.gameChallenge].total_placed_invader_2 = 0;
 			myChallenge[myGame.gameChallenge].total_placed_invader_3 = 0;
+			*/
 			
 			myTimer[AGMode.TIMER_00].timerStart(3 ); // a few seconds 
 			myTimer[AGMode.TIMER_01].timerStart( 3/30 ); // 3 refreshes -- screen alert timer
@@ -404,7 +427,7 @@
 			temp.quality_1 = yy;
 			// add it to the sprite list
 			mySprite.push(temp);
-			myChallenge[ myGame.gameChallenge].total_rings ++;
+			//myChallenge[ myGame.gameChallenge].total_rings ++;
 			//return temp;
 		}
 		public function addTorpedo(ii:int, xx:int, yy:int):void {
@@ -448,8 +471,8 @@
 
 			//total_placed_invader_1 ++;
 			//total_invader_1 ++;
-			myChallenge[this.myGame.gameChallenge].total_placed_invader_1 ++;
-			myChallenge[this.myGame.gameChallenge].total_invader_1 ++;
+			//myChallenge[this.myGame.gameChallenge].total_placed_invader_1 ++;
+			//myChallenge[this.myGame.gameChallenge].total_invader_1 ++;
 
 			// reset timer
 			//timerStart(4, 30 * 2);
@@ -464,15 +487,17 @@
 				return;
 			}
 			// current challenge cleared ???
+			myChallenge[ myGame.gameChallenge ].countTotals(mySprite);
+
 			trace(myGame.gameChallenge);
 			if( myChallenge[ myGame.gameChallenge].checkTotals()  && myGame.gameChallenge  < myChallenge.length ) {
 				if(myTimer[AGMode.TIMER_00].timerDone()) {
 					trace ("increment at timer");
-					myGame.gameChallenge ++;
+					advanceChallenge();
 					myRes[AGResources.NAME_GOAL_MP3].play();
 					//setSoundGoal();
 					alert_color = 0xffffffff;
-					fillChallenges();
+					//fillChallenges(); -- not good
 				}
 			}
 			// end of entire level ???
@@ -838,9 +863,8 @@
 								mySprite.push(temp);
 								myRes[AGResources.NAME_BOOM_MP3].play();
 								sprite.active = false;
-								myChallenge[ myGame.gameChallenge].total_held_rings ++;
-								//myChallenge[ myGame.gameChallenge].total_bubble_1 ++;
-								myChallenge[ myGame.gameChallenge].total_rings --;
+								//myChallenge[ myGame.gameChallenge].total_held_rings ++;
+								//myChallenge[ myGame.gameChallenge].total_rings --;
 								
 							break;
 							
@@ -872,18 +896,17 @@
 							case AGMode.S_BUBBLE_1:
 								sprite.active = false;
 								myGame.gameScore += 10;
-								myChallenge[ myGame.gameChallenge].total_bubble_1 --;
 								//myChallenge[ myGame.gameChallenge].total_bubble_1 --;
 							break;
 							case AGMode.S_BUBBLE_2:
 								sprite.active = false;
 								myGame.gameScore +=10;
-								myChallenge[ myGame.gameChallenge].total_bubble_2 --;
+								//myChallenge[ myGame.gameChallenge].total_bubble_2 --;
 							break;
 							case AGMode.S_BUBBLE_3:
 								sprite.active = false;
 								myGame.gameScore += 10;
-								myChallenge[ myGame.gameChallenge].total_bubble_3 --;
+								//myChallenge[ myGame.gameChallenge].total_bubble_3 --;
 							break;
 							case AGMode.S_GATOR:
 								sprite.active = false;
