@@ -166,7 +166,7 @@
 				y = sprite.y - 32;
 				x = sprite.x;
 		
-				//trace("boom start");
+				trace("boom start");
 				
 		
 				add = 0;
