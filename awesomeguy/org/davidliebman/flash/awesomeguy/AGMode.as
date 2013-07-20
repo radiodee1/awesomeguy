@@ -180,6 +180,8 @@
 	public var preferences_collision:Boolean = true;
 	public var animate_only:Boolean = false;
 	public var alert_color:uint = 0x00000000;
+	public var planets:int = 0;
+	public var challenges:int = 0;
 	
 	public var radar:Rectangle = new Rectangle(0,0,SCREEN_WIDTH - 128, 64);
 	public var radarscreen:Bitmap = new Bitmap();
@@ -263,6 +265,14 @@
 			
 			myStage.removeChildren();
 			
+			if (myGame.gameChallenge > challenges) {
+				game_end_level = true;
+			}
+			if (myGame.gamePlanet > planets) {
+				myGame.gamePlanet = -1;
+				game_end_level = true;
+			}
+			
 			if (game_death) {
 				myGame.gameLives --;
 				game_death = false;
@@ -278,10 +288,12 @@
 				this.doOnce();
 			}
 			
-			if (game_advance_challenge) {
-				myGame.gameChallenge ++;
+			
+			
+			//if (game_advance_challenge) {
+				//myGame.gameChallenge ++;
 				
-			}
+			//}
 			
 			componentsInOrder();
 		}

@@ -72,6 +72,7 @@
 		
 		public override function doOnce():void {
 			myDraw = new AGDrawFlyer(this, myRes, myStage, myScreenBG);
+			
 			this.game_death = false;
 			if(game_reset_start == true) {
 				setStartingVars();
@@ -91,6 +92,10 @@
 			
 			fillChallenges();
 			
+			var myXml:XMLDocument = new XMLDocument(myRes[AGResources.NAME_AWESOMEGUY_XML]);
+			var tree:XML = new XML(myXml);
+			planets = int(tree.planet.length());
+			challenges = myChallenge.length;
 			
 			prepTiles() ;
 			prepRings() ;
