@@ -531,13 +531,9 @@
 				
 			if( myTimer[AGMode.TIMER_03].timerDone()) {
 					
-					// create a line-type object
-					//var line:AGSprite = 
+					
 					addLine(0x00ffffff,AGMode.S_BUBBLE_2);
 					
-					
-					//line.active = true;
-					// reset timer
 					myTimer[AGMode.TIMER_03].timerStart(2);
 					//timerStart(2, 30 * 1);
 				}
@@ -658,11 +654,7 @@
 					//myRes[AGResources.NAME_EXPLOSION_MP3].play();
 					sprite.active = false;
 					sprite.visible = false;
-					//animate_explosion = true;
-					//explosionsprite.active = true;
-					//explosionsprite.x = xpos;
-					//explosionsprite.y = ypos;
-					//agflyer.active = false;
+					
 					
 				}
 
@@ -678,8 +670,7 @@
 		
 		public function flyerDeath():void {
 					myRes[AGResources.NAME_EXPLOSION_MP3].play();
-					//sprite.active = false;
-					//sprite.visible = false;
+					
 					animate_explosion = true;
 					explosionsprite.sprite_type = AGMode.S_EXPLOSION;
 					explosionsprite.quality_3 = 0;
