@@ -125,7 +125,7 @@
 				test = false;
 			}
 			
-			trace(total_rings, total_bubble_1, total_bubble_2, total_bubble_3);
+			//trace(total_rings, total_bubble_1, total_bubble_2, total_bubble_3);
 			return test;
 		}
 

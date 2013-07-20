@@ -81,7 +81,7 @@
 			}
 			//else advanceChallenge();
 			
-			explosionsprite = new AGSprite(this, AGMode.S_EXPLOSION_SPRITE);
+			explosionsprite = new AGSprite(this, AGMode.S_EXPLOSION);
 			explosionsprite.active = false;
 			
 			initAGSprite();
@@ -220,7 +220,7 @@
 				ch.speed = int (tempArray[tempArray.length - 1]);
 				
 				myChallenge.push(ch);
-				ch.showTrace();
+				//ch.showTrace();
 			}
 			
 			
@@ -681,13 +681,13 @@
 					//sprite.active = false;
 					//sprite.visible = false;
 					animate_explosion = true;
+					explosionsprite.sprite_type = AGMode.S_EXPLOSION;
 					explosionsprite.quality_3 = 0;
 					explosionsprite.timerStart(10/1000);
 					explosionsprite.active = true;
 					explosionsprite.x = xpos;
 					explosionsprite.y = ypos;
 					agflyer.active = false;
-					this.game_death = true;
 		}
 		
 		
@@ -861,8 +861,6 @@
 								mySprite.push(temp);
 								myRes[AGResources.NAME_BOOM_MP3].play();
 								sprite.active = false;
-								//myChallenge[ myGame.gameChallenge].total_held_rings ++;
-								//myChallenge[ myGame.gameChallenge].total_rings --;
 								
 							break;
 							
