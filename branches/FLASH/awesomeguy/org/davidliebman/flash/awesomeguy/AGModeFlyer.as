@@ -456,6 +456,7 @@
 			temp.quality_1 = 0;
 			temp.quality_2 = 0;
 			temp.quality_3 = P_NONE;
+			temp.visible = true;
 			// add it to the sprite list
 			mySprite.push(temp);
 
@@ -538,6 +539,22 @@
 					//timerStart(2, 30 * 1);
 				}
 			}
+			var num_strikes:int = myChallenge[myGame.gameChallenge ].invader_1;
+
+			if ( num_strikes >= myChallenge[myGame.gameChallenge].total_placed_invader_1 ) {
+				if(myTimer[AGMode.TIMER_06].timerDone()) {
+					// create a rollee-type object
+					//setSoundEnter2();
+					
+					myRes[AGResources.NAME_ENTER_1_MP3].play();
+					this.addInvader1( adjust_x(getRand(scrollBGX, scrollBGX + 512)), 0);
+					
+		
+					// reset timer
+					myTimer[AGMode.TIMER_06].timerStart( 2);
+				}
+			}
+
 		}
 		
 		public function fireButton():void {
@@ -579,7 +596,8 @@
 					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_3) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_3);
 					
 					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_2) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_2);
-					
+					if (mySprite[i].sprite_type == AGMode.S_INVADER_1) myDraw.drawBasicSprite(mySprite[i], D_INVADER_1);
+
 				}
 				
 			}
@@ -856,12 +874,15 @@
 							break;
 							
 							case AGMode.S_BUBBLE_2:
+							case AGMode.S_INVADER_1:
 								this.agflyer.active = false;
 								this.agflyer.visible = false;
 								sprite.active = false;
 								sprite.visible = true;
 								flyerDeath();
 							break;
+							
+							
 						}//switch
 					}// collision simple
 				}
@@ -899,6 +920,12 @@
 								sprite.active = false;
 								myGame.gameScore += 10;
 							break;
+							
+							case AGMode.S_INVADER_1:
+								sprite.active = false;
+								sprite.visible = false;
+								myGame.gameScore += 10;
+							break;
 						}
 							
 						
@@ -922,17 +949,18 @@
 		}
 
 		public function get_sprite_speed ( spritetype:int ):int {
-			var value:int = 1;
+			var value:int = 8;
 			if (getRand(0,2) != 1) return value;
 		
 			switch (spritetype) {
 			case S_INVADER_1:
+				value = 8;
 			case S_INVADER_2:
 				if ( this.myGame.gamePlanet   <=3 ) {
-					value = this.myGame.gamePlanet;
+					value = (this.myGame.gamePlanet +1) * 2;
 				}
 				else {
-					value = 3;
+					value = 3 * 2;
 				}
 				break;
 			case S_INVADER_3:
