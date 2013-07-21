@@ -661,6 +661,11 @@
 						explosionsprite.active == true) {
 						myDraw.drawBasicSprite(explosionsprite, AGMode.D_EXPLOSION);
 					}
+					if (mySprite[i].sprite_type == AGMode.S_EXPLOSION_SPRITE && 
+						mySprite[i].active == true) {
+						
+						myDraw.drawBasicSprite(mySprite[i], AGMode.D_EXPLOSION_SPRITE);
+					}
 				}
 				
 			}
@@ -915,6 +920,7 @@
 							
 							case AGMode.S_BUBBLE_2:
 							case AGMode.S_INVADER_1:
+							case AGMode.S_INVADER_2:
 								this.agflyer.active = false;
 								this.agflyer.visible = false;
 								sprite.active = false;
@@ -960,10 +966,12 @@
 								sprite.active = false;
 								myGame.gameScore += 10;
 							break;
-							
+							case AGMode.S_INVADER_2:
+								myGame.gameScore += 10;
 							case AGMode.S_INVADER_1:
-								sprite.active = false;
-								sprite.visible = false;
+								sprite.sprite_type = AGMode.S_EXPLOSION_SPRITE;
+								//sprite.active = false;
+								//sprite.visible = false;
 								myGame.gameScore += 10;
 							break;
 						}
