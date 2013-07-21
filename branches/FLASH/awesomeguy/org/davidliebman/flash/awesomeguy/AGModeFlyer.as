@@ -642,9 +642,6 @@
 				
 			}
 			
-			
-			
-			
 		}
 		public function drawAnimatedSprites():void {
 			var i:int;
@@ -767,7 +764,7 @@
 			//var animate:int = 0;
 					
 			
-			var square:Bitmap;
+			var square:AGSprite;
 		
 			
 			
@@ -785,13 +782,15 @@
 						//LOGE("map_level %d", map_level[j][i] );
 						if(  myVisible[i][j] != 0  && myVisible[i][j] != AGMode.B_GOAL  ) { //is tile blank??
 							//trace(myVisible);
-							square = cutTile(  myRes[AGResources.NAME_TILES1_PNG], 
+							square = new AGSprite(this,AGMode.S_BLOCK);
+							square.bitmap = cutTile(  myRes[AGResources.NAME_TILES1_PNG], 
 									myVisible[i][j] + levelcheat,
 									AGMode.TILE_TOP);
 							
-							square.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
-							square.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
-							myStage.addChild(square);
+							square.bitmap.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
+							square.bitmap.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
+							myStage.addChild(square.bitmap);
+							this.myBlocks.push(square);
 							//drawTile_8(square, j * TILE_WIDTH, i * TILE_HEIGHT , 
 							//	scrollx , scrolly, PAINT_TRANSPARENT, 0);
 							
@@ -810,14 +809,16 @@
 						if (i >= 0 && j-m >= 0  && i < LONG_MAP_V && j-m < LONG_MAP_H) { 
 						if(  myVisible[i][j-m] != 0 && myVisible[i][j-m] != B_GOAL  ) { //is tile blank??
 							//cutTile(tiles_a, square, map_level[j-m][i] - levelcheat);
-							square = cutTile(  myRes[AGResources.NAME_TILES1_PNG], 
+							square = new AGSprite(this,AGMode.S_BLOCK);
+							square.bitmap = cutTile(  myRes[AGResources.NAME_TILES1_PNG], 
 									myVisible[i][j-m] + levelcheat,
 									AGMode.TILE_TOP);
 							//drawTile_8(square, j  * TILE_WIDTH, i * TILE_HEIGHT , 
 							//	scrollx , scrolly, PAINT_TRANSPARENT, 0);
-							square.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
-							square.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
-							myStage.addChild(square);
+							square.bitmap.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
+							square.bitmap.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
+							myStage.addChild(square.bitmap);
+							this.myBlocks.push(square);
 						}
 						
 						
@@ -831,14 +832,16 @@
 					if (i >= 0 && j+m >= 0  && i < LONG_MAP_V && j+m < LONG_MAP_H) {
 					if(  myVisible[i][j+m] != 0 && myVisible[i][j+m] != B_GOAL  ) { //is tile blank??
 							//cutTile(tiles_a, square, map_level[j-m][i] - levelcheat);
-							square = cutTile(  myRes[AGResources.NAME_TILES1_PNG], 
+							square = new AGSprite(this,AGMode.S_BLOCK);
+							square.bitmap = cutTile(  myRes[AGResources.NAME_TILES1_PNG], 
 									myVisible[i][j+m] + levelcheat,
 									AGMode.TILE_TOP);
 							//drawTile_8(square, j  * TILE_WIDTH, i * TILE_HEIGHT , 
 							//	scrollx , scrolly, PAINT_TRANSPARENT, 0);
-							square.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
-							square.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
-							myStage.addChild(square);
+							square.bitmap.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
+							square.bitmap.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
+							myStage.addChild(square.bitmap);
+							this.myBlocks.push(square);
 						}
 						
 						
@@ -849,15 +852,6 @@
 				}
 			}
 			
-			
-			
-			
-		
-		
-			//if (! animate_only ) {
-			//	drawInvaderType1();
-			//	drawInvaderType2();
-			//}
 		
 			/* draw guy with animation */
 			//if (! animate_only) {
@@ -875,7 +869,7 @@
 		public override function physicsAdjustments():void {
 			//super.physicsAdjustments();
 			
-			if (yy < 0) flyerGrounded = false;
+			if (yy + xx != 0) flyerGrounded = false;
 			
 			if (flyerGrounded) return;
 			
@@ -933,6 +927,7 @@
 					}// collision simple
 				}
 			}
+			
 			///////////
 			for (ii = 0; ii < myTorpedo.length ; ii ++ ) {
 				for (var jj:int = 0; jj < mySprite.length ; jj ++) {
@@ -974,13 +969,22 @@
 								//sprite.visible = false;
 								myGame.gameScore += 10;
 							break;
-						}
+						}//switch
 							
 						
-					}
+					}// if !null
+				}// for sprite
+			}//for torpedo
+			
+			for (ii = 0; ii < myBlocks.length; ii ++) {
+				if (collisionSimple(myBlocks[ii].bitmap, this.flyersprite)) {
+					this.flyerGrounded = true;
+				}
+				else {
+					
 				}
 			}
-			
+			return;
 		}
 	
 
