@@ -459,16 +459,11 @@
 			temp.quality_3 = P_NONE;
 			temp.visible = true;
 			// add it to the sprite list
-			//mySprite.push(temp);
 			mySprite.push(temp);
-			// reset timer
-			//timerStart(4, 30 * 2);
-			//myTimer[AGMode.TIMER_04].timerStart(2);// 2 sec
+			
 		}
 		
 		public function addInvader2(xx:int, yy:int):void {
-			//setSoundEnter1();
-			//myRes[ AGResources.NAME_ENTER_1_MP3 ].play();
 			
 			var temp:AGSpriteInvader2 = new AGSpriteInvader2(this, AGMode.S_INVADER_2) ;
 			temp.x = adjust_x(getRand(scrollBGX, scrollBGX + 512));
@@ -489,9 +484,7 @@
 			// add it to the sprite list
 			//mySprite.push(temp);
 			mySprite.push(temp);
-			// reset timer
-			//timerStart(4, 30 * 2);
-			//myTimer[AGMode.TIMER_04].timerStart(2);// 2 sec
+			
 		}
 		
 		public function addSprites():void {
@@ -563,7 +556,7 @@
 					//timerStart(2, 30 * 1);
 				}
 			}
-			myChallenge[ myGame.gameChallenge ].countTotals(mySprite);
+			//myChallenge[ myGame.gameChallenge ].countTotals(mySprite);
 
 			var num_strikes:int = myChallenge[myGame.gameChallenge ].invader_1 ;
 
@@ -583,10 +576,10 @@
 					myTimer[AGMode.TIMER_04].timerStart( 2);
 				}
 			}
-			myChallenge[ myGame.gameChallenge ].countTotals(mySprite);
+			//myChallenge[ myGame.gameChallenge ].countTotals(mySprite);
 
 			num_strikes = myChallenge[myGame.gameChallenge ].invader_2 ;
-			trace(myGame.gameChallenge);
+			//trace(myGame.gameChallenge);
 			
 			if ( num_strikes > myChallenge[myGame.gameChallenge].total_placed_invader_2  && 
 				num_strikes != 0) {
@@ -666,8 +659,7 @@
 						explosionsprite.active == true) {
 						myDraw.drawBasicSprite(explosionsprite, AGMode.D_EXPLOSION);
 					}
-					if (mySprite[i].sprite_type == AGMode.S_EXPLOSION_SPRITE && 
-						mySprite[i].active == true) {
+					if (mySprite[i].sprite_type == AGMode.S_EXPLOSION_SPRITE ) {
 						
 						myDraw.drawBasicSprite(mySprite[i], AGMode.D_EXPLOSION_SPRITE);
 					}
@@ -887,7 +879,7 @@
 								this.agflyer.active = false;
 								this.agflyer.visible = false;
 								sprite.active = false;
-								sprite.visible = true;
+								sprite.visible = true;//true
 								flyerDeath();
 							break;
 							
@@ -903,44 +895,52 @@
 					var shot:AGSpriteTorpedo = myTorpedo[ii];
 					sprite = mySprite[jj];
 					if (sprite.bitmap != null && shot.bitmap != null && 
-						sprite.active && shot.active &&
+						sprite.active && 
+						shot.active &&
 						this.collisionSimple( sprite.bitmap, shot.bitmap)) {
 						
 						myRes[AGResources.NAME_BOOM_MP3].play();
 						shot.active = false;
 						shot.visible = false;
-						
+						//if (sprite.sprite_type != AGMode.S_LINE) sprite.sprite_link = 0;
 						switch (sprite.sprite_type) {
 							case AGMode.S_BUBBLE_1:
 								sprite.active = false;
 								myGame.gameScore += 10;
 								//myChallenge[ myGame.gameChallenge].total_bubble_1 --;
 							break;
+							
 							case AGMode.S_BUBBLE_2:
 								sprite.active = false;
 								myGame.gameScore +=10;
 								//myChallenge[ myGame.gameChallenge].total_bubble_2 --;
 							break;
+							
 							case AGMode.S_BUBBLE_3:
 								sprite.active = false;
 								myGame.gameScore += 10;
 								//myChallenge[ myGame.gameChallenge].total_bubble_3 --;
 							break;
+							
 							case AGMode.S_GATOR:
 								sprite.active = false;
 								myGame.gameScore += 10;
 							break;
-							case AGMode.S_INVADER_2:
-								myGame.gameScore += 10;
+							
 							case AGMode.S_INVADER_1:
+								myGame.gameScore += 10;
+								//sprite.sprite_link = AGMode.S_EXPLOSION_SPRITE;
 								sprite.sprite_type = AGMode.S_EXPLOSION_SPRITE;
-								//sprite.active = false;
-								//sprite.visible = false;
+							break;
+							
+							case AGMode.S_INVADER_2:
+								//sprite.sprite_link = AGMode.S_EXPLOSION_SPRITE;
+								sprite.sprite_type = AGMode.S_EXPLOSION_SPRITE;
 								myGame.gameScore += 10;
 							break;
 						}//switch
 							
-						
+						//if (sprite.sprite_link == AGMode.S_EXPLOSION_SPRITE) sprite.sprite_type = sprite.sprite_link;
 					}// if !null
 				}// for sprite
 			}//for torpedo
