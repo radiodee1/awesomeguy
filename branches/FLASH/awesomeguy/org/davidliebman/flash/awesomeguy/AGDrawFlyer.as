@@ -336,6 +336,26 @@
 					
 				break;
 				
+				case AGMode.D_INVADER_2:
+					if (!sprite.facingRight) {
+						sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_INV2_L_PNG].bitmapData.clone());//
+					}
+					else if (sprite.facingRight) {
+						sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_INV2_R_PNG].bitmapData.clone());//				
+					}
+									
+					if (scrollx < sprite.x + (16)) {
+						sprite.bitmap.x = (sprite.x - scrollx )  ;
+					}
+					else {
+						sprite.bitmap.x = sprite.x - scrollx  + (myMode.myHoriz * 16) ;
+					}
+					sprite.bitmap.y = sprite.y - scrolly ;
+					myStage.addChild(sprite.bitmap);
+					
+				break;
 			}
 		}
 
