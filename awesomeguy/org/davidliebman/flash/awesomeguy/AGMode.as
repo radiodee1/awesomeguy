@@ -35,7 +35,7 @@
 		
 	static var TOTAL_SPRITE:int = 50;
 	static var TOTAL_TORPEDOS:int = 5;
-	static var TOTAL_TIMER:int = 10;
+	static var TOTAL_TIMER:int = 15;
 	static var TOTAL_CHALLENGE:int = 10;
 		
 	static var PLATFORM_WIDTH:int = 40*2;

@@ -56,6 +56,7 @@
 			fireButton();
 			doTimers();
 			
+
 			checkRegularCollision();
 
 			
@@ -79,7 +80,8 @@
 				setStartingVars();
 				game_reset_start = false;
 			}
-			//else advanceChallenge();
+			
+			
 			
 			explosionsprite = new AGSprite(this, AGMode.S_EXPLOSION);
 			explosionsprite.active = false;
@@ -87,6 +89,8 @@
 			initAGSprite();
 			initChallenges();// this just creates the array!!
 			initAGTimer();
+			
+			
 			
 			mySprite[0] = explosionsprite;
 			sprite_num ++;
