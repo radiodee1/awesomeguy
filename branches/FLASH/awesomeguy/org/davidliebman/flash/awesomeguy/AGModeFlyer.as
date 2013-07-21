@@ -628,7 +628,8 @@
 			var i:int;
 			for (i = 0; i < mySprite.length; i ++ ) {
 				if (mySprite[i].active == true ){ //|| mySprite[i].visible == true) {
-					mySprite[i].updateSprite();
+					if (mySprite[i].sprite_type != AGMode.S_EXPLOSION_SPRITE) mySprite[i].updateSprite();
+					
 					if (mySprite[i].sprite_type == AGMode.S_CLOUD) myDraw.drawBasicSprite(mySprite[i], D_CLOUD);
 					if (mySprite[i].sprite_type == AGMode.S_LINE ) myDraw.drawBasicSprite(mySprite[i], D_LINE_1);
 					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_1) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_1);
@@ -897,12 +898,13 @@
 					if (sprite.bitmap != null && shot.bitmap != null && 
 						sprite.active && 
 						shot.active &&
+						//sprite.sprite_type != AGMode.S_EXPLOSION_SPRITE &&
 						this.collisionSimple( sprite.bitmap, shot.bitmap)) {
 						
 						myRes[AGResources.NAME_BOOM_MP3].play();
 						shot.active = false;
 						shot.visible = false;
-						//if (sprite.sprite_type != AGMode.S_LINE) sprite.sprite_link = 0;
+						
 						switch (sprite.sprite_type) {
 							case AGMode.S_BUBBLE_1:
 								sprite.active = false;
@@ -929,18 +931,20 @@
 							
 							case AGMode.S_INVADER_1:
 								myGame.gameScore += 10;
-								//sprite.sprite_link = AGMode.S_EXPLOSION_SPRITE;
+								
 								sprite.sprite_type = AGMode.S_EXPLOSION_SPRITE;
 							break;
 							
 							case AGMode.S_INVADER_2:
-								//sprite.sprite_link = AGMode.S_EXPLOSION_SPRITE;
-								sprite.sprite_type = AGMode.S_EXPLOSION_SPRITE;
+								
 								myGame.gameScore += 10;
+								sprite.sprite_type = AGMode.S_EXPLOSION_SPRITE;
+
+
 							break;
 						}//switch
 							
-						//if (sprite.sprite_link == AGMode.S_EXPLOSION_SPRITE) sprite.sprite_type = sprite.sprite_link;
+						
 					}// if !null
 				}// for sprite
 			}//for torpedo

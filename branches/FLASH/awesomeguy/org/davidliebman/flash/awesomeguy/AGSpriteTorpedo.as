@@ -40,22 +40,17 @@
 					}
 					
 					this.quality_1 = jj;
-					if (myMode.xx > 0) { 
+					if (myMode.facingRight) { 
 						this.quality_0 = AGMode.X_MOVE * this.quality_1;
 						this.x += this.quality_0;
 					}
-					else if (myMode.xx < 0 ){ 
+					else if (!myMode.facingRight ){ 
 						this.quality_0 = - (AGMode.X_MOVE * this.quality_1);
 						this.x += this.quality_0;
 					}
-					else {
-						this.quality_0 = 0;
-					}
-					//if (this.limit > AGMode.LASER_WIDTH) {
-					//	this.active = false;
-						//this.sprite_type = AGMode.TORPEDO_UNUSED;
-					//	this.visible = false;
-					//}
+					
+					
+					
 					
 					if(this.facingRight) {
 						this.x = this.x +  Math.abs(this.limit);

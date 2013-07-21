@@ -359,8 +359,8 @@
 				case AGMode.D_EXPLOSION_SPRITE:
 				
 				//i = spriteNum;
-				var x:int, y:int ;
-				var wait:int = 20;
+				//var x:int, y:int ;
+				wait = 20;
 				y = sprite.y - 32;
 				x = sprite.x;
 		
