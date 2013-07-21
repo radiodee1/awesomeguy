@@ -55,7 +55,7 @@
 			//
 			fireButton();
 			doTimers();
-			collisionWithMonsters();
+			//collisionWithMonsters();
 			checkRegularCollision();
 
 			
@@ -458,11 +458,11 @@
 			temp.quality_3 = P_NONE;
 			temp.visible = true;
 			// add it to the sprite list
-			mySprite.push(temp);
-
+			//mySprite.push(temp);
+			myTemp.push(temp);
 			// reset timer
 			//timerStart(4, 30 * 2);
-			myTimer[AGMode.TIMER_04].timerStart(2);// 2 sec
+			//myTimer[AGMode.TIMER_04].timerStart(2);// 2 sec
 		}
 		
 		public function addInvader2(xx:int, yy:int):void {
@@ -486,11 +486,11 @@
 			temp.quality_3 = P_NONE;
 			temp.visible = true;
 			// add it to the sprite list
-			mySprite.push(temp);
-
+			//mySprite.push(temp);
+			myTemp.push(temp);
 			// reset timer
 			//timerStart(4, 30 * 2);
-			myTimer[AGMode.TIMER_04].timerStart(2);// 2 sec
+			//myTimer[AGMode.TIMER_04].timerStart(2);// 2 sec
 		}
 		
 		public function addSprites():void {
@@ -677,56 +677,7 @@
 		}
 		
 		
-		public function collisionWithMonsters():void {
-
-		  var i:int;
-	
-		  for (i = 0  ; i < mySprite.length ; i++) {
-			  if(mySprite[i].sprite_type == AGMode.S_GATOR) {
-			  
-			 
-			 var sprite:AGSprite = mySprite[i];
-			  
-			  
-		    var test:Boolean =  collisionSimple(flyersprite, sprite.bitmap);
-			
-			
-		    if (test && sprite.active   == true) {
-		    
-		      if (flyersprite.getBounds(myStage).bottom < sprite.bitmap.getBounds(myStage).bottom ) {
-		    	
-					  
-		    	if (preferences_collision == true) {
-					sprite.active = false;
-					sprite.visible = false;
-		    		
-					
-					myRes[AGResources.NAME_BOOM_MP3].play();
-					myGame.gameScore = myGame.gameScore + 10;
-		    	}
-
-		      }
-		      else {
-				//endlevel = TRUE;
-				if (preferences_collision == true) {
-					flyerDeath();
-					
-					//myRes[AGResources.NAME_EXPLOSION_MP3].play();
-					sprite.active = false;
-					sprite.visible = false;
-					
-					
-				}
-
-		        
-
-		      }
-		    }
-			
-			  }
-		  }
-
-		}
+		
 		
 		public function flyerDeath():void {
 					myRes[AGResources.NAME_EXPLOSION_MP3].play();
@@ -912,6 +863,16 @@
 								
 							break;
 							
+							case AGMode.S_GATOR:
+								if (sprite.bitmap.getBounds(myStage).bottom  >
+									this.flyersprite.getBounds(myStage).bottom) {
+									sprite.active = false;
+									sprite.visible = false;
+									myGame.gameScore += 10;
+									
+									break;
+								}
+							
 							case AGMode.S_BUBBLE_2:
 							case AGMode.S_INVADER_1:
 							case AGMode.S_INVADER_2:
@@ -980,9 +941,8 @@
 				if (collisionSimple(myBlocks[ii].bitmap, this.flyersprite)) {
 					this.flyerGrounded = true;
 				}
-				else {
-					
-				}
+				
+				
 			}
 			return;
 		}
