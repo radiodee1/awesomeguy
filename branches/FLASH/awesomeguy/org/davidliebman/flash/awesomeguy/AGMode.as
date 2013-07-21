@@ -58,12 +58,12 @@
 	static var B_PLATFORM:int = 437 ; 
 	
 	//sprites
-	static var  S_NONE:int =  0;
-	static var  S_GUY:int =  1;
-	static var  S_FLYER:int =  2;
-	static var  S_GATOR:int =  3;
-	static var  S_CLOUD:int =  4;
-	static var  S_TORPEDO:int =  5;
+	static var S_NONE:int =  0;
+	static var S_GUY:int =  1;
+	static var S_FLYER:int =  2;
+	static var S_GATOR:int =  3;
+	static var S_CLOUD:int =  4;
+	static var S_TORPEDO:int =  5;
 	static var S_BUBBLE_0:int =  6;
 	static var S_BUBBLE_1:int =  7;
 	static var S_BUBBLE_2:int =  8;
