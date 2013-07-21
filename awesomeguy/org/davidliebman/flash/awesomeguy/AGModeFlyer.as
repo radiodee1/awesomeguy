@@ -741,7 +741,7 @@
 							square.bitmap.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
 							square.bitmap.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
 							myStage.addChild(square.bitmap);
-							this.myBlocks.push(square);
+							if (myInvisible[i][j] + mapcheat == AGMode.B_BLOCK) this.myBlocks.push(square);
 							//drawTile_8(square, j * TILE_WIDTH, i * TILE_HEIGHT , 
 							//	scrollx , scrolly, PAINT_TRANSPARENT, 0);
 							
@@ -769,7 +769,7 @@
 							square.bitmap.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
 							square.bitmap.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
 							myStage.addChild(square.bitmap);
-							this.myBlocks.push(square);
+							if (myInvisible[i][j] + mapcheat == AGMode.B_BLOCK) this.myBlocks.push(square);
 						}
 						
 						
@@ -792,7 +792,7 @@
 							square.bitmap.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
 							square.bitmap.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
 							myStage.addChild(square.bitmap);
-							this.myBlocks.push(square);
+							if (myInvisible[i][j] + mapcheat == AGMode.B_BLOCK) this.myBlocks.push(square);
 						}
 						
 						
