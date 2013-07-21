@@ -460,10 +460,33 @@
 			// add it to the sprite list
 			mySprite.push(temp);
 
-			//total_placed_invader_1 ++;
-			//total_invader_1 ++;
-			//myChallenge[this.myGame.gameChallenge].total_placed_invader_1 ++;
-			//myChallenge[this.myGame.gameChallenge].total_invader_1 ++;
+			// reset timer
+			//timerStart(4, 30 * 2);
+			myTimer[AGMode.TIMER_04].timerStart(2);// 2 sec
+		}
+		
+		public function addInvader2(xx:int, yy:int):void {
+			//setSoundEnter1();
+			//myRes[ AGResources.NAME_ENTER_1_MP3 ].play();
+			
+			var temp:AGSpriteInvader2 = new AGSpriteInvader2(this, AGMode.S_INVADER_2) ;
+			temp.x = adjust_x(getRand(scrollBGX, scrollBGX + 512));
+			temp.y = 0;
+
+			temp.topBB = 0;
+			temp.leftBB = 0;
+			temp.bottomBB = 15 *2;
+			temp.rightBB = 15*2;
+			temp.sprite_type = S_INVADER_2;
+			temp.speed = get_sprite_speed(S_INVADER_2);//1;
+			temp.active = true;
+			temp.quality_0 = 0;
+			temp.quality_1 = 0;
+			temp.quality_2 = 0;
+			temp.quality_3 = P_NONE;
+			temp.visible = true;
+			// add it to the sprite list
+			mySprite.push(temp);
 
 			// reset timer
 			//timerStart(4, 30 * 2);
@@ -554,7 +577,23 @@
 					myTimer[AGMode.TIMER_06].timerStart( 2);
 				}
 			}
+			
+			num_strikes = myChallenge[myGame.gameChallenge ].invader_2;
 
+			
+			if ( num_strikes >= myChallenge[myGame.gameChallenge].total_placed_invader_2 ) {
+				if(myTimer[AGMode.TIMER_04].timerDone()) {
+					// create a invader-type object
+					//setSoundEnter1();
+					myRes[AGResources.NAME_ENTER_2_MP3].play();
+					this.addInvader2( adjust_x(getRand(scrollBGX, scrollBGX + 512)), 0);
+
+					// reset timer
+					//timerStart(4, 30 * 2);
+					myTimer[AGMode.TIMER_04].timerStart(2);
+				}
+			}
+			
 		}
 		
 		public function fireButton():void {
@@ -597,6 +636,7 @@
 					
 					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_2) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_2);
 					if (mySprite[i].sprite_type == AGMode.S_INVADER_1) myDraw.drawBasicSprite(mySprite[i], D_INVADER_1);
+					if (mySprite[i].sprite_type == AGMode.S_INVADER_2) myDraw.drawBasicSprite(mySprite[i], D_INVADER_2);
 
 				}
 				
@@ -936,7 +976,7 @@
 		}
 	
 
-		public function goingRightIsShortest(  spritex:int, flyerx:int ):Boolean {
+		public override function goingRightIsShortest(  spritex:int, flyerx:int ):Boolean {
 			var test:Boolean = false;
 		
 			if (Math.abs(flyerx - spritex) < (myHoriz * TILE_WIDTH)/2 && spritex < flyerx) {

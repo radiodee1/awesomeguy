@@ -750,6 +750,9 @@
 			return a.bitmapData.hitTest(apt,128,b.bitmapData,bpt,128);
 			
 		}
+		public function goingRightIsShortest(  spritex:int, flyerx:int ):Boolean { return true;}
+		
+		
 	}
 	
 }
