@@ -74,6 +74,13 @@
 					// ... because lines are misinterpreted.
 					this.total_placed_bubble_1++;
 					this.total_placed_bubble_2++;
+					this.total_placed_bubble_3++;
+				}
+				if (sprite.sprite_type == AGMode.S_EXPLOSION_SPRITE ) {
+					
+					this.total_placed_invader_1++;
+					this.total_placed_invader_2++;
+					this.total_placed_invader_3++;
 				}
 				if (sprite.active == true ) {
 					switch( sprite.sprite_type) {
@@ -128,6 +135,10 @@
 			
 			//trace(total_rings, total_bubble_1, total_bubble_2, total_bubble_3);
 			return test;
+		}
+
+		public function getTotalPlacedInvader01():int {
+			return this.total_placed_invader_1;
 		}
 
 		public function showTrace():void {

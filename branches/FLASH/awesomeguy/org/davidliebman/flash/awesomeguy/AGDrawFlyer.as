@@ -447,6 +447,7 @@
 						//endlevel = TRUE;
 						//gamedeath = TRUE;
 						sprite.active = false;
+						sprite.visible = false;
 						//sprite.sprite_type = AGMode.S_NONE;
 						
 					}
