@@ -55,7 +55,7 @@
 			//
 			fireButton();
 			doTimers();
-			
+			trace (myTimer[AGMode.TIMER_00].timerDone());
 
 			checkRegularCollision();
 
@@ -89,7 +89,7 @@
 			initAGSprite();
 			initChallenges();// this just creates the array!!
 			initAGTimer();
-			
+			setStartingTimers();
 			
 			
 			mySprite[0] = explosionsprite;
@@ -120,23 +120,21 @@
 
 			prepRings();
 			prepRingSprites();
+			setStartingTimers();
+		}
+		public function setStartingTimers():void {
 			
-			myTimer[AGMode.TIMER_00].timerStart(3 ); // a few seconds 
-			myTimer[AGMode.TIMER_01].timerStart( 3/30 ); // 3 refreshes -- screen alert timer
-			myTimer[AGMode.TIMER_08].timerStart( 5/30); // torpedos
+			myTimer[AGMode.TIMER_00] = new AGTimer(3); // a few seconds 
+			myTimer[AGMode.TIMER_01] = new AGTimer(.1); // 3 refreshes -- screen alert timer
+			myTimer[AGMode.TIMER_08] = new AGTimer(5/30);// torpedos
 			
-			//
-			//myChallenge[myGame.gameChallenge].total_placed_bubble_1 = 0;
-			myTimer[AGMode.TIMER_02].timerStart(  1); // about a second
-			//
-			//myChallenge[myGame.gameChallenge].total_placed_bubble_2 = 0;
-			myTimer[AGMode.TIMER_03].timerStart( 2); // about 2 sec
-			//
-			//myChallenge[myGame.gameChallenge].total_placed_invader_1 = 0;
-			myTimer[AGMode.TIMER_04].timerStart( 2);// 2 sec
-			//
-			//myChallenge[myGame.gameChallenge].total_placed_invader_2 = 0;
-			myTimer[AGMode.TIMER_06].timerStart( 2); // 2 sec
+			myTimer[AGMode.TIMER_02] = new AGTimer(1);// about a second
+			
+			myTimer[AGMode.TIMER_03] = new AGTimer(2);// about 2 sec
+			
+			myTimer[AGMode.TIMER_04] = new AGTimer(2);// 2 sec
+			
+			myTimer[AGMode.TIMER_06] = new AGTimer(2); // 2 sec
 		}
 		
 		public override function setStartingVars():void {
@@ -192,7 +190,7 @@
 				myInvisible.push(smallArray);
 			}
 			
-			//trace(myInvisible);
+			
 		}
 		
 		public function fillChallenges():void {
@@ -227,24 +225,7 @@
 				//ch.showTrace();
 			}
 			
-			/*
-			myTimer[AGMode.TIMER_00].timerStart(3 ); // a few seconds 
-			myTimer[AGMode.TIMER_01].timerStart( 3/30 ); // 3 refreshes -- screen alert timer
-			myTimer[AGMode.TIMER_08].timerStart( 5/30); // torpedos
 			
-			//
-			myChallenge[myGame.gameChallenge].total_placed_bubble_1 = 0;
-			myTimer[AGMode.TIMER_02].timerStart(  1); // about a second
-			//
-			myChallenge[myGame.gameChallenge].total_placed_bubble_2 = 0;
-			myTimer[AGMode.TIMER_03].timerStart( 2); // about 2 sec
-			//
-			myChallenge[myGame.gameChallenge].total_placed_invader_1 = 0;
-			myTimer[AGMode.TIMER_04].timerStart( 2);// 2 sec
-			//
-			myChallenge[myGame.gameChallenge].total_placed_invader_2 = 0;
-			myTimer[AGMode.TIMER_06].timerStart( 2); // 2 sec
-			*/
 		}
 		
 		public function prepRings():void {
@@ -545,7 +526,7 @@
 					
 					
 					// reset timer
-					myTimer[AGMode.TIMER_02].timerStart(1);
+					myTimer[AGMode.TIMER_02] = new AGTimer(1);////.timerStart(1);
 					//timerStart(2, 30 * 1);
 				}
 			}
@@ -556,7 +537,7 @@
 					
 					addLine(0x00ffffff,AGMode.S_BUBBLE_2);
 					
-					myTimer[AGMode.TIMER_03].timerStart(2);
+					myTimer[AGMode.TIMER_03] = new AGTimer(2);//////.timerStart(2);
 					//timerStart(2, 30 * 1);
 				}
 			}
@@ -577,7 +558,7 @@
 					
 		
 					// reset timer
-					myTimer[AGMode.TIMER_04].timerStart( 2);
+					myTimer[AGMode.TIMER_04] = new AGTimer(2); /////.timerStart( 2);
 				}
 			}
 			//myChallenge[ myGame.gameChallenge ].countTotals(mySprite);
@@ -595,7 +576,7 @@
 
 					// reset timer
 					//timerStart(4, 30 * 2);
-					myTimer[AGMode.TIMER_06].timerStart(2);
+					myTimer[AGMode.TIMER_06] = new AGTimer(2);/////.timerStart(2);
 				}
 			}
 			
@@ -621,7 +602,7 @@
 						} 
 						ii ++;
 					}
-					if (flag == true) myTimer[AGMode.TIMER_08].timerStart( 0.3);
+					if (flag == true) myTimer[AGMode.TIMER_08] = new AGTimer(.3);////.timerStart( 0.3);
 				}
 	
 	
