@@ -22,6 +22,7 @@
 	var myStage:Stage;
 	var myButtons:Array;
 	var myRes:Array;
+	var myBlocks:Array; 
 	var myGame:AGGame;
 	var myDraw:AGDraw;
 	var myScreenBG:Bitmap;
@@ -75,6 +76,7 @@
 	static var S_EXPLOSION_SPRITE:int = 15;
 	static var S_RING:int = 16;
 	static var S_EXPLOSION:int = 17;
+	static var S_BLOCK:int = 18;
 	
 	//draw enumeration
 	static var D_NONE:int = 0;
@@ -233,6 +235,8 @@
 		public function innerGameLoop() {
 			// this happens every frame because it is called in AGGame.as once every 
 			// frame by 'doAnimation()'...
+			myBlocks = new Array();
+			
 			if (K_ANY && !K_PAUSE) {
 				if (gamePaused) {
 					gamePaused = false;
@@ -750,7 +754,9 @@
 			return a.bitmapData.hitTest(apt,128,b.bitmapData,bpt,128);
 			
 		}
-		public function goingRightIsShortest(  spritex:int, flyerx:int ):Boolean { return true;}
+		public function goingRightIsShortest(  spritex:int, flyerx:int ):Boolean { 
+			return true;
+		}
 		
 		
 	}
