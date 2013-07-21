@@ -385,46 +385,55 @@
 					case 0:
 						
 						//drawSprite_64(explosion_a, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
-						sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_A];
+						//sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_A];
+						sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_EXPLOSION_A].bitmapData.clone());
 						break;
 					case 1:
 						//drawSprite_64(explosion_b, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
-						sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_B];
-
+						//sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_B];
+						sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_EXPLOSION_B].bitmapData.clone());
 						break;
 		
 					case 2:
 						//drawSprite_64(explosion_c, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
-						sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_C];
-		
+						//sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_C];
+						sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_EXPLOSION_C].bitmapData.clone());		
 						break;
 					case 3:
 						//drawSprite_64(explosion_d, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
-						sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_D];
-						
+						//sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_D];
+						sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_EXPLOSION_D].bitmapData.clone());
 						break;
 					case 4:
 						//drawSprite_64(explosion_e, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
-						sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_E];
-						
+						//sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_E];
+						sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_EXPLOSION_E].bitmapData.clone());
 						break;
 					case 5:
 						//drawSprite_64(explosion_f, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
-						sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_F];
-						
+						//sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_F];
+						sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_EXPLOSION_F].bitmapData.clone());
 						break;
 		
 					case 6:
 						//drawSprite_64(explosion_g, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
-						sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_G];
-						
+						//sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_G];
+						sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_EXPLOSION_G].bitmapData.clone());
 						break;
 					case 7:
 						//drawSprite_64(explosion_h, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
 						//sprite[i].active = FALSE;
-						sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_H];
+						//sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_H];
 						//myMode.game_death = true;
-						
+						sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_EXPLOSION_H].bitmapData.clone());
 						break;
 					}
 					
