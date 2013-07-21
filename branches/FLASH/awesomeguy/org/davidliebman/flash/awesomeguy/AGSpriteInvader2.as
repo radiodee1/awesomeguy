@@ -7,17 +7,11 @@
 			// constructor code
 		}
 		public override function updateSprite():void {
-			/////////////////////////////////////
 			
-			//if (this.sprite_type == S_INVADER_1 && this.active == true ) { // if i is an invader
-				// move complex
+				myMode.drawRadarPing(myMode.radar, myMode.radarscreen,
+								 this.x, this.y, AGMode.PING_OTHER, 0xffff0000);
 	
-				if ( this.quality_3 != AGMode.P_GOING_LEFT && this.quality_3 != AGMode.P_GOING_RIGHT) {
-					//checkInvaderCollision(i);
-					
-				}
-	
-				if(myMode.ypos  + AGMode.LASER_GUN  < this.y + 10) {
+				if(myMode.ypos  + AGMode.LASER_GUN  < this.y + 5) {
 					this.y = this.y - this.speed;
 				}
 				else if (myMode.ypos + AGMode.LASER_GUN > this.y + 11) {
@@ -81,12 +75,7 @@
 						//spriteTimerStart(i, 30 * 3);
 					}
 				}
-			//	drawBasicSprite(i, D_INVADER_1);
-				// draw invader1
-	
-	
-			//}
-			/////////////////////////////////////
+			
 		}
 
 	}
