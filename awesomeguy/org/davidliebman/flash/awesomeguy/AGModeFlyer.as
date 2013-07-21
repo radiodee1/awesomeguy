@@ -55,7 +55,7 @@
 			//
 			fireButton();
 			doTimers();
-			//collisionWithMonsters();
+			
 			checkRegularCollision();
 
 			
@@ -122,16 +122,16 @@
 			myTimer[AGMode.TIMER_08].timerStart( 5/30); // torpedos
 			
 			//
-			myChallenge[myGame.gameChallenge].total_placed_bubble_1 = 0;
+			//myChallenge[myGame.gameChallenge].total_placed_bubble_1 = 0;
 			myTimer[AGMode.TIMER_02].timerStart(  1); // about a second
 			//
-			myChallenge[myGame.gameChallenge].total_placed_bubble_2 = 0;
+			//myChallenge[myGame.gameChallenge].total_placed_bubble_2 = 0;
 			myTimer[AGMode.TIMER_03].timerStart( 2); // about 2 sec
 			//
-			myChallenge[myGame.gameChallenge].total_placed_invader_1 = 0;
+			//myChallenge[myGame.gameChallenge].total_placed_invader_1 = 0;
 			myTimer[AGMode.TIMER_04].timerStart( 2);// 2 sec
 			//
-			myChallenge[myGame.gameChallenge].total_placed_invader_2 = 0;
+			//myChallenge[myGame.gameChallenge].total_placed_invader_2 = 0;
 			myTimer[AGMode.TIMER_06].timerStart( 2); // 2 sec
 		}
 		
@@ -223,7 +223,7 @@
 				//ch.showTrace();
 			}
 			
-			
+			/*
 			myTimer[AGMode.TIMER_00].timerStart(3 ); // a few seconds 
 			myTimer[AGMode.TIMER_01].timerStart( 3/30 ); // 3 refreshes -- screen alert timer
 			myTimer[AGMode.TIMER_08].timerStart( 5/30); // torpedos
@@ -240,6 +240,7 @@
 			//
 			myChallenge[myGame.gameChallenge].total_placed_invader_2 = 0;
 			myTimer[AGMode.TIMER_06].timerStart( 2); // 2 sec
+			*/
 		}
 		
 		public function prepRings():void {
@@ -459,7 +460,7 @@
 			temp.visible = true;
 			// add it to the sprite list
 			//mySprite.push(temp);
-			myTemp.push(temp);
+			mySprite.push(temp);
 			// reset timer
 			//timerStart(4, 30 * 2);
 			//myTimer[AGMode.TIMER_04].timerStart(2);// 2 sec
@@ -487,7 +488,7 @@
 			temp.visible = true;
 			// add it to the sprite list
 			//mySprite.push(temp);
-			myTemp.push(temp);
+			mySprite.push(temp);
 			// reset timer
 			//timerStart(4, 30 * 2);
 			//myTimer[AGMode.TIMER_04].timerStart(2);// 2 sec
@@ -562,35 +563,42 @@
 					//timerStart(2, 30 * 1);
 				}
 			}
-			var num_strikes:int = myChallenge[myGame.gameChallenge ].invader_1;
+			myChallenge[ myGame.gameChallenge ].countTotals(mySprite);
 
-			if ( num_strikes >= myChallenge[myGame.gameChallenge].total_placed_invader_1 ) {
-				if(myTimer[AGMode.TIMER_06].timerDone()) {
+			var num_strikes:int = myChallenge[myGame.gameChallenge ].invader_1 ;
+
+			if ( num_strikes >  myChallenge[myGame.gameChallenge].getTotalPlacedInvader01() && //total_placed_invader_1  && 
+				num_strikes != 0) {
+					
+				
+				if(myTimer[AGMode.TIMER_04].timerDone()) {
 					// create a rollee-type object
 					//setSoundEnter2();
 					
 					myRes[AGResources.NAME_ENTER_1_MP3].play();
-					this.addInvader1( adjust_x(getRand(scrollBGX, scrollBGX + 512)), 0);
+					addInvader1( adjust_x(getRand(scrollBGX, scrollBGX + 512)), 0);
 					
 		
 					// reset timer
-					myTimer[AGMode.TIMER_06].timerStart( 2);
+					myTimer[AGMode.TIMER_04].timerStart( 2);
 				}
 			}
-			
-			num_strikes = myChallenge[myGame.gameChallenge ].invader_2;
+			myChallenge[ myGame.gameChallenge ].countTotals(mySprite);
 
+			num_strikes = myChallenge[myGame.gameChallenge ].invader_2 ;
+			trace(myGame.gameChallenge);
 			
-			if ( num_strikes >= myChallenge[myGame.gameChallenge].total_placed_invader_2 ) {
-				if(myTimer[AGMode.TIMER_04].timerDone()) {
+			if ( num_strikes > myChallenge[myGame.gameChallenge].total_placed_invader_2  && 
+				num_strikes != 0) {
+				if(myTimer[AGMode.TIMER_06].timerDone()) {
 					// create a invader-type object
 					//setSoundEnter1();
 					myRes[AGResources.NAME_ENTER_2_MP3].play();
-					this.addInvader2( adjust_x(getRand(scrollBGX, scrollBGX + 512)), 0);
+					addInvader2( adjust_x(getRand(scrollBGX, scrollBGX + 512)), 0);
 
 					// reset timer
 					//timerStart(4, 30 * 2);
-					myTimer[AGMode.TIMER_04].timerStart(2);
+					myTimer[AGMode.TIMER_06].timerStart(2);
 				}
 			}
 			
@@ -626,7 +634,7 @@
 		public function updateSprites():void {
 			var i:int;
 			for (i = 0; i < mySprite.length; i ++ ) {
-				if (mySprite[i].active == true || mySprite[i].visible == true) {
+				if (mySprite[i].active == true ){ //|| mySprite[i].visible == true) {
 					mySprite[i].updateSprite();
 					if (mySprite[i].sprite_type == AGMode.S_CLOUD) myDraw.drawBasicSprite(mySprite[i], D_CLOUD);
 					if (mySprite[i].sprite_type == AGMode.S_LINE ) myDraw.drawBasicSprite(mySprite[i], D_LINE_1);
