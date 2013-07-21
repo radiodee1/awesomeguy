@@ -127,61 +127,6 @@ void initChallenges() {
 
 
 
-/**
- *  Used to place lightning strikes. These strikes cause bubble1 circles to be
- *  drawn to the screen.
- */
-void placeChallengesBubble1() {
-	total_placed_bubble_1 = 0;
-	timerStart(2, 30 * 1); // about a second
-}
-
-/**
- * Cause bubble2 circles to be drawn to the screen.
- */
-void placeChallengesBubble2() {
-	total_placed_bubble_2 = 0;
-	timerStart(3, 30 * 2);
-}
-
-/**
- * Cause invader1 sprites to be drawn on screen.
- */
-void placeChallengesInvader1() {
-	total_placed_invader_1 = 0;
-	timerStart(4, 30 * 2);
-}
-
-
-/**
- * Cause invader2 sprites to be drawn on screen.
- */
-void placeChallengesInvader2() {
-	total_placed_invader_2 = 0;
-	timerStart(6, 30 * 2);
-}
-
-
-
-/**
- *	Used for monster collision function
- *
- *	@param	sprite	a sprite struct
- *	@param	x		an x offset
- *	@param	y		a y offset
- *	@return			the bounding box for the sprite
- */
-BoundingBox makeSpriteBox(Sprite sprite, int x, int  y) {
-  x = adjust_x (x);
-  BoundingBox temp;
-  temp.left = adjust_x(sprite.leftBB + sprite.x + x);
-  temp.right = adjust_x(sprite.rightBB + sprite.x + x);
-  temp.top = sprite.topBB + sprite.y + y;
-  temp.bottom = sprite.bottomBB + sprite.y + y;
-
-
-  return temp;
-}
 
 /**
  *	Used for overall collision testing
