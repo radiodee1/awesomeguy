@@ -8,6 +8,8 @@
 		}
 		public override function updateSprite():void {
 			
+				if (!this.active) return;
+			
 				myMode.drawRadarPing(myMode.radar, myMode.radarscreen,
 								 this.x, this.y, AGMode.PING_OTHER, 0xffff0000);
 	
