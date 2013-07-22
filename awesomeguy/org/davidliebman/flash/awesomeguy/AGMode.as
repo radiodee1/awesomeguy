@@ -78,6 +78,7 @@
 	static var S_EXPLOSION:int = 17;
 	static var S_BLOCK:int = 18;
 	static var S_FLYER_RINGS:int = 19;
+	static var S_GOAL:int = 20;
 	
 	//draw enumeration
 	static var D_NONE:int = 0;
@@ -97,6 +98,7 @@
 	static var  D_BUBBLE_3:int = 14;
 	static var  D_RING:int = 15;
 	static var  D_TORPEDO:int = 16;
+	static var D_GOAL:int = 17;
 	
 	//radar ping types
 	static var PING_FLYER:int = 0;
@@ -178,6 +180,7 @@
 	public var flyerGrounded:Boolean = false;
 	public var preferences_collision:Boolean = true;
 	public var animate_only:Boolean = false;
+	public var is_blinking:Boolean = false;
 	public var alert_color:uint = 0x00000000;
 	public var planets:int = 0;
 	public var challenges:int = 0;
@@ -529,6 +532,15 @@
 			return a.bitmapData.hitTest(apt,128,b.bitmapData,bpt,128);
 			
 		}
+		public function collisionBlock( a:Bitmap, b:Bitmap ):Boolean {
+			var arect:Rectangle = a.getBounds(myStage);
+			var brect:Rectangle = b.getBounds(myStage);
+			var apt:Point = new Point(a.x, a.y);
+			var bpt:Point = new Point(b.x, b.y);
+			return a.bitmapData.hitTest(apt,0,b.bitmapData,bpt,0);
+			
+		}
+		
 		public function goingRightIsShortest(  spritex:int, flyerx:int ):Boolean { 
 			return true;
 		}
