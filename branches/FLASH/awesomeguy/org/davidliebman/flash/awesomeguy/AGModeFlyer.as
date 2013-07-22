@@ -10,7 +10,7 @@
 	public class AGModeFlyer extends AGMode{
 
 		public var total_rings:int;
-		
+		public var flyerrings:AGSprite ;
 		
 		public var animate_explosion:Boolean = false;
 		
@@ -81,6 +81,8 @@
 			}
 			
 			
+			flyerrings = new AGSprite(this, AGMode.S_FLYER_RINGS);
+			flyerrings.active = true;
 			
 			explosionsprite = new AGSprite(this, AGMode.S_EXPLOSION);
 			explosionsprite.active = false;
@@ -111,6 +113,8 @@
 			
 			agflyer = new AGSprite(this,AGMode.S_FLYER);
 			agflyer.active = true;
+			agflyer.bottomBB = 32;
+
 			
 		}
 		
@@ -648,6 +652,8 @@
 						
 						myDraw.drawBasicSprite(mySprite[i], AGMode.D_EXPLOSION_SPRITE);
 					}
+					myDraw.drawBasicSprite(flyerrings, AGMode.D_FLYER_RINGS);
+					
 				}
 				
 			}
@@ -846,7 +852,7 @@
 								mySprite.push(temp);
 								myRes[AGResources.NAME_BOOM_MP3].play();
 								sprite.active = false;
-								
+								myChallenge[myGame.gameChallenge].total_held_rings ++ ;
 							break;
 							
 							case AGMode.S_GATOR:
