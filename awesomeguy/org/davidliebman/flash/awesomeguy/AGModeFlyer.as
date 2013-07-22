@@ -607,7 +607,9 @@
 					myTimer[AGMode.TIMER_06] = new AGTimer(2);/////.timerStart(2);
 				}
 			}
-			
+			if (myTimer[AGMode.TIMER_07].timerDone()) {
+				is_blinking = false;
+			}
 		}
 		
 		public function fireButton():void {
@@ -978,9 +980,9 @@
 						myChallenge[myGame.gameChallenge].total_held_rings = 0;
 						is_blinking = true;
 						//timerStart(7, 3 * 30);//blinking timer 7
-						myTimer[ AGMode.TIMER_07].timerStart(3);
+						myTimer[ AGMode.TIMER_07] = new AGTimer(3);//.timerStart(3);
 					}
-					//trace("goal");
+					
 				}
 				
 				
