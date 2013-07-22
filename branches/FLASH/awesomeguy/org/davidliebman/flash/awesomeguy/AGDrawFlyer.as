@@ -2,7 +2,8 @@
 	import flash.display.*;
 	
 	public class AGDrawFlyer extends AGDraw {
-		
+		var TILE_HEIGHT:int = 16;
+		var TILE_WIDTH:int = 16;
 		var mysprite:Sprite;
 		var anim:int = 0; // for flyer rings
 		var max_rings:int = 0;// for flyer rings
@@ -36,7 +37,7 @@
 
 				
 				if (scrollx >= xx  ) {
-					add = myMode.myHoriz * myMode.TILE_WIDTH;
+					add = myMode.myHoriz * TILE_WIDTH;
 					add_radar =  (xx - scrollx) - xx ;
 				}
 				

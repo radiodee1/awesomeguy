@@ -132,10 +132,10 @@
 	var monster_num:int = 0;
 	var platform_num:int = 0;
 	
-	var TILEMAP_HEIGHT:int = 128 * 2;
-	var TILEMAP_WIDTH:int = 224 * 2;
-	var TILE_HEIGHT:int = 16;
-	var TILE_WIDTH:int = 16;
+	//var TILEMAP_HEIGHT:int = 128 * 2;
+	//var TILEMAP_WIDTH:int = 224 * 2;
+	//var TILE_HEIGHT:int = 16;
+	//var TILE_WIDTH:int = 16;
 	
 	public var SCREEN_HEIGHT:int = (512 * 3/4 ) - 64;
 	public var SCREEN_WIDTH:int = 512;
@@ -358,124 +358,8 @@
 		}
 		
 		public function scrollBackground():void {
-			myField.top = 0;
-			myField.bottom = myVert * TILE_HEIGHT;
-			myField.left = 0;
-			myField.right = myHoriz * TILE_WIDTH;
 			
-			myScreen.top = scrollBGY;
-			myScreen.bottom = scrollBGY + SCREEN_HEIGHT;
-			myScreen.left = scrollBGX;
-			myScreen.right = scrollBGX + SCREEN_WIDTH;
 			
-			myBoundaries.top = myScreen.top + 20 + 0;
-			myBoundaries.bottom = myScreen.bottom - 20 - spriteHeight;
-			myBoundaries.left = myScreen.left + (5 * 8 * 2) + 0;
-			myBoundaries.right = myScreen.right - (5 * 8 * 2) - spriteWidth;
-			
-			mySweetspot.top = myBoundaries.top + (Y_MOVE * 3/2);
-			mySweetspot.bottom = myBoundaries.bottom - (Y_MOVE * 3/2) ;
-			mySweetspot.left = myBoundaries.left + (X_MOVE * 3/2) ;
-			mySweetspot.right = myBoundaries.right - (X_MOVE * 3/2);
-			
-			var newx:int = xpos;
-			var newy:int = ypos;
-			
-			var newscrollx:int = myScreen.left;
-			var newscrolly:int = myScreen.top;
-			
-			var wrappingNow:Boolean = false;
-			
-			if (myScreen.right > myField.right || myScreen.left < myField.left) wrappingNow = true;
-			
-			//change values
-			if (xx > 0) { // going right - drift left
-				if (newx + xx >= myField.right && wrapHorizontal) { //wrap
-					newx = newx - myField.right + xx;
-				
-				}
-				if (myScreen.left + xx >= myField.right && wrapHorizontal) { //wrap
-					newscrollx = newscrollx - myField.right + xx;
-					
-				}
-				
-				newx = newx + xx;
-				newscrollx = newscrollx + xx;
-				
-				
-				if (newx < mySweetspot.left && !wrappingNow) { //drift
-					newscrollx = newscrollx - xx;
-				}
-				if (newx > myBoundaries.left && !wrappingNow) { //drift
-					newscrollx = newscrollx + xx;
-				}
-				
-			}
-			if (xx < 0) { //going left 
-				if (newx + xx <= myField.left && wrapHorizontal) { //wrap
-					newx = newx + myField.right + xx;
-				}
-				if (myScreen.left + xx <= myField.left && wrapHorizontal) { // wrap
-					newscrollx = newscrollx + myField.right + xx;
-				}
-				
-				newx = newx + xx;
-				newscrollx = newscrollx + xx;
-				
-				if (newx > mySweetspot.right && !wrappingNow) { //drift
-					newscrollx = newscrollx - xx;
-				}
-				if (newx < myBoundaries.right && !wrappingNow) { //drift
-					newscrollx = newscrollx + xx;
-				}
-				
-			}
-			if (yy > 0) { // going down
-				if (newy + yy >= myField.bottom - spriteHeight) { //clip
-					newy = myField.bottom - spriteHeight;
-					flyerGrounded = true;// ??
-					//newscrolly = myField.bottom - myScreen.bottom;
-				}
-				if (newy + yy < myField.bottom - spriteHeight) {
-					newy = newy + yy;
-					
-					if (myScreen.bottom <= myField.bottom ) {
-						newscrolly = newscrolly + yy;
-					}
-				}
-				
-				
-			}
-			if (yy < 0 ) { // up - drift down
-				if (newy + yy <= myField.top) { //clip
-					newy = myField.top;
-					//newscrolly = myField.top;
-				}
-				
-				
-				if (newy + yy > myField.top ) {
-					newy = newy + yy;
-					
-					if (myScreen.top >= myField.top ) {
-						newscrolly = newscrolly + yy;
-					}
-					if (newy + yy > myBoundaries.top ) {
-						newscrolly -= yy;
-					}
-					
-				}
-				
-				
-				//////////////////////////////
-				
-			}
-			
-			scrollBGX = newscrollx;
-			scrollBGY = newscrolly;
-			xpos = newx;
-			ypos = newy;
-			
-
 		}
 		
 		public function detectMovement():void {
@@ -500,30 +384,12 @@
 		}
 	
 		public function cutTile(  tileset:Bitmap, num:int , tilebracket:int ):Bitmap {
-			
-			var i:int ,j:int, k:int,l:int, m:int,n:int, p:int ;
-
-			m = int (TILEMAP_HEIGHT / TILE_HEIGHT * tilebracket) ; // 128 * 2 /16 = 16
-			n = int ( TILEMAP_WIDTH / TILE_WIDTH) ; // 224 * 2 /16 = 28
-    
-			k = int ((num / n)   ); // y pos 
-			l = int (num - (k * n) -1  ); // x pos + 4
-			k = k + m; // must come after!!
-			
-			var b:BitmapData = new BitmapData(  TILE_WIDTH, TILE_HEIGHT, true, 0x0);
-			
-			var bitmap:Bitmap = new Bitmap(b);
-			bitmap.bitmapData.copyPixels(tileset.bitmapData,
-							new Rectangle ( l * TILE_WIDTH, k * TILE_HEIGHT, 
-							TILE_HEIGHT, TILE_HEIGHT),
-							new Point (0,0) , null, null, true );
-			
-			//trace("nums m:" + m + " n:" + n + " k:" + k + " l:" + l);
-			
-			
-			return bitmap;
+			return new Bitmap();
 		}
-		
+		public function adjust_x( xxx:int ):int {
+			return 0;
+		}
+
 		
 		
 		
@@ -535,93 +401,14 @@
 
 		public function drawRadarPing(box:Rectangle, bits:Bitmap, oldx:int, oldy:int , kind:int,  color:uint):void {
 	
-		var b:BitmapData;
-		var oldxx:int = 0;
-		var oldyy:int = 0;
-		var ii:int = 0;
-		var jj:int = 0;
-
-		ii =  radar_start_scroll;
-		jj = adjust_x (radar_start);
-		oldyy = oldy;
-
-		
-			
-		
-			oldxx = (oldx - scrollBGX + (myHoriz * TILE_WIDTH/2) -256 + ii) % (myHoriz * TILE_WIDTH );// this might be OK...
-			oldxx = adjust_x(oldxx) * 2;
-		
-	
-		oldyy = oldyy * 2;
-	
-		b = new BitmapData( 2, 2, true, color);
-		bits.bitmapData.copyPixels(b,
-							new Rectangle (0, 0, 
-							2, 2),
-							new Point (box.left + (oldxx/16 ), box.top + (oldyy/16 ) ) , null, null, true );
-	
-		
-
-	if (kind == PING_ROCK) return;
-
-		b = new BitmapData( 2, 2, true, color);
-		bits.bitmapData.copyPixels(b,
-							new Rectangle (0, 0, 
-							2, 2),
-							new Point (box.left + 1 +(oldxx/16 ), box.top + (oldyy/16 ) ) , null, null, true );
-	
-	
-
-		b = new BitmapData( 2, 2, true, color);
-		bits.bitmapData.copyPixels(b,
-							new Rectangle (0, 0, 
-							2, 2),
-							new Point (box.left + (oldxx/16 ), box.top + 1+(oldyy/16 ) ) , null, null, true );
-
-		
-
-		b = new BitmapData( 2, 2, true, color);
-		bits.bitmapData.copyPixels(b,
-							new Rectangle (0, 0, 
-							2, 2),
-							new Point (box.left + 1 + (oldxx/16 ), box.top + 1+ (oldyy/16 ) ) , null, null, true );
-
-	
-
-	if (kind != PING_OTHER) return;
-
-		b = new BitmapData( 2, 2, true, color);
-		bits.bitmapData.copyPixels(b,
-							new Rectangle (0, 0, 
-							2, 2),
-							new Point (box.left -2 + (oldxx/16 ), box.top + (oldyy/16 ) ) , null, null, true );
-
-		
-		b = new BitmapData( 2, 2, true, color);
-		bits.bitmapData.copyPixels(b,
-							new Rectangle (0, 0, 
-							2, 2),
-							new Point (box.left -2 + (oldxx/16 ), box.top +1+ (oldyy/16 ) ) , null, null, true );
-
-		
-		b = new BitmapData( 2, 2, true, color);
-		bits.bitmapData.copyPixels(b,
-							new Rectangle (0, 0, 
-							2, 2),
-							new Point (box.left -1 + (oldxx/16 ), box.top + (oldyy/16 ) ) , null, null, true );
-
-		
-		b = new BitmapData( 2, 2, true, color);
-		bits.bitmapData.copyPixels(b,
-							new Rectangle (0, 0, 
-							2, 2),
-							new Point (box.left -1+ (oldxx/16 ), box.top +1 + (oldyy/16 ) ) , null, null, true );
-
 		
 		}
 		
 		
 		public function drawScoreWords():void {
+			var TILE_HEIGHT:int = 16;
+			var TILE_WIDTH:int = 16;
+			
 			var square:Bitmap;
 			var scrollx:int = scrollBGX;
 			var scrolly:int = scrollBGY;
@@ -686,7 +473,8 @@
  /////////////////////////////////
  
 	public function drawScoreNumbers( pos:int,  num:int,  p:int):void {
-		
+			var TILE_HEIGHT:int = 16;
+			var TILE_WIDTH:int = 16;
 			var i:int, a:int, b:int, c:int, placesValue:int;
 			var places:Array = new Array(0,0,0,0,0,0,0,0,0,0);//ten spots
 			var topNumbers:Array = new Array (364,365,366, 367, 368, 369, 370, 371, 372, 373);
@@ -732,16 +520,7 @@
 	} 
  
 ////////////////////////////////////
-		public function adjust_x( xxx:int ):int {
-			if (xxx > myHoriz *  TILE_WIDTH ) {
-				//x = 0;
-				xxx = xxx - (myHoriz * TILE_WIDTH);
-			}
-			if (xxx < 0 ) {
-				xxx = xxx + (myHoriz * TILE_WIDTH);
-			}
-			return xxx;
-		}		
+		
 		
 		public function getRand(min:int, max:int):int {
 			return min + ( max - min ) * Math.random();
