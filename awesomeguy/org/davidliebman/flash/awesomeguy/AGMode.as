@@ -77,6 +77,7 @@
 	static var S_RING:int = 16;
 	static var S_EXPLOSION:int = 17;
 	static var S_BLOCK:int = 18;
+	static var S_FLYER_RINGS:int = 19;
 	
 	//draw enumeration
 	static var D_NONE:int = 0;

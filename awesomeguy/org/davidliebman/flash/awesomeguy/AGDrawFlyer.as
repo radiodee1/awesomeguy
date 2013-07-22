@@ -4,7 +4,9 @@
 	public class AGDrawFlyer extends AGDraw {
 		
 		var mysprite:Sprite;
-		
+		var anim:int = 0; // for flyer rings
+		var max_rings:int = 0;// for flyer rings
+
 		public override function AGDrawFlyer(mode:AGMode, myres:Array, mystage:Stage, mybackground:Bitmap) {
 			// constructor code
 			super(mode,myres,mystage,mybackground);
@@ -456,6 +458,62 @@
 					//}
 				}
 				
+				break;
+				
+				case AGMode.D_FLYER_RINGS:
+					max_rings = myMode.myChallenge[myMode.myGame.gameChallenge].total_held_rings;
+					if(max_rings == 0) return;
+					//sprite.bitmap = new Bitmap();
+					
+					anim = myMode.animate;
+					if (anim > 8) anim = 0;
+					if (anim == 0 || anim == 1 || anim == 8 ) {
+						sprite.bitmap = myMode.cutTile(myMode.myRes[AGResources.NAME_TILES1_PNG],
+													   AGMode.B_PRIZE,AGMode.TILE_TOP);
+						//cutTile(tiles_a, square, B_PRIZE - levelcheat );
+						//trace(anim);
+					}
+					else if (anim == 2 || anim == 4 || anim == 6) {
+						sprite.bitmap = myMode.cutTile(myMode.myRes[AGResources.NAME_TILES2_PNG],
+													   AGMode.B_PRIZE,AGMode.TILE_TOP);
+
+						//cutTile(tiles_b, square, B_PRIZE - levelcheat);
+					}
+					else if (anim == 3 || anim == 7) {
+						sprite.bitmap = myMode.cutTile(myMode.myRes[AGResources.NAME_TILES3_PNG],
+													   AGMode.B_PRIZE,AGMode.TILE_TOP);
+			
+						//cutTile(tiles_c, square, B_PRIZE -levelcheat);
+					}
+					else if (anim == 5) {
+						sprite.bitmap = myMode.cutTile(myMode.myRes[AGResources.NAME_TILES4_PNG],
+													   AGMode.B_PRIZE,AGMode.TILE_TOP);
+			
+						//cutTile(tiles_d, square, B_PRIZE - levelcheat);
+					}
+			
+			
+					add = 0;
+			
+					if(scrollx < myMode.xpos  ) {
+						add = 0;
+					}
+					else if (scrollx >= myMode.xpos  ) {
+						add = myMode.myHoriz * 16;
+					}
+			
+					if (max_rings > 3) max_rings = 3;
+			
+					for (var xx:int = 0; xx < max_rings; xx ++ ) {
+						var bits:Bitmap = new Bitmap(sprite.bitmap.bitmapData.clone());
+						bits.x = myMode.xpos + add + (xx * 17) - scrollx;
+						bits.y = myMode.ypos + myMode.agflyer.bottomBB  - 3 - scrolly;
+						myStage.addChild(bits);
+						//trace("bits");
+						//drawTile_8(square, flyer.x + add + ( x * 9), flyer.y + flyer.bottomBB - 3 ,
+						//		scrollx , scrolly, PAINT_TRANSPARENT, 0);
+					}
+
 				break;
 			}
 		}

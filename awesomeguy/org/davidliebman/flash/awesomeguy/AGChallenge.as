@@ -82,6 +82,9 @@
 					this.total_placed_invader_2++;
 					this.total_placed_invader_3++;
 				}
+				if (sprite.sprite_type == AGMode.S_RING && sprite.active == false) {
+					//this.total_held_rings ++;
+				}
 				if (sprite.active == true ) {
 					switch( sprite.sprite_type) {
 						case AGMode.S_BUBBLE_1:
