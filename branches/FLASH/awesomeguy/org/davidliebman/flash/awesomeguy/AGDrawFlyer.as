@@ -302,7 +302,7 @@
 				break;
 				
 				case AGMode.D_TORPEDO:
-					
+					if (sprite == null || sprite.bitmap == null ) return;
 					if (scrollx < sprite.x + (8)) {
 						sprite.bitmap.x = (sprite.x - scrollx )  ;
 					}

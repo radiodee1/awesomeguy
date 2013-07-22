@@ -137,9 +137,8 @@
 			return test;
 		}
 
-		public function getTotalPlacedInvader01():int {
-			return this.total_placed_invader_1;
-		}
+		
+		
 
 		public function showTrace():void {
 			trace(rings, bubble_1, bubble_2, bubble_3, this.invader_1, this.invader_2);
