@@ -55,7 +55,6 @@
 			//
 			fireButton();
 			doTimers();
-			trace (myTimer[AGMode.TIMER_00].timerDone());
 
 			checkRegularCollision();
 
@@ -108,8 +107,8 @@
 			
 			radar_start = xpos - scrollBGX;
 			radar_start_scroll =  scrollBGX;
-			//trace (radar_start + " scroll:" + scrollBGX);
-			//myRes[AGResources.NAME_EXPLOSION_MP3].play();
+			
+			
 			agflyer = new AGSprite(this,AGMode.S_FLYER);
 			agflyer.active = true;
 			
@@ -545,7 +544,7 @@
 
 			var num_strikes:int = myChallenge[myGame.gameChallenge ].invader_1 ;
 
-			if ( num_strikes >  myChallenge[myGame.gameChallenge].getTotalPlacedInvader01() && //total_placed_invader_1  && 
+			if ( num_strikes >  myChallenge[myGame.gameChallenge].total_placed_invader_1  && 
 				num_strikes != 0) {
 					
 				
@@ -658,6 +657,7 @@
 				if (sprite.active) {
 					sprite.updateSprite();
 					myDraw.drawBasicSprite(sprite, AGMode.D_TORPEDO);
+					
 				}
 			}
 		}
@@ -921,7 +921,7 @@
 							break;
 							
 							case AGMode.S_INVADER_2:
-								
+								sprite.quality_3 = P_NONE;
 								myGame.gameScore += 10;
 								sprite.sprite_type = AGMode.S_EXPLOSION_SPRITE;
 
