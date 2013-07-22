@@ -132,11 +132,6 @@
 	var monster_num:int = 0;
 	var platform_num:int = 0;
 	
-	//var TILEMAP_HEIGHT:int = 128 * 2;
-	//var TILEMAP_WIDTH:int = 224 * 2;
-	//var TILE_HEIGHT:int = 16;
-	//var TILE_WIDTH:int = 16;
-	
 	public var SCREEN_HEIGHT:int = (512 * 3/4 ) - 64;
 	public var SCREEN_WIDTH:int = 512;
 	
