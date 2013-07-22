@@ -5,6 +5,12 @@
 	
 	public class AGSprite  {
 		
+			static var TILEMAP_HEIGHT:int = 128 * 2;
+			static var TILEMAP_WIDTH:int = 224 * 2;
+			static var TILE_HEIGHT:int = 16;
+			static var TILE_WIDTH:int = 16;
+	
+		
 			var timer:AGTimer = new AGTimer();
 			var myMode:AGMode;
 			

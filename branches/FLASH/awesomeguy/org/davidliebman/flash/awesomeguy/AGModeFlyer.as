@@ -416,6 +416,24 @@
 			//myChallenge[ myGame.gameChallenge].total_rings ++;
 			//return temp;
 		}
+		
+		public function addVarious(xx:int, yy:int, type:int):void {
+			// create a various-type object
+			var temp:AGSpriteVarious = new AGSpriteVarious(this, type);// Sprite temp ;
+			temp.x =xx*16;
+			temp.y = yy *16;
+
+			temp.sprite_type = type;
+			temp.speed = 1;
+			temp.active = true;
+			temp.quality_0 = xx;
+			temp.quality_1 = yy;
+			// add it to the sprite list
+			//mySprite.push(temp);
+			this.myBlocks.push(temp);
+			//myChallenge[ myGame.gameChallenge].total_rings ++;
+			//return temp;
+		}
 		public function addTorpedo(ii:int, xx:int, yy:int):void {
 			var temp:AGSpriteTorpedo = new AGSpriteTorpedo(this, AGMode.TORPEDO_UNUSED);// Sprite temp ;
 			temp.x =xx;
@@ -621,6 +639,8 @@
 		
 		public function updateSprites():void {
 			var i:int;
+			
+			
 			for (i = 0; i < mySprite.length; i ++ ) {
 				if (mySprite[i].active == true ){ //|| mySprite[i].visible == true) {
 					if (mySprite[i].sprite_type != AGMode.S_EXPLOSION_SPRITE) mySprite[i].updateSprite();
@@ -638,6 +658,7 @@
 				}
 				
 			}
+			
 			
 		}
 		public function drawAnimatedSprites():void {
@@ -671,6 +692,12 @@
 					sprite.updateSprite();
 					myDraw.drawBasicSprite(sprite, AGMode.D_TORPEDO);
 					
+				}
+			}
+			for (i = 0; i < myBlocks.length; i ++ ) {
+				if (myBlocks[i].active && myBlocks[i].sprite_type == AGMode.S_GOAL) {
+					myBlocks[i].updateSprite();
+					myDraw.drawBasicSprite(myBlocks[i], AGMode.D_GOAL);
 				}
 			}
 		}
@@ -741,6 +768,8 @@
 							square.bitmap.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
 							myStage.addChild(square.bitmap);
 							if (myInvisible[i][j] + mapcheat == AGMode.B_BLOCK) this.myBlocks.push(square);
+							if (myInvisible[i][j] + mapcheat == AGMode.B_GOAL) addVarious(j,i,AGMode.S_GOAL);
+
 							//drawTile_8(square, j * TILE_WIDTH, i * TILE_HEIGHT , 
 							//	scrollx , scrolly, PAINT_TRANSPARENT, 0);
 							
@@ -769,6 +798,8 @@
 							square.bitmap.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
 							myStage.addChild(square.bitmap);
 							if (myInvisible[i][j] + mapcheat == AGMode.B_BLOCK) this.myBlocks.push(square);
+							if (myInvisible[i][j] + mapcheat == AGMode.B_GOAL) addVarious(j,i,AGMode.S_GOAL);
+
 						}
 						
 						
@@ -792,6 +823,8 @@
 							square.bitmap.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
 							myStage.addChild(square.bitmap);
 							if (myInvisible[i][j] + mapcheat == AGMode.B_BLOCK) this.myBlocks.push(square);
+							if (myInvisible[i][j] + mapcheat == AGMode.B_GOAL) addVarious(j,i,AGMode.S_GOAL);
+
 						}
 						
 						
@@ -801,17 +834,6 @@
 					
 				}
 			}
-			
-		
-			/* draw guy with animation */
-			//if (! animate_only) {
-			//	drawFlyer();
-			//	drawBasicSprite(0, D_FLYER_RINGS);
-			//}
-			
-		
-			
-			
 			
 			return ;
 		}
@@ -948,8 +970,17 @@
 			}//for torpedo
 			
 			for (ii = 0; ii < myBlocks.length; ii ++) {
-				if (collisionSimple(myBlocks[ii].bitmap, this.flyersprite)) {
-					this.flyerGrounded = true;
+				if (myBlocks[ii].bitmap != null &&
+					collisionBlock(myBlocks[ii].bitmap, this.flyersprite)) {
+					if (myBlocks[ii].sprite_type == AGMode.S_BLOCK) this.flyerGrounded = true;
+					if (myBlocks[ii].sprite_type == AGMode.S_GOAL) {
+						myGame.gameScore = myGame.gameScore + ( myChallenge[myGame.gameChallenge].total_held_rings * 20);
+						myChallenge[myGame.gameChallenge].total_held_rings = 0;
+						is_blinking = true;
+						//timerStart(7, 3 * 30);//blinking timer 7
+						myTimer[ AGMode.TIMER_07].timerStart(3);
+					}
+					//trace("goal");
 				}
 				
 				
