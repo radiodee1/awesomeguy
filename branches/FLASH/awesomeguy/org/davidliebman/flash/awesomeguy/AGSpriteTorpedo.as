@@ -33,21 +33,21 @@
 					
 					
 					if (this.active == true ) {
-						this.limit = this.limit + jj;
+						//this.limit = this.limit + jj;
 					}
 					else {
 						return;
 					}
 					
-					this.quality_1 = jj;
+					//this.quality_1 = jj;
 					
 					
 						if (myMode.facingRight) { 
-							this.quality_0 = AGMode.X_MOVE * this.quality_1;
+							this.quality_0 = AGMode.X_MOVE *jj;
 							this.x += this.quality_0;
 						}
 						else if (!myMode.facingRight ){ 
-							this.quality_0 = - (AGMode.X_MOVE * this.quality_1);
+							this.quality_0 = - (AGMode.X_MOVE * jj);
 							this.x += this.quality_0;
 						}
 					
@@ -55,17 +55,13 @@
 					
 					
 						if(this.facingRight) {
-							this.x = this.x +  Math.abs(this.limit);
-							this.x -= AGMode.X_MOVE;
+							
 							if (x - startx > AGMode.LASER_WIDTH) this.active = false;
 						}
 						else {
-							this.x = this.x - Math.abs(this.limit);
 							if (startx - x > AGMode.LASER_WIDTH) this.active = false;
 						}
 					
-					if (this.quality_0 == 0) this.quality_0 = 2 * 2 * 2;
-					//this.quality_1 = jj;
 					this.bitmap = new Bitmap(new BitmapData(Math.abs(this.quality_0) ,  2, true, 0xffffffff));
 					
 					if (!startedOnce) startedOnce = true;
