@@ -42,7 +42,11 @@
 				}
 				
 				if (facingRight) {
-					if (animate %2 == 1 ) {
+					if (myMode.is_blinking) {
+						sprite.bitmap = myRes[AGResources.NAME_FLYER_WHITE_R];
+					}
+					
+					else if (animate %2 == 1 ) {
 						sprite.bitmap = myRes[AGResources.NAME_FLYER_R0_PNG];
 
 					}
@@ -52,7 +56,10 @@
 					}
 				}
 				else {
-					if (animate %2 == 1) {
+					if (myMode.is_blinking) {
+						sprite.bitmap = myRes[AGResources.NAME_FLYER_WHITE_L];
+					}
+					else if (animate %2 == 1) {
 						sprite.bitmap = myRes[AGResources.NAME_FLYER_L0_PNG];
 
 					}

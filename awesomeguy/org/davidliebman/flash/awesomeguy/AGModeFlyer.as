@@ -981,7 +981,7 @@
 						myChallenge[myGame.gameChallenge].total_held_rings = 0;
 						is_blinking = true;
 						//timerStart(7, 3 * 30);//blinking timer 7
-						myTimer[ AGMode.TIMER_07] = new AGTimer(3);//.timerStart(3);
+						myTimer[ AGMode.TIMER_07] = new AGTimer(1.5);//.timerStart(3);
 					}
 					
 				}
