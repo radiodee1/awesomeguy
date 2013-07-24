@@ -160,6 +160,8 @@
 	var ypos:int = scrollBGY + 100;
 	var radar_start:int = 0;
 	var radar_start_scroll:int = 0;
+	var startingx:int = xpos;
+	var startingy:int = ypos;
 	
 	//game progress variables
 	public var game_death:Boolean = false;
@@ -311,12 +313,17 @@
 		}
 		
 		public function setStartingVars():void {
-			scrollBGX = 0;
-			scrollBGY = 50;
-			xpos = scrollBGX + 100;
-			ypos = scrollBGY + 100;
+			xpos = startingx ;
+			ypos = startingy ;
+			scrollBGX = xpos - 100;
+			scrollBGY = ypos - 100;
+			
 			yy=xx=0;
 			flyerGrounded = false;
+		}
+		
+		public function startingPos(xx:int, yy:int):void {
+			
 		}
 		
 		public function componentsInOrder():void {
