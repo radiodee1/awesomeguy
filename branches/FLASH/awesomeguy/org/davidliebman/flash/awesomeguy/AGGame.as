@@ -22,6 +22,7 @@
 	public static var MODE_PAUSE:int = 2;
 	public var gameMode:int = 2;
 	public var lastGameMode:int = 0;
+	public var myModeStack:Array = new Array(MODE_FLYER);
 	
 	public var gamePlanet:int = 0;
 	public var gameMaze:int = 0;
@@ -49,6 +50,8 @@
 				guy.setValues(myStage, myButtons, myRes, this);
 				paused.setValues(myStage, myButtons, myRes, this);
 
+				this.myModeStack.push(AGGame.MODE_PAUSE);
+				
 			if (gameMode == MODE_FLYER) {
 				//modeObj = flyer;
 				modeObj = flyer;
