@@ -178,7 +178,7 @@
 	public var levelcheat:int = 4;
 	public var mapcheat:int = 4; 
 	public var wrapHorizontal:Boolean = true;
-	public var gamePaused:Boolean = false;
+	public var gamePaused:Boolean = true;
 	public var flyerGrounded:Boolean = false;
 	public var preferences_collision:Boolean = true;
 	public var animate_only:Boolean = false;
@@ -241,7 +241,7 @@
 			if (K_ANY && !K_PAUSE) {
 				if (gamePaused) {
 					gamePaused = false;
-
+					myGame.gameMode = myGame.lastGameMode ;
 				}
 				K_PAUSE = false;
 				K_ANY = false;
@@ -252,9 +252,12 @@
 			if (K_PAUSE ) {
 				if ( gamePaused) {
 					gamePaused = false;
+					myGame.gameMode = myGame.lastGameMode ;
 				}
 				else if ( !gamePaused ) {
 					gamePaused = true;
+					myGame.lastGameMode = myGame.gameMode;
+					myGame.gameMode = AGGame.MODE_PAUSE;
 				}
 				K_PAUSE = false;
 				K_ANY = false;
@@ -323,7 +326,7 @@
 		}
 		
 		public function startingPos(xx:int, yy:int):void {
-			
+			// taken from myInvisible[][] array
 		}
 		
 		public function componentsInOrder():void {

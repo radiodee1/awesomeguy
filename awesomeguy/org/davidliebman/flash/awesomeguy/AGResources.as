@@ -71,6 +71,7 @@
 
 	public static var NAME_FLYER_WHITE_L:int = 37;
 	public static var NAME_FLYER_WHITE_R:int = 38;
+	public static var NAME_START_PAUSE_PNG:int = 39;
 
 	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
 	var res01:Array = new Array (R_BITMAP, "bitmap/test2.png");
@@ -117,6 +118,7 @@
 	
 	var res37:Array = new Array (R_BITMAP, "bitmap/flyer_white_l.png");
 	var res38:Array = new Array (R_BITMAP, "bitmap/flyer_white_r.png");
+	var res39:Array = new Array (R_BITMAP, "bitmap/start_pause.png");
 	
 	var i:int = 0;
 		
@@ -177,7 +179,7 @@
 			neededRes.push(res36);
 			neededRes.push(res37);
 			neededRes.push(res38);
-
+			neededRes.push(res39);
 
 			importRes();
 		}

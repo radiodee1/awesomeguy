@@ -19,7 +19,9 @@
 	
 	public static var MODE_FLYER:int = 0;
 	public static var MODE_GUY:int = 1;
-	public var gameMode:int = 0;
+	public static var MODE_PAUSE:int = 2;
+	public var gameMode:int = 2;
+	public var lastGameMode:int = 0;
 	
 	public var gamePlanet:int = 0;
 	public var gameMaze:int = 0;
@@ -32,6 +34,7 @@
 	var modeObj:AGMode ;
 	var guy:AGModeGuy = new AGModeGuy();
 	var flyer:AGModeFlyer = new AGModeFlyer();
+	var paused:AGModePause = new AGModePause();
 		
 		public function AGGame(mystage:Stage, mybuttons:Array, myresources:Array) {
 			
@@ -42,14 +45,21 @@
 			myStage.addEventListener(Event.ENTER_FRAME, setKeys );
 			//trace ("import worked. " );
 			//var getter:AGResources = new AGResources();
-			
-			if (gameMode == MODE_FLYER) {
-				modeObj = flyer;
 				flyer.setValues(myStage, myButtons, myRes, this);
+				guy.setValues(myStage, myButtons, myRes, this);
+				paused.setValues(myStage, myButtons, myRes, this);
+
+			if (gameMode == MODE_FLYER) {
+				//modeObj = flyer;
+				modeObj = flyer;
 			}
 			else if (gameMode == MODE_GUY) {
+				//modeObj = guy;
 				modeObj = guy;
-				guy.setValues(myStage, myButtons, myRes, this);
+			}
+			else if (gameMode == MODE_PAUSE) {
+				//modeObj = paused;
+				modeObj = paused;
 			}
 			
 		}
@@ -75,16 +85,20 @@
 		
 		public function doAnimation() {
 			
-			modeObj.innerGameLoop();
+			//modeObj.innerGameLoop();
 			//trace ("down " + K_DOWN);
 			if (gameMode == MODE_FLYER) {
-
+				modeObj = flyer;
 				//flyer.innerGameLoop();
 			}
 			else if (gameMode == MODE_GUY) {
-				
+				modeObj = guy;
 				//guy.innerGameLoop();
 			}
+			else if (gameMode == MODE_PAUSE) {
+				modeObj = paused;
+			}
+			modeObj.innerGameLoop();
 		}
 	}
 	
