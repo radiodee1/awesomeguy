@@ -270,13 +270,6 @@
 				this.doOnce();
 			}
 			
-			
-			
-			//if (game_advance_challenge) {
-				//myGame.gameChallenge ++;
-				
-			//}
-			
 			componentsInOrder();
 		}
 		
@@ -362,6 +355,14 @@
 				yy = + Y_MOVE;
 			
 			}
+			//if (K_JUMP) {
+				//trace(K_JUMP);
+				
+			//}
+		}
+	
+		public function fireButton():void {
+			
 		}
 	
 		public function cutTile(  tileset:Bitmap, num:int , tilebracket:int ):Bitmap {
@@ -370,9 +371,6 @@
 		public function adjust_x( xxx:int ):int {
 			return 0;
 		}
-
-		
-		
 		
 		////////////////////////
 		public function physicsAdjustments():void {

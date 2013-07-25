@@ -622,13 +622,13 @@
 			}
 		}
 		
-		public function fireButton():void {
+		public override function fireButton():void {
 			var  ii:int, jj:int, kk:int, ll:int, add:int;
 			var flag:Boolean = false;
 			
-			if (K_JUMP) { // using space key
+			if (K_JUMP ) { // using space key
 				
-				if (myTimer[AGMode.TIMER_08].timerDone() || myTimer[AGMode.TIMER_08].started == false) {
+				if (myTimer[AGMode.TIMER_08].timerDone()){ 
 					
 					ii = 0;
 					while (ii  < TOTAL_TORPEDOS  && flag == false) {
@@ -642,7 +642,7 @@
 						} 
 						ii ++;
 					}
-					if (flag == true) myTimer[AGMode.TIMER_08] = new AGTimer(.3);////.timerStart( 0.3);
+					if (flag == true) myTimer[AGMode.TIMER_08] = new AGTimer(.3);
 				}
 	
 	
