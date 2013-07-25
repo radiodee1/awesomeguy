@@ -238,39 +238,12 @@
 			// frame by 'doAnimation()'...
 			myBlocks = new Array();
 			
-			if (K_ANY && !K_PAUSE) {
-				if (gamePaused) {
-					gamePaused = false;
-					myGame.gameMode = myGame.lastGameMode ;
-				}
-				K_PAUSE = false;
-				K_ANY = false;
-				myButtons[AGKeys.BUTTON_PAUSE].setValBool(false);
-				myButtons[AGKeys.BUTTON_ANY].setValBool(false);
-			}
-			
-			if (K_PAUSE ) {
-				if ( gamePaused) {
-					gamePaused = false;
-					myGame.gameMode = myGame.lastGameMode ;
-				}
-				else if ( !gamePaused ) {
-					gamePaused = true;
-					myGame.lastGameMode = myGame.gameMode;
-					myGame.gameMode = AGGame.MODE_PAUSE;
-				}
-				K_PAUSE = false;
-				K_ANY = false;
-				myButtons[AGKeys.BUTTON_PAUSE].setValBool(false);
-				myButtons[AGKeys.BUTTON_ANY].setValBool(false);
-			}
-			
 						
 			animate ++
 			if (animate > 4) animate = 0;
 			
 			setKeys();
-			if (gamePaused) return;			
+			//if (myGame.gamePaused) return;			
 			
 			myStage.removeChildren();
 			
