@@ -77,7 +77,7 @@
 		public function doAnimation() {
 			var current:int = 0;
 			current = this.myModeStack[this.myModeStack.length - 1];
-			trace (this.myModeStack);
+			//trace (this.myModeStack);
 			switch(current) {
 				case AGGame.MODE_START:
 					if (K_ANY ) {
@@ -174,6 +174,8 @@
 			else if (gameMode == MODE_START) {
 				modeObj = paused;
 			}
+			trace( this.K_JUMP);
+			
 			modeObj.innerGameLoop();
 		}
 	}
