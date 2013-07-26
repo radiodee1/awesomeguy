@@ -632,9 +632,9 @@
 					
 					ii = 0;
 					while (ii  < TOTAL_TORPEDOS  && flag == false) {
-	
+						
 						if (myTorpedo[ii].active == false ) {
-	
+						
 							
 							this.addTorpedo(ii, xpos, ypos);
 							

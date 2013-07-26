@@ -317,6 +317,7 @@
 				myTorpedo.push(new AGSpriteTorpedo(this, TORPEDO_UNUSED));
 			}
 			
+			
 		}
 		public function initChallenges():void {
 			myChallenge = new Array();
