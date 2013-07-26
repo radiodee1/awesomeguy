@@ -10,6 +10,7 @@
 			public var total_bubble_0:int, total_bubble_1:int, total_bubble_2:int, total_bubble_3:int;
 			public var total_invader_1:int, total_invader_2:int, total_invader_3:int;
 
+			public var total_placed_rings:int;
 			public var total_placed_bubble_1:int, total_placed_bubble_2:int, total_placed_bubble_3:int;
 			public var total_placed_invader_1:int, total_placed_invader_2:int, total_placed_invader_3:int;
 
@@ -31,6 +32,7 @@
 			this.total_invader_2 = 0;
 			this.total_invader_3 = 0;
 			
+			this.total_placed_rings = 0;
 			this.total_placed_bubble_1 = 0;
 			this.total_placed_bubble_2 = 0;
 			this.total_placed_bubble_3 = 0;
@@ -67,7 +69,7 @@
 						this.total_placed_invader_3 ++;
 					break;
 					case AGMode.S_RING:
-						
+						this.total_placed_rings ++;
 					break;
 				}
 				if (sprite.sprite_type == AGMode.S_LINE || sprite.sprite_type == AGMode.S_LINE_2) {
@@ -83,7 +85,7 @@
 					this.total_placed_invader_3++;
 				}
 				if (sprite.sprite_type == AGMode.S_RING && sprite.active == false) {
-					//this.total_held_rings ++;
+					//this.total_rings ++;
 				}
 				if (sprite.active == true ) {
 					switch( sprite.sprite_type) {
@@ -114,12 +116,12 @@
 				}
 				
 			}
-			//trace("--",total_rings, total_bubble_1, total_bubble_2, total_bubble_3);
+			trace("total rings",total_rings, "rings", this.rings, "placed", this.total_placed_rings);
 
 		}
 		public function checkTotals():Boolean {
 			var test:Boolean = true;
-			if ( 	total_rings +
+			if ( 	
 					total_bubble_0 +
 					total_bubble_1 +
 					total_bubble_2 +
@@ -128,6 +130,7 @@
 					total_invader_2 +
 					total_invader_3
 					> 0 ||
+					total_placed_rings < this.rings ||
 					total_placed_bubble_1 < this.bubble_1 ||
 					total_placed_bubble_2 < this.bubble_2 ||
 					total_placed_invader_1 < this.invader_1 ||

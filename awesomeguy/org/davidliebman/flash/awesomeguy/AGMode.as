@@ -192,6 +192,7 @@
 	
 	public var myVisible:Array ;
 	public var myInvisible:Array ;
+	public var myHold:Array = new Array();
 	
 	var sprite:Sprite = new Sprite();
 	public var flyersprite:Bitmap; // for collision detection
@@ -279,6 +280,7 @@
 		
 		public function advanceChallenge():void {
 			myGame.gameChallenge ++;
+			
 		}
 		
 		public function setStartingVars():void {
@@ -321,9 +323,7 @@
 		}
 		public function initChallenges():void {
 			myChallenge = new Array();
-			for (var ii:int = 0; ii < TOTAL_CHALLENGE; ii ++ ) {
-				myChallenge.push(new AGChallenge());
-			}
+			
 		}
 		public function initAGTimer():void {
 			myTimer = new Array();
@@ -503,7 +503,7 @@
 		
 		
 		public function getRand(min:int, max:int):int {
-			return min + ( max - min ) * Math.random();
+			return min + (( max - min ) * Math.random());
 		}
 		
 		public function collisionSimple( a:Bitmap, b:Bitmap ):Boolean {
