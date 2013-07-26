@@ -9,7 +9,7 @@
 	
 	public class AGModeFlyer extends AGMode{
 
-		public var total_rings:int;
+		
 		public var flyerrings:AGSprite ;
 		
 		public var animate_explosion:Boolean = false;
@@ -112,7 +112,7 @@
 			
 			prepTiles() ;
 			prepRings() ;
-			prepRingSprites();
+			//prepRingSprites();
 			
 			radar_start = xpos - scrollBGX;
 			radar_start_scroll =  scrollBGX;
@@ -127,9 +127,17 @@
 		
 		public override function advanceChallenge():void {
 			super.advanceChallenge();
-
+			myHold = new Array();
+			if (myGame.gameChallenge >= this.myChallenge.length) {
+				myGame.gameChallenge = 0;
+				//fillChallenges();
+			}
+			trace(myGame.gameChallenge, "<");
+			//initChallenges();
+			//fillChallenges();
+			
 			prepRings();
-			prepRingSprites();
+			
 			setStartingTimers();
 		}
 		public function setStartingTimers():void {
@@ -268,71 +276,64 @@
 			//int i,j, k;
 			var num_rings:int, num_spaces:int;
 		
-			myChallenge[myGame.gameChallenge].total_held_rings = 0;
-			
+			trace(myGame.gameChallenge, "<-0");
+			//myChallenge[myGame.gameChallenge].total_held_rings = 0;
+			trace(myGame.gameChallenge, "<-1");
+
 			//the first challenges to place are the rings.
 			num_rings = myChallenge[myGame.gameChallenge].rings;
-			num_spaces = candidate_num;
-		
+			num_spaces = candidate.length;
+			trace(myGame.gameChallenge, "<-2", num_rings);
+			
+			//var myCandidate:Candidate = new Candidate();
+			//myCandidate.value = B_SPACE;
+			//candidate.push(myCandidate);
+			
 			for (i = 0; i < num_rings; i ++ ) {
 		
 				j = getRand(0, num_spaces - ( i )  );
 		
 				
-				for (k = 0; k <= j; k ++) {
+				for (k = 0; k < j; k ++) {
 		
 					while (candidate[k].value != B_SPACE ) {
 						k ++;
 					}
-					if ( candidate[k ].value == B_SPACE && k == j ){//-1) {
+					if ( candidate[k ].value == B_SPACE && k == j-1 ){//-1) {
 						candidate[k].value = B_PRIZE;
 		
 					}
 		
-					else if (candidate[k ].value != B_SPACE && k == j ){
+					else if (candidate[k ].value != B_SPACE && k == j -1){
 						while (candidate[k].value != B_SPACE ) {
 							k++;
 		
 						}
 						if ( candidate[k ].value == B_SPACE  ){//-1) {
 							candidate[k].value = B_PRIZE;
-		
+							trace("change value");
 						}
 						//LOGE("else condition");
 					}
 				}
 			}
-			for (i = 0; i< num_spaces; i ++ ) {
+			trace(myGame.gameChallenge, "<-3 length:", candidate.length);
+			myChallenge[myGame.gameChallenge].rings = 0;
+			for (i = 0; i< candidate.length ; i ++ ) {
 				
-				if (candidate[i].value == B_PRIZE ) cheat =   ( mapcheat );//+ 1 );
-				else cheat = 0;
-				myInvisible[candidate[i].y][candidate[i].x] = candidate[i].value - cheat;
-				if (candidate[i].value == B_PRIZE) {
-					total_rings ++;
-					//trace ("PRIZE " + (candidate[i].value - cheat));
+				if (candidate[i].value == B_PRIZE ) {
+					addRing(candidate[i].x, candidate[i].y);
+					myChallenge[myGame.gameChallenge].rings ++;
 				}
+				
+				
 			}
 			
 			candidate = null;
 			/////////////////////////////
 		}
 				
-		public function prepRingSprites():void {
-			var i:int, j:int , k:int;
-			for (i = 0; i < myVert; i ++ ) {
-				
-				for (j = 0 ; j < myHoriz; j ++ ) {
-					k = myInvisible[i][j];
-					
-					
-					if (k + mapcheat == AGMode.B_PRIZE) {
-						addRing(j, i );
-						//trace("add ring");
-					}
-				}
-				
-			}
-		}
+		
 		
 		public override function startingPos(xx:int, yy:int):void {
 			xpos = xx * TILE_WIDTH;
@@ -421,8 +422,9 @@
 			temp.quality_0 = xx;
 			temp.quality_1 = yy;
 			// add it to the sprite list
-			//mySprite.push(temp);
-			myTemp.push(temp);
+			mySprite.push(temp);
+			trace("adding ring");
+			//myTemp.push(temp);
 			//myChallenge[ myGame.gameChallenge].total_rings ++;
 			//return temp;
 		}
@@ -515,6 +517,9 @@
 				mySprite.push(myTemp[i]);
 			}
 			myTemp = new Array();
+			for (var i:int = 0; i < myHold.length; i ++ ) {
+				mySprite.push(myHold[i]);
+			}
 		}
 		
 		public function doTimers():void {
