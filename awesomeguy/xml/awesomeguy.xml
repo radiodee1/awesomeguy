@@ -856,7 +856,8 @@
 	<challenges>
 		<invaders> 5,1,1,2,0,0,0,0 ,0,0,0,0,0,0,0,1 </invaders>
 		<invaders> 2,3,0,0,0,0,0,0 ,0,0,0,0,0,0,0,1 </invaders>
-		<!-- invaders> 1,1,0,0,0,0,0,0 ,0,0,0,0,0,0,0,1 </invaders>
+		<!-- 
+		<invaders> 1,1,0,0,0,0,0,0 ,0,0,0,0,0,0,0,1 </invaders>
 		
 		<invaders> 1,2,0,0,0,0,0,0 ,0,0,0,0,0,0,0,1 </invaders>
   
