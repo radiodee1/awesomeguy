@@ -11,7 +11,7 @@
 		public function AGSpriteTorpedo(mymode:AGMode, kind:int):void {
 			super(mymode,kind);
 			
-			active = true;
+			active = false;
 		}
 		public override function updateSprite():void {
 				

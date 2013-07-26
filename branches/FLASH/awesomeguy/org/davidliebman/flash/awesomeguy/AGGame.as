@@ -174,7 +174,7 @@
 			else if (gameMode == MODE_START) {
 				modeObj = paused;
 			}
-			trace( this.K_JUMP);
+			
 			
 			modeObj.innerGameLoop();
 		}
