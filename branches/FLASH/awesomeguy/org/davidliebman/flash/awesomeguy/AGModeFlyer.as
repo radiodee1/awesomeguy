@@ -130,11 +130,12 @@
 			myHold = new Array();
 			if (myGame.gameChallenge >= this.myChallenge.length) {
 				myGame.gameChallenge = 0;
-				//fillChallenges();
+				
 			}
 			trace(myGame.gameChallenge, "<");
+			
 			//initChallenges();
-			//fillChallenges();
+			fillChallenges();
 			
 			prepRings();
 			
@@ -145,13 +146,9 @@
 			myTimer[AGMode.TIMER_00] = new AGTimer(3); // a few seconds 
 			myTimer[AGMode.TIMER_01] = new AGTimer(.1); // 3 refreshes -- screen alert timer
 			myTimer[AGMode.TIMER_08] = new AGTimer(5/30);// torpedos
-			
 			myTimer[AGMode.TIMER_02] = new AGTimer(1);// about a second
-			
 			myTimer[AGMode.TIMER_03] = new AGTimer(2);// about 2 sec
-			
 			myTimer[AGMode.TIMER_04] = new AGTimer(2);// 2 sec
-			
 			myTimer[AGMode.TIMER_06] = new AGTimer(2); // 2 sec
 		}
 		
@@ -250,7 +247,7 @@
 		public function prepRings():void {
 			var candidate:Array = new Array();
 			
-			var candidate_num:int = 0;
+			//var candidate_num:int = 0;
 			var i:int, j:int, k:int, cheat:int;
 			
 			for (i = 0 ; i < myVert ; i ++ ) {
@@ -267,7 +264,7 @@
 						myCandidate.type = B_PRIZE ;
 						myInvisible[i][j] = myCandidate.value;
 						candidate.push(myCandidate);
-						candidate_num ++;
+						//candidate_num ++;
 					}
 				}
 			}
@@ -899,7 +896,10 @@
 								mySprite.push(temp);
 								myRes[AGResources.NAME_BOOM_MP3].play();
 								sprite.active = false;
-								myChallenge[myGame.gameChallenge].total_held_rings ++ ;
+								sprite.visible = false;
+								
+								
+								//myChallenge[myGame.gameChallenge].total_held_rings ++ ;
 							break;
 							
 							case AGMode.S_GATOR:
