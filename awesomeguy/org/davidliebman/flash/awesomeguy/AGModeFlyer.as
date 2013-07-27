@@ -130,6 +130,7 @@
 		public override function advanceChallenge():void {
 			super.advanceChallenge();
 			myHold = new Array();
+			fillChallenges();
 			if (myGame.gameChallenge >= this.myChallenge.length) {
 				myGame.gameChallenge = 0;
 				
