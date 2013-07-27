@@ -84,6 +84,7 @@
 			this.game_death = false;
 			if(game_reset_start == true) {
 				setStartingVars();
+				
 				game_reset_start = false;
 			}
 			
@@ -114,9 +115,10 @@
 			prepRings() ;
 			//prepRingSprites();
 			
-			radar_start = xpos - scrollBGX;
-			radar_start_scroll =  scrollBGX;
-			
+			if (this.game_reset_start ) {
+				radar_start = xpos - scrollBGX;
+				radar_start_scroll =  scrollBGX;
+			}
 			
 			agflyer = new AGSprite(this,AGMode.S_FLYER);
 			agflyer.active = true;
@@ -132,14 +134,15 @@
 				myGame.gameChallenge = 0;
 				
 			}
-			trace(myGame.gameChallenge, "<");
+			//this.game_reset_start = false;
+			//trace(myGame.gameChallenge, "<");
+			doOnce();
+
+			//fillChallenges();
 			
-			//initChallenges();
-			fillChallenges();
+			//prepRings();
 			
-			prepRings();
-			
-			setStartingTimers();
+			//setStartingTimers();
 		}
 		public function setStartingTimers():void {
 			
@@ -201,7 +204,7 @@
 					smallArray.push(int (tempArray[ (i * myHoriz) + j ] ) );
 					if (k + mapcheat == AGMode.B_MONSTER) addMonster(j,i ,0);
 					if (k + mapcheat == AGMode.B_PLATFORM) addPlatform(j , i );
-					if (k + mapcheat == AGMode.B_START) startingPos(j,i);
+					if (k + mapcheat == AGMode.B_START) startingPos(j,i); // only do on 'reset start'
 				}
 				myInvisible.push(smallArray);
 			}
@@ -333,12 +336,20 @@
 		
 		
 		public override function startingPos(xx:int, yy:int):void {
-			xpos = xx * TILE_WIDTH;
-			ypos = yy * TILE_HEIGHT;
 			startingx = xpos;
 			startingy = ypos;
+			
+			if (!this.game_reset_start) return;
+			xpos = xx * TILE_WIDTH;
+			ypos = yy * TILE_HEIGHT;
+			
 			scrollBGX = xpos - 100;
 			scrollBGY = ypos - 100;
+			
+			startingx = xpos;
+			startingy = ypos;
+			
+			
 		}
 		
 		public function addMonster(monster_x:int, monster_y:int,  monster_animate:int):void {
