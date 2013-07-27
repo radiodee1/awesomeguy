@@ -116,12 +116,12 @@
 				}
 				
 			}
-			trace("total rings",total_rings, "rings", this.rings, "placed", this.total_placed_rings);
+			//trace("total rings",total_rings, "rings", this.rings, "placed", this.total_placed_rings);
 
 		}
 		public function checkTotals():Boolean {
 			var test:Boolean = true;
-			if ( 	
+			if ( 	total_rings +
 					total_bubble_0 +
 					total_bubble_1 +
 					total_bubble_2 +
