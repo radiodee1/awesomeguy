@@ -22,10 +22,14 @@ public class AG20Chooser extends javax.swing.JFrame {
         String start[] = new String[0];
         FlyerjFrame flyer = new FlyerjFrame();
         flyer.main(start);
+        this.setVisible(false);
     }
     
     public void launchAG20XML() {
-        
+        String start[] = new String[0];
+        AG20jFrame ag = new AG20jFrame();
+        ag.main(start);
+        this.setVisible(false);
     }
     
     /**
