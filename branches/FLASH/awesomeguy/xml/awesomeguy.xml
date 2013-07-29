@@ -868,6 +868,12 @@
 		
 	</challenges>
 
+	<text>
+		<message number="1">find a maze!! </message>
+		<message number="2">find a key!! </message>
+		<message number="3">go back to ship!! </message>
+	</text>
+	
 	<maze number="1">
 		<horizontal>192</horizontal>
 		<vertical>32</vertical>
