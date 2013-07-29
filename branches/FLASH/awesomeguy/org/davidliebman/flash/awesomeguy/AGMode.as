@@ -172,6 +172,7 @@
 	public var game_advance_maze:Boolean = false;
 	public var game_enter_maze:Boolean = false;
 	public var game_end_level:Boolean = false;
+	public var game_start:Boolean = false;
 	
 	public var facingRight:Boolean = false;
 	public var animate:int = 0;
@@ -203,6 +204,7 @@
 
 		public function AGMode() {
 			// constructor code
+			this.game_start = true;
 		}
 		
 		public function setValues(mystage:Stage, mybuttons:Array, myresources:Array, mygame:AGGame) {
