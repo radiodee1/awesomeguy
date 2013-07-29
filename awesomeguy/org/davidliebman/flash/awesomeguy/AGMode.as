@@ -174,7 +174,7 @@
 	public var game_end_level:Boolean = false;
 	public var game_start:Boolean = false;
 	
-	public var facingRight:Boolean = false;
+	public var facingRight:Boolean = true;
 	public var animate:int = 0;
 	public var levelcheat:int = 4;
 	public var mapcheat:int = 4; 
