@@ -130,20 +130,18 @@
 		public override function advanceChallenge():void {
 			super.advanceChallenge();
 			myHold = new Array();
-			fillChallenges();
-			if (myGame.gameChallenge >= this.myChallenge.length) {
+			
+			
+			
+			if (myGame.gameChallenge >= challenges) {
 				myGame.gameChallenge = 0;
 				
 			}
-			//this.game_reset_start = false;
-			//trace(myGame.gameChallenge, "<");
+			
+			
 			doOnce();
 
-			//fillChallenges();
 			
-			//prepRings();
-			
-			//setStartingTimers();
 		}
 		public function setStartingTimers():void {
 			
@@ -248,6 +246,7 @@
 			
 		}
 		
+		
 		public function prepRings():void {
 			var candidate:Array = new Array();
 			
@@ -277,18 +276,12 @@
 			//int i,j, k;
 			var num_rings:int, num_spaces:int;
 		
-			trace(myGame.gameChallenge, "<-0");
-			//myChallenge[myGame.gameChallenge].total_held_rings = 0;
-			trace(myGame.gameChallenge, "<-1");
-
+			
 			//the first challenges to place are the rings.
 			num_rings = myChallenge[myGame.gameChallenge].rings;
 			num_spaces = candidate.length;
-			trace(myGame.gameChallenge, "<-2", num_rings);
 			
-			//var myCandidate:Candidate = new Candidate();
-			//myCandidate.value = B_SPACE;
-			//candidate.push(myCandidate);
+			
 			
 			for (i = 0; i < num_rings; i ++ ) {
 		
@@ -312,13 +305,13 @@
 						}
 						if ( candidate[k ].value == B_SPACE  ){//-1) {
 							candidate[k].value = B_PRIZE;
-							trace("change value");
+							
 						}
 						//LOGE("else condition");
 					}
 				}
 			}
-			trace(myGame.gameChallenge, "<-3 length:", candidate.length);
+			
 			myChallenge[myGame.gameChallenge].rings = 0;
 			for (i = 0; i< candidate.length ; i ++ ) {
 				
@@ -432,7 +425,7 @@
 			temp.quality_1 = yy;
 			// add it to the sprite list
 			mySprite.push(temp);
-			trace("adding ring");
+			
 			//myTemp.push(temp);
 			//myChallenge[ myGame.gameChallenge].total_rings ++;
 			//return temp;
@@ -522,11 +515,12 @@
 		}
 		
 		public function addSprites():void {
-			for(var i:int = 0; i < myTemp.length; i ++ ) {
+			var i:int = 0;
+			for( i= 0; i < myTemp.length; i ++ ) {
 				mySprite.push(myTemp[i]);
 			}
 			myTemp = new Array();
-			for (var i:int = 0; i < myHold.length; i ++ ) {
+			for ( i = 0; i < myHold.length; i ++ ) {
 				mySprite.push(myHold[i]);
 			}
 		}
