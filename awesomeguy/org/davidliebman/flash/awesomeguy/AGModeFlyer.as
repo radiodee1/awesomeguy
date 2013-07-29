@@ -23,6 +23,7 @@
 		
 		public function AGModeFlyer() {
 			// constructor code
+			super();
 		}
 
 
@@ -82,10 +83,10 @@
 			myDraw = new AGDrawFlyer(this, myRes, myStage, myScreenBG);
 			
 			this.game_death = false;
-			if(game_reset_start == true) {
+			if(game_reset_start == true || this.game_start) {
 				setStartingVars();
 				
-				game_reset_start = false;
+				//game_reset_start = false;
 			}
 			
 			
@@ -124,7 +125,8 @@
 			agflyer.active = true;
 			agflyer.bottomBB = 32;
 
-			
+			this.game_start = false;
+			this.game_reset_start = false;
 		}
 		
 		public override function advanceChallenge():void {
@@ -333,17 +335,18 @@
 			startingx = xpos;
 			startingy = ypos;
 			
-			if (!this.game_reset_start) return;
-			xpos = xx * TILE_WIDTH;
-			ypos = yy * TILE_HEIGHT;
 			
-			scrollBGX = xpos - 100;
-			scrollBGY = ypos - 100;
+			if (this.game_reset_start || this.game_start) {
+				xpos = xx * TILE_WIDTH;
+				ypos = yy * TILE_HEIGHT;
 			
-			startingx = xpos;
-			startingy = ypos;
+				scrollBGX = xpos - 100;
+				scrollBGY = ypos - 100;
 			
-			
+				startingx = xpos;
+				startingy = ypos;
+				
+			}
 		}
 		
 		public function addMonster(monster_x:int, monster_y:int,  monster_animate:int):void {
