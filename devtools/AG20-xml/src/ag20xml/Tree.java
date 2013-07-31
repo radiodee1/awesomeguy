@@ -57,10 +57,11 @@ public class Tree {
         }
         System.out.println(newFileName);
         setupTest();
-        find(test);
+        
     }
     public static void main( String args[]) {
         Tree test = new Tree(new String());
+        test.writeOutputFile();
     }
     
     public void setupTest() {
@@ -75,7 +76,7 @@ public class Tree {
         test.add(Tree.N_PLANET);
     }
     public void writeOutputFile() {
-        
+        this.printOption = true;
         try{
           // Create file 
           FileWriter fstream = new FileWriter(newFileName);
@@ -94,7 +95,7 @@ public class Tree {
     }
     
     public void printXml() {
-        
+        find(test);
     }
     
     public void clearList() {
@@ -135,23 +136,27 @@ public class Tree {
     }
     
     public void doPrintOrParse(Info i)  {
+        
+        //pop();
         if (this.printOption) {
             try {
                 out.write("<" + i.name + ">\n");
-            } catch (IOException ex) {
+            } catch (Exception ex) {
                 ex.printStackTrace();
                 //Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        else {
-            last.add(i, 0);
-            last = i;
+        if(true) {
+            //if (last.type == Tree.C_LIST) 
+            last.add(i, 0); // alsways add node
+            
+            if( last.type != Tree.C_LIST) last = i;
         }
         if (this.addToFormOption) {
             
         }
         pop();
-        System.out.println("at > " + i.name);
+        System.out.println("at    > " + i.name );
     }
     
     public void closePrintOrParse(Info i) {
@@ -163,14 +168,16 @@ public class Tree {
                 //Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+        System.out.println("close > " + i.name);
     }
+    
+    
     ////////////////// HERE STARTS PARSE ////////////////////////
     public void follow( ) {
         
         String current = next();
-        if (current.contentEquals(Tree.N_GAME)) {
-            info = new Info(Tree.N_GAME, Tree.C_LIST, false);
+        if (this.next().contentEquals(Tree.N_GAME)) {
+            Info info = new Info(Tree.N_GAME, Tree.C_LIST, false);
             head = last;
             doPrintOrParse(info);
             game();
@@ -183,7 +190,7 @@ public class Tree {
         //String current = next();
         while(next().contentEquals(Tree.N_PLANET)) {
             
-            info = new Info(Tree.N_PLANET, Tree.C_LIST, true);
+            Info info = new Info(Tree.N_PLANET, Tree.C_LIST, true);
             
             //head.add(info, 0);// head node
             //last = info;
@@ -203,31 +210,31 @@ public class Tree {
             
             if (this.next().contentEquals(Tree.N_HORIZON)) {
 
-                info = new Info(Tree.N_HORIZON, Tree.C_LIST, false);
+                Info info = new Info(Tree.N_HORIZON, Tree.C_LIST, false);
                 doPrintOrParse(info);
                 horizon();
                 closePrintOrParse(info);
             }
             while (this.next().contentEquals(Tree.N_MAZE)) {
-                info = new Info(Tree.N_MAZE, Tree.C_LIST, true);
+                Info info = new Info(Tree.N_MAZE, Tree.C_LIST, true);
                 doPrintOrParse(info);
                 maze();
                 closePrintOrParse(info);
             }
             if (this.next().contentEquals(Tree.N_SPECIAL)) {
-                info = new Info(Tree.N_SPECIAL, Tree.C_LIST, true);
+                Info info = new Info(Tree.N_SPECIAL, Tree.C_LIST, true);
                 doPrintOrParse(info);
                 special();
                 closePrintOrParse(info);
             }
             if (this.next().contentEquals(Tree.N_CHALLENGES)) {
-                info = new Info(Tree.N_CHALLENGES, Tree.C_LIST, true);
+                Info info = new Info(Tree.N_CHALLENGES, Tree.C_LIST, true);
                 doPrintOrParse(info);
                 challenges();
                 closePrintOrParse(info);
             }
             if (this.next().contentEquals(Tree.N_TEXT)) {
-                info = new Info(Tree.N_TEXT, Tree.C_LIST, false);
+                Info info = new Info(Tree.N_TEXT, Tree.C_LIST, false);
                 doPrintOrParse(info);
                 text();
                 closePrintOrParse(info);
@@ -237,7 +244,7 @@ public class Tree {
     public void text() {
         String current = next();
         if (current.contentEquals(Tree.N_MESSAGE)) {
-            info = new Info(Tree.N_MESSAGE, Tree.C_STRING, true);
+            Info info = new Info(Tree.N_MESSAGE, Tree.C_STRING, true);
             doPrintOrParse(info);
             closePrintOrParse(info);
         }
@@ -255,36 +262,38 @@ public class Tree {
                 this.next().contentEquals(Tree.N_INVISIBLE)) {
             
             while (this.next().contentEquals(Tree.N_SPECIAL) ) {
-                info = new Info(Tree.N_SPECIAL, Tree.C_LIST, true);
+                Info info = new Info(Tree.N_SPECIAL, Tree.C_LIST, true);
                 doPrintOrParse(info);
                 special();
                 closePrintOrParse(info);
             }
             while (this.next().contentEquals(Tree.N_CHALLENGES)) {
-                info = new Info(Tree.N_CHALLENGES, Tree.C_LIST, true);
+                Info info = new Info(Tree.N_CHALLENGES, Tree.C_LIST, true);
                 doPrintOrParse(info);
                 challenges();
                 closePrintOrParse(info);
             }
             if (this.next().contentEquals(Tree.N_HORIZONTAL)) {
-                info = new Info(Tree.N_HORIZONTAL, Tree.C_STRING, false);
+                Info info = new Info(Tree.N_HORIZONTAL, Tree.C_STRING, false);
+                info.content = new String("number");
                 doPrintOrParse(info);
                 closePrintOrParse(info);
             }
             if (this.next().contentEquals(Tree.N_VERTICAL)) {
-                info = new Info(Tree.N_VERTICAL, Tree.C_STRING, false);
+                Info info = new Info(Tree.N_VERTICAL, Tree.C_STRING, false);
+                info.content = new String("number");
                 doPrintOrParse(info);
                 closePrintOrParse(info);
 
             }
             if (this.next().contentEquals(Tree.N_VISIBLE)) {
-                info = new Info(Tree.N_VISIBLE, Tree.C_STRING, false);
+                Info info = new Info(Tree.N_VISIBLE, Tree.C_STRING, false);
                 doPrintOrParse(info);
                 closePrintOrParse(info);
 
             }
             if (this.next().contentEquals(Tree.N_INVISIBLE)) {
-                info = new Info(Tree.N_INVISIBLE, Tree.C_STRING, false);
+                Info info = new Info(Tree.N_INVISIBLE, Tree.C_STRING, false);
                 doPrintOrParse(info);
                 closePrintOrParse(info);
             }
@@ -299,22 +308,22 @@ public class Tree {
                 this.next().contentEquals(Tree.N_INVISIBLE)) {
             
             if (this.next().contentEquals(Tree.N_HORIZONTAL)) {
-                info = new Info(Tree.N_HORIZONTAL, Tree.C_STRING, false);
+                Info info = new Info(Tree.N_HORIZONTAL, Tree.C_STRING, false);
                 doPrintOrParse(info);
                 closePrintOrParse(info);
             }
             if (this.next().contentEquals(Tree.N_VERTICAL)) {
-                info = new Info(Tree.N_VERTICAL, Tree.C_STRING, false);
+                Info info = new Info(Tree.N_VERTICAL, Tree.C_STRING, false);
                 doPrintOrParse(info);
                 closePrintOrParse(info);
             }
             if (this.next().contentEquals(Tree.N_VISIBLE)) {
-                info = new Info(Tree.N_VISIBLE, Tree.C_STRING, false);
+                Info info = new Info(Tree.N_VISIBLE, Tree.C_STRING, false);
                 doPrintOrParse(info);
                 closePrintOrParse(info);
             }
             if (this.next().contentEquals(Tree.N_INVISIBLE)) {
-                info = new Info(Tree.N_INVISIBLE, Tree.C_STRING, false);
+                Info info = new Info(Tree.N_INVISIBLE, Tree.C_STRING, false);
                 doPrintOrParse(info);
                 closePrintOrParse(info);
             }
@@ -324,7 +333,7 @@ public class Tree {
     public void special() {
         String current = next();
         if (current.contentEquals(Tree.N_BLOCK)) {
-            info = new Info(Tree.N_BLOCK, Tree.C_STRING, true);
+            Info info = new Info(Tree.N_BLOCK, Tree.C_STRING, true);
             doPrintOrParse(info);
             closePrintOrParse(info);
         }
@@ -332,7 +341,7 @@ public class Tree {
     public void challenges() {
         String current = next();
         if (current.contentEquals(Tree.N_INVADERS)) {
-            info = new Info(Tree.N_INVADERS, Tree.C_STRING, true);
+            Info info = new Info(Tree.N_INVADERS, Tree.C_STRING, true);
             doPrintOrParse(info);
             closePrintOrParse(info);
         }
