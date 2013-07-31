@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 
 /**
  *
@@ -24,6 +26,10 @@ public class Tree {
     public Info last = new Info("", 0);
     public boolean printOption = false;
     public boolean addToFormOption = true;
+    
+    public boolean readXML = true;
+    public ParseXML parse ;
+    public int eventType = 0;
     
     public String newFileName = new String();
     public BufferedWriter out;
@@ -51,17 +57,23 @@ public class Tree {
     
     public Tree(String fileName) {
         clearList();
+        parse = new ParseXML("awesomeguy.xml");
+        try {
+            parse.setXmlPullParser();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } 
         newFileName = fileName.trim() + ".mod.xml";
         if (newFileName.contentEquals(".mod.xml")) {
             this.newFileName = new String("output.mod.xml");
         }
         System.out.println(newFileName);
-        setupTest();
-        
+        this.writeOutputFile();
+        find();
     }
     public static void main( String args[]) {
         Tree test = new Tree(new String());
-        test.writeOutputFile();
+        
     }
     
     public void setupTest() {
@@ -95,7 +107,7 @@ public class Tree {
     }
     
     public void printXml() {
-        find(test);
+        find();
     }
     
     public void clearList() {
@@ -120,24 +132,51 @@ public class Tree {
     
     public String next() {
         String val = new String();
-        if (this.position.isEmpty()) {
-            val = new String();
+        if(! this.readXML) {
+        
+            if (this.position.isEmpty()) {
+                val = new String();
+            }
+            else {
+                //val = this.position.remove(0);
+                val = this.position.get(0);
+            }
         }
         else {
-            //val = this.position.remove(0);
-            val = this.position.get(0);
+            try {
+                val = new String();
+                while (eventType == XmlPullParser.START_DOCUMENT ) {
+                    parse.mXpp.next();
+                    eventType = parse.mXpp.getEventType();
+                }
+                
+                val = parse.mXpp.getName();
+            } catch (Exception ex) {
+                Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        
+        System.out.println(val);
         return val;
     }
     
     public void pop() {
-        this.position.remove(0);
+        if ( ! this.readXML) {
+            this.position.remove(0);
+        }
+        else {
+            try {
+                parse.mXpp.nextTag();
+            } catch (XmlPullParserException ex) {
+                Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
     public void doPrintOrParse(Info i)  {
         
-        //pop();
+        
         if (this.printOption) {
             try {
                 out.write("<" + i.name + ">\n");
@@ -152,9 +191,8 @@ public class Tree {
             
             if( last.type != Tree.C_LIST) last = i;
         }
-        if (this.addToFormOption) {
-            
-        }
+        
+        
         pop();
         System.out.println("at    > " + i.name );
     }
@@ -168,6 +206,11 @@ public class Tree {
                 //Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        if (this.readXML) {
+            if (this.eventType != XmlPullParser.END_TAG) {
+                System.out.println("bad close tag");
+            }
+        }
         System.out.println("close > " + i.name);
     }
     
@@ -175,7 +218,7 @@ public class Tree {
     ////////////////// HERE STARTS PARSE ////////////////////////
     public void follow( ) {
         
-        String current = next();
+        
         if (this.next().contentEquals(Tree.N_GAME)) {
             Info info = new Info(Tree.N_GAME, Tree.C_LIST, false);
             head = last;
