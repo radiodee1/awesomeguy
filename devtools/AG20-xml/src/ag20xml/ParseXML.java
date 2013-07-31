@@ -17,7 +17,7 @@ import java.util.*;
 		//private Context mContext;
 		//private GameValues mGameV;
 		public XmlPullParser mXpp;
-		public String mXMLFilename = new String("awesomeguy.xml");
+		public String mXMLFilename = new String("awesomeguy-format.xml");
 
                 
 		

@@ -2,8 +2,8 @@
 <game>
 	<planet number="1">
 
-	<horizontal>192</horizontal>
-	<vertical>32</vertical>
+	<horizontal> 192 </horizontal>
+	<vertical> 32 </vertical>
 
 	<horizon>
 		<visible>

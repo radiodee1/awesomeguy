@@ -94,7 +94,7 @@ public class Tree {
           FileWriter fstream = new FileWriter(newFileName);
           out = new BufferedWriter(fstream);
           out.write("<?xml version=\"1.0\" ?>\n");
-          out.write("<!-- awesomeguy.xml file -->\n");
+          out.write("<!-- awesomeguy.xml file 2.0 -->\n");
           
           this.printXml();
           
@@ -144,13 +144,18 @@ public class Tree {
         }
         else {
             try {
-                val = new String();
+                
                 while (eventType == XmlPullParser.START_DOCUMENT ) {
                     parse.mXpp.next();
                     eventType = parse.mXpp.getEventType();
                 }
-                
-                val = parse.mXpp.getName();
+                eventType = parse.mXpp.getEventType();
+                if (eventType != XmlPullParser.END_DOCUMENT) {
+                    val = parse.mXpp.getName();
+                }
+                else {
+                    val = new String();
+                }
             } catch (Exception ex) {
                 Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -165,7 +170,14 @@ public class Tree {
         }
         else {
             try {
+                while ( (eventType != XmlPullParser.START_TAG ||
+                        eventType == XmlPullParser.TEXT) ) {
+                    parse.mXpp.nextTag();
+                    eventType = parse.mXpp.getEventType();
+                }
+                
                 parse.mXpp.nextTag();
+                eventType = parse.mXpp.getEventType();
             } catch (XmlPullParserException ex) {
                 Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
@@ -186,12 +198,25 @@ public class Tree {
             }
         }
         if(true) {
-            //if (last.type == Tree.C_LIST) 
-            last.add(i, 0); // alsways add node
             
+            last.add(i, 0); // alsways add node
             if( last.type != Tree.C_LIST) last = i;
         }
-        
+        //pop();
+        if (this.eventType != XmlPullParser.END_TAG) {
+            //System.out.println("bad close tag");
+        }
+        if (this.eventType == XmlPullParser.TEXT) {
+            try {
+                System.out.println("bad text status");
+                //this.parse.mXpp.nextTag();
+                i.content = this.parse.mXpp.getText();
+                //this.parse.mXpp.nextTag();
+                System.out.println(i.content);
+            } catch (Exception ex) {
+                Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         
         pop();
         System.out.println("at    > " + i.name );
@@ -203,13 +228,12 @@ public class Tree {
                 out.write("</" + i.name+ ">\n");
             } catch (IOException ex) {
                 ex.printStackTrace();
-                //Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
+                
             }
         }
         if (this.readXML) {
-            if (this.eventType != XmlPullParser.END_TAG) {
-                System.out.println("bad close tag");
-            }
+
+            
         }
         System.out.println("close > " + i.name);
     }
@@ -249,8 +273,22 @@ public class Tree {
                 this.next().contentEquals(Tree.N_MAZE) ||
                 this.next().contentEquals(Tree.N_SPECIAL) ||
                 this.next().contentEquals(Tree.N_CHALLENGES) ||
-                this.next().contentEquals(Tree.N_TEXT)) {
+                this.next().contentEquals(Tree.N_TEXT) ||
+                this.next().contentEquals(Tree.N_HORIZONTAL) ||
+                this.next().contentEquals(Tree.N_VERTICAL)) {
             
+            if (this.next().contentEquals(Tree.N_HORIZONTAL)) {
+                Info info = new Info(Tree.N_HORIZONTAL, Tree.C_STRING, false);
+                doPrintOrParse(info);
+                horizontal(info);
+                closePrintOrParse(info);
+            }
+            if (this.next().contentEquals(Tree.N_VERTICAL)) {
+                Info info = new Info(Tree.N_VERTICAL, Tree.C_STRING, false);
+                doPrintOrParse(info);
+                vertical(info);
+                closePrintOrParse(info);
+            }
             if (this.next().contentEquals(Tree.N_HORIZON)) {
 
                 Info info = new Info(Tree.N_HORIZON, Tree.C_LIST, false);
@@ -345,21 +383,11 @@ public class Tree {
     
     public void horizon() {
         //String current = next();
-        while (this.next().contentEquals(Tree.N_HORIZONTAL) || 
-                this.next().contentEquals(Tree.N_VERTICAL) ||
-                this.next().contentEquals(Tree.N_VISIBLE) ||
+        while (this.next().contentEquals(Tree.N_VISIBLE) ||
                 this.next().contentEquals(Tree.N_INVISIBLE)) {
             
-            if (this.next().contentEquals(Tree.N_HORIZONTAL)) {
-                Info info = new Info(Tree.N_HORIZONTAL, Tree.C_STRING, false);
-                doPrintOrParse(info);
-                closePrintOrParse(info);
-            }
-            if (this.next().contentEquals(Tree.N_VERTICAL)) {
-                Info info = new Info(Tree.N_VERTICAL, Tree.C_STRING, false);
-                doPrintOrParse(info);
-                closePrintOrParse(info);
-            }
+            
+            
             if (this.next().contentEquals(Tree.N_VISIBLE)) {
                 Info info = new Info(Tree.N_VISIBLE, Tree.C_STRING, false);
                 doPrintOrParse(info);
@@ -388,6 +416,27 @@ public class Tree {
             doPrintOrParse(info);
             closePrintOrParse(info);
         }
+    }
+    public void horizontal(Info info) {
+        
+            Info i = new Info(Tree.N_HORIZONTAL,0);
+            i.content = "numbers";
+            info.add(i, 0);
+            if (this.readXML) {
+                //this.parse.mXpp.nextToken();
+            }
+            //doPrintOrParse(info);
+            //closePrintOrParse(info);
+        
+    }
+    public void vertical(Info info) {
+        
+            Info i = new Info(Tree.N_VERTICAL,0);
+            i.content = "numbers";
+            info.add(i, 0);
+            doPrintOrParse(info);
+            closePrintOrParse(info);
+        
     }
 }
 
