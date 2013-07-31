@@ -4,7 +4,6 @@ package flyerxml;
 //import android.util.Log;
 //import android.util.Log;
 import java.io.*;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
