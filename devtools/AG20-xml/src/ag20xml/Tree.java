@@ -195,36 +195,43 @@ public class Tree {
     }
     public void planet() {
         //String current = next();
-        if (this.next().contentEquals(Tree.N_HORIZON)) {
+        while(this.next().contentEquals(Tree.N_HORIZON) ||
+                this.next().contentEquals(Tree.N_MAZE) ||
+                this.next().contentEquals(Tree.N_SPECIAL) ||
+                this.next().contentEquals(Tree.N_CHALLENGES) ||
+                this.next().contentEquals(Tree.N_TEXT)) {
             
-            info = new Info(Tree.N_HORIZON, Tree.C_LIST, false);
-            doPrintOrParse(info);
-            horizon();
-            closePrintOrParse(info);
-        }
-        while (this.next().contentEquals(Tree.N_MAZE)) {
-            info = new Info(Tree.N_MAZE, Tree.C_LIST, true);
-            doPrintOrParse(info);
-            maze();
-            closePrintOrParse(info);
-        }
-        if (this.next().contentEquals(Tree.N_SPECIAL)) {
-            info = new Info(Tree.N_SPECIAL, Tree.C_LIST, true);
-            doPrintOrParse(info);
-            special();
-            closePrintOrParse(info);
-        }
-        if (this.next().contentEquals(Tree.N_CHALLENGES)) {
-            info = new Info(Tree.N_CHALLENGES, Tree.C_LIST, true);
-            doPrintOrParse(info);
-            challenges();
-            closePrintOrParse(info);
-        }
-        if (this.next().contentEquals(Tree.N_TEXT)) {
-            info = new Info(Tree.N_TEXT, Tree.C_LIST, false);
-            doPrintOrParse(info);
-            text();
-            closePrintOrParse(info);
+            if (this.next().contentEquals(Tree.N_HORIZON)) {
+
+                info = new Info(Tree.N_HORIZON, Tree.C_LIST, false);
+                doPrintOrParse(info);
+                horizon();
+                closePrintOrParse(info);
+            }
+            while (this.next().contentEquals(Tree.N_MAZE)) {
+                info = new Info(Tree.N_MAZE, Tree.C_LIST, true);
+                doPrintOrParse(info);
+                maze();
+                closePrintOrParse(info);
+            }
+            if (this.next().contentEquals(Tree.N_SPECIAL)) {
+                info = new Info(Tree.N_SPECIAL, Tree.C_LIST, true);
+                doPrintOrParse(info);
+                special();
+                closePrintOrParse(info);
+            }
+            if (this.next().contentEquals(Tree.N_CHALLENGES)) {
+                info = new Info(Tree.N_CHALLENGES, Tree.C_LIST, true);
+                doPrintOrParse(info);
+                challenges();
+                closePrintOrParse(info);
+            }
+            if (this.next().contentEquals(Tree.N_TEXT)) {
+                info = new Info(Tree.N_TEXT, Tree.C_LIST, false);
+                doPrintOrParse(info);
+                text();
+                closePrintOrParse(info);
+            }
         }
     }
     public void text() {
@@ -239,63 +246,78 @@ public class Tree {
     
     public void maze() {
         String current = next();
-        if (current.contentEquals(Tree.N_SPECIAL)) {
-            info = new Info(Tree.N_SPECIAL, Tree.C_LIST, true);
-            doPrintOrParse(info);
-            special();
-            closePrintOrParse(info);
-        }
-        if (current.contentEquals(Tree.N_CHALLENGES)) {
-            info = new Info(Tree.N_CHALLENGES, Tree.C_LIST, true);
-            doPrintOrParse(info);
-            challenges();
-            closePrintOrParse(info);
-        }
-        if (current.contentEquals(Tree.N_HORIZONTAL)) {
-            info = new Info(Tree.N_HORIZONTAL, Tree.C_STRING, false);
-            doPrintOrParse(info);
-            closePrintOrParse(info);
-        }
-        if (current.contentEquals(Tree.N_VERTICAL)) {
-            info = new Info(Tree.N_VERTICAL, Tree.C_STRING, false);
-            doPrintOrParse(info);
-            closePrintOrParse(info);
+        
+        while(this.next().contentEquals(Tree.N_SPECIAL) ||
+                this.next().contentEquals(Tree.N_HORIZONTAL) ||
+                this.next().contentEquals(Tree.N_CHALLENGES) ||
+                this.next().contentEquals(Tree.N_VERTICAL) ||
+                this.next().contentEquals(Tree.N_VISIBLE) ||
+                this.next().contentEquals(Tree.N_INVISIBLE)) {
             
-        }
-        if (current.contentEquals(Tree.N_VISIBLE)) {
-            info = new Info(Tree.N_VISIBLE, Tree.C_STRING, false);
-            doPrintOrParse(info);
-            closePrintOrParse(info);
-            
-        }
-        if (current.contentEquals(Tree.N_INVISIBLE)) {
-            info = new Info(Tree.N_INVISIBLE, Tree.C_STRING, false);
-            doPrintOrParse(info);
-            closePrintOrParse(info);
+            while (this.next().contentEquals(Tree.N_SPECIAL) ) {
+                info = new Info(Tree.N_SPECIAL, Tree.C_LIST, true);
+                doPrintOrParse(info);
+                special();
+                closePrintOrParse(info);
+            }
+            while (this.next().contentEquals(Tree.N_CHALLENGES)) {
+                info = new Info(Tree.N_CHALLENGES, Tree.C_LIST, true);
+                doPrintOrParse(info);
+                challenges();
+                closePrintOrParse(info);
+            }
+            if (this.next().contentEquals(Tree.N_HORIZONTAL)) {
+                info = new Info(Tree.N_HORIZONTAL, Tree.C_STRING, false);
+                doPrintOrParse(info);
+                closePrintOrParse(info);
+            }
+            if (this.next().contentEquals(Tree.N_VERTICAL)) {
+                info = new Info(Tree.N_VERTICAL, Tree.C_STRING, false);
+                doPrintOrParse(info);
+                closePrintOrParse(info);
+
+            }
+            if (this.next().contentEquals(Tree.N_VISIBLE)) {
+                info = new Info(Tree.N_VISIBLE, Tree.C_STRING, false);
+                doPrintOrParse(info);
+                closePrintOrParse(info);
+
+            }
+            if (this.next().contentEquals(Tree.N_INVISIBLE)) {
+                info = new Info(Tree.N_INVISIBLE, Tree.C_STRING, false);
+                doPrintOrParse(info);
+                closePrintOrParse(info);
+            }
         }
     }
     
     public void horizon() {
-        String current = next();
-        if (current.contentEquals(Tree.N_HORIZONTAL)) {
-            info = new Info(Tree.N_HORIZONTAL, Tree.C_STRING, false);
-            doPrintOrParse(info);
-            closePrintOrParse(info);
-        }
-        if (current.contentEquals(Tree.N_VERTICAL)) {
-            info = new Info(Tree.N_VERTICAL, Tree.C_STRING, false);
-            doPrintOrParse(info);
-            closePrintOrParse(info);
-        }
-        if (current.contentEquals(Tree.N_VISIBLE)) {
-            info = new Info(Tree.N_VISIBLE, Tree.C_STRING, false);
-            doPrintOrParse(info);
-            closePrintOrParse(info);
-        }
-        if (current.contentEquals(Tree.N_INVISIBLE)) {
-            info = new Info(Tree.N_INVISIBLE, Tree.C_STRING, false);
-            doPrintOrParse(info);
-            closePrintOrParse(info);
+        //String current = next();
+        while (this.next().contentEquals(Tree.N_HORIZONTAL) || 
+                this.next().contentEquals(Tree.N_VERTICAL) ||
+                this.next().contentEquals(Tree.N_VISIBLE) ||
+                this.next().contentEquals(Tree.N_INVISIBLE)) {
+            
+            if (this.next().contentEquals(Tree.N_HORIZONTAL)) {
+                info = new Info(Tree.N_HORIZONTAL, Tree.C_STRING, false);
+                doPrintOrParse(info);
+                closePrintOrParse(info);
+            }
+            if (this.next().contentEquals(Tree.N_VERTICAL)) {
+                info = new Info(Tree.N_VERTICAL, Tree.C_STRING, false);
+                doPrintOrParse(info);
+                closePrintOrParse(info);
+            }
+            if (this.next().contentEquals(Tree.N_VISIBLE)) {
+                info = new Info(Tree.N_VISIBLE, Tree.C_STRING, false);
+                doPrintOrParse(info);
+                closePrintOrParse(info);
+            }
+            if (this.next().contentEquals(Tree.N_INVISIBLE)) {
+                info = new Info(Tree.N_INVISIBLE, Tree.C_STRING, false);
+                doPrintOrParse(info);
+                closePrintOrParse(info);
+            }
         }
     }
     
