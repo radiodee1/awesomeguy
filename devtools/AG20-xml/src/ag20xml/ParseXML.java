@@ -37,7 +37,7 @@ import java.util.*;
 			
 				
                    XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-                   factory.setNamespaceAware(true);
+                   factory.setNamespaceAware(false);
                    mXpp = factory.newPullParser(); 	
 
                    FileInputStream fstream = new FileInputStream(mXMLFilename);
@@ -48,7 +48,7 @@ import java.util.*;
 
 
                    mXpp.setInput(br);
-                   
+                   mXpp.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
 
                     return true;
 		}
