@@ -29,7 +29,8 @@ public class Tree {
     public ArrayList<String> test = new ArrayList<String>();
     public Info head = new Info("", 0);
     public Info last = new Info("", 0);
-    public boolean printOption = false;
+    public String val = new String();
+    public boolean printOption = true;
     public boolean addToFormOption = true;
     
     public XmlPullParser mXpp;
@@ -63,7 +64,7 @@ public class Tree {
     public static String N_NUMBER = "number";
     
     public Tree(String fileName) {
-        clearList();
+        //clearList();
         //parse = new ParseXML("awesomeguy.xml");
         try {
             setXmlPullParser();
@@ -76,24 +77,14 @@ public class Tree {
         }
         System.out.println(newFileName);
         this.writeOutputFile();
-        find();
+        //find();
     }
     public static void main( String args[]) {
         Tree test = new Tree(new String());
         
     }
     
-    public void setupTest() {
-        test.add(Tree.N_GAME);
-        test.add(Tree.N_PLANET);
-        test.add(Tree.N_HORIZON);
-        test.add(Tree.N_HORIZONTAL);
-        test.add(Tree.N_VERTICAL);
-        test.add(Tree.N_VISIBLE);
-        test.add(Tree.N_INVISIBLE);
-        test.add(Tree.N_MAZE);
-        test.add(Tree.N_PLANET);
-    }
+
     public void writeOutputFile() {
         this.printOption = true;
         try{
@@ -103,8 +94,8 @@ public class Tree {
           out.write("<?xml version=\"1.0\" ?>\n");
           out.write("<!-- awesomeguy.xml file 2.0 -->\n");
           
-          this.printXml();
-          
+          //this.printXml();
+          this.follow();
           
           //Close the output stream
           out.close();
@@ -113,9 +104,6 @@ public class Tree {
         }
     }
     
-    public void printXml() {
-        find();
-    }
     
     public boolean setXmlPullParser() throws XmlPullParserException, IOException{
 			
@@ -137,31 +125,14 @@ public class Tree {
         return true;
     }
     
-    public void clearList() {
-        this.position.clear();
-    }
-    public Info find(ArrayList<String> i) {
-        this.position = i;
-        return find();
-    }
-    public Info find(String c) {
-        this.position.add(c);
-        return find();
-    }
-    public Info find() {
-        this.copy = (ArrayList<String>) this.position.clone();
-        
-        follow();
-        
-        this.position = (ArrayList<String>) this.copy.clone();
-        return info;
-    }
+
     
     public int skipWhitespace() throws XmlPullParserException, IOException {
         try {
             eventType = mXpp.next();
             while(eventType == XmlPullParser.TEXT &&  mXpp.isWhitespace()) {   // skip whitespace
                 eventType = mXpp.next();
+                System.out.println("skipping");
             }
             if (eventType != XmlPullParser.START_TAG &&  eventType != XmlPullParser.END_TAG) {
                 //throw new XmlPullParserException("expected start or end tag", this, null);
@@ -175,20 +146,10 @@ public class Tree {
     }
     
     public String next() {
-        String val = new String();
-        if(! this.readXML) {
-        
-            if (this.position.isEmpty()) {
-                val = new String();
-            }
-            else {
-                //val = this.position.remove(0);
-                val = this.position.get(0);
-            }
-        }
-        else {// XML READER SECTION
+        //String val = new String();
+        if( this.readXML) {// XML READER SECTION
             try {
-                //this.skipWhitespace();
+                
                 val = new String("");
                 eventType = mXpp.getEventType();
                 if (eventType == XmlPullParser.START_TAG) {
@@ -198,6 +159,8 @@ public class Tree {
                 }
                 else {
                     this.skipWhitespace();
+                    
+                   // val = mXpp.getName();// remove me??!!
                 }
             } catch (Exception ex) {
                 Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
@@ -208,10 +171,7 @@ public class Tree {
     }
     
     public void pop(Info i) {
-        if ( ! this.readXML) {
-            this.position.remove(0);
-        }
-        else {
+        if (  this.readXML)  {
             try {
                //mXpp.next();
                 //this.skipWhitespace();
@@ -222,8 +182,8 @@ public class Tree {
                 //}
                     //skipWhitespace();
                     if (eventType == XmlPullParser.TEXT && false) {
-                        System.out.println(mXpp.getText() + "::");
-                    
+                        System.out.println(mXpp.getText() );
+                        //if (this.printOption) out.write(mXpp.getText());
                         //mXpp.next();
                     }
                 }
@@ -254,10 +214,10 @@ public class Tree {
                     //System.exit(0);
                 }
                 if ( eventType == XmlPullParser.END_TAG ) { //3
-                    //this.skipWhitespace();
+                    
                     mXpp.next();
-                    //this.skipWhitespace();
-                    System.out.println(eventType + " -- closePop");
+                    
+                    System.out.println(eventType + " -- closePop (is 3?)");
                     
                 }
                 if (eventType == XmlPullParser.TEXT ) {
@@ -313,7 +273,7 @@ public class Tree {
             }
         }
         
-        //pop(i);
+        
         System.out.println("at    > " + i.name );
     }
     
@@ -394,8 +354,8 @@ public class Tree {
                 horizontal(info);
                 closePrintOrParse(info);
             }
-            this.next();
-            System.out.println("+++");
+            
+            
             if (this.next().contentEquals(Tree.N_VERTICAL)) {
                 Info info = new Info(Tree.N_VERTICAL, Tree.C_STRING, false);
                 doPrintOrParse(info);
@@ -411,7 +371,7 @@ public class Tree {
                 horizon();
                 closePrintOrParse(info);
             }
-            while (this.next().contentEquals(Tree.N_MAZE)) {
+            if (this.next().contentEquals(Tree.N_MAZE)) {
                 Info info = new Info(Tree.N_MAZE, Tree.C_LIST, true);
                 doPrintOrParse(info);
                 maze();
@@ -438,10 +398,11 @@ public class Tree {
         }
     }
     public void text() {
-        String current = next();
-        if (current.contentEquals(Tree.N_MESSAGE)) {
+        
+        while (this.next().contentEquals(Tree.N_MESSAGE)) {
             Info info = new Info(Tree.N_MESSAGE, Tree.C_STRING, true);
             doPrintOrParse(info);
+            this.message(info);
             closePrintOrParse(info);
         }
     }
@@ -457,13 +418,14 @@ public class Tree {
                 this.next().contentEquals(Tree.N_VISIBLE) ||
                 this.next().contentEquals(Tree.N_INVISIBLE)) {
             
-            while (this.next().contentEquals(Tree.N_SPECIAL) ) {
+            System.out.println("while maze");
+            if (this.next().contentEquals(Tree.N_SPECIAL) ) {
                 Info info = new Info(Tree.N_SPECIAL, Tree.C_LIST, true);
                 doPrintOrParse(info);
                 special();
                 closePrintOrParse(info);
             }
-            while (this.next().contentEquals(Tree.N_CHALLENGES)) {
+            if (this.next().contentEquals(Tree.N_CHALLENGES)) {
                 Info info = new Info(Tree.N_CHALLENGES, Tree.C_LIST, true);
                 doPrintOrParse(info);
                 challenges();
@@ -474,12 +436,14 @@ public class Tree {
                 info.content = new String("number");
                 System.out.println(info.content);
                 doPrintOrParse(info);
+                this.horizontal(info);
                 closePrintOrParse(info);
             }
             if (this.next().contentEquals(Tree.N_VERTICAL)) {
                 Info info = new Info(Tree.N_VERTICAL, Tree.C_STRING, false);
                 info.content = new String("number");
                 doPrintOrParse(info);
+                this.vertical(info);
                 closePrintOrParse(info);
 
             }
@@ -487,12 +451,14 @@ public class Tree {
                 Info info = new Info(Tree.N_VISIBLE, Tree.C_STRING, false);
                 doPrintOrParse(info);
                 System.out.println("visible ---");
+                visible(info);
                 closePrintOrParse(info);
 
             }
             if (this.next().contentEquals(Tree.N_INVISIBLE)) {
                 Info info = new Info(Tree.N_INVISIBLE, Tree.C_STRING, false);
                 doPrintOrParse(info);
+                invisible(info);
                 System.out.println("invisible ---");
                 closePrintOrParse(info);
             }
@@ -504,37 +470,63 @@ public class Tree {
         while (this.next().contentEquals(Tree.N_VISIBLE) ||
                 this.next().contentEquals(Tree.N_INVISIBLE)) {
             
-            
+            System.out.println("while horizon");
             
             if (this.next().contentEquals(Tree.N_VISIBLE)) {
                 Info info = new Info(Tree.N_VISIBLE, Tree.C_STRING, false);
                 doPrintOrParse(info);
+                this.visible(info);
                 closePrintOrParse(info);
             }
             if (this.next().contentEquals(Tree.N_INVISIBLE)) {
                 Info info = new Info(Tree.N_INVISIBLE, Tree.C_STRING, false);
                 doPrintOrParse(info);
+                this.invisible(info);
                 closePrintOrParse(info);
             }
         }
     }
     
     public void special() {
-        String current = next();
-        if (current.contentEquals(Tree.N_BLOCK)) {
-            Info info = new Info(Tree.N_BLOCK, Tree.C_STRING, true);
-            doPrintOrParse(info);
-            closePrintOrParse(info);
+        while (this.next().contentEquals(Tree.N_BLOCK)) {
+            
+            if (this.next().contentEquals(Tree.N_BLOCK)) {
+                Info info = new Info(Tree.N_BLOCK, Tree.C_STRING, true);
+                doPrintOrParse(info);
+                block(info);
+                closePrintOrParse(info);
+            }
         }
+    }
+    
+    public void block(Info i) {
+        
+        //if (this.next().contentEquals(Tree.N_BLOCK)) {
+            //Info info = new Info(Tree.N_BLOCK, Tree.C_STRING, true);
+            //doPrintOrParse(info);
+            this.content(i);
+            //closePrintOrParse(info);
+        //}
     }
     public void challenges() {
-        String current = next();
-        if (current.contentEquals(Tree.N_INVADERS)) {
+        
+        while (this.next().contentEquals(Tree.N_INVADERS)) {
             Info info = new Info(Tree.N_INVADERS, Tree.C_STRING, true);
             doPrintOrParse(info);
+            invaders(info);
             closePrintOrParse(info);
         }
     }
+    public void invaders(Info i) {
+        
+        //if (this.next().contentEquals(Tree.N_INVADERS)) {
+            Info info = new Info(Tree.N_INVADERS, Tree.C_STRING, true);
+            //doPrintOrParse(info);
+            this.content(info);
+            //closePrintOrParse(info);
+        //}
+    }
+    
     public void horizontal(Info info) {
         try {        
             Info i = new Info(Tree.N_HORIZONTAL,0);
@@ -546,9 +538,9 @@ public class Tree {
                 i.content = mXpp.getText();
                 //this.parse.mXpp.nextToken();
                 System.out.println(i.content + " end of tree.");
-                out.write(i.content + "\n");
+                if (this.printOption) out.write(i.content + "\n");
                 //this.skipWhitespace();
-                this.closePrintOrParse(i);
+                //this.closePrintOrParse(i);
             }
             
             //closePrintOrParse(info);
@@ -572,6 +564,59 @@ public class Tree {
         } catch (IOException ex) {
             Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+    }
+    
+    public void visible(Info i) {
+        //String current = next();
+        //if (current.contentEquals(Tree.N_VISIBLE)) {
+            Info info = new Info(Tree.N_VISIBLE, Tree.C_STRING, true);
+            //doPrintOrParse(info);
+            this.content(i);
+            //closePrintOrParse(info);
+        //}
+    }
+    
+    public void invisible(Info i) {
+        //String current = next();
+        //if (current.contentEquals(Tree.N_INVISIBLE)) {
+            Info info = new Info(Tree.N_INVISIBLE, Tree.C_STRING, true);
+            //doPrintOrParse(info);
+            this.content(i);
+            //closePrintOrParse(info);
+        //}
+    }
+    
+    public void message(Info i) {
+        //String current = next();
+        //if (current.contentEquals(Tree.N_INVISIBLE)) {
+            Info info = new Info(Tree.N_MESSAGE, Tree.C_STRING, true);
+            //doPrintOrParse(info);
+            this.content(i);
+            //closePrintOrParse(info);
+        //}
+    }
+    
+    public void content(Info info) {
+        try {        
+            Info i = new Info(info.name,0);
+            
+            info.add(i, 0);
+            //this.doPrintOrParse(i);
+            if (this.readXML || true) {
+                //mXpp.next();
+                i.content = mXpp.getText();
+                //this.parse.mXpp.nextToken();
+                System.out.println(i.content + " end of tree.");
+                if (this.printOption) out.write(i.content );
+                //this.skipWhitespace();
+                //this.closePrintOrParse(i);
+            }
+            
+            //closePrintOrParse(info);
+        } catch (Exception ex) {
+            Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
+        } 
         
     }
 }

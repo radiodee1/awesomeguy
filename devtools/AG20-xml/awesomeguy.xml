@@ -849,8 +849,9 @@
 	</horizon>
 	
 	<special> 
-		<block> </block>
-		<block> </block>
+		<block> num,num,num,num</block>
+		<block> num,num,num,num</block>
+		<block> num2,num2,num,num </block>
 	</special>
 	
 	<challenges>
