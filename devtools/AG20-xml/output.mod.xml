@@ -3,8 +3,7 @@
 <game>
 <planet>
 <horizontal>
- 192 
-</horizontal>
+ 192 </horizontal>
 <vertical>
  32 </vertical>
 <horizon>
@@ -883,8 +882,7 @@ go back to ship!! </message>
 </text>
 <maze>
 <horizontal>
-192
-</horizontal>
+192</horizontal>
 <vertical>
 32</vertical>
 <visible>
@@ -910,8 +908,7 @@ go back to ship!! </message>
 </maze>
 <maze>
 <horizontal>
-192
-</horizontal>
+192</horizontal>
 <vertical>
 32</vertical>
 <visible>
@@ -934,3 +931,6 @@ go back to ship!! </message>
 <invaders>
 </invaders>
 </challenges>
+</maze>
+</planet>
+</game>
