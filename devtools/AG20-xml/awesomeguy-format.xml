@@ -28,7 +28,7 @@
 		<message number="1"> </message>
 		<message number="2"> </message>
 	</text>
-	
+	<underground>
 	<maze number="1">
 		<horizontal>192</horizontal>
 		<vertical>32</vertical>
@@ -72,6 +72,11 @@
 			<invaders> </invaders>
 		</challenges>
 	</maze>
-	
+	</underground>
 	</planet>
+	<planet>
+	</planet>
+	<planet>
+	</planet>
+
 </game>

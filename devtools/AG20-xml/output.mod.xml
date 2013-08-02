@@ -880,6 +880,7 @@ find a key!! </message>
 <message>
 go back to ship!! </message>
 </text>
+<underground>
 <maze>
 <horizontal>
 192</horizontal>
@@ -932,5 +933,10 @@ go back to ship!! </message>
 </invaders>
 </challenges>
 </maze>
+</underground>
+</planet>
+<planet>
+</planet>
+<planet>
 </planet>
 </game>

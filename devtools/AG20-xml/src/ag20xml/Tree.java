@@ -62,6 +62,7 @@ public class Tree {
     public static String N_TEXT = "text";
     public static String N_MESSAGE = "message";
     public static String N_NUMBER = "number";
+    public static String N_UNDERGROUND ="underground";
     
     public Tree(String fileName) {
         //clearList();
@@ -387,7 +388,7 @@ public class Tree {
     public void planet() {
         //String current = next();
         while(this.next().contentEquals(Tree.N_HORIZON) ||
-                this.next().contentEquals(Tree.N_MAZE) ||
+                this.next().contentEquals(Tree.N_UNDERGROUND) ||
                 this.next().contentEquals(Tree.N_SPECIAL) ||
                 this.next().contentEquals(Tree.N_CHALLENGES) ||
                 this.next().contentEquals(Tree.N_TEXT) ||
@@ -420,10 +421,10 @@ public class Tree {
                 horizon();
                 closePrintOrParse(info);
             }
-            if (this.next().contentEquals(Tree.N_MAZE)) {
-                Info info = new Info(Tree.N_MAZE, Tree.C_LIST, true);
+            if (this.next().contentEquals(Tree.N_UNDERGROUND)) {
+                Info info = new Info(Tree.N_UNDERGROUND, Tree.C_LIST, true);
                 doPrintOrParse(info);
-                maze();
+                underground();
                 closePrintOrParse(info);
             }
             if (this.next().contentEquals(Tree.N_SPECIAL)) {
@@ -457,6 +458,15 @@ public class Tree {
         }
     }
     
+    public void underground() {
+        
+        while (this.next().contentEquals(Tree.N_MAZE)) {
+            Info info = new Info(Tree.N_MAZE, Tree.C_STRING, true);
+            doPrintOrParse(info);
+            this.maze();
+            closePrintOrParse(info);
+        }
+    }
     
     public void maze() {
         //String current = next();

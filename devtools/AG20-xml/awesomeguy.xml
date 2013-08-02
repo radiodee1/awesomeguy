@@ -874,7 +874,7 @@
 		<message number="2">find a key!! </message>
 		<message number="3">go back to ship!! </message>
 	</text>
-	
+	<underground>
 	<maze number="1">
 		<horizontal>192</horizontal>
 		<vertical>32</vertical>
@@ -917,8 +917,11 @@
 			<invaders> </invaders>
 		</challenges>
 	</maze>
-	
+	</underground>
 	</planet>
-	
+	<planet>
+	</planet>
+	<planet>
+	</planet>
 	
 </game>
