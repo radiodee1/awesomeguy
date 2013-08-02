@@ -79,6 +79,8 @@ public class Tree {
         System.out.println(newFileName);
         this.writeOutputFile();
         //find();
+        
+        this.showTree(head);
     }
     public static void main( String args[]) {
         Tree test = new Tree(new String());
@@ -136,9 +138,17 @@ public class Tree {
 
         return true;
     }
+    ////////////////// recursive tree stuff ////////////////////////////
     
+    public void showTree(Info i ) {
+        //System.out.println("showTree()");
+        for(int j = 0; j < i.list.size(); j ++) {
+            System.out.println(i.name + " - " +  i.content+ " - "+ i.list.size());
+            showTree(i.list.get(j));
+        }
+    }
 
-    
+    //////////////////////// xml stuff /////////////////////////////////
     public int skipWhitespace() throws XmlPullParserException, IOException {
         
             eventType = mXpp.next();
@@ -270,8 +280,9 @@ public class Tree {
         }
         if(true) {
             
-            //last.add(i, 0); // alsways add node
-            //if( last.type != Tree.C_LIST) last = i;
+            last.add(i, 0); // alsways add node
+            i.parent = last;
+            last = i;
         }
         pop(i);
         if (this.eventType != XmlPullParser.END_TAG) {
@@ -307,7 +318,8 @@ public class Tree {
                 }
             }
             if (this.readXML || true) {
-                //pop();
+                this.last = i.parent;
+                
                 closePop(i);
             }
             out.flush();
@@ -353,7 +365,7 @@ public class Tree {
             try {
                 eventType = mXpp.next();
                 
-                //val = mXpp.getName();
+                
             } catch (Exception ex) {
                 Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
             } 
@@ -583,16 +595,16 @@ public class Tree {
     public void invaders(Info i) {
         
         //if (this.next().contentEquals(Tree.N_INVADERS)) {
-            Info info = new Info(Tree.N_INVADERS, Tree.C_STRING, true);
+            //Info info = new Info(Tree.N_INVADERS, Tree.C_STRING, true);
             //doPrintOrParse(info);
-            this.content(info);
+            this.content(i);
             //closePrintOrParse(info);
         //}
     }
     
     public void horizontal(Info info) {
         try {        
-            Info i = new Info(Tree.N_HORIZONTAL,0);
+            //Info i = new Info(Tree.N_HORIZONTAL,0);
             
 
             this.content(info);
@@ -613,7 +625,7 @@ public class Tree {
     public void visible(Info i) {
         //String current = next();
         //if (current.contentEquals(Tree.N_VISIBLE)) {
-            Info info = new Info(Tree.N_VISIBLE, Tree.C_STRING, true);
+            //Info info = new Info(Tree.N_VISIBLE, Tree.C_STRING, true);
             //doPrintOrParse(info);
             this.content(i);
             //closePrintOrParse(info);
@@ -623,7 +635,7 @@ public class Tree {
     public void invisible(Info i) {
         //String current = next();
         //if (current.contentEquals(Tree.N_INVISIBLE)) {
-            Info info = new Info(Tree.N_INVISIBLE, Tree.C_STRING, true);
+            //Info info = new Info(Tree.N_INVISIBLE, Tree.C_STRING, true);
             //doPrintOrParse(info);
             this.content(i);
             //closePrintOrParse(info);
@@ -633,31 +645,24 @@ public class Tree {
     public void message(Info i) {
         //String current = next();
         //if (current.contentEquals(Tree.N_INVISIBLE)) {
-            Info info = new Info(Tree.N_MESSAGE, Tree.C_STRING, true);
+            //Info info = new Info(Tree.N_MESSAGE, Tree.C_STRING, true);
             //doPrintOrParse(info);
             this.content(i);
             //closePrintOrParse(info);
         //}
     }
     
-    public void content(Info info) {
+    public void content(Info i) {
         try {        
-            //Info i = new Info(info.name,0);
-            
-            //info.add(i, 0);
-            //this.doPrintOrParse(i);
-            if (this.readXML || true) {
+            Info info = new Info(i.name, Tree.C_STRING, false);
+            i.add(info, 0);
+            //if (this.readXML || true) {
                 //mXpp.next();
-                info.content = mXpp.getText();
-                //this.parse.mXpp.nextToken();
-                System.out.println(info.content + " end of tree. (content)");
-                if (this.printOption || true) {
-                    //out.write(info.content );
-                    //out.write ( mXpp.getText());
-                }
-                //this.skipWhitespace();
-                //this.closePrintOrParse(i);
-            }
+            info.content = mXpp.getText();
+            //this.parse.mXpp.nextToken();
+            System.out.println(info.content + " end of tree. (content)");
+                
+            //}
             
             //closePrintOrParse(info);
         } catch (Exception ex) {
@@ -676,6 +681,7 @@ class Info {
     public ArrayList<Integer> nums = new ArrayList<Integer>();
     public boolean repetition = false;
     public boolean endNode = false;
+    public Info parent ;
     
     public Info(String n, int t) {
         this.name = n;
