@@ -6,8 +6,7 @@
  192 
 </horizontal>
 <vertical>
- 32 
-</vertical>
+ 32 </vertical>
 <horizon>
 <visible>
 
@@ -855,6 +854,83 @@
 <special>
 <block>
  num,num,num,num</block>
+<block>
+ num,num,num,num</block>
+<block>
+ num2,num2,num,num </block>
 </special>
-</planet>
-</game>
+<challenges>
+<invaders>
+ 5,1,1,2,1,1,0,0 ,0,0,0,0,0,0,0,1 </invaders>
+<invaders>
+ 2,3,0,0,0,0,0,0 ,0,0,0,0,0,0,0,1 </invaders>
+<invaders>
+ 1,1,0,0,0,0,0,0 ,0,0,0,0,0,0,0,1 </invaders>
+<invaders>
+ 1,2,0,0,0,0,0,0 ,0,0,0,0,0,0,0,1 </invaders>
+<invaders>
+ 2,2,0,0,0,0,0,0 ,0,0,0,0,0,0,0,1 </invaders>
+<invaders>
+ 3,2,0,0,0,0,0,0 ,0,0,0,0,0,0,0,1 </invaders>
+</challenges>
+<text>
+<message>
+find a maze!! </message>
+<message>
+find a key!! </message>
+<message>
+go back to ship!! </message>
+</text>
+<maze>
+<horizontal>
+192
+</horizontal>
+<vertical>
+32</vertical>
+<visible>
+
+			array data
+		</visible>
+<invisible>
+
+			array data
+		</invisible>
+<special>
+<block>
+</block>
+<block>
+</block>
+</special>
+<challenges>
+<invaders>
+</invaders>
+<invaders>
+</invaders>
+</challenges>
+</maze>
+<maze>
+<horizontal>
+192
+</horizontal>
+<vertical>
+32</vertical>
+<visible>
+
+			array data
+		</visible>
+<invisible>
+
+			array data
+		</invisible>
+<special>
+<block>
+</block>
+<block>
+</block>
+</special>
+<challenges>
+<invaders>
+</invaders>
+<invaders>
+</invaders>
+</challenges>

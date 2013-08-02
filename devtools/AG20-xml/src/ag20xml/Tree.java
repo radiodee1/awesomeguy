@@ -98,7 +98,17 @@ public class Tree {
           this.follow();
           
           //Close the output stream
-          out.close();
+          if (out != null) {
+                    out.flush();
+                    out.close();
+                    System.out.println("--end--");
+          }
+          else {
+              System.out.println("--out is null--");
+              throw new Exception();
+          }
+          
+          //out.close();
         }catch (Exception e){//Catch exception if any
           System.err.println("Error: " + e.getMessage());
         }
@@ -128,7 +138,7 @@ public class Tree {
 
     
     public int skipWhitespace() throws XmlPullParserException, IOException {
-        try {
+        
             eventType = mXpp.next();
             while(eventType == XmlPullParser.TEXT &&  mXpp.isWhitespace()) {   // skip whitespace
                 eventType = mXpp.next();
@@ -137,11 +147,7 @@ public class Tree {
             if (eventType != XmlPullParser.START_TAG &&  eventType != XmlPullParser.END_TAG) {
                 //throw new XmlPullParserException("expected start or end tag", this, null);
             }
-        } catch (XmlPullParserException ex) {
-            Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
         return eventType;
     }
     
@@ -160,7 +166,7 @@ public class Tree {
                 else {
                     this.skipWhitespace();
                     
-                   // val = mXpp.getName();// remove me??!!
+                    val = mXpp.getName();// remove me??!!
                 }
             } catch (Exception ex) {
                 Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
@@ -215,10 +221,10 @@ public class Tree {
                 }
                 if ( eventType == XmlPullParser.END_TAG ) { //3
                     
-                    mXpp.next();
+                    //mXpp.next();
                     
                     System.out.println(eventType + " -- closePop (is 3?)");
-                    
+                    this.showType();
                 }
                 if (eventType == XmlPullParser.TEXT ) {
                     System.out.println(" -- skip whitespace");
@@ -231,7 +237,7 @@ public class Tree {
                     System.out.println(mXpp.getName() + " at close pop");
                     mXpp.next();
                 }
-                
+                //out.flush();
                 System.out.println(eventType + " -- close");
             } catch (XmlPullParserException ex) {
                 Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
@@ -278,22 +284,54 @@ public class Tree {
     }
     
     public void closePrintOrParse(Info i) {
-        if (this.printOption) {
-            try {
-                out.write("</" + i.name+ ">\n");
-            } catch (IOException ex) {
-                ex.printStackTrace();
+        try {
+            if (this.printOption) {
+                try {
+                    out.write("</" + i.name+ ">\n");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 
+                    
+                }
             }
+            if (this.readXML) {
+                //pop();
+                closePop(i);
+            }
+            out.flush();
+            //System.out.println("close > " + i.name);
+        } catch (IOException ex) {
+            Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (this.readXML) {
-            //pop();
-            closePop(i);
-        }
-        //System.out.println("close > " + i.name);
     }
     
-    
+    public void showType() {
+        String val = new String();
+        switch(eventType) {
+            case XmlPullParser.COMMENT :
+                val = "comment";
+                break;
+            case XmlPullParser.START_DOCUMENT:
+                val = "start document";
+                break;
+            case XmlPullParser.START_TAG:
+                val = "start tag";
+                break;
+            case XmlPullParser.TEXT:
+                val = "text";
+                break;
+            case XmlPullParser.END_TAG:
+                val = "end tag";
+                break;
+            case XmlPullParser.END_DOCUMENT:
+                val = "end document";
+                break;
+            default:
+                val = "default";
+                break;
+        }
+        System.out.println(val + " " + eventType);
+    }
     ////////////////// HERE STARTS PARSE ////////////////////////
     public void follow( ) {
         
@@ -489,12 +527,13 @@ public class Tree {
     
     public void special() {
         while (this.next().contentEquals(Tree.N_BLOCK)) {
-            
+            this.showType();
             if (this.next().contentEquals(Tree.N_BLOCK)) {
                 Info info = new Info(Tree.N_BLOCK, Tree.C_STRING, true);
                 doPrintOrParse(info);
                 block(info);
                 closePrintOrParse(info);
+                
             }
         }
     }
@@ -503,9 +542,9 @@ public class Tree {
         
         //if (this.next().contentEquals(Tree.N_BLOCK)) {
             //Info info = new Info(Tree.N_BLOCK, Tree.C_STRING, true);
-            //doPrintOrParse(info);
+            //doPrintOrParse(i);
             this.content(i);
-            //closePrintOrParse(info);
+            //closePrintOrParse(i);
         //}
     }
     public void challenges() {
@@ -550,21 +589,11 @@ public class Tree {
         
     }
     public void vertical(Info info) {
-        try {        
-            Info i = new Info(Tree.N_VERTICAL,0);
-            info.add(i, 0);
-            if (this.readXML) {
-                i.content = mXpp.getText();
-                //info.add(i, 0);
-                System.out.println(i.content + " end of tree.");
-                out.write(i.content + "\n");
-            }
+
+            this.content(info);
             //doPrintOrParse(info);
             //closePrintOrParse(info);
-        } catch (IOException ex) {
-            Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+
     }
     
     public void visible(Info i) {
@@ -599,16 +628,19 @@ public class Tree {
     
     public void content(Info info) {
         try {        
-            Info i = new Info(info.name,0);
+            //Info i = new Info(info.name,0);
             
-            info.add(i, 0);
+            //info.add(i, 0);
             //this.doPrintOrParse(i);
             if (this.readXML || true) {
                 //mXpp.next();
-                i.content = mXpp.getText();
+                info.content = mXpp.getText();
                 //this.parse.mXpp.nextToken();
-                System.out.println(i.content + " end of tree.");
-                if (this.printOption) out.write(i.content );
+                System.out.println(info.content + " end of tree. (content)");
+                if (this.printOption || true) {
+                    out.write(info.content );
+                    
+                }
                 //this.skipWhitespace();
                 //this.closePrintOrParse(i);
             }
@@ -616,6 +648,7 @@ public class Tree {
             //closePrintOrParse(info);
         } catch (Exception ex) {
             Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         } 
         
     }
