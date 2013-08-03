@@ -81,7 +81,7 @@ public class Tree {
         this.writeOutputFile();
         //find();
         
-        this.showTree(head, Tree.N_TEXT);//find something
+        this.showTree(head, Tree.N_MAZE);//find something
         System.out.println("-------");
         //this.showList(interest);
         this.showTree(interest, null);// just print everything up untill end node
@@ -151,7 +151,7 @@ public class Tree {
         }
         for(int j = 0; j < i.list.size(); j ++) {
             showTree(i.list.get(j), record);
-            System.out.println(i.name + " - " +  i.content+ " - "+ i.list.size());
+            System.out.println(i.name + " - " +  i.content+ " - "+ i.list.size() + " - " + i.num);
             //showTree(i.list.get(j));
         }
     }
@@ -168,6 +168,8 @@ public class Tree {
         if (mXpp.getAttributeCount() > 0) {
             if(mXpp.getAttributeName(0).contentEquals(Tree.N_NUMBER)) {
                 num = new Integer(mXpp.getAttributeValue(0).toString().trim()).intValue();
+                
+                System.out.println("----- number here " + num + " ------");
             }
         }
         return num;
@@ -188,7 +190,7 @@ public class Tree {
     }
     
     public String next() {
-        //String val = new String();
+        
         if( this.readXML) {// XML READER SECTION
             try {
                 
@@ -221,23 +223,25 @@ public class Tree {
     }
     
     public void pop(Info i) {
+        int j = 0;
+        
         if ( true || this.readXML)  {
             try {
-               //mXpp.next();
-                //this.skipWhitespace();
+               
                 while ( eventType != XmlPullParser.START_TAG ) {
                     //eventType = mXpp.next();
                     this.skipWhitespace();
-                    //eventType = mXpp.getEventType();
-                //}
-                    //skipWhitespace();
-                    if (eventType == XmlPullParser.TEXT && false) {
-                        System.out.println(mXpp.getText() );
-                        //if (this.printOption) out.write(mXpp.getText());
-                        //mXpp.next();
-                    }
-                }
                 
+                    
+                    
+                    
+//                    if (eventType == XmlPullParser.TEXT && false) {
+//                        System.out.println(mXpp.getText() );
+//                        //if (this.printOption) out.write(mXpp.getText());
+//                        //mXpp.next();
+//                    }
+                }
+                i.num = this.getNumber();
                 if(i.name.contentEquals(mXpp.getName()) && 
                         eventType == XmlPullParser.START_TAG) {
                     System.out.println(i.name + " proper pop");
@@ -650,7 +654,7 @@ public class Tree {
     public void content(Info i) {
         try {        
             Info info = new Info(i.name, Tree.C_STRING, false);
-            i.add(info, 0);
+            i.add(info, info.num);
             
             info.content = mXpp.getText();
             
@@ -673,6 +677,7 @@ class Info {
     public boolean repetition = false;
     public boolean endNode = false;
     public Info parent ;
+    public int num = 0;
     
     public Info(String n, int t) {
         this.name = n;
