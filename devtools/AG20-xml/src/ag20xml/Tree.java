@@ -87,13 +87,13 @@ public class Tree {
         System.out.println(newFileName);
         this.writeOutputFile();
         //find();
-        
+        System.out.println("------- " + head.name);
         //this.showTree(head, Tree.N_MAZE);//find something
         
         //this.showTree(interest, null);// just print everything up untill end node
-        //this.showTree(head, 1, 0, Tree.TYPE_ABOVE_GROUND, Tree.N_HORIZON);
+        this.showTree(head, 0, 0, Tree.TYPE_ABOVE_GROUND, Tree.N_VISIBLE);
         System.out.println("------- " + head.name);
-
+        this.showList(this.interest);
         
         //this.showTree(interest, null);
     }
@@ -103,6 +103,8 @@ public class Tree {
     }
     
     public Info getHead() {
+        //return head;
+        //System.out.println("get head!!");
         return head;
     }
     
@@ -137,7 +139,7 @@ public class Tree {
           //out.close();
         }catch (Exception e){//Catch exception if any
           System.err.println("Error: " + e.getMessage());
-          //e.printStackTrace();
+          e.printStackTrace();
         }
     }
     
@@ -444,13 +446,13 @@ public class Tree {
         while(next().contentEquals(Tree.N_PLANET)) {
             if (this.next().contentEquals(Tree.N_PLANET)) {
                 Info info = new Info(Tree.N_PLANET, Tree.C_LIST, true);
-
+                this.l_type = Tree.TYPE_ABOVE_GROUND;
                 doPrintOrParse(info);
                 planet();
-                this.l_planet ++;
-                this.l_type = Tree.TYPE_ABOVE_GROUND;
-                System.out.println("planet ---");
                 
+                System.out.println("planet ---");
+                this.l_planet ++;
+
                 closePrintOrParse(info);
             }
         }
@@ -497,6 +499,7 @@ public class Tree {
                 doPrintOrParse(info);
                 this.l_type = Tree.TYPE_BELOW_GROUND;
                 underground();
+                this.l_type = Tree.TYPE_ABOVE_GROUND;
                 closePrintOrParse(info);
             }
             if (this.next().contentEquals(Tree.N_SPECIAL)) {
@@ -739,5 +742,22 @@ class Info {
     public void add(Info i, int n) {
         this.list.add(i);
         this.nums.add(n);
+    }
+    public Info clone() {
+        Info temp = new Info("", Tree.C_NONE);
+        temp.content = this.content;
+        temp.endNode = this.endNode;
+        temp.l_maze = this.l_maze;
+        temp.l_planet = this.l_planet;
+        temp.l_type = this.l_type;
+        temp.list = (ArrayList<Info>) this.list.clone();
+        temp.name = this.name;
+        temp.num = this.num;
+        temp.nums = (ArrayList<Integer>) this.nums.clone();
+        temp.parent = this.parent;
+        temp.repetition = this.repetition;
+        temp.type = this.type;
+        
+        return temp;
     }
 }

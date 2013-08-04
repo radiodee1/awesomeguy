@@ -14,6 +14,7 @@ import java.util.ArrayList;
 	public class LevelList  {
 		private ArrayList<LevelData> mList = new ArrayList<LevelData>();
 		
+                public boolean endReached;
                 public Info interest ;
                 public Info head ;
                 
@@ -23,14 +24,23 @@ import java.util.ArrayList;
                 public LevelList (Info head) {
                     this.head = head;
                     this.showTree(head);
-                    
+                    interest = head;
                     for(int i = 0; i < this.l_planet; i ++) {
-                        this.showTree(head, i, 1, Tree.TYPE_ABOVE_GROUND, Tree.N_VISIBLE);
-                        Info visible  = interest;
-                        this.showTree(head, i, 1, Tree.TYPE_ABOVE_GROUND, Tree.N_INVISIBLE);
-                        Info invisible = interest;
+                        Info visible = new Info(Tree.N_VISIBLE,Tree.C_STRING);
+                        Info invisible = new Info(Tree.N_INVISIBLE, Tree.C_STRING);
+                        visible.content = new String();
+                        invisible.content = new String();
+                        
+                        this.showTree(head, i, 0, Tree.TYPE_ABOVE_GROUND, Tree.N_VISIBLE);
+                        if (!this.endReached) visible = interest.clone();
+                        
+                        System.out.println(" here again " + visible.content + " here again ");
+                        
+                        this.showTree(head, i, 0, Tree.TYPE_ABOVE_GROUND, Tree.N_INVISIBLE); 
+                        if (!this.endReached) invisible = interest.clone();
+                        
                         this.add("",i,visible.content, invisible.content);
-                        System.out.append("----- level list -----");
+                        
                         System.out.println(visible.content);
 
                     }
@@ -41,27 +51,32 @@ import java.util.ArrayList;
                 public LevelList () {
                     
                 }
-                public boolean showTree(Info i, int planet, int maze, int type, String record) {
+                public Info showTree(Info i, int planet, int maze, int type, String record) {
+                    this.endReached = false;
                     if (record != null && i.name.contentEquals(record) &&
                             planet == i.l_planet && maze == i.l_maze && type == i.l_type) {
                         interest = i;
-                        return true;
+                        System.out.println("something " + i.content);
+                        return i;
                     }
+                    //interest = new Info(new String(),Tree.C_STRING);
                     for(int j = 0; j < i.list.size(); j ++) {
                         showTree(i.list.get(j),planet, maze, type, record);
-                        //System.out.println(i.name + " - " +  i.content+ " - "+ i.list.size() + " - " + i.num);
-                        //showTree(i.list.get(j));
+                        
                     }
-                    return false;
+                    endReached = true;
+                    return null;
                 }
 
                 public void showTree(Info i ) {
-                    if (i.name.contentEquals(Tree.N_PLANET)) this.l_planet ++;
+                    if (i.name.contentEquals(Tree.N_PLANET)) {
+                        this.l_planet ++;
+                        System.out.println("planets here " + this.l_planet);
+                    }
                     
                     for(int j = 0; j < i.list.size(); j ++) {
                         showTree(i.list.get(j));
-                        //System.out.println(i.name + " - " +  i.content+ " - "+ i.list.size() + " - " + i.num);
-                        //showTree(i.list.get(j));
+                       
                     }
                 }
 

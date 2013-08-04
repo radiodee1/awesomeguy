@@ -43,8 +43,11 @@ public class AG20jFrame extends javax.swing.JFrame {
                 Info head = tree.getHead();
                 //InitBackground.ParseXML backgroundParse = new InitBackground.ParseXML(true, windowName);
                 mList = new LevelList(head);
+                
+                //for(int i = 0; i < mList.size(); i ++) System.out.println(" planets " + mList.getLevelTiles(i));
             }
             if (mList.size() >= 1) {
+                this.jLabel1.setText("AG20-XML: " + mList.size() + " planets");
                 this.copyToWindows(frameNumber);
             }
             else if (mList.size() == 0) {
