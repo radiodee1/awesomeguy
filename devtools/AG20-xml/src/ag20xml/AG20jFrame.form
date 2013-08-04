@@ -41,7 +41,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="Awesome Flyer XML"/>
+    <Property name="title" type="java.lang.String" value="Awesomeguy 2.0 XML"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>

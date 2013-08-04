@@ -745,7 +745,7 @@ class Info {
     }
     public Info clone() {
         Info temp = new Info("", Tree.C_NONE);
-        temp.content = this.content;
+        temp.content = new String (this.content);
         temp.endNode = this.endNode;
         temp.l_maze = this.l_maze;
         temp.l_planet = this.l_planet;

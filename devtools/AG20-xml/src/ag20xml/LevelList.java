@@ -24,7 +24,7 @@ import java.util.ArrayList;
                 public LevelList (Info head) {
                     this.head = head;
                     this.showTree(head);
-                    interest = head;
+                    //interest = head;
                     for(int i = 0; i < this.l_planet; i ++) {
                         Info visible = new Info(Tree.N_VISIBLE,Tree.C_STRING);
                         Info invisible = new Info(Tree.N_INVISIBLE, Tree.C_STRING);
@@ -34,7 +34,7 @@ import java.util.ArrayList;
                         this.showTree(head, i, 0, Tree.TYPE_ABOVE_GROUND, Tree.N_VISIBLE);
                         if (!this.endReached) visible = interest.clone();
                         
-                        System.out.println(" here again " + visible.content + " here again ");
+                        System.out.println(i + " here again " + visible.content + " here again ");
                         
                         this.showTree(head, i, 0, Tree.TYPE_ABOVE_GROUND, Tree.N_INVISIBLE); 
                         if (!this.endReached) invisible = interest.clone();
@@ -55,8 +55,8 @@ import java.util.ArrayList;
                     this.endReached = false;
                     if (record != null && i.name.contentEquals(record) &&
                             planet == i.l_planet && maze == i.l_maze && type == i.l_type) {
-                        interest = i;
-                        System.out.println("something " + i.content);
+                        interest = i.clone();
+                        System.out.println("something " + interest.content);
                         return i;
                     }
                     //interest = new Info(new String(),Tree.C_STRING);

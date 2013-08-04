@@ -47,9 +47,10 @@ public class AG20Chooser extends javax.swing.JFrame {
         jButtonFlyerXml = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Choose One!!");
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("AWESOMEGUY 2.0");
+        jLabel1.setText("AWESOMEGUY 2.0 FOR FLASH");
 
         jButtonAG20.setText("HERE");
         jButtonAG20.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -79,12 +80,12 @@ public class AG20Chooser extends javax.swing.JFrame {
                     .addComponent(jButtonAG20)
                     .addComponent(jLabel2)
                     .addComponent(jButtonFlyerXml))
-                .addContainerGap(151, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonAG20)
@@ -92,7 +93,7 @@ public class AG20Chooser extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonFlyerXml)
-                .addContainerGap(128, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
