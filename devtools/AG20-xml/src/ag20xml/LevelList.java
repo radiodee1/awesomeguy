@@ -22,29 +22,36 @@ import java.util.ArrayList;
                 public int l_planet = 0;
                 
                 public LevelList (Info head) {
+                    System.out.println(" --- LevelList ---");
+                    
                     this.head = head;
-                    this.showTree(head);
-                    //interest = head;
+                    this.countPlanets(head);
+                    interest = head;
                     for(int i = 0; i < this.l_planet; i ++) {
+                        
                         Info visible = new Info(Tree.N_VISIBLE,Tree.C_STRING);
                         Info invisible = new Info(Tree.N_INVISIBLE, Tree.C_STRING);
                         visible.content = new String();
                         invisible.content = new String();
                         
-                        this.showTree(head, i, 0, Tree.TYPE_ABOVE_GROUND, Tree.N_VISIBLE);
-                        if (!this.endReached) visible = interest.clone();
+                        this.endReached = false;
                         
-                        System.out.println(i + " here again " + visible.content + " here again ");
+                        this.showTree(head, i, 0, Tree.TYPE_ABOVE_GROUND, Tree.N_VISIBLE);
+                        
+                        if ( true) visible = interest;
+                        
+                        this.endReached = false;
                         
                         this.showTree(head, i, 0, Tree.TYPE_ABOVE_GROUND, Tree.N_INVISIBLE); 
-                        if (!this.endReached) invisible = interest.clone();
+                        if ( true) invisible = interest;
                         
-                        this.add("",i,visible.content, invisible.content);
+                        if (!visible.content.isEmpty() || !invisible.content.isEmpty() || true) {
+                            this.add("",i,visible.content.trim(), invisible.content.trim());
+                        }
                         
-                        System.out.println(visible.content);
 
                     }
-                    System.out.println(this.l_planet + " l_planet");
+                    
                     
                 }
                 
@@ -52,37 +59,44 @@ import java.util.ArrayList;
                     
                 }
                 public Info showTree(Info i, int planet, int maze, int type, String record) {
-                    this.endReached = false;
+                    interest = new Info("", Tree.C_NONE);
                     if (record != null && i.name.contentEquals(record) &&
-                            planet == i.l_planet && maze == i.l_maze && type == i.l_type) {
-                        interest = i.clone();
-                        System.out.println("something " + interest.content);
-                        return i;
-                    }
-                    //interest = new Info(new String(),Tree.C_STRING);
-                    for(int j = 0; j < i.list.size(); j ++) {
-                        showTree(i.list.get(j),planet, maze, type, record);
+                        planet == i.l_planet && maze == i.l_maze && type == i.l_type) {
                         
+                        this.endReached = true;
+                        this.interest = i;
+                        return null;
                     }
-                    endReached = true;
+                    
+                    
+                    int j = 0;
+                    while ( j < i.list.size() && !this.endReached) {
+                        if (!this.endReached) { 
+                            Info test = i.list.get(j);
+                            showTree(test, planet, maze, type, record);
+                            j++;
+                        }
+                        else return null;
+                    }
+                    //endReached = true;
                     return null;
                 }
 
-                public void showTree(Info i ) {
+                public void countPlanets(Info i ) {
                     if (i.name.contentEquals(Tree.N_PLANET)) {
                         this.l_planet ++;
-                        System.out.println("planets here " + this.l_planet);
+                        
                     }
                     
                     for(int j = 0; j < i.list.size(); j ++) {
-                        showTree(i.list.get(j));
+                        countPlanets(i.list.get(j));
                        
                     }
                 }
 
                 public void showList(Info i) {
                     for(int j = 0; j < i.list.size(); j ++) {
-                        System.out.println("list " +i.name + " - " +  i.content+ " - "+ i.list.size());
+                        
 
                     }
                 }
