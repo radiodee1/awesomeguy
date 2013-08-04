@@ -39,6 +39,11 @@ public class Tree {
     public String mXMLFilename = new String("awesomeguy.xml");
     
     public Info interest ;
+    public int l_planet = 0;
+    public int l_maze = 0;
+    public int l_type = 0;
+    public static int TYPE_ABOVE_GROUND = 1;
+    public static int TYPE_BELOW_GROUND = 2;
     
     public String newFileName = new String();
     public BufferedWriter out;
@@ -73,6 +78,8 @@ public class Tree {
         } catch (Exception ex) {
             ex.printStackTrace();
         } 
+        this.mXMLFilename = fileName;
+        
         newFileName = fileName.trim() + ".mod.xml";
         if (newFileName.contentEquals(".mod.xml")) {
             this.newFileName = new String("output.mod.xml");
@@ -81,17 +88,29 @@ public class Tree {
         this.writeOutputFile();
         //find();
         
-        this.showTree(head, Tree.N_MAZE);//find something
-        System.out.println("-------");
-        //this.showList(interest);
-        this.showTree(interest, null);// just print everything up untill end node
+        //this.showTree(head, Tree.N_MAZE);//find something
+        
+        //this.showTree(interest, null);// just print everything up untill end node
+        //this.showTree(head, 1, 0, Tree.TYPE_ABOVE_GROUND, Tree.N_HORIZON);
+        System.out.println("------- " + head.name);
+
+        
+        //this.showTree(interest, null);
     }
     public static void main( String args[]) {
         Tree test = new Tree(new String());
         
     }
     
-
+    public Info getHead() {
+        return head;
+    }
+    
+    public int getPlanets() {
+        return this.l_planet;
+    }
+    
+    
     public void writeOutputFile() {
         this.printOption = true;
         try{
@@ -143,6 +162,20 @@ public class Tree {
         return true;
     }
     ////////////////// recursive tree stuff ////////////////////////////
+    
+    public boolean showTree(Info i, int planet, int maze, int type, String record) {
+        if (record != null && i.name.contentEquals(record) &&
+                planet == i.l_planet && maze == i.l_maze && type == i.l_type) {
+            interest = i;
+            return true;
+        }
+        for(int j = 0; j < i.list.size(); j ++) {
+            showTree(i.list.get(j), record);
+            System.out.println(i.name + " - " +  i.content+ " - "+ i.list.size() + " - " + i.num);
+            //showTree(i.list.get(j));
+        }
+        return false;
+    }
     
     public void showTree(Info i , String record) {
         if (record != null && i.name.contentEquals(record) ) {
@@ -231,15 +264,7 @@ public class Tree {
                 while ( eventType != XmlPullParser.START_TAG ) {
                     //eventType = mXpp.next();
                     this.skipWhitespace();
-                
-                    
-                    
-                    
-//                    if (eventType == XmlPullParser.TEXT && false) {
-//                        System.out.println(mXpp.getText() );
-//                        //if (this.printOption) out.write(mXpp.getText());
-//                        //mXpp.next();
-//                    }
+ 
                 }
                 i.num = this.getNumber();
                 if(i.name.contentEquals(mXpp.getName()) && 
@@ -311,6 +336,10 @@ public class Tree {
             last.add(i, 0); // alsways add node
             i.parent = last;
             last = i;
+            
+            i.l_planet = this.l_planet;
+            i.l_maze = this.l_maze;
+            i.l_type = this.l_type;
         }
         pop(i);
         if (this.eventType != XmlPullParser.END_TAG) {
@@ -418,6 +447,8 @@ public class Tree {
 
                 doPrintOrParse(info);
                 planet();
+                this.l_planet ++;
+                this.l_type = Tree.TYPE_ABOVE_GROUND;
                 System.out.println("planet ---");
                 
                 closePrintOrParse(info);
@@ -464,6 +495,7 @@ public class Tree {
             if (this.next().contentEquals(Tree.N_UNDERGROUND)) {
                 Info info = new Info(Tree.N_UNDERGROUND, Tree.C_LIST, true);
                 doPrintOrParse(info);
+                this.l_type = Tree.TYPE_BELOW_GROUND;
                 underground();
                 closePrintOrParse(info);
             }
@@ -504,6 +536,7 @@ public class Tree {
             Info info = new Info(Tree.N_MAZE, Tree.C_STRING, true);
             doPrintOrParse(info);
             this.maze();
+            this.l_maze ++;
             closePrintOrParse(info);
         }
     }
@@ -678,6 +711,10 @@ class Info {
     public boolean endNode = false;
     public Info parent ;
     public int num = 0;
+    
+    public int l_planet = 0;
+    public int l_maze = 0;
+    public int l_type = 0;
     
     public Info(String n, int t) {
         this.name = n;
