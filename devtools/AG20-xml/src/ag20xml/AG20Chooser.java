@@ -20,7 +20,7 @@ public class AG20Chooser extends javax.swing.JFrame {
 
     public void launchFlyerXml() {
         String start[] = new String[0];
-        AG20jFrame flyer = new AG20jFrame();
+        FlyerjFrame flyer = new FlyerjFrame();
         flyer.main(start);
         this.setVisible(false);
     }
