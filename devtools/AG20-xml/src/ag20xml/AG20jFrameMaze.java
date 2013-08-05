@@ -2,59 +2,46 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ag20xml;
+package flyerxml;
 
 import java.io.*;
 import java.util.*;
 import javax.swing.*;
-import flyerxml.FileLoader;
 /**
  *
  * @author dave
  */
-public class AG20jFrame extends javax.swing.JFrame {
+public class AG20jFrameMaze extends javax.swing.JFrame {
 
-    public static String TILES_VISIBLE = "Visible Info: ";
-    public static String TILES_INVISIBLE = "Invisible Info: ";
+    public static String TILES_LEVEL = "Level Info: ";
+    public static String TILES_OBJECTS = "Object Info: ";
     public static String STRING_GOOD = "GOOD";
     public static String STRING_BAD = "BAD";
     
    static String windowName = new String();
    public int frameNumber = 0;
-   public LevelList mList = new LevelList();
-   public Tree tree;
-   public Info head;
-   
-   //public AG20jFrameList challenge;
-   //public AG20jFrameList special;
-   
+   public InitBackground.LevelList mList = new InitBackground.LevelList();
     /**
      * Creates new form FlyerjFrame
      */
-    public AG20jFrame() {
+    public AG20jFrameMaze() {
         initComponents();
         this.parseXML();
 
     }
     public void parseXML() {
         this.frameNumber = 0;
-        jLabel1.setText("AG20-XML: ");// + windowName);
-        this.jLabel2.setText(AG20jFrame.TILES_VISIBLE);
-        this.jLabel3.setText(AG20jFrame.TILES_INVISIBLE);
+        jLabel1.setText("FlyerXML: ");// + windowName);
+        this.jLabel2.setText(AG20jFrameMaze.TILES_LEVEL);
+        this.jLabel3.setText(AG20jFrameMaze.TILES_OBJECTS);
         try {
-            if (!windowName.isEmpty()) {
-                tree = new Tree(windowName);
-                Info head = tree.getHead();
-                mList = new LevelList(head);
-                
-                //for(int i = 0; i < mList.size(); i ++) System.out.println(" planets " + mList.getLevelTiles(i));
-            }
+            InitBackground.ParseXML backgroundParse = new InitBackground.ParseXML(true, windowName);
+            mList = backgroundParse.getLevelList(true);
             if (mList.size() >= 1) {
-                this.jLabel1.setText("AG20-XML: " + mList.size() + " planets");
                 this.copyToWindows(frameNumber);
             }
             else if (mList.size() == 0) {
-                mList = new LevelList();
+                mList = new InitBackground.LevelList();
                 mList.add("Level 1", 1);
                 this.copyToWindows(frameNumber);
             }
@@ -77,54 +64,51 @@ public class AG20jFrame extends javax.swing.JFrame {
     }
     
     public void incrementFrameNum() {
-        this.collectContents();
         this.copyFromWindows(frameNumber);
         if (frameNumber + 1 == mList.size()) return;
         frameNumber ++;
         this.copyToWindows(frameNumber);
-        this.jLabel2.setText(AG20jFrame.TILES_VISIBLE);
-        this.jLabel3.setText(AG20jFrame.TILES_INVISIBLE);
+        this.jLabel2.setText(AG20jFrameMaze.TILES_LEVEL);
+        this.jLabel3.setText(AG20jFrameMaze.TILES_OBJECTS);
     }
 
     public void decrementFrameNum() {
-        this.collectContents();
         this.copyFromWindows(frameNumber);
         if (frameNumber == 0) return;
         frameNumber --;
         this.copyToWindows(frameNumber);
-        this.jLabel2.setText(AG20jFrame.TILES_VISIBLE);
-        this.jLabel3.setText(AG20jFrame.TILES_INVISIBLE);
+        this.jLabel2.setText(AG20jFrameMaze.TILES_LEVEL);
+        this.jLabel3.setText(AG20jFrameMaze.TILES_OBJECTS);
     }
     
     public void clearLevelTiles() {
         this.jEditorPane1.setText("");
-        this.jLabel2.setText(AG20jFrame.TILES_VISIBLE);
+        this.jLabel2.setText(AG20jFrameMaze.TILES_LEVEL);
         this.copyFromWindows(frameNumber);
     }
     
     public void clearObjectTiles() {
         this.jEditorPane2.setText("");
-        this.jLabel3.setText(AG20jFrame.TILES_INVISIBLE);
+        this.jLabel3.setText(AG20jFrameMaze.TILES_OBJECTS);
         this.copyFromWindows(frameNumber);
     }
     public void checkLevelTiles() {
         if(testContents(this.jEditorPane1.getText())){
-            this.jLabel2.setText(TILES_VISIBLE + STRING_GOOD);
+            this.jLabel2.setText(TILES_LEVEL + STRING_GOOD);
         }
         else {
-            this.jLabel2.setText(TILES_VISIBLE + STRING_BAD);
+            this.jLabel2.setText(TILES_LEVEL + STRING_BAD);
         }
     }
     public void checkObjectTiles() {
         if(testContents(this.jEditorPane2.getText())){
-            this.jLabel3.setText(TILES_INVISIBLE + STRING_GOOD);
+            this.jLabel3.setText(TILES_OBJECTS + STRING_GOOD);
         }
         else {
-            this.jLabel3.setText(TILES_INVISIBLE + STRING_BAD);
+            this.jLabel3.setText(TILES_OBJECTS + STRING_BAD);
         }
     }
     public void printOutput() {
-        this.collectContents();
         FileLoader fileLoader = new FileLoader();
         fileLoader.setVisible(true);
         javax.swing.JFileChooser chooser = fileLoader.getFileChooser();
@@ -135,8 +119,8 @@ public class AG20jFrame extends javax.swing.JFrame {
             
             windowName = file.getAbsolutePath();
             this.copyFromWindows(this.frameNumber);
-            //FlyerXML printer = new FlyerXML(this.windowName , mList);
-            //printer.writeOutputFile();
+            FlyerXML printer = new FlyerXML(this.windowName , mList);
+            printer.writeOutputFile();
 
         } 
         else {
@@ -145,22 +129,6 @@ public class AG20jFrame extends javax.swing.JFrame {
         fileLoader.setVisible(false);
         
     }
-    
-    public void collectContents() {
-        for(int j = 0; j < this.mList.size(); j ++) {
-            if (this.mList.get(j).challengeList != null) {
-                this.mList.get(j).mChallenge = this.mList.get(j).challengeList.returnList;
-                this.mList.get(j).challengeList.dispose();
-            }
-            if (this.mList.get(j).specialList != null) {
-                this.mList.get(j).mSpecial = this.mList.get(j).specialList.returnList;
-                this.mList.get(j).specialList.dispose();
-            }
-        }
-        
-
-    }
-    
     public boolean testContents( String testmeString) {
         boolean hasSize = false;
         StringTokenizer mObjectToken = new StringTokenizer(testmeString,",");
@@ -194,10 +162,6 @@ public class AG20jFrame extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -206,7 +170,7 @@ public class AG20jFrame extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Awesomeguy 2.0 XML");
+        setTitle("Awesome Flyer XML");
 
         jLabel2.setText("Level Info:");
 
@@ -271,34 +235,6 @@ public class AG20jFrame extends javax.swing.JFrame {
 
         jLabel4.setText("Frame:");
 
-        jButton8.setText("MAZES");
-        jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton8MouseClicked(evt);
-            }
-        });
-
-        jButton9.setText("TEXT");
-        jButton9.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton9MouseClicked(evt);
-            }
-        });
-
-        jButton10.setText("CHALLENGE");
-        jButton10.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton10MouseClicked(evt);
-            }
-        });
-
-        jButton11.setText("SPECIAL");
-        jButton11.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton11MouseClicked(evt);
-            }
-        });
-
         jMenu1.setText("File");
 
         jMenuItem3.setText("open file");
@@ -336,34 +272,23 @@ public class AG20jFrame extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButton5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton4)
-                                    .addComponent(jButton10))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addComponent(jButton9)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton11))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton8)))
-                                .addGap(12, 12, 12)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(19, 19, 19)
+                        .addComponent(jButton4)
+                        .addGap(109, 109, 109)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -402,14 +327,9 @@ public class AG20jFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
-                    .addComponent(jButton3)
-                    .addComponent(jButton8))
+                    .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton5)
-                    .addComponent(jButton9)
-                    .addComponent(jButton10)
-                    .addComponent(jButton11))
+                .addComponent(jButton5)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -462,39 +382,6 @@ public class AG20jFrame extends javax.swing.JFrame {
         fileLoader.setVisible(false);
     }//GEN-LAST:event_jMenuItem3MouseReleased
 
-    private void jButton8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseClicked
-        // TODO add your handling code here: MAZES
-    }//GEN-LAST:event_jButton8MouseClicked
-
-    private void jButton10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseClicked
-        // TODO add your handling code here: CHALLENGE
-        if (this.mList.get(this.frameNumber).challengeList == null) {
-            this.mList.get(this.frameNumber).challengeList = new AG20jFrameList("Challenge", 
-                    this.mList.get(this.frameNumber).mChallenge);
-        }
-//        else if (challenge.returnList.size() > 0) {
-//            this.mList.get(this.frameNumber).mChallenge = challenge.returnList;
-//        }
-        this.mList.get(this.frameNumber).challengeList.setVisible(true);
-    }//GEN-LAST:event_jButton10MouseClicked
-
-    private void jButton9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton9MouseClicked
-        // TODO add your handling code here: TEXT
-    }//GEN-LAST:event_jButton9MouseClicked
-
-    private void jButton11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton11MouseClicked
-        // TODO add your handling code here: SPECIAL
-        if (this.mList.get(this.frameNumber).specialList == null) {
-            this.mList.get(this.frameNumber).specialList = new AG20jFrameList("Special", 
-                    this.mList.get(this.frameNumber).mSpecial);
-        }
-//        else if (special.returnList.size() > 0) {
-//            this.mList.get(this.frameNumber).mSpecial = special.returnList;
-//            //System.out.println("special saved??");
-//        }
-        this.mList.get(this.frameNumber).specialList.setVisible(true);
-    }//GEN-LAST:event_jButton11MouseClicked
-
     /**
      * @param args the command line arguments
      */
@@ -512,13 +399,13 @@ public class AG20jFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AG20jFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AG20jFrameMaze.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AG20jFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AG20jFrameMaze.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AG20jFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AG20jFrameMaze.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AG20jFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AG20jFrameMaze.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         if (args.length > 0) {
@@ -527,7 +414,7 @@ public class AG20jFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AG20jFrame().setVisible(true);
+                new AG20jFrameMaze().setVisible(true);
             }
         });
         //FlyerjFrame F = new FlyerjFrame();
@@ -535,16 +422,12 @@ public class AG20jFrame extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JEditorPane jEditorPane2;
     private javax.swing.JLabel jLabel1;
