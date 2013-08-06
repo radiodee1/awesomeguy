@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package flyerxml;
+package ag20xml;
 
 import java.io.*;
 import java.util.*;
@@ -13,120 +13,103 @@ import javax.swing.*;
  */
 public class AG20jFrameMaze extends javax.swing.JFrame {
 
-    public static String TILES_LEVEL = "Level Info: ";
-    public static String TILES_OBJECTS = "Object Info: ";
+    public static String TILES_VISIBLE = "Visible Info: ";
+    public static String TILES_INVISIBLE = "Invisible Info: ";
     public static String STRING_GOOD = "GOOD";
     public static String STRING_BAD = "BAD";
     
+    public ArrayList<MazeData> mList ;
+    public ArrayList<MazeData> returnList ;
+    public String mTitle = new String();
+    
    static String windowName = new String();
    public int frameNumber = 0;
-   public InitBackground.LevelList mList = new InitBackground.LevelList();
+   //public InitBackground.LevelList mList = new InitBackground.LevelList();
     /**
      * Creates new form FlyerjFrame
      */
-    public AG20jFrameMaze() {
+    public AG20jFrameMaze(String title, ArrayList<MazeData> list) {
         initComponents();
-        this.parseXML();
-
+        //this.parseXML();
+        mList = list;
+        mTitle = title;
+        this.setBounds(0, 0, 450, 340);
+        if(mList.size() == 0) mList.add(new MazeData());
+        
+        this.setTitle();
+        this.copyToWindows(this.frameNumber);
     }
-    public void parseXML() {
-        this.frameNumber = 0;
-        jLabel1.setText("FlyerXML: ");// + windowName);
-        this.jLabel2.setText(AG20jFrameMaze.TILES_LEVEL);
-        this.jLabel3.setText(AG20jFrameMaze.TILES_OBJECTS);
-        try {
-            InitBackground.ParseXML backgroundParse = new InitBackground.ParseXML(true, windowName);
-            mList = backgroundParse.getLevelList(true);
-            if (mList.size() >= 1) {
-                this.copyToWindows(frameNumber);
-            }
-            else if (mList.size() == 0) {
-                mList = new InitBackground.LevelList();
-                mList.add("Level 1", 1);
-                this.copyToWindows(frameNumber);
-            }
-        }
-        catch (Exception e) {
-            
-        }
+
+    public void setTitle() {
+        this.jLabel1.setText( this.mTitle + ": " + this.mList.size());
+        this.jLabel2.setText(AG20jFrameMaze.TILES_VISIBLE);
+        this.jLabel3.setText(AG20jFrameMaze.TILES_INVISIBLE);
     }
     
     public void copyToWindows(int num) {
-      this.jEditorPane1.setText(mList.getLevelTiles(num)); 
-      this.jEditorPane2.setText(mList.getObjectTiles(num));
-      this.jTextField1.setText(new Integer(mList.getNum(num)).toString());
+      this.jEditorPane1.setText(mList.get(num).mVisible); 
+      this.jEditorPane2.setText(mList.get(num).mInvisible);
+      this.jTextField1.setText(new Integer(mList.get(num).mNum).toString());
     }
     
     public void copyFromWindows(int num) {
-        this.mList.setTiles(num, this.jEditorPane1.getText(), this.jEditorPane2.getText());
-        this.mList.setLabelNumber(num, Integer.parseInt(this.jTextField1.getText().trim()) );
-        //System.out.println("#"+ mList.getNum(num) + "#");
+        this.mList.get(num).mNum =  Integer.parseInt(this.jTextField1.getText().trim());
+        this.mList.get(num).mVisible = this.jEditorPane1.getText(); 
+        this.mList.get(num).mInvisible = this.jEditorPane2.getText();
     }
     
     public void incrementFrameNum() {
         this.copyFromWindows(frameNumber);
-        if (frameNumber + 1 == mList.size()) return;
-        frameNumber ++;
+        if (frameNumber +1 < mList.size()) {
+            //return;
+            frameNumber ++;
+        }
+        
         this.copyToWindows(frameNumber);
-        this.jLabel2.setText(AG20jFrameMaze.TILES_LEVEL);
-        this.jLabel3.setText(AG20jFrameMaze.TILES_OBJECTS);
+        this.jLabel2.setText(AG20jFrameMaze.TILES_VISIBLE);
+        this.jLabel3.setText(AG20jFrameMaze.TILES_INVISIBLE);
     }
 
     public void decrementFrameNum() {
         this.copyFromWindows(frameNumber);
-        if (frameNumber == 0) return;
-        frameNumber --;
+        if (frameNumber > 0) {
+            frameNumber --;
+        }
+        
         this.copyToWindows(frameNumber);
-        this.jLabel2.setText(AG20jFrameMaze.TILES_LEVEL);
-        this.jLabel3.setText(AG20jFrameMaze.TILES_OBJECTS);
+        this.jLabel2.setText(AG20jFrameMaze.TILES_VISIBLE);
+        this.jLabel3.setText(AG20jFrameMaze.TILES_INVISIBLE);
     }
     
     public void clearLevelTiles() {
         this.jEditorPane1.setText("");
-        this.jLabel2.setText(AG20jFrameMaze.TILES_LEVEL);
+        this.jLabel2.setText(AG20jFrameMaze.TILES_VISIBLE);
         this.copyFromWindows(frameNumber);
     }
     
     public void clearObjectTiles() {
         this.jEditorPane2.setText("");
-        this.jLabel3.setText(AG20jFrameMaze.TILES_OBJECTS);
+        this.jLabel3.setText(AG20jFrameMaze.TILES_INVISIBLE);
         this.copyFromWindows(frameNumber);
     }
     public void checkLevelTiles() {
         if(testContents(this.jEditorPane1.getText())){
-            this.jLabel2.setText(TILES_LEVEL + STRING_GOOD);
+            this.jLabel2.setText(TILES_VISIBLE + STRING_GOOD);
         }
         else {
-            this.jLabel2.setText(TILES_LEVEL + STRING_BAD);
+            this.jLabel2.setText(TILES_VISIBLE + STRING_BAD);
         }
     }
     public void checkObjectTiles() {
         if(testContents(this.jEditorPane2.getText())){
-            this.jLabel3.setText(TILES_OBJECTS + STRING_GOOD);
+            this.jLabel3.setText(TILES_INVISIBLE + STRING_GOOD);
         }
         else {
-            this.jLabel3.setText(TILES_OBJECTS + STRING_BAD);
+            this.jLabel3.setText(TILES_INVISIBLE + STRING_BAD);
         }
     }
-    public void printOutput() {
-        FileLoader fileLoader = new FileLoader();
-        fileLoader.setVisible(true);
-        javax.swing.JFileChooser chooser = fileLoader.getFileChooser();
+    public void saveOutput() {
         
-        int returnValue = chooser.showSaveDialog(this);//showOpenDialog(this);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File file = chooser.getSelectedFile();
-            
-            windowName = file.getAbsolutePath();
-            this.copyFromWindows(this.frameNumber);
-            FlyerXML printer = new FlyerXML(this.windowName , mList);
-            printer.writeOutputFile();
-
-        } 
-        else {
-            System.out.println("File access cancelled by user.");
-        }
-        fileLoader.setVisible(false);
         
     }
     public boolean testContents( String testmeString) {
@@ -162,15 +145,15 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Awesome Flyer XML");
+        setTitle("Maze XML");
 
         jLabel2.setText("Level Info:");
 
@@ -204,7 +187,7 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setText("OUTPUT");
+        jButton5.setText("SAVE");
         jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton5MouseClicked(evt);
@@ -235,28 +218,27 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
 
         jLabel4.setText("Frame:");
 
-        jMenu1.setText("File");
-
-        jMenuItem3.setText("open file");
-        jMenuItem3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jMenuItem3MouseReleased(evt);
+        jButton8.setText("SPECIAL");
+        jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton8MouseClicked(evt);
             }
         });
-        jMenu1.add(jMenuItem3);
 
-        jMenuBar1.add(jMenu1);
+        jButton9.setText("CHALLENGES");
+        jButton9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton9MouseClicked(evt);
+            }
+        });
 
-        jMenu2.setText("Edit");
+        jTextField2.setText("000");
 
-        jMenuItem1.setText("set size");
-        jMenu2.add(jMenuItem1);
+        jLabel5.setText("H:");
 
-        jMenuItem2.setText("preferences");
-        jMenu2.add(jMenuItem2);
+        jLabel6.setText("V:");
 
-        jMenuBar1.add(jMenu2);
-
+        jTextField3.setText("000");
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -268,32 +250,47 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel4)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel5)
+                                        .addGap(4, 4, 4)
+                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel6)
+                                        .addGap(3, 3, 3)
+                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(19, 19, 19)
-                        .addComponent(jButton4)
-                        .addGap(109, 109, 109)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jButton4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton9)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -305,7 +302,11 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))))
+                            .addComponent(jLabel4)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -327,10 +328,13 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
-                    .addComponent(jButton3))
+                    .addComponent(jButton3)
+                    .addComponent(jButton5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton8)
+                    .addComponent(jButton9))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
@@ -361,26 +365,16 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7MouseClicked
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
-        this.printOutput();
+        this.saveOutput();
     }//GEN-LAST:event_jButton5MouseClicked
 
-    private void jMenuItem3MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem3MouseReleased
-        FileLoader fileLoader = new FileLoader();
-        fileLoader.setVisible(true);
-        javax.swing.JFileChooser chooser = fileLoader.getFileChooser();
-        int returnValue = chooser.showOpenDialog(this);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File file = chooser.getSelectedFile();
-            
-            windowName = file.getAbsolutePath();
-            this.parseXML();
+    private void jButton8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseClicked
+        // TODO add your handling code here: SPECIAL
+    }//GEN-LAST:event_jButton8MouseClicked
 
-        } 
-        else {
-            System.out.println("File access cancelled by user.");
-        }
-        fileLoader.setVisible(false);
-    }//GEN-LAST:event_jMenuItem3MouseReleased
+    private void jButton9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton9MouseClicked
+        // TODO add your handling code here: CHALLENGES
+    }//GEN-LAST:event_jButton9MouseClicked
 
     /**
      * @param args the command line arguments
@@ -414,7 +408,7 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AG20jFrameMaze().setVisible(true);
+                new AG20jFrameMaze(new String(), new ArrayList<MazeData>()).setVisible(true);
             }
         });
         //FlyerjFrame F = new FlyerjFrame();
@@ -428,20 +422,21 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JEditorPane jEditorPane2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }

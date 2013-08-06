@@ -84,9 +84,11 @@ import java.util.ArrayList;
                             this.listCaptureWithNum(this.mList.get(i).mTextMessage  ,this.mList.get(i).mTextNum , 
                                 text, i, 0, Tree.TYPE_ABOVE_GROUND, Tree.N_TEXT);
                         }
-                        System.out.println(" numbers " + this.l_challenge + " " + this.l_special + " " + this.l_text);
+                        //System.out.println(" numbers " + this.l_challenge + " " + this.l_special + " " + this.l_text);
                         findMazeData( i);
-
+                        for(int z = 0; z < this.mList.get(i).mMazeData.size(); z ++) {
+                            System.out.println( z + " maze " + this.mList.get(i).mMazeData.get(z).mInvisible);
+                        }
                     }
                     
                     
@@ -102,6 +104,8 @@ import java.util.ArrayList;
                         
                         this.endReached = true;
                         this.interest = i;
+                        if (record.contentEquals(Tree.N_INVISIBLE)) System.out.println(i.content);
+                        
                         return null;
                     }
                     
@@ -168,17 +172,33 @@ import java.util.ArrayList;
                     }
                 }
                 public void findMazeData( int i) {
+                    this.l_maze = 0;
                     countMazes(head, i);
                     int j = this.l_maze;
                     for (int k = 0; k < j; k ++) {
                         MazeData myMaze = new MazeData();
+                        myMaze.mVisible = new String();
+                        myMaze.mInvisible = new String();
+                        
+                        myMaze.mNum = k;
+                        
+                        this.endReached = false;
+                        this.interest = new Info("", Tree.C_NONE);
+                        this.showTree(head, i, k, Tree.TYPE_BELOW_GROUND, Tree.N_MAZE);
+                        Info mazeNode = this.interest;
+                        
+                        this.interest = new Info("", Tree.C_NONE);
+                        this.interest.content = "";
+                        
                         this.endReached = false;
                         this.showTree(head, i, k, Tree.TYPE_BELOW_GROUND, Tree.N_VISIBLE);
-                        myMaze.mVisible = this.interest.content;
+                        myMaze.mVisible = this.interest.content.trim();
+                        
+                        this.interest = new Info("", Tree.C_NONE);
                         
                         this.endReached = false;
                         this.showTree(head, i, k, Tree.TYPE_BELOW_GROUND, Tree.N_INVISIBLE);
-                        myMaze.mInvisible = this.interest.content;
+                        myMaze.mInvisible = this.interest.content.trim();
                         
                         //add array-list-capture here.
                         this.l_challenge = 0;
@@ -198,8 +218,8 @@ import java.util.ArrayList;
                             Info special = this.interest;
                             this.listCapture(myMaze.mSpecial, special, i, k, Tree.TYPE_BELOW_GROUND, Tree.N_SPECIAL);
                         }
-                        
-                        System.out.println();
+                        this.mList.get(i).mMazeData.add(myMaze);
+                        System.out.println((k + 1) +" == "+ mList.get(i).mMazeData.size());
                     }
                 }
                 public void showList(Info i) {
@@ -285,7 +305,7 @@ import java.util.ArrayList;
 	
         class LevelData {
 		public String mText = new String("blank");
-		public Integer mNum = 1;
+		public Integer mNum = 0;
                 
                 public String mLevelTiles = new String();
                 public String mObjectTiles = new String();
@@ -294,9 +314,11 @@ import java.util.ArrayList;
                 public ArrayList<String> mSpecial = new ArrayList<String>();
                 public ArrayList<String> mTextMessage = new ArrayList<String>();
                 public ArrayList<Integer> mTextNum = new ArrayList<Integer>();
+                public ArrayList<MazeData> mMazeData = new ArrayList<MazeData>();
                 
                 public AG20jFrameList specialList;
                 public AG20jFrameList challengeList;
+                public AG20jFrameMaze mazeList;
                 
                 public void addText(String text, int num) {
                     this.mTextMessage.add(text);
@@ -306,11 +328,14 @@ import java.util.ArrayList;
 
         class MazeData {
                 public String mText = new String("blank");
-		public Integer mNum = 1;
+		public Integer mNum = 0;
                 
                 public String mVisible = new String();
                 public String mInvisible = new String();
                 
                 public ArrayList<String> mChallenge = new ArrayList<String>();
                 public ArrayList<String> mSpecial = new ArrayList<String>();
+                
+                public AG20jFrameList specialList;
+                public AG20jFrameList challengeList;
         }

@@ -25,8 +25,6 @@ public class AG20jFrame extends javax.swing.JFrame {
    public Tree tree;
    public Info head;
    
-   //public AG20jFrameList challenge;
-   //public AG20jFrameList special;
    
     /**
      * Creates new form FlyerjFrame
@@ -47,7 +45,7 @@ public class AG20jFrame extends javax.swing.JFrame {
                 Info head = tree.getHead();
                 mList = new LevelList(head);
                 
-                //for(int i = 0; i < mList.size(); i ++) System.out.println(" planets " + mList.getLevelTiles(i));
+                
             }
             if (mList.size() >= 1) {
                 this.jLabel1.setText("AG20-XML: " + mList.size() + " planets");
@@ -137,7 +135,7 @@ public class AG20jFrame extends javax.swing.JFrame {
             this.copyFromWindows(this.frameNumber);
             //FlyerXML printer = new FlyerXML(this.windowName , mList);
             //printer.writeOutputFile();
-
+            
         } 
         else {
             System.out.println("File access cancelled by user.");
@@ -198,6 +196,7 @@ public class AG20jFrame extends javax.swing.JFrame {
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -299,6 +298,8 @@ public class AG20jFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton12.setText("NEW");
+
         jMenu1.setText("File");
 
         jMenuItem3.setText("open file");
@@ -346,9 +347,11 @@ public class AG20jFrame extends javax.swing.JFrame {
                             .addComponent(jScrollPane2)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButton5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton8)
+                                        .addGap(0, 0, Short.MAX_VALUE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jButton4)
@@ -361,8 +364,9 @@ public class AG20jFrame extends javax.swing.JFrame {
                                         .addComponent(jButton11))
                                     .addGroup(layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton8)))
-                                .addGap(12, 12, 12)))
+                                        .addComponent(jButton5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButton12)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -403,13 +407,14 @@ public class AG20jFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
                     .addComponent(jButton3)
-                    .addComponent(jButton8))
+                    .addComponent(jButton5)
+                    .addComponent(jButton12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton5)
                     .addComponent(jButton9)
                     .addComponent(jButton10)
-                    .addComponent(jButton11))
+                    .addComponent(jButton11)
+                    .addComponent(jButton8))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -464,6 +469,12 @@ public class AG20jFrame extends javax.swing.JFrame {
 
     private void jButton8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseClicked
         // TODO add your handling code here: MAZES
+        if (this.mList.get(this.frameNumber).mazeList == null) {
+            this.mList.get(this.frameNumber).mazeList = new AG20jFrameMaze("MAZES", 
+                    this.mList.get(this.frameNumber).mMazeData);
+        }
+
+        this.mList.get(this.frameNumber).mazeList.setVisible(true);
     }//GEN-LAST:event_jButton8MouseClicked
 
     private void jButton10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseClicked
@@ -537,6 +548,7 @@ public class AG20jFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

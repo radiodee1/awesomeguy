@@ -21,6 +21,7 @@ public class AG20jFrameList extends javax.swing.JFrame {
      */
     public AG20jFrameList(String title, ArrayList<String> list) {
         initComponents();
+        this.setBounds(0, 0, 375, 300);
         this.title = title;
         this.list = list;
         this.copyToWindow();

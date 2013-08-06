@@ -71,26 +71,19 @@ public class Tree {
     public static String N_UNDERGROUND ="underground";
     
     public Tree(String fileName) {
-        //clearList();
-        //parse = new ParseXML("awesomeguy.xml");
+        
+        this.mXMLFilename = fileName;
         try {
             setXmlPullParser();
         } catch (Exception ex) {
             ex.printStackTrace();
         } 
-        this.mXMLFilename = fileName;
         
         newFileName = fileName.trim() + ".mod.xml";
-        if (newFileName.contentEquals(".mod.xml")) {
-            this.newFileName = new String("output.mod.xml");
-        }
+        
         System.out.println(newFileName);
         this.writeOutputFile();
-        //find();
-        //System.out.println("------- " + head.name);
-        //this.showTree(head, Tree.N_MAZE);//find something
         
-        //this.showTree(interest, null);// just print everything up untill end node
         this.showTree(head, 0, 0, Tree.TYPE_ABOVE_GROUND, Tree.N_VISIBLE);
         //System.out.println("------- " + head.name);
         this.showList(this.interest);
@@ -148,7 +141,7 @@ public class Tree {
 			
 				
        XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-       factory.setNamespaceAware(true);
+       factory.setNamespaceAware(false);
        mXpp = factory.newPullParser(); 	
 
        FileInputStream fstream = new FileInputStream(mXMLFilename);
@@ -159,7 +152,7 @@ public class Tree {
 
 
        mXpp.setInput(br);
-       mXpp.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, true);
+       //mXpp.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
 
         return true;
     }
