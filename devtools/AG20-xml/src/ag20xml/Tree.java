@@ -36,7 +36,7 @@ public class Tree {
     public XmlPullParser mXpp;
     public boolean readXML = true;
     public int eventType = 0;
-    public String mXMLFilename = new String("awesomeguy.xml");
+    public String mXMLFilename ;
     
     public Info interest ;
     public int l_planet = 0;
@@ -79,7 +79,7 @@ public class Tree {
             ex.printStackTrace();
         } 
         
-        newFileName = fileName.trim() + ".mod.xml";
+        newFileName = fileName.trim() + ".backup.xml";
         
         System.out.println(newFileName);
         this.writeOutputFile();
@@ -347,7 +347,7 @@ public class Tree {
                 i.content = this.mXpp.getText();
                 //this.parse.mXpp.nextTag();
                 //System.out.println(i.content);
-                out.write(i.content);
+                out.write(i.content.trim());
             } catch (Exception ex) {
                 Logger.getLogger(Tree.class.getName()).log(Level.SEVERE, null, ex);
             }

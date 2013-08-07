@@ -53,7 +53,7 @@ public class AG20jFrame extends javax.swing.JFrame {
             }
             else if (mList.size() == 0) {
                 mList = new LevelList();
-                mList.add("Level 1", 1);
+                mList.add("Level 1", 0);
                 this.copyToWindows(frameNumber);
             }
         }
@@ -65,13 +65,15 @@ public class AG20jFrame extends javax.swing.JFrame {
     public void copyToWindows(int num) {
       this.jEditorPane1.setText(mList.getLevelTiles(num)); 
       this.jEditorPane2.setText(mList.getObjectTiles(num));
-      this.jTextField1.setText(new Integer(mList.getNum(num)).toString());
+      //this.jTextField1.setText(new Integer(mList.getNum(num)).toString());
+      this.jLabel5.setText(new Integer(num).toString());
     }
     
     public void copyFromWindows(int num) {
         this.mList.setTiles(num, this.jEditorPane1.getText(), this.jEditorPane2.getText());
-        this.mList.setLabelNumber(num, Integer.parseInt(this.jTextField1.getText().trim()) );
-        //System.out.println("#"+ mList.getNum(num) + "#");
+        //this.mList.setLabelNumber(num, Integer.parseInt(this.jTextField1.getText().trim()) );
+        // nothing needed for number!!
+        // planets go in order...
     }
     
     public void incrementFrameNum() {
@@ -208,13 +210,13 @@ public class AG20jFrame extends javax.swing.JFrame {
         jEditorPane2 = new javax.swing.JEditorPane();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -284,8 +286,6 @@ public class AG20jFrame extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.setText("      ");
-
         jLabel4.setText("Frame:");
 
         jButton8.setText("MAZES");
@@ -322,6 +322,8 @@ public class AG20jFrame extends javax.swing.JFrame {
                 jButton12MouseClicked(evt);
             }
         });
+
+        jLabel5.setText("0");
 
         jMenu1.setText("File");
 
@@ -366,8 +368,9 @@ public class AG20jFrame extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2)
+                                .addComponent(jLabel5)
+                                .addGap(41, 41, 41))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -406,8 +409,8 @@ public class AG20jFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))))
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -438,7 +441,7 @@ public class AG20jFrame extends javax.swing.JFrame {
                     .addComponent(jButton10)
                     .addComponent(jButton11)
                     .addComponent(jButton8))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
@@ -593,6 +596,7 @@ public class AG20jFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -601,6 +605,5 @@ public class AG20jFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

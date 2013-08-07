@@ -134,7 +134,7 @@ public class AG20jFrameText extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
-        setTitle("Awesome Flyer XML");
+        setTitle("Awesomeguy 2.0 text XML");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -272,6 +272,7 @@ public class AG20jFrameText extends javax.swing.JFrame {
     private void jEditorPane1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jEditorPane1FocusLost
         // TODO add your handling code here:
         this.saveOutput();
+        
     }//GEN-LAST:event_jEditorPane1FocusLost
 
     private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost

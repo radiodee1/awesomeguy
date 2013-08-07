@@ -189,11 +189,11 @@ import java.util.ArrayList;
                         
                         this.endReached = false;
                         this.showTree(head, i, k, Tree.TYPE_BELOW_GROUND, Tree.N_HORIZONTAL);
-                        myMaze.mHorizontal = new Integer(this.interest.content).intValue();
+                        myMaze.mHorizontal = new Integer(this.interest.content.trim()).intValue();
                         
                         this.endReached = false;
                         this.showTree(head, i, k, Tree.TYPE_BELOW_GROUND, Tree.N_VERTICAL);
-                        myMaze.mVertical = new Integer(this.interest.content).intValue();
+                        myMaze.mVertical = new Integer(this.interest.content.trim()).intValue();
                         
                         
                         this.interest = new Info("", Tree.C_NONE);
@@ -243,7 +243,7 @@ import java.util.ArrayList;
                     this.showTree(i, planet, maze, type, record);
                     Info z = this.interest;
                     for (int j = 0; j < z.list.size(); j ++ ) {
-                        String text = new String(z.list.get(j).content);
+                        String text = new String(z.list.get(j).content.trim());
                         list.add(text);
                         System.out.println(text);
                     }
@@ -254,7 +254,7 @@ import java.util.ArrayList;
                     this.showTree(i, planet, maze, type, record);
                     Info z = this.interest;
                     for (int j = 0; j < z.list.size(); j ++ ) {
-                        String text = new String(z.list.get(j).content);
+                        String text = new String(z.list.get(j).content.trim());
                         int number = z.list.get(j).num;
                         list.add(text);
                         nums.add(number);

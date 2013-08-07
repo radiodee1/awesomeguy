@@ -50,7 +50,15 @@ public class AG20XML {
     public String stop15 = new String();
     
     public AG20XML(String fileName, LevelList mL){
-        newFileName = fileName.trim() + ".mod.xml";
+        this.newFileName = fileName;
+        
+        if (newFileName.endsWith(".xml")) {
+            this.newFileName =  this.newFileName.substring(0, this.newFileName.length() - 4);
+            System.out.println(this.newFileName);
+        }
+        
+        
+        newFileName = this.newFileName.trim() + ".mod.xml";
         if (newFileName.contentEquals(".mod.xml")) {
             this.newFileName = new String("output.mod.xml");
         }
@@ -79,6 +87,8 @@ public class AG20XML {
     private void printXml() {
         try {
             for (int x = 0; x < mList.size(); x ++ ) {
+                out.write("<!-- planet start here -->\n");
+                
                 out.write(this.start1);//planet - visible
                 
                 out.write(mList.getLevelTiles(x));
@@ -177,17 +187,17 @@ public class AG20XML {
         this.stop2 = "</invisible>\n"
                 + "</horizon>\n";
         
-        this.start3 = "<challenge>\n";
-        this.stop3 = "</challenge>\n";
+        this.start3 = "<challenges>\n";
+        this.stop3 = "</challenges>\n";
         
-        this.start4 = "<invaders>\n";
+        this.start4 = "<invaders>";
         this.stop4 = "</invaders>\n";
         
         this.start5 = "<text>\n";
         this.stop5 = "</text>\n";
         
         this.start6 = "<message number=\"";
-        this.start7 = "\">\n";
+        this.start7 = "\">";
         this.stop6 = "</message>\n";
         
         this.start8 = "<maze number=\"";
@@ -205,7 +215,7 @@ public class AG20XML {
         this.start13 = "<invisible>\n";
         this.stop13 = "</invisible>\n";
         
-        this.start14 = "<block>\n";
+        this.start14 = "<block>";
         this.stop14 = "</block>\n";
         
         this.start15 = "<special>\n";
