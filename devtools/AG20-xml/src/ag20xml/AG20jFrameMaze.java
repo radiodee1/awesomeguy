@@ -476,6 +476,7 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
 
     private void jButton10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseClicked
         // TODO add your handling code here:
+        this.mList.add(new MazeData());
     }//GEN-LAST:event_jButton10MouseClicked
 
     /**

@@ -176,6 +176,10 @@ public class AG20jFrame extends javax.swing.JFrame {
         return hasSize;
     }
     
+    public void addFrame() {
+        this.mList.add(new LevelData());
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -523,6 +527,7 @@ public class AG20jFrame extends javax.swing.JFrame {
 
     private void jButton12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton12MouseClicked
         // TODO add your handling code here: NEW
+        this.addFrame();
     }//GEN-LAST:event_jButton12MouseClicked
 
     /**

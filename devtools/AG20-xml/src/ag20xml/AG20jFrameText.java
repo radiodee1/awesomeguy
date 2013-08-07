@@ -31,6 +31,7 @@ public class AG20jFrameText extends javax.swing.JFrame {
         mList = l;
         mNums = n;
         mTitle = t;
+        if(mList.size() == 0) this.addFrame();
         
         initComponents();
         this.parseXML();
@@ -102,6 +103,10 @@ public class AG20jFrameText extends javax.swing.JFrame {
         this.dispose();
     }
 
+    public void addFrame() {
+        this.mList.add("");
+        this.mNums.add(0);
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -243,6 +248,7 @@ public class AG20jFrameText extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here: NEW
+        addFrame();
     }//GEN-LAST:event_jButton1MouseClicked
 
     /**

@@ -282,6 +282,10 @@ import java.util.ArrayList;
 			return mList.size();
 		}
 		
+                public void add(LevelData l) {
+                    mList.add(l);
+                }
+                
 		public ArrayList<String> getStrings() {
 			ArrayList<String> temp = new ArrayList<String>();
 			for(int i = 0; i < mList.size(); i ++) {
