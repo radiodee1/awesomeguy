@@ -319,6 +319,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="NEW"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton12MouseClicked"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

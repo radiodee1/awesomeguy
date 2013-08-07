@@ -86,9 +86,9 @@ import java.util.ArrayList;
                         }
                         //System.out.println(" numbers " + this.l_challenge + " " + this.l_special + " " + this.l_text);
                         findMazeData( i);
-                        for(int z = 0; z < this.mList.get(i).mMazeData.size(); z ++) {
-                            System.out.println( z + " maze " + this.mList.get(i).mMazeData.get(z).mInvisible);
-                        }
+//                        for(int z = 0; z < this.mList.get(i).mMazeData.size(); z ++) {
+//                            System.out.println( z + " maze " + this.mList.get(i).mMazeData.get(z).mInvisible);
+//                        }
                     }
                     
                     
@@ -180,12 +180,21 @@ import java.util.ArrayList;
                         myMaze.mVisible = new String();
                         myMaze.mInvisible = new String();
                         
-                        myMaze.mNum = k;
+                        this.interest = new Info("", Tree.C_NONE);
+                        this.interest.num = 0;
                         
                         this.endReached = false;
-                        this.interest = new Info("", Tree.C_NONE);
                         this.showTree(head, i, k, Tree.TYPE_BELOW_GROUND, Tree.N_MAZE);
-                        Info mazeNode = this.interest;
+                        myMaze.mNum = this.interest.num;
+                        
+                        this.endReached = false;
+                        this.showTree(head, i, k, Tree.TYPE_BELOW_GROUND, Tree.N_HORIZONTAL);
+                        myMaze.mHorizontal = new Integer(this.interest.content).intValue();
+                        
+                        this.endReached = false;
+                        this.showTree(head, i, k, Tree.TYPE_BELOW_GROUND, Tree.N_VERTICAL);
+                        myMaze.mVertical = new Integer(this.interest.content).intValue();
+                        
                         
                         this.interest = new Info("", Tree.C_NONE);
                         this.interest.content = "";
@@ -319,6 +328,7 @@ import java.util.ArrayList;
                 public AG20jFrameList specialList;
                 public AG20jFrameList challengeList;
                 public AG20jFrameMaze mazeList;
+                public AG20jFrameText textList;
                 
                 public void addText(String text, int num) {
                     this.mTextMessage.add(text);
@@ -329,6 +339,9 @@ import java.util.ArrayList;
         class MazeData {
                 public String mText = new String("blank");
 		public Integer mNum = 0;
+                
+                public Integer mHorizontal = 0;
+                public Integer mVertical = 0;
                 
                 public String mVisible = new String();
                 public String mInvisible = new String();

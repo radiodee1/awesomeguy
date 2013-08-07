@@ -154,6 +154,15 @@ public class AG20jFrame extends javax.swing.JFrame {
                 this.mList.get(j).mSpecial = this.mList.get(j).specialList.returnList;
                 this.mList.get(j).specialList.dispose();
             }
+            if (this.mList.get(j).mazeList != null) {
+                this.mList.get(j).mMazeData = this.mList.get(j).mazeList.returnList;
+                this.mList.get(j).mazeList.dispose();
+            }
+            if (this.mList.get(j).textList != null) {
+                this.mList.get(j).mTextMessage = this.mList.get(j).textList.returnListText;
+                this.mList.get(j).mTextNum = this.mList.get(j).textList.returnListNums;
+                this.mList.get(j).textList.dispose();
+            }
         }
         
 
@@ -299,6 +308,11 @@ public class AG20jFrame extends javax.swing.JFrame {
         });
 
         jButton12.setText("NEW");
+        jButton12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton12MouseClicked(evt);
+            }
+        });
 
         jMenu1.setText("File");
 
@@ -470,7 +484,7 @@ public class AG20jFrame extends javax.swing.JFrame {
     private void jButton8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseClicked
         // TODO add your handling code here: MAZES
         if (this.mList.get(this.frameNumber).mazeList == null) {
-            this.mList.get(this.frameNumber).mazeList = new AG20jFrameMaze("MAZES", 
+            this.mList.get(this.frameNumber).mazeList = new AG20jFrameMaze( "Planet: "+ this.frameNumber + " MAZES ", 
                     this.mList.get(this.frameNumber).mMazeData);
         }
 
@@ -483,14 +497,18 @@ public class AG20jFrame extends javax.swing.JFrame {
             this.mList.get(this.frameNumber).challengeList = new AG20jFrameList("Challenge", 
                     this.mList.get(this.frameNumber).mChallenge);
         }
-//        else if (challenge.returnList.size() > 0) {
-//            this.mList.get(this.frameNumber).mChallenge = challenge.returnList;
-//        }
+
         this.mList.get(this.frameNumber).challengeList.setVisible(true);
     }//GEN-LAST:event_jButton10MouseClicked
 
     private void jButton9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton9MouseClicked
         // TODO add your handling code here: TEXT
+        if (this.mList.get(this.frameNumber).textList == null) {
+            this.mList.get(this.frameNumber).textList = new AG20jFrameText("TEXT", 
+                    this.mList.get(this.frameNumber).mTextMessage, this.mList.get(this.frameNumber).mTextNum);
+        }
+
+        this.mList.get(this.frameNumber).textList.setVisible(true);
     }//GEN-LAST:event_jButton9MouseClicked
 
     private void jButton11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton11MouseClicked
@@ -499,12 +517,13 @@ public class AG20jFrame extends javax.swing.JFrame {
             this.mList.get(this.frameNumber).specialList = new AG20jFrameList("Special", 
                     this.mList.get(this.frameNumber).mSpecial);
         }
-//        else if (special.returnList.size() > 0) {
-//            this.mList.get(this.frameNumber).mSpecial = special.returnList;
-//            //System.out.println("special saved??");
-//        }
+
         this.mList.get(this.frameNumber).specialList.setVisible(true);
     }//GEN-LAST:event_jButton11MouseClicked
+
+    private void jButton12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton12MouseClicked
+        // TODO add your handling code here: NEW
+    }//GEN-LAST:event_jButton12MouseClicked
 
     /**
      * @param args the command line arguments

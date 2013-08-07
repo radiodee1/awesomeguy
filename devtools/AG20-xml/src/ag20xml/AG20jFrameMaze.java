@@ -34,6 +34,10 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
         mList = list;
         mTitle = title;
         this.setBounds(0, 0, 450, 340);
+        this.jTextField2.setBounds(0, 0, 28, 19);
+        this.jTextField2.setText("000");
+        this.jTextField3.setBounds(0, 0, 28, 19);
+        this.jTextField3.setText("000");
         if(mList.size() == 0) mList.add(new MazeData());
         
         this.setTitle();
@@ -50,10 +54,16 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
       this.jEditorPane1.setText(mList.get(num).mVisible); 
       this.jEditorPane2.setText(mList.get(num).mInvisible);
       this.jTextField1.setText(new Integer(mList.get(num).mNum).toString());
+      this.jTextField2.setText(new Integer(mList.get(num).mHorizontal).toString());
+      this.jTextField3.setText(new Integer(mList.get(num).mVertical).toString());
+
     }
     
     public void copyFromWindows(int num) {
         this.mList.get(num).mNum =  Integer.parseInt(this.jTextField1.getText().trim());
+        this.mList.get(num).mHorizontal =  Integer.parseInt(this.jTextField2.getText().trim());
+        this.mList.get(num).mVertical =  Integer.parseInt(this.jTextField3.getText().trim());
+
         this.mList.get(num).mVisible = this.jEditorPane1.getText(); 
         this.mList.get(num).mInvisible = this.jEditorPane2.getText();
     }
@@ -63,22 +73,22 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
         if (frameNumber +1 < mList.size()) {
             //return;
             frameNumber ++;
-        }
         
-        this.copyToWindows(frameNumber);
-        this.jLabel2.setText(AG20jFrameMaze.TILES_VISIBLE);
-        this.jLabel3.setText(AG20jFrameMaze.TILES_INVISIBLE);
+            this.copyToWindows(frameNumber);
+            this.jLabel2.setText(AG20jFrameMaze.TILES_VISIBLE);
+            this.jLabel3.setText(AG20jFrameMaze.TILES_INVISIBLE);
+        }
     }
 
     public void decrementFrameNum() {
         this.copyFromWindows(frameNumber);
         if (frameNumber > 0) {
             frameNumber --;
+      
+            this.copyToWindows(frameNumber);
+            this.jLabel2.setText(AG20jFrameMaze.TILES_VISIBLE);
+            this.jLabel3.setText(AG20jFrameMaze.TILES_INVISIBLE);
         }
-        
-        this.copyToWindows(frameNumber);
-        this.jLabel2.setText(AG20jFrameMaze.TILES_VISIBLE);
-        this.jLabel3.setText(AG20jFrameMaze.TILES_INVISIBLE);
     }
     
     public void clearLevelTiles() {
@@ -109,14 +119,33 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
         }
     }
     public void saveOutput() {
-        
-        
+        this.collectContents();
+        this.returnList = this.mList;// this does practically nothing!!
+        this.dispose();
     }
+    public void collectContents() {
+        for(int j = 0; j < this.mList.size(); j ++) {
+            if (this.mList.get(j).challengeList != null) {
+                this.mList.get(j).mChallenge = this.mList.get(j).challengeList.returnList;
+                this.mList.get(j).challengeList.dispose();
+            }
+            if (this.mList.get(j).specialList != null) {
+                this.mList.get(j).mSpecial = this.mList.get(j).specialList.returnList;
+                this.mList.get(j).specialList.dispose();
+            }
+            this.returnList = this.mList;
+        }
+        
+
+    }
+    
     public boolean testContents( String testmeString) {
         boolean hasSize = false;
         StringTokenizer mObjectToken = new StringTokenizer(testmeString,",");
 	int mTotalTokens = mObjectToken.countTokens();
-        if ( mTotalTokens == 192*32) hasSize = true;
+        if ( mTotalTokens == 
+                this.mList.get(this.frameNumber).mVertical * this.mList.get(this.frameNumber).mHorizontal
+            ) hasSize = true;
         return hasSize;
     }
     
@@ -151,9 +180,15 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
+        jButton10 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
 
         setTitle("Maze XML");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jLabel2.setText("Level Info:");
 
@@ -233,12 +268,31 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
         });
 
         jTextField2.setText("000");
+        jTextField2.setMinimumSize(new java.awt.Dimension(28, 19));
+        jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField2FocusLost(evt);
+            }
+        });
 
         jLabel5.setText("H:");
 
         jLabel6.setText("V:");
 
         jTextField3.setText("000");
+        jTextField3.setMinimumSize(new java.awt.Dimension(28, 19));
+        jTextField3.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField3FocusLost(evt);
+            }
+        });
+
+        jButton10.setText("NEW");
+        jButton10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton10MouseClicked(evt);
+            }
+        });
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -262,11 +316,11 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel5)
                                         .addGap(4, 4, 4)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jLabel6)
                                         .addGap(3, 3, 3)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -290,6 +344,8 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
                         .addComponent(jButton8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton10)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -333,7 +389,8 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton8)
-                    .addComponent(jButton9))
+                    .addComponent(jButton9)
+                    .addComponent(jButton10))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
@@ -370,11 +427,56 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
 
     private void jButton8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseClicked
         // TODO add your handling code here: SPECIAL
+        if (this.mList.get(this.frameNumber).specialList == null) {
+            this.mList.get(this.frameNumber).specialList = new AG20jFrameList("Maze index: "+ this.frameNumber +" Special", 
+                    this.mList.get(this.frameNumber).mSpecial);
+        }
+
+        this.mList.get(this.frameNumber).specialList.setVisible(true);
     }//GEN-LAST:event_jButton8MouseClicked
 
     private void jButton9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton9MouseClicked
         // TODO add your handling code here: CHALLENGES
+        if (this.mList.get(this.frameNumber).challengeList == null) {
+            this.mList.get(this.frameNumber).challengeList = new AG20jFrameList("Maze index: "+ this.frameNumber +" Challenge", 
+                    this.mList.get(this.frameNumber).mChallenge);
+        }
+
+        this.mList.get(this.frameNumber).challengeList.setVisible(true);
     }//GEN-LAST:event_jButton9MouseClicked
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        for(int j = 0; j < this.mList.size(); j ++) {
+            if (this.mList.get(j).challengeList != null) {
+                this.mList.get(j).mChallenge = this.mList.get(j).challengeList.returnList;
+                this.mList.get(j).challengeList.dispose();
+            }
+            if (this.mList.get(j).specialList != null) {
+                this.mList.get(j).mSpecial = this.mList.get(j).specialList.returnList;
+                this.mList.get(j).specialList.dispose();
+            }
+            
+            
+        }
+        this.returnList = this.mList;
+        
+        
+    }//GEN-LAST:event_formWindowClosed
+
+    private void jTextField2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2FocusLost
+        // TODO add your handling code here:
+        this.copyFromWindows(this.frameNumber);
+    }//GEN-LAST:event_jTextField2FocusLost
+
+    private void jTextField3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField3FocusLost
+        // TODO add your handling code here:
+        this.copyFromWindows(this.frameNumber);
+    }//GEN-LAST:event_jTextField3FocusLost
+
+    private void jButton10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton10MouseClicked
 
     /**
      * @param args the command line arguments
@@ -416,6 +518,7 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
