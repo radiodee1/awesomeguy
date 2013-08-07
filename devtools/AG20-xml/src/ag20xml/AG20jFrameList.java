@@ -16,16 +16,20 @@ public class AG20jFrameList extends javax.swing.JFrame {
     String title = new String();
     ArrayList<String> list = new ArrayList<String>();
     ArrayList<String> returnList = new ArrayList<String>();
+    public AG20jFrame frame;
+
+    
     /**
      * Creates new form AG20jFrameList
      */
-    public AG20jFrameList(String title, ArrayList<String> list) {
+    public AG20jFrameList(String title, ArrayList<String> list, AG20jFrame frame) {
         initComponents();
         this.setBounds(0, 0, 375, 300);
         this.title = title;
         this.list = list;
         this.copyToWindow();
         this.setTitle();
+        this.frame = frame;
     }
     
     public void copyToWindow() {
@@ -117,6 +121,7 @@ public class AG20jFrameList extends javax.swing.JFrame {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here: CLOSE
         this.copyFromWindow();
+        this.frame.collectContents();
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
@@ -156,7 +161,7 @@ public class AG20jFrameList extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AG20jFrameList("", new ArrayList<String>()).setVisible(true);
+                //new AG20jFrameList("", new ArrayList<String>()).setVisible(true);
             }
         });
     }

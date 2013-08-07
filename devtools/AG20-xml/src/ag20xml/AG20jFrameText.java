@@ -24,13 +24,16 @@ public class AG20jFrameText extends javax.swing.JFrame {
    
    public ArrayList<String> returnListText;
    public ArrayList<Integer> returnListNums;
+   public AG20jFrame frame;
+   
     /**
      * Creates new form FlyerjFrame
      */
-    public AG20jFrameText(String t, ArrayList<String> l, ArrayList<Integer> n) {
+    public AG20jFrameText(String t, ArrayList<String> l, ArrayList<Integer> n, AG20jFrame frame) {
         mList = l;
         mNums = n;
         mTitle = t;
+        this.frame = frame;
         if(mList.size() == 0) this.addFrame();
         
         initComponents();
@@ -98,9 +101,12 @@ public class AG20jFrameText extends javax.swing.JFrame {
     
 
     public void saveOutput() {
+        this.copyFromWindows(this.frameNumber);
         this.returnListText = this.mList;
         this.returnListNums = this.mNums;
-        this.dispose();
+        
+        this.frame.collectContents();
+        
     }
 
     public void addFrame() {
@@ -160,9 +166,19 @@ public class AG20jFrameText extends javax.swing.JFrame {
 
         jLabel1.setText("jLabel1");
 
+        jEditorPane1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jEditorPane1FocusLost(evt);
+            }
+        });
         jScrollPane1.setViewportView(jEditorPane1);
 
         jTextField1.setText("      ");
+        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField1FocusLost(evt);
+            }
+        });
 
         jLabel4.setText("Frame:");
 
@@ -238,18 +254,30 @@ public class AG20jFrameText extends javax.swing.JFrame {
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
         this.saveOutput();
+        this.dispose();
     }//GEN-LAST:event_jButton5MouseClicked
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
         this.returnListText = this.mList;
         this.returnListNums = this.mNums;
+        this.saveOutput();
     }//GEN-LAST:event_formWindowClosed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here: NEW
         addFrame();
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jEditorPane1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jEditorPane1FocusLost
+        // TODO add your handling code here:
+        this.saveOutput();
+    }//GEN-LAST:event_jEditorPane1FocusLost
+
+    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
+        // TODO add your handling code here:
+        this.saveOutput();
+    }//GEN-LAST:event_jTextField1FocusLost
 
     /**
      * @param args the command line arguments
@@ -283,7 +311,7 @@ public class AG20jFrameText extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AG20jFrameText("TEXT",new ArrayList<String>(), new ArrayList<Integer>()).setVisible(true);
+                //new AG20jFrameText("TEXT",new ArrayList<String>(), new ArrayList<Integer>()).setVisible(true);
             }
         });
         //FlyerjFrame F = new FlyerjFrame();

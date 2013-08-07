@@ -24,15 +24,18 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
     
    static String windowName = new String();
    public int frameNumber = 0;
+   public AG20jFrame frame;
+
    //public InitBackground.LevelList mList = new InitBackground.LevelList();
     /**
      * Creates new form FlyerjFrame
      */
-    public AG20jFrameMaze(String title, ArrayList<MazeData> list) {
+    public AG20jFrameMaze(String title, ArrayList<MazeData> list, AG20jFrame frame) {
         initComponents();
         //this.parseXML();
         mList = list;
         mTitle = title;
+        this.frame = frame;
         this.setBounds(0, 0, 450, 340);
         this.jTextField2.setBounds(0, 0, 28, 19);
         this.jTextField2.setText("000");
@@ -119,8 +122,10 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
         }
     }
     public void saveOutput() {
+        this.copyFromWindows(this.frameNumber);
         this.collectContents();
         this.returnList = this.mList;// this does practically nothing!!
+        this.frame.collectContents();
         this.dispose();
     }
     public void collectContents() {
@@ -429,7 +434,7 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
         // TODO add your handling code here: SPECIAL
         if (this.mList.get(this.frameNumber).specialList == null) {
             this.mList.get(this.frameNumber).specialList = new AG20jFrameList("Maze index: "+ this.frameNumber +" Special", 
-                    this.mList.get(this.frameNumber).mSpecial);
+                    this.mList.get(this.frameNumber).mSpecial, this.frame);
         }
 
         this.mList.get(this.frameNumber).specialList.setVisible(true);
@@ -439,7 +444,7 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
         // TODO add your handling code here: CHALLENGES
         if (this.mList.get(this.frameNumber).challengeList == null) {
             this.mList.get(this.frameNumber).challengeList = new AG20jFrameList("Maze index: "+ this.frameNumber +" Challenge", 
-                    this.mList.get(this.frameNumber).mChallenge);
+                    this.mList.get(this.frameNumber).mChallenge, this.frame);
         }
 
         this.mList.get(this.frameNumber).challengeList.setVisible(true);
@@ -511,7 +516,7 @@ public class AG20jFrameMaze extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AG20jFrameMaze(new String(), new ArrayList<MazeData>()).setVisible(true);
+                //new AG20jFrameMaze(new String(), new ArrayList<MazeData>()).setVisible(true);
             }
         });
         //FlyerjFrame F = new FlyerjFrame();

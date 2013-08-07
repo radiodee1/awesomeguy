@@ -133,8 +133,8 @@ public class AG20jFrame extends javax.swing.JFrame {
             
             windowName = file.getAbsolutePath();
             this.copyFromWindows(this.frameNumber);
-            //FlyerXML printer = new FlyerXML(this.windowName , mList);
-            //printer.writeOutputFile();
+            AG20XML printer = new AG20XML(this.windowName , mList);
+            printer.writeOutputFile();
             
         } 
         else {
@@ -156,12 +156,17 @@ public class AG20jFrame extends javax.swing.JFrame {
             }
             if (this.mList.get(j).mazeList != null) {
                 this.mList.get(j).mMazeData = this.mList.get(j).mazeList.returnList;
+                // collect maze data!!
+                
                 this.mList.get(j).mazeList.dispose();
             }
             if (this.mList.get(j).textList != null) {
                 this.mList.get(j).mTextMessage = this.mList.get(j).textList.returnListText;
                 this.mList.get(j).mTextNum = this.mList.get(j).textList.returnListNums;
-                this.mList.get(j).textList.dispose();
+                for (int q = 0; q<this.mList.get(j).mTextMessage.size() ; q ++) {
+                    System.out.println(" message: " + this.mList.get(j).mTextMessage.get(q));
+                }
+                //this.mList.get(j).textList.dispose();
             }
         }
         
@@ -489,7 +494,7 @@ public class AG20jFrame extends javax.swing.JFrame {
         // TODO add your handling code here: MAZES
         if (this.mList.get(this.frameNumber).mazeList == null) {
             this.mList.get(this.frameNumber).mazeList = new AG20jFrameMaze( "Planet: "+ this.frameNumber + " MAZES ", 
-                    this.mList.get(this.frameNumber).mMazeData);
+                    this.mList.get(this.frameNumber).mMazeData, this);
         }
 
         this.mList.get(this.frameNumber).mazeList.setVisible(true);
@@ -499,7 +504,7 @@ public class AG20jFrame extends javax.swing.JFrame {
         // TODO add your handling code here: CHALLENGE
         if (this.mList.get(this.frameNumber).challengeList == null) {
             this.mList.get(this.frameNumber).challengeList = new AG20jFrameList("Challenge", 
-                    this.mList.get(this.frameNumber).mChallenge);
+                    this.mList.get(this.frameNumber).mChallenge, this);
         }
 
         this.mList.get(this.frameNumber).challengeList.setVisible(true);
@@ -509,7 +514,8 @@ public class AG20jFrame extends javax.swing.JFrame {
         // TODO add your handling code here: TEXT
         if (this.mList.get(this.frameNumber).textList == null) {
             this.mList.get(this.frameNumber).textList = new AG20jFrameText("TEXT", 
-                    this.mList.get(this.frameNumber).mTextMessage, this.mList.get(this.frameNumber).mTextNum);
+                    this.mList.get(this.frameNumber).mTextMessage, 
+                    this.mList.get(this.frameNumber).mTextNum, this);
         }
 
         this.mList.get(this.frameNumber).textList.setVisible(true);
@@ -519,7 +525,7 @@ public class AG20jFrame extends javax.swing.JFrame {
         // TODO add your handling code here: SPECIAL
         if (this.mList.get(this.frameNumber).specialList == null) {
             this.mList.get(this.frameNumber).specialList = new AG20jFrameList("Special", 
-                    this.mList.get(this.frameNumber).mSpecial);
+                    this.mList.get(this.frameNumber).mSpecial, this);
         }
 
         this.mList.get(this.frameNumber).specialList.setVisible(true);
