@@ -127,7 +127,9 @@
 				
 				break;
 				case AGGame.MODE_FLYER:
-				
+					
+					
+					
 					if (K_PAUSE ) {
 						
 						if ( !gamePaused ) {
@@ -145,6 +147,13 @@
 			
 			// SPECIAL CONDITIONS HERE!!
 			
+			if(this.modeObj != null && 
+			   this.modeObj.game_advance_maze && this.gameMode == AGGame.MODE_FLYER) {
+				// switch to maze from planet...
+				this.myModeStack.push(AGGame.MODE_GUY);
+				this.modeObj.game_advance_maze = false;
+			}
+			
 			if (gameLives == 0 ) {
 				this.gameLives = 3;
 				this.gameScore = 10;
@@ -152,8 +161,8 @@
 				this.myModeStack = new Array();
 				this.myModeStack.push(AGGame.MODE_START);
 				this.gamePaused = true;
-				//flyer = new AGModeFlyer();
-				//flyer.setValues(myStage, myButtons,myRes,this);
+				
+				
 			}
 			
 			// SWITCH MODE??!!

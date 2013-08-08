@@ -384,6 +384,7 @@
 			pyr.sprite_type = S_PYRAMID;
 			pyr.active = true;
 			pyr.visible = true;
+			pyr.sprite_link = maze;
 			mySprite.push(pyr);
 		}
 		
@@ -973,7 +974,22 @@
 								sprite.visible = true;//true
 								flyerDeath();
 							break;
-							
+							case AGMode.S_PYRAMID:
+								if (this.flyerGrounded) {
+									
+									sprite.quality_0 ++;
+									if (sprite.animate > 4) {
+										//start maze
+										myGame.gameMaze = sprite.sprite_link;
+										this.game_advance_maze = true;
+									}
+								}
+								else {
+									sprite.animate = 0;
+									sprite.quality_0 = 0;
+									
+								}
+							break;
 							
 						}//switch
 					}// collision simple

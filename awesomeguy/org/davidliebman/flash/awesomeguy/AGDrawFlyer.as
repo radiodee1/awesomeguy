@@ -546,9 +546,24 @@
 						sprite.bitmap = new Bitmap( 
 									myRes[AGResources.NAME_PYRAMID_0_PNG].bitmapData.clone());//
 					}
-					
+					if (sprite.animate == 1) {
+						sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_PYRAMID_1_PNG].bitmapData.clone());//
+					}
+					if (sprite.animate == 2) {
+						sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_PYRAMID_2_PNG].bitmapData.clone());//
+					}
+					if (sprite.animate == 3) {
+						sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_PYRAMID_3_PNG].bitmapData.clone());//
+					}
+					if (sprite.animate == 4) {
+						sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_PYRAMID_4_PNG].bitmapData.clone());//
+					}
 									
-					if (scrollx < sprite.x + (16)) {
+					if (scrollx < sprite.x + ( 8 * 16)) {
 						sprite.bitmap.x = (sprite.x - scrollx )  ;
 					}
 					else {
