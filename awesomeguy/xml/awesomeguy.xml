@@ -849,7 +849,7 @@
 	</horizon>
 	
 	<special> 
-		<block> </block>
+		<block> XML_MAZE_ENTRANCE , 0,31, 1, XML_MAZE_START_REGULAR , 0, 0 </block>
 		<block> </block>
 	</special>
 	

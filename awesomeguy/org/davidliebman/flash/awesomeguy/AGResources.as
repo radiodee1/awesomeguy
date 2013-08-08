@@ -72,6 +72,12 @@
 	public static var NAME_FLYER_WHITE_L:int = 37;
 	public static var NAME_FLYER_WHITE_R:int = 38;
 	public static var NAME_START_PAUSE_PNG:int = 39;
+	
+	public static var NAME_PYRAMID_0_PNG:int = 40;
+	public static var NAME_PYRAMID_1_PNG:int = 41;
+	public static var NAME_PYRAMID_2_PNG:int = 42;
+	public static var NAME_PYRAMID_3_PNG:int = 43;
+	public static var NAME_PYRAMID_4_PNG:int = 44;
 
 	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
 	var res01:Array = new Array (R_BITMAP, "bitmap/test2.png");
@@ -119,6 +125,12 @@
 	var res37:Array = new Array (R_BITMAP, "bitmap/flyer_white_l.png");
 	var res38:Array = new Array (R_BITMAP, "bitmap/flyer_white_r.png");
 	var res39:Array = new Array (R_BITMAP, "bitmap/start_pause.png");
+	
+	var res40:Array = new Array (R_BITMAP, "bitmap/pyramiddoor0.png");
+	var res41:Array = new Array (R_BITMAP, "bitmap/pyramiddoor1.png");
+	var res42:Array = new Array (R_BITMAP, "bitmap/pyramiddoor2.png");
+	var res43:Array = new Array (R_BITMAP, "bitmap/pyramiddoor3.png");
+	var res44:Array = new Array (R_BITMAP, "bitmap/pyramiddoor4.png");
 	
 	var i:int = 0;
 		
@@ -180,6 +192,12 @@
 			neededRes.push(res37);
 			neededRes.push(res38);
 			neededRes.push(res39);
+
+			neededRes.push(res40);
+			neededRes.push(res41);
+			neededRes.push(res42);
+			neededRes.push(res43);
+			neededRes.push(res44);
 
 			importRes();
 		}

@@ -85,7 +85,7 @@
 			this.game_death = false;
 			if(game_reset_start == true || this.game_start) {
 				setStartingVars();
-				
+				myRes[AGResources.NAME_ENTER_1_MP3].play();
 				//game_reset_start = false;
 			}
 			
@@ -210,6 +210,12 @@
 				myInvisible.push(smallArray);
 			}
 			
+			
+		}
+		
+		public override function prepSpecialXml():void {
+			var myXML:XMLDocument = myRes[AGResources.NAME_AWESOMEGUY_XML];
+			var tree:XML = new XML(myXML);
 			
 		}
 		
