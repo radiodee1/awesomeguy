@@ -7,11 +7,11 @@
 		}
 		
 		public override function componentsInOrder():void {
-			
+			myStage.addChild(myRes[AGResources.NAME_START_PAUSE_PNG]);
+
 		}
 		
 		public override function doOnce():void {
-			myStage.addChild(myRes[AGResources.NAME_TEST2_PNG]);
 		}
 		
 		public override function prepTiles():void {
