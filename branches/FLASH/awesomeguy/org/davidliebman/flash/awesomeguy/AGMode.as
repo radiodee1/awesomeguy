@@ -79,6 +79,7 @@
 	static var S_BLOCK:int = 18;
 	static var S_FLYER_RINGS:int = 19;
 	static var S_GOAL:int = 20;
+	static var S_PYRAMID:int = 21;
 	
 	//draw enumeration
 	static var D_NONE:int = 0;
@@ -99,6 +100,7 @@
 	static var  D_RING:int = 15;
 	static var  D_TORPEDO:int = 16;
 	static var D_GOAL:int = 17;
+	static var D_PYRAMID:int = 18;
 	
 	//radar ping types
 	static var PING_FLYER:int = 0;

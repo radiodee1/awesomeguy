@@ -114,6 +114,7 @@
 			
 			prepTiles() ;
 			prepRings() ;
+			prepSpecialXml();
 			//prepRingSprites();
 			
 			if (this.game_reset_start ) {
@@ -216,7 +217,28 @@
 		public override function prepSpecialXml():void {
 			var myXML:XMLDocument = myRes[AGResources.NAME_AWESOMEGUY_XML];
 			var tree:XML = new XML(myXML);
-			
+			var num:int = int (tree.planet[myGame.gamePlanet].special.block.length() );
+			var i:int, j:int;
+			var value:String = "";
+			var tempArray:Array = new Array();
+			var tempString:String = "";
+			var tempCharArray:Array = new Array();
+
+			for (i = 0; i < num; i ++ ) {
+				value = tree.planet[myGame.gamePlanet].special.block[i].toString();
+				tempArray = value.split(",");
+				
+				for (j = 0; j < tempArray.length; j ++ ) {
+					tempString = tempArray[j];
+					tempCharArray = tempString.split(" ");
+					tempString = tempCharArray.join("");
+					tempArray[j] = tempString;
+				}
+				
+				if (tempArray[0] == AG.XML_MAZE_ENTRANCE) { // this is a pyramid
+					addPyramid(int(tempArray[1]),int(tempArray[2]), int(tempArray[3]));
+				}
+			}
 		}
 		
 		public function fillChallenges():void {
@@ -353,6 +375,16 @@
 				startingy = ypos;
 				
 			}
+		}
+		
+		public function addPyramid(xx:int, yy:int, maze:int):void {
+			var pyr:AGSpritePyramid = new AGSpritePyramid(this, AGMode.S_PYRAMID);
+			pyr.x = xx * TILE_WIDTH;
+			pyr.y = yy * TILE_HEIGHT;
+			pyr.sprite_type = S_PYRAMID;
+			pyr.active = true;
+			pyr.visible = true;
+			mySprite.push(pyr);
 		}
 		
 		public function addMonster(monster_x:int, monster_y:int,  monster_animate:int):void {
@@ -709,6 +741,11 @@
 						
 						myDraw.drawBasicSprite(mySprite[i], AGMode.D_EXPLOSION_SPRITE);
 					}
+					if (mySprite[i].sprite_type == AGMode.S_PYRAMID) {
+						myDraw.drawBasicSprite(mySprite[i], AGMode.D_PYRAMID);
+						
+					}
+					
 					myDraw.drawBasicSprite(flyerrings, AGMode.D_FLYER_RINGS);
 					
 				}

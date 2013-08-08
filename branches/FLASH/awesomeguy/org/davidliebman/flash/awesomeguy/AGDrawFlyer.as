@@ -540,6 +540,24 @@
 					myStage.addChild(sprite.bitmap);
 					
 				break;
+				
+				case AGMode.D_PYRAMID:
+					if (sprite.animate == 0) {
+						sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_PYRAMID_0_PNG].bitmapData.clone());//
+					}
+					
+									
+					if (scrollx < sprite.x + (16)) {
+						sprite.bitmap.x = (sprite.x - scrollx )  ;
+					}
+					else {
+						sprite.bitmap.x = sprite.x - scrollx  + (myMode.myHoriz * 16) ;
+					}
+					sprite.bitmap.y = sprite.y - scrolly - ( 7 * 16) ;
+					myStage.addChild(sprite.bitmap);
+					
+				break;
 			}
 		}
 
