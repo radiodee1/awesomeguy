@@ -433,6 +433,20 @@
 			platform_num = sprite_num;
 		}
 		
+		public function addForceField(xx:int, yy:int, link:int):void {
+			var new2:AGSpriteBubble3  = new AGSpriteBubble3(this, AGMode.S_BUBBLE_MAZE);
+			myRes[AGResources.NAME_ENTER_4_MP3].play();
+			new2.active = true;
+			new2.sprite_type = AGMode.S_BUBBLE_MAZE;
+			new2.x = xx;
+			new2.y = yy;
+			new2.speed = 4;
+			new2.limit = 64;
+			new2.sprite_link = link;
+			new2.color = 0xffffff00;
+			mySprite.push(new2);
+		}
+		
 		public function addLine(color:uint, linktype:int):AGSprite {
 			// create a line-type object
 			var temp:AGSpriteLine = new AGSpriteLine(this, AGMode.S_LINE);// Sprite temp ;
@@ -712,11 +726,11 @@
 					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_1) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_1);
 					
 					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_3) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_3);
-					
+					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_MAZE) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_3);
 					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_2) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_2);
 					if (mySprite[i].sprite_type == AGMode.S_INVADER_1) myDraw.drawBasicSprite(mySprite[i], D_INVADER_1);
 					if (mySprite[i].sprite_type == AGMode.S_INVADER_2) myDraw.drawBasicSprite(mySprite[i], D_INVADER_2);
-
+					
 				}
 				
 			}
@@ -784,10 +798,6 @@
 					explosionsprite.y = ypos;
 					agflyer.active = false;
 		}
-		
-		
-		
-		
 		
 		///////////////////////////////////////////
 		public function drawLevelTiles():void {
@@ -979,15 +989,19 @@
 									
 									sprite.quality_0 ++;
 									if (sprite.animate > 4) {
-										//start maze
-										myGame.gameMaze = sprite.sprite_link;
-										this.game_advance_maze = true;
+										if(sprite.quality_1 == 0) {
+											sprite.quality_1 = 1;
+											this.addForceField(xpos + 32, 31 * TILE_HEIGHT, sprite.sprite_link);
+											
+										}
+										//myGame.gameMaze = sprite.sprite_link;
+										//this.game_advance_maze = true;
 									}
 								}
 								else {
 									sprite.animate = 0;
 									sprite.quality_0 = 0;
-									
+									sprite.quality_1 = 0;
 								}
 							break;
 							
