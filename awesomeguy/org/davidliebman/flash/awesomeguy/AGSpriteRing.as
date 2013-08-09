@@ -12,7 +12,7 @@
 			animate ++;
 			if (animate > 7) animate = 0;
 			
-			var zz:int = AGMode.B_PRIZE ;
+			var zz:int = AGModeFlyer.B_PRIZE ;
 			if (animate == 0 || animate == 1 || animate == 8) {
 		
 								//cutTile(tiles_a, square, k - mapcheat);

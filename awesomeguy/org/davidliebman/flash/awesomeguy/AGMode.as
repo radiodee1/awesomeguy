@@ -41,21 +41,7 @@
 	static var PLATFORM_WIDTH:int = 40*2;
 	static var PLATFORM_HEIGHT:int = 8*2;
 		
-	//blocks	
-	static var B_NONE:int = -1 ;
-	static var B_START:int = 5 ;
-	static var B_SPACE:int = 0 ;
-	static var B_LADDER:int = 444 ;
-	static var B_BLOCK:int = 442 ;
-	static var B_GOAL:int = 446 ;
-	static var B_KEY:int = 445 ; 
-	static var B_PRIZE:int =  447 ;
-	static var B_MONSTER:int = 443 ;
-	static var B_MARKER:int = 441 ; 
-	static var B_DEATH:int = 439 ;
-	static var B_ONEUP:int = 438 ;
-	static var B_BIBPRIZE:int = 440 ;
-	static var B_PLATFORM:int = 437 ; 
+		
 	
 	//sprites
 	static var S_NONE:int =  0;
