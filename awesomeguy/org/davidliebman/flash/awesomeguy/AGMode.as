@@ -80,6 +80,7 @@
 	static var S_FLYER_RINGS:int = 19;
 	static var S_GOAL:int = 20;
 	static var S_PYRAMID:int = 21;
+	static var S_BUBBLE_MAZE:int = 22;
 	
 	//draw enumeration
 	static var D_NONE:int = 0;

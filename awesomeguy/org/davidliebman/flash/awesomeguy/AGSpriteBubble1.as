@@ -52,7 +52,7 @@
 									 this.color);
 
 				
-				if (this.sprite_type == AGMode.S_BUBBLE_3) {
+				if (this.sprite_type == AGMode.S_BUBBLE_3 || this.sprite_type == AGMode.S_BUBBLE_MAZE) {
 					this.shape.graphics.moveTo( newlimit - int(dist) , newlimit - j );
 					this.shape.graphics.lineTo( newlimit - int (dist) + 2, newlimit - j);
 					this.shape.graphics.moveTo( (newlimit - int (dist) ) + (2 * int(dist)) - 2, newlimit - j );
