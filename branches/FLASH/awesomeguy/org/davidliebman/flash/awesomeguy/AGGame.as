@@ -12,6 +12,8 @@
 	var K_JUMP:Boolean = false;
 	var K_PAUSE:Boolean = false;
 	var K_ANY:Boolean = false;
+	var K_RESTART:Boolean = false;
+	var K_QUIET:Boolean = false;
 	
 	var myStage:Stage;
 	var myButtons:Array;
@@ -35,9 +37,9 @@
 	
 	
 	var modeObj:AGMode ;
-	var guy:AGModeGuy = new AGModeGuy();
-	var flyer:AGModeFlyer = new AGModeFlyer();
-	var paused:AGModePause = new AGModePause();
+	var guy:AGModeGuy;
+	var flyer:AGModeFlyer;
+	var paused:AGModePause;
 		
 		public function AGGame(mystage:Stage, mybuttons:Array, myresources:Array) {
 			
@@ -47,22 +49,40 @@
 			
 			myStage.addEventListener(Event.ENTER_FRAME, setKeys );
 			//trace ("import worked. " );
-			//var getter:AGResources = new AGResources();
+			
+			this.startAGGame();
+		}
+		
+		public function startAGGame() {
+			gamePaused = true;
+			K_PAUSE = false;
+			K_ANY = false;
+			myButtons[AGKeys.BUTTON_PAUSE].setValBool(false);
+			myButtons[AGKeys.BUTTON_ANY].setValBool(false);
+			
+			guy = new AGModeGuy();
+			flyer = new AGModeFlyer();
+			paused = new AGModePause();
 			flyer.setValues(myStage, myButtons, myRes, this);
 			guy.setValues(myStage, myButtons, myRes, this);
 			paused.setValues(myStage, myButtons, myRes, this);
+			this.myModeStack = new Array();
 			this.myModeStack.push(AGGame.MODE_START);
-				
 		}
 
 		public function setKeys(e:Event) {
 			setKeyValues(myButtons[AGKeys.BUTTON_LEFT].getValBool() , myButtons[AGKeys.BUTTON_RIGHT].getValBool(),
 						 myButtons[AGKeys.BUTTON_UP].getValBool(), myButtons[AGKeys.BUTTON_DOWN].getValBool(), 
 						 myButtons[AGKeys.BUTTON_SHOOT].getValBool(), myButtons[AGKeys.BUTTON_JUMP].getValBool(),
-						 myButtons[AGKeys.BUTTON_PAUSE].getValBool() ,myButtons[AGKeys.BUTTON_ANY].getValBool());
+						 myButtons[AGKeys.BUTTON_PAUSE].getValBool() ,myButtons[AGKeys.BUTTON_ANY].getValBool() ,
+						 myButtons[AGKeys.BUTTON_RESTART].getValBool(), myButtons[AGKeys.BUTTON_QUIET].getValBool());
 		}
 
-		public function setKeyValues(left:Boolean, right:Boolean, up:Boolean, down:Boolean, shoot:Boolean, jump:Boolean, bpause:Boolean, any:Boolean) {
+		public function setKeyValues(left:Boolean, right:Boolean, 
+									 up:Boolean, down:Boolean, 
+									 shoot:Boolean, jump:Boolean, 
+									 bpause:Boolean, any:Boolean,
+									 restart:Boolean, quiet:Boolean) {
 			K_LEFT = left;
 			K_RIGHT = right;
 			K_UP = up;
@@ -71,6 +91,8 @@
 			K_SHOOT = shoot;
 			K_PAUSE = bpause;
 			K_ANY = any;
+			K_RESTART = restart;
+			K_QUIET = quiet;
 			doAnimation();
 		}
 		
@@ -152,6 +174,11 @@
 				// switch to maze from planet...
 				this.myModeStack.push(AGGame.MODE_GUY);
 				this.modeObj.game_advance_maze = false;
+			}
+			
+			if (K_RESTART) {
+				this.myButtons[AGKeys.BUTTON_RESTART].setValBool(false);
+				this.startAGGame();
 			}
 			
 			if (gameLives == 0 ) {

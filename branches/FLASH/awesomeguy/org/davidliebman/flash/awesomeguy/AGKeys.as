@@ -12,11 +12,16 @@
 	var KEY_VAL_SHOOT:KeyValue = new KeyValue();
 	var KEY_VAL_JUMP:KeyValue = new KeyValue();
 	var KEY_VAL_PAUSE:KeyValue = new KeyValue();
+	
+	var KEY_VAL_RESTART:KeyValue = new KeyValue();
+	var KEY_VAL_QUIET:KeyValue = new KeyValue();
+	
 	var KEY_VAL_ANY:KeyValue = new KeyValue();
 	
 	var array:Array =  new Array( KEY_VAL_LEFT, KEY_VAL_RIGHT, KEY_VAL_UP, 
 								 KEY_VAL_DOWN, KEY_VAL_SHOOT , KEY_VAL_JUMP,
-								 KEY_VAL_PAUSE, KEY_VAL_ANY );
+								 KEY_VAL_PAUSE, KEY_VAL_ANY, KEY_VAL_RESTART, 
+								 KEY_VAL_QUIET);
 
 	static var BUTTON_LEFT:int = 0;
 	static var BUTTON_RIGHT:int = 1;
@@ -26,6 +31,9 @@
 	static var BUTTON_JUMP:int = 5;
 	static var BUTTON_PAUSE:int = 6;
 	static var BUTTON_ANY:int = 7;
+	static var BUTTON_RESTART:int = 8;
+	static var BUTTON_QUIET:int = 9;
+	
 
 	var KEY_LEFT:Boolean = false;
 	var KEY_RIGHT:Boolean = false;
@@ -35,6 +43,8 @@
 	var KEY_JUMP:Boolean = false;
 	var KEY_PAUSE:Boolean = false;
 	var KEY_ANY:Boolean = false;
+	var KEY_RESTART:Boolean = false;
+	var KEY_QUIET:Boolean = false;
 
 	var keycodeLeft:int = 37;
 	var keycodeRight:int = 39;
@@ -43,6 +53,8 @@
 	var keycodeShoot:int = 16;
 	var keycodeJump:int = 32;
 	var keycodePause:int = 80;
+	var keycodeRestart:int = 82;
+	var keycodeQuiet:int = 81;
 	
 	var lastCode:int ;
 	
@@ -73,6 +85,8 @@
 			if (event.keyCode == keycodeShoot) KEY_SHOOT = true;
 			if (event.keyCode == keycodeJump) KEY_JUMP = true;
 			if (event.keyCode == keycodePause) KEY_PAUSE = true;
+			if (event.keyCode == keycodeRestart) KEY_RESTART = true;
+			if (event.keyCode == keycodeQuiet) KEY_QUIET = true;
 			if (event.keyCode != keycodePause) KEY_ANY = true;
 			lastCode = event.keyCode;
 			setAllKeys();
@@ -89,6 +103,8 @@
 			if (event.keyCode == keycodeShoot) KEY_SHOOT = false;
 			if (event.keyCode == keycodeJump) KEY_JUMP = false;
 			if (event.keyCode == keycodePause) KEY_PAUSE = false;
+			if (event.keyCode == keycodeRestart) KEY_RESTART = false;
+			if (event.keyCode == keycodeQuiet) KEY_QUIET = false;
 			if (lastCode == event.keyCode) KEY_ANY = false;
 			setAllKeys();
 
@@ -105,6 +121,8 @@
 			 KEY_VAL_JUMP.setValBool(KEY_JUMP);
 			 KEY_VAL_PAUSE.setValBool(KEY_PAUSE);
 			 KEY_VAL_ANY.setValBool(KEY_ANY);
+			 KEY_VAL_RESTART.setValBool(KEY_RESTART);
+			 KEY_VAL_QUIET.setValBool(KEY_QUIET);
 		}
 		
 		public function launchNextPhase():void {
