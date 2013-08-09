@@ -14,6 +14,21 @@
 		
 		public var animate_explosion:Boolean = false;
 		
+	static var B_NONE:int = -1 ;
+	static var B_START:int = 5 ;
+	static var B_SPACE:int = 0 ;
+	static var B_LADDER:int = 444 ;
+	static var B_BLOCK:int = 442 ;
+	static var B_GOAL:int = 446 ;
+	static var B_KEY:int = 445 ; 
+	static var B_PRIZE:int =  447 ;
+	static var B_MONSTER:int = 443 ;
+	static var B_MARKER:int = 441 ; 
+	static var B_DEATH:int = 439 ;
+	static var B_ONEUP:int = 438 ;
+	static var B_BIBPRIZE:int = 440 ;
+	static var B_PLATFORM:int = 437 ; 
+		
 		
 		var TILEMAP_HEIGHT:int = 128 * 2;
 		var TILEMAP_WIDTH:int = 224 * 2;
@@ -204,9 +219,9 @@
 				for (j = 0 ; j < myHoriz; j ++ ) {
 					k = int (tempArray[ (i * myHoriz) + j ] );
 					smallArray.push(int (tempArray[ (i * myHoriz) + j ] ) );
-					if (k + mapcheat == AGMode.B_MONSTER) addMonster(j,i ,0);
-					if (k + mapcheat == AGMode.B_PLATFORM) addPlatform(j , i );
-					if (k + mapcheat == AGMode.B_START) startingPos(j,i); // only do on 'reset start'
+					if (k + mapcheat == AGModeFlyer.B_MONSTER) addMonster(j,i ,0);
+					if (k + mapcheat == AGModeFlyer.B_PLATFORM) addPlatform(j , i );
+					if (k + mapcheat == AGModeFlyer.B_START) startingPos(j,i); // only do on 'reset start'
 				}
 				myInvisible.push(smallArray);
 			}
@@ -834,7 +849,7 @@
 					//trace("i"+i+" j" + j + " = " + myVisible[i][j]);
 						
 						//LOGE("map_level %d", map_level[j][i] );
-						if(  myVisible[i][j] != 0  && myVisible[i][j] != AGMode.B_GOAL  ) { //is tile blank??
+						if(  myVisible[i][j] != 0  && myVisible[i][j] != AGModeFlyer.B_GOAL  ) { //is tile blank??
 							//trace(myVisible);
 							square = new AGSprite(this,AGMode.S_BLOCK);
 							square.bitmap = cutTile(  myRes[AGResources.NAME_TILES1_PNG], 
@@ -844,8 +859,8 @@
 							square.bitmap.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
 							square.bitmap.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
 							myStage.addChild(square.bitmap);
-							if (myInvisible[i][j] + mapcheat == AGMode.B_BLOCK) this.myBlocks.push(square);
-							if (myInvisible[i][j] + mapcheat == AGMode.B_GOAL) addVarious(j,i,AGMode.S_GOAL);
+							if (myInvisible[i][j] + mapcheat == AGModeFlyer.B_BLOCK) this.myBlocks.push(square);
+							if (myInvisible[i][j] + mapcheat == AGModeFlyer.B_GOAL) addVarious(j,i,AGMode.S_GOAL);
 
 							//drawTile_8(square, j * TILE_WIDTH, i * TILE_HEIGHT , 
 							//	scrollx , scrolly, PAINT_TRANSPARENT, 0);
@@ -874,8 +889,8 @@
 							square.bitmap.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
 							square.bitmap.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
 							myStage.addChild(square.bitmap);
-							if (myInvisible[i][j] + mapcheat == AGMode.B_BLOCK) this.myBlocks.push(square);
-							if (myInvisible[i][j] + mapcheat == AGMode.B_GOAL) addVarious(j,i,AGMode.S_GOAL);
+							if (myInvisible[i][j] + mapcheat == AGModeFlyer.B_BLOCK) this.myBlocks.push(square);
+							if (myInvisible[i][j] + mapcheat == AGModeFlyer.B_GOAL) addVarious(j,i,AGMode.S_GOAL);
 
 						}
 						
@@ -899,8 +914,8 @@
 							square.bitmap.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
 							square.bitmap.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
 							myStage.addChild(square.bitmap);
-							if (myInvisible[i][j] + mapcheat == AGMode.B_BLOCK) this.myBlocks.push(square);
-							if (myInvisible[i][j] + mapcheat == AGMode.B_GOAL) addVarious(j,i,AGMode.S_GOAL);
+							if (myInvisible[i][j] + mapcheat == AGModeFlyer.B_BLOCK) this.myBlocks.push(square);
+							if (myInvisible[i][j] + mapcheat == AGModeFlyer.B_GOAL) addVarious(j,i,AGMode.S_GOAL);
 
 						}
 						

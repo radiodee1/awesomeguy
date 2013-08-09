@@ -482,25 +482,25 @@
 					if (anim > 8) anim = 0;
 					if (anim == 0 || anim == 1 || anim == 8 ) {
 						sprite.bitmap = myMode.cutTile(myMode.myRes[AGResources.NAME_TILES1_PNG],
-													   AGMode.B_PRIZE,AGMode.TILE_TOP);
+													   AGModeFlyer.B_PRIZE,AGMode.TILE_TOP);
 						//cutTile(tiles_a, square, B_PRIZE - levelcheat );
 						//trace(anim);
 					}
 					else if (anim == 2 || anim == 4 || anim == 6) {
 						sprite.bitmap = myMode.cutTile(myMode.myRes[AGResources.NAME_TILES2_PNG],
-													   AGMode.B_PRIZE,AGMode.TILE_TOP);
+													   AGModeFlyer.B_PRIZE,AGMode.TILE_TOP);
 
 						//cutTile(tiles_b, square, B_PRIZE - levelcheat);
 					}
 					else if (anim == 3 || anim == 7) {
 						sprite.bitmap = myMode.cutTile(myMode.myRes[AGResources.NAME_TILES3_PNG],
-													   AGMode.B_PRIZE,AGMode.TILE_TOP);
+													   AGModeFlyer.B_PRIZE,AGMode.TILE_TOP);
 			
 						//cutTile(tiles_c, square, B_PRIZE -levelcheat);
 					}
 					else if (anim == 5) {
 						sprite.bitmap = myMode.cutTile(myMode.myRes[AGResources.NAME_TILES4_PNG],
-													   AGMode.B_PRIZE,AGMode.TILE_TOP);
+													   AGModeFlyer.B_PRIZE,AGMode.TILE_TOP);
 			
 						//cutTile(tiles_d, square, B_PRIZE - levelcheat);
 					}

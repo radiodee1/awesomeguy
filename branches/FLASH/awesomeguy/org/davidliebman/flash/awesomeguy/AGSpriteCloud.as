@@ -36,12 +36,12 @@
 					// marker test
 					y_right = yy;
 					x_right = xx + width + cheat ;
-					if(map_objects[y_right][x_right] + myMode.mapcheat == AGMode.B_BLOCK ||
+					if(map_objects[y_right][x_right] + myMode.mapcheat == AGModeFlyer.B_BLOCK ||
 							(xx + width > level_w &&
-							map_objects[y_right][x_right - level_w]  + myMode.mapcheat == AGMode.B_BLOCK)) markerTest = TRUE;
-					if(map_objects[y_right][x_right]  + myMode.mapcheat == AGMode.B_MARKER ||
+							map_objects[y_right][x_right - level_w]  + myMode.mapcheat == AGModeFlyer.B_BLOCK)) markerTest = TRUE;
+					if(map_objects[y_right][x_right]  + myMode.mapcheat == AGModeFlyer.B_MARKER ||
 							(xx + width > level_w &&
-							map_objects[y_right][x_right - level_w]  + myMode.mapcheat== AGMode.B_MARKER)) markerTest = TRUE;
+							map_objects[y_right][x_right - level_w]  + myMode.mapcheat== AGModeFlyer.B_MARKER)) markerTest = TRUE;
 			
 					// turn platform
 					if ( markerTest == TRUE) {
@@ -58,8 +58,8 @@
 					// marker test
 					y_left = yy;
 					x_left = xx + cheat ;
-					if(map_objects[y_left ][x_left] + myMode.mapcheat == AGMode.B_BLOCK) markerTest = TRUE;
-					if(map_objects[y_left ][x_left] + myMode.mapcheat == AGMode.B_MARKER) markerTest = TRUE;
+					if(map_objects[y_left ][x_left] + myMode.mapcheat == AGModeFlyer.B_BLOCK) markerTest = TRUE;
+					if(map_objects[y_left ][x_left] + myMode.mapcheat == AGModeFlyer.B_MARKER) markerTest = TRUE;
 			
 					// turn platform
 					if (markerTest == TRUE) {
