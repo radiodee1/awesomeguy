@@ -14,7 +14,7 @@
 	var KEY_VAL_PAUSE:KeyValue = new KeyValue();
 	
 	var KEY_VAL_RESTART:KeyValue = new KeyValue();
-	var KEY_VAL_QUIET:KeyValue = new KeyValue();
+	var KEY_VAL_QUIET:KeyValue = new KeyValue(KeyValue.ENUM_TOGGLE);
 	
 	var KEY_VAL_ANY:KeyValue = new KeyValue();
 	

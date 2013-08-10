@@ -278,8 +278,8 @@
 				
 				case AGResources.R_SOUND:
 				//sound
+					myRes.push(new AGSound(r_sound, myButtons[AGKeys.BUTTON_QUIET]));
 					
-					myRes.push(r_sound);
 					
 				break;
 			
