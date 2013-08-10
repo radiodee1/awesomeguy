@@ -97,10 +97,10 @@
 		}
 		
 		public function doAnimation() {
-			var current:int = 0;
-			current = this.myModeStack[this.myModeStack.length - 1];
-			//trace (this.myModeStack);
-			switch(current) {
+			//var current:int = 0;
+			this.gameMode = this.myModeStack[this.myModeStack.length - 1];
+			
+			switch(this.gameMode) {
 				case AGGame.MODE_START:
 					if (K_ANY ) {
 						if (gamePaused) {
@@ -131,7 +131,7 @@
 								this.flyer.game_advance_maze = false;
 								this.modeObj.game_advance_maze = false;
 								this.paused.game_advance_maze = false;
-								trace("return to planet true");
+								
 							}
 						}
 						K_PAUSE = false;
