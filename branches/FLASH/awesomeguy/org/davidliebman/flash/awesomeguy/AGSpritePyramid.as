@@ -20,8 +20,9 @@
 				}
 			}
 			else if (toggle == ENUM_SINK) {
-				if (y < 16 * 32) {
+				if (y < (16 * 32) + (8 *16) ) {
 					y = y + 3;
+					trace("sinking", y);
 				}
 				else {
 					this.active = false;
