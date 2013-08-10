@@ -125,6 +125,13 @@
 							
 							if (this.myModeStack[this.myModeStack.length - 1] == AGGame.MODE_FLYER){
 								this.flyer.animate_return_to_planet = true;
+								this.flyer.animate_enter_maze = false;
+								
+								this.guy.game_advance_maze = false;
+								this.flyer.game_advance_maze = false;
+								this.modeObj.game_advance_maze = false;
+								this.paused.game_advance_maze = false;
+								trace("return to planet true");
 							}
 						}
 						K_PAUSE = false;
@@ -172,16 +179,21 @@
 			}
 			
 			// SPECIAL CONDITIONS HERE!!
-			
+			this.gameMode = this.myModeStack[ this.myModeStack.length - 1];
+
 			if(this.modeObj != null && 
-			   this.modeObj.game_advance_maze && this.gameMode == AGGame.MODE_FLYER) {
+			   this.flyer.game_advance_maze && this.gameMode == AGGame.MODE_FLYER) {
 				// switch to maze from planet...
 				//this.myModeStack.push(AGGame.MODE_GUY);
 				
 				this.myModeStack.push(AGGame.MODE_PAUSE);// just for testing!!
 				gamePaused = true; // just for testing!!
 				
+				//this.modeObj.game_advance_maze = false;
+				this.guy.game_advance_maze = false;
+				this.flyer.game_advance_maze = false;
 				this.modeObj.game_advance_maze = false;
+				this.paused.game_advance_maze = false;
 			}
 			
 			if (K_RESTART) {

@@ -15,6 +15,7 @@
 		public var animate_explosion:Boolean = false;
 		public var animate_enter_maze:Boolean = false;
 		public var animate_return_to_planet:Boolean = false;
+		public var animate_return_to_planet_sprite:AGSpritePyramid ;
 		
 		static var B_NONE:int = -1 ;
 		static var B_START:int = 5 ;
@@ -778,11 +779,7 @@
 					}
 					if (mySprite[i].sprite_type == AGMode.S_PYRAMID) {
 						myDraw.drawBasicSprite(mySprite[i], AGMode.D_PYRAMID);
-						if (this.animate_return_to_planet) {
-							mySprite[i].switchPyramid();
-							this.animate_return_to_planet = false;
-							trace("return");
-						}
+						
 					}
 					
 					myDraw.drawBasicSprite(flyerrings, AGMode.D_FLYER_RINGS);
@@ -811,16 +808,16 @@
 		
 		
 		public function flyerDeath():void {
-					myRes[AGResources.NAME_EXPLOSION_MP3].play();
-					
-					animate_explosion = true;
-					explosionsprite.sprite_type = AGMode.S_EXPLOSION;
-					explosionsprite.quality_3 = 0;
-					explosionsprite.timerStart(10/1000);
-					explosionsprite.active = true;
-					explosionsprite.x = xpos;
-					explosionsprite.y = ypos;
-					agflyer.active = false;
+			myRes[AGResources.NAME_EXPLOSION_MP3].play();
+			
+			animate_explosion = true;
+			explosionsprite.sprite_type = AGMode.S_EXPLOSION;
+			explosionsprite.quality_3 = 0;
+			explosionsprite.timerStart(10/1000);
+			explosionsprite.active = true;
+			explosionsprite.x = xpos;
+			explosionsprite.y = ypos;
+			agflyer.active = false;
 		}
 		
 		///////////////////////////////////////////
@@ -1009,23 +1006,37 @@
 								flyerDeath();
 							break;
 							case AGMode.S_PYRAMID:
-								if (this.flyerGrounded && !this.animate_return_to_planet) {
-									
+								var pyramid:AGSpritePyramid = AGSpritePyramid(sprite);
+								trace("toggle",pyramid.toggle);
+							
+								if (pyramid.toggle == pyramid.ENUM_SINK) break;
+							
+								if (this.flyerGrounded && !this.animate_return_to_planet && pyramid.toggle == pyramid.ENUM_SHOW) {
+									trace("go to game pause");
 									sprite.quality_0 ++;
 									if (sprite.animate > 4) {
 										if(sprite.quality_1 == 0) {
 											sprite.quality_1 = 1;
 											this.addForceField(xpos + 32, 31 * TILE_HEIGHT, sprite.sprite_link);
 											this.animate_enter_maze = true;
+											this.animate_return_to_planet_sprite = AGSpritePyramid (sprite);
+											
 										}
 										
 									}
 								}
-								else if (!this.animate_return_to_planet){
+								else if (!this.animate_return_to_planet && pyramid.toggle == pyramid.ENUM_SHOW ){
 									sprite.animate = 0;
 									sprite.quality_0 = 0;
 									sprite.quality_1 = 0;
 									this.animate_enter_maze = false;
+								}
+								if (this.animate_return_to_planet){// && pyramid.toggle == pyramid.ENUM_SHOW) {
+									this.animate_return_to_planet_sprite.switchPyramid();
+									this.animate_return_to_planet = false;
+									this.animate_enter_maze = false;
+									
+									trace("return toggle", pyramid.toggle);
 								}
 							break;
 							
