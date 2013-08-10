@@ -105,7 +105,7 @@
 					if (K_ANY ) {
 						if (gamePaused) {
 							gamePaused = false;
-							//this.gameMode = this.lastGameMode ;
+							
 							this.myModeStack.push(AGGame.MODE_FLYER);
 						}
 						K_PAUSE = false;
@@ -120,8 +120,12 @@
 					if (K_ANY ) {
 						if (gamePaused) {
 							gamePaused = false;
-							//this.gameMode = this.lastGameMode ;
+							
 							this.myModeStack.pop();
+							
+							if (this.myModeStack[this.myModeStack.length - 1] == AGGame.MODE_FLYER){
+								this.flyer.animate_return_to_planet = true;
+							}
 						}
 						K_PAUSE = false;
 						K_ANY = false;
@@ -172,7 +176,11 @@
 			if(this.modeObj != null && 
 			   this.modeObj.game_advance_maze && this.gameMode == AGGame.MODE_FLYER) {
 				// switch to maze from planet...
-				this.myModeStack.push(AGGame.MODE_GUY);
+				//this.myModeStack.push(AGGame.MODE_GUY);
+				
+				this.myModeStack.push(AGGame.MODE_PAUSE);// just for testing!!
+				gamePaused = true; // just for testing!!
+				
 				this.modeObj.game_advance_maze = false;
 			}
 			
