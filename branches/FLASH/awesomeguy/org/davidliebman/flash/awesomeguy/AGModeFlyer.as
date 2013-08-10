@@ -13,21 +13,23 @@
 		public var flyerrings:AGSprite ;
 		
 		public var animate_explosion:Boolean = false;
+		public var animate_enter_maze:Boolean = false;
+		public var animate_return_to_planet:Boolean = false;
 		
-	static var B_NONE:int = -1 ;
-	static var B_START:int = 5 ;
-	static var B_SPACE:int = 0 ;
-	static var B_LADDER:int = 444 ;
-	static var B_BLOCK:int = 442 ;
-	static var B_GOAL:int = 446 ;
-	static var B_KEY:int = 445 ; 
-	static var B_PRIZE:int =  447 ;
-	static var B_MONSTER:int = 443 ;
-	static var B_MARKER:int = 441 ; 
-	static var B_DEATH:int = 439 ;
-	static var B_ONEUP:int = 438 ;
-	static var B_BIBPRIZE:int = 440 ;
-	static var B_PLATFORM:int = 437 ; 
+		static var B_NONE:int = -1 ;
+		static var B_START:int = 5 ;
+		static var B_SPACE:int = 0 ;
+		static var B_LADDER:int = 444 ;
+		static var B_BLOCK:int = 442 ;
+		static var B_GOAL:int = 446 ;
+		static var B_KEY:int = 445 ; 
+		static var B_PRIZE:int =  447 ;
+		static var B_MONSTER:int = 443 ;
+		static var B_MARKER:int = 441 ; 
+		static var B_DEATH:int = 439 ;
+		static var B_ONEUP:int = 438 ;
+		static var B_BIBPRIZE:int = 440 ;
+		static var B_PLATFORM:int = 437 ; 
 		
 		
 		var TILEMAP_HEIGHT:int = 128 * 2;
@@ -730,11 +732,14 @@
 		
 		public function updateSprites():void {
 			var i:int;
-			
+			var anim:Boolean = this.animate_enter_maze;
 			
 			for (i = 0; i < mySprite.length; i ++ ) {
 				if (mySprite[i].active == true ){ //|| mySprite[i].visible == true) {
-					if (mySprite[i].sprite_type != AGMode.S_EXPLOSION_SPRITE) mySprite[i].updateSprite();
+					if ((mySprite[i].sprite_type != AGMode.S_EXPLOSION_SPRITE && !anim) || 
+						mySprite[i].sprite_type == AGMode.S_BUBBLE_MAZE) {
+						mySprite[i].updateSprite();
+					}
 					
 					if (mySprite[i].sprite_type == AGMode.S_CLOUD) myDraw.drawBasicSprite(mySprite[i], D_CLOUD);
 					if (mySprite[i].sprite_type == AGMode.S_LINE ) myDraw.drawBasicSprite(mySprite[i], D_LINE_1);
@@ -1007,16 +1012,16 @@
 										if(sprite.quality_1 == 0) {
 											sprite.quality_1 = 1;
 											this.addForceField(xpos + 32, 31 * TILE_HEIGHT, sprite.sprite_link);
-											
+											this.animate_enter_maze = true;
 										}
-										//myGame.gameMaze = sprite.sprite_link;
-										//this.game_advance_maze = true;
+										
 									}
 								}
 								else {
 									sprite.animate = 0;
 									sprite.quality_0 = 0;
 									sprite.quality_1 = 0;
+									this.animate_enter_maze = false;
 								}
 							break;
 							
