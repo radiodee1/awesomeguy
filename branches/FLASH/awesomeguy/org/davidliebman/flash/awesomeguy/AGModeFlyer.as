@@ -16,6 +16,7 @@
 		public var animate_enter_maze:Boolean = false;
 		public var animate_return_to_planet:Boolean = false;
 		public var animate_return_to_planet_sprite:AGSpritePyramid ;
+		public var animate_return_to_planet_bubble:AGSpriteBubble3 ;
 		
 		static var B_NONE:int = -1 ;
 		static var B_START:int = 5 ;
@@ -451,7 +452,7 @@
 			platform_num = sprite_num;
 		}
 		
-		public function addForceField(xx:int, yy:int, link:int):void {
+		public function addForceField(xx:int, yy:int, link:int):AGSpriteBubble3 {
 			var new2:AGSpriteBubble3  = new AGSpriteBubble3(this, AGMode.S_BUBBLE_MAZE);
 			myRes[AGResources.NAME_ENTER_4_MP3].play();
 			new2.active = true;
@@ -463,6 +464,7 @@
 			new2.sprite_link = link;
 			new2.color = 0xffffff00;
 			mySprite.push(new2);
+			return new2;
 		}
 		
 		public function addLine(color:uint, linktype:int):AGSprite {
@@ -736,9 +738,9 @@
 			var anim:Boolean = this.animate_enter_maze;
 			
 			for (i = 0; i < mySprite.length; i ++ ) {
-				if (mySprite[i].active == true ){ //|| mySprite[i].visible == true) {
+				if (mySprite[i].active == true ){ 
 					if ((mySprite[i].sprite_type != AGMode.S_EXPLOSION_SPRITE && !anim) || 
-						mySprite[i].sprite_type == AGMode.S_BUBBLE_MAZE) {
+						(mySprite[i].sprite_type == AGMode.S_BUBBLE_MAZE )) {
 						mySprite[i].updateSprite();
 					}
 					
@@ -1007,20 +1009,21 @@
 							break;
 							case AGMode.S_PYRAMID:
 								var pyramid:AGSpritePyramid = AGSpritePyramid(sprite);
-								trace("toggle",pyramid.toggle);
+								
 							
 								if (pyramid.toggle == pyramid.ENUM_SINK) break;
 							
 								if (this.flyerGrounded && !this.animate_return_to_planet && pyramid.toggle == pyramid.ENUM_SHOW) {
-									trace("go to game pause");
+									
 									sprite.quality_0 ++;
 									if (sprite.animate > 4) {
 										if(sprite.quality_1 == 0) {
 											sprite.quality_1 = 1;
-											this.addForceField(xpos + 32, 31 * TILE_HEIGHT, sprite.sprite_link);
+											var bubble:AGSpriteBubble3 = this.addForceField(xpos + 32, 31 * TILE_HEIGHT, 
+																							sprite.sprite_link);
 											this.animate_enter_maze = true;
 											this.animate_return_to_planet_sprite = AGSpritePyramid (sprite);
-											
+											this.animate_return_to_planet_bubble = bubble;
 										}
 										
 									}
@@ -1035,8 +1038,9 @@
 									this.animate_return_to_planet_sprite.switchPyramid();
 									this.animate_return_to_planet = false;
 									this.animate_enter_maze = false;
+									this.animate_return_to_planet_bubble.active = false;
+									this.animate_return_to_planet_bubble.visible = false;
 									
-									trace("return toggle", pyramid.toggle);
 								}
 							break;
 							

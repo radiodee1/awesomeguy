@@ -19,7 +19,10 @@
 				//start maze
 				
 				this.myMode.myGame.gameMaze = this.sprite_link;
-				this.myMode.game_advance_maze = true;
+				
+				if (!AGModeFlyer(this.myMode).animate_return_to_planet) {
+					this.myMode.game_advance_maze = true;
+				}
 			}
 			super.updateSprite();
 
