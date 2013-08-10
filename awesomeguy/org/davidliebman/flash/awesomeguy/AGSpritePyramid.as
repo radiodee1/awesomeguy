@@ -24,7 +24,8 @@
 					y = y + 3;
 				}
 				else {
-					
+					this.active = false;
+					this.visible = false;
 				}
 			}
 			
