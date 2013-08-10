@@ -778,7 +778,11 @@
 					}
 					if (mySprite[i].sprite_type == AGMode.S_PYRAMID) {
 						myDraw.drawBasicSprite(mySprite[i], AGMode.D_PYRAMID);
-						
+						if (this.animate_return_to_planet) {
+							mySprite[i].switchPyramid();
+							this.animate_return_to_planet = false;
+							trace("return");
+						}
 					}
 					
 					myDraw.drawBasicSprite(flyerrings, AGMode.D_FLYER_RINGS);
@@ -1005,7 +1009,7 @@
 								flyerDeath();
 							break;
 							case AGMode.S_PYRAMID:
-								if (this.flyerGrounded) {
+								if (this.flyerGrounded && !this.animate_return_to_planet) {
 									
 									sprite.quality_0 ++;
 									if (sprite.animate > 4) {
@@ -1017,7 +1021,7 @@
 										
 									}
 								}
-								else {
+								else if (!this.animate_return_to_planet){
 									sprite.animate = 0;
 									sprite.quality_0 = 0;
 									sprite.quality_1 = 0;
