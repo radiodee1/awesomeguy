@@ -153,13 +153,10 @@
 			super.advanceChallenge();
 			myHold = new Array();
 			
-			
-			
 			if (myGame.gameChallenge >= challenges) {
 				myGame.gameChallenge = 0;
 				
 			}
-			
 			
 			doOnce();
 
@@ -749,7 +746,6 @@
 					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_1) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_1);
 					
 					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_3) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_3);
-					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_MAZE) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_3);
 					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_2) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_2);
 					if (mySprite[i].sprite_type == AGMode.S_INVADER_1) myDraw.drawBasicSprite(mySprite[i], D_INVADER_1);
 					if (mySprite[i].sprite_type == AGMode.S_INVADER_2) myDraw.drawBasicSprite(mySprite[i], D_INVADER_2);
@@ -779,6 +775,10 @@
 						
 						myDraw.drawBasicSprite(mySprite[i], AGMode.D_EXPLOSION_SPRITE);
 					}
+					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_MAZE) {
+						myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_3);
+					}
+
 					if (mySprite[i].sprite_type == AGMode.S_PYRAMID) {
 						myDraw.drawBasicSprite(mySprite[i], AGMode.D_PYRAMID);
 						
