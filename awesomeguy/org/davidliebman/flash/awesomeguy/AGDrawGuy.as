@@ -1,9 +1,12 @@
 ﻿package org.davidliebman.flash.awesomeguy {
+	import flash.display.Bitmap;
+	import flash.display.Stage;
 	
 	public class AGDrawGuy extends AGDraw{
 
 		public function AGDrawGuy(mode:AGMode, myres:Array, mystage:Stage, mybackground:Bitmap) {
 			// constructor code
+			
 			super(mode,myres,mystage,mybackground);
 		}
 

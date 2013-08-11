@@ -184,10 +184,11 @@
 			if(this.modeObj != null && 
 			   this.flyer.game_advance_maze && this.gameMode == AGGame.MODE_FLYER) {
 				// switch to maze from planet...
-				//this.myModeStack.push(AGGame.MODE_GUY);
+				this.myModeStack.push(AGGame.MODE_GUY);
 				
-				this.myModeStack.push(AGGame.MODE_PAUSE);// just for testing!!
-				gamePaused = true; // just for testing!!
+				this.guy.setValues(this.myStage, this.myButtons, this.myRes, this);
+				//this.myModeStack.push(AGGame.MODE_PAUSE);// just for testing!!
+				//gamePaused = true; // just for testing!!
 				
 				//this.modeObj.game_advance_maze = false;
 				this.guy.game_advance_maze = false;

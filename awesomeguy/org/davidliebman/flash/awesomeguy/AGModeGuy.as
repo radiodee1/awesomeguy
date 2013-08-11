@@ -3,6 +3,8 @@
 	import flash.geom.Rectangle;
 	import flash.display.BitmapData;
 	import flash.geom.Point;
+	import flash.xml.XMLDocument;
+	import flash.display.Shape;
 	
 	public class AGModeGuy extends AGMode{
 
@@ -37,11 +39,105 @@
 		public override function componentsInOrder():void {
 			super.componentsInOrder();
 			
-			myStage.addChild(myRes[AGResources.NAME_START_PAUSE_PNG]);
+			
+			//physicsAdjustments();
+			var myShape:Shape = new Shape();
+			myShape.graphics.lineStyle(2, 0xffffffff, 1);
+			myShape.graphics.moveTo(0,0);
+			myShape.graphics.lineTo(0,SCREEN_HEIGHT );
+			myShape.graphics.lineTo(SCREEN_WIDTH, SCREEN_HEIGHT );
+			myShape.graphics.lineTo(SCREEN_WIDTH, 0);
+			myShape.graphics.lineTo(0,0);
+			
+			myScreenBG = new Bitmap (new BitmapData (SCREEN_WIDTH, SCREEN_HEIGHT , false, alert_color));
+			myScreenBG.x = 0;
+			myScreenBG.y = 0;
+			myStage.addChild(myScreenBG);
+			
+			var screenframe:Bitmap= new Bitmap (new BitmapData (SCREEN_WIDTH, 64, false, 0x66666666));
+			radarscreen = new Bitmap( new BitmapData(SCREEN_WIDTH - 128, 64,
+										false, 0x00000000));
+			addSprites();
+			updateSprites();
+			drawLevelTiles();
+			drawAnimatedSprites();
+			drawRadarRock();
+
+			//
+			agflyer.sprite = this.sprite;
+			myDraw.drawRes(agflyer,xpos,ypos,facingRight,AGMode.D_FLYER ,animate);
+
+			drawScoreWords();
+			myStage.addChild(myShape);
+			//
+			fireButton();
+			doTimers();
+
+			checkRegularCollision();
+
+			
+			screenframe.x = 0;
+			screenframe.y = SCREEN_HEIGHT;
+			myStage.addChild(screenframe);
+			
+			drawRadarPing(radar, radarscreen ,xpos,ypos,AGMode.PING_FLYER,0xffffffff);
+			
+			radarscreen.x = 64;
+			radarscreen.y = SCREEN_HEIGHT;
+			myStage.addChild(radarscreen);
 
 		}
 		
 		public override function doOnce():void {
+			
+			myDraw = new AGDrawGuy(this, myRes, myStage, myScreenBG);
+			
+			this.game_death = false;
+			if(game_reset_start == true || this.game_start) {
+				setStartingVars();
+				myRes[AGResources.NAME_ENTER_1_MP3].play();
+				//game_reset_start = false;
+			}
+			
+			
+			//flyerrings = new AGSprite(this, AGMode.S_FLYER_RINGS);
+			//flyerrings.active = true;
+			
+			explosionsprite = new AGSprite(this, AGMode.S_EXPLOSION);
+			explosionsprite.active = false;
+			
+			initAGSprite();
+			initChallenges();// this just creates the array!!
+			initAGTimer();
+			setStartingTimers();
+			
+			
+			mySprite[0] = explosionsprite;
+			sprite_num ++;
+			
+			fillChallenges();
+			
+			var myXml:XMLDocument = new XMLDocument(myRes[AGResources.NAME_AWESOMEGUY_XML]);
+			var tree:XML = new XML(myXml);
+			planets = int(tree.planet.length());
+			challenges = myChallenge.length;
+			
+			prepTiles() ;
+			prepRings() ;
+			prepSpecialXml();
+			//prepRingSprites();
+			
+			if (this.game_reset_start ) {
+				radar_start = xpos - scrollBGX;
+				radar_start_scroll =  scrollBGX;
+			}
+			
+			agflyer = new AGSprite(this,AGMode.S_FLYER);
+			agflyer.active = true;
+			agflyer.bottomBB = 32;
+
+			this.game_start = false;
+			this.game_reset_start = false;
 		}
 		
 		public override function advanceChallenge():void {
@@ -75,6 +171,62 @@
 		}
 		
 		public override function prepTiles():void {
+			var tempArray:Array = new Array();
+			var smallArray:Array = new Array();
+			var visibleArray:Array = new Array();
+			var invisibleArray:Array = new Array();
+			
+			var stringVisible:String;
+			var stringInvisible:String;
+			var myXML:XMLDocument = myRes[AGResources.NAME_AWESOMEGUY_XML];
+			
+			var mazeNumber:String = String( this.myGame.gameMaze);
+			var tree:XML = new XML(myXML);
+			
+			
+			myHoriz = int (tree.planet[myGame.gamePlanet].underground.maze.(@number==mazeNumber).horizontal.toString());
+			myVert = int (tree.planet[myGame.gamePlanet].underground.maze.(@number==mazeNumber).vertical.toString());
+			
+			stringVisible = tree.planet[myGame.gamePlanet].underground.maze.(@number==mazeNumber).visible.toString();
+			stringInvisible = tree.planet[myGame.gamePlanet].underground.maze.(@number==mazeNumber).invisible.toString();
+			
+			var i:int = 0;
+			var j:int = 0;
+			var k:int = 0;
+			
+			myVisible = new Array();
+			tempArray = new Array();
+			tempArray = stringVisible.split(",");
+			for (i = 0; i < myVert; i ++ ) {
+				smallArray = new Array();
+				for (j = 0 ; j < myHoriz; j ++ ) {
+					smallArray.push(int (tempArray[ (i * myHoriz) + j ] ) );
+				}
+				myVisible.push(smallArray);
+			}
+			
+			myInvisible = new Array();
+			tempArray = new Array();
+			tempArray = stringInvisible.split(",");
+			for (i = 0; i < myVert; i ++ ) {
+				smallArray = new Array();
+				for (j = 0 ; j < myHoriz; j ++ ) {
+					k = int (tempArray[ (i * myHoriz) + j ] );
+					smallArray.push(int (tempArray[ (i * myHoriz) + j ] ) );
+					//if (k + mapcheat == AGModeFlyer.B_MONSTER) addMonster(j,i ,0);
+					//if (k + mapcheat == AGModeFlyer.B_PLATFORM) addPlatform(j , i );
+					//if (k + mapcheat == AGModeFlyer.B_START) startingPos(j,i); // only do on 'reset start'
+				}
+				myInvisible.push(smallArray);
+			}
+			
+		}
+		
+		public  function fillChallenges():void {
+			
+		}
+		
+		public function prepRings():void {
 			
 		}
 		
@@ -278,7 +430,157 @@
 			}
 		} 
 		
+		public function drawRadarRock():void {
+
+			var xxx:int,yyy:int;
+			for (xxx = 0; xxx < myHoriz; xxx ++ ) {
+				for(yyy = 0; yyy < myVert; yyy ++ ) {
 		
+					if (myInvisible[yyy][xxx] + mapcheat == B_BLOCK) {
+						
+						drawRadarPing(radar, radarscreen, xxx * TILE_WIDTH, yyy * TILE_HEIGHT, PING_ROCK, 0xffffffff);
+					}
+					else if (myVisible[yyy][xxx]  != B_SPACE) {
+						drawRadarPing(radar, radarscreen, xxx * TILE_WIDTH, yyy * TILE_HEIGHT, PING_ROCK, 0xff903590);//0xff889be7);
+						
+					}
+					
+				}
+			}
+		}
+		
+		public function checkRegularCollision():void {
+			var ii:int;
+			for (ii = 0; ii < mySprite.length ; ii ++ ) {
+				if (mySprite[ii].bitmap != null) {
+					if (this.collisionSimple(mySprite[ii].bitmap, this.flyersprite) 
+						&& mySprite[ii].active == true ) {
+							var sprite:AGSprite = mySprite[ii];
+						switch (sprite.sprite_type) {
+							case AGMode.S_RING:
+								
+								var temp:AGSpriteBubble1 = new AGSpriteBubble1(this, AGMode.S_BUBBLE_1);// Sprite temp ;
+								temp.x = sprite.x;
+								temp.y = myVert * TILE_HEIGHT;
+								temp.limit = 100;
+								temp.color = 0xffff0000;
+								temp.speed =  2;
+								temp.active = true;
+								temp.quality_0 = 0;
+								myGame.gameScore += 10;
+								mySprite.push(temp);
+								myRes[AGResources.NAME_BOOM_MP3].play();
+								sprite.active = false;
+								sprite.visible = false;
+								
+								
+								//myChallenge[myGame.gameChallenge].total_held_rings ++ ;
+							break;
+							
+							case AGMode.S_GATOR:
+								if (sprite.bitmap.getBounds(myStage).bottom  >
+									this.flyersprite.getBounds(myStage).bottom) {
+									sprite.active = false;
+									sprite.visible = false;
+									myGame.gameScore += 10;
+									
+									break;
+								}
+							
+							case AGMode.S_BUBBLE_2:
+							case AGMode.S_INVADER_1:
+							case AGMode.S_INVADER_2:
+								this.agflyer.active = false;
+								this.agflyer.visible = false;
+								sprite.active = false;
+								sprite.visible = true;//true
+								//flyerDeath();
+							break;
+							
+							
+						}//switch
+					}// collision simple
+				}
+			}
+			
+			///////////
+			for (ii = 0; ii < myTorpedo.length ; ii ++ ) {
+				for (var jj:int = 0; jj < mySprite.length ; jj ++) {
+					var shot:AGSpriteTorpedo = myTorpedo[ii];
+					sprite = mySprite[jj];
+					if (sprite.bitmap != null && shot.bitmap != null && 
+						sprite.active && 
+						shot.active &&
+						//sprite.sprite_type != AGMode.S_EXPLOSION_SPRITE &&
+						this.collisionSimple( sprite.bitmap, shot.bitmap)) {
+						
+						myRes[AGResources.NAME_BOOM_MP3].play();
+						shot.active = false;
+						shot.visible = false;
+						
+						switch (sprite.sprite_type) {
+							case AGMode.S_BUBBLE_1:
+								sprite.active = false;
+								myGame.gameScore += 10;
+								//myChallenge[ myGame.gameChallenge].total_bubble_1 --;
+							break;
+							
+							case AGMode.S_BUBBLE_2:
+								sprite.active = false;
+								myGame.gameScore +=10;
+								//myChallenge[ myGame.gameChallenge].total_bubble_2 --;
+							break;
+							
+							case AGMode.S_BUBBLE_3:
+								sprite.active = false;
+								myGame.gameScore += 10;
+								//myChallenge[ myGame.gameChallenge].total_bubble_3 --;
+							break;
+							
+							case AGMode.S_GATOR:
+								sprite.active = false;
+								myGame.gameScore += 10;
+							break;
+							
+							case AGMode.S_INVADER_1:
+								myGame.gameScore += 10;
+								
+								sprite.sprite_type = AGMode.S_EXPLOSION_SPRITE;
+							break;
+							
+							case AGMode.S_INVADER_2:
+								sprite.quality_3 = P_NONE;
+								myGame.gameScore += 10;
+								sprite.sprite_type = AGMode.S_EXPLOSION_SPRITE;
+
+
+							break;
+						}//switch
+							
+						
+					}// if !null
+				}// for sprite
+			}//for torpedo
+			
+			for (ii = 0; ii < myBlocks.length; ii ++) {
+				if (myBlocks[ii].bitmap != null &&
+					collisionBlock(myBlocks[ii].bitmap, this.flyersprite)) {
+					if (myBlocks[ii].sprite_type == AGMode.S_BLOCK) this.flyerGrounded = true;
+					if (myBlocks[ii].sprite_type == AGMode.S_GOAL) {
+						myGame.gameScore = myGame.gameScore + ( myChallenge[myGame.gameChallenge].total_held_rings * 20);
+						myChallenge[myGame.gameChallenge].total_held_rings = 0;
+						is_blinking = true;
+						//timerStart(7, 3 * 30);//blinking timer 7
+						myTimer[ AGMode.TIMER_07] = new AGTimer(1.5);//.timerStart(3);
+					}
+					
+				}
+				
+				
+			}
+			return;
+		}
+	
 		
 	}
 	
