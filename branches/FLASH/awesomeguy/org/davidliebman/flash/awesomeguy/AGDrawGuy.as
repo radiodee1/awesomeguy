@@ -16,6 +16,18 @@
 
 		public override function drawRes(sprite:AGSprite, xx:int, yy:int, facingRight:Boolean, kind:int, animate:int):void {
 			// all drawing goes here!!
+			
+			var add:int, add_radar:int, z:int;
+			var scrollx:int = myMode.scrollBGX;
+			var scrolly:int = myMode.scrollBGY;
+			var anim_speed:int = 5;
+			
+			switch(kind) {
+				case AGMode.D_GUY:
+					var guysprite:AGSpriteGuy = AGSpriteGuy(sprite);
+				break;
+			}
+			
 		}
 
 	}
