@@ -7,19 +7,20 @@
 	public class AGModeGuy extends AGMode{
 
 		static var B_NONE:int = -1 ;
-		static var B_START:int = 5 ;
+		static var B_START:int = 17 ;
+		static var B_GUN:int = 16;
 		static var B_SPACE:int = 0 ;
-		static var B_LADDER:int = 444 ;
-		static var B_BLOCK:int = 442 ;
-		static var B_GOAL:int = 446 ;
-		static var B_KEY:int = 445 ; 
-		static var B_PRIZE:int =  447 ;
-		static var B_MONSTER:int = 443 ;
-		static var B_MARKER:int = 441 ; 
-		static var B_DEATH:int = 439 ;
-		static var B_ONEUP:int = 438 ;
-		static var B_BIBPRIZE:int = 440 ;
-		static var B_PLATFORM:int = 437 ; 
+		static var B_LADDER:int = 25 ;
+		static var B_BLOCK:int = 23 ;
+		static var B_GOAL:int = 27 ;
+		static var B_KEY:int = 26 ; 
+		static var B_PRIZE:int =  28 ;
+		static var B_MONSTER:int = 24 ;
+		static var B_MARKER:int = 22 ; 
+		static var B_DEATH:int = 20 ;
+		static var B_ONEUP:int = 19 ;
+		static var B_BIGPRIZE:int = 21 ;
+		static var B_PLATFORM:int = 18 ; 
 		
 		var TILEMAP_HEIGHT:int = 128 * 2;
 		var TILEMAP_WIDTH:int = 224 * 2;
@@ -29,6 +30,8 @@
 		public function AGModeGuy() {
 			// constructor code
 			super();
+			levelcheat = 0;
+			mapcheat = 0;
 		}
 		
 		public override function componentsInOrder():void {
