@@ -28,6 +28,9 @@
 		var TILEMAP_WIDTH:int = 224 * 2;
 		var TILE_HEIGHT:int = 64;
 		var TILE_WIDTH:int = 64;
+		
+		var myHorizontal:int = 0;
+		var myVertical:int = 0;
 
 		public function AGModeGuy() {
 			// constructor code
@@ -262,7 +265,65 @@
 		}
 		
 		public function drawLevelTiles():void {
+			var  i:int,j:int,k:int,l:int,m:int, zz:int;
 			
+			var baseX:int, baseY:int;//, startX, startY;
+			
+			
+			var TILE_WIDTH:int = 64;
+			var TILE_HEIGHT:int = 64;
+			
+			var tilesWidthMeasurement:int = 32;
+			var tilesHeightMeasurement:int = 24;//32;
+			
+			var LONG_MAP_H:int =	this.myHoriz;
+			var LONG_MAP_V:int =	this.myVert;
+			//animate = newBG + 1;
+			//var animate:int = 0;
+					
+			
+			var square:AGSprite;
+		
+			
+			
+			
+			/* draw background */
+			baseX = scrollBGX / TILE_WIDTH;
+			baseY = scrollBGY / TILE_HEIGHT;
+			
+			for ( j = baseX - 1 ; j < baseX + tilesWidthMeasurement + 3; j++) { //32
+				for ( i = baseY - 1 ; i < baseY + tilesHeightMeasurement + 3; i ++ ) { //24
+					
+					if (i >= 0 && j >= 0  && i < LONG_MAP_V && j < LONG_MAP_H) { 
+					//trace("i"+i+" j" + j + " = " + myVisible[i][j]);
+						
+						
+						if(  myVisible[i][j] != 0  && myVisible[i][j] != AGModeFlyer.B_GOAL  ) { //is tile blank??
+							//trace(myVisible);
+							square = new AGSprite(this,AGMode.S_BLOCK);
+							square.bitmap = cutTile(  myRes[AGResources.NAME_TILES1_PNG], 
+									myVisible[i][j] + levelcheat,
+									AGMode.TILE_BOT);
+							
+							square.bitmap.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
+							square.bitmap.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
+							myStage.addChild(square.bitmap);
+							//if (myInvisible[i][j] + mapcheat == AGModeFlyer.B_BLOCK) this.myBlocks.push(square);
+							//if (myInvisible[i][j] + mapcheat == AGModeFlyer.B_GOAL) addVarious(j,i,AGMode.S_GOAL);
+							
+						}
+						
+						
+		
+					} // if i,j > 0, etc...
+				
+					//////////////////////////////////////////
+					
+					
+				}
+			}
+			
+			return ;
 		}
 		public override function scrollBackground():void {
 			
