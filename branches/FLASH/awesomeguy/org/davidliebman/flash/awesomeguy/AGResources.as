@@ -24,8 +24,8 @@
 	public static var R_SOUND:int = 2;
 	public static var R_XML:int = 3;
 	public static var R_BITMAP:int = 4;
-		
-	//public static var RES_INDEX:int = 6;
+	public static var R_BITMAP_WBLACK:int = 5;
+	
 		
 	public static var NAME_AWESOMEGUY_XML:int =  0;
 	public static var NAME_TEST2_PNG:int =  1;
@@ -79,6 +79,18 @@
 	public static var NAME_PYRAMID_3_PNG:int = 43;
 	public static var NAME_PYRAMID_4_PNG:int = 44;
 
+	public static var NAME_G_CLIMB1_PNG:int = 45;
+	public static var NAME_G_CLIMB2_PNG:int =46;
+	public static var NAME_G_PUNCHL1_PNG:int =47;
+	public static var NAME_G_PUNCHL2_PNG:int =48;
+	public static var NAME_G_PUNCHR1_PNG:int =49;
+	public static var NAME_G_PUNCHR2_PNG:int =50;
+	public static var NAME_G_STEPL1_PNG:int =51;
+	public static var NAME_G_STEPL2_PNG:int =52;
+	public static var NAME_G_STEPR1_PNG:int =53;
+	public static var NAME_G_STEPR2_PNG:int =54;
+
+
 	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
 	var res01:Array = new Array (R_BITMAP, "bitmap/test2.png");
 	var res02:Array = new Array (R_BITMAP, "bitmap/agtiles1.png");
@@ -126,11 +138,22 @@
 	var res38:Array = new Array (R_BITMAP, "bitmap/flyer_white_r.png");
 	var res39:Array = new Array (R_BITMAP, "bitmap/start_pause.png");
 	
-	var res40:Array = new Array (R_BITMAP, "bitmap/pyramiddoor0.png");
-	var res41:Array = new Array (R_BITMAP, "bitmap/pyramiddoor1.png");
-	var res42:Array = new Array (R_BITMAP, "bitmap/pyramiddoor2.png");
-	var res43:Array = new Array (R_BITMAP, "bitmap/pyramiddoor3.png");
-	var res44:Array = new Array (R_BITMAP, "bitmap/pyramiddoor4.png");
+	var res40:Array = new Array (R_BITMAP_WBLACK, "bitmap/pyramiddoor0.png");
+	var res41:Array = new Array (R_BITMAP_WBLACK, "bitmap/pyramiddoor1.png");
+	var res42:Array = new Array (R_BITMAP_WBLACK, "bitmap/pyramiddoor2.png");
+	var res43:Array = new Array (R_BITMAP_WBLACK, "bitmap/pyramiddoor3.png");
+	var res44:Array = new Array (R_BITMAP_WBLACK, "bitmap/pyramiddoor4.png");
+	
+	var res45:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_climb1.png");
+	var res46:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_climb2.png");
+	var res47:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_punchl1.png");
+	var res48:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_punchl2.png");
+	var res49:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_punchr1.png");
+	var res50:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_punchr2.png");
+	var res51:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl1.png");
+	var res52:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl2.png");
+	var res53:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr1.png");
+	var res54:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr2.png");
 	
 	var i:int = 0;
 		
@@ -199,6 +222,17 @@
 			neededRes.push(res43);
 			neededRes.push(res44);
 
+			neededRes.push(res45);
+			neededRes.push(res46);
+			neededRes.push(res47);
+			neededRes.push(res48);
+			neededRes.push(res49);
+			neededRes.push(res50);
+			neededRes.push(res51);
+			neededRes.push(res52);
+			neededRes.push(res53);
+			neededRes.push(res54);
+
 			importRes();
 		}
 		
@@ -221,6 +255,7 @@
 			switch(r_type) {
 				case AGResources.R_SPRITE:
 				case AGResources.R_BITMAP:
+				case AGResources.R_BITMAP_WBLACK:
 				
 					loader.contentLoaderInfo.addEventListener(Event.COMPLETE, finishRes);
 					
@@ -273,6 +308,10 @@
 					var color:uint = 0x00000000;
 					bitmapdata2.threshold(bitmapdata1, rect, pt, "==", threshold, color, maskcolor, true);
 					r_bitmap = new Bitmap(bitmapdata2);
+					myRes.push(r_bitmap);
+				break;
+				case AGResources.R_BITMAP_WBLACK:
+					r_bitmap = Bitmap(LoaderInfo(e.target).content);
 					myRes.push(r_bitmap);
 				break;
 				

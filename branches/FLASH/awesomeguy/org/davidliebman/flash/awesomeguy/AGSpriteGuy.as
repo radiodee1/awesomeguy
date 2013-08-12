@@ -3,10 +3,15 @@
 	public class AGSpriteGuy  extends AGSprite{
 
 
-		var isPunching:Boolean; 
-		var isClimbing:Boolean;
-		var isJumping:Boolean;
-
+		var state:int = 0;
+		
+		var cheatx_climb:int = 0;
+		var cheaty_climb:int = 0;
+		var cheatx_punch:int = 0;
+		var cheaty_punch:int = 0;
+		var cheatx_step:int = 0;
+		var cheaty_step:int = 0;
+		
 		public function AGSpriteGuy(mymode:AGMode, kind:int) {
 			super(mymode,kind);
 			// constructor code
