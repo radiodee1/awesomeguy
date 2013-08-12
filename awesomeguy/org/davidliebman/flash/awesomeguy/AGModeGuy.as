@@ -8,6 +8,10 @@
 	
 	public class AGModeGuy extends AGMode{
 
+		static var GUY_CLIMB:int = 1;
+		static var GUY_PUNCH:int = 2;
+		static var GUY_STEP:int = 3;
+
 		static var B_NONE:int = -1 ;
 		static var B_START:int = 17 ;
 		static var B_GUN:int = 16;
@@ -284,9 +288,6 @@
 			
 			var square:AGSprite;
 		
-			
-			
-			
 			/* draw background */
 			baseX = scrollBGX / TILE_WIDTH;
 			baseY = scrollBGY / TILE_HEIGHT;
@@ -326,7 +327,132 @@
 			return ;
 		}
 		public override function scrollBackground():void {
+			this.wrapHorizontal = false;
+			this.spriteWidth = 0;
+			this.spriteHeight = 0;
 			
+			myField.top = 0;
+			myField.bottom = myVert * TILE_HEIGHT;
+			myField.left = 0;
+			myField.right = myHoriz * TILE_WIDTH;
+			
+			myScreen.top = scrollBGY;
+			myScreen.bottom = scrollBGY + SCREEN_HEIGHT;
+			myScreen.left = scrollBGX;
+			myScreen.right = scrollBGX + SCREEN_WIDTH;
+			
+			myBoundaries.top = myScreen.top + 20 + 0;
+			myBoundaries.bottom = myScreen.bottom - 20 - spriteHeight;
+			myBoundaries.left = myScreen.left + (5 * TILE_WIDTH) + 0;
+			myBoundaries.right = myScreen.right - (5 * TILE_WIDTH) - spriteWidth;
+			
+			mySweetspot.top = myBoundaries.top + (Y_MOVE * 3/2);
+			mySweetspot.bottom = myBoundaries.bottom - (Y_MOVE * 3/2) ;
+			mySweetspot.left = myBoundaries.left + (X_MOVE * 3/2) ;
+			mySweetspot.right = myBoundaries.right - (X_MOVE * 3/2);
+			
+			var newx:int = xpos;
+			var newy:int = ypos;
+			
+			var newscrollx:int = scrollBGX;// myScreen.left;
+			var newscrolly:int = scrollBGY;// myScreen.top;
+			
+			var wrappingNow:Boolean = false;
+			
+			
+			//change values
+			if (xx > 0) { // going right - drift left
+				
+				if (newx + xx >= myField.right - spriteWidth) { //clip
+					newx = myField.right - spriteWidth;
+					//flyerGrounded = true;// ??
+					//newscrolly = myField.bottom - myScreen.bottom;
+				}
+				if (newx + xx < myField.right - spriteWidth) {
+					newx = newx + xx;
+					
+					if (myScreen.right <= myField.right  ) {
+						newscrollx = newscrollx + xx;
+					}
+					else {
+						newx -= xx;
+					}
+					
+				}
+				
+			}
+			if (xx < 0) { //going left 
+			
+				if (newx + xx <= myField.left) { //clip
+					newx = myField.left;
+					
+				}
+				
+				
+				if (newx + xx > myField.left ) {
+					newx = newx + xx;
+					
+					if (myScreen.left >= myField.left ) {
+						newscrollx = newscrollx + xx;
+					}
+					else {
+						newx -= xx;
+					}
+					
+					
+				}
+			
+				
+				
+			}
+			if (yy > 0) { // going down
+				if (newy + yy >= myField.bottom - spriteHeight) { //clip
+					newy = myField.bottom - spriteHeight;
+					//flyerGrounded = true;// ??
+					//newscrolly = myField.bottom - myScreen.bottom;
+				}
+				if (newy + yy < myField.bottom - spriteHeight) {
+					newy = newy + yy;
+					
+					if (myScreen.bottom <= myField.bottom  ) {
+						newscrolly = newscrolly + yy;
+					}
+					else {
+						newy -= yy;
+					}
+				}
+				
+				
+			}
+			if (yy < 0 ) { // up - drift down
+				if (newy + yy <= myField.top) { //clip
+					newy = myField.top;
+					//newscrolly = myField.top;
+				}
+				
+				
+				if (newy + yy > myField.top ) {
+					newy = newy + yy;
+					
+					if (myScreen.top >= myField.top  ) {
+						newscrolly = newscrolly + yy;
+					}
+					else {
+						newy -= yy;
+					}
+					
+					
+				}
+				
+				
+				//////////////////////////////
+				
+			}
+			
+			scrollBGX = newscrollx;
+			scrollBGY = newscrolly;
+			xpos = newx;
+			ypos = newy;
 			
 		}
 		public override function detectMovement():void {
