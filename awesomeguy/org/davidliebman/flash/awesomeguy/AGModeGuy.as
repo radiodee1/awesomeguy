@@ -15,6 +15,13 @@
 		static var GUY_STEP:int = 3;
 		static var GUY_STILL:int = 4;
 
+		static var HIT_NONE:int = 0;
+		static var HIT_TOP:int = 1;
+		static var HIT_BOTTOM:int = 2;
+		static var HIT_LEFT:int = 3;
+		static var HIT_RIGHT:int = 4;
+		public var hittype:int = 0;
+
 		static var B_NONE:int = -1 ;
 		static var B_START:int = 17 ;
 		static var B_GUN:int = 16;
@@ -42,7 +49,10 @@
 		public static var X_MOVE = 10 * 2;
 		public static var Y_MOVE = 10 * 2;
 
-		var hit_top:Boolean , hit_bottom:Boolean, hit_left:Boolean, hit_right:Boolean;
+		public var hit_top:Boolean =false; 
+		public var hit_bottom:Boolean= false; 
+		public var hit_left:Boolean= false;
+		public var hit_right:Boolean = false;
 
 		public function AGModeGuy() {
 			// constructor code
@@ -73,13 +83,14 @@
 			radarscreen = new Bitmap( new BitmapData(SCREEN_WIDTH - 128, 64,
 										false, 0x00000000));
 			addSprites();
-			updateSprites();
+			
 			drawLevelTiles();
+			updateSprites();
 			drawAnimatedSprites();
 			drawRadarRock();
 
 			//
-			agflyer.sprite = this.sprite;
+			//agflyer.sprite = this.sprite;
 			myGuy.x = xpos;
 			myGuy.y = ypos;
 
@@ -102,7 +113,11 @@
 			radarscreen.y = SCREEN_HEIGHT;
 			myStage.addChild(radarscreen);
 
-			super.componentsInOrder();
+			this.detectMovement();
+
+			this.physicsAdjustments();
+			this.scrollBackground();
+			
 
 		}
 		
@@ -113,6 +128,8 @@
 			myGuy.active = true;
 			myGuy.visible = true;
 			myGuy.quality_0 = AGModeGuy.GUY_STEP;
+			this.flyersprite = myGuy.bitmap;
+			
 			this.mySprite.push(myGuy);
 			
 			this.game_death = false;
@@ -155,9 +172,9 @@
 				radar_start_scroll =  scrollBGX;
 			}
 			
-			agflyer = new AGSprite(this,AGMode.S_FLYER);
-			agflyer.active = true;
-			agflyer.bottomBB = 32;
+			//agflyer = new AGSprite(this,AGMode.S_FLYER);
+			//agflyer.active = true;
+			//agflyer.bottomBB = 32;
 
 			this.game_start = false;
 			this.game_reset_start = false;
@@ -339,14 +356,14 @@
 			var TILE_WIDTH:int = 64;
 			var TILE_HEIGHT:int = 64;
 			
-			var tilesWidthMeasurement:int = 32;
-			var tilesHeightMeasurement:int = 24;//32;
+			var tilesWidthMeasurement:int =   32;
+			var tilesHeightMeasurement:int =  24;//
 			
 			var LONG_MAP_H:int =	this.myHoriz;
 			var LONG_MAP_V:int =	this.myVert;
 			//animate = newBG + 1;
 			//var animate:int = 0;
-					
+			this.myBlocks = new Array();
 			
 			var square:AGSprite;
 		
@@ -358,7 +375,7 @@
 				for ( i = baseY - 1 ; i < baseY + tilesHeightMeasurement + 3; i ++ ) { //24
 					
 					if (i >= 0 && j >= 0  && i < LONG_MAP_V && j < LONG_MAP_H) { 
-					//trace("i"+i+" j" + j + " = " + myVisible[i][j]);
+					
 						
 						
 						if(  myVisible[i][j] != 0  && myVisible[i][j] != AGModeFlyer.B_GOAL  ) { //is tile blank??
@@ -523,12 +540,13 @@
 		public override function detectMovement():void {
 			xx = 0;
 			yy = 0;
-			if ( K_LEFT && !this.hit_left ) {
-				xx = - X_MOVE;				
+			if ( K_LEFT  ) {
+				if (hittype != AGModeGuy.HIT_LEFT) xx = - X_MOVE;				
 				facingRight = false;
+				
 			}
-			if (K_RIGHT && !this.hit_right) {
-				xx = + X_MOVE;
+			if (K_RIGHT ) {
+				if (hittype != AGModeGuy.HIT_RIGHT) xx = + X_MOVE;
 				facingRight = true;
 			}
 			if (K_UP ) {
@@ -749,8 +767,8 @@
 							case AGMode.S_BUBBLE_2:
 							case AGMode.S_INVADER_1:
 							case AGMode.S_INVADER_2:
-								this.agflyer.active = false;
-								this.agflyer.visible = false;
+								//this.agflyer.active = false;
+								//this.agflyer.visible = false;
 								sprite.active = false;
 								sprite.visible = true;//true
 								//flyerDeath();
@@ -822,17 +840,14 @@
 			}//for torpedo
 			
 			for (ii = 0; ii < myBlocks.length; ii ++) {
-				if (myBlocks[ii].bitmap != null &&
+				if (myBlocks[ii].bitmap != null && this.flyersprite != null &&
 					collisionBlock(myBlocks[ii].bitmap, this.flyersprite)) {
+					//this.hittype = AGModeGuy.HIT_NONE;
+
 					if (myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
 						examineHit(myBlocks[ii].bitmap, this.flyersprite);
 					}
-					else {
-						this.hit_bottom = false;
-						this.hit_left = false;
-						this.hit_right = false;
-						this.hit_top = false;
-					}
+					
 					if (myBlocks[ii].sprite_type == AGMode.S_GOAL) {
 						//myGame.gameScore = myGame.gameScore + ( myChallenge[myGame.gameChallenge].total_held_rings * 20);
 						//myChallenge[myGame.gameChallenge].total_held_rings = 0;
@@ -842,37 +857,47 @@
 					}
 					
 				}
-				
+				else {
+					//this.hit_bottom = false;
+					//this.hit_left = false;
+					//this.hit_right = false;
+					//this.hit_top = false;
+				}
 				
 			}
 			return;
 		}
 		
 		public function examineHit(block:Bitmap, guy:Bitmap):void {
-			this.hit_bottom = false;
-			this.hit_left = false;
-			this.hit_right = false;
-			this.hit_top = false;
-			trace("here");
-			
-			if(block.getBounds(myStage).bottom > guy.getBounds(myStage).top ) {
-				this.hit_top = true;
-				//if (yy < 0) yy = 0;
-				trace("here top");
-			}
-			if(block.getBounds(myStage).top < guy.getBounds(myStage).bottom) {
-				this.hit_bottom = true;
-				//if (yy > 0) yy = 0;
-			}
-			if(block.getBounds(myStage).left < guy.getBounds(myStage).right) {
-				this.hit_right = true;
-				//if (xx > 0) xx = 0;
-			}
-			if(block.getBounds(myStage).right > guy.getBounds(myStage).left) {
-				this.hit_left = true;
-				//if (xx < 0) xx = 0;
+			if (block == null || guy == null) {
+				//trace("null");
+				return;
 			}
 			
+			if (myGuy.quality_0 == AGModeGuy.GUY_STEP) {
+				//hittype = AGModeGuy.HIT_NONE;
+				
+				if(block.getBounds(myStage).bottom > guy.getBounds(myStage).top ) {
+					hittype = AGModeGuy.HIT_TOP;
+					//if (yy < 0) yy = 0;
+					trace("here top");
+				}
+				else if(block.getBounds(myStage).top < guy.getBounds(myStage).bottom) {
+					hittype = AGModeGuy.HIT_BOTTOM;
+					//if (yy > 0) yy = 0;
+				}
+				else if(block.x  < guy.x + guy.width  && block.x + block.width > guy.x + guy.width) {
+					hittype = AGModeGuy.HIT_RIGHT;
+					//if (xx > 0) xx = 0;
+				}
+				else if(block.x + block.width   > guy.x && 
+				   block.x < guy.x && 
+				   block.x + block.width < guy.x + guy.width) {
+					hittype = AGModeGuy.HIT_LEFT;
+					//if (xx < 0) xx = 0;
+					trace("here left");
+				}
+			}
 			return;
 		}
 		
