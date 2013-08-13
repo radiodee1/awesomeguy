@@ -108,6 +108,7 @@
 			myGuy = new AGSpriteGuy(this, AGMode.S_GUY);
 			myGuy.active = true;
 			myGuy.visible = true;
+			myGuy.quality_0 = AGModeGuy.GUY_STEP;
 			this.mySprite.push(myGuy);
 			
 			this.game_death = false;
@@ -420,7 +421,8 @@
 					}
 					
 				}
-				
+				myGuy.facingRight = true;
+				myGuy.quality_0 = AGModeGuy.GUY_STEP;
 			}
 			if (xx < 0) { //going left 
 			
@@ -443,8 +445,8 @@
 					
 				}
 			
-				
-				
+				myGuy.facingRight = false;
+				myGuy.quality_0 = AGModeGuy.GUY_STEP;
 			}
 			if (yy > 0) { // going down
 				if (newy + yy >= myField.bottom - spriteHeight) { //clip
@@ -519,6 +521,8 @@
 				//trace(K_JUMP);
 				
 			//}
+			if (xx  == 0 && yy == 0) myGuy.quality_0 = AGModeGuy.GUY_STILL;
+			
 		}
 		public override function fireButton():void {
 			

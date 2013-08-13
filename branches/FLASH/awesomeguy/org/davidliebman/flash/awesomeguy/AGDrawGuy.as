@@ -4,6 +4,13 @@
 	
 	public class AGDrawGuy extends AGDraw{
 
+		var cheatx_climb:int = 0;
+		var cheaty_climb:int = 0;
+		var cheatx_punch:int = 0;
+		var cheaty_punch:int = 0;
+		var cheatx_step:int = 8;
+		var cheaty_step:int = 0;
+
 		public function AGDrawGuy(mode:AGMode, myres:Array, mystage:Stage, mybackground:Bitmap) {
 			// constructor code
 			
@@ -21,13 +28,66 @@
 			var scrollx:int = myMode.scrollBGX;
 			var scrolly:int = myMode.scrollBGY;
 			var anim_speed:int = 5;
+			var guyx:int, guyy:int;
 			
 			switch(kind) {
 				case AGMode.D_GUY:
-					//var guysprite:AGSpriteGuy = AGSpriteGuy(sprite);
-					sprite.bitmap = myRes[AGResources.NAME_G_STEPR1_PNG];
-					sprite.bitmap.x =  xx - scrollx;
-					sprite.bitmap.y = yy - scrolly;
+					
+					switch(sprite.quality_0) {
+						case AGModeGuy.GUY_CLIMB:
+							if (sprite.animate % 2 == 1) {
+								sprite.bitmap = myRes[AGResources.NAME_G_CLIMB1_PNG];
+							}
+							else {
+								sprite.bitmap = myRes[AGResources.NAME_G_CLIMB2_PNG];
+							}
+						
+						break;
+						case AGModeGuy.GUY_PUNCH:
+							if (sprite.facingRight) {
+								if (sprite.animate %2 == 1) {
+									sprite.bitmap = myRes[AGResources.NAME_G_PUNCHR1_PNG];
+								}
+								else {
+									sprite.bitmap = myRes[AGResources.NAME_G_PUNCHR2_PNG];
+								}
+							}
+							else {
+								if(sprite.animate %2 == 1) {
+									sprite.bitmap = myRes[AGResources.NAME_G_PUNCHL1_PNG];
+								}
+								else {
+									sprite.bitmap = myRes[AGResources.NAME_G_PUNCHL2_PNG];
+								}
+							}
+						break;
+						case AGModeGuy.GUY_STEP:
+							if (sprite.facingRight) {
+								if (sprite.animate %2 == 1 ) {
+									sprite.bitmap = myRes[AGResources.NAME_G_STEPR1_PNG];
+									guyx = this.cheatx_step;
+								}
+								else {
+									sprite.bitmap = myRes[AGResources.NAME_G_STEPR2_PNG];
+								}
+							}
+							else {
+								if (sprite.animate %2 == 1) {
+									sprite.bitmap = myRes[AGResources.NAME_G_STEPL1_PNG];
+									guyx =  this.cheatx_step;
+								}
+								else {
+									sprite.bitmap = myRes[AGResources.NAME_G_STEPL2_PNG];
+								}
+							}
+						break;
+						case AGModeGuy.GUY_STILL:
+						break;
+					}
+					
+					
+					sprite.bitmap.x =  xx - scrollx + guyx;
+					sprite.bitmap.y = yy - scrolly + guyy;
 					if (sprite.active == true) myStage.addChild(sprite.bitmap);
 					myMode.flyersprite = sprite.bitmap;
 					
