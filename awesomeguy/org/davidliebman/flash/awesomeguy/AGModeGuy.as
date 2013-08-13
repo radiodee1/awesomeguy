@@ -46,8 +46,8 @@
 		var myHorizontal:int = 0;
 		var myVertical:int = 0;
 		
-		public static var X_MOVE = 10 * 2;
-		public static var Y_MOVE = 10 * 2;
+		public static var X_MOVE = 5 * 2;
+		public static var Y_MOVE = 5 * 2;
 
 		public var hit_top:Boolean =false; 
 		public var hit_bottom:Boolean= false; 
@@ -541,13 +541,14 @@
 			xx = 0;
 			yy = 0;
 			if ( K_LEFT  ) {
-				if (hittype != AGModeGuy.HIT_LEFT) xx = - X_MOVE;				
+				if (!this.hit_left) xx = - X_MOVE;				
 				facingRight = false;
-				
+				this.hit_right = false;
 			}
 			if (K_RIGHT ) {
-				if (hittype != AGModeGuy.HIT_RIGHT) xx = + X_MOVE;
+				if (!this.hit_right) xx = + X_MOVE;
 				facingRight = true;
+				this.hit_left = false;
 			}
 			if (K_UP ) {
 				yy = - Y_MOVE;
@@ -630,16 +631,14 @@
 					for (i = 0; i < 6; i ++) {
 						square = cutTile(myRes[AGResources.NAME_TILES1_PNG],  topScore[i] + 1, AGMode.TILE_TOP);
 						
-						//drawTile_8(square, (scorePos + i) * TILE_WIDTH + scrollx, (1) * TILE_HEIGHT + scrolly, 
-						//	scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
+						
 						square.x = (scorePos + i) * TILE_WIDTH  ;
 						square.y = (1) * TILE_HEIGHT ;
 						myStage.addChild(square);
 	
 						square = cutTile(myRes[AGResources.NAME_TILES1_PNG], topScore[i] +28 + 1, AGMode.TILE_TOP);
 	
-						//drawTile_8(square, (scorePos + i) * TILE_WIDTH  + scrollx, (2) * TILE_HEIGHT + scrolly, 
-						//	scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
+						
 						square.x = (scorePos + i) * TILE_WIDTH  ;
 						square.y = (2) * TILE_HEIGHT ;
 						myStage.addChild(square);
@@ -653,13 +652,10 @@
 						square.x = (livesPos + i) * TILE_WIDTH  ;
 						square.y = (1) * TILE_HEIGHT ;
 						myStage.addChild(square);
-						//drawTile_8(square, (livesPos + i) * TILE_WIDTH + scrollx, (1) * TILE_HEIGHT + scrolly, 
-						//	scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
-	
+						
 						square = cutTile(myRes[AGResources.NAME_TILES1_PNG],  topLives[i] + 28 + 1,AGMode.TILE_TOP );
 	
-						//drawTile_8(square, (livesPos + i) * TILE_WIDTH +scrollx , (2) * TILE_HEIGHT + scrolly , 
-						//	scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
+						
 						square.x = (livesPos + i) * TILE_WIDTH  ;
 						square.y = (2) * TILE_HEIGHT ;
 						myStage.addChild(square);
@@ -698,18 +694,12 @@
 					
 						square = cutTile(myRes[AGResources.NAME_TILES1_PNG], topNumbers[placesValue] + 1, AGMode.TILE_TOP);
 	
-						//drawTile_8(square, (pos + i - p + c) * TILE_WIDTH + scrollx, (1) * TILE_HEIGHT +
-						//	scrolly, scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
-	
 						square.x = (pos + i - p + c) * TILE_WIDTH;
 						square.y = (1) * TILE_HEIGHT;
 						myStage.addChild(square);
 	
 						square = cutTile(myRes[AGResources.NAME_TILES1_PNG], topNumbers[placesValue] +28 + 1, AGMode.TILE_TOP);
 	
-						//drawTile_8(square, (pos + i - p + c) * TILE_WIDTH +scrollx , (2) * TILE_HEIGHT +
-						//	scrolly , scrollx , scrolly, PAINT_TRANSPARENT, number_alpha);
-						
 						square.x = (pos + i - p + c) * TILE_WIDTH;
 						square.y = (2) * TILE_HEIGHT;
 						myStage.addChild(square);
@@ -839,6 +829,11 @@
 				}// for sprite
 			}//for torpedo
 			
+			this.hit_bottom = false;
+			//this.hit_left = false;
+			//this.hit_right = false;
+			this.hit_top = false;
+			
 			for (ii = 0; ii < myBlocks.length; ii ++) {
 				if (myBlocks[ii].bitmap != null && this.flyersprite != null &&
 					collisionBlock(myBlocks[ii].bitmap, this.flyersprite)) {
@@ -846,6 +841,7 @@
 
 					if (myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
 						examineHit(myBlocks[ii].bitmap, this.flyersprite);
+						trace("hit here...");
 					}
 					
 					if (myBlocks[ii].sprite_type == AGMode.S_GOAL) {
@@ -857,12 +853,7 @@
 					}
 					
 				}
-				else {
-					//this.hit_bottom = false;
-					//this.hit_left = false;
-					//this.hit_right = false;
-					//this.hit_top = false;
-				}
+				
 				
 			}
 			return;
@@ -877,23 +868,31 @@
 			if (myGuy.quality_0 == AGModeGuy.GUY_STEP) {
 				//hittype = AGModeGuy.HIT_NONE;
 				
-				if(block.getBounds(myStage).bottom > guy.getBounds(myStage).top ) {
+				if(block.getBounds(myStage).bottom > guy.getBounds(myStage).top && false ) {
 					hittype = AGModeGuy.HIT_TOP;
+					this.hit_top = true;
 					//if (yy < 0) yy = 0;
 					trace("here top");
 				}
-				else if(block.getBounds(myStage).top < guy.getBounds(myStage).bottom) {
+				if(block.getBounds(myStage).top < guy.getBounds(myStage).bottom && false) {
 					hittype = AGModeGuy.HIT_BOTTOM;
 					//if (yy > 0) yy = 0;
+					this.hit_bottom = true;
+					trace("here bottom");
 				}
-				else if(block.x  < guy.x + guy.width  && block.x + block.width > guy.x + guy.width) {
+				if(block.x  < guy.x + guy.width  && 
+						block.x + block.width > guy.x + guy.width &&
+						block.x > guy.x && facingRight) {
 					hittype = AGModeGuy.HIT_RIGHT;
 					//if (xx > 0) xx = 0;
+					this.hit_right = true;
+					trace("here right");
 				}
-				else if(block.x + block.width   > guy.x && 
+				if(block.x + block.width   > guy.x && 
 				   block.x < guy.x && 
-				   block.x + block.width < guy.x + guy.width) {
+				   block.x + block.width < guy.x + guy.width && !facingRight) {
 					hittype = AGModeGuy.HIT_LEFT;
+					this.hit_left = true;
 					//if (xx < 0) xx = 0;
 					trace("here left");
 				}
