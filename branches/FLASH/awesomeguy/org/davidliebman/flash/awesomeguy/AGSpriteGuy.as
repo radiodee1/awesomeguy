@@ -16,12 +16,11 @@
 
 		public override function updateSprite():void {
 			super.updateSprite();
-			
-			
-			this.quality_1 ++;
-			if (this.quality_1 > 5 ) {
+		
+			if (this.timer.timerDone()) {
 				this.animate ++;
-				this.quality_1 = 0;
+				
+				this.timer = new AGTimer(0.15);
 			}
 			if (this.animate > 8) {
 				this.animate = 0;
