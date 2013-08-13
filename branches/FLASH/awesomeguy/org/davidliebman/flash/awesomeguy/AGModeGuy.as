@@ -8,9 +8,12 @@
 	
 	public class AGModeGuy extends AGMode{
 
+		var myGuy:AGSpriteGuy;
+
 		static var GUY_CLIMB:int = 1;
 		static var GUY_PUNCH:int = 2;
 		static var GUY_STEP:int = 3;
+		static var GUY_STILL:int = 4;
 
 		static var B_NONE:int = -1 ;
 		static var B_START:int = 17 ;
@@ -35,6 +38,9 @@
 		
 		var myHorizontal:int = 0;
 		var myVertical:int = 0;
+		
+		public static var X_MOVE = 10 * 2;
+		public static var Y_MOVE = 10 * 2;
 
 		public function AGModeGuy() {
 			// constructor code
@@ -72,7 +78,8 @@
 
 			//
 			agflyer.sprite = this.sprite;
-			myDraw.drawRes(agflyer,xpos,ypos,facingRight,AGMode.D_FLYER ,animate);
+			myGuy.x = xpos;
+			myGuy.y = ypos;
 
 			drawScoreWords();
 			myStage.addChild(myShape);
@@ -98,6 +105,10 @@
 		public override function doOnce():void {
 			
 			myDraw = new AGDrawGuy(this, myRes, myStage, myScreenBG);
+			myGuy = new AGSpriteGuy(this, AGMode.S_GUY);
+			myGuy.active = true;
+			myGuy.visible = true;
+			this.mySprite.push(myGuy);
 			
 			this.game_death = false;
 			if(game_reset_start == true || this.game_start) {
@@ -254,7 +265,16 @@
 		}
 		
 		public function addSprites():void {
+			var i:int = 0;
+			mySprite.push(myGuy);
 			
+			for( i= 0; i < myTemp.length; i ++ ) {
+				mySprite.push(myTemp[i]);
+			}
+			myTemp = new Array();
+			for ( i = 0; i < myHold.length; i ++ ) {
+				mySprite.push(myHold[i]);
+			}
 		}
 		
 		public function doTimers():void {
@@ -262,7 +282,29 @@
 		}
 		
 		public function updateSprites():void {
+			var i:int;
+			//var anim:Boolean = this.animate_enter_maze;
 			
+			for (i = 0; i < mySprite.length; i ++ ) {
+				if (mySprite[i].active == true ){
+					mySprite[i].updateSprite();
+//					if ((mySprite[i].sprite_type != AGMode.S_EXPLOSION_SPRITE ) || 
+//						(mySprite[i].sprite_type == AGMode.S_BUBBLE_MAZE )) {
+//						mySprite[i].updateSprite();
+//					}
+//					
+					if (mySprite[i].sprite_type == AGMode.S_GUY) myDraw.drawBasicSprite(mySprite[i], D_GUY);
+//					if (mySprite[i].sprite_type == AGMode.S_LINE ) myDraw.drawBasicSprite(mySprite[i], D_LINE_1);
+//					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_1) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_1);
+//					
+//					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_3) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_3);
+//					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_2) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_2);
+//					if (mySprite[i].sprite_type == AGMode.S_INVADER_1) myDraw.drawBasicSprite(mySprite[i], D_INVADER_1);
+//					if (mySprite[i].sprite_type == AGMode.S_INVADER_2) myDraw.drawBasicSprite(mySprite[i], D_INVADER_2);
+					
+				}
+				
+			}
 		}
 		public function drawAnimatedSprites():void {
 			
@@ -328,8 +370,8 @@
 		}
 		public override function scrollBackground():void {
 			this.wrapHorizontal = false;
-			this.spriteWidth = 0;
-			this.spriteHeight = 0;
+			this.spriteWidth = 64;
+			this.spriteHeight = 128;
 			
 			myField.top = 0;
 			myField.bottom = myVert * TILE_HEIGHT;
@@ -341,8 +383,8 @@
 			myScreen.left = scrollBGX;
 			myScreen.right = scrollBGX + SCREEN_WIDTH;
 			
-			myBoundaries.top = myScreen.top + 20 + 0;
-			myBoundaries.bottom = myScreen.bottom - 20 - spriteHeight;
+			myBoundaries.top = myScreen.top + (2 * TILE_HEIGHT) + 0;
+			myBoundaries.bottom = myScreen.bottom - (2 * TILE_HEIGHT) - spriteHeight;
 			myBoundaries.left = myScreen.left + (5 * TILE_WIDTH) + 0;
 			myBoundaries.right = myScreen.right - (5 * TILE_WIDTH) - spriteWidth;
 			
@@ -361,21 +403,20 @@
 			
 			
 			//change values
-			if (xx > 0) { // going right - drift left
+			if (xx > 0) { // going right 
 				
 				if (newx + xx >= myField.right - spriteWidth) { //clip
 					newx = myField.right - spriteWidth;
-					//flyerGrounded = true;// ??
-					//newscrolly = myField.bottom - myScreen.bottom;
+					
 				}
 				if (newx + xx < myField.right - spriteWidth) {
 					newx = newx + xx;
 					
-					if (myScreen.right <= myField.right  ) {
+					if (myScreen.right <= myField.right && newx + xx >= myBoundaries.left  ) {
 						newscrollx = newscrollx + xx;
 					}
 					else {
-						newx -= xx;
+						//newx -= xx;
 					}
 					
 				}
@@ -392,11 +433,11 @@
 				if (newx + xx > myField.left ) {
 					newx = newx + xx;
 					
-					if (myScreen.left >= myField.left ) {
+					if (myScreen.left + xx >= myField.left && newx + xx <= myBoundaries.right ) {
 						newscrollx = newscrollx + xx;
 					}
 					else {
-						newx -= xx;
+						//newx -= xx;
 					}
 					
 					
@@ -409,36 +450,36 @@
 				if (newy + yy >= myField.bottom - spriteHeight) { //clip
 					newy = myField.bottom - spriteHeight;
 					//flyerGrounded = true;// ??
-					//newscrolly = myField.bottom - myScreen.bottom;
+					//newscrolly = myField.bottom - myScreen.bottom + spriteHeight;
 				}
 				if (newy + yy < myField.bottom - spriteHeight) {
 					newy = newy + yy;
 					
-					if (myScreen.bottom <= myField.bottom  ) {
+					if (myScreen.bottom <= myField.bottom  && newy + yy >= myBoundaries.top) {
 						newscrolly = newscrolly + yy;
 					}
 					else {
-						newy -= yy;
+						//newy -= yy;
 					}
 				}
 				
 				
 			}
-			if (yy < 0 ) { // up - drift down
+			if (yy < 0 ) { // up 
 				if (newy + yy <= myField.top) { //clip
 					newy = myField.top;
-					//newscrolly = myField.top;
+					newscrolly = myField.top; // bad hack...
 				}
 				
 				
 				if (newy + yy > myField.top ) {
 					newy = newy + yy;
 					
-					if (myScreen.top >= myField.top  ) {
+					if (myScreen.top  >= myField.top && newy + yy <= myBoundaries.bottom  ) {
 						newscrolly = newscrolly + yy;
 					}
 					else {
-						newy -= yy;
+						//newy -= yy;
 					}
 					
 					
@@ -456,7 +497,24 @@
 			
 		}
 		public override function detectMovement():void {
-			super.detectMovement();
+			xx = 0;
+			yy = 0;
+			if ( K_LEFT  ) {
+				xx = - X_MOVE;				
+				facingRight = false;
+			}
+			if (K_RIGHT ) {
+				xx = + X_MOVE;
+				facingRight = true;
+			}
+			if (K_UP ) {
+				yy = - Y_MOVE;
+
+			}
+			if (K_DOWN ) {
+				yy = + Y_MOVE;
+			
+			}
 			//if (K_JUMP) {
 				//trace(K_JUMP);
 				
