@@ -42,15 +42,17 @@
 		public static var X_MOVE = 10 * 2;
 		public static var Y_MOVE = 10 * 2;
 
+		var hit_top:Boolean , hit_bottom:Boolean, hit_left:Boolean, hit_right:Boolean;
+
 		public function AGModeGuy() {
 			// constructor code
 			super();
-			levelcheat = 0;
+			levelcheat =0;
 			mapcheat = 0;
 		}
 		
 		public override function componentsInOrder():void {
-			super.componentsInOrder();
+			//super.componentsInOrder();
 			
 			
 			//physicsAdjustments();
@@ -99,6 +101,8 @@
 			radarscreen.x = 64;
 			radarscreen.y = SCREEN_HEIGHT;
 			myStage.addChild(radarscreen);
+
+			super.componentsInOrder();
 
 		}
 		
@@ -187,6 +191,21 @@
 		
 		public override function startingPos(xx:int, yy:int):void {
 			// taken from myInvisible[][] array
+			startingx = xpos;
+			startingy = ypos;
+			
+			
+			if (this.game_reset_start || this.game_start) {
+				xpos = xx * TILE_WIDTH;
+				ypos = yy * TILE_HEIGHT;
+			
+				scrollBGX = xpos - 100;
+				scrollBGY = ypos - 100;
+			
+				startingx = xpos;
+				startingy = ypos;
+				
+			}
 		}
 		
 		public override function prepTiles():void {
@@ -234,7 +253,7 @@
 					smallArray.push(int (tempArray[ (i * myHoriz) + j ] ) );
 					//if (k + mapcheat == AGModeFlyer.B_MONSTER) addMonster(j,i ,0);
 					//if (k + mapcheat == AGModeFlyer.B_PLATFORM) addPlatform(j , i );
-					//if (k + mapcheat == AGModeFlyer.B_START) startingPos(j,i); // only do on 'reset start'
+					if (k + mapcheat == AGModeFlyer.B_START) startingPos(j,i); // only do on 'reset start'
 				}
 				myInvisible.push(smallArray);
 			}
@@ -352,7 +371,10 @@
 							square.bitmap.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
 							square.bitmap.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
 							myStage.addChild(square.bitmap);
-							//if (myInvisible[i][j] + mapcheat == AGModeFlyer.B_BLOCK) this.myBlocks.push(square);
+							if (myInvisible[i][j] + mapcheat == AGModeGuy.B_BLOCK) {
+								this.myBlocks.push(square);
+								
+							}
 							//if (myInvisible[i][j] + mapcheat == AGModeFlyer.B_GOAL) addVarious(j,i,AGMode.S_GOAL);
 							
 						}
@@ -501,11 +523,11 @@
 		public override function detectMovement():void {
 			xx = 0;
 			yy = 0;
-			if ( K_LEFT  ) {
+			if ( K_LEFT && !this.hit_left ) {
 				xx = - X_MOVE;				
 				facingRight = false;
 			}
-			if (K_RIGHT ) {
+			if (K_RIGHT && !this.hit_right) {
 				xx = + X_MOVE;
 				facingRight = true;
 			}
@@ -699,6 +721,7 @@
 		}
 		
 		public function checkRegularCollision():void {
+			
 			var ii:int;
 			for (ii = 0; ii < mySprite.length ; ii ++ ) {
 				if (mySprite[ii].bitmap != null) {
@@ -708,19 +731,6 @@
 						switch (sprite.sprite_type) {
 							case AGMode.S_RING:
 								
-								var temp:AGSpriteBubble1 = new AGSpriteBubble1(this, AGMode.S_BUBBLE_1);// Sprite temp ;
-								temp.x = sprite.x;
-								temp.y = myVert * TILE_HEIGHT;
-								temp.limit = 100;
-								temp.color = 0xffff0000;
-								temp.speed =  2;
-								temp.active = true;
-								temp.quality_0 = 0;
-								myGame.gameScore += 10;
-								mySprite.push(temp);
-								myRes[AGResources.NAME_BOOM_MP3].play();
-								sprite.active = false;
-								sprite.visible = false;
 								
 								
 								//myChallenge[myGame.gameChallenge].total_held_rings ++ ;
@@ -814,13 +824,21 @@
 			for (ii = 0; ii < myBlocks.length; ii ++) {
 				if (myBlocks[ii].bitmap != null &&
 					collisionBlock(myBlocks[ii].bitmap, this.flyersprite)) {
-					if (myBlocks[ii].sprite_type == AGMode.S_BLOCK) this.flyerGrounded = true;
+					if (myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
+						examineHit(myBlocks[ii].bitmap, this.flyersprite);
+					}
+					else {
+						this.hit_bottom = false;
+						this.hit_left = false;
+						this.hit_right = false;
+						this.hit_top = false;
+					}
 					if (myBlocks[ii].sprite_type == AGMode.S_GOAL) {
-						myGame.gameScore = myGame.gameScore + ( myChallenge[myGame.gameChallenge].total_held_rings * 20);
-						myChallenge[myGame.gameChallenge].total_held_rings = 0;
+						//myGame.gameScore = myGame.gameScore + ( myChallenge[myGame.gameChallenge].total_held_rings * 20);
+						//myChallenge[myGame.gameChallenge].total_held_rings = 0;
 						is_blinking = true;
-						//timerStart(7, 3 * 30);//blinking timer 7
-						myTimer[ AGMode.TIMER_07] = new AGTimer(1.5);//.timerStart(3);
+						
+						//myTimer[ AGMode.TIMER_07] = new AGTimer(1.5);//.timerStart(3);
 					}
 					
 				}
@@ -829,7 +847,34 @@
 			}
 			return;
 		}
-	
+		
+		public function examineHit(block:Bitmap, guy:Bitmap):void {
+			this.hit_bottom = false;
+			this.hit_left = false;
+			this.hit_right = false;
+			this.hit_top = false;
+			trace("here");
+			
+			if(block.getBounds(myStage).bottom > guy.getBounds(myStage).top ) {
+				this.hit_top = true;
+				//if (yy < 0) yy = 0;
+				trace("here top");
+			}
+			if(block.getBounds(myStage).top < guy.getBounds(myStage).bottom) {
+				this.hit_bottom = true;
+				//if (yy > 0) yy = 0;
+			}
+			if(block.getBounds(myStage).left < guy.getBounds(myStage).right) {
+				this.hit_right = true;
+				//if (xx > 0) xx = 0;
+			}
+			if(block.getBounds(myStage).right > guy.getBounds(myStage).left) {
+				this.hit_left = true;
+				//if (xx < 0) xx = 0;
+			}
+			
+			return;
+		}
 		
 	}
 	
