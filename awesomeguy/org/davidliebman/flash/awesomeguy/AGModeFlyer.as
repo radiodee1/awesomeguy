@@ -39,6 +39,8 @@
 		var TILE_HEIGHT:int = 16;
 		var TILE_WIDTH:int = 16;
 	
+		public static var X_MOVE = 10 * 2;
+		public static var Y_MOVE = 3 * 2;
 		
 		public function AGModeFlyer() {
 			// constructor code
@@ -938,6 +940,31 @@
 			return ;
 		}
 		
+		
+		public override function detectMovement():void {
+			xx = 0;
+			yy = 0;
+			if ( K_LEFT  ) {
+				xx = - X_MOVE;				
+				facingRight = false;
+			}
+			if (K_RIGHT ) {
+				xx = + X_MOVE;
+				facingRight = true;
+			}
+			if (K_UP ) {
+				yy = - Y_MOVE;
+
+			}
+			if (K_DOWN ) {
+				yy = + Y_MOVE;
+			
+			}
+			//if (K_JUMP) {
+				//trace(K_JUMP);
+				
+			//}
+		}
 		
 		public override function physicsAdjustments():void {
 			//super.physicsAdjustments();

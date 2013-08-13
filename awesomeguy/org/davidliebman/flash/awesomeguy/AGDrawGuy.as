@@ -24,7 +24,13 @@
 			
 			switch(kind) {
 				case AGMode.D_GUY:
-					var guysprite:AGSpriteGuy = AGSpriteGuy(sprite);
+					//var guysprite:AGSpriteGuy = AGSpriteGuy(sprite);
+					sprite.bitmap = myRes[AGResources.NAME_G_STEPR1_PNG];
+					sprite.bitmap.x =  xx - scrollx;
+					sprite.bitmap.y = yy - scrolly;
+					if (sprite.active == true) myStage.addChild(sprite.bitmap);
+					myMode.flyersprite = sprite.bitmap;
+					
 				break;
 			}
 			
