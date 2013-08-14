@@ -388,6 +388,7 @@
 									myVisible[i][j] + levelcheat,
 									AGMode.TILE_BOT);
 							
+							
 							square.bitmap.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
 							square.bitmap.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
 							myStage.addChild(square.bitmap);
@@ -592,11 +593,14 @@
 			
 			var i:int ,j:int, k:int,l:int, m:int,n:int, p:int ;
 
-			m = int ( int (TILEMAP_HEIGHT / TILE_HEIGHT) * tilebracket) ; // 128 * 2 /16 = 16
-			n = int ( TILEMAP_WIDTH / TILE_WIDTH) ; // 224 * 2 /16 = 28
+			m = int ( int (TILEMAP_HEIGHT / TILE_HEIGHT) * tilebracket) ; // 128 * 2 /64 = 4
+			n = int ( TILEMAP_WIDTH / TILE_WIDTH) ; // 224 * 2 /64 = 7
     
-			k = int ((num / n)   ); // y pos 
-			l = int (num - (k * n) -1  ); // x pos + 4
+			k = int (((num -1)/ n)   ); // y pos //14 / 7 = 2
+			l = int (num - (k * n) -1  ) ; // x pos // 14 - 14 - 1
+			//trace (num,k,l, TILE_HEIGHT, TILEMAP_HEIGHT, TILEMAP_WIDTH);
+			
+			
 			k = k + m; // must come after!!
 			
 			var b:BitmapData = new BitmapData(  TILE_WIDTH, TILE_HEIGHT, true, 0x0);
