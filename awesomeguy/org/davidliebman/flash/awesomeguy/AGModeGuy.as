@@ -931,8 +931,8 @@
 						//myTimer[ AGMode.TIMER_07] = new AGTimer(1.5);//.timerStart(3);
 					}
 					if (myBlocks[ii].sprite_type == AGMode.S_LADDER) {
-						this.hit_ladder = true;
-						trace("ladder!");
+						if (!this.hit_bottom) this.hit_ladder = true;
+						//trace("ladder!");
 					}
 				}
 				
@@ -951,32 +951,32 @@
 				//hittype = AGModeGuy.HIT_NONE;
 				
 				if(block.getBounds(myStage).bottom > guy.getBounds(myStage).top && false ) {
-					hittype = AGModeGuy.HIT_TOP;
+					//hittype = AGModeGuy.HIT_TOP;
 					this.hit_top = true;
 					//if (yy < 0) yy = 0;
-					trace("here top");
+					//trace("here top");
 				}
 				if(block.getBounds(myStage).top < guy.getBounds(myStage).bottom && false) {
-					hittype = AGModeGuy.HIT_BOTTOM;
+					//hittype = AGModeGuy.HIT_BOTTOM;
 					//if (yy > 0) yy = 0;
 					this.hit_bottom = true;
-					trace("here bottom");
+					//trace("here bottom");
 				}
 				if(block.x  < guy.x + guy.width  && 
 						block.x + block.width > guy.x + guy.width &&
 						block.x > guy.x ) {
-					hittype = AGModeGuy.HIT_RIGHT;
+					//hittype = AGModeGuy.HIT_RIGHT;
 					
 					this.hit_right = true;
-					trace("here right");
+					//trace("here right");
 				}
 				if(block.x + block.width   > guy.x && 
 				   block.x < guy.x && 
 				   block.x + block.width < guy.x + guy.width ) {
-					hittype = AGModeGuy.HIT_LEFT;
+					//hittype = AGModeGuy.HIT_LEFT;
 					this.hit_left = true;
 					
-					trace("here left");
+					//trace("here left");
 				}
 			}
 			return;
