@@ -70,7 +70,11 @@
 				}
 				sprite.bitmap.x = add + xx - scrollx;
 				sprite.bitmap.y = yy - scrolly;
-				if (sprite.active == true) myStage.addChild(sprite.bitmap);
+				if (sprite.active == true && sprite != null && sprite.bitmap != null) {
+					//trace("before");
+					myStage.addChild(sprite.bitmap);
+					//trace("after");
+				}
 				myMode.flyersprite = sprite.bitmap;
 				break;
 				
@@ -242,8 +246,11 @@
 					
 					sprite.bitmap.x = x - scrollx + add;
 					sprite.bitmap.y = y - scrolly;
-					myStage.addChild(sprite.bitmap);
-					
+					if (sprite.active == true && sprite != null && sprite.bitmap != null) {
+					//trace("before");
+						myStage.addChild(sprite.bitmap);
+					//trace("after");
+					}
 					
 					if (sprite.quality_3 > 7) {
 						//sprite[i].quality_3 = -1;
@@ -298,7 +305,14 @@
 						sprite.bitmap.x = sprite.x - scrollx - (sprite.limit * 2) + (myMode.myHoriz * 16);
 					}
 					sprite.bitmap.y = sprite.y - (sprite.limit * 2) - scrolly;
-					myStage.addChild(sprite.bitmap);
+					
+					if (sprite.active == true && sprite != null && sprite.bitmap != null) {
+					//trace("before");
+						myStage.addChild(sprite.bitmap);
+					//trace("after");
+					}
+					
+					//myStage.addChild(sprite.bitmap);
 				break;
 				case AGMode.D_RING:
 					if (scrollx < sprite.x + (16)) {
@@ -454,8 +468,12 @@
 					
 					sprite.bitmap.x = x - scrollx + add;
 					sprite.bitmap.y = y - scrolly;
-					myStage.addChild(sprite.bitmap);
-					
+					//myStage.addChild(sprite.bitmap);
+					if (sprite.active == true && sprite != null && sprite.bitmap != null) {
+					//trace("before");
+						myStage.addChild(sprite.bitmap);
+					//trace("after");
+					}
 					
 					if (sprite.quality_3 > 7) {
 						//sprite[i].quality_3 = -1;
@@ -570,7 +588,13 @@
 						sprite.bitmap.x = sprite.x - scrollx  + (myMode.myHoriz * 16) ;
 					}
 					sprite.bitmap.y = sprite.y - scrolly - ( 7 * 16) ;
-					myStage.addChild(sprite.bitmap);
+					//myStage.addChild(sprite.bitmap);
+					
+					if (sprite.active == true && sprite != null && sprite.bitmap != null) {
+					//trace("before");
+						myStage.addChild(sprite.bitmap);
+					//trace("after");
+					}
 					
 				break;
 			}

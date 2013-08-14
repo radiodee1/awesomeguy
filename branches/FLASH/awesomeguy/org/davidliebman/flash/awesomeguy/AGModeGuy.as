@@ -14,6 +14,7 @@
 		static var GUY_PUNCH:int = 2;
 		static var GUY_STEP:int = 3;
 		static var GUY_STILL:int = 4;
+		static var GUY_FALL:int= 5;
 
 		static var HIT_NONE:int = 0;
 		static var HIT_TOP:int = 1;
@@ -53,11 +54,13 @@
 		public var hit_bottom:Boolean= false; 
 		public var hit_left:Boolean= false;
 		public var hit_right:Boolean = false;
+		public var hit_center:Boolean= false;
+		public var hit_ladder:Boolean = false;
 
 		public function AGModeGuy() {
 			// constructor code
 			super();
-			levelcheat =0;
+			levelcheat = 0 ;
 			mapcheat = 0;
 		}
 		
@@ -378,8 +381,8 @@
 					
 						
 						
-						if(  myVisible[i][j] != 0  && myVisible[i][j] != AGModeFlyer.B_GOAL  ) { //is tile blank??
-							//trace(myVisible);
+						if(  myVisible[i][j] != 0 ) {// && myVisible[i][j] != AGModeGuy.B_GOAL  ) { //is tile blank??
+							//trace(myVisible[i][j]);
 							square = new AGSprite(this,AGMode.S_BLOCK);
 							square.bitmap = cutTile(  myRes[AGResources.NAME_TILES1_PNG], 
 									myVisible[i][j] + levelcheat,
@@ -392,7 +395,10 @@
 								this.myBlocks.push(square);
 								
 							}
-							//if (myInvisible[i][j] + mapcheat == AGModeFlyer.B_GOAL) addVarious(j,i,AGMode.S_GOAL);
+							if (myInvisible[i][j] + mapcheat == AGModeGuy.B_LADDER){ 
+								square.sprite_type = AGMode.S_LADDER;
+								this.myBlocks.push(square);
+							}
 							
 						}
 						
@@ -542,25 +548,34 @@
 			yy = 0;
 			if ( K_LEFT  ) {
 				if (!this.hit_left) xx = - X_MOVE;
-				else xx = int (X_MOVE / 1);
+				else if (!this.hit_right) xx = int (X_MOVE / 1);
 				myGuy.facingRight = false;
 				this.facingRight = false;
 				//this.hit_right = false;
 			}
 			if (K_RIGHT ) {
 				if (!this.hit_right) xx = + X_MOVE;
-				else xx = - int (X_MOVE / 1);
+				else if (!this.hit_left) xx = - int (X_MOVE / 1);
 				myGuy.facingRight = true;
 				this.facingRight = true;
 				//this.hit_left = false;
 			}
 			if (K_UP ) {
-				yy = - Y_MOVE;
-
+				//if (!this.hit_top) yy = - Y_MOVE;
+				//else if (!this.hit_bottom) yy = Y_MOVE;
+				if (this.hit_ladder) {
+					yy = - Y_MOVE;
+					if(!this.hit_bottom) myGuy.quality_0 = AGModeGuy.GUY_CLIMB;
+				}
+				
 			}
 			if (K_DOWN ) {
-				yy = + Y_MOVE;
-			
+				if (!this.hit_bottom) yy = + Y_MOVE;
+				else if (!this.hit_top) yy = - Y_MOVE;
+				if (this.hit_ladder) {
+					yy =  Y_MOVE;
+					if(!this.hit_bottom) myGuy.quality_0 = AGModeGuy.GUY_CLIMB;
+				}
 			}
 			//if (K_JUMP) {
 				//trace(K_JUMP);
@@ -577,7 +592,7 @@
 			
 			var i:int ,j:int, k:int,l:int, m:int,n:int, p:int ;
 
-			m = int (TILEMAP_HEIGHT / TILE_HEIGHT * tilebracket) ; // 128 * 2 /16 = 16
+			m = int ( int (TILEMAP_HEIGHT / TILE_HEIGHT) * tilebracket) ; // 128 * 2 /16 = 16
 			n = int ( TILEMAP_WIDTH / TILE_WIDTH) ; // 224 * 2 /16 = 28
     
 			k = int ((num / n)   ); // y pos 
@@ -592,8 +607,6 @@
 							TILE_HEIGHT, TILE_HEIGHT),
 							new Point (0,0) , null, null, true );
 			
-			//trace("nums m:" + m + " n:" + n + " k:" + k + " l:" + l);
-			
 			
 			return bitmap;
 		}
@@ -604,6 +617,26 @@
 		
 		public override function physicsAdjustments():void {
 				//this version for overriding
+				
+				switch(myGuy.quality_0) {
+					case AGModeGuy.GUY_STEP:
+					
+						if ( this.hit_bottom && this.hit_center && !this.hit_left && !this.hit_right) {
+							yy = yy - 2;
+						}
+					break;
+					case AGModeGuy.GUY_STILL:
+					case AGModeGuy.GUY_FALL:
+						if (!this.hit_bottom && !this.hit_center && !this.hit_ladder) {
+							yy = AGModeGuy.Y_MOVE;
+						}
+					
+					break;
+				}
+				
+				
+				
+				
 		}
 		
 		public override function drawRadarPing(box:Rectangle, bits:Bitmap, oldx:int, oldy:int , kind:int,  color:uint):void {
@@ -837,24 +870,43 @@
 			this.hit_left = false;
 			this.hit_right = false;
 			this.hit_top = false;
-			
-			
+			this.hit_center = false;
+			this.hit_ladder = false;
 			
 			for (ii = 0; ii < myBlocks.length; ii ++) {
 				if (myBlocks[ii].bitmap != null && this.flyersprite != null) {
-					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_left)) {
-						this.hit_left = true;
+					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_left) && 
+						myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
+							
+						if(myBlocks[ii].bitmap.y  < 
+						   myDraw.rail_left.y + (myDraw.rail_left.height / 2) ) {
+							this.hit_left = true;
+						}
+						
+						
+						//this.hit_left = true;
 						//this.examineHit(myBlocks[ii].bitmap, myDraw.rail_left);
 					}
-					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_right)) {
-						this.hit_right = true;
+					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_right)&& 
+						myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
+							
+						if(myBlocks[ii].bitmap.y  < 
+						   myDraw.rail_right.y + (myDraw.rail_right.height / 2) ) {
+							this.hit_right = true;
+						}
+						
+						//this.hit_right = true;
 						//this.examineHit(myBlocks[ii].bitmap, myDraw.rail_right);
 					}
-					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_top)) {
-						this.examineHit(myBlocks[ii].bitmap, myDraw.rail_top);
+					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_top)&& 
+						myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
+						this.hit_top = true;
+						//this.examineHit(myBlocks[ii].bitmap, myDraw.rail_top);
 					}
-					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_bottom)) {
-						this.examineHit(myBlocks[ii].bitmap, myDraw.rail_bottom);
+					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_bottom) && 
+						myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
+						this.hit_bottom = true;
+						//this.examineHit(myBlocks[ii].bitmap, myDraw.rail_bottom);
 					}
 				}
 				
@@ -864,7 +916,7 @@
 
 					if (myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
 						//examineHit(myBlocks[ii].bitmap, this.flyersprite);
-						
+						this.hit_center = true;
 					}
 					
 					if (myBlocks[ii].sprite_type == AGMode.S_GOAL) {
@@ -874,7 +926,10 @@
 						
 						//myTimer[ AGMode.TIMER_07] = new AGTimer(1.5);//.timerStart(3);
 					}
-					
+					if (myBlocks[ii].sprite_type == AGMode.S_LADDER) {
+						this.hit_ladder = true;
+						trace("ladder!");
+					}
 				}
 				
 				
