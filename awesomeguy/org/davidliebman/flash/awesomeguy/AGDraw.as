@@ -9,6 +9,11 @@
 		public var myStage:Stage;// primary bitmap that holds rock tiles
 		public var myBackground:Bitmap;// secondary bitmap for bubbles etc.
 
+		public var rail_left:Bitmap;
+		public var rail_right:Bitmap;
+		public var rail_top:Bitmap;
+		public var rail_bottom:Bitmap;
+
 		public function AGDraw(mode:AGMode, myres:Array, mystage:Stage, mybackground:Bitmap) {
 			// constructor code
 			myMode = mode;

@@ -46,8 +46,8 @@
 		var myHorizontal:int = 0;
 		var myVertical:int = 0;
 		
-		public static var X_MOVE = 5 * 2;
-		public static var Y_MOVE = 5 * 2;
+		public static var X_MOVE = 10 * 2;
+		public static var Y_MOVE = 10 * 2;
 
 		public var hit_top:Boolean =false; 
 		public var hit_bottom:Boolean= false; 
@@ -460,7 +460,7 @@
 					}
 					
 				}
-				myGuy.facingRight = true;
+				//myGuy.facingRight = true;
 				myGuy.quality_0 = AGModeGuy.GUY_STEP;
 			}
 			if (xx < 0) { //going left 
@@ -484,7 +484,7 @@
 					
 				}
 			
-				myGuy.facingRight = false;
+				//myGuy.facingRight = false;
 				myGuy.quality_0 = AGModeGuy.GUY_STEP;
 			}
 			if (yy > 0) { // going down
@@ -541,14 +541,18 @@
 			xx = 0;
 			yy = 0;
 			if ( K_LEFT  ) {
-				if (!this.hit_left) xx = - X_MOVE;				
-				facingRight = false;
-				this.hit_right = false;
+				if (!this.hit_left) xx = - X_MOVE;
+				else xx = int (X_MOVE / 1);
+				myGuy.facingRight = false;
+				this.facingRight = false;
+				//this.hit_right = false;
 			}
 			if (K_RIGHT ) {
 				if (!this.hit_right) xx = + X_MOVE;
-				facingRight = true;
-				this.hit_left = false;
+				else xx = - int (X_MOVE / 1);
+				myGuy.facingRight = true;
+				this.facingRight = true;
+				//this.hit_left = false;
 			}
 			if (K_UP ) {
 				yy = - Y_MOVE;
@@ -830,18 +834,37 @@
 			}//for torpedo
 			
 			this.hit_bottom = false;
-			//this.hit_left = false;
-			//this.hit_right = false;
+			this.hit_left = false;
+			this.hit_right = false;
 			this.hit_top = false;
 			
+			
+			
 			for (ii = 0; ii < myBlocks.length; ii ++) {
+				if (myBlocks[ii].bitmap != null && this.flyersprite != null) {
+					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_left)) {
+						this.hit_left = true;
+						//this.examineHit(myBlocks[ii].bitmap, myDraw.rail_left);
+					}
+					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_right)) {
+						this.hit_right = true;
+						//this.examineHit(myBlocks[ii].bitmap, myDraw.rail_right);
+					}
+					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_top)) {
+						this.examineHit(myBlocks[ii].bitmap, myDraw.rail_top);
+					}
+					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_bottom)) {
+						this.examineHit(myBlocks[ii].bitmap, myDraw.rail_bottom);
+					}
+				}
+				
 				if (myBlocks[ii].bitmap != null && this.flyersprite != null &&
 					collisionBlock(myBlocks[ii].bitmap, this.flyersprite)) {
 					//this.hittype = AGModeGuy.HIT_NONE;
 
 					if (myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
-						examineHit(myBlocks[ii].bitmap, this.flyersprite);
-						trace("hit here...");
+						//examineHit(myBlocks[ii].bitmap, this.flyersprite);
+						
 					}
 					
 					if (myBlocks[ii].sprite_type == AGMode.S_GOAL) {
@@ -882,18 +905,18 @@
 				}
 				if(block.x  < guy.x + guy.width  && 
 						block.x + block.width > guy.x + guy.width &&
-						block.x > guy.x && facingRight) {
+						block.x > guy.x ) {
 					hittype = AGModeGuy.HIT_RIGHT;
-					//if (xx > 0) xx = 0;
+					
 					this.hit_right = true;
 					trace("here right");
 				}
 				if(block.x + block.width   > guy.x && 
 				   block.x < guy.x && 
-				   block.x + block.width < guy.x + guy.width && !facingRight) {
+				   block.x + block.width < guy.x + guy.width ) {
 					hittype = AGModeGuy.HIT_LEFT;
 					this.hit_left = true;
-					//if (xx < 0) xx = 0;
+					
 					trace("here left");
 				}
 			}
