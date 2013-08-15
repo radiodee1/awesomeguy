@@ -506,6 +506,7 @@
 		}
 		
 		public function collisionSimple( a:Bitmap, b:Bitmap ):Boolean {
+			if (a == null || b == null) return false;
 			var arect:Rectangle = a.getBounds(myStage);
 			var brect:Rectangle = b.getBounds(myStage);
 			var apt:Point = new Point(a.x, a.y);
@@ -514,6 +515,7 @@
 			
 		}
 		public function collisionBlock( a:Bitmap, b:Bitmap ):Boolean {
+			if (a == null || b == null) return false;
 			var arect:Rectangle = a.getBounds(myStage);
 			var brect:Rectangle = b.getBounds(myStage);
 			var apt:Point = new Point(a.x, a.y);

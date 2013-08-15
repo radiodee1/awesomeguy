@@ -621,6 +621,10 @@
 						if ( this.hit_bottom && this.hit_center && !this.hit_left && !this.hit_right) {
 							yy = yy - 2;
 						}
+						if (!this.hit_bottom && !this.hit_center && !this.hit_ladder) {
+							yy = AGModeGuy.Y_MOVE;
+						}
+						
 					break;
 					case AGModeGuy.GUY_STILL:
 					case AGModeGuy.GUY_FALL:
@@ -934,46 +938,7 @@
 			return;
 		}
 		
-		public function examineHit(block:Bitmap, guy:Bitmap):void {
-			if (block == null || guy == null) {
-				//trace("null");
-				return;
-			}
-			
-			if (myGuy.quality_0 == AGModeGuy.GUY_STEP) {
-				//hittype = AGModeGuy.HIT_NONE;
-				
-				if(block.getBounds(myStage).bottom > guy.getBounds(myStage).top && false ) {
-					//hittype = AGModeGuy.HIT_TOP;
-					this.hit_top = true;
-					//if (yy < 0) yy = 0;
-					//trace("here top");
-				}
-				if(block.getBounds(myStage).top < guy.getBounds(myStage).bottom && false) {
-					//hittype = AGModeGuy.HIT_BOTTOM;
-					//if (yy > 0) yy = 0;
-					this.hit_bottom = true;
-					//trace("here bottom");
-				}
-				if(block.x  < guy.x + guy.width  && 
-						block.x + block.width > guy.x + guy.width &&
-						block.x > guy.x ) {
-					//hittype = AGModeGuy.HIT_RIGHT;
-					
-					this.hit_right = true;
-					//trace("here right");
-				}
-				if(block.x + block.width   > guy.x && 
-				   block.x < guy.x && 
-				   block.x + block.width < guy.x + guy.width ) {
-					//hittype = AGModeGuy.HIT_LEFT;
-					this.hit_left = true;
-					
-					//trace("here left");
-				}
-			}
-			return;
-		}
+		
 		
 	}
 	
