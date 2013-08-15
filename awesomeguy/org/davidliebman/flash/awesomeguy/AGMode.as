@@ -205,6 +205,8 @@
 			myRes = myresources;
 			myGame = mygame;
 			
+			this.game_start = true;// remove me??!!
+			
 			doOnce();
 		}
 		
