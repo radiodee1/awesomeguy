@@ -105,8 +105,8 @@
 			
 		}
 		public function makeRails(sprite:AGSprite):void {
-			var vertical:BitmapData = new BitmapData(2,guyheight - AGModeGuy.Y_MOVE,false,0x00ff0000);
-			var horizontal:BitmapData = new BitmapData(guywidth - AGModeGuy.X_MOVE, 2,false,0x00ff000);
+			var vertical:BitmapData = new BitmapData(2,guyheight - AGModeGuy.Y_MOVE,true,0x00ff0000);
+			var horizontal:BitmapData = new BitmapData(guywidth - AGModeGuy.X_MOVE, 2,true,0x00ff0000);
 			
 			this.rail_bottom = new Bitmap(horizontal);
 			this.rail_top = new Bitmap(horizontal);

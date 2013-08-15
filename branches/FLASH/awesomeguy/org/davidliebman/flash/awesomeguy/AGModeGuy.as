@@ -16,13 +16,6 @@
 		static var GUY_STILL:int = 4;
 		static var GUY_FALL:int= 5;
 
-		static var HIT_NONE:int = 0;
-		static var HIT_TOP:int = 1;
-		static var HIT_BOTTOM:int = 2;
-		static var HIT_LEFT:int = 3;
-		static var HIT_RIGHT:int = 4;
-		public var hittype:int = 0;
-
 		static var B_NONE:int = -1 ;
 		static var B_START:int = 17 ;
 		static var B_GUN:int = 16;
@@ -62,6 +55,7 @@
 			super();
 			levelcheat = 0 ;
 			mapcheat = 0;
+			this.game_start = true;
 		}
 		
 		public override function componentsInOrder():void {
@@ -273,7 +267,7 @@
 					smallArray.push(int (tempArray[ (i * myHoriz) + j ] ) );
 					//if (k + mapcheat == AGModeFlyer.B_MONSTER) addMonster(j,i ,0);
 					//if (k + mapcheat == AGModeFlyer.B_PLATFORM) addPlatform(j , i );
-					if (k + mapcheat == AGModeFlyer.B_START) startingPos(j,i); // only do on 'reset start'
+					if (k + mapcheat == AGModeGuy.B_START) startingPos(j,i); // only do on 'reset start'
 				}
 				myInvisible.push(smallArray);
 			}
@@ -552,18 +546,17 @@
 				else if (!this.hit_right) xx = int (X_MOVE / 1);
 				myGuy.facingRight = false;
 				this.facingRight = false;
-				//this.hit_right = false;
+				
 			}
 			if (K_RIGHT ) {
 				if (!this.hit_right) xx = + X_MOVE;
 				else if (!this.hit_left) xx = - int (X_MOVE / 1);
 				myGuy.facingRight = true;
 				this.facingRight = true;
-				//this.hit_left = false;
+				
 			}
 			if (K_UP ) {
-				//if (!this.hit_top) yy = - Y_MOVE;
-				//else if (!this.hit_bottom) yy = Y_MOVE;
+				
 				if (this.hit_ladder) {
 					yy = - Y_MOVE;
 					if(!this.hit_bottom) myGuy.quality_0 = AGModeGuy.GUY_CLIMB;
@@ -573,7 +566,7 @@
 			if (K_DOWN ) {
 				if (!this.hit_bottom) yy = + Y_MOVE;
 				else if (!this.hit_top) yy = - Y_MOVE;
-				if (this.hit_ladder) {
+				if (this.hit_ladder && !this.hit_bottom) {
 					yy =  Y_MOVE;
 					if(!this.hit_bottom) myGuy.quality_0 = AGModeGuy.GUY_CLIMB;
 				}
