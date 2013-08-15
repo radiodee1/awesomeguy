@@ -18,6 +18,10 @@
 				trace("disaster");
 				return;
 			}
+			if (myMode == null ) {
+				trace("mode disaster");
+				return;
+			}
 			
 			drawRes(sprite, sprite.x, sprite.y, sprite.facingRight, kind, sprite.animate);
 		}
@@ -36,7 +40,7 @@
 				case AGMode.D_NONE:
 					break;
 				case AGMode.D_FLYER:
-					
+				try {
 				add = 0;
 				add_radar = 0;
 
@@ -81,6 +85,10 @@
 					//trace("after");
 				}
 				myMode.flyersprite = sprite.bitmap;
+				}catch (err:Error) {
+					trace("draw flyer!!!!!!!!!!!!!!!");
+				}
+				
 				break;
 				
 				case AGMode.D_GATOR:
