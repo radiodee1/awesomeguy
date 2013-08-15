@@ -14,6 +14,11 @@
 		}
 		
 		public override function drawBasicSprite(sprite:AGSprite, kind:int):void {
+			if(sprite == null  ) {
+				trace("disaster");
+				return;
+			}
+			
 			drawRes(sprite, sprite.x, sprite.y, sprite.facingRight, kind, sprite.animate);
 		}
 		
