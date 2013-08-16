@@ -671,8 +671,105 @@
 		}
 		
 		public override function drawRadarPing(box:Rectangle, bits:Bitmap, oldx:int, oldy:int , kind:int,  color:uint):void {
+			var b:BitmapData;
+			var oldxx:int = 0;
+			var oldyy:int = 0;
+			var ii:int = 0;
+			var jj:int = 0;
+
+		ii =  radar_start_scroll;
+		jj = adjust_x (radar_start);
+		oldyy = oldy;
+
+		
 			
 		
+			oldxx = (oldx - scrollBGX + (myHoriz * TILE_WIDTH/2) -256 + ii) % (myHoriz * TILE_WIDTH );// this might be OK...
+			oldxx = adjust_x(oldxx) * 2;
+		
+	
+		oldyy = oldyy * 2;
+	
+		b = new BitmapData( 2, 2, true, color);
+		bits.bitmapData.copyPixels(b,
+							new Rectangle (0, 0, 
+							2, 2),
+							new Point (box.left + (oldxx/TILE_WIDTH ), 
+							box.top + (oldyy/TILE_HEIGHT ) ) , 
+							null, null, true );
+	
+		
+
+	if (kind == PING_ROCK) return;
+
+		b = new BitmapData( 2, 2, true, color);
+		bits.bitmapData.copyPixels(b,
+							new Rectangle (0, 0, 
+							2, 2),
+							new Point (box.left + 1 +(oldxx/TILE_WIDTH ), 
+							box.top + (oldyy/TILE_HEIGHT ) ) , 
+							null, null, true );
+	
+	
+
+		b = new BitmapData( 2, 2, true, color);
+		bits.bitmapData.copyPixels(b,
+							new Rectangle (0, 0, 
+							2, 2),
+							new Point (box.left + (oldxx/TILE_WIDTH ), 
+							box.top + 1+(oldyy/TILE_HEIGHT ) ) , 
+							null, null, true );
+
+		
+
+		b = new BitmapData( 2, 2, true, color);
+		bits.bitmapData.copyPixels(b,
+							new Rectangle (0, 0, 
+							2, 2),
+							new Point (box.left + 1 + (oldxx/TILE_WIDTH ), 
+							box.top + 1+ (oldyy/TILE_HEIGHT ) ) , 
+							null, null, true );
+
+	
+
+	if (kind != PING_OTHER) return;
+
+		b = new BitmapData( 2, 2, true, color);
+		bits.bitmapData.copyPixels(b,
+							new Rectangle (0, 0, 
+							2, 2),
+							new Point (box.left -2 + (oldxx/TILE_WIDTH ), 
+							box.top + (oldyy/TILE_HEIGHT ) ) , 
+							null, null, true );
+
+		
+		b = new BitmapData( 2, 2, true, color);
+		bits.bitmapData.copyPixels(b,
+							new Rectangle (0, 0, 
+							2, 2),
+							new Point (box.left -2 + (oldxx/TILE_WIDTH ), 
+							box.top +1+ (oldyy/TILE_HEIGHT ) ) , 
+							null, null, true );
+
+		
+		b = new BitmapData( 2, 2, true, color);
+		bits.bitmapData.copyPixels(b,
+							new Rectangle (0, 0, 
+							2, 2),
+							new Point (box.left -1 + (oldxx/TILE_WIDTH ), 
+							box.top + (oldyy/TILE_HEIGHT ) ) , 
+							null, null, true );
+
+		
+		b = new BitmapData( 2, 2, true, color);
+		bits.bitmapData.copyPixels(b,
+							new Rectangle (0, 0, 
+							2, 2),
+							new Point (box.left -1+ (oldxx/TILE_WIDTH ), 
+							box.top +1 + (oldyy/TILE_HEIGHT ) ) , 
+							null, null, true );
+
+
 		}
 		
 		public override function drawScoreWords():void {
@@ -714,7 +811,7 @@
 						square.x = (scorePos + i) * TILE_WIDTH  ;
 						square.y = (2) * TILE_HEIGHT ;
 						myStage.addChild(square);
-						trace("on screen", square.x, square.y);
+						
 					}
 					//print LEVEL:
 					for (i = 0; i < 6; i ++) {
@@ -795,11 +892,11 @@
 			for (xxx = 0; xxx < myHoriz; xxx ++ ) {
 				for(yyy = 0; yyy < myVert; yyy ++ ) {
 		
-					if (myInvisible[yyy][xxx] + mapcheat == B_BLOCK) {
+					if (myInvisible[yyy][xxx] + mapcheat == AGModeGuy.B_BLOCK) {
 						
 						drawRadarPing(radar, radarscreen, xxx * TILE_WIDTH, yyy * TILE_HEIGHT, PING_ROCK, 0xffffffff);
 					}
-					else if (myVisible[yyy][xxx]  != B_SPACE) {
+					else if (myVisible[yyy][xxx]  != AGModeGuy.B_SPACE) {
 						drawRadarPing(radar, radarscreen, xxx * TILE_WIDTH, yyy * TILE_HEIGHT, PING_ROCK, 0xff903590);//0xff889be7);
 						
 					}
