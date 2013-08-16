@@ -1372,7 +1372,9 @@
 		bits.bitmapData.copyPixels(b,
 							new Rectangle (0, 0, 
 							2, 2),
-							new Point (box.left + (oldxx/16 ), box.top + (oldyy/16 ) ) , null, null, true );
+							new Point (box.left + (oldxx/16 ), 
+							box.top + (oldyy/16 ) ) , 
+							null, null, true );
 	
 		
 
@@ -1382,7 +1384,9 @@
 		bits.bitmapData.copyPixels(b,
 							new Rectangle (0, 0, 
 							2, 2),
-							new Point (box.left + 1 +(oldxx/16 ), box.top + (oldyy/16 ) ) , null, null, true );
+							new Point (box.left + 1 +(oldxx/16 ), 
+							box.top + (oldyy/16 ) ) , 
+							null, null, true );
 	
 	
 
@@ -1390,7 +1394,9 @@
 		bits.bitmapData.copyPixels(b,
 							new Rectangle (0, 0, 
 							2, 2),
-							new Point (box.left + (oldxx/16 ), box.top + 1+(oldyy/16 ) ) , null, null, true );
+							new Point (box.left + (oldxx/16 ), 
+							box.top + 1+(oldyy/16 ) ) , 
+							null, null, true );
 
 		
 
@@ -1398,7 +1404,9 @@
 		bits.bitmapData.copyPixels(b,
 							new Rectangle (0, 0, 
 							2, 2),
-							new Point (box.left + 1 + (oldxx/16 ), box.top + 1+ (oldyy/16 ) ) , null, null, true );
+							new Point (box.left + 1 + (oldxx/16 ), 
+							box.top + 1+ (oldyy/16 ) ) , 
+							null, null, true );
 
 	
 
@@ -1408,28 +1416,36 @@
 		bits.bitmapData.copyPixels(b,
 							new Rectangle (0, 0, 
 							2, 2),
-							new Point (box.left -2 + (oldxx/16 ), box.top + (oldyy/16 ) ) , null, null, true );
+							new Point (box.left -2 + (oldxx/16 ), 
+							box.top + (oldyy/16 ) ) , 
+							null, null, true );
 
 		
 		b = new BitmapData( 2, 2, true, color);
 		bits.bitmapData.copyPixels(b,
 							new Rectangle (0, 0, 
 							2, 2),
-							new Point (box.left -2 + (oldxx/16 ), box.top +1+ (oldyy/16 ) ) , null, null, true );
+							new Point (box.left -2 + (oldxx/16 ), 
+							box.top +1+ (oldyy/16 ) ) , 
+							null, null, true );
 
 		
 		b = new BitmapData( 2, 2, true, color);
 		bits.bitmapData.copyPixels(b,
 							new Rectangle (0, 0, 
 							2, 2),
-							new Point (box.left -1 + (oldxx/16 ), box.top + (oldyy/16 ) ) , null, null, true );
+							new Point (box.left -1 + (oldxx/16 ), 
+							box.top + (oldyy/16 ) ) , 
+							null, null, true );
 
 		
 		b = new BitmapData( 2, 2, true, color);
 		bits.bitmapData.copyPixels(b,
 							new Rectangle (0, 0, 
 							2, 2),
-							new Point (box.left -1+ (oldxx/16 ), box.top +1 + (oldyy/16 ) ) , null, null, true );
+							new Point (box.left -1+ (oldxx/16 ), 
+							box.top +1 + (oldyy/16 ) ) , 
+							null, null, true );
 
 		
 		}
