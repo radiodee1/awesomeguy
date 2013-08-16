@@ -7,8 +7,7 @@
 	import flash.display.BitmapData;
 	import flash.display.*;
 	import flash.xml.XMLDocument;
-	import flash.text.TextField;
-	import flash.text.TextFormat;
+	import flash.text.*;
 	
 	public class AGMode {
 
@@ -556,6 +555,7 @@
 			var tempString:String = "";
 			var tempCharArray:Array = new Array();
 
+			/*
 			for (i = 0; i < num; i ++ ) {
 				value = tree.planet[myGame.gamePlanet].special.block[i].toString();
 				tempArray = value.split(",");
@@ -571,6 +571,7 @@
 					//addPyramid(int(tempArray[1]),int(tempArray[2]), int(tempArray[3]));
 				}
 			}
+			*/
 			messageTimer = new AGTimer(2);
 			blinkTimer = new AGTimer(0);
 		}
@@ -578,35 +579,51 @@
 		public function showText():void {
 			var j:int;
 			var k:int = 1;
-			var message:String = "---";
+			var tmessage:TextField = new TextField();
+
+			var mode:int = this.myGame.myModeStack[ this.myGame.myModeStack.length - 1];
+
+			if (mode == AGGame.MODE_FLYER) {
+				k = 1;
+			}
+			else if (mode == AGGame.MODE_GUY) {
+				k = 3;
+			}
+			
+			//var message:String = "---";
 			for(j = 0; j < myText.length; j ++ ) {
 				if (k == myText[j][0]) {
-					message = myText[j][1];
+					tmessage.text = myText[j][1];
 				}
 			}
 			
-			var tmessage:TextField = new TextField();
-			tmessage.text = message;
+			
 			var tformat:TextFormat = new TextFormat();
-			tformat.color = 0x00ffffff;
+			
+			tmessage.autoSize = TextFieldAutoSize.LEFT;
+			tmessage.border = false;
+			tmessage.borderColor = 0x00000000;
+			
+			tformat.color = 0xffffff00;
 			tformat.font = "Courier";
+			//tformat.size = 20;
+			tformat.bold = true;
 			tmessage.x = 30;
 			tmessage.y = 48;
 			tmessage.setTextFormat(tformat);
 			
+			
 			if (messageTimer.timerDone()) {
 				blinkTimer = new AGTimer(2);
-				
-				
 				messageTimer = new AGTimer(3);
 			}
 			
 			if (!blinkTimer.done && blinkTimer.started) {
 				myStage.addChild(tmessage);
-
+				//trace(tmessage.text);
 			}
 			
-			//myStage.addChild(tmessage);
+			
 		}
 		
 	}
