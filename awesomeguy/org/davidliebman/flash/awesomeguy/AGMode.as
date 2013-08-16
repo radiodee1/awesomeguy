@@ -591,6 +591,7 @@
 			}
 			
 			//var message:String = "---";
+			tmessage.text = "";
 			for(j = 0; j < myText.length; j ++ ) {
 				if (k == myText[j][0]) {
 					tmessage.text = myText[j][1];
