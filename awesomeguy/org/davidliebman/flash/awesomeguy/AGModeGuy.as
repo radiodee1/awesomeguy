@@ -98,7 +98,8 @@
 			doTimers();
 
 			checkRegularCollision();
-
+			
+			showText();
 			
 			screenframe.x = 0;
 			screenframe.y = SCREEN_HEIGHT;
@@ -136,7 +137,7 @@
 				//game_reset_start = false;
 			}
 			
-			
+			prepText();
 			//flyerrings = new AGSprite(this, AGMode.S_FLYER_RINGS);
 			//flyerrings.active = true;
 			
@@ -582,6 +583,35 @@
 			
 		}
 		
+		public function oldCutTile(tileset:Bitmap, num:int, tilebracket:int, width:int, height:int):Bitmap {
+			var i:int ,j:int, k:int,l:int, m:int,n:int, p:int, TILE_HEIGHT:int, TILE_WIDTH:int ;
+
+			TILE_HEIGHT = height;
+			TILE_WIDTH = width;
+			m = int ( int (TILEMAP_HEIGHT / TILE_HEIGHT) * tilebracket) ; // 128 * 2 /64 = 4
+			n = int ( TILEMAP_WIDTH / TILE_WIDTH) ; // 224 * 2 /64 = 7
+    
+			k = int (((num -1)/ n)   ); // y pos //14 / 7 = 2
+			l = int (num - (k * n) -1  ) ; // x pos // 14 - 14 - 1
+			//trace (num,k,l, TILE_HEIGHT, TILEMAP_HEIGHT, TILEMAP_WIDTH);
+			
+			
+			k = k + m; // must come after!!
+			
+			var b:BitmapData = new BitmapData(  TILE_WIDTH, TILE_HEIGHT, true, 0x0);
+			
+			var bitmap:Bitmap = new Bitmap(b);
+			bitmap.bitmapData.copyPixels(tileset.bitmapData,
+							new Rectangle ( l * TILE_WIDTH, k * TILE_HEIGHT, 
+							TILE_HEIGHT, TILE_HEIGHT),
+							new Point (0,0) , null, null, true );
+			
+			
+			return bitmap;
+		}
+		
+		
+		
 		public override function cutTile(  tileset:Bitmap, num:int , tilebracket:int ):Bitmap {
 			
 			var i:int ,j:int, k:int,l:int, m:int,n:int, p:int ;
@@ -662,36 +692,44 @@
 			scorePos = 2 ;
 			livesPos = 16  ;
 			//uint16_t square[TILE_HEIGHT][TILE_WIDTH];
-			
+			//trace("draw score");
 			
 			if (ypos - scrollBGY > 16 * 2) {
 					//print SCORE:
 					for (i = 0; i < 6; i ++) {
-						square = cutTile(myRes[AGResources.NAME_TILES1_PNG],  topScore[i] + 1, AGMode.TILE_TOP);
+						square = oldCutTile(myRes[AGResources.NAME_TILES1_PNG],  
+											topScore[i] + 1, AGMode.TILE_TOP,
+											TILE_WIDTH, TILE_HEIGHT);
 						
 						
 						square.x = (scorePos + i) * TILE_WIDTH  ;
 						square.y = (1) * TILE_HEIGHT ;
 						myStage.addChild(square);
 	
-						square = cutTile(myRes[AGResources.NAME_TILES1_PNG], topScore[i] +28 + 1, AGMode.TILE_TOP);
+						square = oldCutTile(myRes[AGResources.NAME_TILES1_PNG], 
+											topScore[i] +28 + 1, AGMode.TILE_TOP,
+											TILE_WIDTH, TILE_HEIGHT);
 	
 						
 						square.x = (scorePos + i) * TILE_WIDTH  ;
 						square.y = (2) * TILE_HEIGHT ;
 						myStage.addChild(square);
-	
+						trace("on screen", square.x, square.y);
 					}
 					//print LEVEL:
 					for (i = 0; i < 6; i ++) {
 						
-						square = cutTile(myRes[AGResources.NAME_TILES1_PNG], topLives[i] + 1, AGMode.TILE_TOP);
+						square = oldCutTile(myRes[AGResources.NAME_TILES1_PNG], 
+											topLives[i] + 1, AGMode.TILE_TOP,
+											TILE_WIDTH, TILE_HEIGHT);
 	
 						square.x = (livesPos + i) * TILE_WIDTH  ;
 						square.y = (1) * TILE_HEIGHT ;
 						myStage.addChild(square);
 						
-						square = cutTile(myRes[AGResources.NAME_TILES1_PNG],  topLives[i] + 28 + 1,AGMode.TILE_TOP );
+						square = oldCutTile(myRes[AGResources.NAME_TILES1_PNG],  
+											topLives[i] + 28 + 1, AGMode.TILE_TOP,
+											TILE_WIDTH, TILE_HEIGHT);
 	
 						
 						square.x = (livesPos + i) * TILE_WIDTH  ;
@@ -730,13 +768,17 @@
 						c = p - i;
 					}
 					
-						square = cutTile(myRes[AGResources.NAME_TILES1_PNG], topNumbers[placesValue] + 1, AGMode.TILE_TOP);
+						square = oldCutTile(myRes[AGResources.NAME_TILES1_PNG], 
+											topNumbers[placesValue] + 1, AGMode.TILE_TOP,
+											TILE_WIDTH, TILE_HEIGHT);
 	
 						square.x = (pos + i - p + c) * TILE_WIDTH;
 						square.y = (1) * TILE_HEIGHT;
 						myStage.addChild(square);
 	
-						square = cutTile(myRes[AGResources.NAME_TILES1_PNG], topNumbers[placesValue] +28 + 1, AGMode.TILE_TOP);
+						square = oldCutTile(myRes[AGResources.NAME_TILES1_PNG], 
+											topNumbers[placesValue] +28 + 1, AGMode.TILE_TOP,
+											TILE_WIDTH, TILE_HEIGHT);
 	
 						square.x = (pos + i - p + c) * TILE_WIDTH;
 						square.y = (2) * TILE_HEIGHT;
