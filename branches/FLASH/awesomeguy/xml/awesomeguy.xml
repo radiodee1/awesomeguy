@@ -854,8 +854,9 @@
 </special>
 <text>
 <message number="1">find a maze!!</message>
-<message number="2">find a key!!</message>
-<message number="3">go back to ship!!</message>
+<message number="2">go to astrogate!!</message>
+<message number="3">find an astrogate key!!</message>
+<message number="4">go back to ship!!</message>
 </text>
 <underground>
 <maze number="1">

@@ -165,15 +165,12 @@
 			prepSpecialXml();
 			//prepRingSprites();
 			
-			if (this.game_reset_start ) {
+			if (this.game_reset_start  || this.game_start) {
 				radar_start = xpos - scrollBGX;
 				radar_start_scroll =  scrollBGX;
 			}
 			
-			//agflyer = new AGSprite(this,AGMode.S_FLYER);
-			//agflyer.active = true;
-			//agflyer.bottomBB = 32;
-
+			
 			this.game_start = false;
 			this.game_reset_start = false;
 		}
@@ -679,16 +676,18 @@
 
 		ii =  radar_start_scroll;
 		jj = adjust_x (radar_start);
-		oldyy = oldy;
+		//oldyy = oldy;
 
-		
+		var FLYER_HORIZ:int = 192;
+		var FLYER_VERT:int = 32;
 			
 		
-			oldxx = (oldx - scrollBGX + (myHoriz * TILE_WIDTH/2) -256 + ii) % (myHoriz * TILE_WIDTH );// this might be OK...
+			oldxx = (oldx - scrollBGX + (FLYER_HORIZ * TILE_WIDTH/2) -256 );//+ ii);// % (myHoriz * TILE_WIDTH );// this might be OK...
 			oldxx = adjust_x(oldxx) * 2;
 		
+			oldyy = (oldy - scrollBGY + (FLYER_VERT * TILE_HEIGHT/2) - (24* 16/ 2));
 	
-		oldyy = oldyy * 2;
+			oldyy = oldyy * 2;
 	
 		b = new BitmapData( 2, 2, true, color);
 		bits.bitmapData.copyPixels(b,
@@ -896,8 +895,8 @@
 						
 						drawRadarPing(radar, radarscreen, xxx * TILE_WIDTH, yyy * TILE_HEIGHT, PING_ROCK, 0xffffffff);
 					}
-					else if (myVisible[yyy][xxx]  != AGModeGuy.B_SPACE) {
-						drawRadarPing(radar, radarscreen, xxx * TILE_WIDTH, yyy * TILE_HEIGHT, PING_ROCK, 0xff903590);//0xff889be7);
+					else if (myInvisible[yyy][xxx]  == AGModeGuy.B_LADDER) {
+						drawRadarPing(radar, radarscreen, xxx * TILE_WIDTH, yyy * TILE_HEIGHT, PING_ROCK, 0xffffff00);//0xff889be7);
 						
 					}
 					
