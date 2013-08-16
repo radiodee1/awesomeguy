@@ -552,7 +552,15 @@
 				break;
 				
 				case AGMode.D_FLYER_RINGS:
+				
+					if (myMode.myChallenge[myMode.myGame.gameChallenge] == null) {
+						trace("array disaster");
+						return;
+					}
+				
+				
 					max_rings = myMode.myChallenge[myMode.myGame.gameChallenge].total_held_rings;
+					
 					if(max_rings == 0) return;
 					//sprite.bitmap = new Bitmap();
 					
@@ -605,8 +613,7 @@
 							myStage.addChild(bits);
 							//trace("after");
 						}
-						//myStage.addChild(bits);
-						//trace("bits");
+						//
 						//drawTile_8(square, flyer.x + add + ( x * 9), flyer.y + flyer.bottomBB - 3 ,
 						//		scrollx , scrolly, PAINT_TRANSPARENT, 0);
 					}

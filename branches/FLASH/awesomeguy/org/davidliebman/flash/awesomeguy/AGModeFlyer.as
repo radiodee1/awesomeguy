@@ -1013,8 +1013,8 @@
 								sprite.active = false;
 								sprite.visible = false;
 								
-								
-								//myChallenge[myGame.gameChallenge].total_held_rings ++ ;
+								//this line is important!!
+								myChallenge[myGame.gameChallenge].total_held_rings ++ ;
 							break;
 							
 							case AGMode.S_GATOR:
