@@ -182,6 +182,9 @@
 	public var alert_color:uint = 0x00000000;
 	public var planets:int = 0;
 	public var challenges:int = 0;
+	
+	public var messageTimer:AGTimer;
+	public var blinkTimer:AGTimer;
 	public var maze_entrances:int= 0;
 	
 	public var radar:Rectangle = new Rectangle(0,0,SCREEN_WIDTH - 128, 64);
@@ -568,8 +571,10 @@
 					//addPyramid(int(tempArray[1]),int(tempArray[2]), int(tempArray[3]));
 				}
 			}
-			
+			messageTimer = new AGTimer(2);
+			blinkTimer = new AGTimer(0);
 		}
+		
 		public function showText():void {
 			var j:int;
 			var k:int = 1;
@@ -588,7 +593,20 @@
 			tmessage.x = 30;
 			tmessage.y = 48;
 			tmessage.setTextFormat(tformat);
-			myStage.addChild(tmessage);
+			
+			if (messageTimer.timerDone()) {
+				blinkTimer = new AGTimer(2);
+				
+				
+				messageTimer = new AGTimer(3);
+			}
+			
+			if (!blinkTimer.done && blinkTimer.started) {
+				myStage.addChild(tmessage);
+
+			}
+			
+			//myStage.addChild(tmessage);
 		}
 		
 	}
