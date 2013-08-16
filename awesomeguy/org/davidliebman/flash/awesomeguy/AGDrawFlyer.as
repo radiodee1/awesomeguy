@@ -22,13 +22,42 @@
 				trace("mode disaster");
 				return;
 			}
+			if( myStage == null) {
+				trace("stage disaster");
+				return;
+					  
+			}
+			if (myRes == null ) {
+				trace("resource disaster");
+				return;
+			}
+			if (myBackground == null) {
+				//trace("background");
+				
+			}
 			
 			drawRes(sprite, sprite.x, sprite.y, sprite.facingRight, kind, sprite.animate);
 		}
 		
 		public override function drawRes(sprite:AGSprite, xx:int, yy:int, facingRight:Boolean, kind:int, animate:int):void {
 			// all drawing goes here!!
-			if (sprite == null) return;
+			if (sprite == null) { 
+				trace("sprite null disaster");
+				return;
+			}
+			if (myMode == null ) {
+				trace("mode disaster");
+				return;
+			}
+			if( myStage == null) {
+				trace("stage disaster");
+				return;
+					  
+			}
+			if (myRes == null ) {
+				trace("resource disaster");
+				return;
+			}
 		
 			// init some vars here
 			var add:int, add_radar:int, z:int;

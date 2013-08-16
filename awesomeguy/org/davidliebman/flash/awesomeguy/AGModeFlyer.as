@@ -87,6 +87,7 @@
 
 			checkRegularCollision();
 
+			showText();
 			
 			screenframe.x = 0;
 			screenframe.y = SCREEN_HEIGHT;
@@ -109,7 +110,7 @@
 				myRes[AGResources.NAME_ENTER_1_MP3].play();
 				//game_reset_start = false;
 			}
-			
+			prepText();
 			
 			flyerrings = new AGSprite(this, AGMode.S_FLYER_RINGS);
 			flyerrings.active = true;
@@ -255,6 +256,7 @@
 				
 				if (tempArray[0] == AG.XML_MAZE_ENTRANCE) { // this is a pyramid
 					addPyramid(int(tempArray[1]),int(tempArray[2]), int(tempArray[3]));
+					this.maze_entrances ++;
 				}
 			}
 		}
