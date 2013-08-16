@@ -27,6 +27,7 @@
 				else {
 					this.active = false;
 					this.visible = false;
+					this.myMode.maze_entrances --;
 				}
 			}
 			

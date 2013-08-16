@@ -2,8 +2,10 @@
 	import flash.display.*;
 	import flash.events.KeyboardEvent;
 	import flash.events.*;
+	//import flash.text.TextField;
 	
 	public class AGKeys extends Sprite {
+	
 	
 	var KEY_VAL_LEFT:KeyValue = new KeyValue();
 	var KEY_VAL_RIGHT:KeyValue = new KeyValue();
@@ -64,6 +66,7 @@
 			myScreen = mystage;
 			this.addEventListener(Event.ADDED_TO_STAGE, setCallbacks);
 			//setCallbacks();
+			
 			//trace("constructor...");
 		}
 		

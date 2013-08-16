@@ -6,6 +6,9 @@
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.*;
+	import flash.xml.XMLDocument;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
 	
 	public class AGMode {
 
@@ -32,6 +35,7 @@
 	var myTorpedo:Array = new Array();
 	var myChallenge:Array = new Array();
 	var myTemp:Array = new Array();
+	var myText:Array = new Array();
 		
 	static var TOTAL_SPRITE:int = 50;
 	static var TOTAL_TORPEDOS:int = 5;
@@ -178,6 +182,7 @@
 	public var alert_color:uint = 0x00000000;
 	public var planets:int = 0;
 	public var challenges:int = 0;
+	public var maze_entrances:int= 0;
 	
 	public var radar:Rectangle = new Rectangle(0,0,SCREEN_WIDTH - 128, 64);
 	public var radarscreen:Bitmap = new Bitmap();
@@ -527,7 +532,64 @@
 		public function goingRightIsShortest(  spritex:int, flyerx:int ):Boolean { 
 			return true;
 		}
-		
+		public function prepText():void {
+			var myXML:XMLDocument = myRes[AGResources.NAME_AWESOMEGUY_XML];
+			var tree:XML = new XML(myXML);
+			var num:int = int (tree.planet[myGame.gamePlanet].text.message.length()) ;//length here.
+			var j:int = 0;
+			for(j = 0; j < num; j ++ ) {
+				var number:int = int (tree.planet[myGame.gamePlanet].text.message[j].@number) ;//0;
+				var message:String = tree.planet[myGame.gamePlanet].text.message[j];//"";
+				var smallArray = new Array(number, message);
+				this.myText.push(smallArray);
+				//trace(number,message);
+			}
+			
+			
+			num = int (tree.planet[myGame.gamePlanet].special.block.length() );
+			var i:int;
+			var value:String = "";
+			var tempArray:Array = new Array();
+			var tempString:String = "";
+			var tempCharArray:Array = new Array();
+
+			for (i = 0; i < num; i ++ ) {
+				value = tree.planet[myGame.gamePlanet].special.block[i].toString();
+				tempArray = value.split(",");
+				
+				for (j = 0; j < tempArray.length; j ++ ) {
+					tempString = tempArray[j];
+					tempCharArray = tempString.split(" ");
+					tempString = tempCharArray.join("");
+					tempArray[j] = tempString;
+				}
+				
+				if (tempArray[0] == AG.XML_MAZE_ENTRANCE) { // this is a pyramid
+					//addPyramid(int(tempArray[1]),int(tempArray[2]), int(tempArray[3]));
+				}
+			}
+			
+		}
+		public function showText():void {
+			var j:int;
+			var k:int = 1;
+			var message:String = "---";
+			for(j = 0; j < myText.length; j ++ ) {
+				if (k == myText[j][0]) {
+					message = myText[j][1];
+				}
+			}
+			
+			var tmessage:TextField = new TextField();
+			tmessage.text = message;
+			var tformat:TextFormat = new TextFormat();
+			tformat.color = 0x00ffffff;
+			tformat.font = "Courier";
+			tmessage.x = 30;
+			tmessage.y = 48;
+			tmessage.setTextFormat(tformat);
+			myStage.addChild(tmessage);
+		}
 		
 	}
 	

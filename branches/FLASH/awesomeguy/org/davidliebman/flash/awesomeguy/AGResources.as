@@ -9,8 +9,12 @@
 	import flash.xml.XMLDocument;
 	import flash.geom.*;
 	import fl.motion.Color;
+	import flash.text.*;
 	
 	public class AGResources {
+
+	var textField:TextField = new TextField();
+	var format:TextFormat = new TextFormat();
 
 	var myStage:Stage;
 	var neededRes:Array = new Array();
@@ -168,10 +172,21 @@
 		
 		public function AGResources(mystage:Stage, buttons:Array) {
 			//trace ("import worked. " );
+			
 			myStage = mystage;
 			myButtons = buttons;
 			i = 0;
 			myRes = new Array();
+			
+			this.format.color = 0x00ffffff;
+			this.format.font = "Courier";
+			
+			this.textField.x = 10;
+			this.textField.y = 10;
+			this.textField.text = "loading...";
+			this.textField.setTextFormat(this.format);
+			myStage.addChild(this.textField);
+			
 			// list resources needed...
 			neededRes.push(res00);
 			neededRes.push(res01);
