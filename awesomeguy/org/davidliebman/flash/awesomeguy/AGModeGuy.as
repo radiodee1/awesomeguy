@@ -444,7 +444,7 @@
 							if (myInvisible[i][j] != 0 && 
 								myInvisible[i][j] != AGModeGuy.B_BLOCK && 
 								myInvisible[i][j] != AGModeGuy.B_LADDER &&
-								myInvisible[i][j] != AGModeGuy.B_START
+								myInvisible[i][j] != AGModeGuy.B_START &&
 								myInvisible[i][j] != AGModeGuy.B_MONSTER) {
 									
 								square = new AGSprite(this,AGMode.S_BLOCK);
