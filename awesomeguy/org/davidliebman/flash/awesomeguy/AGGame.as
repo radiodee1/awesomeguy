@@ -33,7 +33,7 @@
 	public var gameChallenge:int = 0;
 	public var gameScore:int = 10;
 	public var gameLives:int = 3;
-	
+	public var gameHealth:int = 50;
 	
 	
 	var modeObj:AGMode ;
