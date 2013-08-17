@@ -266,7 +266,7 @@
 				for (j = 0 ; j < myHoriz; j ++ ) {
 					k = int (tempArray[ (i * myHoriz) + j ] );
 					smallArray.push(int (tempArray[ (i * myHoriz) + j ] ) );
-					//if (k + mapcheat == AGModeFlyer.B_MONSTER) addMonster(j,i ,0);
+					if (k + mapcheat == AGModeGuy.B_MONSTER) addXMonster(j,i ,0);
 					//if (k + mapcheat == AGModeFlyer.B_PLATFORM) addPlatform(j , i );
 					if (k + mapcheat == AGModeGuy.B_START) startingPos(j,i); // only do on 'reset start'
 				}
@@ -297,6 +297,29 @@
 		}
 		public override function initAGTimer():void {
 			//super.initAGTimer();
+		}
+		
+		public function addXMonster(monster_x:int, monster_y:int,  monster_animate:int):void {
+			var mon:AGSpriteXMonster = new AGSpriteXMonster(this,AGMode.S_XMONSTER);
+			mon.x = monster_x * TILE_WIDTH;
+			mon.y = monster_y * TILE_HEIGHT;
+			mon.animate = monster_animate;
+			mon.facingRight = true;
+			mon.active = true;
+			mon.visible = true;
+			  
+			mon.topBB = 3 *2; 
+			mon.bottomBB = 8 *2;
+			mon.leftBB = 0;
+			mon.rightBB = 16 * 2;
+		
+			mon.sprite_type = S_GATOR;
+			//mySprite[sprite_num].type = S_GATOR;
+			sprite_num ++;
+			monster_num = sprite_num;
+			
+			platform_num = 0;
+			mySprite.push(mon);
 		}
 		
 		public function addSprites():void {
