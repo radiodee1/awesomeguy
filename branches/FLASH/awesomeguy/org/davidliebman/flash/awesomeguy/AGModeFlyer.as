@@ -87,7 +87,7 @@
 
 			checkRegularCollision();
 
-			showText();
+			//showText();
 			
 			screenframe.x = 0;
 			screenframe.y = SCREEN_HEIGHT;
@@ -824,6 +824,8 @@
 			explosionsprite.x = xpos;
 			explosionsprite.y = ypos;
 			agflyer.active = false;
+			
+			this.myGame.gameHealth -= 10;
 		}
 		
 		///////////////////////////////////////////
@@ -846,9 +848,6 @@
 					
 			
 			var square:AGSprite;
-		
-			
-			
 			
 			/* draw background */
 			baseX = scrollBGX / TILE_WIDTH;
@@ -1143,6 +1142,8 @@
 					if (myBlocks[ii].sprite_type == AGMode.S_BLOCK) this.flyerGrounded = true;
 					if (myBlocks[ii].sprite_type == AGMode.S_GOAL) {
 						myGame.gameScore = myGame.gameScore + ( myChallenge[myGame.gameChallenge].total_held_rings * 20);
+						myGame.gameHealth += ( myChallenge[myGame.gameChallenge].total_held_rings * 10);
+
 						myChallenge[myGame.gameChallenge].total_held_rings = 0;
 						is_blinking = true;
 						//timerStart(7, 3 * 30);//blinking timer 7

@@ -102,7 +102,7 @@
 
 			checkRegularCollision();
 			
-			showText();
+			//showText();
 			
 			screenframe.x = 0;
 			screenframe.y = SCREEN_HEIGHT;
@@ -589,7 +589,7 @@
 		public override function fireButton():void {
 			
 		}
-		
+		/*
 		public function oldCutTile(tileset:Bitmap, num:int, tilebracket:int, width:int, height:int):Bitmap {
 			var i:int ,j:int, k:int,l:int, m:int,n:int, p:int, TILE_HEIGHT:int, TILE_WIDTH:int ;
 
@@ -617,7 +617,7 @@
 			return bitmap;
 		}
 		
-		
+		*/
 		
 		public override function cutTile(  tileset:Bitmap, num:int , tilebracket:int ):Bitmap {
 			
@@ -815,6 +815,8 @@
 			//trace("draw score");
 			
 			if (ypos - scrollBGY > 16 * 2) {
+				this.showText();
+				this.showHealth();
 					//print SCORE:
 					for (i = 0; i < 6; i ++) {
 						square = oldCutTile(myRes[AGResources.NAME_TILES1_PNG],  
