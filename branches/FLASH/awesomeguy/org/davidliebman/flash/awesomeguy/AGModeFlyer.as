@@ -258,6 +258,10 @@
 					addPyramid(int(tempArray[1]),int(tempArray[2]), int(tempArray[3]));
 					this.maze_entrances ++;
 				}
+				if (tempArray[0] == AG.XML_MAZE_ENTRANCE_BUNKER) { // this is a bunker
+					addBunker(int(tempArray[1]),int(tempArray[2]), int(tempArray[3]));
+					this.maze_entrances ++;
+				}
 			}
 		}
 		
@@ -398,6 +402,17 @@
 		}
 		
 		public function addPyramid(xx:int, yy:int, maze:int):void {
+			var pyr:AGSpritePyramid = new AGSpritePyramid(this, AGMode.S_PYRAMID);
+			pyr.x = xx * TILE_WIDTH;
+			pyr.y = yy * TILE_HEIGHT;
+			pyr.sprite_type = S_PYRAMID;
+			pyr.active = true;
+			pyr.visible = true;
+			pyr.sprite_link = maze;
+			mySprite.push(pyr);
+		}
+		
+		public function addBunker(xx:int, yy:int, maze:int):void {
 			var pyr:AGSpritePyramid = new AGSpritePyramid(this, AGMode.S_PYRAMID);
 			pyr.x = xx * TILE_WIDTH;
 			pyr.y = yy * TILE_HEIGHT;
