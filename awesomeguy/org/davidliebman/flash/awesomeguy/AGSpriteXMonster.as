@@ -18,6 +18,7 @@
 			//int index_num = 0;
 			var vert:int = 64;
 			var horiz:int = 64;
+			var width:int = 4;
 			
 			//for each monster...
 			if( true) {
@@ -42,12 +43,12 @@
 								// marker test
 								if (xx + 3 < myMode.myHoriz && yy + 2 < myMode.myVert || true ) {
 									
-									if(myMode.myInvisible[yy][xx+2] + myMode.mapcheat == AGModeGuy.B_BLOCK  ) markerTest = true;//TRUE;
-									if(myMode.myInvisible[yy][xx+2] + myMode.mapcheat == AGModeGuy.B_MARKER ) markerTest = true;// TRUE;
-									if(myMode.myInvisible[yy+1][xx+2]  == 0) markerTest = true;//TRUE;
+									if(myMode.myInvisible[yy][xx+width] + myMode.mapcheat == AGModeGuy.B_BLOCK  ) markerTest = true;//TRUE;
+									if(myMode.myInvisible[yy][xx+width] + myMode.mapcheat == AGModeGuy.B_MARKER ) markerTest = true;// TRUE;
+									if(myMode.myInvisible[yy+1][xx+width]  == 0) markerTest = true;//TRUE;
 								}
 								// turn monster
-								if (this.x > myMode.myHoriz * horiz  - 32 || markerTest == true ) {
+								if (this.x > myMode.myHoriz * horiz  - (horiz * 3) || markerTest == true ) {
 			
 									this.facingRight=false;//FALSE;
 								}
