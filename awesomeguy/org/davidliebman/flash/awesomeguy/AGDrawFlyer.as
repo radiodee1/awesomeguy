@@ -216,6 +216,11 @@
 				case AGMode.D_EXPLOSION:
 				
 				
+				if(sprite.timer == null) {
+					trace("timer disaster");
+					return;
+				}
+				
 				//i = spriteNum;
 				var x:int, y:int ;
 				var wait:int = 20;

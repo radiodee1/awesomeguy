@@ -114,16 +114,16 @@
 			this.rail_right = new Bitmap(vertical);
 			
 			this.rail_bottom.x = sprite.bitmap.x + (AGModeGuy.X_MOVE/ 2) ;
-			this.rail_bottom.y = sprite.bitmap.y + sprite.bitmap.height +  AGModeGuy.Y_MOVE;
+			this.rail_bottom.y = sprite.bitmap.y + sprite.bitmap.height +  (AGModeGuy.Y_MOVE/2);
 			
-			this.rail_left.x = sprite.bitmap.x - AGModeGuy.X_MOVE;
+			this.rail_left.x = sprite.bitmap.x - (AGModeGuy.X_MOVE/2);
 			this.rail_left.y = sprite.bitmap.y + (AGModeGuy.Y_MOVE/ 2);
 			
-			this.rail_right.x = sprite.bitmap.x + sprite.bitmap.width + AGModeGuy.X_MOVE;
+			this.rail_right.x = sprite.bitmap.x + sprite.bitmap.width + (AGModeGuy.X_MOVE/2);
 			this.rail_right.y = sprite.bitmap.y + (AGModeGuy.Y_MOVE/2) ;
 			
 			this.rail_top.x = sprite.bitmap.x + (AGModeGuy.X_MOVE/2);
-			this.rail_top.y = sprite.bitmap.y - AGModeGuy.Y_MOVE;
+			this.rail_top.y = sprite.bitmap.y - ( AGModeGuy.Y_MOVE/2);
 			
 			myStage.addChild(this.rail_bottom);
 			myStage.addChild(this.rail_left);

@@ -43,6 +43,9 @@
 		public static var X_MOVE = 10 * 2;
 		public static var Y_MOVE = 10 * 2;
 
+		public var jump_count:int = 0;
+		public var shoot_count:int = 0;
+
 		public var hit_top:Boolean =false; 
 		public var hit_bottom:Boolean= false; 
 		public var hit_left:Boolean= false;
@@ -293,7 +296,7 @@
 			
 		}
 		public override function initAGTimer():void {
-			super.initAGTimer();
+			//super.initAGTimer();
 		}
 		
 		public function addSprites():void {
@@ -569,11 +572,18 @@
 					if(!this.hit_bottom) myGuy.quality_0 = AGModeGuy.GUY_CLIMB;
 				}
 			}
-			//if (K_JUMP) {
+			if (K_JUMP && this.jump_count <= 0 && this.hit_bottom) {
 				//trace(K_JUMP);
-				
-			//}
-			if (xx  == 0 && yy == 0) myGuy.quality_0 = AGModeGuy.GUY_STILL;
+				myGuy.quality_0 = AGModeGuy.GUY_FALL;
+				this.jump_count = 10;
+			}
+			if (K_SHOOT && this.shoot_count <= 0) {
+				trace("shoot");
+				myGuy.quality_0 = AGModeGuy.GUY_PUNCH;
+				this.shoot_count = 3;
+			}
+			
+			if (xx  == 0 && yy == 0 && this.shoot_count <= 0) myGuy.quality_0 = AGModeGuy.GUY_STILL;
 			
 		}
 		public override function fireButton():void {
@@ -645,10 +655,11 @@
 				switch(myGuy.quality_0) {
 					case AGModeGuy.GUY_STEP:
 					
-						if ( this.hit_bottom && this.hit_center && !this.hit_left && !this.hit_right) {
-							yy = yy - 2;
+						if ( this.hit_bottom && this.hit_center && (!this.hit_left || !this.hit_right)) {
+							yy =  - 6;
+							
 						}
-						if (!this.hit_bottom && !this.hit_center && !this.hit_ladder) {
+						else if (!this.hit_bottom && !this.hit_center && !this.hit_ladder) {
 							yy = AGModeGuy.Y_MOVE;
 						}
 						
@@ -658,12 +669,25 @@
 						if (!this.hit_bottom && !this.hit_center && !this.hit_ladder) {
 							yy = AGModeGuy.Y_MOVE;
 						}
+						if (this.jump_count > 0) {
+							this.jump_count = this.jump_count - 1;
+							yy = - AGModeGuy.Y_MOVE;
+						}
 					
 					break;
+					case AGModeGuy.GUY_PUNCH:
+						
+					break;
+					
 				}
 				
-				
-				
+				if (this.shoot_count >= 0) {
+					this.shoot_count --;
+				}
+				if (this.hit_top && !this.hit_bottom) {
+					this.jump_count = 0;
+					if (yy < 0 || yy == 0) yy = AGModeGuy.Y_MOVE;
+				}
 				
 		}
 		
