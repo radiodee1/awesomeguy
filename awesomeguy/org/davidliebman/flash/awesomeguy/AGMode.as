@@ -94,6 +94,7 @@
 	static var D_GOAL:int = 17;
 	static var D_PYRAMID:int = 18;
 	static var D_GUY:int = 19;
+	static var D_XMONSTER:int = 20;
 	
 	//radar ping types
 	static var PING_FLYER:int = 0;

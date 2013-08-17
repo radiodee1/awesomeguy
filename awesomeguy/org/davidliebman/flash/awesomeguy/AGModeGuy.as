@@ -313,7 +313,7 @@
 			mon.leftBB = 0;
 			mon.rightBB = 16 * 2;
 		
-			mon.sprite_type = S_GATOR;
+			mon.sprite_type = S_XMONSTER;
 			//mySprite[sprite_num].type = S_GATOR;
 			sprite_num ++;
 			monster_num = sprite_num;
@@ -365,7 +365,37 @@
 			}
 		}
 		public function drawAnimatedSprites():void {
-			
+			var i:int;
+			for (i = 0; i < mySprite.length; i ++ ) {
+				if (mySprite[i].active == true) {
+					
+					//if (mySprite[i].sprite_type == AGMode.S_RING) {
+					//	myDraw.drawBasicSprite(mySprite[i], D_RING);
+					//}
+					if (mySprite[i].sprite_type == AGMode.S_XMONSTER) {
+						myDraw.drawBasicSprite(mySprite[i], D_XMONSTER);
+					}
+					//if (explosionsprite.sprite_type == AGMode.S_EXPLOSION && 
+					//	explosionsprite.active == true) {
+					//	myDraw.drawBasicSprite(explosionsprite, AGMode.D_EXPLOSION);
+					//}
+					//if (mySprite[i].sprite_type == AGMode.S_EXPLOSION_SPRITE ) {
+						
+					//	myDraw.drawBasicSprite(mySprite[i], AGMode.D_EXPLOSION_SPRITE);
+					//}
+					//if (mySprite[i].sprite_type == AGMode.S_BUBBLE_MAZE) {
+					//	myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_3);
+					//}
+
+					//if (mySprite[i].sprite_type == AGMode.S_PYRAMID) {
+					//	myDraw.drawBasicSprite(mySprite[i], AGMode.D_PYRAMID);
+						
+					//}
+					
+					//myDraw.drawBasicSprite(flyerrings, AGMode.D_FLYER_RINGS);
+					
+				}
+			}
 		}
 		
 		public function drawLevelTiles():void {

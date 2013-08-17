@@ -12,6 +12,10 @@
 		var cheatx_step:int = 8;
 		var cheaty_step:int = 0;
 		
+		var sprite:AGSprite;
+		
+		var scrollx:int;// = myMode.scrollBGX;
+		var scrolly:int;// = myMode.scrollBGY;
 		
 		var guywidth:int;
 		var guyheight:int;
@@ -30,10 +34,12 @@
 			// all drawing goes here!!
 			
 			var add:int, add_radar:int, z:int;
-			var scrollx:int = myMode.scrollBGX;
-			var scrolly:int = myMode.scrollBGY;
+			scrollx = myMode.scrollBGX;
+			scrolly = myMode.scrollBGY;
 			var anim_speed:int = 5;
 			var guyx:int, guyy:int;
+			
+			this.sprite = sprite;
 			
 			switch(kind) {
 				case AGMode.D_GUY:
@@ -101,6 +107,10 @@
 					myMode.flyersprite = sprite.bitmap;
 					
 				break;
+				case AGMode.D_XMONSTER:
+					drawXMonster();
+				break;
+				
 			}
 			
 		}
@@ -132,6 +142,102 @@
 			
 		}
 		
+		public function drawXMonster():void {
+				var anim_speed:int = 5;
+				var add:int, add_radar:int, z:int;
+
+			
+				sprite.animate ++;
+				if (sprite.animate > (anim_speed * 4) ) sprite.animate=0;
+				if (sprite.animate > anim_speed * 2) z = 1;
+				else z = 0;
+				
+		
+				if(sprite.visible == true) {
+					if (scrollx < sprite.x + 32 ) {
+						//trace (sprite.animate);
+						if(sprite.facingRight == true) {
+							if(z == 0) {
+								
+								sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_MONSTER_R0_PNG].bitmapData.clone());
+								sprite.bitmap.x = sprite.x - scrollx;
+								sprite.bitmap.y = sprite.y - scrolly;
+								myStage.addChild(sprite.bitmap);
+		
+							}
+							else if (z == 1 ) {
+								
+								sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_MONSTER_R1_PNG].bitmapData.clone());//
+								sprite.bitmap.x = sprite.x - scrollx;
+								sprite.bitmap.y = sprite.y - scrolly;
+								myStage.addChild(sprite.bitmap);
+							}
+						}
+						else if (!sprite.facingRight == true) {
+							if(z == 0) {
+		
+								sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_MONSTER_L0_PNG].bitmapData.clone());//
+								sprite.bitmap.x = sprite.x - scrollx;
+								sprite.bitmap.y = sprite.y - scrolly;
+								myStage.addChild(sprite.bitmap);
+							}
+							else if (z == 1) {
+		
+								sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_MONSTER_L1_PNG].bitmapData.clone());//
+								sprite.bitmap.x = sprite.x - scrollx;
+								sprite.bitmap.y = sprite.y - scrolly;
+								myStage.addChild(sprite.bitmap);
+							}
+						}
+					}
+					else if (scrollx >= sprite.x  ) {
+						//trace(sprite.animate);
+						if(sprite.facingRight == true) {
+							if(z == 0) {
+		
+								sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_MONSTER_R0_PNG].bitmapData.clone());//
+								sprite.bitmap.x = (myMode.myHoriz * 16 ) + sprite.x - scrollx;
+								sprite.bitmap.y = sprite.y - scrolly;
+								myStage.addChild(sprite.bitmap);
+							}
+							else if (z == 1 ) {
+		
+								sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_MONSTER_R1_PNG].bitmapData.clone());//
+								sprite.bitmap.x = (myMode.myHoriz * 16 ) + sprite.x - scrollx;
+								sprite.bitmap.y = sprite.y - scrolly;
+								myStage.addChild(sprite.bitmap);
+							}
+						}
+						else if (!sprite.facingRight == true) {
+							if(z == 0) {
+		
+								sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_MONSTER_L0_PNG].bitmapData.clone());//
+								sprite.bitmap.x = (myMode.myHoriz * 16 ) + sprite.x - scrollx;
+								sprite.bitmap.y = sprite.y - scrolly;
+								myStage.addChild(sprite.bitmap);
+							}
+							else if (z == 1 ) {
+		
+								sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_MONSTER_L1_PNG].bitmapData.clone());//
+								sprite.bitmap.x = (myMode.myHoriz * 16 ) + sprite.x - scrollx;
+								sprite.bitmap.y = sprite.y - scrolly;
+								myStage.addChild(sprite.bitmap);
+							}
+						}
+					}
+				}
+				
+			trace("draw xmonster");
+			return;
+		}
 
 	}
 	
