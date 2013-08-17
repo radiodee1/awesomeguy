@@ -99,6 +99,11 @@
 	public static var NAME_CRAWLER_R1_PNG:int = 57;
 	public static var NAME_CRAWLER_R2_PNG:int = 58;
 
+	public static var NAME_GATOR_PUNCH_L1_PNG:int = 59;
+	public static var NAME_GATOR_PUNCH_L2_PNG:int = 60;
+	public static var NAME_GATOR_PUNCH_R1_PNG:int = 61;
+	public static var NAME_GATOR_PUNCH_R2_PNG:int = 62;
+
 
 	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
 	var res01:Array = new Array (R_BITMAP, "bitmap/test2.png");
@@ -169,6 +174,10 @@
 	var res57:Array = new Array(R_BITMAP_WBLACK, "bitmap/crawler_r1.png");
 	var res58:Array = new Array(R_BITMAP_WBLACK, "bitmap/crawler_r2.png");
 
+	var res59:Array = new Array(R_BITMAP_WBLACK, "bitmap/gater_punch_l1.png");
+	var res60:Array = new Array(R_BITMAP_WBLACK, "bitmap/gater_punch_l2.png");
+	var res61:Array = new Array(R_BITMAP_WBLACK, "bitmap/gater_punch_r1.png");
+	var res62:Array = new Array(R_BITMAP_WBLACK, "bitmap/gater_punch_r2.png");
 
 	var i:int = 0;
 		
@@ -263,6 +272,10 @@
 			neededRes.push(res56);
 			neededRes.push(res57);
 			neededRes.push(res58);
+			neededRes.push(res59);
+			neededRes.push(res60);
+			neededRes.push(res61);
+			neededRes.push(res62);
 
 
 			importRes();

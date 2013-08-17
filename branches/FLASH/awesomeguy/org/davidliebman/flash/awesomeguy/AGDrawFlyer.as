@@ -221,6 +221,8 @@
 					return;
 				}
 				
+				try {
+				
 				//i = spriteNum;
 				var x:int, y:int ;
 				var wait:int = 20;
@@ -311,6 +313,11 @@
 					sprite.timerStart( wait/1000 );/// 100);
 					//}
 				}
+				
+				} catch (err:Error) {
+					trace("flyer disaster averted");
+					return;
+				}// catch
 				
 				break;
 				///////////
@@ -452,6 +459,7 @@
 				break;
 				case AGMode.D_EXPLOSION_SPRITE:
 				
+				try {
 				//i = spriteNum;
 				//var x:int, y:int ;
 				wait = 20;
@@ -552,6 +560,12 @@
 					sprite.quality_3 ++;
 					sprite.timerStart( wait/1000 );/// 100);
 					//}
+					
+				}
+				
+				} catch (err:Error) {
+					trace("sprite explosion disaster");
+					return;
 				}
 				
 				break;
@@ -643,6 +657,8 @@
 				break;
 				
 				case AGMode.D_PYRAMID:
+				
+				try {
 					if (sprite.animate == 0) {
 						sprite.bitmap = new Bitmap( 
 									myRes[AGResources.NAME_PYRAMID_0_PNG].bitmapData.clone());//
@@ -679,6 +695,10 @@
 					//trace("after");
 					}
 					
+				} catch (err:Error) {
+					trace("pyramid disaster");
+					return;
+				}
 				break;
 			}
 		}

@@ -24,7 +24,7 @@
 			if( true) {
 				
 					//if (i == 5) return;
-					if (this.sprite_type == AGMode.S_XMONSTER) {
+					if ( true) {
 						markerTest = false;//FALSE; 
 						
 						if (this.active ==true  ) {

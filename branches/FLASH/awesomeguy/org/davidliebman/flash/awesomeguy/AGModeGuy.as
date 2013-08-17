@@ -317,7 +317,7 @@
 			
 			sprite_num ++;
 			monster_num = sprite_num;
-			trace(sprite_num);
+			
 			platform_num = 0;
 			mySprite.push(mon);
 		}
@@ -373,7 +373,11 @@
 					//	myDraw.drawBasicSprite(mySprite[i], D_RING);
 					//}
 					if (mySprite[i].sprite_type == AGMode.S_XMONSTER) {
-						trace("monsterx", i);
+						
+						myDraw.drawBasicSprite(mySprite[i], D_XMONSTER);
+					}
+					if (mySprite[i].sprite_type == AGMode.S_XMONSTER_STAND) {
+						
 						myDraw.drawBasicSprite(mySprite[i], D_XMONSTER);
 					}
 					//if (explosionsprite.sprite_type == AGMode.S_EXPLOSION && 
@@ -430,13 +434,24 @@
 					
 						
 						
-						if(  myVisible[i][j] != 0 ) {// && myVisible[i][j] != AGModeGuy.B_GOAL  ) { //is tile blank??
+						if(  myVisible[i][j] != 0 || myInvisible[i][j] != 0 ) {// && myVisible[i][j] != AGModeGuy.B_GOAL  ) { //is tile blank??
 							//trace(myVisible[i][j]);
 							square = new AGSprite(this,AGMode.S_BLOCK);
 							square.bitmap = cutTile(  myRes[AGResources.NAME_TILES1_PNG], 
 									myVisible[i][j] + levelcheat,
 									AGMode.TILE_BOT);
 							
+							if (myInvisible[i][j] != 0 && 
+								myInvisible[i][j] != AGModeGuy.B_BLOCK && 
+								myInvisible[i][j] != AGModeGuy.B_LADDER &&
+								myInvisible[i][j] != AGModeGuy.B_START
+								myInvisible[i][j] != AGModeGuy.B_MONSTER) {
+									
+								square = new AGSprite(this,AGMode.S_BLOCK);
+								square.bitmap = cutTile(  myRes[AGResources.NAME_TILES1_PNG], 
+									myInvisible[i][j] + levelcheat,
+									AGMode.TILE_BOT);
+							}
 							
 							square.bitmap.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
 							square.bitmap.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
@@ -450,6 +465,10 @@
 								this.myBlocks.push(square);
 							}
 							
+							if (myInvisible[i][j] + mapcheat == AGModeGuy.B_KEY){ 
+								square.sprite_type = AGMode.S_KEY;
+								this.myBlocks.push(square);
+							}
 						}
 						
 						
@@ -989,6 +1008,16 @@
 			var ii:int;
 			for (ii = 0; ii < mySprite.length ; ii ++ ) {
 				if (mySprite[ii].bitmap != null) {
+					if (mySprite[ii].sprite_type == AGMode.S_XMONSTER || 
+						mySprite[ii].sprite_type == AGMode.S_XMONSTER_STAND) {
+						
+						if (this.distanceIsShort(mySprite[ii].bitmap, this.flyersprite) ) {
+							mySprite[ii].sprite_type = AGMode.S_XMONSTER_STAND;
+						}
+						else {
+							mySprite[ii].sprite_type = AGMode.S_XMONSTER;
+						}
+					}
 					if (this.collisionSimple(mySprite[ii].bitmap, this.flyersprite) 
 						&& mySprite[ii].active == true ) {
 							var sprite:AGSprite = mySprite[ii];

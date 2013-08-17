@@ -73,6 +73,7 @@
 	static var S_LADDER:int = 23;
 	static var S_XMONSTER:int =  24;
 	static var S_XMONSTER_STAND:int = 25;
+	static var S_KEY:int = 26;
 	
 	//draw enumeration
 	static var D_NONE:int = 0;
@@ -563,6 +564,19 @@
 			var bpt:Point = new Point(b.x, b.y);
 			return a.bitmapData.hitTest(apt,0,b.bitmapData,bpt,0);
 			
+		}
+		
+		public function distanceIsShort(a:Bitmap, b:Bitmap):Boolean {
+			var r:Boolean = false;
+			var dist:int = 128;
+			if (a == null || b == null) return r;
+			var arect:Rectangle = a.getBounds(myStage);
+			var brect:Rectangle = b.getBounds(myStage);
+			var apt:Point = new Point(a.x, a.y);
+			var bpt:Point = new Point(b.x, b.y);
+			if (Math.abs(a.x - b.x) < dist) r = true;
+			if (Math.abs(a.y - b.y) < dist) r = true;
+			return r;
 		}
 		
 		public function goingRightIsShortest(  spritex:int, flyerx:int ):Boolean { 

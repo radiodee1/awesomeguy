@@ -153,8 +153,8 @@
 				else z = 0;
 				
 		
-				if(sprite.visible == true) {
-					if (scrollx < sprite.x + 32 || true ) {
+				if(sprite.visible == true && sprite.sprite_type == AGMode.S_XMONSTER) {
+					if ( true ) {
 						//trace (sprite.animate);
 						if(sprite.facingRight == true) {
 							if(z == 0) {
@@ -195,6 +195,51 @@
 						}
 					}
 					
+				}
+				
+				else if (sprite.sprite_type == AGMode.S_XMONSTER_STAND) {
+					ycheat = -56;
+					
+					if ( true ) {
+						//trace (sprite.animate);
+						if(sprite.facingRight == true) {
+							if(z == 0) {
+								
+								sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_GATOR_PUNCH_R1_PNG].bitmapData.clone());
+								sprite.bitmap.x = sprite.x - scrollx;
+								sprite.bitmap.y = sprite.y - scrolly + ycheat;
+								myStage.addChild(sprite.bitmap);
+		
+							}
+							else if (z == 1 ) {
+								
+								sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_GATOR_PUNCH_R2_PNG].bitmapData.clone());//
+								sprite.bitmap.x = sprite.x - scrollx;
+								sprite.bitmap.y = sprite.y - scrolly + ycheat;
+								myStage.addChild(sprite.bitmap);
+							}
+						}
+						else if (!sprite.facingRight == true) {
+							if(z == 0) {
+		
+								sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_GATOR_PUNCH_L1_PNG].bitmapData.clone());//
+								sprite.bitmap.x = sprite.x - scrollx;
+								sprite.bitmap.y = sprite.y - scrolly + ycheat;
+								myStage.addChild(sprite.bitmap);
+							}
+							else if (z == 1) {
+		
+								sprite.bitmap = new Bitmap( 
+									myRes[AGResources.NAME_GATOR_PUNCH_L2_PNG].bitmapData.clone());//
+								sprite.bitmap.x = sprite.x - scrollx;
+								sprite.bitmap.y = sprite.y - scrolly + ycheat;
+								myStage.addChild(sprite.bitmap);
+							}
+						}
+					}
 				}
 				
 			//trace("draw xmonster");
