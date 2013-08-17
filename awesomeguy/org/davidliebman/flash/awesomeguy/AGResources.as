@@ -94,6 +94,11 @@
 	public static var NAME_G_STEPR1_PNG:int =53;
 	public static var NAME_G_STEPR2_PNG:int =54;
 
+	public static var NAME_CRAWLER_L1_PNG:int = 55;
+	public static var NAME_CRAWLER_L2_PNG:int = 56;
+	public static var NAME_CRAWLER_R1_PNG:int = 57;
+	public static var NAME_CRAWLER_R2_PNG:int = 58;
+
 
 	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
 	var res01:Array = new Array (R_BITMAP, "bitmap/test2.png");
@@ -159,6 +164,12 @@
 	var res53:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr1.png");
 	var res54:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr2.png");
 	
+	var res55:Array = new Array(R_BITMAP_WBLACK, "bitmap/crawler_l1.png");
+	var res56:Array = new Array(R_BITMAP_WBLACK, "bitmap/crawler_l2.png");
+	var res57:Array = new Array(R_BITMAP_WBLACK, "bitmap/crawler_r1.png");
+	var res58:Array = new Array(R_BITMAP_WBLACK, "bitmap/crawler_r2.png");
+
+
 	var i:int = 0;
 		
 	var r_url:String = "";
@@ -247,6 +258,12 @@
 			neededRes.push(res52);
 			neededRes.push(res53);
 			neededRes.push(res54);
+
+			neededRes.push(res55);
+			neededRes.push(res56);
+			neededRes.push(res57);
+			neededRes.push(res58);
+
 
 			importRes();
 		}

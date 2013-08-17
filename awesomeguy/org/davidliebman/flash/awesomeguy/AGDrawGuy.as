@@ -146,7 +146,7 @@
 				var anim_speed:int = 5;
 				var add:int, add_radar:int, z:int;
 
-			
+				var ycheat:int = 17;
 				sprite.animate ++;
 				if (sprite.animate > (anim_speed * 4) ) sprite.animate=0;
 				if (sprite.animate > anim_speed * 2) z = 1;
@@ -154,22 +154,22 @@
 				
 		
 				if(sprite.visible == true) {
-					if (scrollx < sprite.x + 32 ) {
+					if (scrollx < sprite.x + 32 || true ) {
 						//trace (sprite.animate);
 						if(sprite.facingRight == true) {
 							if(z == 0) {
 								
 								sprite.bitmap = new Bitmap( 
-									myRes[AGResources.NAME_MONSTER_R0_PNG].bitmapData.clone());
+									myRes[AGResources.NAME_CRAWLER_R1_PNG].bitmapData.clone());
 								sprite.bitmap.x = sprite.x - scrollx;
-								sprite.bitmap.y = sprite.y - scrolly;
+								sprite.bitmap.y = sprite.y - scrolly + ycheat;
 								myStage.addChild(sprite.bitmap);
 		
 							}
 							else if (z == 1 ) {
 								
 								sprite.bitmap = new Bitmap( 
-									myRes[AGResources.NAME_MONSTER_R1_PNG].bitmapData.clone());//
+									myRes[AGResources.NAME_CRAWLER_R2_PNG].bitmapData.clone());//
 								sprite.bitmap.x = sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
 								myStage.addChild(sprite.bitmap);
@@ -179,15 +179,15 @@
 							if(z == 0) {
 		
 								sprite.bitmap = new Bitmap( 
-									myRes[AGResources.NAME_MONSTER_L0_PNG].bitmapData.clone());//
+									myRes[AGResources.NAME_CRAWLER_L1_PNG].bitmapData.clone());//
 								sprite.bitmap.x = sprite.x - scrollx;
-								sprite.bitmap.y = sprite.y - scrolly;
+								sprite.bitmap.y = sprite.y - scrolly + ycheat;
 								myStage.addChild(sprite.bitmap);
 							}
 							else if (z == 1) {
 		
 								sprite.bitmap = new Bitmap( 
-									myRes[AGResources.NAME_MONSTER_L1_PNG].bitmapData.clone());//
+									myRes[AGResources.NAME_CRAWLER_L2_PNG].bitmapData.clone());//
 								sprite.bitmap.x = sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
 								myStage.addChild(sprite.bitmap);
