@@ -68,6 +68,8 @@
 			paused.setValues(myStage, myButtons, myRes, this);
 			this.myModeStack = new Array();
 			this.myModeStack.push(AGGame.MODE_START);
+			
+			this.gameHealth = 50;
 		}
 
 		public function setKeys(e:Event) {

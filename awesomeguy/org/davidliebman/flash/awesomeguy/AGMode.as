@@ -375,6 +375,35 @@
 		public function cutTile(  tileset:Bitmap, num:int , tilebracket:int ):Bitmap {
 			return new Bitmap();
 		}
+		
+		public function oldCutTile(tileset:Bitmap, num:int, tilebracket:int, width:int, height:int):Bitmap {
+			var i:int ,j:int, k:int,l:int, m:int,n:int, p:int, TILE_HEIGHT:int, TILE_WIDTH:int ;
+			var TILEMAP_HEIGHT:int = 128 * 2;
+			var TILEMAP_WIDTH:int = 224 * 2;
+			TILE_HEIGHT = height;
+			TILE_WIDTH = width;
+			m = int ( int (TILEMAP_HEIGHT / TILE_HEIGHT) * tilebracket) ; // 128 * 2 /64 = 4
+			n = int ( TILEMAP_WIDTH / TILE_WIDTH) ; // 224 * 2 /64 = 7
+    
+			k = int (((num -1)/ n)   ); // y pos //14 / 7 = 2
+			l = int (num - (k * n) -1  ) ; // x pos // 14 - 14 - 1
+			//trace (num,k,l, TILE_HEIGHT, TILEMAP_HEIGHT, TILEMAP_WIDTH);
+			
+			
+			k = k + m; // must come after!!
+			
+			var b:BitmapData = new BitmapData(  TILE_WIDTH, TILE_HEIGHT, true, 0x0);
+			
+			var bitmap:Bitmap = new Bitmap(b);
+			bitmap.bitmapData.copyPixels(tileset.bitmapData,
+							new Rectangle ( l * TILE_WIDTH, k * TILE_HEIGHT, 
+							TILE_HEIGHT, TILE_HEIGHT),
+							new Point (0,0) , null, null, true );
+			
+			
+			return bitmap;
+		}
+		
 		public function adjust_x( xxx:int ):int {
 			return 0;
 		}
@@ -411,6 +440,8 @@
 			
 			
 			if (ypos - scrollBGY > 16 * 2) {
+				this.showText();
+				this.showHealth();
 					//print SCORE:
 					for (i = 0; i < 6; i ++) {
 						square = cutTile(myRes[AGResources.NAME_TILES1_PNG],  topScore[i] + 1, AGMode.TILE_TOP);
@@ -624,9 +655,27 @@
 				//trace(tmessage.text);
 			}
 			
-			
+			return;
 		}
-		
+
+		public function showHealth() {
+			var square:Bitmap;
+			var ii:int;
+			
+			if ( this.myGame.gameHealth > 100) this.myGame.gameHealth = 100;
+			if ( this.myGame.gameHealth < 0 ) this.myGame.gameHealth = 0;
+			
+			for (ii = 0; ii < 10; ii ++ ) {
+				square = this.oldCutTile(myRes[AGResources.NAME_TILES1_PNG], 
+										 AGModeFlyer.B_ONEUP, AGMode.TILE_TOP,
+										 16,16);
+				if(this.myGame.gameHealth > ii * 10) {
+					square.x = (16 * ii) + 256;
+					square.y = 56;
+					myStage.addChild(square);
+				}
+			}
+		}
 	}
 	
 }
