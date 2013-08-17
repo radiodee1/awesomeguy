@@ -671,10 +671,11 @@
 										 16,16);
 				if(this.myGame.gameHealth > ii * 10) {
 					square.x = (16 * ii) + 256;
-					square.y = 56;
+					square.y = 48;
 					myStage.addChild(square);
 				}
 			}
+			return;
 		}
 	}
 	

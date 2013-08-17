@@ -5,6 +5,9 @@
 		public static var XML_MAZE_ENTRANCE:String = "XML_MAZE_ENTRANCE";
 		//followed by x-flyer-tiles, y-flyer-tiles, new-maze-number
 		
+		public static var XML_MAZE_ENTRANCE_BUNKER:String = "XML_MAZE_ENTRANCE_BUNKER";
+		//followed by x-flyer-tiles, y-flyer-tiles, new-maze-number
+		
 		public static var XML_MAZE_CONNECT:String = "XML_MAZE_CONNECT";
 		public static var XML_MAZE_START_REGULAR:String = "XML_MAZE_START_REGULAR";
 		//followed by x-maze-tiles, y-maze-tiles
