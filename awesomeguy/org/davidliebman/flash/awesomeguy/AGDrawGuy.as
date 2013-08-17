@@ -194,48 +194,10 @@
 							}
 						}
 					}
-					else if (scrollx >= sprite.x  ) {
-						//trace(sprite.animate);
-						if(sprite.facingRight == true) {
-							if(z == 0) {
-		
-								sprite.bitmap = new Bitmap( 
-									myRes[AGResources.NAME_MONSTER_R0_PNG].bitmapData.clone());//
-								sprite.bitmap.x = (myMode.myHoriz * 16 ) + sprite.x - scrollx;
-								sprite.bitmap.y = sprite.y - scrolly;
-								myStage.addChild(sprite.bitmap);
-							}
-							else if (z == 1 ) {
-		
-								sprite.bitmap = new Bitmap( 
-									myRes[AGResources.NAME_MONSTER_R1_PNG].bitmapData.clone());//
-								sprite.bitmap.x = (myMode.myHoriz * 16 ) + sprite.x - scrollx;
-								sprite.bitmap.y = sprite.y - scrolly;
-								myStage.addChild(sprite.bitmap);
-							}
-						}
-						else if (!sprite.facingRight == true) {
-							if(z == 0) {
-		
-								sprite.bitmap = new Bitmap( 
-									myRes[AGResources.NAME_MONSTER_L0_PNG].bitmapData.clone());//
-								sprite.bitmap.x = (myMode.myHoriz * 16 ) + sprite.x - scrollx;
-								sprite.bitmap.y = sprite.y - scrolly;
-								myStage.addChild(sprite.bitmap);
-							}
-							else if (z == 1 ) {
-		
-								sprite.bitmap = new Bitmap( 
-									myRes[AGResources.NAME_MONSTER_L1_PNG].bitmapData.clone());//
-								sprite.bitmap.x = (myMode.myHoriz * 16 ) + sprite.x - scrollx;
-								sprite.bitmap.y = sprite.y - scrolly;
-								myStage.addChild(sprite.bitmap);
-							}
-						}
-					}
+					
 				}
 				
-			trace("draw xmonster");
+			//trace("draw xmonster");
 			return;
 		}
 

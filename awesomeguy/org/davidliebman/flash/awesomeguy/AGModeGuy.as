@@ -314,10 +314,10 @@
 			mon.rightBB = 16 * 2;
 		
 			mon.sprite_type = S_XMONSTER;
-			//mySprite[sprite_num].type = S_GATOR;
+			
 			sprite_num ++;
 			monster_num = sprite_num;
-			
+			trace(sprite_num);
 			platform_num = 0;
 			mySprite.push(mon);
 		}
@@ -373,6 +373,7 @@
 					//	myDraw.drawBasicSprite(mySprite[i], D_RING);
 					//}
 					if (mySprite[i].sprite_type == AGMode.S_XMONSTER) {
+						trace("monsterx", i);
 						myDraw.drawBasicSprite(mySprite[i], D_XMONSTER);
 					}
 					//if (explosionsprite.sprite_type == AGMode.S_EXPLOSION && 
