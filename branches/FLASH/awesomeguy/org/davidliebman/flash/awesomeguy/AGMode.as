@@ -72,6 +72,7 @@
 	static var S_BUBBLE_MAZE:int = 22;
 	static var S_LADDER:int = 23;
 	static var S_XMONSTER:int =  24;
+	static var S_XMONSTER_STAND:int = 25;
 	
 	//draw enumeration
 	static var D_NONE:int = 0;
