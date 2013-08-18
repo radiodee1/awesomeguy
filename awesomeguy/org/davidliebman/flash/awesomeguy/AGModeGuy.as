@@ -269,6 +269,7 @@
 					if (k + mapcheat == AGModeGuy.B_MONSTER) addXMonster(j,i ,0);
 					//if (k + mapcheat == AGModeFlyer.B_PLATFORM) addPlatform(j , i );
 					if (k + mapcheat == AGModeGuy.B_START) startingPos(j,i); // only do on 'reset start'
+					if (k + mapcheat == AGModeGuy.B_KEY) this.addXVarious(j,i,AGMode.S_KEY);
 				}
 				myInvisible.push(smallArray);
 			}
@@ -297,6 +298,25 @@
 		}
 		public override function initAGTimer():void {
 			//super.initAGTimer();
+		}
+		
+		public function addXVarious(xx:int, yy:int, type:int):void {
+			// create a various-type object
+			var temp:AGSpriteVarious = new AGSpriteVarious(this, type);// Sprite temp ;
+			temp.x =xx*64;
+			temp.y = yy *64;
+
+			temp.sprite_type = type;
+			temp.speed = 1;
+			temp.active = true;
+			temp.visible = true;
+			temp.quality_0 = xx;
+			temp.quality_1 = yy;
+			// add it to the sprite list
+			mySprite.push(temp);
+			//this.myBlocks.push(temp);
+			//myChallenge[ myGame.gameChallenge].total_rings ++;
+			//return temp;
 		}
 		
 		public function addXMonster(monster_x:int, monster_y:int,  monster_animate:int):void {
@@ -352,6 +372,8 @@
 //					}
 //					
 					if (mySprite[i].sprite_type == AGMode.S_GUY) myDraw.drawBasicSprite(mySprite[i], D_GUY);
+					if (mySprite[i].sprite_type == AGMode.S_KEY) myDraw.drawBasicSprite(mySprite[i], D_KEY);
+
 //					if (mySprite[i].sprite_type == AGMode.S_LINE ) myDraw.drawBasicSprite(mySprite[i], D_LINE_1);
 //					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_1) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_1);
 //					
@@ -465,10 +487,7 @@
 								this.myBlocks.push(square);
 							}
 							
-							if (myInvisible[i][j] + mapcheat == AGModeGuy.B_KEY){ 
-								square.sprite_type = AGMode.S_KEY;
-								this.myBlocks.push(square);
-							}
+							
 						}
 						
 						

@@ -110,7 +110,9 @@
 				case AGMode.D_XMONSTER:
 					drawXMonster();
 				break;
-				
+				case AGMode.D_KEY:
+					drawKey();
+				break;
 			}
 			
 		}
@@ -244,6 +246,13 @@
 				
 			//trace("draw xmonster");
 			return;
+		}
+
+		public function drawKey() {
+			sprite.bitmap.x = sprite.x - scrollx;
+			sprite.bitmap.y = sprite.y - scrolly ;
+			myStage.addChild(sprite.bitmap);
+			trace("key");
 		}
 
 	}
