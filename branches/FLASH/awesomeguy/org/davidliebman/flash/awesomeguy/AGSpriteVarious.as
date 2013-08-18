@@ -18,6 +18,11 @@
 					this.bitmap = new Bitmap(new BitmapData(TILE_WIDTH, TILE_HEIGHT,true, 0x00000000));
 					
 				break;
+				case AGMode.S_KEY:
+					this.bitmap = myMode.oldCutTile(myMode.myRes[AGResources.NAME_TILES1_PNG],
+													AGModeGuy.B_KEY,AGMode.TILE_BOT, 64,64);
+				break;
+				
 			}
 		}
 
