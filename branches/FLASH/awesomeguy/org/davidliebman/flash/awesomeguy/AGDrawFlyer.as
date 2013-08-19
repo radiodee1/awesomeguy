@@ -25,8 +25,12 @@
 		
 		public override function drawBasicSprite(sprite:AGSprite, kind:int):void {
 			
-			
-			drawRes(sprite, sprite.x, sprite.y, sprite.facingRight, kind, sprite.animate);
+			try {
+				drawRes(sprite, sprite.x, sprite.y, sprite.facingRight, kind, sprite.animate);
+			}
+			catch(err:Error) {
+				trace("null pointer error??");
+			}
 		}
 		
 		public override function drawRes(sprite:AGSprite, xx:int, yy:int, facingRight:Boolean, kind:int, animate:int):void {
