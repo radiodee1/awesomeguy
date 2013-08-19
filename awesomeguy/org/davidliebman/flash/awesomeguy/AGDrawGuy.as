@@ -113,6 +113,15 @@
 				case AGMode.D_KEY:
 					drawKey();
 				break;
+				
+				case AGMode.D_RING:
+					drawRing();
+				break;
+				
+				case AGMode.D_GUN:
+				case AGMode.D_GOAL:
+					this.drawXVarious();
+				break;
 			}
 			
 		}
@@ -252,7 +261,34 @@
 			sprite.bitmap.x = sprite.x - scrollx;
 			sprite.bitmap.y = sprite.y - scrolly ;
 			myStage.addChild(sprite.bitmap);
-			trace("key");
+			
+		}
+
+		public function drawRing() {
+			
+			sprite.bitmap.x = (sprite.x - scrollx );
+			
+			
+			sprite.bitmap.y = sprite.y - scrolly;
+			if (sprite.active == true && sprite != null && sprite.bitmap != null) {
+			//trace("before");
+				myStage.addChild(sprite.bitmap);
+			
+			}//if
+					
+					//myStage.addChild(sprite.bitmap);
+		}
+		
+		public function drawXVarious() {
+			sprite.bitmap.x = (sprite.x - scrollx );
+			
+			
+			sprite.bitmap.y = sprite.y - scrolly;
+			if (sprite.active == true && sprite != null && sprite.bitmap != null) {
+			//trace("before");
+				myStage.addChild(sprite.bitmap);
+			
+			}//if
 		}
 
 	}

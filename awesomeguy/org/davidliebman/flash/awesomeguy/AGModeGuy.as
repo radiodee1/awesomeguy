@@ -267,9 +267,12 @@
 					k = int (tempArray[ (i * myHoriz) + j ] );
 					smallArray.push(int (tempArray[ (i * myHoriz) + j ] ) );
 					if (k + mapcheat == AGModeGuy.B_MONSTER) addXMonster(j,i ,0);
-					//if (k + mapcheat == AGModeFlyer.B_PLATFORM) addPlatform(j , i );
+					if (k + mapcheat == AGModeGuy.B_PRIZE) this.addXRing(j,i);//
 					if (k + mapcheat == AGModeGuy.B_START) startingPos(j,i); // only do on 'reset start'
 					if (k + mapcheat == AGModeGuy.B_KEY) this.addXVarious(j,i,AGMode.S_KEY);
+					if (k + mapcheat == AGModeGuy.B_GUN) this.addXVarious(j,i,AGMode.S_GUN);
+					if (k + mapcheat == AGModeGuy.B_GOAL) this.addXVarious(j,i,AGMode.S_XGOAL);
+
 				}
 				myInvisible.push(smallArray);
 			}
@@ -341,6 +344,24 @@
 			platform_num = 0;
 			mySprite.push(mon);
 		}
+		public function addXRing(xx:int, yy:int):void {
+			// create a line-type object
+			var temp:AGSpriteXRing = new AGSpriteXRing(this, AGMode.S_RING);// Sprite temp ;
+			temp.x =xx*64;
+			temp.y = yy *64;
+
+			temp.sprite_type = S_RING;
+			temp.speed = 1;
+			temp.active = true;
+			temp.quality_0 = xx;
+			temp.quality_1 = yy;
+			// add it to the sprite list
+			mySprite.push(temp);
+			
+			//myTemp.push(temp);
+			//myChallenge[ myGame.gameChallenge].total_rings ++;
+			//return temp;
+		}
 		
 		public function addSprites():void {
 			var i:int = 0;
@@ -374,7 +395,7 @@
 					if (mySprite[i].sprite_type == AGMode.S_GUY) myDraw.drawBasicSprite(mySprite[i], D_GUY);
 					if (mySprite[i].sprite_type == AGMode.S_KEY) myDraw.drawBasicSprite(mySprite[i], D_KEY);
 
-//					if (mySprite[i].sprite_type == AGMode.S_LINE ) myDraw.drawBasicSprite(mySprite[i], D_LINE_1);
+					if (mySprite[i].sprite_type == AGMode.S_XGOAL ) myDraw.drawBasicSprite(mySprite[i], D_GOAL);
 //					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_1) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_1);
 //					
 //					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_3) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_3);
@@ -391,9 +412,9 @@
 			for (i = 0; i < mySprite.length; i ++ ) {
 				if (mySprite[i].active == true) {
 					
-					//if (mySprite[i].sprite_type == AGMode.S_RING) {
-					//	myDraw.drawBasicSprite(mySprite[i], D_RING);
-					//}
+					if (mySprite[i].sprite_type == AGMode.S_RING) {
+						myDraw.drawBasicSprite(mySprite[i], D_RING);
+					}
 					if (mySprite[i].sprite_type == AGMode.S_XMONSTER) {
 						
 						myDraw.drawBasicSprite(mySprite[i], D_XMONSTER);
@@ -463,17 +484,6 @@
 									myVisible[i][j] + levelcheat,
 									AGMode.TILE_BOT);
 							
-							if (myInvisible[i][j] != 0 && 
-								myInvisible[i][j] != AGModeGuy.B_BLOCK && 
-								myInvisible[i][j] != AGModeGuy.B_LADDER &&
-								myInvisible[i][j] != AGModeGuy.B_START &&
-								myInvisible[i][j] != AGModeGuy.B_MONSTER) {
-									
-								square = new AGSprite(this,AGMode.S_BLOCK);
-								square.bitmap = cutTile(  myRes[AGResources.NAME_TILES1_PNG], 
-									myInvisible[i][j] + levelcheat,
-									AGMode.TILE_BOT);
-							}
 							
 							square.bitmap.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
 							square.bitmap.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
@@ -670,7 +680,7 @@
 				this.jump_count = 10;
 			}
 			if (K_SHOOT && this.shoot_count <= 0) {
-				trace("shoot");
+				myGuy.animate = 0;
 				myGuy.quality_0 = AGModeGuy.GUY_PUNCH;
 				this.shoot_count = 3;
 			}
@@ -681,35 +691,7 @@
 		public override function fireButton():void {
 			
 		}
-		/*
-		public function oldCutTile(tileset:Bitmap, num:int, tilebracket:int, width:int, height:int):Bitmap {
-			var i:int ,j:int, k:int,l:int, m:int,n:int, p:int, TILE_HEIGHT:int, TILE_WIDTH:int ;
-
-			TILE_HEIGHT = height;
-			TILE_WIDTH = width;
-			m = int ( int (TILEMAP_HEIGHT / TILE_HEIGHT) * tilebracket) ; // 128 * 2 /64 = 4
-			n = int ( TILEMAP_WIDTH / TILE_WIDTH) ; // 224 * 2 /64 = 7
-    
-			k = int (((num -1)/ n)   ); // y pos //14 / 7 = 2
-			l = int (num - (k * n) -1  ) ; // x pos // 14 - 14 - 1
-			//trace (num,k,l, TILE_HEIGHT, TILEMAP_HEIGHT, TILEMAP_WIDTH);
-			
-			
-			k = k + m; // must come after!!
-			
-			var b:BitmapData = new BitmapData(  TILE_WIDTH, TILE_HEIGHT, true, 0x0);
-			
-			var bitmap:Bitmap = new Bitmap(b);
-			bitmap.bitmapData.copyPixels(tileset.bitmapData,
-							new Rectangle ( l * TILE_WIDTH, k * TILE_HEIGHT, 
-							TILE_HEIGHT, TILE_HEIGHT),
-							new Point (0,0) , null, null, true );
-			
-			
-			return bitmap;
-		}
 		
-		*/
 		
 		public override function cutTile(  tileset:Bitmap, num:int , tilebracket:int ):Bitmap {
 			
@@ -747,11 +729,8 @@
 				switch(myGuy.quality_0) {
 					case AGModeGuy.GUY_STEP:
 					
-						if ( this.hit_bottom && this.hit_center && (!this.hit_left || !this.hit_right)) {
-							yy =  - 6;
-							
-						}
-						else if (!this.hit_bottom && !this.hit_center && !this.hit_ladder) {
+						
+						if (!this.hit_bottom && !this.hit_center && !this.hit_ladder) {
 							yy = AGModeGuy.Y_MOVE;
 						}
 						
@@ -779,6 +758,11 @@
 				if (this.hit_top && !this.hit_bottom) {
 					this.jump_count = 0;
 					if (yy < 0 || yy == 0) yy = AGModeGuy.Y_MOVE;
+				}
+				if ( this.hit_bottom && this.hit_center && 
+					(!this.hit_left || !this.hit_right) && !this.hit_top) {
+					yy =  - 6;
+							
 				}
 				
 		}
@@ -1043,7 +1027,10 @@
 						switch (sprite.sprite_type) {
 							case AGMode.S_RING:
 								
-								
+								myGame.gameScore += 20;
+								sprite.active = false;
+								sprite.visible = false;
+								myGame.gameHealth += 10;
 								
 								//myChallenge[myGame.gameChallenge].total_held_rings ++ ;
 							break;

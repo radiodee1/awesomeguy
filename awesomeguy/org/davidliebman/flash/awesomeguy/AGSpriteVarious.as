@@ -22,6 +22,14 @@
 					this.bitmap = myMode.oldCutTile(myMode.myRes[AGResources.NAME_TILES1_PNG],
 													AGModeGuy.B_KEY,AGMode.TILE_BOT, 64,64);
 				break;
+				case AGMode.S_GUN:
+					this.bitmap = myMode.oldCutTile(myMode.myRes[AGResources.NAME_TILES1_PNG],
+													AGModeGuy.B_GUN,AGMode.TILE_BOT, 64,64);
+				break;
+				case AGMode.S_XGOAL:
+					this.bitmap = myMode.oldCutTile(myMode.myRes[AGResources.NAME_TILES1_PNG],
+													AGModeGuy.B_GOAL,AGMode.TILE_BOT, 64,64);
+				break;
 				
 			}
 		}
