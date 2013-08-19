@@ -849,6 +849,7 @@
 </challenges>
 <special>
 <block>XML_MAZE_ENTRANCE , 50,31, 1, XML_MAZE_START_REGULAR , 0, 0</block>
+<block>XML_MAZE_ENTRANCE_BUNKER, 150, 31, 1, XML_MAZE_START_REGULAR, 0, 0</block>
 <block>XML_TEST</block>
 </special>
 <text>

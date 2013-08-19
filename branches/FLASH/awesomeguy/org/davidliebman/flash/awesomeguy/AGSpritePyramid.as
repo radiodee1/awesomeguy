@@ -13,6 +13,12 @@
 		}
 		
 		public override function updateSprite():void {
+			if (this.sprite_type == AGMode.S_BUNKER) {
+				this.bitmap = myMode.oldCutTile(myMode.myRes[AGResources.NAME_TILES1_PNG],
+													AGModeFlyer.B_BIBPRIZE,AGMode.TILE_TOP, 16,16);
+			}
+			
+			
 			if (toggle == ENUM_SHOW) {
 				if(this.quality_0 > 5) {
 					this.animate ++;
@@ -20,7 +26,7 @@
 				}
 			}
 			else if (toggle == ENUM_SINK) {
-				if (y < (16 * 32) + (8 *16) ) {
+				if (y < (16*32) +  this.bitmap.height ) {//(16 * 32) + (8 *16) ) {
 					y = y + 3;
 					
 				}
