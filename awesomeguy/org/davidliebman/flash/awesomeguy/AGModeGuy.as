@@ -1016,7 +1016,7 @@
 			myRes[AGResources.NAME_EXPLOSION_MP3].play();
 			this.game_death = true;
 			
-			agflyer.active = false;
+			//agflyer.active = false;
 			
 			this.myGame.gameHealth -= 10;
 		}
@@ -1067,8 +1067,8 @@
 							case AGMode.S_XMONSTER_STAND:
 								testPunch(myGuy, sprite);
 								if (!sprite.active) break;
-								
-							
+								if (myGame.gameHealth <= 0) this.guyDeath();
+								break;
 							case AGMode.S_BUBBLE_2:
 							case AGMode.S_INVADER_1:
 							case AGMode.S_INVADER_2:
@@ -1237,7 +1237,7 @@
 			
 				if (sprite.quality_0 != AGModeGuy.GUY_PUNCH ) {
 					if (myGame.gameHealth <= 0) this.guyDeath();
-					else myGame.gameHealth -= 10;
+					else myGame.gameHealth -= 5;
 				}
 				else if (facingMonster  ) {
 					// punch monster...
