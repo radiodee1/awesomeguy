@@ -60,6 +60,8 @@
 			levelcheat = 0 ;
 			mapcheat = 0;
 			this.game_start = true;
+			this.flyersprite = new Bitmap();
+			this.agflyer = new AGSprite( this, 0);
 		}
 		
 		public override function componentsInOrder():void {

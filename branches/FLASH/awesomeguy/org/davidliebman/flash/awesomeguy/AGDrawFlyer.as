@@ -8,33 +8,23 @@
 		var anim:int = 0; // for flyer rings
 		var max_rings:int = 0;// for flyer rings
 
+		var add:int, add_radar:int, z:int;
+		var scrollx:int =0;
+		var scrolly:int = 0;
+		var anim_speed:int = 5;
+		var sprite:AGSprite = new AGSprite(null, 0);
+		var xx:int = 0;
+		var yy:int = 0;
+		var facingRight:Boolean = false;
+		var kind:int, animate:int;
+
 		public override function AGDrawFlyer(mode:AGMode, myres:Array, mystage:Stage, mybackground:Bitmap) {
 			// constructor code
 			super(mode,myres,mystage,mybackground);
 		}
 		
 		public override function drawBasicSprite(sprite:AGSprite, kind:int):void {
-			if(sprite == null  ) {
-				trace("disaster");
-				return;
-			}
-			if (myMode == null ) {
-				trace("mode disaster");
-				return;
-			}
-			if( myStage == null) {
-				trace("stage disaster");
-				return;
-					  
-			}
-			if (myRes == null ) {
-				trace("resource disaster");
-				return;
-			}
-			if (myBackground == null) {
-				//trace("background");
-				
-			}
+			
 			
 			drawRes(sprite, sprite.x, sprite.y, sprite.facingRight, kind, sprite.animate);
 		}
@@ -42,12 +32,19 @@
 		public override function drawRes(sprite:AGSprite, xx:int, yy:int, facingRight:Boolean, kind:int, animate:int):void {
 			// all drawing goes here!!
 			
-		
+			this.sprite = sprite;
+			this.xx = xx;
+			this.yy = yy;
+			this.facingRight = facingRight;
+			this.animate = animate;
+			this.kind = kind;
+			
 			// init some vars here
-			var add:int, add_radar:int, z:int;
-			var scrollx:int = myMode.scrollBGX;
-			var scrolly:int = myMode.scrollBGY;
-			var anim_speed:int = 5;
+			//var add:int, add_radar:int, z:int;
+			
+			scrollx = myMode.scrollBGX;
+			scrolly = myMode.scrollBGY;
+			anim_speed = 5;
 			
 			switch (kind) {
 				case AGMode.D_NONE:
@@ -199,9 +196,9 @@
 				//////////////////////////////////////////
 				case AGMode.D_EXPLOSION:
 				
+				drawExplosion();
 				
-				
-				
+				/*
 				try {
 				
 					//i = spriteNum;
@@ -300,6 +297,7 @@
 					return;
 				}// catch
 				
+				*/
 				break;
 				///////////
 				case AGMode.D_CLOUD:
@@ -441,6 +439,10 @@
 				case AGMode.D_EXPLOSION_SPRITE:
 				
 				try {
+					
+				var x:int, y:int ;
+				var wait:int = 20;
+				
 				//i = spriteNum;
 				//var x:int, y:int ;
 				wait = 20;
@@ -682,6 +684,110 @@
 				}
 				break;
 			}
+		}
+
+		public function drawExplosion():void {
+			
+				
+				try {
+				
+					//i = spriteNum;
+					var x:int, y:int ;
+					var wait:int = 20;
+					y = sprite.y - 32;
+					x = sprite.x;
+			
+					//trace("boom start");
+					
+			
+					add = 0;
+			
+					if(scrollx < sprite.x + 64*2) {
+						add = 0;
+					}
+					else if (scrollx >= sprite.x ) {
+						add = myMode.myHoriz * 16;
+					}
+					
+					//
+					if (sprite.timerDone() ){// ||  sprite.timer.started == false) {
+			
+						//LOGE("explosion %d ", flyer_explosion);
+			
+						switch (sprite.quality_3) {
+						case 0:
+							
+							//drawSprite_64(explosion_a, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+							sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_A];
+							break;
+						case 1:
+							//drawSprite_64(explosion_b, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+							sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_B];
+	
+							break;
+			
+						case 2:
+							//drawSprite_64(explosion_c, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+							sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_C];
+			
+							break;
+						case 3:
+							//drawSprite_64(explosion_d, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+							sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_D];
+							
+							break;
+						case 4:
+							//drawSprite_64(explosion_e, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+							sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_E];
+							
+							break;
+						case 5:
+							//drawSprite_64(explosion_f, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+							sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_F];
+							
+							break;
+			
+						case 6:
+							//drawSprite_64(explosion_g, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+							sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_G];
+							
+							break;
+						case 7:
+							//drawSprite_64(explosion_h, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
+							//sprite[i].active = FALSE;
+							sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_H];
+							//myMode.game_death = true;
+							
+							break;
+						}
+						
+						sprite.bitmap.x = x - scrollx + add;
+						sprite.bitmap.y = y - scrolly;
+						if (sprite.active == true && sprite != null && sprite.bitmap != null) {
+						//trace("before");
+							myStage.addChild(sprite.bitmap);
+						//trace("after");
+						}
+						
+						if (sprite.quality_3 > 7) {
+							//sprite[i].quality_3 = -1;
+							//endlevel = TRUE;
+							//gamedeath = TRUE;
+							sprite.active = false;
+							//sprite.sprite_type = AGMode.S_NONE;
+							myMode.game_death = true;
+						}
+						sprite.quality_3 ++;
+						sprite.timerStart( wait/1000 );/// 100);
+						//}
+					}
+				
+				} catch (err:Error) {
+					trace("flyer disaster averted");
+					return;
+				}// catch
+				
+				return;
 		}
 
 	}
