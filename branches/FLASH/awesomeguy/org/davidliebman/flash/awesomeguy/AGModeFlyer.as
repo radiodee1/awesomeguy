@@ -1062,7 +1062,7 @@
 								if (pyramid.toggle == pyramid.ENUM_SINK) break;
 							
 								if (this.flyerGrounded && !this.animate_return_to_planet && pyramid.toggle == pyramid.ENUM_SHOW) {
-									
+									if (sprite.sprite_type == AGMode.S_BUNKER) sprite.animate = 5;
 									sprite.quality_0 ++;
 									if (sprite.animate > 4) {
 										if(sprite.quality_1 == 0) {
