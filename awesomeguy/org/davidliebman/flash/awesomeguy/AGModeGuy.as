@@ -1195,7 +1195,7 @@
 				}
 				
 				if (myBlocks[ii].bitmap != null && this.flyersprite != null &&
-					collisionBlock(myBlocks[ii].bitmap, this.flyersprite)) {
+					collisionSimple(myBlocks[ii].bitmap, this.flyersprite)) {
 					//this.hittype = AGModeGuy.HIT_NONE;
 
 					if (myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
