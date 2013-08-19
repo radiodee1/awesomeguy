@@ -74,6 +74,8 @@
 	static var S_XMONSTER:int =  24;
 	static var S_XMONSTER_STAND:int = 25;
 	static var S_KEY:int = 26;
+	static var S_GUN:int = 27;
+	static var S_XGOAL:int = 28;
 	
 	//draw enumeration
 	static var D_NONE:int = 0;
@@ -98,6 +100,7 @@
 	static var D_GUY:int = 19;
 	static var D_XMONSTER:int = 20;
 	static var D_KEY:int = 21;
+	static var D_GUN:int = 22;
 	
 	//radar ping types
 	static var PING_FLYER:int = 0;
