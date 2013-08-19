@@ -50,6 +50,8 @@
 				case AGMode.D_NONE:
 					break;
 				case AGMode.D_FLYER:
+					drawFlyer();
+				/*
 				try {
 					add = 0;
 					add_radar = 0;
@@ -98,7 +100,7 @@
 				}catch (err:Error) {
 					trace("draw flyer!!!!!!!!!!!!!!!");
 				}
-				
+				*/
 				break;
 				
 				case AGMode.D_GATOR:
@@ -787,6 +789,59 @@
 					return;
 				}// catch
 				
+				return;
+		}
+
+		public function drawFlyer():void {
+			
+				try {
+					add = 0;
+					add_radar = 0;
+	
+					
+					if (scrollx >= xx  ) {
+						add = myMode.myHoriz * TILE_WIDTH;
+						add_radar =  (xx - scrollx) - xx ;
+					}
+					
+					if (facingRight) {
+						if (myMode.is_blinking) {
+							sprite.bitmap = myRes[AGResources.NAME_FLYER_WHITE_R];
+						}
+						
+						else if (animate %2 == 1 ) {
+							sprite.bitmap = myRes[AGResources.NAME_FLYER_R0_PNG];
+	
+						}
+						else {
+							sprite.bitmap = myRes[AGResources.NAME_FLYER_R1_PNG];
+		
+						}
+					}
+					else {
+						if (myMode.is_blinking) {
+							sprite.bitmap = myRes[AGResources.NAME_FLYER_WHITE_L];
+						}
+						else if (animate %2 == 1) {
+							sprite.bitmap = myRes[AGResources.NAME_FLYER_L0_PNG];
+	
+						}
+						else {
+							sprite.bitmap = myRes[AGResources.NAME_FLYER_L1_PNG];
+		
+						}
+					}
+					sprite.bitmap.x = add + xx - scrollx;
+					sprite.bitmap.y = yy - scrolly;
+					if (sprite.active == true && sprite != null && sprite.bitmap != null) {
+						//trace("before");
+						myStage.addChild(sprite.bitmap);
+						//trace("after");
+					}
+					myMode.flyersprite = sprite.bitmap;
+				}catch (err:Error) {
+					trace("draw flyer!!!!!!!!!!!!!!!");
+				}
 				return;
 		}
 
