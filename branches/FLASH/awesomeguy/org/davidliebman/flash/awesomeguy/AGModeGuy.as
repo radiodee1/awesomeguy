@@ -1006,6 +1006,21 @@
 			}
 		}
 		
+		public function guyDeath():void {
+			myRes[AGResources.NAME_EXPLOSION_MP3].play();
+			this.game_death = true;
+			//animate_explosion = true;
+			//explosionsprite.sprite_type = AGMode.S_EXPLOSION;
+			//explosionsprite.quality_3 = 0;
+			//explosionsprite.timerStart(10/1000);
+			//explosionsprite.active = true;
+			//explosionsprite.x = xpos;
+			//explosionsprite.y = ypos;
+			agflyer.active = false;
+			
+			this.myGame.gameHealth -= 10;
+		}
+		
 		public function checkRegularCollision():void {
 			
 			var ii:int;
@@ -1036,13 +1051,22 @@
 							break;
 							
 							case AGMode.S_GATOR:
+							case AGMode.S_XMONSTER:
+							case AGMode.S_XMONSTER_STAND:
 								if (sprite.bitmap.getBounds(myStage).bottom  >
-									this.flyersprite.getBounds(myStage).bottom) {
+									this.flyersprite.getBounds(myStage).bottom &&
+									sprite.bitmap.getBounds(myStage).top <
+									this.flyersprite.getBounds(myStage).bottom &&
+									this.jump_count <= 0) {
+										
 									sprite.active = false;
 									sprite.visible = false;
 									myGame.gameScore += 10;
 									
 									break;
+								}
+								else {
+									this.guyDeath();
 								}
 							
 							case AGMode.S_BUBBLE_2:
@@ -1052,7 +1076,7 @@
 								//this.agflyer.visible = false;
 								sprite.active = false;
 								sprite.visible = true;//true
-								//flyerDeath();
+								guyDeath();
 							break;
 							
 							
