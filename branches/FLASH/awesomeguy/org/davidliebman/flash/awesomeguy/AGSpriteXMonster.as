@@ -100,6 +100,12 @@
 				
 		
 			}
+			myMode.drawRadarPing(myMode.radar, 
+								 myMode.radarscreen, 
+								 this.x, this.y, 
+								 AGMode.PING_OTHER, 
+								 0xff00ff00);
+			
 			return;
 		}
 
