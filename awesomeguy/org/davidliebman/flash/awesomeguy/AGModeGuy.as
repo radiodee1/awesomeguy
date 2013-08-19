@@ -44,7 +44,8 @@
 		public static var Y_MOVE = 10 * 2;
 
 		public var jump_count:int = 0;
-		public var shoot_count:int = 0;
+		public var shoot_count:int = 0; // shoot button
+		public var bullet_count:int = 0; // number of bullets in gun
 
 		public var hit_top:Boolean =false; 
 		public var hit_bottom:Boolean= false; 
@@ -396,7 +397,7 @@
 					if (mySprite[i].sprite_type == AGMode.S_KEY) myDraw.drawBasicSprite(mySprite[i], D_KEY);
 
 					if (mySprite[i].sprite_type == AGMode.S_XGOAL ) myDraw.drawBasicSprite(mySprite[i], D_GOAL);
-//					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_1) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_1);
+					if (mySprite[i].sprite_type == AGMode.S_GUN) myDraw.drawBasicSprite(mySprite[i], D_GUN);
 //					
 //					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_3) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_3);
 //					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_2) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_2);
@@ -747,6 +748,11 @@
 					
 					break;
 					case AGModeGuy.GUY_PUNCH:
+						if (K_SHOOT && this.bullet_count > 0) {
+							trace("shoot gun");
+							this.bullet_count --;
+						}
+						if (this.shoot_count <= 0) myGuy.animate = 1;
 						
 					break;
 					
@@ -1009,13 +1015,7 @@
 		public function guyDeath():void {
 			myRes[AGResources.NAME_EXPLOSION_MP3].play();
 			this.game_death = true;
-			//animate_explosion = true;
-			//explosionsprite.sprite_type = AGMode.S_EXPLOSION;
-			//explosionsprite.quality_3 = 0;
-			//explosionsprite.timerStart(10/1000);
-			//explosionsprite.active = true;
-			//explosionsprite.x = xpos;
-			//explosionsprite.y = ypos;
+			
 			agflyer.active = false;
 			
 			this.myGame.gameHealth -= 10;
@@ -1036,6 +1036,18 @@
 							mySprite[ii].sprite_type = AGMode.S_XMONSTER;
 						}
 					}
+					if ((mySprite[ii].sprite_type == AGMode.S_XMONSTER ||
+						mySprite[ii].sprite_type == AGMode.S_XMONSTER_STAND)&&
+						mySprite[ii].active == true &&
+						this.collisionBlock(this.mySprite[ii].bitmap, myDraw.rail_bottom) &&
+						!this.collisionBlock(this.mySprite[ii].bitmap, myDraw.rail_left) &&
+						!this.collisionBlock(this.mySprite[ii].bitmap, myDraw.rail_right)) {
+						myGame.gameScore += 20;
+						myGame.gameHealth += 5;
+						this.mySprite[ii].active = false;
+						this.mySprite[ii].visible = false;
+					}
+					
 					if (this.collisionSimple(mySprite[ii].bitmap, this.flyersprite) 
 						&& mySprite[ii].active == true ) {
 							var sprite:AGSprite = mySprite[ii];
@@ -1053,21 +1065,9 @@
 							case AGMode.S_GATOR:
 							case AGMode.S_XMONSTER:
 							case AGMode.S_XMONSTER_STAND:
-								if (sprite.bitmap.getBounds(myStage).bottom  >
-									this.flyersprite.getBounds(myStage).bottom &&
-									sprite.bitmap.getBounds(myStage).top <
-									this.flyersprite.getBounds(myStage).bottom &&
-									this.jump_count <= 0) {
-										
-									sprite.active = false;
-									sprite.visible = false;
-									myGame.gameScore += 10;
-									
-									break;
-								}
-								else {
-									this.guyDeath();
-								}
+								testPunch(myGuy, sprite);
+								if (!sprite.active) break;
+								
 							
 							case AGMode.S_BUBBLE_2:
 							case AGMode.S_INVADER_1:
@@ -1078,7 +1078,11 @@
 								sprite.visible = true;//true
 								guyDeath();
 							break;
-							
+							case AGMode.S_GUN:
+								sprite.active = false;
+								sprite.visible = false;
+								this.bullet_count = 10;
+							break;
 							
 						}//switch
 					}// collision simple
@@ -1215,7 +1219,36 @@
 			return;
 		}
 		
-		
+		public function testPunch(sprite:AGSprite, monster:AGSprite ):void {
+			
+				var facingMonster:Boolean = false; 
+				
+				if (monster.sprite_type != AGMode.S_XMONSTER && 
+					monster.sprite_type != AGMode.S_XMONSTER_STAND) {
+					return;
+				}
+			
+				if (sprite.facingRight && sprite.x < monster.x) {
+					facingMonster = true;
+				} 
+				else if (!sprite.facingRight && monster.x < sprite.x) {
+					facingMonster = true;
+				}
+			
+				if (sprite.quality_0 != AGModeGuy.GUY_PUNCH ) {
+					if (myGame.gameHealth <= 0) this.guyDeath();
+					else myGame.gameHealth -= 10;
+				}
+				else if (facingMonster  ) {
+					// punch monster...
+					myGame.gameHealth -=5;
+					monster.visible = false;
+					monster.active = false;
+					myGame.gameScore += 10;
+					
+				}
+				return ;
+		}
 		
 	}
 	
