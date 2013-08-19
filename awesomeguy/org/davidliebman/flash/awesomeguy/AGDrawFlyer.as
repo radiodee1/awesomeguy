@@ -689,6 +689,10 @@
 					return;
 				}
 				break;
+				
+				case AGMode.D_BUNKER :
+					drawBunker();
+				break;
 			}
 		}
 
@@ -847,6 +851,24 @@
 					trace("draw flyer!!!!!!!!!!!!!!!");
 				}
 				return;
+		}
+
+		public function drawBunker():void {
+					add = 0;
+					add_radar = 0;
+	
+					
+					if (scrollx >= xx  ) {
+						add = myMode.myHoriz * TILE_WIDTH;
+						add_radar =  (xx - scrollx) - xx ;
+					}
+					sprite.bitmap.x = add + xx - scrollx;
+					sprite.bitmap.y = yy - scrolly;
+					if (sprite.active == true && sprite != null && sprite.bitmap != null) {
+						//trace("before");
+						myStage.addChild(sprite.bitmap);
+						//trace("after");
+					}
 		}
 
 	}

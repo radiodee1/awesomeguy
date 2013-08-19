@@ -413,10 +413,10 @@
 		}
 		
 		public function addBunker(xx:int, yy:int, maze:int):void {
-			var pyr:AGSpritePyramid = new AGSpritePyramid(this, AGMode.S_PYRAMID);
+			var pyr:AGSpritePyramid = new AGSpritePyramid(this, AGMode.S_BUNKER);
 			pyr.x = xx * TILE_WIDTH;
 			pyr.y = yy * TILE_HEIGHT;
-			pyr.sprite_type = S_PYRAMID;
+			pyr.sprite_type = S_BUNKER;
 			pyr.active = true;
 			pyr.visible = true;
 			pyr.sprite_link = maze;
@@ -802,6 +802,10 @@
 						myDraw.drawBasicSprite(mySprite[i], AGMode.D_PYRAMID);
 						
 					}
+					if (mySprite[i].sprite_type == AGMode.S_BUNKER) {
+						myDraw.drawBasicSprite(mySprite[i], AGMode.D_BUNKER);
+						
+					}
 					
 					myDraw.drawBasicSprite(flyerrings, AGMode.D_FLYER_RINGS);
 					
@@ -1051,6 +1055,7 @@
 								flyerDeath();
 							break;
 							case AGMode.S_PYRAMID:
+							case AGMode.S_BUNKER:
 								var pyramid:AGSpritePyramid = AGSpritePyramid(sprite);
 								
 							
