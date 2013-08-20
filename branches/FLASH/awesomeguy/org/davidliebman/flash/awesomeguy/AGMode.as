@@ -700,6 +700,8 @@
 					myStage.addChild(square);
 				}
 			}
+			
+			
 			return;
 		}
 	}

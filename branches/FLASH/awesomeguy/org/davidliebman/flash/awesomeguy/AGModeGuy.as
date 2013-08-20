@@ -1103,6 +1103,7 @@
 								//myChallenge[myGame.gameChallenge].total_held_rings ++ ;
 							break;
 							case AGMode.S_EXIT:
+								if (this.key_count == 0) break;
 								this.animate_return_to_planet = true;
 							break;
 							case AGMode.S_XMONSTER:
@@ -1112,17 +1113,7 @@
 								if (myGame.gameHealth <= 0) this.guyDeath();
 								break;
 								
-							/*
-							case AGMode.S_BUBBLE_2:
-							case AGMode.S_INVADER_1:
-							case AGMode.S_INVADER_2:
-								//this.agflyer.active = false;
-								//this.agflyer.visible = false;
-								sprite.active = false;
-								sprite.visible = true;//true
-								guyDeath();
-							break;
-							*/
+							
 							case AGMode.S_GUN:
 								sprite.active = false;
 								sprite.visible = false;
