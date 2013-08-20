@@ -109,6 +109,7 @@
 				setStartingVars();
 				myRes[AGResources.NAME_ENTER_1_MP3].play();
 				//game_reset_start = false;
+				
 			}
 			prepText();
 			
@@ -136,10 +137,13 @@
 			
 			prepTiles() ;
 			prepRings() ;
+			//if ( this.game_start) 
 			prepSpecialXml();
-			//prepRingSprites();
+			
 			
 			if (this.game_reset_start ) {
+				
+				
 				radar_start = xpos - scrollBGX;
 				radar_start_scroll =  scrollBGX;
 			}
