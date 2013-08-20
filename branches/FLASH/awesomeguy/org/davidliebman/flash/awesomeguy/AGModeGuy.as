@@ -43,9 +43,12 @@
 		public static var X_MOVE = 10 * 2;
 		public static var Y_MOVE = 10 * 2;
 
+		public var animate_return_to_planet:Boolean = false;
+
 		public var jump_count:int = 0;
 		public var shoot_count:int = 0; // shoot button
 		public var bullet_count:int = 0; // number of bullets in gun
+		public var key_count:int = 0;
 
 		public var hit_top:Boolean =false; 
 		public var hit_bottom:Boolean= false; 
@@ -291,7 +294,41 @@
 		}
 		
 		public override function prepSpecialXml():void {
+			var mazeNumber:String = String( this.myGame.gameMaze);
+			var myXML:XMLDocument = myRes[AGResources.NAME_AWESOMEGUY_XML];
+			var tree:XML = new XML(myXML);
 			
+			var num:int = int (tree.planet[myGame.gamePlanet].underground.maze.(@number==mazeNumber).special.block.length() );
+			//trace(num);
+			var i:int, j:int;
+			var value:String = "";
+			var tempArray:Array = new Array();
+			var tempString:String = "";
+			var tempCharArray:Array = new Array();
+
+			for (i = 0; i < num; i ++ ) {
+				value = tree.planet[myGame.gamePlanet].underground.maze.(@number==mazeNumber).special.block[i].toString();
+				tempArray = value.split(",");
+				
+				for (j = 0; j < tempArray.length; j ++ ) {
+					tempString = tempArray[j];
+					tempCharArray = tempString.split(" ");
+					tempString = tempCharArray.join("");
+					tempArray[j] = tempString;
+				}
+				
+				/*
+				if (tempArray[0] == AG.XML_MAZE_ENTRANCE) { // this is a pyramid
+					addPyramid(int(tempArray[1]),int(tempArray[2]), int(tempArray[3]));
+					this.maze_entrances ++;
+				}
+				*/
+				if (tempArray[0] == AG.XML_MAZE_EXIT) { // this is a bunker
+					addXVarious(int(tempArray[1]),int(tempArray[2]), AGMode.S_EXIT);
+					
+				}
+				
+			}
 		}
 		
 		public override function initAGSprite():void {
@@ -399,9 +436,11 @@
 					if (mySprite[i].sprite_type == AGMode.S_KEY) myDraw.drawBasicSprite(mySprite[i], D_KEY);
 
 					if (mySprite[i].sprite_type == AGMode.S_XGOAL ) myDraw.drawBasicSprite(mySprite[i], D_GOAL);
-					if (mySprite[i].sprite_type == AGMode.S_GUN) myDraw.drawBasicSprite(mySprite[i], D_GUN);
+					if (mySprite[i].sprite_type == AGMode.S_GUN && this.key_count > 0) {
+						myDraw.drawBasicSprite(mySprite[i], D_GUN);
+					}
 //					
-//					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_3) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_3);
+					if (mySprite[i].sprite_type == AGMode.S_EXIT) myDraw.drawBasicSprite(mySprite[i], D_EXIT);
 //					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_2) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_2);
 //					if (mySprite[i].sprite_type == AGMode.S_INVADER_1) myDraw.drawBasicSprite(mySprite[i], D_INVADER_1);
 //					if (mySprite[i].sprite_type == AGMode.S_INVADER_2) myDraw.drawBasicSprite(mySprite[i], D_INVADER_2);
@@ -1063,14 +1102,17 @@
 								
 								//myChallenge[myGame.gameChallenge].total_held_rings ++ ;
 							break;
-							
-							case AGMode.S_GATOR:
+							case AGMode.S_EXIT:
+								this.animate_return_to_planet = true;
+							break;
 							case AGMode.S_XMONSTER:
 							case AGMode.S_XMONSTER_STAND:
 								testPunch(myGuy, sprite);
 								if (!sprite.active) break;
 								if (myGame.gameHealth <= 0) this.guyDeath();
 								break;
+								
+							/*
 							case AGMode.S_BUBBLE_2:
 							case AGMode.S_INVADER_1:
 							case AGMode.S_INVADER_2:
@@ -1080,12 +1122,17 @@
 								sprite.visible = true;//true
 								guyDeath();
 							break;
+							*/
 							case AGMode.S_GUN:
 								sprite.active = false;
 								sprite.visible = false;
 								this.bullet_count = 10;
 							break;
-							
+							case AGMode.S_KEY:
+								sprite.active = false;
+								sprite.visible = false;
+								this.key_count ++;
+							break;
 						}//switch
 					}// collision simple
 				}

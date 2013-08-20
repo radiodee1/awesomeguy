@@ -34,6 +34,7 @@
 	public var gameScore:int = 10;
 	public var gameLives:int = 3;
 	public var gameHealth:int = 50;
+	public var gameKeys:int = 0;
 	
 	
 	var modeObj:AGMode ;
@@ -189,6 +190,25 @@
 				this.myModeStack.push(AGGame.MODE_GUY);
 				
 				this.guy.setValues(this.myStage, this.myButtons, this.myRes, this);
+				//this.myModeStack.push(AGGame.MODE_PAUSE);// just for testing!!
+				//gamePaused = true; // just for testing!!
+				
+				//this.modeObj.game_advance_maze = false;
+				this.guy.game_advance_maze = false;
+				this.flyer.game_advance_maze = false;
+				this.modeObj.game_advance_maze = false;
+				this.paused.game_advance_maze = false;
+			}
+			
+			if(this.modeObj != null && 
+			   this.guy.animate_return_to_planet && this.gameMode == AGGame.MODE_GUY) {
+				// switch to maze from planet...
+				this.myModeStack.pop();
+				
+				this.flyer.animate_return_to_planet = true;
+				this.flyer.animate_enter_maze = false;
+								
+				//this.guy.setValues(this.myStage, this.myButtons, this.myRes, this);
 				//this.myModeStack.push(AGGame.MODE_PAUSE);// just for testing!!
 				//gamePaused = true; // just for testing!!
 				

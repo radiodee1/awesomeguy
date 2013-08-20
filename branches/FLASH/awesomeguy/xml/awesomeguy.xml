@@ -1059,6 +1059,9 @@
 <challenges>
 </challenges>
 <special>
+<block>XML_MAZE_EXIT, 31, 29</block>
+<block>XML_MAZE_TEST</block>
+<block>XML_MAZE_TEST</block>
 </special>
 </maze>
 <maze number="2">

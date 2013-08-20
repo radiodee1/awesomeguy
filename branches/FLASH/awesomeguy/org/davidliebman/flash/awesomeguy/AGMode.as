@@ -77,6 +77,7 @@
 	static var S_GUN:int = 27;
 	static var S_XGOAL:int = 28;
 	static var S_BUNKER:int = 29;
+	static var S_EXIT:int = 30;
 	
 	//draw enumeration
 	static var D_NONE:int = 0;
@@ -103,6 +104,7 @@
 	static var D_KEY:int = 21;
 	static var D_GUN:int = 22;
 	static var D_BUNKER:int = 23;
+	static var D_EXIT:int = 24;
 	
 	//radar ping types
 	static var PING_FLYER:int = 0;

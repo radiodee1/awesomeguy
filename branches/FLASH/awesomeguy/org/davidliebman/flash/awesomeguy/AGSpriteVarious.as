@@ -30,13 +30,11 @@
 					this.bitmap = myMode.oldCutTile(myMode.myRes[AGResources.NAME_TILES1_PNG],
 													AGModeGuy.B_GOAL,AGMode.TILE_BOT, 64,64);
 				break;
-				/*
-				case AGMode.S_BUNKER:
-					this.bitmap = myMode.oldCutTile(myMode.myRes[AGResources.NAME_TILES1_PNG],
-													AGModeFlyer.B_BIBPRIZE,AGMode.TILE_TOP, 16,16);
-				break;
-				*/
 				
+				case AGMode.S_EXIT:
+					var bits:BitmapData = new BitmapData(64,64*2,false,0x00555555);
+					this.bitmap = new Bitmap(bits);
+				break;
 				
 			}
 		}
