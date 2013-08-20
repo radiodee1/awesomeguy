@@ -80,6 +80,7 @@
 			myDraw.drawRes(agflyer,xpos,ypos,facingRight,AGMode.D_FLYER ,animate);
 
 			drawScoreWords();
+			this.showKeys(this.myGame.gameKeys);
 			myStage.addChild(myShape);
 			//
 			fireButton();
