@@ -341,7 +341,7 @@
 			
 		}
 		public override function initAGTimer():void {
-			//super.initAGTimer();
+			super.initAGTimer();
 		}
 		
 		public function addXVarious(xx:int, yy:int, type:int):void {
@@ -404,6 +404,22 @@
 			//return temp;
 		}
 		
+		public function addTorpedo(ii:int, xx:int, yy:int):void {
+			var temp:AGSpriteTorpedo = new AGSpriteTorpedo(this, AGMode.TORPEDO_UNUSED);// Sprite temp ;
+			temp.x =xx;
+			temp.y = yy ;
+			temp.facingRight = facingRight;
+			if (facingRight) {
+				temp.x = temp.x + spriteWidth;
+			}
+			temp.sprite_type = AGMode.S_TORPEDO;
+			temp.speed = 1;
+			temp.active = true;
+			temp.visible = true;
+			temp.limit = 0;
+			myTorpedo[ii] = temp;
+			//trace("new torpedo");
+		}
 		public function addSprites():void {
 			var i:int = 0;
 			mySprite.push(myGuy);
@@ -437,11 +453,13 @@
 					if (mySprite[i].sprite_type == AGMode.S_KEY) myDraw.drawBasicSprite(mySprite[i], D_KEY);
 
 					if (mySprite[i].sprite_type == AGMode.S_XGOAL ) myDraw.drawBasicSprite(mySprite[i], D_GOAL);
-					if (mySprite[i].sprite_type == AGMode.S_GUN && this.myGame.gameKeys > 0) {
+					if (mySprite[i].sprite_type == AGMode.S_GUN ) {
 						myDraw.drawBasicSprite(mySprite[i], D_GUN);
 					}
 //					
-					if (mySprite[i].sprite_type == AGMode.S_EXIT) myDraw.drawBasicSprite(mySprite[i], D_EXIT);
+					if (mySprite[i].sprite_type == AGMode.S_EXIT && this.key_for_maze == true ) {
+						myDraw.drawBasicSprite(mySprite[i], D_EXIT);
+					}
 //					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_2) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_2);
 //					if (mySprite[i].sprite_type == AGMode.S_INVADER_1) myDraw.drawBasicSprite(mySprite[i], D_INVADER_1);
 //					if (mySprite[i].sprite_type == AGMode.S_INVADER_2) myDraw.drawBasicSprite(mySprite[i], D_INVADER_2);
@@ -484,6 +502,15 @@
 					//}
 					
 					//myDraw.drawBasicSprite(flyerrings, AGMode.D_FLYER_RINGS);
+					
+				}
+			}
+			var sprite:AGSpriteTorpedo;
+			for ( i = 0; i < myTorpedo.length ; i ++ ) {
+				sprite = myTorpedo[i];
+				if (sprite.active) {
+					sprite.updateSprite();
+					myDraw.drawBasicSprite(sprite, AGMode.D_TORPEDO);
 					
 				}
 			}
@@ -727,12 +754,39 @@
 				myGuy.quality_0 = AGModeGuy.GUY_PUNCH;
 				this.shoot_count = 3;
 			}
+			if (K_SHOOT && this.bullet_count > 0) {
+				//this.fireButton();
+			}
 			
 			if (xx  == 0 && yy == 0 && this.shoot_count <= 0) myGuy.quality_0 = AGModeGuy.GUY_STILL;
 			
 		}
 		public override function fireButton():void {
+			var  ii:int, jj:int, kk:int, ll:int, add:int;
+			var flag:Boolean = false;
 			
+			if (this.K_SHOOT && this.bullet_count > 0 ) { // using space key
+				
+				if (myTimer[AGMode.TIMER_08].timerDone()){ 
+					
+					ii = 0;
+					while (ii  < TOTAL_TORPEDOS  && flag == false) {
+						
+						if (myTorpedo[ii].active == false ) {
+						
+							
+							this.addTorpedo(ii, xpos, ypos);
+							this.bullet_count --;
+							
+							flag = true;
+						} 
+						ii ++;
+					}
+					if (flag == true) myTimer[AGMode.TIMER_08] = new AGTimer(.3);
+				}
+	
+	
+			}
 		}
 		
 		
@@ -790,11 +844,11 @@
 					
 					break;
 					case AGModeGuy.GUY_PUNCH:
-						if (K_SHOOT && this.bullet_count > 0) {
-							trace("shoot gun");
-							this.bullet_count --;
-						}
-						if (this.shoot_count <= 0) myGuy.animate = 1;
+						//if (K_SHOOT && this.bullet_count > 0) {
+							//trace("shoot gun");
+							//this.bullet_count --;
+						//}
+						//if (this.shoot_count <= 0) myGuy.animate = 1;
 						
 					break;
 					
@@ -1118,7 +1172,7 @@
 							case AGMode.S_GUN:
 								sprite.active = false;
 								sprite.visible = false;
-								this.bullet_count = 10;
+								this.bullet_count = 20;
 							break;
 							case AGMode.S_KEY:
 								sprite.active = false;
@@ -1166,6 +1220,8 @@
 							break;
 							
 							case AGMode.S_GATOR:
+							case AGMode.S_XMONSTER:
+							case AGMode.S_XMONSTER_STAND:
 								sprite.active = false;
 								myGame.gameScore += 10;
 							break;
