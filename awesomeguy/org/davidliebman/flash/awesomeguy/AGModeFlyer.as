@@ -137,12 +137,14 @@
 			
 			prepTiles() ;
 			prepRings() ;
-			//if ( this.game_start) 
-			prepSpecialXml();
+			if ( this.game_start) prepSpecialXml(); // just for maze entrances!!
 			
+			for (var i:int = 0; i < myGame.myMazeEntrance.length; i ++ ) {
+				mySprite.push(myGame.myMazeEntrance[i]);
+			}
 			
 			if (this.game_reset_start ) {
-				
+				//prepSpecialXml();
 				
 				radar_start = xpos - scrollBGX;
 				radar_start_scroll =  scrollBGX;
@@ -158,7 +160,7 @@
 		
 		public override function advanceChallenge():void {
 			super.advanceChallenge();
-			myHold = new Array();
+			//myHold = new Array();
 			
 			if (myGame.gameChallenge >= challenges) {
 				myGame.gameChallenge = 0;
@@ -266,7 +268,10 @@
 					addBunker(int(tempArray[1]),int(tempArray[2]), int(tempArray[3]));
 					this.maze_entrances ++;
 				}
+				
+				
 			}
+			
 		}
 		
 		public function fillChallenges():void {
@@ -413,7 +418,8 @@
 			pyr.active = true;
 			pyr.visible = true;
 			pyr.sprite_link = maze;
-			mySprite.push(pyr);
+			//mySprite.push(pyr);
+			myGame.myMazeEntrance.push(pyr);
 		}
 		
 		public function addBunker(xx:int, yy:int, maze:int):void {
@@ -424,7 +430,8 @@
 			pyr.active = true;
 			pyr.visible = true;
 			pyr.sprite_link = maze;
-			mySprite.push(pyr);
+			//mySprite.push(pyr);
+			myGame.myMazeEntrance.push(pyr);
 		}
 		
 		public function addMonster(monster_x:int, monster_y:int,  monster_animate:int):void {
@@ -616,9 +623,11 @@
 				mySprite.push(myTemp[i]);
 			}
 			myTemp = new Array();
-			for ( i = 0; i < myHold.length; i ++ ) {
-				mySprite.push(myHold[i]);
+			/*
+			for (i = 0; i < myGame.myMazeEntrance.length; i ++ ) {
+				mySprite.push(myGame.myMazeEntrance[i]);
 			}
+			*/
 		}
 		
 		public function doTimers():void {
@@ -724,6 +733,16 @@
 			if (myTimer[AGMode.TIMER_07].timerDone()) {
 				is_blinking = false;
 			}
+			
+			if (this.animate_return_to_planet ){// && pyramid.toggle == pyramid.ENUM_SHOW) {
+				this.animate_return_to_planet_sprite.switchPyramid();
+				this.animate_return_to_planet = false;
+				this.animate_enter_maze = false;
+				this.animate_return_to_planet_bubble.active = false;
+				this.animate_return_to_planet_bubble.visible = false;
+				
+			}
+			
 		}
 		
 		public override function fireButton():void {
@@ -831,6 +850,8 @@
 					myDraw.drawBasicSprite(myBlocks[i], AGMode.D_GOAL);
 				}
 			}
+			
+			
 		}
 		
 		
@@ -1063,8 +1084,7 @@
 								var pyramid:AGSpritePyramid = AGSpritePyramid(sprite);
 								
 							
-								if (pyramid.toggle == pyramid.ENUM_SINK && 
-									pyramid.sprite_type == AGMode.S_BUNKER) break;
+								//if (pyramid.toggle == pyramid.ENUM_SINK ) break;
 							
 								if (this.flyerGrounded && !this.animate_return_to_planet && pyramid.toggle == pyramid.ENUM_SHOW) {
 									if (sprite.sprite_type == AGMode.S_BUNKER) sprite.animate = 5;
@@ -1087,14 +1107,7 @@
 									sprite.quality_1 = 0;
 									this.animate_enter_maze = false;
 								}
-								if (this.animate_return_to_planet){// && pyramid.toggle == pyramid.ENUM_SHOW) {
-									this.animate_return_to_planet_sprite.switchPyramid();
-									this.animate_return_to_planet = false;
-									this.animate_enter_maze = false;
-									this.animate_return_to_planet_bubble.active = false;
-									this.animate_return_to_planet_bubble.visible = false;
-									
-								}
+								
 							break;
 							
 						}//switch

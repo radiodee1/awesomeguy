@@ -18,6 +18,7 @@
 	var myStage:Stage;
 	var myButtons:Array;
 	var myRes:Array;
+	var myMazeEntrance:Array;
 	
 	public static var MODE_FLYER:int = 0;
 	public static var MODE_GUY:int = 1;
@@ -60,6 +61,8 @@
 			K_ANY = false;
 			myButtons[AGKeys.BUTTON_PAUSE].setValBool(false);
 			myButtons[AGKeys.BUTTON_ANY].setValBool(false);
+			
+			this.myMazeEntrance = new Array();
 			
 			guy = new AGModeGuy();
 			flyer = new AGModeFlyer();
@@ -188,7 +191,7 @@
 			   this.flyer.game_advance_maze && this.gameMode == AGGame.MODE_FLYER) {
 				// switch to maze from planet...
 				this.myModeStack.push(AGGame.MODE_GUY);
-				
+				this.guy = new AGModeGuy();
 				this.guy.setValues(this.myStage, this.myButtons, this.myRes, this);
 				//this.myModeStack.push(AGGame.MODE_PAUSE);// just for testing!!
 				//gamePaused = true; // just for testing!!
@@ -206,7 +209,7 @@
 				this.myModeStack.pop();
 				
 				this.flyer.animate_return_to_planet = true;
-				this.flyer.animate_enter_maze = false;
+				//this.flyer.animate_enter_maze = false;
 								
 				//this.guy.setValues(this.myStage, this.myButtons, this.myRes, this);
 				//this.myModeStack.push(AGGame.MODE_PAUSE);// just for testing!!

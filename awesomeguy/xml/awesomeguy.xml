@@ -1170,6 +1170,9 @@
 <challenges>
 </challenges>
 <special>
+<block>XML_MAZE_EXIT, 31, 13</block>
+<block>XML_MAZE_TEST</block>
+
 </special>
 </maze>
 </underground>
