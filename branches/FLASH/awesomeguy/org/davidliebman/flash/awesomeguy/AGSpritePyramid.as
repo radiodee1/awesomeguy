@@ -5,6 +5,7 @@
 		var toggle:int = 0;
 		var ENUM_SHOW:int = 1;
 		var ENUM_SINK:int = 2;
+		var ENUM_AFTER:int = 3;
 
 		public function AGSpritePyramid( mymode:AGMode, kind:int) {
 			super(mymode, kind);
@@ -35,6 +36,9 @@
 					this.visible = false;
 					this.myMode.maze_entrances --;
 				}
+			}
+			else if (toggle == ENUM_AFTER) {
+				
 			}
 			
 		}
