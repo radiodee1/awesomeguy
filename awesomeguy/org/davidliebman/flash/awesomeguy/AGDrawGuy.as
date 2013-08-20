@@ -123,6 +123,10 @@
 				case AGMode.D_EXIT:
 					this.drawXVarious();
 				break;
+				
+				case AGMode.D_TORPEDO:
+					drawTorpedo();
+				break;
 			}
 			
 		}
@@ -290,6 +294,27 @@
 				myStage.addChild(sprite.bitmap);
 			
 			}//if
+		}
+
+		public function drawTorpedo() {
+			if (sprite == null || sprite.bitmap == null ) return;
+					
+			if (sprite.facingRight) sprite.quality_2 = myMode.spriteWidth;
+			else sprite.quality_2 = 0;
+			
+			if (scrollx < sprite.x + (8)) {
+				sprite.bitmap.x = (sprite.x - scrollx ) - sprite.quality_2 ;
+			}
+			else {
+				sprite.bitmap.x = sprite.x - scrollx  + (myMode.myHoriz * 16) - sprite.quality_2;
+			}
+			
+			sprite.bitmap.y = sprite.y - scrolly + AGMode.LASER_GUN;
+			if (sprite.active == true && sprite != null && sprite.bitmap != null) {
+			//trace("before");
+				myStage.addChild(sprite.bitmap);
+			//trace("after");
+			}
 		}
 
 	}

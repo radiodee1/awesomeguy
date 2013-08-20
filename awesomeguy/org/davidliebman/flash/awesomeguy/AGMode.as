@@ -330,9 +330,7 @@
 			var ii:int = 0;
 			mySprite = new Array();
 			myTorpedo = new Array();
-			//for (ii = 0; ii < TOTAL_SPRITE; ii ++ ) {
-			//	mySprite.push(new AGSprite(this,S_NONE));
-			//}
+			
 			for (ii = 0; ii < TOTAL_TORPEDOS; ii ++ ) {
 				myTorpedo.push(new AGSpriteTorpedo(this, TORPEDO_UNUSED));
 			}
@@ -715,6 +713,7 @@
 										 16,16);
 				if(true) {
 					square.x = (16 * ii) + 256;
+					if (ii > 0) square.x += 2;
 					square.y = 64;
 					myStage.addChild(square);
 				}
