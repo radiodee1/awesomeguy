@@ -120,6 +120,7 @@
 				
 				case AGMode.D_GUN:
 				case AGMode.D_GOAL:
+				case AGMode.D_EXIT:
 					this.drawXVarious();
 				break;
 			}

@@ -1059,7 +1059,8 @@
 								var pyramid:AGSpritePyramid = AGSpritePyramid(sprite);
 								
 							
-								if (pyramid.toggle == pyramid.ENUM_SINK) break;
+								if (pyramid.toggle == pyramid.ENUM_SINK && 
+									pyramid.sprite_type == AGMode.S_BUNKER) break;
 							
 								if (this.flyerGrounded && !this.animate_return_to_planet && pyramid.toggle == pyramid.ENUM_SHOW) {
 									if (sprite.sprite_type == AGMode.S_BUNKER) sprite.animate = 5;
