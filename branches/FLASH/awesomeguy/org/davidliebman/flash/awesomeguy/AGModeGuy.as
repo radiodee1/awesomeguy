@@ -48,7 +48,7 @@
 		public var jump_count:int = 0;
 		public var shoot_count:int = 0; // shoot button
 		public var bullet_count:int = 0; // number of bullets in gun
-		public var key_count:int = 0;
+		public var key_for_maze:Boolean = false;
 
 		public var hit_top:Boolean =false; 
 		public var hit_bottom:Boolean= false; 
@@ -101,6 +101,7 @@
 			myGuy.y = ypos;
 
 			drawScoreWords();
+			showKeys(this.myGame.gameKeys);
 			myStage.addChild(myShape);
 			//
 			fireButton();
@@ -436,7 +437,7 @@
 					if (mySprite[i].sprite_type == AGMode.S_KEY) myDraw.drawBasicSprite(mySprite[i], D_KEY);
 
 					if (mySprite[i].sprite_type == AGMode.S_XGOAL ) myDraw.drawBasicSprite(mySprite[i], D_GOAL);
-					if (mySprite[i].sprite_type == AGMode.S_GUN && this.key_count > 0) {
+					if (mySprite[i].sprite_type == AGMode.S_GUN && this.myGame.gameKeys > 0) {
 						myDraw.drawBasicSprite(mySprite[i], D_GUN);
 					}
 //					
@@ -1103,7 +1104,7 @@
 								//myChallenge[myGame.gameChallenge].total_held_rings ++ ;
 							break;
 							case AGMode.S_EXIT:
-								if (this.key_count == 0) break;
+								if (!this.key_for_maze) break; // has a key been found on this maze??
 								this.animate_return_to_planet = true;
 							break;
 							case AGMode.S_XMONSTER:
@@ -1122,7 +1123,8 @@
 							case AGMode.S_KEY:
 								sprite.active = false;
 								sprite.visible = false;
-								this.key_count ++;
+								this.myGame.gameKeys ++;
+								this.key_for_maze = true;
 							break;
 						}//switch
 					}// collision simple

@@ -704,6 +704,23 @@
 			
 			return;
 		}
+		
+		public function showKeys(num:int):void {
+			var square:Bitmap;
+			var ii:int;
+			
+			for (ii = 0; ii < num; ii ++ ) {
+				square = this.oldCutTile(myRes[AGResources.NAME_TILES1_PNG], 
+										 AGModeFlyer.B_KEY, AGMode.TILE_TOP,
+										 16,16);
+				if(true) {
+					square.x = (16 * ii) + 256;
+					square.y = 64;
+					myStage.addChild(square);
+				}
+			}
+			
+		}
 	}
 	
 }
