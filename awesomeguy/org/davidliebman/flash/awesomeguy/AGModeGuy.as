@@ -68,10 +68,7 @@
 		}
 		
 		public override function componentsInOrder():void {
-			//super.componentsInOrder();
 			
-			
-			//physicsAdjustments();
 			var myShape:Shape = new Shape();
 			myShape.graphics.lineStyle(2, 0xffffffff, 1);
 			myShape.graphics.moveTo(0,0);
@@ -89,6 +86,8 @@
 			radarscreen = new Bitmap( new BitmapData(SCREEN_WIDTH - 128, 64,
 										false, 0x00000000));
 			addSprites();
+			myGuy.updateSprite()
+			myDraw.drawBasicSprite(myGuy, D_GUY);
 			
 			drawLevelTiles();
 			updateSprites();
@@ -108,8 +107,6 @@
 			doTimers();
 
 			checkRegularCollision();
-			
-			//showText();
 			
 			screenframe.x = 0;
 			screenframe.y = SCREEN_HEIGHT;
@@ -136,6 +133,7 @@
 			myGuy.active = true;
 			myGuy.visible = true;
 			myGuy.quality_0 = AGModeGuy.GUY_STEP;
+
 			this.flyersprite = myGuy.bitmap;
 			
 			this.mySprite.push(myGuy);
@@ -422,7 +420,6 @@
 		}
 		public function addSprites():void {
 			var i:int = 0;
-			mySprite.push(myGuy);
 			
 			for( i= 0; i < myTemp.length; i ++ ) {
 				mySprite.push(myTemp[i]);
