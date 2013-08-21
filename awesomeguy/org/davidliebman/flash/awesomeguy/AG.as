@@ -32,7 +32,8 @@
 		//followed by message-number
 		public static var XML_TEXT_PLANET_AFTER_COMPLETE:String = "XML_TEXT_PLANET_AFTER_COMPLETE";
 		//followed by message-number
-
+		public static var XML_PLANET_ASTROGATE:String = "XML_PLANET_ASTROGATE";
+		//followed by x-flyer-tiles, y-flyer-tiles
 		
 
 		public function AG() {

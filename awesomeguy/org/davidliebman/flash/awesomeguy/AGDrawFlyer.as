@@ -55,56 +55,8 @@
 					break;
 				case AGMode.D_FLYER:
 					drawFlyer();
-				/*
-				try {
-					add = 0;
-					add_radar = 0;
-	
-					
-					if (scrollx >= xx  ) {
-						add = myMode.myHoriz * TILE_WIDTH;
-						add_radar =  (xx - scrollx) - xx ;
-					}
-					
-					if (facingRight) {
-						if (myMode.is_blinking) {
-							sprite.bitmap = myRes[AGResources.NAME_FLYER_WHITE_R];
-						}
-						
-						else if (animate %2 == 1 ) {
-							sprite.bitmap = myRes[AGResources.NAME_FLYER_R0_PNG];
-	
-						}
-						else {
-							sprite.bitmap = myRes[AGResources.NAME_FLYER_R1_PNG];
-		
-						}
-					}
-					else {
-						if (myMode.is_blinking) {
-							sprite.bitmap = myRes[AGResources.NAME_FLYER_WHITE_L];
-						}
-						else if (animate %2 == 1) {
-							sprite.bitmap = myRes[AGResources.NAME_FLYER_L0_PNG];
-	
-						}
-						else {
-							sprite.bitmap = myRes[AGResources.NAME_FLYER_L1_PNG];
-		
-						}
-					}
-					sprite.bitmap.x = add + xx - scrollx;
-					sprite.bitmap.y = yy - scrolly;
-					if (sprite.active == true && sprite != null && sprite.bitmap != null) {
-						//trace("before");
-						myStage.addChild(sprite.bitmap);
-						//trace("after");
-					}
-					myMode.flyersprite = sprite.bitmap;
-				}catch (err:Error) {
-					trace("draw flyer!!!!!!!!!!!!!!!");
-				}
-				*/
+				
+				
 				break;
 				
 				case AGMode.D_GATOR:
@@ -204,106 +156,8 @@
 				
 				drawExplosion();
 				
-				/*
-				try {
 				
-					//i = spriteNum;
-					var x:int, y:int ;
-					var wait:int = 20;
-					y = sprite.y - 32;
-					x = sprite.x;
-			
-					//trace("boom start");
-					
-			
-					add = 0;
-			
-					if(scrollx < sprite.x + 64*2) {
-						add = 0;
-					}
-					else if (scrollx >= sprite.x ) {
-						add = myMode.myHoriz * 16;
-					}
-					
-					//
-					if (sprite.timerDone() ){// ||  sprite.timer.started == false) {
-			
-						//LOGE("explosion %d ", flyer_explosion);
-			
-						switch (sprite.quality_3) {
-						case 0:
-							
-							//drawSprite_64(explosion_a, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
-							sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_A];
-							break;
-						case 1:
-							//drawSprite_64(explosion_b, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
-							sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_B];
-	
-							break;
-			
-						case 2:
-							//drawSprite_64(explosion_c, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
-							sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_C];
-			
-							break;
-						case 3:
-							//drawSprite_64(explosion_d, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
-							sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_D];
-							
-							break;
-						case 4:
-							//drawSprite_64(explosion_e, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
-							sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_E];
-							
-							break;
-						case 5:
-							//drawSprite_64(explosion_f, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
-							sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_F];
-							
-							break;
-			
-						case 6:
-							//drawSprite_64(explosion_g, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
-							sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_G];
-							
-							break;
-						case 7:
-							//drawSprite_64(explosion_h, x + add, y, scrollx, scrolly, PAINT_TRANSPARENT, 0);
-							//sprite[i].active = FALSE;
-							sprite.bitmap = myRes[AGResources.NAME_EXPLOSION_H];
-							//myMode.game_death = true;
-							
-							break;
-						}
-						
-						sprite.bitmap.x = x - scrollx + add;
-						sprite.bitmap.y = y - scrolly;
-						if (sprite.active == true && sprite != null && sprite.bitmap != null) {
-						//trace("before");
-							myStage.addChild(sprite.bitmap);
-						//trace("after");
-						}
-						
-						if (sprite.quality_3 > 7) {
-							//sprite[i].quality_3 = -1;
-							//endlevel = TRUE;
-							//gamedeath = TRUE;
-							sprite.active = false;
-							//sprite.sprite_type = AGMode.S_NONE;
-							myMode.game_death = true;
-						}
-						sprite.quality_3 ++;
-						sprite.timerStart( wait/1000 );/// 100);
-						//}
-					}
 				
-				} catch (err:Error) {
-					trace("flyer disaster averted");
-					return;
-				}// catch
-				
-				*/
 				break;
 				///////////
 				case AGMode.D_CLOUD:
@@ -693,6 +547,9 @@
 				case AGMode.D_BUNKER :
 					drawBunker();
 				break;
+				case AGMode.D_ASTROGATE:
+					drawAstrogate();
+				break;
 			}
 		}
 
@@ -854,23 +711,40 @@
 		}
 
 		public function drawBunker():void {
-					add = 0;
-					add_radar = 0;
-	
-					
-					if (scrollx >= xx  ) {
-						add = myMode.myHoriz * TILE_WIDTH;
-						add_radar =  (xx - scrollx) - xx ;
-					}
-					sprite.bitmap.x = add + xx - scrollx;
-					sprite.bitmap.y = yy - scrolly;
-					if (sprite.active == true && sprite != null && sprite.bitmap != null) {
-						//trace("before");
-						myStage.addChild(sprite.bitmap);
-						//trace("after");
-					}
-		}
+			add = 0;
+			add_radar = 0;
 
+			
+			if (scrollx >= xx  ) {
+				add = myMode.myHoriz * TILE_WIDTH;
+				add_radar =  (xx - scrollx) - xx ;
+			}
+			sprite.bitmap.x = add + xx - scrollx;
+			sprite.bitmap.y = yy - scrolly;
+			if (sprite.active == true && sprite != null && sprite.bitmap != null) {
+				//trace("before");
+				myStage.addChild(sprite.bitmap);
+				//trace("after");
+			}
+		}
+		public function drawAstrogate():void {
+			add = 0;
+			add_radar = 0;
+
+			
+			if (scrollx >= xx  ) {
+				add = myMode.myHoriz * TILE_WIDTH;
+				add_radar =  (xx - scrollx) - xx ;
+			}
+			sprite.bitmap.x = add + xx - scrollx;
+			sprite.bitmap.y = yy - scrolly;
+			if (sprite.active == true && sprite != null && sprite.bitmap != null) {
+				//trace("before");
+				myStage.addChild(sprite.bitmap);
+				//trace("after");
+			}
+
+		}
 	}
 	
 }

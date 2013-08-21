@@ -852,6 +852,7 @@
 <block>XML_MAZE_ENTRANCE_BUNKER, 150, 31, 2, XML_MAZE_START_REGULAR, 0, 0</block>
 <block>XML_TEXT_PLANET_BEFORE_COMPLETE,1 </block>
 <block>XML_TEXT_PLANET_AFTER_COMPLETE,2</block>
+<block>XML_PLANET_ASTROGATE, 100, 15 </block>
 <block>XML_TEST</block>
 </special>
 <text>
