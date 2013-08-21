@@ -18,7 +18,9 @@
 			//int index_num = 0;
 			var vert:int = 64;
 			var horiz:int = 64;
-			var width:int = 4;
+			var width:int = 2;
+			
+			
 			
 			//for each monster...
 			if( true) {
@@ -48,7 +50,7 @@
 									if(myMode.myInvisible[yy+1][xx+width]  == 0) markerTest = true;//TRUE;
 								}
 								// turn monster
-								if (this.x > myMode.myHoriz * horiz  - (horiz * 3) || markerTest == true ) {
+								if (this.x > myMode.myHoriz * horiz  - (horiz * 2) || markerTest == true ) {
 			
 									this.facingRight=false;//FALSE;
 								}

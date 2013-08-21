@@ -37,6 +37,10 @@
 	public var gameHealth:int = 50;
 	public var gameKeys:int = 0;
 	
+	public var xml_text_planet_before:int = 1;
+	public var xml_text_planet_after:int = 2;
+	public var xml_text_maze_before:int = 3;
+	public var xml_text_maze_after:int = 4;
 	
 	var modeObj:AGMode ;
 	var guy:AGModeGuy;
