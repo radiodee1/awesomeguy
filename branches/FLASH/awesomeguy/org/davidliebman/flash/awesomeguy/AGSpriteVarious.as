@@ -34,6 +34,11 @@
 				case AGMode.S_EXIT:
 					var bits:BitmapData = new BitmapData(64,64*2,false,0x00555555);
 					this.bitmap = new Bitmap(bits);
+
+				break;
+				
+				case AGMode.S_ASTROGATE:
+					this.bitmap = myMode.myRes[AGResources.NAME_ASTROGATE_PNG];
 				break;
 				
 			}

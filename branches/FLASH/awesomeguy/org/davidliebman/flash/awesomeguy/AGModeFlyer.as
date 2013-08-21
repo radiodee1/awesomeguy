@@ -11,6 +11,7 @@
 
 		
 		public var flyerrings:AGSprite ;
+		public var flyerastrogate:AGSprite ;
 		
 		public var animate_explosion:Boolean = false;
 		public var animate_enter_maze:Boolean = false;
@@ -88,7 +89,7 @@
 
 			checkRegularCollision();
 
-			//showText();
+			showAstrogate();
 			
 			screenframe.x = 0;
 			screenframe.y = SCREEN_HEIGHT;
@@ -268,6 +269,11 @@
 				if (tempArray[0] == AG.XML_MAZE_ENTRANCE_BUNKER) { // this is a bunker
 					addBunker(int(tempArray[1]),int(tempArray[2]), int(tempArray[3]));
 					this.maze_entrances ++;
+				}
+				
+				if (tempArray[0] == AG.XML_PLANET_ASTROGATE) { // this is an astrogate
+					addAstrogate(int(tempArray[1]),int(tempArray[2]), AGMode.S_ASTROGATE);
+					
 				}
 				
 				if (tempArray[0] == AG.XML_TEXT_PLANET_AFTER_COMPLETE) {
@@ -557,6 +563,25 @@
 			//myChallenge[ myGame.gameChallenge].total_rings ++;
 			//return temp;
 		}
+		
+		public function addAstrogate(xx:int, yy:int, type:int):void {
+			// create a various-type object
+			var temp:AGSpriteVarious = new AGSpriteVarious(this, type);// Sprite temp ;
+			temp.x =xx*16;
+			temp.y = yy *16;
+
+			temp.sprite_type = type;
+			temp.speed = 1;
+			temp.active = false;
+			temp.quality_0 = xx;
+			temp.quality_1 = yy;
+			// add it to the sprite list
+			this.myGame.myMazeEntrance.push(temp);
+			//mySprite.push(temp);
+			this.flyerastrogate = temp;
+			//this.myBlocks.push(temp);
+			//return temp;
+		}
 		public function addTorpedo(ii:int, xx:int, yy:int):void {
 			var temp:AGSpriteTorpedo = new AGSpriteTorpedo(this, AGMode.TORPEDO_UNUSED);// Sprite temp ;
 			temp.x =xx;
@@ -797,7 +822,8 @@
 					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_2) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_2);
 					if (mySprite[i].sprite_type == AGMode.S_INVADER_1) myDraw.drawBasicSprite(mySprite[i], D_INVADER_1);
 					if (mySprite[i].sprite_type == AGMode.S_INVADER_2) myDraw.drawBasicSprite(mySprite[i], D_INVADER_2);
-					
+					if (mySprite[i].sprite_type == AGMode.S_ASTROGATE) myDraw.drawBasicSprite(mySprite[i], D_ASTROGATE);
+
 				}
 				
 			}
@@ -1495,7 +1521,13 @@
 		
 		}
 
-
+		public function showAstrogate():void {
+			
+			if (this.maze_entrances == 0) {
+				this.flyerastrogate.active = true;
+				this.flyerastrogate.visible = true;
+			}
+		}
 		public function drawRadarRock():void {
 
 			var xxx:int,yyy:int;
