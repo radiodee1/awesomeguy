@@ -18,6 +18,8 @@
 			var visibility:Boolean = false;
 			//int index_num = 0;
 			
+			var tileWidth:int = 16;
+			
 			
 			//for each monster...
 			if( true) {
@@ -27,8 +29,8 @@
 						markerTest = false;//FALSE; 
 						
 						if (this.active ==true  ) {
-							xx = Math.floor(int ( this.x / 16));
-							yy = Math.floor(int ( this.y / 16)) ;
+							xx = Math.floor(int ( this.x / tileWidth));
+							yy = Math.floor(int ( this.y / tileWidth)) ;
 							
 							
 							// Must move and stop monsters when they hit bricks or
@@ -47,7 +49,7 @@
 									if(myMode.myInvisible[yy+1][xx+2]  == 0) markerTest = true;//TRUE;
 								}
 								// turn monster
-								if (this.x > myMode.myHoriz * 16  - 32 || markerTest == true ) {
+								if (this.x > (myMode.myHoriz * tileWidth)  - (tileWidth * 2) || markerTest == true ) {
 			
 									this.facingRight=false;//FALSE;
 								}
@@ -74,18 +76,20 @@
 							//default is to show monster
 							visibility = show;
 							//hide monster if...
-							if(this.x > myMode.scrollBGX + 64 * 16 + 32 ) {
+							/*
+							if(this.x > myMode.scrollBGX + 64 * tileWidth + 32 ) {
 								visibility = hide;
 							}
 							if (this.x < myMode.scrollBGX - 32) {
 								visibility = hide;
 							}
-							if (this.y > myMode.scrollBGY + 48 * 16 + 32) {
+							if (this.y > myMode.scrollBGY + 48 * tileWidth + 32) {
 								visibility = hide;
 							}
 							if ( this.y < myMode.scrollBGY  - 32) {
 								visibility = hide;
 							}
+							*/
 						}
 						//visibility = show;
 						//swap monsters

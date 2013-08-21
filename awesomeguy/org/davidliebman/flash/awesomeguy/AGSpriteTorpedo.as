@@ -17,9 +17,15 @@
 				
 				var  ii:int, jj:int, kk:int, ll:int, add:int;
 				var flag:Boolean = false;
-				
+				var long:Boolean = false;
+				var guy:Boolean = false;
 				var SCREEN_WIDTH:int = myMode.SCREEN_WIDTH;
 				var SCREEN_HEIGHT:int = myMode.SCREEN_HEIGHT;
+				
+				if (myMode.myGame.gameHealth >= 60 && 
+					myMode.myGame.gameMode == AGGame.MODE_GUY) long = true;
+					
+				if (myMode.myGame.gameMode == AGGame.MODE_GUY) guy = true;
 				
 				jj = 4;
 				
@@ -50,18 +56,30 @@
 							this.quality_0 = - (AGMode.X_MOVE * jj);
 							this.x += this.quality_0;
 						}
+						
+						/////////////////////
+						if (myMode.facingRight && long) { 
+							this.quality_0 = SCREEN_WIDTH;
+							this.x += 0;
+						}
+						else if (!myMode.facingRight && long){ 
+							this.quality_0 = - (SCREEN_WIDTH);
+							this.x += this.quality_0;
+						}
 					
 					
-					
-					
-						if(this.facingRight) {
+						
+						if(this.facingRight && !guy) {
 							
-							if (x - startx > AGMode.LASER_WIDTH) this.active = false;
+							if (x - startx > AGMode.LASER_WIDTH *4) this.active = false;
 						}
-						else {
-							if (startx - x > AGMode.LASER_WIDTH) this.active = false;
+						else if (!guy) {
+							if (startx - x > AGMode.LASER_WIDTH *4) this.active = false;
 						}
-					
+						
+						//if (long == true) add = SCREEN_WIDTH;
+						//else add = this.quality_0;
+						
 					this.bitmap = new Bitmap(new BitmapData(Math.abs(this.quality_0) ,  2, true, 0xffffffff));
 					
 					if (!startedOnce) startedOnce = true;

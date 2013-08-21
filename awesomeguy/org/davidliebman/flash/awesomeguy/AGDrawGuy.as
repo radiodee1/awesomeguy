@@ -302,18 +302,14 @@
 			if (sprite.facingRight) sprite.quality_2 = myMode.spriteWidth;
 			else sprite.quality_2 = 0;
 			
-			if (scrollx < sprite.x + (8)) {
-				sprite.bitmap.x = (sprite.x - scrollx ) - sprite.quality_2 ;
-			}
-			else {
-				sprite.bitmap.x = sprite.x - scrollx  + (myMode.myHoriz * 16) - sprite.quality_2;
-			}
 			
-			sprite.bitmap.y = sprite.y - scrolly + AGMode.LASER_GUN;
+			sprite.bitmap.x = (sprite.x - scrollx ) - sprite.quality_2 ;
+			
+			sprite.bitmap.y = sprite.y - scrolly + 64;
 			if (sprite.active == true && sprite != null && sprite.bitmap != null) {
-			//trace("before");
+			
 				myStage.addChild(sprite.bitmap);
-			//trace("after");
+			
 			}
 		}
 

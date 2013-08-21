@@ -609,23 +609,7 @@
 			var tempString:String = "";
 			var tempCharArray:Array = new Array();
 
-			/*
-			for (i = 0; i < num; i ++ ) {
-				value = tree.planet[myGame.gamePlanet].special.block[i].toString();
-				tempArray = value.split(",");
-				
-				for (j = 0; j < tempArray.length; j ++ ) {
-					tempString = tempArray[j];
-					tempCharArray = tempString.split(" ");
-					tempString = tempCharArray.join("");
-					tempArray[j] = tempString;
-				}
-				
-				if (tempArray[0] == AG.XML_MAZE_ENTRANCE) { // this is a pyramid
-					//addPyramid(int(tempArray[1]),int(tempArray[2]), int(tempArray[3]));
-				}
-			}
-			*/
+			
 			messageTimer = new AGTimer(2);
 			blinkTimer = new AGTimer(0);
 		}
@@ -638,10 +622,13 @@
 			var mode:int = this.myGame.myModeStack[ this.myGame.myModeStack.length - 1];
 
 			if (mode == AGGame.MODE_FLYER) {
-				k = 1;
+				
+				if (this.maze_entrances > 0) k = myGame.xml_text_planet_before;
+				else k = myGame.xml_text_planet_after;
 			}
 			else if (mode == AGGame.MODE_GUY) {
-				k = 3;
+				if (AGModeGuy(this).key_for_maze == false) k = myGame.xml_text_maze_before;
+				else k = myGame.xml_text_maze_after;
 			}
 			
 			//var message:String = "---";
@@ -712,8 +699,7 @@
 										 AGModeFlyer.B_KEY, AGMode.TILE_TOP,
 										 16,16);
 				if(true) {
-					square.x = (16 * ii) + 256;
-					if (ii > 0) square.x += 2;
+					square.x = (18 * ii) + 256;
 					square.y = 64;
 					myStage.addChild(square);
 				}
