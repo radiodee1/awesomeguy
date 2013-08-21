@@ -18,7 +18,7 @@
 
 	var myStage:Stage;
 	var neededRes:Array = new Array();
-	//var collectedRes:Array = new Array();
+	
 	var loader:Loader = new Loader();
 	var uloader:URLLoader = new URLLoader();
 	var myButtons:Array;
@@ -103,6 +103,7 @@
 	public static var NAME_GATOR_PUNCH_L2_PNG:int = 60;
 	public static var NAME_GATOR_PUNCH_R1_PNG:int = 61;
 	public static var NAME_GATOR_PUNCH_R2_PNG:int = 62;
+	public static var NAME_BUNKER_PNG:int = 63;
 
 
 	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
@@ -178,6 +179,8 @@
 	var res60:Array = new Array(R_BITMAP_WBLACK, "bitmap/gater_punch_l2.png");
 	var res61:Array = new Array(R_BITMAP_WBLACK, "bitmap/gater_punch_r1.png");
 	var res62:Array = new Array(R_BITMAP_WBLACK, "bitmap/gater_punch_r2.png");
+	var res63:Array = new Array(R_BITMAP_WBLACK, "bitmap/bunker.png");
+
 
 	var i:int = 0;
 		
@@ -276,6 +279,7 @@
 			neededRes.push(res60);
 			neededRes.push(res61);
 			neededRes.push(res62);
+			neededRes.push(res63);
 
 
 			importRes();
