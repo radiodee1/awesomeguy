@@ -1142,6 +1142,11 @@
 								
 							break;
 							
+							case AGMode.S_ASTROGATE:
+								this.game_advance_planet = true;
+								this.flyerastrogate.active = false;
+							break;
+							
 						}//switch
 					}// collision simple
 				}

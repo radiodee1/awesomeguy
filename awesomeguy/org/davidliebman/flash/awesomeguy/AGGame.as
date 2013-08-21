@@ -53,6 +53,7 @@
 			myButtons = mybuttons;
 			myRes = myresources;
 			
+			
 			myStage.addEventListener(Event.ENTER_FRAME, setKeys );
 			//trace ("import worked. " );
 			
@@ -222,6 +223,27 @@
 				//this.modeObj.game_advance_maze = false;
 				this.guy.game_advance_maze = false;
 				this.flyer.game_advance_maze = false;
+				this.modeObj.game_advance_maze = false;
+				this.paused.game_advance_maze = false;
+			}
+			
+			if(this.modeObj != null && 
+			   this.flyer.game_advance_planet && this.gameMode == AGGame.MODE_FLYER) {
+				
+				this.myMazeEntrance = new Array();
+				
+				//var planet:int = this.gamePlanet;
+				this.gamePlanet ++;
+				if (this.gamePlanet >= this.flyer.planets) this.gamePlanet = 0;
+				
+				this.flyer = new AGModeFlyer();
+				this.flyer.setValues(this.myStage, this.myButtons, this.myRes, this);
+				this.flyer.game_start = true;
+				
+				
+				this.guy.game_advance_maze = false;
+				this.flyer.game_advance_maze = false;
+				this.flyer.game_advance_planet = false;
 				this.modeObj.game_advance_maze = false;
 				this.paused.game_advance_maze = false;
 			}
