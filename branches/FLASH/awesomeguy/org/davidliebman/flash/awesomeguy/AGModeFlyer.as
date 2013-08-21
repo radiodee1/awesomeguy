@@ -270,7 +270,12 @@
 					this.maze_entrances ++;
 				}
 				
-				
+				if (tempArray[0] == AG.XML_TEXT_PLANET_AFTER_COMPLETE) {
+					myGame.xml_text_planet_after = int(tempArray[1]);
+				}
+				if (tempArray[0] == AG.XML_TEXT_PLANET_BEFORE_COMPLETE) {
+					myGame.xml_text_planet_before = int(tempArray[1]);
+				}
 			}
 			
 		}

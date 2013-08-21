@@ -316,12 +316,13 @@
 					tempArray[j] = tempString;
 				}
 				
-				/*
-				if (tempArray[0] == AG.XML_MAZE_ENTRANCE) { // this is a pyramid
-					addPyramid(int(tempArray[1]),int(tempArray[2]), int(tempArray[3]));
-					this.maze_entrances ++;
+				if (tempArray[0] == AG.XML_TEXT_MAZE_AFTER_COMPLETE) {
+					myGame.xml_text_maze_after = int(tempArray[1]);
 				}
-				*/
+				if (tempArray[0] == AG.XML_TEXT_MAZE_BEFORE_COMPLETE) {
+					myGame.xml_text_maze_before = int(tempArray[1]);
+				}
+				
 				if (tempArray[0] == AG.XML_MAZE_EXIT) { // this is a bunker
 					addXVarious(int(tempArray[1]),int(tempArray[2]), AGMode.S_EXIT);
 					
