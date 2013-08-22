@@ -20,7 +20,7 @@
 			if (this.timer.timerDone()) {
 				this.animate ++;
 				
-				this.timer = new AGTimer(0.15);
+				this.timer = new AGTimer(0.1);//0.15
 			}
 			if (this.animate > 8) {
 				this.animate = 0;

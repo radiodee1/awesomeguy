@@ -105,6 +105,8 @@
 	public static var NAME_GATOR_PUNCH_R2_PNG:int = 62;
 	public static var NAME_BUNKER_PNG:int = 63;
 	public static var NAME_ASTROGATE_PNG:int = 64;
+	public static var NAME_G_STEPL3_PNG:int = 65;
+	public static var NAME_G_STEPR3_PNG:int = 66;
 
 
 	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
@@ -182,6 +184,8 @@
 	var res62:Array = new Array(R_BITMAP_WBLACK, "bitmap/gater_punch_r2.png");
 	var res63:Array = new Array(R_BITMAP_WBLACK, "bitmap/bunker.png");
 	var res64:Array = new Array(R_BITMAP, "bitmap/astrogate.png");
+	var res65:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl3.png");
+	var res66:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr3.png");
 
 	var i:int = 0;
 		
@@ -282,6 +286,8 @@
 			neededRes.push(res62);
 			neededRes.push(res63);
 			neededRes.push(res64);
+			neededRes.push(res65);
+			neededRes.push(res66);
 
 			importRes();
 		}

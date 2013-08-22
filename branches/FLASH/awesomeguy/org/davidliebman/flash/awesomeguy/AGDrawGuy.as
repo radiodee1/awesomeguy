@@ -74,21 +74,36 @@
 						break;
 						case AGModeGuy.GUY_STEP:
 							if (sprite.facingRight) {
-								if (sprite.animate %2 == 1 ) {
+								if (sprite.animate %4 == 0 ) {
 									sprite.bitmap = myRes[AGResources.NAME_G_STEPR1_PNG];
 									guyx = this.cheatx_step;
 								}
-								else {
+								else if (sprite.animate %4 == 1) {
 									sprite.bitmap = myRes[AGResources.NAME_G_STEPR2_PNG];
 								}
+								else if (sprite.animate %4 == 2) {
+									sprite.bitmap = myRes[AGResources.NAME_G_STEPR1_PNG];
+									guyx = this.cheatx_step
+								}
+								else if (sprite.animate %4 == 3) {
+									sprite.bitmap = myRes[AGResources.NAME_G_STEPR3_PNG];
+								}
+								
 							}
 							else {
-								if (sprite.animate %2 == 1) {
+								if (sprite.animate %4 == 0 ) {
 									sprite.bitmap = myRes[AGResources.NAME_G_STEPL1_PNG];
-									guyx =  this.cheatx_step;
+									guyx = this.cheatx_step;
 								}
-								else {
+								else if (sprite.animate %4 == 1) {
 									sprite.bitmap = myRes[AGResources.NAME_G_STEPL2_PNG];
+								}
+								else if (sprite.animate %4 == 2) {
+									sprite.bitmap = myRes[AGResources.NAME_G_STEPL1_PNG];
+									guyx = this.cheatx_step
+								}
+								else if (sprite.animate %4 == 3) {
+									sprite.bitmap = myRes[AGResources.NAME_G_STEPL3_PNG];
 								}
 							}
 						break;
