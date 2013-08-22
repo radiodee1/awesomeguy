@@ -15,6 +15,7 @@
 		static var GUY_STEP:int = 3;
 		static var GUY_STILL:int = 4;
 		static var GUY_FALL:int= 5;
+		static var GUY_SHOOT:int = 6;
 
 		static var B_NONE:int = -1 ;
 		static var B_START:int = 17 ;
@@ -752,8 +753,9 @@
 				myGuy.quality_0 = AGModeGuy.GUY_PUNCH;
 				this.shoot_count = 3;
 			}
-			if (K_SHOOT && this.bullet_count > 0) {
+			if (K_SHOOT && this.bullet_count > 1) {
 				//this.fireButton();
+				myGuy.quality_0 = AGModeGuy.GUY_SHOOT;
 			}
 			
 			if (xx  == 0 && yy == 0 && this.shoot_count <= 0) myGuy.quality_0 = AGModeGuy.GUY_STILL;
@@ -763,7 +765,7 @@
 			var  ii:int, jj:int, kk:int, ll:int, add:int;
 			var flag:Boolean = false;
 			
-			if (this.K_SHOOT && this.bullet_count > 0 ) { // using space key
+			if (this.K_SHOOT && this.bullet_count > 0 ) { // using shift key
 				
 				if (myTimer[AGMode.TIMER_08].timerDone()){ 
 					
@@ -825,9 +827,9 @@
 					case AGModeGuy.GUY_STEP:
 					
 						
-						if (!this.hit_bottom && !this.hit_center && !this.hit_ladder) {
-							yy = AGModeGuy.Y_MOVE;
-						}
+						//if (!this.hit_bottom && !this.hit_center && !this.hit_ladder) {
+							//yy = AGModeGuy.Y_MOVE;
+						//}
 						
 					break;
 					case AGModeGuy.GUY_STILL:
@@ -863,6 +865,9 @@
 					(!this.hit_left || !this.hit_right) && !this.hit_top) {
 					yy =  - 6;
 							
+				}
+				if (!this.hit_bottom && !this.hit_center && !this.hit_ladder) {
+					yy = AGModeGuy.Y_MOVE;
 				}
 				
 		}

@@ -780,7 +780,7 @@
 			var  ii:int, jj:int, kk:int, ll:int, add:int;
 			var flag:Boolean = false;
 			
-			if (K_JUMP ) { // using space key
+			if (K_JUMP || K_SHOOT ) { // using space key
 				
 				if (myTimer[AGMode.TIMER_08].timerDone()){ 
 					

@@ -107,6 +107,11 @@
 	public static var NAME_ASTROGATE_PNG:int = 64;
 	public static var NAME_G_STEPL3_PNG:int = 65;
 	public static var NAME_G_STEPR3_PNG:int = 66;
+	
+	public static var NAME_G_SHOOTL1_PNG:int = 67;
+	public static var NAME_G_SHOOTL2_PNG:int = 68;
+	public static var NAME_G_SHOOTR1_PNG:int = 69;
+	public static var NAME_G_SHOOTR2_PNG:int = 70;
 
 
 	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
@@ -186,6 +191,12 @@
 	var res64:Array = new Array(R_BITMAP, "bitmap/astrogate.png");
 	var res65:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl3.png");
 	var res66:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr3.png");
+
+	var res67:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_shootl1.png");
+	var res68:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_shootl2.png");
+	var res69:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_shootr1.png");
+	var res70:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_shootr2.png");
+
 
 	var i:int = 0;
 		
@@ -288,6 +299,11 @@
 			neededRes.push(res64);
 			neededRes.push(res65);
 			neededRes.push(res66);
+
+			neededRes.push(res67);
+			neededRes.push(res68);
+			neededRes.push(res69);
+			neededRes.push(res70);
 
 			importRes();
 		}
