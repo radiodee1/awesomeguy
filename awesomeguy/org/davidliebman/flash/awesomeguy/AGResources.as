@@ -219,7 +219,7 @@
 			
 			this.format.color = 0x00ffffff;
 			this.format.font = "Courier";
-			
+			this.format.bold = true;
 			this.textField.x = 10;
 			this.textField.y = 10;
 			this.textField.text = "loading...";

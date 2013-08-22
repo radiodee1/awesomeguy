@@ -866,7 +866,7 @@
 					yy =  - 6;
 							
 				}
-				if (!this.hit_bottom && !this.hit_center && !this.hit_ladder) {
+				if (!this.hit_bottom && !this.hit_center && !this.hit_ladder && this.jump_count <= 0) {
 					yy = AGModeGuy.Y_MOVE;
 				}
 				
