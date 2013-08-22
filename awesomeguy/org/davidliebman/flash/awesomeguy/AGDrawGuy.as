@@ -72,6 +72,25 @@
 								}
 							}
 						break;
+						case AGModeGuy.GUY_SHOOT:
+							if (sprite.facingRight) {
+								if (sprite.animate %2 == 1) {
+									sprite.bitmap = myRes[AGResources.NAME_G_SHOOTR1_PNG];
+								}
+								else {
+									sprite.bitmap = myRes[AGResources.NAME_G_SHOOTR2_PNG];
+								}
+							}
+							else {
+								if(sprite.animate %2 == 1) {
+									sprite.bitmap = myRes[AGResources.NAME_G_SHOOTL1_PNG];
+								}
+								else {
+									sprite.bitmap = myRes[AGResources.NAME_G_SHOOTL2_PNG];
+								}
+							}
+						break;
+						
 						case AGModeGuy.GUY_STEP:
 							if (sprite.facingRight) {
 								if (sprite.animate %4 == 0 ) {
