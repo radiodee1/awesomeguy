@@ -695,7 +695,7 @@
 		public function showKeys(num:int):void {
 			var square:Bitmap;
 			var ii:int;
-			
+			if (ypos - scrollBGY < 16 * 2) return;
 			for (ii = 0; ii < num; ii ++ ) {
 				square = this.oldCutTile(myRes[AGResources.NAME_TILES1_PNG], 
 										 AGModeFlyer.B_KEY, AGMode.TILE_TOP,
