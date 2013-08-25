@@ -228,6 +228,22 @@
 			}
 			
 			if(this.modeObj != null && 
+			   this.flyer.game_advance_maze && this.gameMode == AGGame.MODE_GUY) {
+				// switch to new maze from old maze...
+				//this.myModeStack.push(AGGame.MODE_GUY);
+				this.guy = new AGModeGuy();
+				this.guy.setValues(this.myStage, this.myButtons, this.myRes, this);
+				//this.myModeStack.push(AGGame.MODE_PAUSE);// just for testing!!
+				//gamePaused = true; // just for testing!!
+				
+				//this.modeObj.game_advance_maze = false;
+				this.guy.game_advance_maze = false;
+				this.flyer.game_advance_maze = false;
+				this.modeObj.game_advance_maze = false;
+				this.paused.game_advance_maze = false;
+			}
+			
+			if(this.modeObj != null && 
 			   this.flyer.game_advance_planet && this.gameMode == AGGame.MODE_FLYER) {
 				
 				this.myMazeEntrance = new Array();
