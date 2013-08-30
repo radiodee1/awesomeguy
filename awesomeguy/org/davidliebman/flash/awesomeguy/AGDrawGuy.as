@@ -336,10 +336,15 @@
 			if (sprite.facingRight) sprite.quality_2 = myMode.spriteWidth;
 			else sprite.quality_2 = 0;
 			
+			if (this.myMode.myGame.gameMode == AGGame.MODE_FLYER) {
+				sprite.bitmap.x = (sprite.x - scrollx ) - sprite.quality_2 ;
+			}
+			else sprite.bitmap.x = (sprite.x - scrollx ) ;
 			
-			sprite.bitmap.x = (sprite.x - scrollx ) - sprite.quality_2 ;
 			
-			sprite.bitmap.y = sprite.y - scrolly + 64;
+			//sprite.bitmap.x = (sprite.x - scrollx ) - sprite.quality_2 ;
+			
+			sprite.bitmap.y = sprite.y - scrolly + 50;
 			if (sprite.active == true && sprite != null && sprite.bitmap != null) {
 			
 				myStage.addChild(sprite.bitmap);

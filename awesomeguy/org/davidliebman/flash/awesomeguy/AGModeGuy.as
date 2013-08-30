@@ -801,7 +801,7 @@
 						
 						if (myTorpedo[ii].active == false ) {
 						
-							
+							this.myGuy.animate = 1;
 							this.addTorpedo(ii, xpos, ypos);
 							this.bullet_count --;
 							
@@ -810,6 +810,9 @@
 						ii ++;
 					}
 					if (flag == true) myTimer[AGMode.TIMER_08] = new AGTimer(.3);
+				}
+				else {
+					this.myGuy.animate = 0;
 				}
 	
 	
