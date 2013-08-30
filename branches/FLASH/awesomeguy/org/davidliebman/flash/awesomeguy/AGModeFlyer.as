@@ -1113,6 +1113,11 @@
 							break;
 							case AGMode.S_PYRAMID:
 							case AGMode.S_BUNKER:
+							
+								myGame.gameScore = myGame.gameScore + ( myChallenge[myGame.gameChallenge].total_held_rings * 20);
+								myGame.gameHealth += ( myChallenge[myGame.gameChallenge].total_held_rings * 10);
+								myChallenge[myGame.gameChallenge].total_held_rings = 0;
+							
 								var pyramid:AGSpritePyramid = AGSpritePyramid(sprite);
 								
 							
