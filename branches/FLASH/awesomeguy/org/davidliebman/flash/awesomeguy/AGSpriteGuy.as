@@ -17,10 +17,14 @@
 		public override function updateSprite():void {
 			super.updateSprite();
 		
-			if (this.timer.timerDone()) {
+			if (this.timer.timerDone() && this.quality_0 != AGModeGuy.GUY_SHOOT) {
 				this.animate ++;
 				
 				this.timer = new AGTimer(0.1);//0.15
+			}
+			if (this.timer.timerDone() && this.quality_0 == AGModeGuy.GUY_SHOOT) {
+				this.animate = 1;
+				//this.timer = new AGTimer(0.1);
 			}
 			if (this.animate > 8) {
 				this.animate = 0;
