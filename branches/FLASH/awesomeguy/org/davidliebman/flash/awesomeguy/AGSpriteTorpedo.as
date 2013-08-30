@@ -25,6 +25,8 @@
 				if (myMode.myGame.gameHealth >= 60 && 
 					myMode.myGame.gameMode == AGGame.MODE_GUY) long = true;
 					
+				//trace("long",long);
+					
 				if (myMode.myGame.gameMode == AGGame.MODE_GUY) guy = true;
 				
 				jj = 4;
@@ -46,8 +48,11 @@
 					}
 					
 					//this.quality_1 = jj;
-					
-					
+					if (myMode.facingRight != this.facingRight) {  
+						this.visible = false;
+						this.active = false;
+						return;
+					}
 						if (myMode.facingRight) { 
 							this.quality_0 = AGMode.X_MOVE *jj;
 							this.x += this.quality_0;
@@ -59,11 +64,11 @@
 						
 						/////////////////////
 						if (myMode.facingRight && long) { 
-							this.quality_0 = SCREEN_WIDTH;
+							this.quality_0 = SCREEN_WIDTH - this.x;
 							this.x += 0;
 						}
 						else if (!myMode.facingRight && long){ 
-							this.quality_0 = - (SCREEN_WIDTH);
+							this.quality_0 = - (this.x);
 							this.x += this.quality_0;
 						}
 					

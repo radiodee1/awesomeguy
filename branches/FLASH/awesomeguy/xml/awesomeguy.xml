@@ -1315,7 +1315,7 @@
 </challenges>
 <special>
 <block>XML_MAZE_EXIT_KEYLESS, 0, 1</block>
-<block>XML_TEXT_MAZE_BEFORE_COMPLETE, 3</block>
+<block>XML_TEXT_MAZE_BEFORE_COMPLETE, 4</block>
 <block>XML_TEXT_MAZE_AFTER_COMPLETE, 4</block>
 <block>XML_MAZE_PAUSE_AT_START, 2</block>
 </special>
