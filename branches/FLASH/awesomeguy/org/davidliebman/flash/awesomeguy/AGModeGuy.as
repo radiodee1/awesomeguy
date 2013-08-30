@@ -50,6 +50,7 @@
 		public var shoot_count:int = 0; // shoot button
 		public var bullet_count:int = 0; // number of bullets in gun
 		public var key_for_maze:Boolean = false;
+		public var starting_pos_timer:Boolean = false;
 
 		public var hit_top:Boolean =false; 
 		public var hit_bottom:Boolean= false; 
@@ -212,6 +213,8 @@
 		
 		public override function startingPos(xx:int, yy:int):void {
 			// taken from myInvisible[][] array
+			//this.starting_pos_set = true;
+			
 			startingx = xpos;
 			startingy = ypos;
 			
@@ -324,11 +327,22 @@
 					myGame.xml_text_maze_before = int(tempArray[1]);
 				}
 				
-				if (tempArray[0] == AG.XML_MAZE_EXIT) { // this is a bunker
+				if (tempArray[0] == AG.XML_MAZE_EXIT) { // this is a 
 					addXVarious(int(tempArray[1]),int(tempArray[2]), AGMode.S_EXIT);
-					
 				}
-				
+				if (tempArray[0] == AG.XML_MAZE_EXIT_KEYLESS) { // this is a 
+					addXVarious(int(tempArray[1]),int(tempArray[2]), AGMode.S_EXIT_KEYLESS);
+				}
+				if (tempArray[0] == AG.XML_MAZE_CONNECT) { // this is a 
+					addXVarious(int(tempArray[1]),int(tempArray[2]), AGMode.S_CONNECT_MAZE, int(tempArray[3]));
+				}
+				if (tempArray[0] == AG.XML_MAZE_CONNECT_KEYLESS) { // this is a 
+					addXVarious(int(tempArray[1]),int(tempArray[2]), AGMode.S_CONNECT_MAZE_KEYLESS, int(tempArray[3]));
+				}
+				if (tempArray[0] == AG.XML_MAZE_PAUSE_AT_START) { // this is a 
+					myTimer[AGMode.TIMER_00] = new AGTimer(int (tempArray[1]));
+					//addXVarious(int(tempArray[1]),int(tempArray[2]), AGMode.S_CONNECT_MAZE_KEYLESS, int(tempArray[3]));
+				}
 			}
 		}
 		
@@ -344,7 +358,7 @@
 			super.initAGTimer();
 		}
 		
-		public function addXVarious(xx:int, yy:int, type:int):void {
+		public function addXVarious(xx:int, yy:int, type:int, link:int=0):void {
 			// create a various-type object
 			var temp:AGSpriteVarious = new AGSpriteVarious(this, type);// Sprite temp ;
 			temp.x =xx*64;
@@ -356,6 +370,7 @@
 			temp.visible = true;
 			temp.quality_0 = xx;
 			temp.quality_1 = yy;
+			temp.sprite_link = link;
 			// add it to the sprite list
 			mySprite.push(temp);
 			//this.myBlocks.push(temp);
@@ -433,7 +448,9 @@
 		}
 		
 		public function doTimers():void {
-			
+			if (myTimer[AGMode.TIMER_00].timerDone() ) {
+				this.starting_pos_timer = true;
+			}
 		}
 		
 		public function updateSprites():void {
@@ -459,6 +476,16 @@
 					if (mySprite[i].sprite_type == AGMode.S_EXIT && this.key_for_maze == true ) {
 						myDraw.drawBasicSprite(mySprite[i], D_EXIT);
 					}
+					if (mySprite[i].sprite_type == AGMode.S_EXIT_KEYLESS  ) {
+						myDraw.drawBasicSprite(mySprite[i], D_EXIT);
+					}
+					if (mySprite[i].sprite_type == AGMode.S_CONNECT_MAZE && this.key_for_maze == true ) {
+						myDraw.drawBasicSprite(mySprite[i], D_EXIT);
+					}
+					if (mySprite[i].sprite_type == AGMode.S_CONNECT_MAZE_KEYLESS  ) {
+						myDraw.drawBasicSprite(mySprite[i], D_EXIT);
+					}
+					
 //					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_2) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_2);
 //					if (mySprite[i].sprite_type == AGMode.S_INVADER_1) myDraw.drawBasicSprite(mySprite[i], D_INVADER_1);
 //					if (mySprite[i].sprite_type == AGMode.S_INVADER_2) myDraw.drawBasicSprite(mySprite[i], D_INVADER_2);
@@ -1161,8 +1188,27 @@
 								//myChallenge[myGame.gameChallenge].total_held_rings ++ ;
 							break;
 							case AGMode.S_EXIT:
-								if (!this.key_for_maze) break; // has a key been found on this maze??
+								if (!this.key_for_maze || !this.starting_pos_timer) break; // has a key been found on this maze??
 								this.animate_return_to_planet = true;
+							break;
+							case AGMode.S_EXIT_KEYLESS:
+								if (this.starting_pos_timer) {
+									this.animate_return_to_planet = true;
+								}
+							break;
+							case AGMode.S_CONNECT_MAZE:
+								if (!this.key_for_maze || !this.starting_pos_timer) break;
+								//add connect here
+								this.myGame.gameMaze = sprite.sprite_link;
+								trace (sprite.sprite_link);
+								this.game_advance_maze = true;
+							break;
+							case AGMode.S_CONNECT_MAZE_KEYLESS:
+								// add connect here
+								if (this.starting_pos_timer) {
+									this.myGame.gameMaze = sprite.sprite_link;
+									this.game_advance_maze = true;
+								}
 							break;
 							case AGMode.S_XMONSTER:
 							case AGMode.S_XMONSTER_STAND:

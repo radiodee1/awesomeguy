@@ -11,12 +11,23 @@
 		public static var XML_MAZE_CONNECT:String = "XML_MAZE_CONNECT";
 		//followed by x-maze-tiles, y-maze-tiles, new-maze-number
 
+		public static var XML_MAZE_CONNECT_KEYLESS:String = "XML_MAZE_CONNECT_KEYLESS";
+		//followed by x-maze-tiles, y-maze-tiles, new-maze-number
+
 		public static var XML_MAZE_START_REGULAR:String = "XML_MAZE_START_REGULAR";
 		//followed by x-maze-tiles, y-maze-tiles
+		
 		public static var XML_MAZE_EXIT:String = "XML_MAZE_EXIT";
 		//followed by x-maze-tiles, y-maze-tiles (back to surface)
 		
+		public static var XML_MAZE_EXIT_KEYLESS:String = "XML_MAZE_EXIT_KEYLESS";
+		//followed by x-maze-tiles, y-maze-tiles (back to surface)
+		
 		public static var XML_MAZE_START_SPECIAL:String = "XML_MAZE_START_SPECIAL";
+		
+		public static var XML_MAZE_PAUSE_AT_START:String = "XML_MAZE_PAUSE_AT_START";
+		//followed by num-of-seconds (pause before next exit is possible)
+		
 		public static var XML_TEST:String = "XML_TEST";
 
 		public static var XML_TEXT_TIME_BEFORE_START:String = "XML_TEXT_TIME_BEFORE_START";
