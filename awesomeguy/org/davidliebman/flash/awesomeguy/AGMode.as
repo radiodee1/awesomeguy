@@ -79,6 +79,11 @@
 	static var S_BUNKER:int = 29;
 	static var S_EXIT:int = 30;
 	static var S_ASTROGATE:int = 31;
+	static var S_EXIT_KEYLESS:int = 32;
+	static var S_CONNECT_MAZE:int = 33;
+	static var S_CONNECT_MAZE_KEYLESS:int = 34;
+
+	
 	
 	//draw enumeration
 	static var D_NONE:int = 0;
