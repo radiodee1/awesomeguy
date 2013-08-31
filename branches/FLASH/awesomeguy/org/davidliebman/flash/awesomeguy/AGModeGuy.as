@@ -772,7 +772,7 @@
 			}
 			if (K_JUMP && this.jump_count <= 0 && this.hit_bottom) {
 				//trace(K_JUMP);
-				myGuy.quality_0 = AGModeGuy.GUY_FALL;
+				//myGuy.quality_0 = AGModeGuy.GUY_FALL;
 				this.jump_count = 10;
 			}
 			if (K_SHOOT && this.shoot_count <= 0) {
@@ -867,10 +867,10 @@
 						if (!this.hit_bottom && !this.hit_center && !this.hit_ladder) {
 							yy = AGModeGuy.Y_MOVE;
 						}
-						if (this.jump_count > 0) {
-							this.jump_count = this.jump_count - 1;
-							yy = - AGModeGuy.Y_MOVE;
-						}
+						//if (this.jump_count > 0) {
+						//	this.jump_count = this.jump_count - 1;
+						//	yy = - AGModeGuy.Y_MOVE;
+						//}
 					
 					break;
 					case AGModeGuy.GUY_PUNCH:
@@ -899,7 +899,10 @@
 				if (!this.hit_bottom && !this.hit_center && !this.hit_ladder && this.jump_count <= 0) {
 					yy = AGModeGuy.Y_MOVE;
 				}
-				
+				if (this.jump_count > 0) {
+					this.jump_count = this.jump_count - 1;
+					yy = - AGModeGuy.Y_MOVE;
+				}
 		}
 		
 		public override function drawRadarPing(box:Rectangle, bits:Bitmap, oldx:int, oldy:int , kind:int,  color:uint):void {
