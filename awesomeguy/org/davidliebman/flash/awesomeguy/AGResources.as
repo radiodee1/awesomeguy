@@ -113,6 +113,7 @@
 	public static var NAME_G_SHOOTR1_PNG:int = 69;
 	public static var NAME_G_SHOOTR2_PNG:int = 70;
 
+	public static var NAME_PLATFORM_PNG:int = 71;
 
 	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
 	var res01:Array = new Array (R_BITMAP, "bitmap/test2.png");
@@ -197,6 +198,7 @@
 	var res69:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_shootr1.png");
 	var res70:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_shootr2.png");
 
+	var res71:Array = new Array(R_BITMAP_WBLACK, "bitmap/platform.png");
 
 	var i:int = 0;
 		
@@ -305,6 +307,8 @@
 			neededRes.push(res69);
 			neededRes.push(res70);
 
+			neededRes.push(res71);
+			
 			importRes();
 		}
 		
