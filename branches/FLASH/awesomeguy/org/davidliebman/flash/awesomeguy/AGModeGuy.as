@@ -58,6 +58,7 @@
 		public var hit_right:Boolean = false;
 		public var hit_center:Boolean= false;
 		public var hit_ladder:Boolean = false;
+		public var hit_platform:Boolean = false;
 
 		public function AGModeGuy() {
 			// constructor code
@@ -899,10 +900,12 @@
 					this.jump_count = 0;
 					if (yy < 0 || yy == 0) yy = AGModeGuy.Y_MOVE;
 				}
-				if ( this.hit_bottom && this.hit_center && 
-					(!this.hit_left || !this.hit_right) && !this.hit_top) {
+				if ( this.hit_bottom && this.hit_center &&  !this.hit_top) {
 					yy =  - 6;
 							
+				}
+				if (this.hit_platform && this.hit_center && this.hit_bottom && !this.hit_top) {
+					yy = - 6;
 				}
 				if (!this.hit_bottom && !this.hit_center && !this.hit_ladder && this.jump_count <= 0) {
 					yy = AGModeGuy.Y_MOVE;
@@ -1169,6 +1172,7 @@
 			this.hit_top = false;
 			this.hit_center = false;
 			this.hit_ladder = false;
+			this.hit_platform = false;
 			
 			var ii:int;
 			for (ii = 0; ii < mySprite.length ; ii ++ ) {
@@ -1197,8 +1201,14 @@
 					if (this.collisionBlock(mySprite[ii].bitmap, myDraw.rail_bottom) && 
 						mySprite[ii].sprite_type == AGMode.S_PLATFORM) {
 						this.hit_bottom = true;
+						this.hit_platform = true;
 						xpos += mySprite[ii].quality_0;
 						this.scrollBGX += mySprite[ii].quality_0;
+					}
+					if (this.collisionBlock(mySprite[ii].bitmap, this.flyersprite) && 
+						mySprite[ii].sprite_type == AGMode.S_PLATFORM) {
+						this.hit_center = true;
+						
 					}
 					if (this.collisionSimple(mySprite[ii].bitmap, this.flyersprite) 
 						&& mySprite[ii].active == true ) {
