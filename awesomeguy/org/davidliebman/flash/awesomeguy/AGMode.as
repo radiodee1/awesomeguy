@@ -82,7 +82,8 @@
 	static var S_EXIT_KEYLESS:int = 32;
 	static var S_CONNECT_MAZE:int = 33;
 	static var S_CONNECT_MAZE_KEYLESS:int = 34;
-
+	static var S_PLATFORM:int = 35;
+	static var S_PLATFORM_MARKER:int = 36;
 	
 	
 	//draw enumeration
@@ -112,6 +113,7 @@
 	static var D_BUNKER:int = 23;
 	static var D_EXIT:int = 24;
 	static var D_ASTROGATE:int = 25;
+	static var D_PLATFORM:int = 26;
 	
 	//radar ping types
 	static var PING_FLYER:int = 0;

@@ -155,6 +155,7 @@
 				case AGMode.D_GUN:
 				case AGMode.D_GOAL:
 				case AGMode.D_EXIT:
+				case AGMode.D_PLATFORM:
 					this.drawXVarious();
 				break;
 				

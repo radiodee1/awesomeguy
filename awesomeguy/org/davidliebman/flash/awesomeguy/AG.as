@@ -28,6 +28,12 @@
 		public static var XML_MAZE_PAUSE_AT_START:String = "XML_MAZE_PAUSE_AT_START";
 		//followed by num-of-seconds (pause before next exit is possible)
 		
+		public static var XML_MAZE_PLATFORM_START:String = "XML_MAZE_PLATFORM_START";
+		//followed by x-maze-tiles, y-maze-tiles
+		
+		public static var XML_MAZE_PLATFORM_MARKER:String = "XML_MAZE_PLATFORM_MARKER";
+		//followed by x-maze-tiles, y-maze-tiles (invisible)
+		
 		public static var XML_TEST:String = "XML_TEST";
 
 		public static var XML_TEXT_TIME_BEFORE_START:String = "XML_TEXT_TIME_BEFORE_START";
@@ -44,7 +50,7 @@
 		public static var XML_TEXT_PLANET_AFTER_COMPLETE:String = "XML_TEXT_PLANET_AFTER_COMPLETE";
 		//followed by message-number
 		public static var XML_PLANET_ASTROGATE:String = "XML_PLANET_ASTROGATE";
-		//followed by x-flyer-tiles, y-flyer-tiles
+		//followed by x-flyer-tiles, y-flyer-tiles (position of astrogate)
 		
 
 		public function AG() {

@@ -1065,6 +1065,7 @@
 <block>XML_MAZE_EXIT, 31, 29</block>
 <block>XML_TEXT_MAZE_BEFORE_COMPLETE, 3</block>
 <block>XML_TEXT_MAZE_AFTER_COMPLETE, 4</block>
+<block>XML_MAZE_PLATFORM_START, 2,5</block>
 </special>
 </maze>
 <maze number="2">
