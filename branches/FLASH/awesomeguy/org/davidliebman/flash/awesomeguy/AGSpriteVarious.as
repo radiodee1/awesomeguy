@@ -53,8 +53,12 @@
 
 		public function updatePlatform():void {
 			
-			var bits:BitmapData = new BitmapData(64*2,64,false,0x00555555);
-			this.bitmap = new Bitmap(bits);
+			//var bits:BitmapData = new BitmapData(64*2,64,false,0x00555555);
+			//this.bitmap = new Bitmap(bits);
+			
+			this.bitmap = new Bitmap( 
+									myMode.myRes[AGResources.NAME_PLATFORM_PNG].bitmapData.clone());
+			
 		///////////////////////////////
 			var i:int;
 			var xx:int,yy:int,z:int;
