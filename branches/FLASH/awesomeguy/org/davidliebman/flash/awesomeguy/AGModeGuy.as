@@ -341,7 +341,13 @@
 				}
 				if (tempArray[0] == AG.XML_MAZE_PAUSE_AT_START) { // this is a 
 					myTimer[AGMode.TIMER_00] = new AGTimer(int (tempArray[1]));
-					//addXVarious(int(tempArray[1]),int(tempArray[2]), AGMode.S_CONNECT_MAZE_KEYLESS, int(tempArray[3]));
+					//
+				}
+				if (tempArray[0] == AG.XML_MAZE_PLATFORM_START) { // this is a 
+					addXVarious(int(tempArray[1]),int(tempArray[2]), AGMode.S_PLATFORM);
+				}
+				if (tempArray[0] == AG.XML_MAZE_PLATFORM_MARKER) { // this is a 
+					addXVarious(int(tempArray[1]),int(tempArray[2]), AGMode.S_PLATFORM_MARKER);
 				}
 			}
 		}
@@ -485,7 +491,9 @@
 					if (mySprite[i].sprite_type == AGMode.S_CONNECT_MAZE_KEYLESS  ) {
 						myDraw.drawBasicSprite(mySprite[i], D_EXIT);
 					}
-					
+					if (mySprite[i].sprite_type == AGMode.S_PLATFORM  ) {
+						myDraw.drawBasicSprite(mySprite[i], D_PLATFORM);
+					}
 //					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_2) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_2);
 //					if (mySprite[i].sprite_type == AGMode.S_INVADER_1) myDraw.drawBasicSprite(mySprite[i], D_INVADER_1);
 //					if (mySprite[i].sprite_type == AGMode.S_INVADER_2) myDraw.drawBasicSprite(mySprite[i], D_INVADER_2);
@@ -1155,6 +1163,13 @@
 		
 		public function checkRegularCollision():void {
 			
+			this.hit_bottom = false;
+			this.hit_left = false;
+			this.hit_right = false;
+			this.hit_top = false;
+			this.hit_center = false;
+			this.hit_ladder = false;
+			
 			var ii:int;
 			for (ii = 0; ii < mySprite.length ; ii ++ ) {
 				if (mySprite[ii].bitmap != null) {
@@ -1179,7 +1194,12 @@
 						this.mySprite[ii].active = false;
 						this.mySprite[ii].visible = false;
 					}
-					
+					if (this.collisionBlock(mySprite[ii].bitmap, myDraw.rail_bottom) && 
+						mySprite[ii].sprite_type == AGMode.S_PLATFORM) {
+						this.hit_bottom = true;
+						xpos += mySprite[ii].quality_0;
+						this.scrollBGX += mySprite[ii].quality_0;
+					}
 					if (this.collisionSimple(mySprite[ii].bitmap, this.flyersprite) 
 						&& mySprite[ii].active == true ) {
 							var sprite:AGSprite = mySprite[ii];
@@ -1300,13 +1320,6 @@
 					}// if !null
 				}// for sprite
 			}//for torpedo
-			
-			this.hit_bottom = false;
-			this.hit_left = false;
-			this.hit_right = false;
-			this.hit_top = false;
-			this.hit_center = false;
-			this.hit_ladder = false;
 			
 			for (ii = 0; ii < myBlocks.length; ii ++) {
 				if (myBlocks[ii].bitmap != null && this.flyersprite != null) {
