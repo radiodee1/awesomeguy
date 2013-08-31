@@ -96,7 +96,7 @@
 								if (xx + 3 < myMode.myHoriz && yy + 2 < myMode.myVert || true ) {
 									
 									if(myMode.myInvisible[yy][xx+width] + myMode.mapcheat == AGModeGuy.B_BLOCK  ) markerTest = true;//TRUE;
-									//if(myMode.myInvisible[yy][xx+width] + myMode.mapcheat == AGModeGuy.B_MARKER ) markerTest = true;// TRUE;
+									if(myMode.myInvisible[yy][xx+width] + myMode.mapcheat == AGModeGuy.B_MARKER ) markerTest = true;// TRUE;
 									//if(myMode.myInvisible[yy+1][xx+width]  == 0) markerTest = true;//TRUE;
 								}
 								// turn monster
@@ -112,7 +112,7 @@
 								// marker test
 								if (xx -1 > 0 && yy + 2 < myMode.myVert || true) {
 									if(myMode.myInvisible[yy][xx] + myMode.mapcheat == AGModeGuy.B_BLOCK) markerTest = true;//TRUE;
-									//if(myMode.myInvisible[yy][xx] + myMode.mapcheat == AGModeGuy.B_MARKER) markerTest =true;// TRUE;
+									if(myMode.myInvisible[yy][xx] + myMode.mapcheat == AGModeGuy.B_MARKER) markerTest =true;// TRUE;
 									//if(myMode.myInvisible[yy+1][xx-1] == 0) markerTest = true;//TRUE;
 								}
 								// turn monster
