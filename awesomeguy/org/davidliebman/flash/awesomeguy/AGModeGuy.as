@@ -348,7 +348,9 @@
 					addXVarious(int(tempArray[1]),int(tempArray[2]), AGMode.S_PLATFORM);
 				}
 				if (tempArray[0] == AG.XML_MAZE_PLATFORM_MARKER) { // this is a 
-					addXVarious(int(tempArray[1]),int(tempArray[2]), AGMode.S_PLATFORM_MARKER);
+					if(myInvisible[int(tempArray[2])][int(tempArray[1])] == 0) {
+						myInvisible[int(tempArray[2])][int(tempArray[1])] = AGModeGuy.B_MARKER;
+					}
 				}
 			}
 		}
