@@ -182,6 +182,8 @@
 			myTimer[AGMode.TIMER_03] = new AGTimer(2);// about 2 sec
 			myTimer[AGMode.TIMER_04] = new AGTimer(2);// 2 sec
 			myTimer[AGMode.TIMER_06] = new AGTimer(2); // 2 sec
+			myTimer[AGMode.TIMER_07] = new AGTimer(0);
+			myTimer[AGMode.TIMER_05] = new AGTimer(0);
 		}
 		
 		public override function setStartingVars():void {
@@ -673,6 +675,9 @@
 		}
 		
 		public function doTimers():void {
+			
+			
+			
 			if (myTimer[AGMode.TIMER_01].timerDone()) {
 				alert_color = 0x00000000;
 			}

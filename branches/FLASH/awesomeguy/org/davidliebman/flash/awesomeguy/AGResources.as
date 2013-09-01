@@ -21,7 +21,9 @@
 	
 	var loader:Loader = new Loader();
 	var uloader:URLLoader = new URLLoader();
-	var myButtons:Array;
+	//var myButtons:Array;
+	var myKeyStage:AGKeys;
+	var myKeys:Array;
 	var myRes:Array = new Array();
 
 	public static var R_SPRITE:int = 1;
@@ -211,11 +213,13 @@
 	var r_xml:XMLDocument = new XMLDocument();
 	var r_bitmap:Bitmap = new Bitmap();
 		
-		public function AGResources(mystage:Stage, buttons:Array) {
+		public function AGResources(mystage:Stage, keystage:AGKeys, keys:Array) {
 			//trace ("import worked. " );
 			
 			myStage = mystage;
-			myButtons = buttons;
+			//myButtons = buttons;
+			myKeyStage = keystage;
+			myKeys = keys;
 			i = 0;
 			myRes = new Array();
 			
@@ -393,8 +397,8 @@
 				
 				case AGResources.R_SOUND:
 				//sound
-					myRes.push(new AGSound(r_sound, myButtons[AGKeys.BUTTON_QUIET]));
-					
+					//myRes.push(new AGSound(r_sound, myButtons[AGKeys.BUTTON_QUIET]));
+					myRes.push(new AGSound(r_sound, myKeys[myKeyStage.keycodeQuiet]));
 					
 				break;
 			
@@ -417,7 +421,7 @@
 		public function launchNextPhase():void {
 			trace("really done");
 			
-			var game:AGGame = new AGGame(myStage, myButtons, myRes);
+			var game:AGGame = new AGGame(myStage, myKeyStage, myKeys, myRes);
 		}
 		
 	}

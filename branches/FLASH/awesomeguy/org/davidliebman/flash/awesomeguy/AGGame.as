@@ -16,9 +16,11 @@
 	var K_QUIET:Boolean = false;
 	
 	var myStage:Stage;
-	var myButtons:Array;
+	var myKeys:Array;
 	var myRes:Array;
 	var myMazeEntrance:Array;
+	var myKeyStage:AGKeys;
+	
 	
 	public static var MODE_FLYER:int = 0;
 	public static var MODE_GUY:int = 1;
@@ -47,12 +49,12 @@
 	var flyer:AGModeFlyer;
 	var paused:AGModePause;
 		
-		public function AGGame(mystage:Stage, mybuttons:Array, myresources:Array) {
+		public function AGGame(mystage:Stage, mykeystage:AGKeys, mykeys:Array, myresources:Array) {
 			
 			myStage = mystage;
-			myButtons = mybuttons;
+			myKeys = mykeys;
 			myRes = myresources;
-			
+			myKeyStage = mykeystage;
 			
 			myStage.addEventListener(Event.ENTER_FRAME, setKeys );
 			//trace ("import worked. " );
@@ -64,17 +66,18 @@
 			gamePaused = true;
 			K_PAUSE = false;
 			K_ANY = false;
-			myButtons[AGKeys.BUTTON_PAUSE].setValBool(false);
-			myButtons[AGKeys.BUTTON_ANY].setValBool(false);
-			
+			//myButtons[AGKeys.BUTTON_PAUSE].setValBool(false);
+			//myButtons[AGKeys.BUTTON_ANY].setValBool(false);
+			myKeys[myKeyStage.keycodePause].setValBool(false);
+			myKeys[myKeyStage.keycodeAny].setValBool(false);
 			this.myMazeEntrance = new Array();
 			
 			guy = new AGModeGuy();
 			flyer = new AGModeFlyer();
 			paused = new AGModePause();
-			flyer.setValues(myStage, myButtons, myRes, this);
-			guy.setValues(myStage, myButtons, myRes, this);
-			paused.setValues(myStage, myButtons, myRes, this);
+			flyer.setValues(myStage, myKeys, myRes, this);
+			guy.setValues(myStage, myKeys, myRes, this);
+			paused.setValues(myStage, myKeys, myRes, this);
 			this.myModeStack = new Array();
 			this.myModeStack.push(AGGame.MODE_START);
 			
@@ -82,11 +85,14 @@
 		}
 
 		public function setKeys(e:Event) {
-			setKeyValues(myButtons[AGKeys.BUTTON_LEFT].getValBool() , myButtons[AGKeys.BUTTON_RIGHT].getValBool(),
-						 myButtons[AGKeys.BUTTON_UP].getValBool(), myButtons[AGKeys.BUTTON_DOWN].getValBool(), 
-						 myButtons[AGKeys.BUTTON_SHOOT].getValBool(), myButtons[AGKeys.BUTTON_JUMP].getValBool(),
-						 myButtons[AGKeys.BUTTON_PAUSE].getValBool() ,myButtons[AGKeys.BUTTON_ANY].getValBool() ,
-						 myButtons[AGKeys.BUTTON_RESTART].getValBool(), myButtons[AGKeys.BUTTON_QUIET].getValBool());
+			
+			setKeyValues(myKeys[myKeyStage.keycodeLeft].getValBool(),myKeys[myKeyStage.keycodeRight].getValBool(),
+						 myKeys[myKeyStage.keycodeUp].getValBool(),myKeys[myKeyStage.keycodeDown].getValBool(),
+						 myKeys[myKeyStage.keycodeShoot].getValBool(),myKeys[myKeyStage.keycodeJump].getValBool(),
+						 myKeys[myKeyStage.keycodePause].getValBool(),myKeys[myKeyStage.keycodeAny].getValBool(),
+						 myKeys[myKeyStage.keycodeRestart].getValBool(),myKeys[myKeyStage.keycodeQuiet].getValBool());
+			
+				 
 		}
 
 		public function setKeyValues(left:Boolean, right:Boolean, 
@@ -121,8 +127,10 @@
 						}
 						K_PAUSE = false;
 						K_ANY = false;
-						myButtons[AGKeys.BUTTON_PAUSE].setValBool(false);
-						myButtons[AGKeys.BUTTON_ANY].setValBool(false);
+						
+						
+						myKeys[myKeyStage.keycodePause].setValBool(false);
+						myKeys[myKeyStage.keycodeAny].setValBool(false);
 					}
 					
 				
@@ -135,8 +143,6 @@
 							this.myModeStack.pop();
 							
 							if (this.myModeStack[this.myModeStack.length - 1] == AGGame.MODE_FLYER){
-								this.flyer.animate_return_to_planet = true;
-								this.flyer.animate_enter_maze = false;
 								
 								this.guy.game_advance_maze = false;
 								this.flyer.game_advance_maze = false;
@@ -147,8 +153,12 @@
 						}
 						K_PAUSE = false;
 						K_ANY = false;
-						myButtons[AGKeys.BUTTON_PAUSE].setValBool(false);
-						myButtons[AGKeys.BUTTON_ANY].setValBool(false);
+						
+						
+						
+						myKeys[myKeyStage.keycodePause].setValBool(false);
+						myKeys[myKeyStage.keycodeAny].setValBool(false);
+						
 					}
 				
 				
@@ -165,8 +175,11 @@
 						}
 						K_PAUSE = false;
 						K_ANY = false;
-						myButtons[AGKeys.BUTTON_PAUSE].setValBool(false);
-						myButtons[AGKeys.BUTTON_ANY].setValBool(false);
+						
+						
+						myKeys[myKeyStage.keycodePause].setValBool(false);
+						myKeys[myKeyStage.keycodeAny].setValBool(false);
+						
 					}
 				
 				break;
@@ -183,8 +196,10 @@
 						}
 						K_PAUSE = false;
 						K_ANY = false;
-						myButtons[AGKeys.BUTTON_PAUSE].setValBool(false);
-						myButtons[AGKeys.BUTTON_ANY].setValBool(false);
+						
+						
+						myKeys[myKeyStage.keycodePause].setValBool(false);
+						myKeys[myKeyStage.keycodeAny].setValBool(false);
 					}
 				break;
 			}
@@ -197,7 +212,7 @@
 				// switch to maze from planet...
 				this.myModeStack.push(AGGame.MODE_GUY);
 				this.guy = new AGModeGuy();
-				this.guy.setValues(this.myStage, this.myButtons, this.myRes, this);
+				this.guy.setValues(this.myStage, myKeys, this.myRes, this);
 				//this.myModeStack.push(AGGame.MODE_PAUSE);// just for testing!!
 				//gamePaused = true; // just for testing!!
 				
@@ -232,7 +247,7 @@
 				// switch to new maze from old maze...
 				//this.myModeStack.push(AGGame.MODE_GUY);
 				this.guy = new AGModeGuy();
-				this.guy.setValues(this.myStage, this.myButtons, this.myRes, this);
+				this.guy.setValues(this.myStage, myKeys, this.myRes, this);
 				//this.myModeStack.push(AGGame.MODE_PAUSE);// just for testing!!
 				//gamePaused = true; // just for testing!!
 				//this.guy.game_reset_start = true;
@@ -253,7 +268,7 @@
 				if (this.gamePlanet >= this.flyer.planets) this.gamePlanet = 0;
 				
 				this.flyer = new AGModeFlyer();
-				this.flyer.setValues(this.myStage, this.myButtons, this.myRes, this);
+				this.flyer.setValues(this.myStage, myKeys, this.myRes, this);
 				this.flyer.game_start = true;
 				
 				
@@ -265,7 +280,8 @@
 			}
 			
 			if (K_RESTART) {
-				this.myButtons[AGKeys.BUTTON_RESTART].setValBool(false);
+				//this.myButtons[AGKeys.BUTTON_RESTART].setValBool(false);
+				this.myKeys[this.myKeyStage.keycodeRestart].setValBool(false);
 				this.startAGGame();
 			}
 			
