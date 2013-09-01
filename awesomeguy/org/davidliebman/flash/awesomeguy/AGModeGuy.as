@@ -1280,7 +1280,6 @@
 					if (sprite.bitmap != null && shot.bitmap != null && 
 						sprite.active && 
 						shot.active &&
-						//sprite.sprite_type != AGMode.S_EXPLOSION_SPRITE &&
 						this.collisionSimple( sprite.bitmap, shot.bitmap)) {
 						
 						myRes[AGResources.NAME_BOOM_MP3].play();
@@ -1344,8 +1343,6 @@
 						}
 						
 						
-						//this.hit_left = true;
-						//this.examineHit(myBlocks[ii].bitmap, myDraw.rail_left);
 					}
 					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_right)&& 
 						myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
@@ -1355,8 +1352,7 @@
 							this.hit_right = true;
 						}
 						
-						//this.hit_right = true;
-						//this.examineHit(myBlocks[ii].bitmap, myDraw.rail_right);
+						
 					}
 					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_top)&& 
 						myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
