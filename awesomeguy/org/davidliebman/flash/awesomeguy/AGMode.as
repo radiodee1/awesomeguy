@@ -22,7 +22,8 @@
 	var K_ANY:Boolean = false;
 		
 	var myStage:Stage;
-	var myButtons:Array;
+	//var myButtons:Array;
+	var myKeys:Array;
 	var myRes:Array;
 	var myBlocks:Array; 
 	var myGame:AGGame;
@@ -226,10 +227,11 @@
 			this.game_start = true;
 		}
 		
-		public function setValues(mystage:Stage, mybuttons:Array, myresources:Array, mygame:AGGame) {
+		public function setValues(mystage:Stage, mykeys:Array, myresources:Array, mygame:AGGame) {
 			
 			myStage = mystage;
-			myButtons = mybuttons;
+			//myButtons = mybuttons;
+			myKeys = mykeys;
 			myRes = myresources;
 			myGame = mygame;
 			
@@ -239,10 +241,12 @@
 		}
 		
 		public function setKeys() {
-			setKeyValues(myButtons[AGKeys.BUTTON_LEFT].getValBool() , myButtons[AGKeys.BUTTON_RIGHT].getValBool(),
-						 myButtons[AGKeys.BUTTON_UP].getValBool(), myButtons[AGKeys.BUTTON_DOWN].getValBool(), 
-						 myButtons[AGKeys.BUTTON_SHOOT].getValBool(), myButtons[AGKeys.BUTTON_JUMP].getValBool(),
-						 myButtons[AGKeys.BUTTON_PAUSE].getValBool(), myButtons[AGKeys.BUTTON_ANY].getValBool());
+			
+			setKeyValues(myKeys[myGame.myKeyStage.keycodeLeft].getValBool(),myKeys[myGame.myKeyStage.keycodeRight].getValBool(),
+						 myKeys[myGame.myKeyStage.keycodeUp].getValBool(),myKeys[myGame.myKeyStage.keycodeDown].getValBool(),
+						 myKeys[myGame.myKeyStage.keycodeShoot].getValBool(),myKeys[myGame.myKeyStage.keycodeJump].getValBool(),
+						 myKeys[myGame.myKeyStage.keycodePause].getValBool(),myKeys[myGame.myKeyStage.keycodeAny].getValBool());
+			
 		}
 
 		public function setKeyValues(left:Boolean, right:Boolean, up:Boolean, down:Boolean, 

@@ -24,6 +24,7 @@
 								 KEY_VAL_DOWN, KEY_VAL_SHOOT , KEY_VAL_JUMP,
 								 KEY_VAL_PAUSE, KEY_VAL_ANY, KEY_VAL_RESTART, 
 								 KEY_VAL_QUIET);
+	var keys:Array = new Array();
 
 	static var BUTTON_LEFT:int = 0;
 	static var BUTTON_RIGHT:int = 1;
@@ -48,21 +49,30 @@
 	var KEY_RESTART:Boolean = false;
 	var KEY_QUIET:Boolean = false;
 
-	var keycodeLeft:int = 37;
-	var keycodeRight:int = 39;
-	var keycodeUp:int = 38;
-	var keycodeDown:int = 40;
-	var keycodeShoot:int = 16;
-	var keycodeJump:int = 32;
-	var keycodePause:int = 80;
-	var keycodeRestart:int = 82;
-	var keycodeQuiet:int = 81;
+	public var keycodeLeft:int = 37;
+	public var keycodeRight:int = 39;
+	public var keycodeUp:int = 38;
+	public var keycodeDown:int = 40;
+	public var keycodeShoot:int = 16;
+	public var keycodeJump:int = 32;
+	public var keycodePause:int = 80;
+	public var keycodeRestart:int = 82;
+	public var keycodeQuiet:int = 81;
+	public var keycodeAny:int = 104;
 	
 	var lastCode:int ;
 	
 	var myScreen:Stage;
 
 		public function AGKeys(mystage:Stage) {
+			keys = new Array();
+			for(var x:int = 0; x < 105; x ++) {
+				if (x == keycodeQuiet) {
+					keys.push(new KeyValue(KeyValue.ENUM_TOGGLE));
+				}
+				else keys.push(new KeyValue());
+			}
+			
 			myScreen = mystage;
 			this.addEventListener(Event.ADDED_TO_STAGE, setCallbacks);
 			//setCallbacks();
@@ -81,6 +91,9 @@
 		
 		public function keyboardDownHandler(event:KeyboardEvent):void {
 			// Start your custom code
+			keys[event.keyCode].setValBool(true);
+			keys[this.keycodeAny].setValBool(true);
+			
 			if (event.keyCode == keycodeLeft) KEY_LEFT = true;
 			if (event.keyCode == keycodeRight) KEY_RIGHT = true;
 			if (event.keyCode == keycodeUp) KEY_UP = true;
@@ -99,6 +112,9 @@
 		
 		public function keyboardUpHandler(event:KeyboardEvent):void{
 			// Start your custom code
+			keys[event.keyCode].setValBool(false);
+			keys[this.keycodeAny].setValBool(false);
+			
 			if (event.keyCode == keycodeLeft) KEY_LEFT = false;
 			if (event.keyCode == keycodeRight) KEY_RIGHT = false;
 			if (event.keyCode == keycodeUp) KEY_UP = false;
@@ -129,7 +145,7 @@
 		}
 		
 		public function launchNextPhase():void {
-			var resources:AGResources = new AGResources(myScreen, array);
+			var resources:AGResources = new AGResources(myScreen, this, keys);
 			//trace("next phase...");
 		}
 
