@@ -352,6 +352,16 @@
 						myInvisible[int(tempArray[2])][int(tempArray[1])] = AGModeGuy.B_MARKER;
 					}
 				}
+				if (tempArray[0] == AG.XML_REPLACE_INVISIBLE) { // this is a 
+					if(true) {
+						myInvisible[int(tempArray[2])][int(tempArray[1])] = int (tempArray[3]);
+					}
+				}
+				if (tempArray[0] == AG.XML_REPLACE_VISIBLE) { // this is a 
+					if(true) {
+						myVisible[int(tempArray[2])][int(tempArray[1])] = int (tempArray[3]);
+					}
+				}
 			}
 		}
 		

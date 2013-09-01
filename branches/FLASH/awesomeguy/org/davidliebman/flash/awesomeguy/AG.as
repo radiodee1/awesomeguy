@@ -52,6 +52,11 @@
 		public static var XML_PLANET_ASTROGATE:String = "XML_PLANET_ASTROGATE";
 		//followed by x-flyer-tiles, y-flyer-tiles (position of astrogate)
 		
+		public static var XML_REPLACE_VISIBLE:String = "XML_REPLACE_VISIBLE";
+		//followed by x-tiles, y-tiles, value
+		
+		public static var XML_REPLACE_INVISIBLE:String = "XML_REPLACE_INVISIBLE";
+		//followed by x-tiles, y-tiles, value
 
 		public function AG() {
 			// constructor code
