@@ -397,7 +397,7 @@
 				
 				case AGResources.R_SOUND:
 				//sound
-					//myRes.push(new AGSound(r_sound, myButtons[AGKeys.BUTTON_QUIET]));
+					
 					myRes.push(new AGSound(r_sound, myKeys[myKeyStage.keycodeQuiet]));
 					
 				break;
