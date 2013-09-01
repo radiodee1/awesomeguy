@@ -66,8 +66,8 @@
 			gamePaused = true;
 			K_PAUSE = false;
 			K_ANY = false;
-			//myButtons[AGKeys.BUTTON_PAUSE].setValBool(false);
-			//myButtons[AGKeys.BUTTON_ANY].setValBool(false);
+			
+			
 			myKeys[myKeyStage.keycodePause].setValBool(false);
 			myKeys[myKeyStage.keycodeAny].setValBool(false);
 			this.myMazeEntrance = new Array();
