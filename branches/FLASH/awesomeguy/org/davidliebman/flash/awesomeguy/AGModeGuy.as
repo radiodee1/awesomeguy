@@ -1387,7 +1387,7 @@
 						//myTimer[ AGMode.TIMER_07] = new AGTimer(1.5);//.timerStart(3);
 					}
 					if (myBlocks[ii].sprite_type == AGMode.S_LADDER) {
-						if (!this.hit_bottom) this.hit_ladder = true;
+						this.hit_ladder = true;
 						//trace("ladder!");
 					}
 				}
