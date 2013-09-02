@@ -58,7 +58,7 @@
 	public var keycodePause:int = 80;
 	public var keycodeRestart:int = 82;
 	public var keycodeQuiet:int = 81;
-	public var keycodeAny:int = 104;
+	public var keycodeAny:int = 105;
 	
 	var lastCode:int ;
 	
@@ -66,7 +66,7 @@
 
 		public function AGKeys(mystage:Stage) {
 			keys = new Array();
-			for(var x:int = 0; x < 105; x ++) {
+			for(var x:int = 0; x <= 130; x ++) {
 				if (x == keycodeQuiet) {
 					keys.push(new KeyValue(KeyValue.ENUM_TOGGLE));
 				}
@@ -107,7 +107,7 @@
 			lastCode = event.keyCode;
 			setAllKeys();
 
-			//trace("Key Code DOWN: " + event.keyCode);
+			trace("Key Code DOWN: " + event.keyCode);
 		}
 		
 		public function keyboardUpHandler(event:KeyboardEvent):void{

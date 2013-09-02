@@ -362,6 +362,9 @@
 						myVisible[int(tempArray[2])][int(tempArray[1])] = int (tempArray[3]);
 					}
 				}
+				if (tempArray[0] == AG.XML_MAZE_DOOR_SPRITE) { // this is a 
+					addXVarious(int(tempArray[1]),int(tempArray[2]), AGMode.S_DOOR_SPRITE);
+				}
 			}
 		}
 		
@@ -506,6 +509,9 @@
 					}
 					if (mySprite[i].sprite_type == AGMode.S_PLATFORM  ) {
 						myDraw.drawBasicSprite(mySprite[i], D_PLATFORM);
+					}
+					if (mySprite[i].sprite_type == AGMode.S_DOOR_SPRITE  ) {
+						myDraw.drawBasicSprite(mySprite[i], D_EXIT);
 					}
 //					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_2) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_2);
 //					if (mySprite[i].sprite_type == AGMode.S_INVADER_1) myDraw.drawBasicSprite(mySprite[i], D_INVADER_1);

@@ -35,6 +35,7 @@
 				case AGMode.S_EXIT_KEYLESS:
 				case AGMode.S_CONNECT_MAZE:
 				case AGMode.S_CONNECT_MAZE_KEYLESS:
+				case AGMode.S_DOOR_SPRITE:
 					var bits:BitmapData = new BitmapData(64,64*2,false,0x00555555);
 					this.bitmap = new Bitmap(bits);
 

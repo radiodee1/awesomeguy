@@ -1067,6 +1067,7 @@
 <block>XML_TEXT_MAZE_AFTER_COMPLETE, 4</block>
 <block>XML_MAZE_PLATFORM_START, 2,5</block>
 <block>XML_MAZE_PLATFORM_MARKER, 10,5</block>
+<block>XML_MAZE_DOOR_SPRITE, 0,1</block>
 </special>
 </maze>
 <maze number="2">
@@ -1320,6 +1321,7 @@
 <block>XML_TEXT_MAZE_BEFORE_COMPLETE, 4</block>
 <block>XML_TEXT_MAZE_AFTER_COMPLETE, 4</block>
 <block>XML_MAZE_PAUSE_AT_START, 2</block>
+<block>XML_MAZE_DOOR_SPRITE, 0,29</block>
 </special>
 </maze>
 </underground>
