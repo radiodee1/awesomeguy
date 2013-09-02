@@ -58,7 +58,8 @@
 	public var keycodePause:int = 80;
 	public var keycodeRestart:int = 82;
 	public var keycodeQuiet:int = 81;
-	public var keycodeAny:int = 105;
+	public var keycodeAny:int = 250;
+	public var keycodeControls:int = 191;// question mark
 	
 	var lastCode:int ;
 	
@@ -66,7 +67,7 @@
 
 		public function AGKeys(mystage:Stage) {
 			keys = new Array();
-			for(var x:int = 0; x <= 130; x ++) {
+			for(var x:int = 0; x <= keycodeAny; x ++) {
 				if (x == keycodeQuiet) {
 					keys.push(new KeyValue(KeyValue.ENUM_TOGGLE));
 				}
@@ -91,9 +92,13 @@
 		
 		public function keyboardDownHandler(event:KeyboardEvent):void {
 			// Start your custom code
+			
+			trace("Key Code DOWN: " + event.keyCode);
+
 			keys[event.keyCode].setValBool(true);
 			keys[this.keycodeAny].setValBool(true);
 			
+			/*
 			if (event.keyCode == keycodeLeft) KEY_LEFT = true;
 			if (event.keyCode == keycodeRight) KEY_RIGHT = true;
 			if (event.keyCode == keycodeUp) KEY_UP = true;
@@ -105,16 +110,16 @@
 			if (event.keyCode == keycodeQuiet) KEY_QUIET = true;
 			if (event.keyCode != keycodePause) KEY_ANY = true;
 			lastCode = event.keyCode;
-			setAllKeys();
+			*/
+			//setAllKeys();
 
-			trace("Key Code DOWN: " + event.keyCode);
 		}
 		
 		public function keyboardUpHandler(event:KeyboardEvent):void{
 			// Start your custom code
 			keys[event.keyCode].setValBool(false);
 			keys[this.keycodeAny].setValBool(false);
-			
+			/*
 			if (event.keyCode == keycodeLeft) KEY_LEFT = false;
 			if (event.keyCode == keycodeRight) KEY_RIGHT = false;
 			if (event.keyCode == keycodeUp) KEY_UP = false;
@@ -125,12 +130,14 @@
 			if (event.keyCode == keycodeRestart) KEY_RESTART = false;
 			if (event.keyCode == keycodeQuiet) KEY_QUIET = false;
 			if (lastCode == event.keyCode) KEY_ANY = false;
-			setAllKeys();
+			*/
+			
+			//setAllKeys();
 
-			//trace("Key Code UP: " + event.keyCode);
+			trace("Key Code UP: " + event.keyCode);
 
 		}
-		
+		/*
 		public function setAllKeys():void {
 			 KEY_VAL_LEFT.setValBool(KEY_LEFT);
 			 KEY_VAL_RIGHT.setValBool(KEY_RIGHT);
@@ -143,6 +150,7 @@
 			 KEY_VAL_RESTART.setValBool(KEY_RESTART);
 			 KEY_VAL_QUIET.setValBool(KEY_QUIET);
 		}
+		*/
 		
 		public function launchNextPhase():void {
 			var resources:AGResources = new AGResources(myScreen, this, keys);
