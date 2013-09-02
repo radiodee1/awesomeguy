@@ -1,4 +1,5 @@
 ﻿package  org.davidliebman.flash.awesomeguy{
+	import flash.display.Bitmap;
 	
 	public class AGModeControls extends AGMode {
 
@@ -19,6 +20,7 @@
 			sign.x = 0;
 			sign.y = 0;
 			myStage.addChild(sign);
+			
 		}
 
 	}

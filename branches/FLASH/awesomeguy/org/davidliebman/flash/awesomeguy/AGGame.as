@@ -14,6 +14,7 @@
 	var K_ANY:Boolean = false;
 	var K_RESTART:Boolean = false;
 	var K_QUIET:Boolean = false;
+	var K_CONTROLS:Boolean = false;
 	
 	var myStage:Stage;
 	var myKeys:Array;
@@ -26,6 +27,8 @@
 	public static var MODE_GUY:int = 1;
 	public static var MODE_PAUSE:int = 2;
 	public static var MODE_START:int = 3;
+	public static var MODE_CONTROLS:int = 4;
+	
 	public var gameMode:int = MODE_START;
 	public var lastGameMode:int = 0;
 	public var myModeStack:Array = new Array();
@@ -48,6 +51,7 @@
 	var guy:AGModeGuy;
 	var flyer:AGModeFlyer;
 	var paused:AGModePause;
+	var controls:AGModeControls;
 		
 		public function AGGame(mystage:Stage, mykeystage:AGKeys, mykeys:Array, myresources:Array) {
 			
@@ -75,9 +79,13 @@
 			guy = new AGModeGuy();
 			flyer = new AGModeFlyer();
 			paused = new AGModePause();
+			controls = new AGModeControls();
+			
 			flyer.setValues(myStage, myKeys, myRes, this);
 			guy.setValues(myStage, myKeys, myRes, this);
 			paused.setValues(myStage, myKeys, myRes, this);
+			controls.setValues(myStage, myKeys, myRes, this);
+			
 			this.myModeStack = new Array();
 			this.myModeStack.push(AGGame.MODE_START);
 			
@@ -92,7 +100,7 @@
 						 myKeys[myKeyStage.keycodePause].getValBool(),myKeys[myKeyStage.keycodeAny].getValBool(),
 						 myKeys[myKeyStage.keycodeRestart].getValBool(),myKeys[myKeyStage.keycodeQuiet].getValBool());
 			
-				 
+			
 		}
 
 		public function setKeyValues(left:Boolean, right:Boolean, 
@@ -110,6 +118,9 @@
 			K_ANY = any;
 			K_RESTART = restart;
 			K_QUIET = quiet;
+
+			K_CONTROLS = myKeys[myKeyStage.keycodeControls].getValBool();
+
 			doAnimation();
 		}
 		
@@ -119,7 +130,17 @@
 			
 			switch(this.gameMode) {
 				case AGGame.MODE_START:
-					if (K_ANY ) {
+					
+					 if (K_CONTROLS  ) {
+						this.myModeStack.push(AGGame.MODE_CONTROLS);
+						
+						K_CONTROLS = false;
+						myKeys[myKeyStage.keycodeControls].setValBool(false);
+						myKeys[myKeyStage.keycodeAny].setValBool(false);
+						gamePaused = true;
+					}
+					
+					else if (!K_CONTROLS && K_ANY ) {
 						if (gamePaused) {
 							gamePaused = false;
 							
@@ -133,10 +154,22 @@
 						myKeys[myKeyStage.keycodeAny].setValBool(false);
 					}
 					
+					
+					
 				
 				break;
 				case AGGame.MODE_PAUSE:
-					if (K_ANY ) {
+					
+					if (K_CONTROLS  ) {
+						this.myModeStack.push(AGGame.MODE_CONTROLS);
+						
+						K_CONTROLS = false;
+						myKeys[myKeyStage.keycodeControls].setValBool(false);
+						myKeys[myKeyStage.keycodeAny].setValBool(false);
+						gamePaused = true;
+					}
+				
+					else if (K_ANY && !K_CONTROLS ) {
 						if (gamePaused) {
 							gamePaused = false;
 							
@@ -160,7 +193,7 @@
 						myKeys[myKeyStage.keycodeAny].setValBool(false);
 						
 					}
-				
+					
 				
 				break;
 				case AGGame.MODE_GUY:
@@ -202,7 +235,37 @@
 						myKeys[myKeyStage.keycodeAny].setValBool(false);
 					}
 				break;
+				case AGGame.MODE_CONTROLS:
+					if (K_ANY  ) {
+						if (gamePaused) {
+							gamePaused = false;
+							
+							this.myModeStack.pop();
+							
+							if (this.myModeStack[this.myModeStack.length - 1] == AGGame.MODE_FLYER){
+								
+								this.guy.game_advance_maze = false;
+								this.flyer.game_advance_maze = false;
+								this.modeObj.game_advance_maze = false;
+								this.paused.game_advance_maze = false;
+								
+							}
+						}
+						K_PAUSE = false;
+						K_ANY = false;
+						
+						
+						
+						myKeys[myKeyStage.keycodePause].setValBool(false);
+						myKeys[myKeyStage.keycodeAny].setValBool(false);
+						
+					}
+				break;
 			}
+			
+			
+			
+			
 			
 			// SPECIAL CONDITIONS HERE!!
 			this.gameMode = this.myModeStack[ this.myModeStack.length - 1];
@@ -313,6 +376,9 @@
 			}
 			else if (gameMode == MODE_START) {
 				modeObj = paused;
+			}
+			else if (gameMode == MODE_CONTROLS) {
+				modeObj = controls;
 			}
 			
 			
