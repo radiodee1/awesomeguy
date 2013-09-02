@@ -116,6 +116,14 @@
 	public static var NAME_G_SHOOTR2_PNG:int = 70;
 
 	public static var NAME_PLATFORM_PNG:int = 71;
+		
+	public static var NAME_ARROW_D_PNG:int = 72;
+	public static var NAME_ARROW_L_PNG:int = 73;
+	public static var NAME_ARROW_R_PNG:int = 74;
+	public static var NAME_ARROW_U_PNG:int = 75;
+	public static var NAME_START_CONTROLS_PNG:int = 76;
+
+	
 
 	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
 	var res01:Array = new Array (R_BITMAP, "bitmap/test2.png");
@@ -201,6 +209,11 @@
 	var res70:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_shootr2.png");
 
 	var res71:Array = new Array(R_BITMAP_WBLACK, "bitmap/platform.png");
+	var res72:Array = new Array(R_BITMAP_WBLACK, "bitmap/arrow_d.png");
+	var res73:Array = new Array(R_BITMAP_WBLACK, "bitmap/arrow_l.png");
+	var res74:Array = new Array(R_BITMAP_WBLACK, "bitmap/arrow_r.png");
+	var res75:Array = new Array(R_BITMAP_WBLACK, "bitmap/arrow_u.png");
+	var res76:Array = new Array(R_BITMAP_WBLACK, "bitmap/start_controls.png");
 
 	var i:int = 0;
 		
@@ -312,6 +325,11 @@
 			neededRes.push(res70);
 
 			neededRes.push(res71);
+			neededRes.push(res72);
+			neededRes.push(res73);
+			neededRes.push(res74);
+			neededRes.push(res75);
+			neededRes.push(res76);
 			
 			importRes();
 		}
