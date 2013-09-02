@@ -85,7 +85,7 @@
 	static var S_CONNECT_MAZE_KEYLESS:int = 34;
 	static var S_PLATFORM:int = 35;
 	static var S_PLATFORM_MARKER:int = 36;
-	
+	static var S_DOOR_SPRITE:int = 37;
 	
 	//draw enumeration
 	static var D_NONE:int = 0;

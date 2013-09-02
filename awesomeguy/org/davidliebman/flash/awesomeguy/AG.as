@@ -3,7 +3,7 @@
 	public class AG {
 
 		public static var XML_MAZE_ENTRANCE:String = "XML_MAZE_ENTRANCE";
-		//followed by x-flyer-tiles, y-flyer-tiles, new-maze-number
+		//followed by x-flyer-tiles, y-flyer-tiles, new-maze-number (this is a pyramid!!)
 		
 		public static var XML_MAZE_ENTRANCE_BUNKER:String = "XML_MAZE_ENTRANCE_BUNKER";
 		//followed by x-flyer-tiles, y-flyer-tiles, new-maze-number
@@ -24,6 +24,9 @@
 		//followed by x-maze-tiles, y-maze-tiles (back to surface)
 		
 		public static var XML_MAZE_START_SPECIAL:String = "XML_MAZE_START_SPECIAL";
+		
+		public static var XML_MAZE_DOOR_SPRITE:String = "XML_MAZE_DOOR_SPRITE";
+		//followed by x-maze-tiles, y-maze-tiles (puts door on screen -- no maze connection.)
 		
 		public static var XML_MAZE_PAUSE_AT_START:String = "XML_MAZE_PAUSE_AT_START";
 		//followed by num-of-seconds (pause before next exit is possible)
