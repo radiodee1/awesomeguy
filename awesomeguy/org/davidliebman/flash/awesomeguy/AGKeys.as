@@ -53,7 +53,7 @@
 		}
 		
 		public function keyboardDownHandler(event:KeyboardEvent):void {
-			// Start your custom code
+			// 
 			
 			//trace("Key Code DOWN: " + event.keyCode);
 
@@ -65,7 +65,7 @@
 		}
 		
 		public function keyboardUpHandler(event:KeyboardEvent):void{
-			// Start your custom code
+			// 
 			keys[event.keyCode].setValBool(false);
 			keys[this.keycodeAny].setValBool(false);
 			
