@@ -43,7 +43,8 @@
 		static var INPUT_SHOOT:int = 7;
 		
 		var input:int = 0;
-
+		var ycheat:int = 40;
+		
 		public function AGModeControls() {
 			// constructor code
 		}
@@ -56,6 +57,7 @@
 			
 			myFormat.bold = true;
 			myFormat.font = "Courier";
+			myFormat.size = 20;
 			myTextBox.restrict = "0-9";
 			myTextBox.setTextFormat(myFormat);
 			myTextBox.text = "000";
@@ -64,7 +66,7 @@
 			myTextBox.type = TextFieldType.INPUT;
 			myTextBox.backgroundColor = 0xaaaaaa;
 			myTextBox.x = 20;
-			myTextBox.y = 130;
+			myTextBox.y = 130 + ycheat;
 			myTextBox.height = 20;
 			myTextBox.width = 30;
 			myTextBox.background = true;
@@ -92,63 +94,63 @@
 			this.myTextShoot.y = 0;
 			
 			this.arrowBoxD.x = 100;
-			this.arrowBoxD.y = 130;			
+			this.arrowBoxD.y = 130 + ycheat;			
 			
 			this.arrowBoxL.x = 150;
-			this.arrowBoxL.y = 130;
+			this.arrowBoxL.y = 130 + ycheat;
 			
 			this.arrowBoxR.x = 200;
-			this.arrowBoxR.y = 130;
+			this.arrowBoxR.y = 130 + ycheat;
 			
 			this.arrowBoxU.x = 250;
-			this.arrowBoxU.y = 130;
+			this.arrowBoxU.y = 130 + ycheat;
 			
 			this.arrowBoxJump.x = 300;
-			this.arrowBoxJump.y = 130;
+			this.arrowBoxJump.y = 130 + ycheat;
 			
 			this.arrowBoxShoot.x = 350;
-			this.arrowBoxShoot.y = 130;
+			this.arrowBoxShoot.y = 130 + ycheat;
 			
 			//myStage.addChild(this.arrowBoxD);
 			this.doArrowSpriteFormat(this.arrowButD, myRes[AGResources.NAME_ARROW_D_PNG]);
 			this.arrowButD.x = 100;
-			this.arrowButD.y = 160;
+			this.arrowButD.y = 160 + ycheat;
 			this.arrowButD.addEventListener(MouseEvent.CLICK, doInputD);
 			
 			this.doArrowSpriteFormat(this.arrowButL, myRes[AGResources.NAME_ARROW_L_PNG]);
 			this.arrowButL.x = 150;
-			this.arrowButL.y = 160;
+			this.arrowButL.y = 160 + ycheat;
 			this.arrowButL.addEventListener(MouseEvent.CLICK, doInputL);
 
 			
 			this.doArrowSpriteFormat(this.arrowButR, myRes[AGResources.NAME_ARROW_R_PNG]);
 			this.arrowButR.x = 200;
-			this.arrowButR.y = 160;
+			this.arrowButR.y = 160 + ycheat;
 			this.arrowButR.addEventListener(MouseEvent.CLICK, doInputR);
 
 
 			this.doArrowSpriteFormat(this.arrowButU, myRes[AGResources.NAME_ARROW_U_PNG]);
 			this.arrowButU.x = 250;
-			this.arrowButU.y = 160;
+			this.arrowButU.y = 160 + ycheat;
 			this.arrowButU.addEventListener(MouseEvent.CLICK, doInputU);
 
 
 			this.doArrowSpriteFormat(this.arrowButJump, this.myBitmap);
 			this.arrowButJump.x = 300;
-			this.arrowButJump.y = 160;
+			this.arrowButJump.y = 160 + ycheat;
 			this.arrowButJump.addChild(this.myTextJump);
 			this.arrowButJump.addEventListener(MouseEvent.CLICK, doInputJump);
 
 
 			this.doArrowSpriteFormat(this.arrowButShoot, this.myBitmap2);
 			this.arrowButShoot.x = 350;
-			this.arrowButShoot.y = 160;
+			this.arrowButShoot.y = 160 + ycheat;
 			this.arrowButShoot.addChild(this.myTextShoot);
 			this.arrowButShoot.addEventListener(MouseEvent.CLICK, doInputShoot);
 			
 			this.doArrowBoxFormat(this.myTextOut);
 			this.myTextOut.x = 200;
-			this.myTextOut.y = 200;
+			this.myTextOut.y = 200 + ycheat;
 			//myStage.addChild(myTextBox);
 		}
 		public override function componentsInOrder():void {
@@ -189,7 +191,6 @@
 
 		public function doTextInput(e:TextEvent):void {
 			
-			this.myStage.addChild(this.myTextOut);
 			input = INPUT_LEVEL;
 		}
 
@@ -273,7 +274,8 @@
 		public function doArrowBoxFormat(box:TextField):void {
 			myFormat.bold = true;
 			myFormat.font = "Courier";
-			//box.restrict = "0-9";
+			myFormat.size = 26;
+			
 			box.setTextFormat(myFormat);
 			box.text = "";
 			box.textColor = 0x00;
