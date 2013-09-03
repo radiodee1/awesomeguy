@@ -591,8 +591,8 @@
 			if (a == null || b == null) return r;
 			var arect:Rectangle = a.getBounds(myStage);
 			var brect:Rectangle = b.getBounds(myStage);
-			var apt:Point = new Point(a.x, a.y);
-			var bpt:Point = new Point(b.x, b.y);
+			if (Math.abs(arect.x + arect.width - brect.x + brect.width) < dist ) r = true;
+			
 			if (Math.abs(a.x - b.x) < dist) r = true;
 			if (Math.abs(a.y - b.y) < dist/10) r = true;
 			return r;
