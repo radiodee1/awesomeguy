@@ -594,7 +594,7 @@
 			var apt:Point = new Point(a.x, a.y);
 			var bpt:Point = new Point(b.x, b.y);
 			if (Math.abs(a.x - b.x) < dist) r = true;
-			if (Math.abs(a.y - b.y) < dist) r = true;
+			if (Math.abs(a.y - b.y) < dist/10) r = true;
 			return r;
 		}
 		
