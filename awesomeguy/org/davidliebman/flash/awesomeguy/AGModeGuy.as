@@ -405,6 +405,7 @@
 			mon.x = monster_x * TILE_WIDTH;
 			mon.y = monster_y * TILE_HEIGHT;
 			mon.animate = monster_animate;
+			mon.animate = this.getRand(0,2);
 			mon.facingRight = true;
 			mon.active = true;
 			mon.visible = true;
