@@ -237,13 +237,24 @@
 				break;
 				case AGGame.MODE_CONTROLS:
 					if (K_CONTROLS  ) {
-						//if (gamePaused) {
-						//	gamePaused = false;
+						
+						this.myModeStack.pop();
+						
+						var gmode:int = this.myModeStack[this.myModeStack.length - 1];
+						if (gmode == AGGame.MODE_START){
 							
-							this.myModeStack.pop();
+							this.gamePlanet = int (this.controls.myTextBox.text);
+							this.gamePlanet = (this.gamePlanet)% this.flyer.planets;
 							
+							this.flyer.setValues(myStage, myKeys, myRes, this);
 							
-						//}
+							this.guy.game_advance_maze = false;
+							this.flyer.game_advance_maze = false;
+							this.modeObj.game_advance_maze = false;
+							this.paused.game_advance_maze = false;
+							
+						}
+						
 						K_CONTROLS = false;
 						K_ANY = false;
 						
