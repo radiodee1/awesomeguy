@@ -175,6 +175,7 @@
 			prepRings() ;
 			prepSpecialXml();
 			//prepRingSprites();
+			this.prepTilesToSprites();
 			
 			if (this.game_reset_start  || this.game_start) {
 				radar_start = xpos - scrollBGX;
@@ -276,12 +277,12 @@
 				for (j = 0 ; j < myHoriz; j ++ ) {
 					k = int (tempArray[ (i * myHoriz) + j ] );
 					smallArray.push(int (tempArray[ (i * myHoriz) + j ] ) );
-					if (k + mapcheat == AGModeGuy.B_MONSTER) addXMonster(j,i ,0);
-					if (k + mapcheat == AGModeGuy.B_PRIZE) this.addXRing(j,i);//
-					if (k + mapcheat == AGModeGuy.B_START) startingPos(j,i); // only do on 'reset start'
-					if (k + mapcheat == AGModeGuy.B_KEY) this.addXVarious(j,i,AGMode.S_KEY);
-					if (k + mapcheat == AGModeGuy.B_GUN) this.addXVarious(j,i,AGMode.S_GUN);
-					if (k + mapcheat == AGModeGuy.B_GOAL) this.addXVarious(j,i,AGMode.S_XGOAL);
+					//if (k + mapcheat == AGModeGuy.B_MONSTER) addXMonster(j,i ,0);
+					//if (k + mapcheat == AGModeGuy.B_PRIZE) this.addXRing(j,i);//
+					//if (k + mapcheat == AGModeGuy.B_START) startingPos(j,i); // only do on 'reset start'
+					//if (k + mapcheat == AGModeGuy.B_KEY) this.addXVarious(j,i,AGMode.S_KEY);
+					//if (k + mapcheat == AGModeGuy.B_GUN) this.addXVarious(j,i,AGMode.S_GUN);
+					//if (k + mapcheat == AGModeGuy.B_GOAL) this.addXVarious(j,i,AGMode.S_XGOAL);
 
 				}
 				myInvisible.push(smallArray);
@@ -364,6 +365,22 @@
 				}
 				if (tempArray[0] == AG.XML_MAZE_DOOR_SPRITE) { // this is a 
 					addXVarious(int(tempArray[1]),int(tempArray[2]), AGMode.S_DOOR_SPRITE);
+				}
+			}
+		}
+		
+		public override function prepTilesToSprites():void {
+			var k:int = 0;
+			for (var i:int = 0; i < myInvisible.length; i ++ ) {
+				for (var j:int = 0; j < myInvisible[i].length; j ++ ) {
+					//trace ("no error");
+					k = myInvisible[i][j];
+					if (k + mapcheat == AGModeGuy.B_MONSTER) addXMonster(j,i ,0);
+					if (k + mapcheat == AGModeGuy.B_PRIZE) this.addXRing(j,i);//
+					if (k + mapcheat == AGModeGuy.B_START) startingPos(j,i); // only do on 'reset start'
+					if (k + mapcheat == AGModeGuy.B_KEY) this.addXVarious(j,i,AGMode.S_KEY);
+					if (k + mapcheat == AGModeGuy.B_GUN) this.addXVarious(j,i,AGMode.S_GUN);
+					if (k + mapcheat == AGModeGuy.B_GOAL) this.addXVarious(j,i,AGMode.S_XGOAL);
 				}
 			}
 		}

@@ -339,6 +339,10 @@
 			
 		}
 		
+		public function prepTilesToSprites():void {
+			
+		}
+		
 		public function initAGSprite():void {
 			var ii:int = 0;
 			mySprite = new Array();
