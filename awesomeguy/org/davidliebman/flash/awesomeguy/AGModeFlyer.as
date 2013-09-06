@@ -140,6 +140,7 @@
 			prepTiles() ;
 			prepRings() ;
 			if ( this.game_start) prepSpecialXml(); // just for maze entrances!!
+			this.prepTilesToSprites();
 			
 			for (var i:int = 0; i < myGame.myMazeEntrance.length; i ++ ) {
 				mySprite.push(myGame.myMazeEntrance[i]);
@@ -233,9 +234,9 @@
 				for (j = 0 ; j < myHoriz; j ++ ) {
 					k = int (tempArray[ (i * myHoriz) + j ] );
 					smallArray.push(int (tempArray[ (i * myHoriz) + j ] ) );
-					if (k + mapcheat == AGModeFlyer.B_MONSTER) addMonster(j,i ,0);
-					if (k + mapcheat == AGModeFlyer.B_PLATFORM) addPlatform(j , i );
-					if (k + mapcheat == AGModeFlyer.B_START) startingPos(j,i); // only do on 'reset start'
+					//if (k + mapcheat == AGModeFlyer.B_MONSTER) addMonster(j,i ,0);
+					//if (k + mapcheat == AGModeFlyer.B_PLATFORM) addPlatform(j , i );
+					//if (k + mapcheat == AGModeFlyer.B_START) startingPos(j,i); // only do on 'reset start'
 				}
 				myInvisible.push(smallArray);
 			}
@@ -297,6 +298,19 @@
 				
 			}
 			
+		}
+		
+		public override function prepTilesToSprites():void {
+			var k:int = 0;
+			for (var i:int = 0; i < myInvisible.length; i ++ ) {
+				for (var j:int = 0; j < myInvisible[i].length; j ++ ) {
+					//trace ("no error");
+					k = myInvisible[i][j];
+					if (k + mapcheat == AGModeFlyer.B_MONSTER) addMonster(j,i ,0);
+					if (k + mapcheat == AGModeFlyer.B_PLATFORM) addPlatform(j , i );
+					if (k + mapcheat == AGModeFlyer.B_START) startingPos(j,i); // only do on 'reset start'
+				}
+			}
 		}
 		
 		public function fillChallenges():void {

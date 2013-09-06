@@ -246,7 +246,8 @@
 							this.gamePlanet = int (this.controls.myTextBox.text);
 							this.gamePlanet = (this.gamePlanet)% this.flyer.planets;
 							
-							this.flyer.setValues(myStage, myKeys, myRes, this);
+							
+							this.flyer.doOnce();
 							
 							this.guy.game_advance_maze = false;
 							this.flyer.game_advance_maze = false;
