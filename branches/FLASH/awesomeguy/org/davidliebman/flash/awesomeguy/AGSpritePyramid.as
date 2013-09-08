@@ -8,12 +8,13 @@
 		var ENUM_SHOW:int = 1;
 		var ENUM_SINK:int = 2;
 		var ENUM_AFTER:int = 3;
-		
+		var startingy:int = 0;
 
 		public function AGSpritePyramid( mymode:AGMode, kind:int) {
 			super(mymode, kind);
 			toggle = ENUM_SHOW;
 			// constructor code
+			startingy = this.y;
 		}
 		
 		public override function updateSprite():void {
@@ -31,9 +32,13 @@
 				}
 			}
 			else if (toggle == ENUM_SINK) {
-				if (y < (16*32) +  this.bitmap.height ) {//(16 * 32) + (8 *16) ) {
+				if (y < startingy + this.bitmap.height){//(16*32) +  this.bitmap.height ) {
 					y = y + 3;
-					
+					for (var i:int = 0; i < y - startingy; i ++) {
+						for (var j:int = 0; j < this.bitmap.width; j ++) {
+							this.bitmap.bitmapData.setPixel32(j,this.bitmap.height - i, 0xff000000);
+						}
+					}
 				}
 				else {
 					this.active = false;
@@ -47,6 +52,7 @@
 			
 		}
 		public function switchPyramid():void {
+			startingy = this.y;
 			toggle = ENUM_SINK;
 		}
 
