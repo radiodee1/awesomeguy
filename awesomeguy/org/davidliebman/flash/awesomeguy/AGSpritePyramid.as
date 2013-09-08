@@ -39,7 +39,11 @@
 					for (var i:int = 0; i < y - startingy; i ++) {
 						var rect:Rectangle = new Rectangle(0, this.bitmap.height - i, this.bitmap.width, i );
 						var ct:ColorTransform = new ColorTransform();
-						ct.alphaMultiplier = 1;
+						ct.alphaMultiplier = 0xff;
+						ct.alphaOffset = 0xff;
+						ct.redMultiplier =1;
+						ct.greenMultiplier = 1;
+						ct.blueMultiplier = 1;
 						this.bitmap.bitmapData.colorTransform(rect,ct);
 						
 					}
