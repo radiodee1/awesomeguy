@@ -1,6 +1,8 @@
 ﻿package org.davidliebman.flash.awesomeguy {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.geom.Rectangle;
+	import flash.geom.ColorTransform;
 	
 	public class AGSpritePyramid extends AGSprite {
 
@@ -35,9 +37,11 @@
 				if (y < startingy + this.bitmap.height){//(16*32) +  this.bitmap.height ) {
 					y = y + 3;
 					for (var i:int = 0; i < y - startingy; i ++) {
-						for (var j:int = 0; j < this.bitmap.width; j ++) {
-							this.bitmap.bitmapData.setPixel32(j,this.bitmap.height - i, 0xff000000);
-						}
+						var rect:Rectangle = new Rectangle(0, this.bitmap.height - i, this.bitmap.width, i );
+						var ct:ColorTransform = new ColorTransform();
+						ct.alphaMultiplier = 1;
+						this.bitmap.bitmapData.colorTransform(rect,ct);
+						
 					}
 				}
 				else {
