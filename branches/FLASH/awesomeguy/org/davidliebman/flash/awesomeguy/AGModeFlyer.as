@@ -850,8 +850,6 @@
 					
 					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_3) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_3);
 					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_2) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_2);
-					if (mySprite[i].sprite_type == AGMode.S_INVADER_1) myDraw.drawBasicSprite(mySprite[i], D_INVADER_1);
-					if (mySprite[i].sprite_type == AGMode.S_INVADER_2) myDraw.drawBasicSprite(mySprite[i], D_INVADER_2);
 					if (mySprite[i].sprite_type == AGMode.S_ASTROGATE) myDraw.drawBasicSprite(mySprite[i], D_ASTROGATE);
 
 				}
@@ -891,6 +889,8 @@
 						myDraw.drawBasicSprite(mySprite[i], AGMode.D_BUNKER);
 						
 					}
+					if (mySprite[i].sprite_type == AGMode.S_INVADER_1) myDraw.drawBasicSprite(mySprite[i], D_INVADER_1);
+					if (mySprite[i].sprite_type == AGMode.S_INVADER_2) myDraw.drawBasicSprite(mySprite[i], D_INVADER_2);
 					
 					myDraw.drawBasicSprite(flyerrings, AGMode.D_FLYER_RINGS);
 					
