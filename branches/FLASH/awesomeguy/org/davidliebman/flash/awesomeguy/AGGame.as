@@ -1,6 +1,7 @@
 ﻿package  org.davidliebman.flash.awesomeguy {
 	import flash.display.Stage;
 	import flash.events.Event;
+	import flash.xml.XMLDocument;
 	
 	public class AGGame {
 
@@ -35,6 +36,7 @@
 	public var gamePaused:Boolean = true;
 	
 	public var gamePlanet:int = 0;
+	public var gamePlanetTot:int = 0;
 	public var gameMaze:int = 0;
 	public var gameChallenge:int = 0;
 	public var gameScore:int = 10;
@@ -62,6 +64,11 @@
 			
 			myStage.addEventListener(Event.ENTER_FRAME, setKeys );
 			//trace ("import worked. " );
+			controls = new AGModeControls();
+			controls.setValues(myStage,myKeys,myRes,this);
+			var myXml:XMLDocument = new XMLDocument(myRes[AGResources.NAME_AWESOMEGUY_XML]);
+			var tree:XML = new XML(myXml);
+			this.gamePlanetTot = int(tree.planet.length());
 			
 			this.startAGGame();
 		}
@@ -79,12 +86,12 @@
 			guy = new AGModeGuy();
 			flyer = new AGModeFlyer();
 			paused = new AGModePause();
-			controls = new AGModeControls();
+			//controls = new AGModeControls();
 			
 			flyer.setValues(myStage, myKeys, myRes, this);
 			guy.setValues(myStage, myKeys, myRes, this);
 			paused.setValues(myStage, myKeys, myRes, this);
-			controls.setValues(myStage, myKeys, myRes, this);
+			//controls.setValues(myStage, myKeys, myRes, this);
 			
 			this.myModeStack = new Array();
 			this.myModeStack.push(AGGame.MODE_START);
@@ -243,16 +250,21 @@
 						var gmode:int = this.myModeStack[this.myModeStack.length - 1];
 						if (gmode == AGGame.MODE_START){
 							
-							this.gamePlanet = int (this.controls.myTextBox.text);
-							this.gamePlanet = (this.gamePlanet)% this.flyer.planets;
+							//var myXml:XMLDocument = new XMLDocument(myRes[AGResources.NAME_AWESOMEGUY_XML]);
+							//var tree:XML = new XML(myXml);
+							//var planets:int = int(tree.planet.length());
+							//trace(planets);
 							
+							var choice:int = int (this.controls.myTextBox.text);
+							//this.gamePlanet = (this.gamePlanet)% this.flyer.planets;
+							this.gamePlanet = (choice) % this.gamePlanetTot;
 							
-							this.flyer.doOnce();
-							
-							this.guy.game_advance_maze = false;
-							this.flyer.game_advance_maze = false;
-							this.modeObj.game_advance_maze = false;
-							this.paused.game_advance_maze = false;
+							//this.flyer.doOnce();
+							this.startAGGame();
+							//this.guy.game_advance_maze = false;
+							//this.flyer.game_advance_maze = false;
+							//this.modeObj.game_advance_maze = false;
+							//this.paused.game_advance_maze = false;
 							
 						}
 						
@@ -350,6 +362,9 @@
 			if (K_RESTART) {
 				//this.myButtons[AGKeys.BUTTON_RESTART].setValBool(false);
 				this.myKeys[this.myKeyStage.keycodeRestart].setValBool(false);
+				controls = new AGModeControls();
+				controls.setValues(myStage,myKeys,myRes,this);
+				
 				this.startAGGame();
 			}
 			
@@ -361,7 +376,7 @@
 				this.myModeStack.push(AGGame.MODE_START);
 				this.gamePaused = true;
 				
-				
+				this.startAGGame();
 			}
 			
 			// SWITCH MODE??!!

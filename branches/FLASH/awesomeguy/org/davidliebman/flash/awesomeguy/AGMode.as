@@ -278,7 +278,7 @@
 			if (myGame.gameChallenge > challenges) {
 				game_end_level = true;
 			}
-			if (myGame.gamePlanet > planets) {
+			if (myGame.gamePlanet > myGame.gamePlanetTot ) {
 				myGame.gamePlanet = -1;
 				game_end_level = true;
 			}
