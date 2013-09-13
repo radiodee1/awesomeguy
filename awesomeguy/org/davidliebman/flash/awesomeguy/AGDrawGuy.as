@@ -98,14 +98,14 @@
 									guyx = this.cheatx_step;
 								}
 								else if (sprite.animate %4 == 1) {
-									sprite.bitmap = myRes[AGResources.NAME_G_STEPR2_PNG];
+									sprite.bitmap = myRes[AGResources.NAME_G_STEPR3_PNG];
 								}
 								else if (sprite.animate %4 == 2) {
 									sprite.bitmap = myRes[AGResources.NAME_G_STEPR1_PNG];
 									guyx = this.cheatx_step
 								}
 								else if (sprite.animate %4 == 3) {
-									sprite.bitmap = myRes[AGResources.NAME_G_STEPR3_PNG];
+									sprite.bitmap = myRes[AGResources.NAME_G_STEPR2_PNG];
 								}
 								
 							}
@@ -115,14 +115,14 @@
 									guyx = this.cheatx_step;
 								}
 								else if (sprite.animate %4 == 1) {
-									sprite.bitmap = myRes[AGResources.NAME_G_STEPL2_PNG];
+									sprite.bitmap = myRes[AGResources.NAME_G_STEPL3_PNG];
 								}
 								else if (sprite.animate %4 == 2) {
 									sprite.bitmap = myRes[AGResources.NAME_G_STEPL1_PNG];
 									guyx = this.cheatx_step
 								}
 								else if (sprite.animate %4 == 3) {
-									sprite.bitmap = myRes[AGResources.NAME_G_STEPL3_PNG];
+									sprite.bitmap = myRes[AGResources.NAME_G_STEPL2_PNG];
 								}
 							}
 						break;
