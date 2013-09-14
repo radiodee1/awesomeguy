@@ -60,11 +60,11 @@
 			myFormat.size = 20;
 			myTextBox.restrict = "0-9";
 			myTextBox.setTextFormat(myFormat);
-			myTextBox.text = "000";
+			myTextBox.text = "0";
 			myTextBox.textColor = 0x00;
 			myTextBox.thickness = 2;
 			myTextBox.type = TextFieldType.INPUT;
-			myTextBox.backgroundColor = 0xaaaaaa;
+			myTextBox.backgroundColor = 0xaaffaa;
 			myTextBox.x = 20;
 			myTextBox.y = 130 + ycheat;
 			myTextBox.height = 20;
@@ -87,11 +87,13 @@
 			this.myTextJump.mouseEnabled=false;
 			this.myTextJump.x = 0;
 			this.myTextJump.y = 0;
+			this.myTextJump.backgroundColor = 0xaaffaa;
 			
 			this.myTextShoot.text = "shoot";
 			this.myTextShoot.mouseEnabled = false;
 			this.myTextShoot.x = 0;
 			this.myTextShoot.y = 0;
+			this.myTextShoot.backgroundColor = 0xaaffaa;
 			
 			this.arrowBoxD.x = 100;
 			this.arrowBoxD.y = 130 + ycheat;			
