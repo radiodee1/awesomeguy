@@ -20,7 +20,7 @@
 			if (this.timer.timerDone() && this.quality_0 != AGModeGuy.GUY_SHOOT) {
 				this.animate ++;
 				
-				this.timer = new AGTimer(0.1);//0.15
+				this.timer = new AGTimer(0.05);//0.1
 			}
 			if (this.timer.timerDone() && this.quality_0 == AGModeGuy.GUY_SHOOT) {
 				this.animate = 1;
