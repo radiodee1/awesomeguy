@@ -450,7 +450,7 @@
 				startingx = xpos;
 				startingy = ypos;
 				
-				trace(xx,yy);
+				
 			}
 		}
 		
