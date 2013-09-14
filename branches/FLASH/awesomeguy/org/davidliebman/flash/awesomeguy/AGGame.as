@@ -345,11 +345,12 @@
 				
 				//var planet:int = this.gamePlanet;
 				this.gamePlanet ++;
-				if (this.gamePlanet >= this.flyer.planets) this.gamePlanet = 0;
-				
+				//if (this.gamePlanet >= this.flyer.planets) this.gamePlanet = 0;
+				if (this.gamePlanet >= this.gamePlanetTot) this.gamePlanet = 0;
 				this.flyer = new AGModeFlyer();
-				this.flyer.setValues(this.myStage, myKeys, this.myRes, this);
 				this.flyer.game_start = true;
+				this.flyer.setValues(this.myStage, myKeys, this.myRes, this);
+				//this.flyer.game_start = true;
 				
 				
 				this.guy.game_advance_maze = false;

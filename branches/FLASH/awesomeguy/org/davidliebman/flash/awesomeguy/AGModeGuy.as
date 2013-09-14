@@ -299,6 +299,8 @@
 		}
 		
 		public override function prepSpecialXml():void {
+			var is_timer_set:Boolean = false;
+			
 			var mazeNumber:String = String( this.myGame.gameMaze);
 			var myXML:XMLDocument = myRes[AGResources.NAME_AWESOMEGUY_XML];
 			var tree:XML = new XML(myXML);
@@ -343,7 +345,7 @@
 				}
 				if (tempArray[0] == AG.XML_MAZE_PAUSE_AT_START) { // this is a 
 					myTimer[AGMode.TIMER_00] = new AGTimer(int (tempArray[1]));
-					//
+					is_timer_set = true;
 				}
 				if (tempArray[0] == AG.XML_MAZE_PLATFORM_START) { // this is a 
 					addXVarious(int(tempArray[1]),int(tempArray[2]), AGMode.S_PLATFORM);
@@ -366,6 +368,10 @@
 				if (tempArray[0] == AG.XML_MAZE_DOOR_SPRITE) { // this is a 
 					addXVarious(int(tempArray[1]),int(tempArray[2]), AGMode.S_DOOR_SPRITE);
 				}
+			}
+			if (!is_timer_set) {
+				myTimer[AGMode.TIMER_00] = new AGTimer(2);
+
 			}
 		}
 		

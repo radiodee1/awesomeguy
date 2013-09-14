@@ -2165,12 +2165,12 @@
 438, 438, 438, 438, 438, 438, 438, 438, 438, 438, 438, 438, 438, 438, 438, 438</invisible>
 </horizon>
 <challenges>
-<invaders>5,1,1,2,1,1,0,0 ,0,0,0,0,0,0,0,1</invaders>
-<invaders>2,3,0,0,0,0,0,0 ,0,0,0,0,0,0,0,1</invaders>
-<invaders>1,1,0,0,0,0,0,0 ,0,0,0,0,0,0,0,1</invaders>
-<invaders>1,2,0,0,0,0,0,0 ,0,0,0,0,0,0,0,1</invaders>
-<invaders>2,2,0,0,0,0,0,0 ,0,0,0,0,0,0,0,1</invaders>
-<invaders>3,2,0,0,0,0,0,0 ,0,0,0,0,0,0,0,1</invaders>
+<invaders>0,1,1,2,1,1,0,0 ,0,0,0,0,0,0,0,1</invaders>
+<invaders>0,3,0,0,0,0,0,0 ,0,0,0,0,0,0,0,1</invaders>
+<invaders>0,1,0,0,0,0,0,0 ,0,0,0,0,0,0,0,1</invaders>
+<invaders>0,2,0,0,0,0,0,0 ,0,0,0,0,0,0,0,1</invaders>
+<invaders>0,2,0,0,0,0,0,0 ,0,0,0,0,0,0,0,1</invaders>
+<invaders>0,2,0,0,0,0,0,0 ,0,0,0,0,0,0,0,1</invaders>
 </challenges>
 <special>
 <block>XML_MAZE_ENTRANCE , 50,31, 11, XML_MAZE_START_REGULAR , 0, 0</block>
