@@ -146,7 +146,7 @@
 				mySprite.push(myGame.myMazeEntrance[i]);
 			}
 			
-			if (this.game_reset_start ) {
+			if (this.game_reset_start || this.game_start ) {
 				//prepSpecialXml();
 				
 				radar_start = xpos - scrollBGX;
@@ -432,12 +432,16 @@
 		
 		
 		public override function startingPos(xx:int, yy:int):void {
+			var TILE_WIDTH:int = 16;
+			var TILE_HEIGHT:int = 16;
+			
 			startingx = xpos;
 			startingy = ypos;
 			
 			
-			if (this.game_reset_start || this.game_start) {
-				xpos = xx * TILE_WIDTH;
+			if (this.game_reset_start || this.game_start ) {
+				xpos = xx * TILE_WIDTH; // disregard??
+				//xpos = 0;
 				ypos = yy * TILE_HEIGHT;
 			
 				scrollBGX = xpos - 100;
@@ -446,6 +450,7 @@
 				startingx = xpos;
 				startingy = ypos;
 				
+				trace(xx,yy);
 			}
 		}
 		
@@ -1473,7 +1478,7 @@
 		
 			
 		
-			oldxx = (oldx - scrollBGX + (myHoriz * TILE_WIDTH/2) -256 + ii) % (myHoriz * TILE_WIDTH );// this might be OK...
+			oldxx = (oldx - scrollBGX + (myHoriz * TILE_WIDTH/2) -256 + ii - startingx) % (myHoriz * TILE_WIDTH );// this might be OK...
 			oldxx = adjust_x(oldxx) * 2;
 		
 	
