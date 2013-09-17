@@ -727,6 +727,7 @@
 						myRes[AGResources.NAME_GOAL_MP3].play();
 						//setSoundGoal();
 						//myTimer[AGMode.TIMER_00].timer_disable = true;
+						myTimer[AGMode.TIMER_00].timerDestroy();
 						myTimer[AGMode.TIMER_00] = new AGTimer();
 						//timer[0].timer_disable = TRUE;
 					}
@@ -744,6 +745,7 @@
 					
 					
 					// reset timer
+					myTimer[AGMode.TIMER_02].timerDestroy();
 					myTimer[AGMode.TIMER_02] = new AGTimer(1);////.timerStart(1);
 					//timerStart(2, 30 * 1);
 				}
@@ -755,6 +757,7 @@
 					
 					addLine(0x00ffffff,AGMode.S_BUBBLE_2);
 					
+					myTimer[AGMode.TIMER_03].timerDestroy();
 					myTimer[AGMode.TIMER_03] = new AGTimer(2);//////.timerStart(2);
 					//timerStart(2, 30 * 1);
 				}
@@ -776,6 +779,7 @@
 					
 		
 					// reset timer
+					myTimer[AGMode.TIMER_04].timerDestroy();
 					myTimer[AGMode.TIMER_04] = new AGTimer(2); /////.timerStart( 2);
 				}
 			}
@@ -794,6 +798,7 @@
 
 					// reset timer
 					//timerStart(4, 30 * 2);
+					myTimer[AGMode.TIMER_06].timerDestroy();
 					myTimer[AGMode.TIMER_06] = new AGTimer(2);/////.timerStart(2);
 				}
 			}
@@ -832,7 +837,10 @@
 						} 
 						ii ++;
 					}
-					if (flag == true) myTimer[AGMode.TIMER_08] = new AGTimer(.3);
+					if (flag == true) {
+						myTimer[AGMode.TIMER_08].timerDestroy();
+						myTimer[AGMode.TIMER_08] = new AGTimer(.3);
+					}
 				}
 	
 	
@@ -1263,7 +1271,8 @@
 						myChallenge[myGame.gameChallenge].total_held_rings = 0;
 						is_blinking = true;
 						//timerStart(7, 3 * 30);//blinking timer 7
-						myTimer[ AGMode.TIMER_07] = new AGTimer(1.5);//.timerStart(3);
+						myTimer[AGMode.TIMER_07].timerDestroy();
+						myTimer[AGMode.TIMER_07] = new AGTimer(1.5);//.timerStart(3);
 					}
 					
 				}

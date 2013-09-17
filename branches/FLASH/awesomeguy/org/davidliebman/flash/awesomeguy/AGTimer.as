@@ -11,7 +11,7 @@
 			public var started:Boolean = false;
 		
 		public function AGTimer(num:Number = 0) {
-			
+			this.timerDestroy();
 			this.timer_disable = false;
 			if (num != 0 ) timerStart(num);
 			// constructor code
@@ -24,6 +24,15 @@
 			myTimer.start();
 			started = true;
 			done = false;
+		}
+		
+		public function timerDestroy():void {
+			if (myTimer) {
+				
+				myTimer.removeEventListener( TimerEvent.TIMER,runOnce);
+				myTimer.stop();
+				myTimer = null;
+			}
 		}
 		
 		public function runOnce(e:TimerEvent):void {
