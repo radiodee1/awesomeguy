@@ -360,6 +360,11 @@
 			
 		}
 		public function initAGTimer():void {
+			for (var jj:int = 0; jj < myTimer.length; jj ++ ) {
+				myTimer[jj].timerDestroy();
+				//get rid of timer callbacks.
+			}
+			
 			myTimer = new Array();
 			for (var ii:int = 0; ii < TOTAL_TIMER; ii ++ ) {
 				myTimer.push(new AGTimer());

@@ -344,6 +344,7 @@
 					addXVarious(int(tempArray[1]),int(tempArray[2]), AGMode.S_CONNECT_MAZE_KEYLESS, int(tempArray[3]));
 				}
 				if (tempArray[0] == AG.XML_MAZE_PAUSE_AT_START) { // this is a 
+					myTimer[AGMode.TIMER_00].timerDestroy();
 					myTimer[AGMode.TIMER_00] = new AGTimer(int (tempArray[1]));
 					is_timer_set = true;
 				}
@@ -370,6 +371,7 @@
 				}
 			}
 			if (!is_timer_set) {
+				myTimer[AGMode.TIMER_00].timerDestroy();
 				myTimer[AGMode.TIMER_00] = new AGTimer(2);
 
 			}
@@ -860,7 +862,10 @@
 						} 
 						ii ++;
 					}
-					if (flag == true) myTimer[AGMode.TIMER_08] = new AGTimer(.3);
+					if (flag == true) {
+						myTimer[AGMode.TIMER_08].timerDestroy();
+						myTimer[AGMode.TIMER_08] = new AGTimer(.3);
+					}
 				}
 				else {
 					this.myGuy.animate = 0;
