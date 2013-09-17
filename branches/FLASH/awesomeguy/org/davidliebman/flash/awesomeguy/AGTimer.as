@@ -1,6 +1,7 @@
 ﻿package org.davidliebman.flash.awesomeguy {
 	import flash.utils.Timer;
 	import flash.events.TimerEvent;
+	import flash.events.Event;
 	
 	public class AGTimer {
 
@@ -10,6 +11,7 @@
 			public var started:Boolean = false;
 		
 		public function AGTimer(num:Number = 0) {
+			
 			this.timer_disable = false;
 			if (num != 0 ) timerStart(num);
 			// constructor code
@@ -18,7 +20,7 @@
 		public function timerStart(num:Number):void {
 			
 			myTimer = new Timer(num * 1000, 1);
-			myTimer.addEventListener(TimerEvent.TIMER, runOnce);
+			myTimer.addEventListener(TimerEvent.TIMER, runOnce,false,0,true);
 			myTimer.start();
 			started = true;
 			done = false;
