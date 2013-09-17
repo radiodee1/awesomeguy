@@ -726,7 +726,8 @@
 					if (this.game_end_level ) {
 						myRes[AGResources.NAME_GOAL_MP3].play();
 						//setSoundGoal();
-						myTimer[AGMode.TIMER_00].timer_disable = true;
+						//myTimer[AGMode.TIMER_00].timer_disable = true;
+						myTimer[AGMode.TIMER_00] = new AGTimer();
 						//timer[0].timer_disable = TRUE;
 					}
 		

@@ -250,21 +250,14 @@
 						var gmode:int = this.myModeStack[this.myModeStack.length - 1];
 						if (gmode == AGGame.MODE_START){
 							
-							//var myXml:XMLDocument = new XMLDocument(myRes[AGResources.NAME_AWESOMEGUY_XML]);
-							//var tree:XML = new XML(myXml);
-							//var planets:int = int(tree.planet.length());
-							//trace(planets);
 							
-							var choice:int = int (this.controls.myTextBox.text);
+							var choice:int = int (this.controls.myTextBox.text) -1;
 							//this.gamePlanet = (this.gamePlanet)% this.flyer.planets;
 							this.gamePlanet = (choice) % this.gamePlanetTot;
 							
 							//this.flyer.doOnce();
 							this.startAGGame();
-							//this.guy.game_advance_maze = false;
-							//this.flyer.game_advance_maze = false;
-							//this.modeObj.game_advance_maze = false;
-							//this.paused.game_advance_maze = false;
+							
 							
 						}
 						
