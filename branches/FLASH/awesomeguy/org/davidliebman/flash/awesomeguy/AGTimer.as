@@ -10,6 +10,7 @@
 			public var started:Boolean = false;
 		
 		public function AGTimer(num:Number = 0) {
+			this.timer_disable = false;
 			if (num != 0 ) timerStart(num);
 			// constructor code
 			

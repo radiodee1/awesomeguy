@@ -295,6 +295,7 @@
 			if (game_end_level) {
 				game_reset_start = true;
 				myGame.gamePlanet ++;
+				myGame.gameChallenge = 0;
 				this.doOnce();
 			}
 			
