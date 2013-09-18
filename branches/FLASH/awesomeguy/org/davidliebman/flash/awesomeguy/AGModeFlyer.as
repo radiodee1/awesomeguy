@@ -454,6 +454,13 @@
 			}
 		}
 		
+		public override function timerDestroy():void {
+			super.timerDestroy();
+			this.flyerastrogate.timerDestroy();
+			this.flyerrings.timerDestroy();
+			
+		}
+		
 		public function addPyramid(xx:int, yy:int, maze:int):void {
 			var pyr:AGSpritePyramid = new AGSpritePyramid(this, AGMode.S_PYRAMID);
 			pyr.x = xx * TILE_WIDTH;
@@ -1169,10 +1176,12 @@
 							
 								if (this.flyerGrounded && !this.animate_return_to_planet && pyramid.toggle == pyramid.ENUM_SHOW) {
 									if (sprite.sprite_type == AGMode.S_BUNKER) sprite.animate = 5;
+									this.timerDestroy();
 									sprite.quality_0 ++;
 									if (sprite.animate > 4) {
 										if(sprite.quality_1 == 0) {
 											sprite.quality_1 = 1;
+											
 											var bubble:AGSpriteBubble3 = this.addForceField(xpos + 32, 31 * TILE_HEIGHT, 
 																							sprite.sprite_link);
 											this.animate_enter_maze = true;
