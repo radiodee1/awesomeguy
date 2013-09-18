@@ -355,6 +355,12 @@
 			
 			
 		}
+		public function timerDestroy():void {
+			for (var ii:int = 0; ii < mySprite.length; ii ++) {
+				mySprite[ii].timerDestroy();
+			}
+		}
+		
 		public function initChallenges():void {
 			myChallenge = new Array();
 			

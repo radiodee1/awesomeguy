@@ -60,6 +60,10 @@
 			return timer.timerDone();
 		}
 		
+		public function timerDestroy():void {
+			timer.timerDestroy();
+		}
+		
 		public function pruneSprite():void {
 			//
 		}
