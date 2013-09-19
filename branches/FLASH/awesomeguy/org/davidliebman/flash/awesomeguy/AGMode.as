@@ -359,6 +359,8 @@
 			for (var ii:int = 0; ii < mySprite.length; ii ++) {
 				mySprite[ii].timerDestroy();
 			}
+			this.agflyer.timerDestroy();
+			this.explosionsprite.timerDestroy();
 		}
 		
 		public function initChallenges():void {
