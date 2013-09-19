@@ -16,6 +16,7 @@
 		static var GUY_STILL:int = 4;
 		static var GUY_FALL:int= 5;
 		static var GUY_SHOOT:int = 6;
+		static var GUY_CROUCH:int = 7;
 
 		static var B_NONE:int = -1 ;
 		static var B_START:int = 17 ;
@@ -821,6 +822,10 @@
 				if (this.hit_ladder && !this.hit_bottom) {
 					yy =  Y_MOVE;
 					if(!this.hit_bottom) myGuy.quality_0 = AGModeGuy.GUY_CLIMB;
+				}
+				if (!this.hit_ladder && this.hit_bottom) {
+					yy = 0;
+					myGuy.quality_0 = AGModeGuy.GUY_CROUCH;
 				}
 			}
 			if (K_JUMP && this.jump_count <= 0 && this.hit_bottom) {
