@@ -63,9 +63,8 @@
 			myKeyStage = mykeystage;
 			
 			myStage.addEventListener(Event.ENTER_FRAME, setKeys );
-			//trace ("import worked. " );
-			controls = new AGModeControls();
-			controls.setValues(myStage,myKeys,myRes,this);
+			
+			
 			var myXml:XMLDocument = new XMLDocument(myRes[AGResources.NAME_AWESOMEGUY_XML]);
 			var tree:XML = new XML(myXml);
 			this.gamePlanetTot = int(tree.planet.length());
@@ -137,9 +136,14 @@
 			
 			switch(this.gameMode) {
 				case AGGame.MODE_START:
+				
+					controls = new AGModeControls();
+					controls.setValues(myStage,myKeys,myRes,this);
 					
 					 if (K_CONTROLS  ) {
 						this.myModeStack.push(AGGame.MODE_CONTROLS);
+						
+						
 						
 						K_CONTROLS = false;
 						myKeys[myKeyStage.keycodeControls].setValBool(false);
@@ -167,7 +171,13 @@
 				break;
 				case AGGame.MODE_PAUSE:
 					
+					//controls = new AGModeControls();
+					//controls.setValues(myStage,myKeys,myRes,this);
+					
 					if (K_CONTROLS  ) {
+						
+						
+						
 						this.myModeStack.push(AGGame.MODE_CONTROLS);
 						
 						K_CONTROLS = false;
@@ -248,15 +258,16 @@
 						this.myModeStack.pop();
 						
 						var gmode:int = this.myModeStack[this.myModeStack.length - 1];
-						if (gmode == AGGame.MODE_START){
+						if (gmode == AGGame.MODE_START || gmode == AGGame.MODE_PAUSE ){
 							
 							
 							var choice:int = int (this.controls.myTextBox.text) -1;
 							//this.gamePlanet = (this.gamePlanet)% this.flyer.planets;
 							this.gamePlanet = (choice) % this.gamePlanetTot;
 							
-							//this.flyer.doOnce();
-							this.startAGGame();
+							this.flyer.setValues(myStage,myKeys,myRes,this);
+							this.flyer.doOnce();
+							
 							
 							
 						}
