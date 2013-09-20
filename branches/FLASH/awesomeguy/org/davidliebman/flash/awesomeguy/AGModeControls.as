@@ -60,7 +60,7 @@
 			myFormat.size = 20;
 			myTextBox.restrict = "0-9";
 			myTextBox.setTextFormat(myFormat);
-			myTextBox.text = "0";
+			myTextBox.text = "01";
 			myTextBox.textColor = 0x00;
 			myTextBox.thickness = 2;
 			myTextBox.type = TextFieldType.INPUT;
@@ -269,7 +269,7 @@
 				break;
 			}
 			
-			this.myTextOut.text = String.fromCharCode(e.charCode);
+			this.myTextOut.text = "[" + String.fromCharCode(e.charCode) + "]";
 			myStage.removeEventListener(KeyboardEvent.KEY_DOWN, saveKey);
 		}
 
