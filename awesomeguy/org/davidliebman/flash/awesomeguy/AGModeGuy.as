@@ -810,6 +810,10 @@
 			}
 			if (K_UP ) {
 				
+				//if (myGuy.quality_0 == AGModeGuy.GUY_CROUCH) {
+				//	myGuy.quality_0 = AGModeGuy.GUY_STILL;
+				//}
+				
 				if (this.hit_ladder) {
 					yy = - Y_MOVE;
 					if(!this.hit_bottom) myGuy.quality_0 = AGModeGuy.GUY_CLIMB;
