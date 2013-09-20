@@ -826,7 +826,7 @@
 				if (!this.hit_ladder && this.hit_bottom) {
 					yy = 0;
 					myGuy.quality_0 = AGModeGuy.GUY_CROUCH;
-					//trace("crouch");
+					//trace("crouch", myGuy.animate, myGuy.quality_0);
 				}
 			}
 			if (K_JUMP && this.jump_count <= 0 && this.hit_bottom) {
@@ -844,7 +844,9 @@
 				myGuy.quality_0 = AGModeGuy.GUY_SHOOT;
 			}
 			
-			if (xx  == 0 && yy == 0 && this.shoot_count <= 0) myGuy.quality_0 = AGModeGuy.GUY_STILL;
+			if (xx  == 0 && yy == 0 && this.shoot_count <= 0 && !K_DOWN) {
+				myGuy.quality_0 = AGModeGuy.GUY_STILL;
+			}
 			
 		}
 		public override function fireButton():void {
@@ -1308,11 +1310,13 @@
 								
 							
 							case AGMode.S_GUN:
+								if (myGuy.quality_0 != AGModeGuy.GUY_CROUCH) break;
 								sprite.active = false;
 								sprite.visible = false;
 								this.bullet_count = 20;
 							break;
 							case AGMode.S_KEY:
+								if (myGuy.quality_0 != AGModeGuy.GUY_CROUCH) break;
 								sprite.active = false;
 								sprite.visible = false;
 								this.myGame.gameKeys ++;
