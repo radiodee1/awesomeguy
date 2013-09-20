@@ -127,6 +127,17 @@
 							}
 						break;
 						case AGModeGuy.GUY_STILL:
+							//trace("still", sprite.animate);
+						break;
+						case AGModeGuy.GUY_CROUCH:
+							
+							if (sprite.facingRight) {
+								sprite.bitmap = myRes[AGResources.NAME_G_CROUCHR1_PNG];
+								
+							}
+							else {
+								sprite.bitmap = myRes[AGResources.NAME_G_CROUCHL1_PNG];
+							}
 						break;
 					}
 					

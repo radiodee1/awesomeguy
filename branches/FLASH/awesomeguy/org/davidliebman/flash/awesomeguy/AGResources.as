@@ -123,6 +123,8 @@
 	public static var NAME_ARROW_U_PNG:int = 75;
 	public static var NAME_START_CONTROLS_PNG:int = 76;
 
+	public static var NAME_G_CROUCHL1_PNG:int = 77;
+	public static var NAME_G_CROUCHR1_PNG:int = 78;
 	
 
 	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
@@ -214,6 +216,9 @@
 	var res74:Array = new Array(R_BITMAP_WBLACK, "bitmap/arrow_r.png");
 	var res75:Array = new Array(R_BITMAP_WBLACK, "bitmap/arrow_u.png");
 	var res76:Array = new Array(R_BITMAP_WBLACK, "bitmap/start_controls.png");
+
+	var res77:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_crouchl1.png");
+	var res78:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_crouchr1.png");
 
 	var i:int = 0;
 		
@@ -330,6 +335,9 @@
 			neededRes.push(res74);
 			neededRes.push(res75);
 			neededRes.push(res76);
+			
+			neededRes.push(res77);
+			neededRes.push(res78);
 			
 			importRes();
 		}
