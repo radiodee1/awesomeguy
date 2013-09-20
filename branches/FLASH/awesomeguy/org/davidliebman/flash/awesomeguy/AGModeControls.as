@@ -50,7 +50,7 @@
 		}
 
 		public override function doOnce():void {
-			showSign();
+			//showSign();
 			
 			myBitmap = new Bitmap(new BitmapData(20,20,false,0xaaaaaa));
 			myBitmap2 = new Bitmap(new BitmapData(20,20,false,0xaaaaaa));

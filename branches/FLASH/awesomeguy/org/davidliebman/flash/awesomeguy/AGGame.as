@@ -64,6 +64,8 @@
 			
 			myStage.addEventListener(Event.ENTER_FRAME, setKeys );
 			
+			controls = new AGModeControls();
+			controls.setValues(myStage,myKeys,myRes,this);
 			
 			var myXml:XMLDocument = new XMLDocument(myRes[AGResources.NAME_AWESOMEGUY_XML]);
 			var tree:XML = new XML(myXml);
@@ -137,8 +139,8 @@
 			switch(this.gameMode) {
 				case AGGame.MODE_START:
 				
-					controls = new AGModeControls();
-					controls.setValues(myStage,myKeys,myRes,this);
+					//controls = new AGModeControls();
+					//controls.setValues(myStage,myKeys,myRes,this);
 					
 					 if (K_CONTROLS  ) {
 						this.myModeStack.push(AGGame.MODE_CONTROLS);
@@ -262,8 +264,12 @@
 							
 							
 							var choice:int = int (this.controls.myTextBox.text) -1;
+							if (choice == -1) choice = 1;
 							//this.gamePlanet = (this.gamePlanet)% this.flyer.planets;
 							this.gamePlanet = (choice) % this.gamePlanetTot;
+							
+							this.myMazeEntrance = new Array();
+							flyer = new AGModeFlyer();
 							
 							this.flyer.setValues(myStage,myKeys,myRes,this);
 							this.flyer.doOnce();
