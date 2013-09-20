@@ -714,7 +714,7 @@
 					}
 					
 				}
-				//myGuy.facingRight = true;
+				
 				myGuy.quality_0 = AGModeGuy.GUY_STEP;
 			}
 			if (xx < 0) { //going left 
@@ -738,7 +738,7 @@
 					
 				}
 			
-				//myGuy.facingRight = false;
+				
 				myGuy.quality_0 = AGModeGuy.GUY_STEP;
 			}
 			if (yy > 0) { // going down
@@ -826,6 +826,7 @@
 				if (!this.hit_ladder && this.hit_bottom) {
 					yy = 0;
 					myGuy.quality_0 = AGModeGuy.GUY_CROUCH;
+					//trace("crouch");
 				}
 			}
 			if (K_JUMP && this.jump_count <= 0 && this.hit_bottom) {
