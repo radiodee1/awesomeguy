@@ -1120,6 +1120,8 @@
 	
 		public function checkRegularCollision():void {
 			var ii:int;
+			var is_touching_pyramid:Boolean = false;
+			
 			for (ii = 0; ii < mySprite.length ; ii ++ ) {
 				if (mySprite[ii].bitmap != null) {
 					if (this.collisionSimple(mySprite[ii].bitmap, this.flyersprite) 
@@ -1168,7 +1170,8 @@
 							break;
 							case AGMode.S_PYRAMID:
 							case AGMode.S_BUNKER:
-							
+								is_touching_pyramid = true;
+								
 								myGame.gameScore = myGame.gameScore + ( myChallenge[myGame.gameChallenge].total_held_rings * 20);
 								myGame.gameHealth += ( myChallenge[myGame.gameChallenge].total_held_rings * 10);
 								myChallenge[myGame.gameChallenge].total_held_rings = 0;
@@ -1215,6 +1218,7 @@
 				}
 			}
 			
+			if (!is_touching_pyramid) this.animate_enter_maze_started = false;
 			///////////
 			for (ii = 0; ii < myTorpedo.length ; ii ++ ) {
 				for (var jj:int = 0; jj < mySprite.length ; jj ++) {
