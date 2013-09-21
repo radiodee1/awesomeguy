@@ -398,11 +398,13 @@
 						sprite.active = false;
 						sprite.visible = false;
 						//sprite.sprite_type = AGMode.S_NONE;
-						
+						sprite.timerDestroy();
+						this.myMode.timerDestroy();
 					}
-					sprite.quality_3 ++;
-					sprite.timerStart( wait/1000 );/// 100);
-					//}
+					else {
+						sprite.quality_3 ++;
+						sprite.timerStart( wait/1000 );/// 100);
+					}
 					
 				}
 				
@@ -643,10 +645,13 @@
 							sprite.active = false;
 							//sprite.sprite_type = AGMode.S_NONE;
 							myMode.game_death = true;
+							sprite.timerDestroy();
+							this.myMode.timerDestroy();
 						}
-						sprite.quality_3 ++;
-						sprite.timerStart( wait/1000 );/// 100);
-						//}
+						else {
+							sprite.quality_3 ++;
+							sprite.timerStart( wait/1000 );/// 100);
+						}
 					}
 				
 				} catch (err:Error) {
