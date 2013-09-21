@@ -392,12 +392,10 @@
 					}
 					
 					if (sprite.quality_3 > 7) {
-						//sprite[i].quality_3 = -1;
-						//endlevel = TRUE;
-						//gamedeath = TRUE;
+						
 						sprite.active = false;
 						sprite.visible = false;
-						//sprite.sprite_type = AGMode.S_NONE;
+						//
 						sprite.timerDestroy();
 						this.myMode.timerDestroy();
 					}
