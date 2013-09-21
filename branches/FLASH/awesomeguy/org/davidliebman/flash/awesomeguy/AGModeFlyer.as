@@ -1159,7 +1159,7 @@
 							case AGMode.S_BUBBLE_2:
 							case AGMode.S_INVADER_1:
 							case AGMode.S_INVADER_2:
-								if (this.animate_enter_maze_started || this.animate_enter_maze) break;
+								if (this.animate_enter_maze_started ) break;
 								this.agflyer.active = false;
 								this.agflyer.visible = false;
 								sprite.active = false;

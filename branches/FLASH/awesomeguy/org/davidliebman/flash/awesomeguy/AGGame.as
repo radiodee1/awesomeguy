@@ -98,6 +98,14 @@
 			this.myModeStack.push(AGGame.MODE_START);
 			
 			this.gameHealth = 50;
+			this.gameLives = 3;
+			this.gameScore = 10;
+			this.gameHealth = 50;
+			this.gamePlanet = 0;
+			this.gameKeys = 0;
+			//this.myModeStack = new Array();
+				
+			this.gamePaused = true;
 		}
 
 		public function setKeys(e:Event) {
@@ -382,6 +390,7 @@
 			if (gameLives == 0 ) {
 				this.gameLives = 3;
 				this.gameScore = 10;
+				this.gameHealth = 50;
 				this.gamePlanet = 0;
 				this.myModeStack = new Array();
 				this.myModeStack.push(AGGame.MODE_START);
