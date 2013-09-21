@@ -15,6 +15,7 @@
 		
 		public var animate_explosion:Boolean = false;
 		public var animate_enter_maze:Boolean = false;
+		public var animate_enter_maze_started:Boolean = false;
 		public var animate_return_to_planet:Boolean = false;
 		public var animate_return_to_planet_sprite:AGSpritePyramid ;
 		public var animate_return_to_planet_bubble:AGSpriteBubble3 ;
@@ -77,7 +78,8 @@
 			drawRadarRock();
 
 			//
-			agflyer.sprite = this.sprite;
+			//agflyer.sprite = this.sprite;
+			//agflyer = new AGSprite(this, AGMode.D_FLYER );
 			myDraw.drawRes(agflyer,xpos,ypos,facingRight,AGMode.D_FLYER ,animate);
 
 			drawScoreWords();
@@ -817,6 +819,7 @@
 				this.animate_return_to_planet_sprite.switchPyramid();
 				this.animate_return_to_planet = false;
 				this.animate_enter_maze = false;
+				this.animate_enter_maze_started = false;
 				this.animate_return_to_planet_bubble.active = false;
 				this.animate_return_to_planet_bubble.visible = false;
 				
@@ -1156,6 +1159,7 @@
 							case AGMode.S_BUBBLE_2:
 							case AGMode.S_INVADER_1:
 							case AGMode.S_INVADER_2:
+								if (this.animate_enter_maze_started || this.animate_enter_maze) break;
 								this.agflyer.active = false;
 								this.agflyer.visible = false;
 								sprite.active = false;
@@ -1170,7 +1174,7 @@
 								myChallenge[myGame.gameChallenge].total_held_rings = 0;
 							
 								var pyramid:AGSpritePyramid = AGSpritePyramid(sprite);
-								
+								this.animate_enter_maze_started = true;
 							
 								//if (pyramid.toggle == pyramid.ENUM_SINK ) break;
 							
@@ -1196,6 +1200,7 @@
 									sprite.quality_0 = 0;
 									sprite.quality_1 = 0;
 									this.animate_enter_maze = false;
+									this.animate_enter_maze_started = false;
 								}
 								
 							break;

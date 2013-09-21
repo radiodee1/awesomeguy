@@ -701,7 +701,7 @@
 					}
 					sprite.bitmap.x = add + xx - scrollx;
 					sprite.bitmap.y = yy - scrolly;
-					if (sprite.active == true && sprite != null && sprite.bitmap != null) {
+					if (sprite.active == true  ) {
 						//trace("before");
 						myStage.addChild(sprite.bitmap);
 						//trace("after");
