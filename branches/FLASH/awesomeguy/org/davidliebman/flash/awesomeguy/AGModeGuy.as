@@ -150,11 +150,11 @@
 			}
 			
 			prepText();
-			//flyerrings = new AGSprite(this, AGMode.S_FLYER_RINGS);
-			//flyerrings.active = true;
+			
 			
 			explosionsprite = new AGSprite(this, AGMode.S_EXPLOSION);
 			explosionsprite.active = false;
+			explosionsprite.timerDestroy();
 			
 			initAGSprite();
 			initChallenges();// this just creates the array!!
