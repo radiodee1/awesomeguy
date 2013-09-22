@@ -126,6 +126,18 @@
 	public static var NAME_G_CROUCHL1_PNG:int = 77;
 	public static var NAME_G_CROUCHR1_PNG:int = 78;
 	
+	public static var NAME_G_STEPL4_PNG:int =79;
+	public static var NAME_G_STEPL5_PNG:int =80;
+	public static var NAME_G_STEPL6_PNG:int =81;
+	public static var NAME_G_STEPL7_PNG:int =82;
+	public static var NAME_G_STEPL8_PNG:int =83;
+
+	public static var NAME_G_STEPR4_PNG:int =84;
+	public static var NAME_G_STEPR5_PNG:int =85;
+	public static var NAME_G_STEPR6_PNG:int =86;
+	public static var NAME_G_STEPR7_PNG:int =87;
+	public static var NAME_G_STEPR8_PNG:int =88;
+
 
 	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
 	var res01:Array = new Array (R_BITMAP, "bitmap/test2.png");
@@ -219,6 +231,19 @@
 
 	var res77:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_crouchl1.png");
 	var res78:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_crouchr1.png");
+
+	var res79:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl4.png");
+	var res80:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl5.png");
+	var res81:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl6.png");
+	var res82:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl7.png");
+	var res83:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl8.png");
+
+	var res84:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr4.png");
+	var res85:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr5.png");
+	var res86:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr6.png");
+	var res87:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr7.png");
+	var res88:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr8.png");
+
 
 	var i:int = 0;
 		
@@ -338,7 +363,19 @@
 			
 			neededRes.push(res77);
 			neededRes.push(res78);
-			
+
+			neededRes.push(res79);
+			neededRes.push(res80);
+			neededRes.push(res81);
+			neededRes.push(res82);
+			neededRes.push(res83);
+
+			neededRes.push(res84);
+			neededRes.push(res85);
+			neededRes.push(res86);
+			neededRes.push(res87);
+			neededRes.push(res88);
+
 			importRes();
 		}
 		
