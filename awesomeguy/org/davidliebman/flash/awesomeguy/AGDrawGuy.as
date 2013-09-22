@@ -95,58 +95,59 @@
 							if (sprite.facingRight) {
 								if (sprite.animate %8 == 0 ) {
 									sprite.bitmap = myRes[AGResources.NAME_G_STEPR1_PNG];
-									guyx = this.cheatx_step;
+									//guyx = this.cheatx_step;
 								}
 								else if (sprite.animate %8 == 1) {
 									sprite.bitmap = myRes[AGResources.NAME_G_STEPR2_PNG];
 								}
 								else if (sprite.animate %8 == 2) {
 									sprite.bitmap = myRes[AGResources.NAME_G_STEPR3_PNG];
-									guyx = this.cheatx_step
+									//guyx = this.cheatx_step
 								}
 								else if (sprite.animate %8 == 3) {
 									sprite.bitmap = myRes[AGResources.NAME_G_STEPR4_PNG];
 								}
 								else if (sprite.animate %8 == 4 ) {
 									sprite.bitmap = myRes[AGResources.NAME_G_STEPR5_PNG];
-									guyx = this.cheatx_step;
+									//guyx = this.cheatx_step;
 								}
 								else if (sprite.animate %8 == 5) {
 									sprite.bitmap = myRes[AGResources.NAME_G_STEPR6_PNG];
 								}
 								else if (sprite.animate %8 == 6) {
 									sprite.bitmap = myRes[AGResources.NAME_G_STEPR7_PNG];
-									guyx = this.cheatx_step
+									//guyx = this.cheatx_step
 								}
 								else if (sprite.animate %8 == 7) {
 									sprite.bitmap = myRes[AGResources.NAME_G_STEPR8_PNG];
+									
 								}
 							}
 							else {
 								if (sprite.animate %8 == 0 ) {
 									sprite.bitmap = myRes[AGResources.NAME_G_STEPL1_PNG];
-									guyx = this.cheatx_step;
+									//guyx = this.cheatx_step;
 								}
 								else if (sprite.animate %8 == 1) {
 									sprite.bitmap = myRes[AGResources.NAME_G_STEPL2_PNG];
 								}
 								else if (sprite.animate %8 == 2) {
 									sprite.bitmap = myRes[AGResources.NAME_G_STEPL3_PNG];
-									guyx = this.cheatx_step
+									//guyx = this.cheatx_step
 								}
 								else if (sprite.animate %8 == 3) {
 									sprite.bitmap = myRes[AGResources.NAME_G_STEPL4_PNG];
 								}
 								else if (sprite.animate %8 == 4 ) {
 									sprite.bitmap = myRes[AGResources.NAME_G_STEPL5_PNG];
-									guyx = this.cheatx_step;
+									//guyx = this.cheatx_step;
 								}
 								else if (sprite.animate %8 == 5) {
 									sprite.bitmap = myRes[AGResources.NAME_G_STEPL6_PNG];
 								}
 								else if (sprite.animate %8 == 6) {
 									sprite.bitmap = myRes[AGResources.NAME_G_STEPL7_PNG];
-									guyx = this.cheatx_step
+									//guyx = this.cheatx_step
 								}
 								else if (sprite.animate %8 == 7) {
 									sprite.bitmap = myRes[AGResources.NAME_G_STEPL8_PNG];
