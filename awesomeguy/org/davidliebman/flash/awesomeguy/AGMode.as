@@ -606,10 +606,11 @@
 		public function distanceIsShort(a:Bitmap, b:Bitmap):Boolean {
 			var r:Boolean = false;
 			var dist:int = 128;
+			var constant:int = 230;
 			if (a == null || b == null) return r;
 			var arect:Rectangle = a.getBounds(myStage);
 			var brect:Rectangle = b.getBounds(myStage);
-			if (Math.abs(arect.x + arect.width - brect.x + brect.width) < dist ) r = true;
+			if (Math.abs(arect.x + arect.width - brect.x + constant) < dist ) r = true;
 			
 			if (Math.abs(a.x - b.x) < dist) r = true;
 			if (Math.abs(a.y - b.y) < dist/10) r = true;
