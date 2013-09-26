@@ -34,6 +34,9 @@
 		var myBitmap:Bitmap = new Bitmap();
 		var myBitmap2:Bitmap = new Bitmap();
 		
+		var myBits:AGBitEffect = new AGBitEffect();
+		var bitmap_a:Bitmap = new Bitmap();
+		
 		static var INPUT_LEVEL:int = 1;
 		static var INPUT_UP:int = 2;
 		static var INPUT_DOWN:int = 3;
@@ -154,6 +157,8 @@
 			this.myTextOut.x = 200;
 			this.myTextOut.y = 200 + ycheat;
 			//myStage.addChild(myTextBox);
+			
+			
 		}
 		public override function componentsInOrder():void {
 			showSign();
@@ -180,6 +185,11 @@
 			this.arrowBoxU.text = myGame.myKeyStage.keycodeUp.toString();
 			this.arrowBoxShoot.text = myGame.myKeyStage.keycodeShoot.toString();
 			this.arrowBoxJump.text = myGame.myKeyStage.keycodeJump.toString();
+			
+			bitmap_a = myBits.swishBits(myRes[AGResources.NAME_G_PUNCHL1_PNG]);
+			this.bitmap_a.x = 200;
+			this.bitmap_a.y = 225 + ycheat;
+			myStage.addChild(this.bitmap_a);
 		}
 
 		public function showSign():void {
