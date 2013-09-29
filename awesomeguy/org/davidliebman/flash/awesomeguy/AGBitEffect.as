@@ -30,50 +30,103 @@
 			
 			var pixel:uint = 0x0;
 			
-			var width:int = i.width/2;
+			var width:int = i.width/4;
 			var cycle:int = int (i.height / width ) + 1;
 			var side:int = 0;
 			var yy:int = 0;
 			var mm:int = 0;
 			
-			scroll_b = scroll * width/ 16;
-			//trace(scroll_b);
+			scroll_b = scroll * width * 4/ 16;
 			
+			//scroll_b = 0;
 			for (var ii:int =  -1 ; ii < cycle; ii ++ ) {
-				for (var jj:int = 0; jj < width *2; jj ++) {
-					mm = jj -( width * 2);
-					
-					if (ii % 2 == 0) {
-						side = int (Math.sqrt((width * width) - (jj * jj) ) ) ;
-						//
-					}
-					else if (ii % 2 == 1) {
-						side = -1 * int (Math.sqrt((width * width) - (jj * jj) ) ) ;
-						//
-					}
-					
-					//else if (ii % 4 == 1) {
-					//	side = -1* int (Math.sqrt( (jj * jj) ) - (width * width) ) ;
-						//
-					//}
-					//else {
-					//	side =  int (Math.sqrt((jj * jj) - (width * width) ) ) ;
-						//
-					//}
-					
-					
-					yy = (ii * width) + jj;
-					if (yy + scroll_b <= i.height && yy + scroll_b >= 0 && side != 0) {
+				
+				
+				if (ii % 4 == 0) {
+					for (var jj:int = 0; jj < width * 2;  jj ++) {
 						
-						for (var kk:int = 0; kk < i.width; kk ++) {
-							pixel = bmd_i.getPixel32(kk, yy + scroll_b );
-							//if (pixel == 0xff000000) trace("alpha");//pixel = 0xffffffff;
-							bmd_o.setPixel32(( width * 1) + side + kk,yy + scroll_b, pixel);
-							//
-						}
-						//bmd_o.setPixel32( width + side,yy,0x00000000);
-					}
-				}
+						
+						side =  int (Math.sqrt((width * width) - (jj * jj) ) ) ;
+							
+							
+						
+						yy = ((ii + 1) * width ) - jj;
+						if (yy + scroll_b <= i.height && yy + scroll_b >= 0 && side != 0) {
+							
+							for (var kk:int = 0; kk < i.width; kk ++) {
+								pixel = bmd_i.getPixel32(kk, yy + scroll_b );
+								//pixel = 0xff0000ff;
+								bmd_o.setPixel32(( width * 1) + side + kk,yy + scroll_b, pixel);
+								//
+							}// for kk
+							
+						}// if yy
+					}// for jj
+				}// if ii %4
+				
+				if (ii % 4 == 1) {
+					for (var jj:int =0  ; jj < width*2; jj ++) {
+						
+						
+						side =  int (Math.sqrt((width * width) - (jj * jj) ) ) ;
+							
+							
+						
+						yy = (ii * width) + jj;
+						if (yy + scroll_b <= i.height && yy + scroll_b >= 0 && side != 0) {
+							
+							for (var kk:int = 0; kk < i.width; kk ++) {
+								pixel = bmd_i.getPixel32(kk, yy + scroll_b );
+								//if (pixel == 0xff000000) trace("alpha");//pixel = 0xffffffff;
+								bmd_o.setPixel32(( width * 1) + side + kk,yy + scroll_b, pixel);
+								//
+							}// for kk
+							
+						}// if yy
+					}// for jj
+				}// if ii %4
+				if (ii % 4 == 2) {
+					for (var jj:int = width * 2; jj >=0; jj --) {
+						
+						
+						side =   - int (Math.sqrt((width * width) - (jj * jj) ) ) ;
+							
+							
+						
+						yy = ((ii + 1 )* width) - jj;
+						if (yy + scroll_b <= i.height && yy + scroll_b >= 0 && side != 0) {
+							
+							for (var kk:int = 0; kk < i.width; kk ++) {
+								pixel = bmd_i.getPixel32(kk, yy + scroll_b );
+								//if (pixel == 0xff000000) trace("alpha");//pixel = 0xffffffff;
+								bmd_o.setPixel32(( width * 1) + side + kk,yy + scroll_b, pixel);
+								//
+							}// for kk
+							
+						}// if yy
+					}// for jj
+				}// if ii %4
+				if (ii % 4 == 3) {
+					for (var jj:int = 0; jj < width *2; jj ++) {
+						
+						
+						side =   - int (Math.sqrt((width * width) - (jj * jj) ) ) ;
+							
+							
+						
+						yy = (ii * width) + jj;
+						if (yy + scroll_b <= i.height && yy + scroll_b >= 0 && side != 0) {
+							
+							for (var kk:int = 0; kk < i.width; kk ++) {
+								pixel = bmd_i.getPixel32(kk, yy + scroll_b );
+								//if (pixel == 0xff000000) trace("alpha");//pixel = 0xffffffff;
+								bmd_o.setPixel32(( width * 1) + side + kk,yy + scroll_b, pixel);
+								//
+							}// for kk
+							
+						}// if yy
+					}// for jj
+				}// if ii %4
 			}
 			
 			
