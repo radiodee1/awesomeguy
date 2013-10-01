@@ -7,6 +7,8 @@
 	public class AGBitEffect {
 
 		private var scroll:int = 0;
+		private var neg:int = 1;
+
 
 		public function AGBitEffect() {
 			// constructor code
@@ -21,7 +23,10 @@
 				scroll ++;
 				
 			}
-			if (scroll > 16) scroll = 0;
+			if (scroll > 16) { 
+				scroll = 0;
+				neg = neg * -1;
+			}
 			
 			var scroll_b:int = 0;
 			
@@ -35,6 +40,8 @@
 			var side:int = 0;
 			var yy:int = 0;
 			var mm:int = 0;
+			var jj:int = 0;
+			var kk:int = 0;
 			
 			scroll_b = scroll * width * 4/ 16;
 			
@@ -43,17 +50,17 @@
 				
 				
 				if (ii % 4 == 0) {
-					for (var jj:int = 0; jj < width * 2;  jj ++) {
+					for ( jj = 0; jj < width * 2;  jj ++) {
 						
 						
-						side =  int (Math.sqrt((width * width) - (jj * jj) ) ) ;
+						side = neg * int (Math.sqrt((width * width) - (jj * jj) ) ) ;
 							
 							
 						
 						yy = ((ii + 1) * width ) - jj;
 						if (yy + scroll_b <= i.height && yy + scroll_b >= 0 && side != 0) {
 							
-							for (var kk:int = 0; kk < i.width; kk ++) {
+							for ( kk = 0; kk < i.width; kk ++) {
 								pixel = bmd_i.getPixel32(kk, yy + scroll_b );
 								//pixel = 0xff0000ff;
 								bmd_o.setPixel32(( width * 1) + side + kk,yy + scroll_b, pixel);
@@ -65,17 +72,17 @@
 				}// if ii %4
 				
 				if (ii % 4 == 1) {
-					for (var jj:int =0  ; jj < width*2; jj ++) {
+					for (jj =0  ; jj < width*2; jj ++) {
 						
 						
-						side =  int (Math.sqrt((width * width) - (jj * jj) ) ) ;
+						side = neg * int (Math.sqrt((width * width) - (jj * jj) ) ) ;
 							
 							
 						
 						yy = (ii * width) + jj;
 						if (yy + scroll_b <= i.height && yy + scroll_b >= 0 && side != 0) {
 							
-							for (var kk:int = 0; kk < i.width; kk ++) {
+							for ( kk = 0; kk < i.width; kk ++) {
 								pixel = bmd_i.getPixel32(kk, yy + scroll_b );
 								//if (pixel == 0xff000000) trace("alpha");//pixel = 0xffffffff;
 								bmd_o.setPixel32(( width * 1) + side + kk,yy + scroll_b, pixel);
@@ -86,17 +93,17 @@
 					}// for jj
 				}// if ii %4
 				if (ii % 4 == 2) {
-					for (var jj:int = width * 2; jj >=0; jj --) {
+					for (jj = width * 2; jj >=0; jj --) {
 						
 						
-						side =   - int (Math.sqrt((width * width) - (jj * jj) ) ) ;
+						side =   - neg * int (Math.sqrt((width * width) - (jj * jj) ) ) ;
 							
 							
 						
 						yy = ((ii + 1 )* width) - jj;
 						if (yy + scroll_b <= i.height && yy + scroll_b >= 0 && side != 0) {
 							
-							for (var kk:int = 0; kk < i.width; kk ++) {
+							for (kk = 0; kk < i.width; kk ++) {
 								pixel = bmd_i.getPixel32(kk, yy + scroll_b );
 								//if (pixel == 0xff000000) trace("alpha");//pixel = 0xffffffff;
 								bmd_o.setPixel32(( width * 1) + side + kk,yy + scroll_b, pixel);
@@ -107,17 +114,17 @@
 					}// for jj
 				}// if ii %4
 				if (ii % 4 == 3) {
-					for (var jj:int = 0; jj < width *2; jj ++) {
+					for ( jj = 0; jj < width *2; jj ++) {
 						
 						
-						side =   - int (Math.sqrt((width * width) - (jj * jj) ) ) ;
+						side =   - neg * int (Math.sqrt((width * width) - (jj * jj) ) ) ;
 							
 							
 						
 						yy = (ii * width) + jj;
 						if (yy + scroll_b <= i.height && yy + scroll_b >= 0 && side != 0) {
 							
-							for (var kk:int = 0; kk < i.width; kk ++) {
+							for (kk = 0; kk < i.width; kk ++) {
 								pixel = bmd_i.getPixel32(kk, yy + scroll_b );
 								//if (pixel == 0xff000000) trace("alpha");//pixel = 0xffffffff;
 								bmd_o.setPixel32(( width * 1) + side + kk,yy + scroll_b, pixel);

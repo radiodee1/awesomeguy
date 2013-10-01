@@ -28,7 +28,7 @@
 		
 		public function timerDestroy():void {
 			if (myTimer) {
-				
+				done = false;
 				myTimer.removeEventListener( TimerEvent.TIMER,runOnce);
 				myTimer.stop();
 				myTimer = null;

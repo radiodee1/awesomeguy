@@ -4,6 +4,8 @@
 	import flash.display.BitmapData;
 	
 	public class AGDrawGuy extends AGDraw{
+		var biteffect:AGBitEffect = new AGBitEffect();
+		var biteffect_enable:Boolean = false;
 
 		var cheatx_climb:int = 0;
 		var cheaty_climb:int = 0;
@@ -176,7 +178,15 @@
 					this.guyheight = sprite.bitmap.height;
 					makeRails(sprite);
 					
-					if (sprite.active == true) myStage.addChild(sprite.bitmap);
+					var tempMap:Bitmap = sprite.bitmap;
+					
+					if (this.biteffect_enable && sprite.active) {
+						tempMap = this.biteffect.swishBits(sprite.bitmap); 
+					}
+					tempMap.x = sprite.bitmap.x;
+					tempMap.y = sprite.bitmap.y;
+					
+					if (sprite.active == true) myStage.addChild(tempMap);//(sprite.bitmap);
 					myMode.flyersprite = sprite.bitmap;
 					
 				break;
@@ -390,6 +400,10 @@
 				myStage.addChild(sprite.bitmap);
 			
 			}
+		}
+		
+		public function setBitEffectEnable(xx:Boolean):void {
+			this.biteffect_enable = xx;
 		}
 
 	}

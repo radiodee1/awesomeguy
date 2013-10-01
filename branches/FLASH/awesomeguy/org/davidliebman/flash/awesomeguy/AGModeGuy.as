@@ -61,6 +61,10 @@
 		public var hit_ladder:Boolean = false;
 		public var hit_platform:Boolean = false;
 
+		//public var animate_only:Boolean = false;
+		public var animate_only_death:Boolean = false;
+		public var animate_only_revive:Boolean = false;
+
 		public function AGModeGuy() {
 			// constructor code
 			super();
@@ -110,7 +114,7 @@
 			fireButton();
 			doTimers();
 
-			checkRegularCollision();
+			if (!this.animate_only) checkRegularCollision();
 			
 			screenframe.x = 0;
 			screenframe.y = SCREEN_HEIGHT;
@@ -500,6 +504,41 @@
 			if (myTimer[AGMode.TIMER_00].timerDone() ) {
 				this.starting_pos_timer = true;
 			}
+			if (this.animate_only_death && ! myTimer[AGMode.TIMER_01].done && ! myTimer[AGMode.TIMER_01].started ) {
+				//
+				this.animate_only_death = false;
+				myTimer[AGMode.TIMER_01] = new AGTimer(3);
+				this.animate_only = true;
+				AGDrawGuy(this.myDraw).setBitEffectEnable(true);
+			}
+			if (this.animate_only_revive && ! myTimer[AGMode.TIMER_02].done && ! myTimer[AGMode.TIMER_02].started ) {
+				//
+				this.animate_only_revive = false;
+				myTimer[AGMode.TIMER_02] = new AGTimer(3);
+				this.animate_only = true;
+				AGDrawGuy(this.myDraw).setBitEffectEnable(true);
+
+			}
+			if (myTimer[AGMode.TIMER_01].timerDone() &&   myTimer[AGMode.TIMER_01].started) {
+				//
+				myTimer[AGMode.TIMER_01].timerDestroy();
+				this.animate_only = false;
+				this.animate_only_death = false;
+				this.guyDeath();
+				AGDrawGuy(this.myDraw).setBitEffectEnable(false);
+
+			}
+			if (myTimer[AGMode.TIMER_02].timerDone() &&  myTimer[AGMode.TIMER_02].started) {
+				//
+				myTimer[AGMode.TIMER_02].timerDestroy();
+				
+				this.animate_only = false;
+				this.animate_only_revive = false;
+				AGDrawGuy(this.myDraw).setBitEffectEnable(false);
+
+			}
+			
+			
 		}
 		
 		public function updateSprites():void {
@@ -1221,6 +1260,7 @@
 			//agflyer.active = false;
 			
 			this.myGame.gameHealth -= 10;
+			this.animate_only_revive = true;
 		}
 		
 		public function checkRegularCollision():void {
@@ -1309,7 +1349,8 @@
 							case AGMode.S_XMONSTER_STAND:
 								testPunch(myGuy, sprite);
 								if (!sprite.active) break;
-								if (myGame.gameHealth <= 0) this.guyDeath();
+								//if (myGame.gameHealth <= 0) this.guyDeath();
+								if (myGame.gameHealth <= 0) this.animate_only_death = true;
 								break;
 								
 							
@@ -1469,7 +1510,8 @@
 				}
 			
 				if (sprite.quality_0 != AGModeGuy.GUY_PUNCH ) {
-					if (myGame.gameHealth <= 0) this.guyDeath();
+					//if (myGame.gameHealth <= 0) this.guyDeath();
+					if (myGame.gameHealth <= 0) this.animate_only_death = true;
 					else myGame.gameHealth -= 5;
 				}
 				else if (facingMonster  ) {
