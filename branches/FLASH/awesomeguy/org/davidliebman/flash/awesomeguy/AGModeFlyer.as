@@ -822,7 +822,7 @@
 				this.animate_enter_maze_started = false;
 				this.animate_return_to_planet_bubble.active = false;
 				this.animate_return_to_planet_bubble.visible = false;
-				
+				this.agflyer.active = true;
 			}
 			
 		}
