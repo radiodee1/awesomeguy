@@ -111,7 +111,7 @@
 			showKeys(this.myGame.gameKeys);
 			myStage.addChild(myShape);
 			//
-			fireButton();
+			if (! this.animate_only) fireButton();
 			doTimers();
 
 			if (!this.animate_only) checkRegularCollision();
@@ -126,7 +126,7 @@
 			radarscreen.y = SCREEN_HEIGHT;
 			myStage.addChild(radarscreen);
 
-			this.detectMovement();
+			if (!this.animate_only) this.detectMovement();
 
 			this.physicsAdjustments();
 			this.scrollBackground();
@@ -959,7 +959,10 @@
 		
 		public override function physicsAdjustments():void {
 				//this version for overriding
-				
+				if (this.animate_only) {
+					yy = 0;
+					xx = 0;
+				}
 				switch(myGuy.quality_0) {
 					case AGModeGuy.GUY_STEP:
 					
