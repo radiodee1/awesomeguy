@@ -617,7 +617,8 @@
 			return r;
 		}
 		
-		public function goingRightIsShortest(  spritex:int, flyerx:int ):Boolean { 
+		public function goingRightIsShortest(  spritex:int, flyerx:int ):Boolean {
+			trace("goingRightIsShortest - wrong version.");
 			return true;
 		}
 		public function prepText():void {
