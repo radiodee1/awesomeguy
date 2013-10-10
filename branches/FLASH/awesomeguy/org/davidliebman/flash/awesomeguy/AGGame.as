@@ -2,6 +2,8 @@
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.xml.XMLDocument;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
 	
 	public class AGGame {
 
@@ -62,7 +64,8 @@
 			myRes = myresources;
 			myKeyStage = mykeystage;
 			
-			myStage.addEventListener(Event.ENTER_FRAME, setKeys );
+			//myStage.addEventListener(Event.ENTER_FRAME, setKeys );
+			loadXML();
 			
 			controls = new AGModeControls();
 			controls.setValues(myStage,myKeys,myRes,this);
@@ -106,6 +109,27 @@
 			//this.myModeStack = new Array();
 				
 			this.gamePaused = true;
+		}
+		public function loadXML():void {
+			var uloader:URLLoader = new URLLoader();
+			var title:String = new String("xml/00awesomeguy.xml");
+			
+			// form title string here:
+			uloader.addEventListener(Event.COMPLETE, finishLoadXML);
+			trace(title);
+			uloader.load( new URLRequest(title));
+		}
+		
+		public function finishLoadXML(e:Event):void {
+			// finish loading xml:
+			var xml_doc:XMLDocument = new XMLDocument();
+			xml_doc.ignoreWhite = true;
+			xml_doc.parseXML(e.target.data);
+			myRes[AGResources.NAME_AWESOMEGUY_XML] = xml_doc;
+			
+			// last thing here:
+			myStage.addEventListener(Event.ENTER_FRAME, setKeys );
+
 		}
 
 		public function setKeys(e:Event) {
