@@ -119,6 +119,9 @@
 				this.gamePaused = true;
 			}
 			else {
+				this.modeObj = flyer;
+				this.myModeStack = new Array();
+				this.myModeStack.push(AGGame.MODE_START);
 				this.myModeStack.push(AGGame.MODE_FLYER);
 				this.gamePaused = false;
 			}
@@ -425,7 +428,7 @@
 				this.flyer.setValues(this.myStage, myKeys, this.myRes, this);
 				//this.flyer.game_start = true;
 				//this.loadXML(true);
-				
+				this.modeObj = flyer;
 				this.guy.game_advance_maze = false;
 				this.flyer.game_advance_maze = false;
 				this.flyer.game_advance_planet = false;
@@ -439,6 +442,7 @@
 				controls = new AGModeControls();
 				controls.setValues(myStage,myKeys,myRes,this);
 				
+				this.gamePlanet = 0;
 				this.loadXML();
 				//this.startAGGame();
 			}
