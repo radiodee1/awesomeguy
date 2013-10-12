@@ -1316,8 +1316,10 @@
 						this.hit_center = true;
 						this.hit_bottom = true;
 						this.hit_platform = true;
-						if (true) ypos += (mySprite[ii].quality_0 + 6);
-						//if (mySprite[ii].quality_0 < 0) ypos += (mySprite[ii].quality_0 - 6);
+						if (mySprite[ii].quality_0 > 0) ypos += (Math.abs(mySprite[ii].quality_0) + 6);
+						if (mySprite[ii].quality_0 < 0) ypos -= (Math.abs(mySprite[ii].quality_0) - 6);
+						//if (mySprite[ii].quality_0 < 0 || true) yy += (mySprite[ii].quality_0);
+
 						this.scrollBGY += mySprite[ii].quality_0;
 					}
 					

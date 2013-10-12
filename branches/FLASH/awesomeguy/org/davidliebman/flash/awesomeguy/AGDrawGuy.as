@@ -228,7 +228,7 @@
 			this.rail_bottom.y = sprite.bitmap.y + sprite.bitmap.height +  (AGModeGuy.Y_MOVE/2);
 			
 			this.rail_low_bottom.x = sprite.bitmap.x + (AGModeGuy.X_MOVE/ 2) ;
-			this.rail_low_bottom.y = sprite.bitmap.y + sprite.bitmap.height +  (AGModeGuy.Y_MOVE);
+			this.rail_low_bottom.y = sprite.bitmap.y + sprite.bitmap.height +  (AGModeGuy.Y_MOVE *2);
 			
 			
 			this.rail_left.x = sprite.bitmap.x - (AGModeGuy.X_MOVE/2);
