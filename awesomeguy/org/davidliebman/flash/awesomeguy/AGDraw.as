@@ -13,6 +13,7 @@
 		public var rail_right:Bitmap;
 		public var rail_top:Bitmap;
 		public var rail_bottom:Bitmap;
+		public var rail_low_bottom:Bitmap;
 
 		public function AGDraw(mode:AGMode, myres:Array, mystage:Stage, mybackground:Bitmap) {
 			// constructor code

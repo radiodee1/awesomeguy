@@ -222,9 +222,14 @@
 			this.rail_top = new Bitmap(horizontal);
 			this.rail_left = new Bitmap(vertical);
 			this.rail_right = new Bitmap(vertical);
+			this.rail_low_bottom = new Bitmap(horizontal);
 			
 			this.rail_bottom.x = sprite.bitmap.x + (AGModeGuy.X_MOVE/ 2) ;
 			this.rail_bottom.y = sprite.bitmap.y + sprite.bitmap.height +  (AGModeGuy.Y_MOVE/2);
+			
+			this.rail_low_bottom.x = sprite.bitmap.x + (AGModeGuy.X_MOVE/ 2) ;
+			this.rail_low_bottom.y = sprite.bitmap.y + sprite.bitmap.height +  (AGModeGuy.Y_MOVE);
+			
 			
 			this.rail_left.x = sprite.bitmap.x - (AGModeGuy.X_MOVE/2);
 			this.rail_left.y = sprite.bitmap.y + (AGModeGuy.Y_MOVE/ 2);
