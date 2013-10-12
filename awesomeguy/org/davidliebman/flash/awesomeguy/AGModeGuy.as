@@ -584,6 +584,9 @@
 					if (mySprite[i].sprite_type == AGMode.S_PLATFORM  ) {
 						myDraw.drawBasicSprite(mySprite[i], D_PLATFORM);
 					}
+					if (mySprite[i].sprite_type == AGMode.S_PLUNGER ) {
+						myDraw.drawBasicSprite(mySprite[i], D_PLATFORM);
+					}
 					if (mySprite[i].sprite_type == AGMode.S_DOOR_SPRITE  ) {
 						myDraw.drawBasicSprite(mySprite[i], D_EXIT);
 					}
@@ -611,24 +614,7 @@
 						
 						myDraw.drawBasicSprite(mySprite[i], D_XMONSTER);
 					}
-					//if (explosionsprite.sprite_type == AGMode.S_EXPLOSION && 
-					//	explosionsprite.active == true) {
-					//	myDraw.drawBasicSprite(explosionsprite, AGMode.D_EXPLOSION);
-					//}
-					//if (mySprite[i].sprite_type == AGMode.S_EXPLOSION_SPRITE ) {
-						
-					//	myDraw.drawBasicSprite(mySprite[i], AGMode.D_EXPLOSION_SPRITE);
-					//}
-					//if (mySprite[i].sprite_type == AGMode.S_BUBBLE_MAZE) {
-					//	myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_3);
-					//}
-
-					//if (mySprite[i].sprite_type == AGMode.S_PYRAMID) {
-					//	myDraw.drawBasicSprite(mySprite[i], AGMode.D_PYRAMID);
-						
-					//}
 					
-					//myDraw.drawBasicSprite(flyerrings, AGMode.D_FLYER_RINGS);
 					
 				}
 			}
@@ -1320,6 +1306,20 @@
 						this.hit_center = true;
 						
 					}
+					if (this.collisionBlock(mySprite[ii].bitmap, this.flyersprite) && 
+						mySprite[ii].sprite_type == AGMode.S_PLUNGER) {
+						this.hit_center = true;
+						
+					}
+					if (this.collisionBlock(mySprite[ii].bitmap, myDraw.rail_bottom) && 
+						mySprite[ii].sprite_type == AGMode.S_PLUNGER) {
+						this.hit_center = true;
+						this.hit_bottom = true;
+						this.hit_platform = true;
+						//ypos += mySprite[ii].quality_0 + 6;
+						this.scrollBGY += mySprite[ii].quality_0;
+					}
+					
 					if (this.collisionSimple(mySprite[ii].bitmap, this.flyersprite) 
 						&& mySprite[ii].active == true ) {
 							var sprite:AGSprite = mySprite[ii];

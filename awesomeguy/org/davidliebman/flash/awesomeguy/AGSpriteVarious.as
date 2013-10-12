@@ -188,7 +188,7 @@
 			var vert:int = 64;
 			var horiz:int = 64;
 			var width:int = 2;
-			
+			var height:int = 1;
 			
 			
 			//for each monster...
@@ -203,11 +203,6 @@
 							yy = Math.floor(int ( this.y / vert)) ;
 							
 							
-							// Must move and stop monsters when they hit bricks or
-							// markers or the end of the screen/room/level.
-							//if (xx < 0 || yy < 0 ) return;
-							//if (xx > myHoriz || yy > myVert) return;
-							
 							if(this.goingUp != true ) {
 			
 								this.y = this.y + move;
@@ -216,12 +211,12 @@
 								// marker test
 								if (xx + 3 < myMode.myHoriz && yy + 2 < myMode.myVert || true ) {
 									
-									if(myMode.myInvisible[yy][xx+width] + myMode.mapcheat == AGModeGuy.B_BLOCK  ) markerTest = true;//TRUE;
-									if(myMode.myInvisible[yy][xx+width] + myMode.mapcheat == AGModeGuy.B_MARKER ) markerTest = true;// TRUE;
+									if(myMode.myInvisible[yy + height][xx] + myMode.mapcheat == AGModeGuy.B_BLOCK  ) markerTest = true;//TRUE;
+									if(myMode.myInvisible[yy + height][xx] + myMode.mapcheat == AGModeGuy.B_PLUNGER_MARKER ) markerTest = true;// TRUE;
 									//if(myMode.myInvisible[yy+1][xx+width]  == 0) markerTest = true;//TRUE;
 								}
 								// turn monster
-								if (this.y > myMode.myHoriz * horiz  - (horiz * 2) || markerTest == true ) {
+								if (this.y > myMode.myVert * vert  - (vert * 2) || markerTest == true ) {
 			
 									this.goingUp=true;
 								}
@@ -233,7 +228,7 @@
 								// marker test
 								if (xx -1 > 0 && yy + 2 < myMode.myVert || true) {
 									if(myMode.myInvisible[yy][xx] + myMode.mapcheat == AGModeGuy.B_BLOCK) markerTest = true;//TRUE;
-									if(myMode.myInvisible[yy][xx] + myMode.mapcheat == AGModeGuy.B_MARKER) markerTest =true;// TRUE;
+									if(myMode.myInvisible[yy][xx] + myMode.mapcheat == AGModeGuy.B_PLUNGER_MARKER) markerTest =true;// TRUE;
 									//if(myMode.myInvisible[yy+1][xx-1] == 0) markerTest = true;//TRUE;
 								}
 								// turn monster
@@ -243,7 +238,7 @@
 								}
 							}
 			
-							//Only show monsters that are on the screen properly
+							//Only show those that are on the screen properly
 			
 			
 							//default is to show monster
@@ -262,13 +257,10 @@
 								visibility = hide;
 							}
 						}
-						//visibility = show;
-						//swap monsters
+						
 						if (this.visible && visibility == show) this.visible = true;// TRUE;
 						
-						//drawBasicSprite(i, D_GATOR);
 					
-						//myDraw.drawBasicSprite(mySprite[i], D_GATOR);
 					}
 					
 				
