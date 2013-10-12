@@ -1306,17 +1306,18 @@
 						this.hit_center = true;
 						
 					}
-					if (this.collisionBlock(mySprite[ii].bitmap, this.flyersprite) && 
+					if (this.collisionBlock(mySprite[ii].bitmap, myDraw.rail_bottom)&&//this.flyersprite) && 
 						mySprite[ii].sprite_type == AGMode.S_PLUNGER) {
 						this.hit_center = true;
 						
 					}
-					if (this.collisionBlock(mySprite[ii].bitmap, myDraw.rail_bottom) && 
+					if (this.collisionBlock(mySprite[ii].bitmap, myDraw.rail_low_bottom) && 
 						mySprite[ii].sprite_type == AGMode.S_PLUNGER) {
 						this.hit_center = true;
 						this.hit_bottom = true;
 						this.hit_platform = true;
-						//ypos += mySprite[ii].quality_0 + 6;
+						if (true) ypos += (mySprite[ii].quality_0 + 6);
+						//if (mySprite[ii].quality_0 < 0) ypos += (mySprite[ii].quality_0 - 6);
 						this.scrollBGY += mySprite[ii].quality_0;
 					}
 					
