@@ -37,6 +37,12 @@
 		public static var XML_MAZE_PLATFORM_MARKER:String = "XML_MAZE_PLATFORM_MARKER";
 		//followed by x-maze-tiles, y-maze-tiles (invisible)
 		
+		public static var XML_MAZE_PLUNGER_START:String = "XML_MAZE_PLUNGER_START";
+		//followed by x-maze-tiles, y-maze-tiles
+		
+		public static var XML_MAZE_PLUNGER_MARKER:String = "XML_MAZE_PLUNGER_MARKER";
+		//followed by x-maze-tiles, y-maze-tiles (invisible)
+		
 		public static var XML_TEST:String = "XML_TEST";
 
 		public static var XML_TEXT_TIME_BEFORE_START:String = "XML_TEXT_TIME_BEFORE_START";

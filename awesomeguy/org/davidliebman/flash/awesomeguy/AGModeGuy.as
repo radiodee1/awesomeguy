@@ -33,6 +33,9 @@
 		static var B_ONEUP:int = 19 ;
 		static var B_BIGPRIZE:int = 21 ;
 		static var B_PLATFORM:int = 18 ; 
+		// her start several block types that have no map icon!!
+		static var B_PLUNGER:int = 19;
+		static var B_PLUNGER_MARKER:int = 20;
 		
 		var TILEMAP_HEIGHT:int = 128 * 2;
 		var TILEMAP_WIDTH:int = 224 * 2;
@@ -283,13 +286,7 @@
 				for (j = 0 ; j < myHoriz; j ++ ) {
 					k = int (tempArray[ (i * myHoriz) + j ] );
 					smallArray.push(int (tempArray[ (i * myHoriz) + j ] ) );
-					//if (k + mapcheat == AGModeGuy.B_MONSTER) addXMonster(j,i ,0);
-					//if (k + mapcheat == AGModeGuy.B_PRIZE) this.addXRing(j,i);//
-					//if (k + mapcheat == AGModeGuy.B_START) startingPos(j,i); // only do on 'reset start'
-					//if (k + mapcheat == AGModeGuy.B_KEY) this.addXVarious(j,i,AGMode.S_KEY);
-					//if (k + mapcheat == AGModeGuy.B_GUN) this.addXVarious(j,i,AGMode.S_GUN);
-					//if (k + mapcheat == AGModeGuy.B_GOAL) this.addXVarious(j,i,AGMode.S_XGOAL);
-
+					
 				}
 				myInvisible.push(smallArray);
 			}
@@ -362,6 +359,16 @@
 						myInvisible[int(tempArray[2])][int(tempArray[1])] = AGModeGuy.B_MARKER;
 					}
 				}
+				
+				if (tempArray[0] == AG.XML_MAZE_PLUNGER_START) { // this is a 
+					addXVarious(int(tempArray[1]),int(tempArray[2]), AGMode.S_PLUNGER);
+				}
+				if (tempArray[0] == AG.XML_MAZE_PLUNGER_MARKER) { // this is a 
+					if(myInvisible[int(tempArray[2])][int(tempArray[1])] == 0) {
+						myInvisible[int(tempArray[2])][int(tempArray[1])] = AGModeGuy.B_PLUNGER_MARKER;
+					}
+				}
+				
 				if (tempArray[0] == AG.XML_REPLACE_INVISIBLE) { // this is a 
 					if(true) {
 						myInvisible[int(tempArray[2])][int(tempArray[1])] = int (tempArray[3]);
