@@ -25,6 +25,7 @@
 	var myMazeEntrance:Array;
 	var myKeyStage:AGKeys;
 	
+	public static var MAGIC_NUMBER_PLANETS:int = 2;
 	
 	public static var MODE_FLYER:int = 0;
 	public static var MODE_GUY:int = 1;
@@ -36,6 +37,7 @@
 	public var lastGameMode:int = 0;
 	public var myModeStack:Array = new Array();
 	public var gamePaused:Boolean = true;
+	public var load_after_start:Boolean = false;
 	
 	public var gamePlanet:int = 0;
 	public var gamePlanetTot:int = 0;
@@ -45,6 +47,9 @@
 	public var gameLives:int = 3;
 	public var gameHealth:int = 50;
 	public var gameKeys:int = 0;
+	public var gameXML:XMLDocument = null;
+	
+	public var uloader:URLLoader = new URLLoader();
 	
 	public var xml_text_planet_before:int = 1;
 	public var xml_text_planet_after:int = 2;
@@ -65,16 +70,19 @@
 			myKeyStage = mykeystage;
 			
 			//myStage.addEventListener(Event.ENTER_FRAME, setKeys );
-			loadXML();
+			//loadXML();
 			
 			controls = new AGModeControls();
 			controls.setValues(myStage,myKeys,myRes,this);
 			
-			var myXml:XMLDocument = new XMLDocument(myRes[AGResources.NAME_AWESOMEGUY_XML]);
-			var tree:XML = new XML(myXml);
-			this.gamePlanetTot = int(tree.planet.length());
+			//var myXml:XMLDocument = new XMLDocument(myRes[AGResources.NAME_AWESOMEGUY_XML]);
+			//var tree:XML = new XML(myXml);
+			//this.gamePlanetTot = int(tree.planet.length());
 			
-			this.startAGGame();
+			this.gamePlanetTot = AGGame.MAGIC_NUMBER_PLANETS;
+			
+			this.loadXML();
+			//this.startAGGame();
 		}
 		
 		public function startAGGame() {
@@ -90,46 +98,66 @@
 			guy = new AGModeGuy();
 			flyer = new AGModeFlyer();
 			paused = new AGModePause();
-			//controls = new AGModeControls();
-			
+
+
 			flyer.setValues(myStage, myKeys, myRes, this);
 			guy.setValues(myStage, myKeys, myRes, this);
 			paused.setValues(myStage, myKeys, myRes, this);
-			//controls.setValues(myStage, myKeys, myRes, this);
+
+			if (! this.load_after_start) {
+				this.myModeStack = new Array();
+				this.myModeStack.push(AGGame.MODE_START);
 			
-			this.myModeStack = new Array();
-			this.myModeStack.push(AGGame.MODE_START);
-			
-			this.gameHealth = 50;
-			this.gameLives = 3;
-			this.gameScore = 10;
-			this.gameHealth = 50;
-			this.gamePlanet = 0;
-			this.gameKeys = 0;
-			//this.myModeStack = new Array();
+				this.gameHealth = 50;
+				this.gameLives = 3;
+				this.gameScore = 10;
+				this.gameHealth = 50;
+				this.gamePlanet = 0;
+				this.gameKeys = 0;
+				//this.myModeStack = new Array();
 				
-			this.gamePaused = true;
+				this.gamePaused = true;
+			}
+			else {
+				this.myModeStack.push(AGGame.MODE_FLYER);
+				this.gamePaused = false;
+			}
+			this.load_after_start = false;
 		}
-		public function loadXML():void {
-			var uloader:URLLoader = new URLLoader();
-			var title:String = new String("xml/00awesomeguy.xml");
+		
+		public function loadXML(after_start:Boolean = false):void {
+			
+			load_after_start = after_start;
+			myStage.removeEventListener(Event.ENTER_FRAME, setKeys);
+			
+			
+			var path:String = new String("xml/0");
+			var number:String = new String(this.gamePlanet.toString());
+			var name:String = new String("awesomeguy.xml");
+			var title_s:String = path + number + name;
 			
 			// form title string here:
 			uloader.addEventListener(Event.COMPLETE, finishLoadXML);
-			trace(title);
-			uloader.load( new URLRequest(title));
+			trace(title_s);
+			uloader.load( new URLRequest(title_s));
 		}
 		
 		public function finishLoadXML(e:Event):void {
 			// finish loading xml:
+			
 			var xml_doc:XMLDocument = new XMLDocument();
 			xml_doc.ignoreWhite = true;
 			xml_doc.parseXML(e.target.data);
-			myRes[AGResources.NAME_AWESOMEGUY_XML] = xml_doc;
-			
+			//myRes[AGResources.NAME_AWESOMEGUY_XML] = xml_doc;
+			this.gameXML = xml_doc;
 			// last thing here:
+			
 			myStage.addEventListener(Event.ENTER_FRAME, setKeys );
-
+			
+			this.startAGGame();
+			
+			trace("xml");
+			
 		}
 
 		public function setKeys(e:Event) {
@@ -190,6 +218,7 @@
 							gamePaused = false;
 							
 							this.myModeStack.push(AGGame.MODE_FLYER);
+							//this.loadXML();
 						}
 						K_PAUSE = false;
 						K_ANY = false;
@@ -232,7 +261,7 @@
 								this.flyer.game_advance_maze = false;
 								this.modeObj.game_advance_maze = false;
 								this.paused.game_advance_maze = false;
-								
+								//this.loadXML();
 							}
 						}
 						K_PAUSE = false;
@@ -389,11 +418,13 @@
 				this.gamePlanet ++;
 				//if (this.gamePlanet >= this.flyer.planets) this.gamePlanet = 0;
 				if (this.gamePlanet >= this.gamePlanetTot) this.gamePlanet = 0;
+				this.loadXML(true);
+				
 				this.flyer = new AGModeFlyer();
 				this.flyer.game_start = true;
 				this.flyer.setValues(this.myStage, myKeys, this.myRes, this);
 				//this.flyer.game_start = true;
-				
+				//this.loadXML(true);
 				
 				this.guy.game_advance_maze = false;
 				this.flyer.game_advance_maze = false;
@@ -408,7 +439,8 @@
 				controls = new AGModeControls();
 				controls.setValues(myStage,myKeys,myRes,this);
 				
-				this.startAGGame();
+				this.loadXML();
+				//this.startAGGame();
 			}
 			
 			if (gameLives == 0 ) {
@@ -420,7 +452,8 @@
 				this.myModeStack.push(AGGame.MODE_START);
 				this.gamePaused = true;
 				
-				this.startAGGame();
+				this.loadXML();
+				//this.startAGGame();
 			}
 			
 			// SWITCH MODE??!!
@@ -445,8 +478,7 @@
 				modeObj = controls;
 			}
 			
-			
-			modeObj.innerGameLoop();
+			if (true ) modeObj.innerGameLoop();
 		}
 	}
 	
