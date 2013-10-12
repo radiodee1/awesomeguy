@@ -1068,6 +1068,7 @@
 <block>XML_MAZE_PLATFORM_START, 2,5</block>
 <block>XML_MAZE_PLATFORM_MARKER, 10,5</block>
 <block>XML_MAZE_DOOR_SPRITE, 0,1</block>
+<block>XML_MAZE_PLUNGER_START, 4, 8 </block>
 </special>
 </maze>
 <maze number="2">
