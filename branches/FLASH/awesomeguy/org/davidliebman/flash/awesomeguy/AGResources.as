@@ -138,8 +138,9 @@
 	public static var NAME_G_STEPR7_PNG:int =87;
 	public static var NAME_G_STEPR8_PNG:int =88;
 
+	
 
-	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
+	var res00:Array = new Array (R_XML, "xml/01awesomeguy.xml");
 	var res01:Array = new Array (R_BITMAP, "bitmap/test2.png");
 	var res02:Array = new Array (R_BITMAP, "bitmap/agtiles1.png");
 	var res03:Array = new Array (R_BITMAP, "bitmap/agtiles2.png");

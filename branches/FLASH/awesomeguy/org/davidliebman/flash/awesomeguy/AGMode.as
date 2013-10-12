@@ -622,20 +622,21 @@
 			return true;
 		}
 		public function prepText():void {
-			var myXML:XMLDocument = myRes[AGResources.NAME_AWESOMEGUY_XML];
+			var myXML:XMLDocument = myGame.gameXML;// myRes[AGResources.NAME_AWESOMEGUY_XML];
 			var tree:XML = new XML(myXML);
-			var num:int = int (tree.planet[myGame.gamePlanet].text.message.length()) ;//length here.
+			var num:int = int (tree.planet[0].text.message.length()) ;//length here.
+			//var num:int = int (tree.planet[myGame.gamePlanet].text.message.length()) ;//length here.
 			var j:int = 0;
 			for(j = 0; j < num; j ++ ) {
-				var number:int = int (tree.planet[myGame.gamePlanet].text.message[j].@number) ;//0;
-				var message:String = tree.planet[myGame.gamePlanet].text.message[j];//"";
+				var number:int = int (tree.planet[0].text.message[j].@number) ;//0;
+				var message:String = tree.planet[0].text.message[j];//"";
 				var smallArray = new Array(number, message);
 				this.myText.push(smallArray);
 				//trace(number,message);
 			}
 			
 			
-			num = int (tree.planet[myGame.gamePlanet].special.block.length() );
+			num = int (tree.planet[0].special.block.length() );
 			var i:int;
 			var value:String = "";
 			var tempArray:Array = new Array();

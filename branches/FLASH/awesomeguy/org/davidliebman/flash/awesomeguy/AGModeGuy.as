@@ -171,9 +171,10 @@
 			
 			fillChallenges();
 			
-			var myXml:XMLDocument = new XMLDocument(myRes[AGResources.NAME_AWESOMEGUY_XML]);
+			var myXml:XMLDocument =myGame.gameXML;// new XMLDocument(myRes[AGResources.NAME_AWESOMEGUY_XML]);
 			var tree:XML = new XML(myXml);
-			planets = int(tree.planet.length());
+			//planets = int(tree.planet.length());
+			planets = AGGame.MAGIC_NUMBER_PLANETS;
 			challenges = myChallenge.length;
 			
 			prepTiles() ;
@@ -247,17 +248,17 @@
 			
 			var stringVisible:String;
 			var stringInvisible:String;
-			var myXML:XMLDocument = myRes[AGResources.NAME_AWESOMEGUY_XML];
+			var myXML:XMLDocument = myGame.gameXML;//myRes[AGResources.NAME_AWESOMEGUY_XML];
 			
 			var mazeNumber:String = String( this.myGame.gameMaze);
 			var tree:XML = new XML(myXML);
 			
 			
-			myHoriz = int (tree.planet[myGame.gamePlanet].underground.maze.(@number==mazeNumber).horizontal.toString());
-			myVert = int (tree.planet[myGame.gamePlanet].underground.maze.(@number==mazeNumber).vertical.toString());
+			myHoriz = int (tree.planet[0].underground.maze.(@number==mazeNumber).horizontal.toString());
+			myVert = int (tree.planet[0].underground.maze.(@number==mazeNumber).vertical.toString());
 			
-			stringVisible = tree.planet[myGame.gamePlanet].underground.maze.(@number==mazeNumber).visible.toString();
-			stringInvisible = tree.planet[myGame.gamePlanet].underground.maze.(@number==mazeNumber).invisible.toString();
+			stringVisible = tree.planet[0].underground.maze.(@number==mazeNumber).visible.toString();
+			stringInvisible = tree.planet[0].underground.maze.(@number==mazeNumber).invisible.toString();
 			
 			var i:int = 0;
 			var j:int = 0;
@@ -307,10 +308,10 @@
 			var is_timer_set:Boolean = false;
 			
 			var mazeNumber:String = String( this.myGame.gameMaze);
-			var myXML:XMLDocument = myRes[AGResources.NAME_AWESOMEGUY_XML];
+			var myXML:XMLDocument = myGame.gameXML;//myRes[AGResources.NAME_AWESOMEGUY_XML];
 			var tree:XML = new XML(myXML);
 			
-			var num:int = int (tree.planet[myGame.gamePlanet].underground.maze.(@number==mazeNumber).special.block.length() );
+			var num:int = int (tree.planet[0].underground.maze.(@number==mazeNumber).special.block.length() );
 			//trace(num);
 			var i:int, j:int;
 			var value:String = "";
@@ -319,7 +320,7 @@
 			var tempCharArray:Array = new Array();
 
 			for (i = 0; i < num; i ++ ) {
-				value = tree.planet[myGame.gamePlanet].underground.maze.(@number==mazeNumber).special.block[i].toString();
+				value = tree.planet[0].underground.maze.(@number==mazeNumber).special.block[i].toString();
 				tempArray = value.split(",");
 				
 				for (j = 0; j < tempArray.length; j ++ ) {

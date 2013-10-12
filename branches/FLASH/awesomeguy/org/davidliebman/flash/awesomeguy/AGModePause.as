@@ -6,10 +6,8 @@
 		public function AGModePause() {
 			// constructor code
 		}
-		//public override function setValues(mystage:Stage, mybuttons:Array, myresources:Array, mygame:AGGame):void {
-			//super.setValues(mystage, mybuttons, myresources,mygame);
-			//super.setValues(mystage,mybuttons,myresources,mygame);
-		//}
+		
+		
 		public override function doOnce():void {
 			showSign();
 		}

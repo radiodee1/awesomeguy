@@ -134,9 +134,10 @@
 			
 			fillChallenges();
 			
-			var myXml:XMLDocument = new XMLDocument(myRes[AGResources.NAME_AWESOMEGUY_XML]);
+			var myXml:XMLDocument =myGame.gameXML;// new XMLDocument(myRes[AGResources.NAME_AWESOMEGUY_XML]);
 			var tree:XML = new XML(myXml);
-			planets = int(tree.planet.length());
+			//planets = int(tree.planet.length());
+			planets = AGGame.MAGIC_NUMBER_PLANETS;
 			challenges = myChallenge.length;
 			
 			prepTiles() ;
@@ -201,17 +202,17 @@
 			
 			var stringVisible:String;
 			var stringInvisible:String;
-			var myXML:XMLDocument = myRes[AGResources.NAME_AWESOMEGUY_XML];
+			var myXML:XMLDocument =myGame.gameXML;// myRes[AGResources.NAME_AWESOMEGUY_XML];
 			
 			var tree:XML = new XML(myXML);
 			//trace (tree.planet[myGame.gamePlanet].horizontal);
 			
-			myHoriz = int (tree.planet[myGame.gamePlanet].horizontal.toString());
-			myVert = int (tree.planet[myGame.gamePlanet].vertical.toString());
+			myHoriz = int (tree.planet[0].horizontal.toString());
+			myVert = int (tree.planet[0].vertical.toString());
 			
 
-			stringVisible = tree.planet[myGame.gamePlanet].horizon.visible.toString();
-			stringInvisible = tree.planet[myGame.gamePlanet].horizon.invisible.toString();
+			stringVisible = tree.planet[0].horizon.visible.toString();
+			stringInvisible = tree.planet[0].horizon.invisible.toString();
 
 			var i:int = 0;
 			var j:int = 0;
@@ -247,9 +248,9 @@
 		}
 		
 		public override function prepSpecialXml():void {
-			var myXML:XMLDocument = myRes[AGResources.NAME_AWESOMEGUY_XML];
+			var myXML:XMLDocument = myGame.gameXML;//myRes[AGResources.NAME_AWESOMEGUY_XML];
 			var tree:XML = new XML(myXML);
-			var num:int = int (tree.planet[myGame.gamePlanet].special.block.length() );
+			var num:int = int (tree.planet[0].special.block.length() );
 			var i:int, j:int;
 			var value:String = "";
 			var tempArray:Array = new Array();
@@ -257,7 +258,7 @@
 			var tempCharArray:Array = new Array();
 
 			for (i = 0; i < num; i ++ ) {
-				value = tree.planet[myGame.gamePlanet].special.block[i].toString();
+				value = tree.planet[0].special.block[i].toString();
 				tempArray = value.split(",");
 				
 				for (j = 0; j < tempArray.length; j ++ ) {
@@ -319,8 +320,8 @@
 			var challengeBody:String = new String();
 			var challengeLength:int = 0;
 			var ii:int, jj:int;
-			var tree:XML = new XML(new XMLDocument(myRes[AGResources.NAME_AWESOMEGUY_XML]));
-			challengeLength = tree.planet[myGame.gamePlanet].challenges.invaders.length();
+			var tree:XML = new XML(myGame.gameXML);//new XMLDocument(myRes[AGResources.NAME_AWESOMEGUY_XML]));
+			challengeLength = tree.planet[0].challenges.invaders.length();
 
 			myChallenge = new Array();
 			
@@ -328,7 +329,7 @@
 			for (ii = 0; ii < challengeLength; ii ++ ) {
 				challengeBody = new String();
 			
-				challengeBody = tree.planet[myGame.gamePlanet].challenges.invaders[ii].toString();
+				challengeBody = tree.planet[0].challenges.invaders[ii].toString();
 
 				tempArray = new Array();
 				tempArray = challengeBody.split(",");
