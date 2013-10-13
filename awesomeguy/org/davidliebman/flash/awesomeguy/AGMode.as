@@ -289,10 +289,11 @@
 				myGame.gameLives --;
 				game_death = false;
 				game_reset_start = true;
-				this.doOnce();
+				//this.doOnce();
 				if (myGame.gameLives <= 0 ) {
 					game_over = true;
 				}
+				this.doOnce();
 			}
 			if (game_end_level) {
 				game_reset_start = true;

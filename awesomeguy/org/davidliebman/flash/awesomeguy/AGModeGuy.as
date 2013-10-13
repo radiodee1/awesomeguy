@@ -160,7 +160,7 @@
 			if(game_reset_start == true || this.game_start) {
 				setStartingVars();
 				myRes[AGResources.NAME_ENTER_1_MP3].play();
-				//game_reset_start = false;
+				
 			}
 			
 			prepText();
@@ -181,7 +181,7 @@
 			
 			fillChallenges();
 			
-			var myXml:XMLDocument =myGame.gameXML;// new XMLDocument(myRes[AGResources.NAME_AWESOMEGUY_XML]);
+			var myXml:XMLDocument = myGame.gameXML;// new XMLDocument(myRes[AGResources.NAME_AWESOMEGUY_XML]);
 			var tree:XML = new XML(myXml);
 			//planets = int(tree.planet.length());
 			planets = AGGame.MAGIC_NUMBER_PLANETS;
@@ -516,7 +516,7 @@
 		}
 		
 		public function doTimers():void {
-			if (myTimer[AGMode.TIMER_00].timerDone() ) {
+			if (myTimer[AGMode.TIMER_00].timerDone() ){//&& myTimer[AGMode.TIMER_00].started ) {
 				this.starting_pos_timer = true;
 			}
 			if (this.animate_only_death && ! myTimer[AGMode.TIMER_01].done && ! myTimer[AGMode.TIMER_01].started ) {
@@ -529,6 +529,9 @@
 			}
 			if (this.animate_only_revive && ! myTimer[AGMode.TIMER_02].done && ! myTimer[AGMode.TIMER_02].started ) {
 				//
+				myGuy.x = this.startingx;
+				myGuy.y = this.startingy;
+				
 				this.animate_only_revive = false;
 				myTimer[AGMode.TIMER_02] = new AGTimer(3);
 				this.animate_only = true;
@@ -1262,9 +1265,7 @@
 			//myRes[AGResources.NAME_EXPLOSION_MP3].play();
 			this.game_death = true;
 			
-			//agflyer.active = false;
 			
-			this.myGame.gameHealth -= 10;
 			this.animate_only_revive = true;
 		}
 		
@@ -1532,12 +1533,12 @@
 			}
 			// test for smoosh-ing of guy under plunger
 			if (this.hit_smoosh_bottom || this.hit_smoosh_top) {
-				if (myGame.gameHealth <= 0) {
-					this.animate_only_death = true;
-				}
-				else {
+				if (myGame.gameHealth > 15 ) {
 					myRes[AGResources.NAME_ENTER_1_MP3].play();
 					myGame.gameHealth -= 10;
+				}
+				else {
+					this.animate_only_death = true;
 				}
 			}
 			
@@ -1562,7 +1563,9 @@
 			
 				if (sprite.quality_0 != AGModeGuy.GUY_PUNCH ) {
 					//if (myGame.gameHealth <= 0) this.guyDeath();
-					if (myGame.gameHealth <= 0) this.animate_only_death = true;
+					if (myGame.gameHealth <= 0) {
+						this.animate_only_death = true;
+					}
 					else { 
 						myRes[AGResources.NAME_ENTER_1_MP3].play();
 						myGame.gameHealth -= 5;
