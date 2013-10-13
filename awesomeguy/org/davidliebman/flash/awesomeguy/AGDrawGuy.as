@@ -374,9 +374,9 @@
 		}
 		
 		public function drawXVarious() {
+			
+			if (sprite.bitmap == null) return;
 			sprite.bitmap.x = (sprite.x - scrollx );
-			
-			
 			sprite.bitmap.y = sprite.y - scrolly;
 			if (sprite.active == true && sprite != null && sprite.bitmap != null) {
 			//trace("before");
