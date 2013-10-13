@@ -64,6 +64,12 @@
 		public var hit_ladder:Boolean = false;
 		public var hit_platform:Boolean = false;
 
+		public var hit_plunger_top:Boolean = false;
+		public var hit_plunger_bottom:Boolean = false;
+		
+		public var hit_smoosh_top:Boolean = false;
+		public var hit_smoosh_bottom:Boolean = false;
+
 		//public var animate_only:Boolean = false;
 		public var animate_only_death:Boolean = false;
 		public var animate_only_revive:Boolean = false;
@@ -515,12 +521,17 @@
 			if (this.animate_only_death && ! myTimer[AGMode.TIMER_01].done && ! myTimer[AGMode.TIMER_01].started ) {
 				//
 				this.animate_only_death = false;
+				//this.hit_smoosh_bottom = false;
+				//this.hit_smoosh_top = false;
 				myTimer[AGMode.TIMER_01] = new AGTimer(3);
 				this.animate_only = true;
 				AGDrawGuy(this.myDraw).setBitEffectEnable(true);
 			}
 			if (this.animate_only_revive && ! myTimer[AGMode.TIMER_02].done && ! myTimer[AGMode.TIMER_02].started ) {
 				//
+				//this.hit_smoosh_bottom = false;
+				//this.hit_smoosh_top = false;
+				
 				this.animate_only_revive = false;
 				myTimer[AGMode.TIMER_02] = new AGTimer(3);
 				this.animate_only = true;
@@ -555,12 +566,9 @@
 			
 			for (i = 0; i < mySprite.length; i ++ ) {
 				if (mySprite[i].active == true ){
-					mySprite[i].updateSprite();
-//					if ((mySprite[i].sprite_type != AGMode.S_EXPLOSION_SPRITE ) || 
-//						(mySprite[i].sprite_type == AGMode.S_BUBBLE_MAZE )) {
-//						mySprite[i].updateSprite();
-//					}
-//					
+					if ( mySprite[i].sprite_type != AGMode.S_PLUNGER || (!this.animate_only_death &&  !this.hit_smoosh_bottom && !this.hit_smoosh_top)) mySprite[i].updateSprite();
+					//else mySprite[i].updateSprite();
+
 					if (mySprite[i].sprite_type == AGMode.S_GUY) myDraw.drawBasicSprite(mySprite[i], D_GUY);
 					if (mySprite[i].sprite_type == AGMode.S_KEY) myDraw.drawBasicSprite(mySprite[i], D_KEY);
 
@@ -953,10 +961,13 @@
 		
 		public override function physicsAdjustments():void {
 				//this version for overriding
-				if (this.animate_only) {
+				if (this.animate_only || this.animate_only_death || 
+					this.hit_smoosh_bottom || this.hit_smoosh_top) {
 					yy = 0;
 					xx = 0;
 				}
+				
+				
 				switch(myGuy.quality_0) {
 					case AGModeGuy.GUY_STEP:
 					
@@ -968,7 +979,8 @@
 					break;
 					case AGModeGuy.GUY_STILL:
 					case AGModeGuy.GUY_FALL:
-						if (!this.hit_bottom && !this.hit_center && !this.hit_ladder) {
+						if (!this.hit_bottom && !this.hit_center && !this.hit_ladder && 
+							!this.hit_smoosh_bottom && !this.hit_smoosh_top) {
 							yy = AGModeGuy.Y_MOVE;
 						}
 						//if (this.jump_count > 0) {
@@ -1269,6 +1281,10 @@
 			this.hit_center = false;
 			this.hit_ladder = false;
 			this.hit_platform = false;
+			this.hit_plunger_bottom = false;
+			this.hit_plunger_top = false;
+			this.hit_smoosh_bottom = false;
+			this.hit_smoosh_top = false;
 			
 			var ii:int;
 			for (ii = 0; ii < mySprite.length ; ii ++ ) {
@@ -1306,21 +1322,29 @@
 						this.hit_center = true;
 						
 					}
+					if (this.collisionBlock(mySprite[ii].bitmap, myDraw.rail_top) &&
+						mySprite[ii].sprite_type == AGMode.S_PLUNGER) {
+						this.hit_center = true;
+						this.hit_plunger_top = true;
+					}
 					if (this.collisionBlock(mySprite[ii].bitmap, myDraw.rail_bottom)&&//this.flyersprite) && 
 						mySprite[ii].sprite_type == AGMode.S_PLUNGER) {
 						this.hit_center = true;
-						
+						this.hit_plunger_bottom = true;
 					}
 					if (this.collisionBlock(mySprite[ii].bitmap, myDraw.rail_low_bottom) && 
-						mySprite[ii].sprite_type == AGMode.S_PLUNGER) {
+						mySprite[ii].sprite_type == AGMode.S_PLUNGER && !this.animate_only_death) {
 						this.hit_center = true;
 						this.hit_bottom = true;
 						this.hit_platform = true;
-						if (mySprite[ii].quality_0 > 0) ypos += (Math.abs(mySprite[ii].quality_0) + 6);
-						if (mySprite[ii].quality_0 < 0) ypos -= (Math.abs(mySprite[ii].quality_0) - 6);
-						//if (mySprite[ii].quality_0 < 0 || true) yy += (mySprite[ii].quality_0);
+						
+						if (!this.animate_only_death && !this.hit_smoosh_bottom && !this.hit_smoosh_top) {
+							if (mySprite[ii].quality_0 > 0) ypos += (Math.abs(mySprite[ii].quality_0) + 6);
+							if (mySprite[ii].quality_0 < 0) ypos -= (Math.abs(mySprite[ii].quality_0) - 6);
+							//if (mySprite[ii].quality_0 < 0 || true) yy += (mySprite[ii].quality_0);
 
-						this.scrollBGY += mySprite[ii].quality_0;
+							this.scrollBGY += mySprite[ii].quality_0;
+						}
 					}
 					
 					if (this.collisionSimple(mySprite[ii].bitmap, this.flyersprite) 
@@ -1471,11 +1495,17 @@
 					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_top)&& 
 						myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
 						this.hit_top = true;
+						if (this.hit_plunger_bottom) {
+							this.hit_smoosh_top = true;
+						}
 						//this.examineHit(myBlocks[ii].bitmap, myDraw.rail_top);
 					}
 					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_bottom) && 
 						myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
 						this.hit_bottom = true;
+						if (this.hit_plunger_top) {
+							this.hit_smoosh_bottom = true;
+						}
 						//this.examineHit(myBlocks[ii].bitmap, myDraw.rail_bottom);
 					}
 				}
@@ -1504,6 +1534,16 @@
 				
 				
 			}
+			// test for smoosh-ing of guy under plunger
+			if (this.hit_smoosh_bottom || this.hit_smoosh_top) {
+				if (myGame.gameHealth <= 0) {
+					this.animate_only_death = true;
+				}
+				else {
+					myGame.gameHealth -= 10;
+				}
+			}
+			
 			return;
 		}
 		

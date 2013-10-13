@@ -195,7 +195,7 @@
 			if( true) {
 				
 					//if (i == 5) return;
-					if ( true) {
+					if ( !AGModeGuy(this.myMode).animate_only_death) {
 						markerTest = false;//FALSE; 
 						
 						if (this.active ==true  ) {
