@@ -159,7 +159,7 @@
 			
 			this.startAGGame();
 			
-			trace("xml");
+			//trace("xml");
 			
 		}
 

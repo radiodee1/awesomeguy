@@ -112,10 +112,11 @@
 			drawRadarRock();
 
 			//
-			//agflyer.sprite = this.sprite;
-			myGuy.x = xpos;
-			myGuy.y = ypos;
-
+			if (!this.animate_only_death && !this.animate_only) {
+				myGuy.x = xpos;
+				myGuy.y = ypos;
+			}
+			
 			drawScoreWords();
 			showKeys(this.myGame.gameKeys);
 			myStage.addChild(myShape);
@@ -191,7 +192,7 @@
 			prepSpecialXml();
 			//prepRingSprites();
 			this.prepTilesToSprites();
-			
+						
 			if (this.game_reset_start  || this.game_start) {
 				radar_start = xpos - scrollBGX;
 				radar_start_scroll =  scrollBGX;
@@ -391,7 +392,7 @@
 			}
 			if (!is_timer_set) {
 				myTimer[AGMode.TIMER_00].timerDestroy();
-				myTimer[AGMode.TIMER_00] = new AGTimer(2);
+				myTimer[AGMode.TIMER_00] = new AGTimer(3);
 
 			}
 		}
@@ -521,17 +522,13 @@
 			if (this.animate_only_death && ! myTimer[AGMode.TIMER_01].done && ! myTimer[AGMode.TIMER_01].started ) {
 				//
 				this.animate_only_death = false;
-				//this.hit_smoosh_bottom = false;
-				//this.hit_smoosh_top = false;
+				
 				myTimer[AGMode.TIMER_01] = new AGTimer(3);
 				this.animate_only = true;
 				AGDrawGuy(this.myDraw).setBitEffectEnable(true);
 			}
 			if (this.animate_only_revive && ! myTimer[AGMode.TIMER_02].done && ! myTimer[AGMode.TIMER_02].started ) {
 				//
-				//this.hit_smoosh_bottom = false;
-				//this.hit_smoosh_top = false;
-				
 				this.animate_only_revive = false;
 				myTimer[AGMode.TIMER_02] = new AGTimer(3);
 				this.animate_only = true;
@@ -598,10 +595,8 @@
 					if (mySprite[i].sprite_type == AGMode.S_DOOR_SPRITE  ) {
 						myDraw.drawBasicSprite(mySprite[i], D_EXIT);
 					}
-//					if (mySprite[i].sprite_type == AGMode.S_BUBBLE_2) myDraw.drawBasicSprite(mySprite[i], D_BUBBLE_2);
-//					if (mySprite[i].sprite_type == AGMode.S_INVADER_1) myDraw.drawBasicSprite(mySprite[i], D_INVADER_1);
-//					if (mySprite[i].sprite_type == AGMode.S_INVADER_2) myDraw.drawBasicSprite(mySprite[i], D_INVADER_2);
-					
+
+
 				}
 				
 			}
@@ -965,6 +960,7 @@
 					this.hit_smoosh_bottom || this.hit_smoosh_top) {
 					yy = 0;
 					xx = 0;
+					return;
 				}
 				
 				
@@ -1263,7 +1259,7 @@
 		}
 		
 		public function guyDeath():void {
-			myRes[AGResources.NAME_EXPLOSION_MP3].play();
+			//myRes[AGResources.NAME_EXPLOSION_MP3].play();
 			this.game_death = true;
 			
 			//agflyer.active = false;
@@ -1338,11 +1334,11 @@
 						this.hit_bottom = true;
 						this.hit_platform = true;
 						
-						if (!this.animate_only_death && !this.hit_smoosh_bottom && !this.hit_smoosh_top) {
+						if (!this.animate_only_death &&  !this.animate_only && !this.hit_smoosh_bottom && !this.hit_smoosh_top) {
 							if (mySprite[ii].quality_0 > 0) ypos += (Math.abs(mySprite[ii].quality_0) + 6);
 							if (mySprite[ii].quality_0 < 0) ypos -= (Math.abs(mySprite[ii].quality_0) - 6);
 							//if (mySprite[ii].quality_0 < 0 || true) yy += (mySprite[ii].quality_0);
-
+							
 							this.scrollBGY += mySprite[ii].quality_0;
 						}
 					}
@@ -1540,6 +1536,7 @@
 					this.animate_only_death = true;
 				}
 				else {
+					myRes[AGResources.NAME_ENTER_1_MP3].play();
 					myGame.gameHealth -= 10;
 				}
 			}
@@ -1566,7 +1563,10 @@
 				if (sprite.quality_0 != AGModeGuy.GUY_PUNCH ) {
 					//if (myGame.gameHealth <= 0) this.guyDeath();
 					if (myGame.gameHealth <= 0) this.animate_only_death = true;
-					else myGame.gameHealth -= 5;
+					else { 
+						myRes[AGResources.NAME_ENTER_1_MP3].play();
+						myGame.gameHealth -= 5;
+					}
 				}
 				else if (facingMonster  ) {
 					// punch monster...
