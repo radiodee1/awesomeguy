@@ -205,6 +205,7 @@
 	public var alert_color:uint = 0x00000000;
 	public var planets:int = 0;
 	public var challenges:int = 0;
+	public var do_once_flag:Boolean = false;
 	
 	public var messageTimer:AGTimer;
 	public var blinkTimer:AGTimer;
@@ -266,6 +267,8 @@
 		public function innerGameLoop() {
 			// this happens every frame because it is called in AGGame.as once every 
 			// frame by 'doAnimation()'...
+			this.do_once_flag = false;
+			
 			myBlocks = new Array();
 			
 						
@@ -286,19 +289,25 @@
 			}
 			
 			if (game_death) {
-				myGame.gameLives --;
+				myGame.gameLives -= 1;
+				
 				game_death = false;
 				game_reset_start = true;
 				//this.doOnce();
 				if (myGame.gameLives <= 0 ) {
 					game_over = true;
 				}
-				this.doOnce();
+				do_once_flag = true;
+				//this.doOnce();
 			}
 			if (game_end_level) {
 				game_reset_start = true;
 				myGame.gamePlanet ++;
 				myGame.gameChallenge = 0;
+				do_once_flag = true;
+				//this.doOnce();
+			}
+			if (do_once_flag) {
 				this.doOnce();
 			}
 			
