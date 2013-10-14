@@ -49,6 +49,7 @@
 		public static var Y_MOVE = 10 * 2;
 
 		public var animate_return_to_planet:Boolean = false;
+		public var animate_plunger:AGSprite;
 
 		public var jump_count:int = 0;
 		public var shoot_count:int = 0; // shoot button
@@ -1270,6 +1271,9 @@
 		}
 		
 		public function checkRegularCollision():void {
+			if (this.animate_only || 
+				this.animate_only_death || 
+				this.animate_only_revive) return;
 			
 			this.hit_bottom = false;
 			this.hit_left = false;
@@ -1285,7 +1289,7 @@
 			
 			var ii:int;
 			for (ii = 0; ii < mySprite.length ; ii ++ ) {
-				if (mySprite[ii].bitmap != null) {
+				if (mySprite[ii].bitmap != null && mySprite[ii].active ) {
 					if (mySprite[ii].sprite_type == AGMode.S_XMONSTER || 
 						mySprite[ii].sprite_type == AGMode.S_XMONSTER_STAND) {
 						
@@ -1323,11 +1327,13 @@
 						mySprite[ii].sprite_type == AGMode.S_PLUNGER) {
 						this.hit_center = true;
 						this.hit_plunger_top = true;
+						this.animate_plunger = mySprite[ii];
 					}
 					if (this.collisionBlock(mySprite[ii].bitmap, myDraw.rail_bottom)&&//this.flyersprite) && 
 						mySprite[ii].sprite_type == AGMode.S_PLUNGER) {
 						this.hit_center = true;
 						this.hit_plunger_bottom = true;
+						this.animate_plunger = mySprite[ii];
 					}
 					if (this.collisionBlock(mySprite[ii].bitmap, myDraw.rail_low_bottom) && 
 						mySprite[ii].sprite_type == AGMode.S_PLUNGER && !this.animate_only_death) {
@@ -1539,6 +1545,9 @@
 				}
 				else {
 					this.animate_only_death = true;
+					if (this.animate_plunger != null) this.animate_plunger.active = false;
+					//myGuy.active = false;
+					//this.myGame.gameLives ++;
 				}
 			}
 			
