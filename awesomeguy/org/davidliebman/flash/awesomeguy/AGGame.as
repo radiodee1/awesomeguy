@@ -70,7 +70,6 @@
 			myKeyStage = mykeystage;
 			
 			//myStage.addEventListener(Event.ENTER_FRAME, setKeys );
-			//loadXML();
 			
 			controls = new AGModeControls();
 			controls.setValues(myStage,myKeys,myRes,this);
@@ -133,11 +132,13 @@
 			load_after_start = after_start;
 			myStage.removeEventListener(Event.ENTER_FRAME, setKeys);
 			
-			
-			var path:String = new String("xml/0");
+			var path:String = new String("xml/");
+			var padding:String = new String("00");
 			var number:String = new String(this.gamePlanet.toString());
+			var combined:String = padding + number;
+			combined = combined.substr(combined.length - 2, 2);
 			var name:String = new String("awesomeguy.xml");
-			var title_s:String = path + number + name;
+			var title_s:String = path + combined + name;
 			
 			// form title string here:
 			uloader.addEventListener(Event.COMPLETE, finishLoadXML);
@@ -221,7 +222,7 @@
 							gamePaused = false;
 							
 							this.myModeStack.push(AGGame.MODE_FLYER);
-							//this.loadXML();
+							
 						}
 						K_PAUSE = false;
 						K_ANY = false;
@@ -264,7 +265,7 @@
 								this.flyer.game_advance_maze = false;
 								this.modeObj.game_advance_maze = false;
 								this.paused.game_advance_maze = false;
-								//this.loadXML();
+								
 							}
 						}
 						K_PAUSE = false;
@@ -331,6 +332,8 @@
 							if (choice == -1) choice = 1;
 							//this.gamePlanet = (this.gamePlanet)% this.flyer.planets;
 							this.gamePlanet = (choice) % this.gamePlanetTot;
+							
+							this.loadXML(true);
 							
 							this.myMazeEntrance = new Array();
 							flyer = new AGModeFlyer();
