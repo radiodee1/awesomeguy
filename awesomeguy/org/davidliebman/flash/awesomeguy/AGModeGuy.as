@@ -1615,10 +1615,10 @@
 			this.myGame.myHeldObject.active = false;
 			this.myGame.myHeldObject.visible = false;
 			
-			//trace ("try to GET object");
 			
 			return;
 		}
+		
 		function handleDropObject():void {
 			if (this.dropping_activity || this.getting_activity) return;
 			var sprite:AGSprite = this.myGame.myHeldObject;
@@ -1631,7 +1631,6 @@
 			sprite.x = xpos;
 			this.myGame.myHeldObject = null;
 			
-			//trace ("try to DROP object");
 			
 			return;
 		}
