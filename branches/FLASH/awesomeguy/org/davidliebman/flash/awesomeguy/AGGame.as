@@ -48,6 +48,7 @@
 	public var gameHealth:int = 50;
 	public var gameKeys:int = 0;
 	public var gameXML:XMLDocument = null;
+	public var gameHeldObject:AGSprite = null;
 	
 	public var uloader:URLLoader = new URLLoader();
 	
