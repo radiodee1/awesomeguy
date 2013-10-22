@@ -88,6 +88,11 @@
 	static var S_DOOR_SPRITE:int = 37;
 	static var S_PLUNGER:int = 38;
 	static var S_PLUNGER_MARKER:int = 39;
+	static var S_KEY_RED:int = 40;
+	static var S_KEY_GREEN:int = 41;
+	static var S_KEY_BLUE:int = 42;
+		
+	
 	
 	//draw enumeration
 	static var D_NONE:int = 0;
@@ -745,13 +750,39 @@
 										 AGModeFlyer.B_KEY, AGMode.TILE_TOP,
 										 16,16);
 				if(true) {
-					square.x = (18 * ii) + 256;
+					square.x = (18 * ii) + 256 + 20;
 					square.y = 64;
 					myStage.addChild(square);
 				}
 			}
 			
 		}
+		public function showHeldObject():void {
+			var square:Bitmap;
+			if (ypos - scrollBGY < 16 * 2) return;
+			if (this.myGame.myHeldObject == null) return;
+			switch (this.myGame.myHeldObject.sprite_type) {
+				case AGMode.S_KEY_BLUE:
+					square = myRes[AGResources.NAME_KEY_BLUE_PNG];
+				break;
+				case AGMode.S_KEY_GREEN:
+					square = myRes[AGResources.NAME_KEY_GREEN_PNG];
+				break;
+				case AGMode.S_KEY_RED:
+					square = myRes[AGResources.NAME_KEY_RED_PNG];
+				break;
+				case AGMode.S_GUN:
+					square = myRes[AGResources.NAME_GUNSMALL_PNG];
+				break;
+			}
+			if (true) {
+				square.x = 256;
+				square.y = 64;
+				myStage.addChild(square);
+			}
+			return;
+		}
+		
 	}
 	
 }

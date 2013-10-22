@@ -120,6 +120,7 @@
 			
 			drawScoreWords();
 			showKeys(this.myGame.gameKeys);
+			this.showHeldObject();
 			myStage.addChild(myShape);
 			//
 			if (! this.animate_only) fireButton();
@@ -1400,6 +1401,7 @@
 								sprite.active = false;
 								sprite.visible = false;
 								this.bullet_count = 20;
+								this.myGame.myHeldObject = sprite;
 							break;
 							case AGMode.S_KEY:
 								if (myGuy.quality_0 != AGModeGuy.GUY_CROUCH) break;

@@ -24,6 +24,7 @@
 	var myRes:Array;
 	var myMazeEntrance:Array;
 	var myKeyStage:AGKeys;
+	var myHeldObject:AGSprite;
 	
 	public static var MAGIC_NUMBER_PLANETS:int = 2;
 	
