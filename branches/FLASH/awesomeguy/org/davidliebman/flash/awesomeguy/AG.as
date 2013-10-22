@@ -43,6 +43,14 @@
 		public static var XML_MAZE_PLUNGER_MARKER:String = "XML_MAZE_PLUNGER_MARKER";
 		//followed by x-maze-tiles, y-maze-tiles (invisible)
 		
+		public static var XML_MAZE_KEY_DOOR_COMBO:String = "XML_MAZE_KEY_DOOR_COMBO";
+		//followed by color-enum, x-maze-tiles-key, y-maze-tiles-key, x-maze-tiles-door, y-maze-tiles-door
+		
+		public static var XML_MAZE_COLOR_RED:String = "XML_MAZE_COLOR_RED";
+		public static var XML_MAZE_COLOR_GREEN:String = "XML_MAZE_COLOR_GREEN";
+		public static var XML_MAZE_COLOR_BLUE:String = "XML_MAZE_COLOR_BLUE";
+		// used in XML_MAZE_KEY_DOOR_COMBO as color-enum
+		
 		public static var XML_TEST:String = "XML_TEST";
 
 		public static var XML_TEXT_TIME_BEFORE_START:String = "XML_TEXT_TIME_BEFORE_START";
