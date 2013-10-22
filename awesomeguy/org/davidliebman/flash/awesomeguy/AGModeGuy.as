@@ -56,6 +56,10 @@
 		public var bullet_count:int = 0; // number of bullets in gun
 		public var key_for_maze:Boolean = false;
 		public var starting_pos_timer:Boolean = false;
+		public var dropping_activity:Boolean = false;
+		public var getting_activity:Boolean = false;
+		
+		public var myTempGets:Array;
 
 		public var hit_top:Boolean =false; 
 		public var hit_bottom:Boolean= false; 
@@ -971,8 +975,8 @@
 				
 				switch(myGuy.quality_0) {
 					case AGModeGuy.GUY_STEP:
-					
-						
+						dropping_activity = false;
+						getting_activity = false;
 						//if (!this.hit_bottom && !this.hit_center && !this.hit_ladder) {
 							//yy = AGModeGuy.Y_MOVE;
 						//}
@@ -990,13 +994,10 @@
 						//}
 					
 					break;
-					case AGModeGuy.GUY_PUNCH:
-						//if (K_SHOOT && this.bullet_count > 0) {
-							//trace("shoot gun");
-							//this.bullet_count --;
-						//}
-						//if (this.shoot_count <= 0) myGuy.animate = 1;
-						
+					case AGModeGuy.GUY_CROUCH:
+						if (this.myGuy.quality_0 == AGModeGuy.GUY_CROUCH) {
+							this.handleDropObject();
+						}
 					break;
 					
 				}
@@ -1288,6 +1289,8 @@
 			this.hit_smoosh_bottom = false;
 			this.hit_smoosh_top = false;
 			
+			this.myTempGets = new Array();
+			
 			var ii:int;
 			for (ii = 0; ii < mySprite.length ; ii ++ ) {
 				if (mySprite[ii].bitmap != null && mySprite[ii].active ) {
@@ -1398,10 +1401,13 @@
 							
 							case AGMode.S_GUN:
 								if (myGuy.quality_0 != AGModeGuy.GUY_CROUCH) break;
+								if (dropping_activity) break;
 								sprite.active = false;
 								sprite.visible = false;
 								this.bullet_count = 20;
-								this.myGame.myHeldObject = sprite;
+								//this.myGame.myHeldObject = sprite;
+								
+								this.myTempGets.push(sprite);
 							break;
 							case AGMode.S_KEY:
 								if (myGuy.quality_0 != AGModeGuy.GUY_CROUCH) break;
@@ -1409,6 +1415,10 @@
 								sprite.visible = false;
 								this.myGame.gameKeys ++;
 								this.key_for_maze = true;
+							break;
+							
+							default:
+								
 							break;
 						}//switch
 					}// collision simple
@@ -1552,6 +1562,10 @@
 					//this.myGame.gameLives ++;
 				}
 			}
+			// handle get object!!
+			if ( myGuy.quality_0 == AGModeGuy.GUY_CROUCH) {
+				this.handleGetObject();
+			}
 			
 			return;
 		}
@@ -1591,6 +1605,35 @@
 					
 				}
 				return ;
+		}
+		
+		function handleGetObject():void {
+			
+			if (dropping_activity || getting_activity) return;
+			getting_activity = true;
+			if (this.myTempGets.length > 0) this.myGame.myHeldObject = this.myTempGets[0];
+			this.myGame.myHeldObject.active = false;
+			this.myGame.myHeldObject.visible = false;
+			
+			//trace ("try to GET object");
+			
+			return;
+		}
+		function handleDropObject():void {
+			if (this.dropping_activity || this.getting_activity) return;
+			var sprite:AGSprite = this.myGame.myHeldObject;
+			if (sprite == null) return;
+			dropping_activity = true;
+			sprite.active = true;
+			sprite.visible = true;
+			var temp:int = (int(ypos / TILE_HEIGHT) + 1) * TILE_HEIGHT;
+			sprite.y = temp;//ypos;
+			sprite.x = xpos;
+			this.myGame.myHeldObject = null;
+			
+			//trace ("try to DROP object");
+			
+			return;
 		}
 		
 	}
