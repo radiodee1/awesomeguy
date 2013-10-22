@@ -252,13 +252,13 @@
 	var res87:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr7.png");
 	var res88:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr8.png");
 
-	var res89:Array = new Array(R_BITMAP_WBLACK, "bitmap/gunsmall.png");
-	var res90:Array = new Array(R_BITMAP_WBLACK, "bitmap/key_blue.png");
-	var res91:Array = new Array(R_BITMAP_WBLACK, "bitmap/key_green.png");
-	var res92:Array = new Array(R_BITMAP_WBLACK, "bitmap/key_red.png");
-	var res93:Array = new Array(R_BITMAP_WBLACK, "bitmap/keysmall_blue.png");
-	var res94:Array = new Array(R_BITMAP_WBLACK, "bitmap/keysmall_green.png");
-	var res95:Array = new Array(R_BITMAP_WBLACK, "bitmap/keysmall_red.png");
+	var res89:Array = new Array(R_BITMAP, "bitmap/gunsmall.png");
+	var res90:Array = new Array(R_BITMAP, "bitmap/key_blue.png");
+	var res91:Array = new Array(R_BITMAP, "bitmap/key_green.png");
+	var res92:Array = new Array(R_BITMAP, "bitmap/key_red.png");
+	var res93:Array = new Array(R_BITMAP, "bitmap/keysmall_blue.png");
+	var res94:Array = new Array(R_BITMAP, "bitmap/keysmall_green.png");
+	var res95:Array = new Array(R_BITMAP, "bitmap/keysmall_red.png");
 
 
 	var i:int = 0;
