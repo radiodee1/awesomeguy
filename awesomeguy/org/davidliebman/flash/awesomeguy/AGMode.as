@@ -91,7 +91,9 @@
 	static var S_KEY_RED:int = 40;
 	static var S_KEY_GREEN:int = 41;
 	static var S_KEY_BLUE:int = 42;
-		
+	static var S_DOOR_RED:int = 43;
+	static var S_DOOR_GREEN:int = 44;
+	static var S_DOOR_BLUE:int = 45;
 	
 	
 	//draw enumeration
@@ -763,13 +765,13 @@
 			if (this.myGame.myHeldObject == null) return;
 			switch (this.myGame.myHeldObject.sprite_type) {
 				case AGMode.S_KEY_BLUE:
-					square = myRes[AGResources.NAME_KEY_BLUE_PNG];
+					square = myRes[AGResources.NAME_KEYSMALL_BLUE_PNG];
 				break;
 				case AGMode.S_KEY_GREEN:
-					square = myRes[AGResources.NAME_KEY_GREEN_PNG];
+					square = myRes[AGResources.NAME_KEYSMALL_GREEN_PNG];
 				break;
 				case AGMode.S_KEY_RED:
-					square = myRes[AGResources.NAME_KEY_RED_PNG];
+					square = myRes[AGResources.NAME_KEYSMALL_RED_PNG];
 				break;
 				case AGMode.S_GUN:
 					square = myRes[AGResources.NAME_GUNSMALL_PNG];

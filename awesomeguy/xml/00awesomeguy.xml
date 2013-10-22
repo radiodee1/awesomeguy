@@ -1070,6 +1070,7 @@
 <block>XML_MAZE_DOOR_SPRITE, 0,1</block>
 <block>XML_MAZE_PLUNGER_START, 4, 13 </block>
 <block>XML_MAZE_PLUNGER_MARKER, 4, 10</block>
+<block>XML_MAZE_KEY_DOOR_COMBO, XML_MAZE_COLOR_RED,2, 6, 11,5</block>
 </special>
 </maze>
 <maze number="2">
