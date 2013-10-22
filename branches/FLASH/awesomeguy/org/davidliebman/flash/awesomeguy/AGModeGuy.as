@@ -395,6 +395,23 @@
 				if (tempArray[0] == AG.XML_MAZE_DOOR_SPRITE) { // this is a 
 					addXVarious(int(tempArray[1]),int(tempArray[2]), AGMode.S_DOOR_SPRITE);
 				}
+				if (tempArray[0] == AG.XML_MAZE_KEY_DOOR_COMBO) {
+					if (tempArray.length == 6) {
+						if (tempArray[1] == AG.XML_MAZE_COLOR_BLUE) {
+							addXVarious(int(tempArray[2]), int (tempArray[3]), AGMode.S_KEY_BLUE);
+							addXVarious(int (tempArray[4]), int (tempArray[5]), AGMode.S_DOOR_BLUE);
+						}
+						else if (tempArray[1] == AG.XML_MAZE_COLOR_GREEN) {
+							addXVarious(int(tempArray[2]), int (tempArray[3]), AGMode.S_KEY_GREEN);
+							addXVarious(int (tempArray[4]), int (tempArray[5]), AGMode.S_DOOR_GREEN);
+						}
+						else if (tempArray[1] == AG.XML_MAZE_COLOR_RED) {
+							addXVarious(int(tempArray[2]), int (tempArray[3]), AGMode.S_KEY_RED);
+							addXVarious(int (tempArray[4]), int (tempArray[5]), AGMode.S_DOOR_RED);
+						}
+					}
+				}
+				
 			}
 			if (!is_timer_set) {
 				myTimer[AGMode.TIMER_00].timerDestroy();
@@ -604,8 +621,16 @@
 					if (mySprite[i].sprite_type == AGMode.S_DOOR_SPRITE  ) {
 						myDraw.drawBasicSprite(mySprite[i], D_EXIT);
 					}
-
-
+					if (mySprite[i].sprite_type == AGMode.S_DOOR_BLUE ||
+						mySprite[i].sprite_type == AGMode.S_DOOR_GREEN || 
+						mySprite[i].sprite_type == AGMode.S_DOOR_RED) {
+						myDraw.drawBasicSprite(mySprite[i], D_EXIT);
+					}
+					if (mySprite[i].sprite_type == AGMode.S_KEY_BLUE ||
+						mySprite[i].sprite_type == AGMode.S_KEY_GREEN || 
+						mySprite[i].sprite_type == AGMode.S_KEY_RED) {
+						myDraw.drawBasicSprite(mySprite[i], D_EXIT);
+					}
 				}
 				
 			}
@@ -1294,6 +1319,12 @@
 			var ii:int;
 			for (ii = 0; ii < mySprite.length ; ii ++ ) {
 				if (mySprite[ii].bitmap != null && mySprite[ii].active ) {
+					if (mySprite[ii].sprite_type == AGMode.S_DOOR_BLUE || 
+						mySprite[ii].sprite_type == AGMode.S_DOOR_GREEN ||
+						mySprite[ii].sprite_type == AGMode.S_DOOR_RED ) {
+						this.testDoorHit(mySprite[ii]);
+					}
+					
 					if (mySprite[ii].sprite_type == AGMode.S_XMONSTER || 
 						mySprite[ii].sprite_type == AGMode.S_XMONSTER_STAND) {
 						
@@ -1417,8 +1448,20 @@
 								this.key_for_maze = true;
 							break;
 							
-							default:
+							case AGMode.S_DOOR_BLUE:
+							case AGMode.S_DOOR_GREEN:
+							case AGMode.S_DOOR_RED:
+								//first test if door is opened.
+								testDoorOpen(sprite);
+								//test if door is hit above!!
 								
+							break;
+							
+							case AGMode.S_KEY_BLUE:
+							case AGMode.S_KEY_GREEN:
+							case AGMode.S_KEY_RED:
+								if (myGuy.quality_0 != AGModeGuy.GUY_CROUCH) break;
+								this.myTempGets.push(sprite);
 							break;
 						}//switch
 					}// collision simple
@@ -1607,15 +1650,80 @@
 				return ;
 		}
 		
+		function testDoorOpen(sprite:AGSprite):void {
+			if (this.myGame.myHeldObject == null) return;
+			
+			switch (this.myGame.myHeldObject.sprite_type) {
+				case AGMode.S_KEY_BLUE:
+					if (sprite.sprite_type == AGMode.S_DOOR_BLUE) {
+						sprite.active = false;
+						sprite.visible = false;
+						
+					}
+				break;
+				case AGMode.S_KEY_GREEN:
+					if (sprite.sprite_type == AGMode.S_DOOR_GREEN) {
+						sprite.active = false;
+						sprite.visible = false;
+					}
+				break;
+				case AGMode.S_KEY_RED:
+					if (sprite.sprite_type == AGMode.S_DOOR_RED) {
+						sprite.active = false;
+						sprite.visible = false;
+					}
+				break;
+			}
+		}
+		
+		function testDoorHit(sprite:AGSprite):void {
+				if (sprite.bitmap != null && this.flyersprite != null) {
+					if (this.collisionBlock(sprite.bitmap, myDraw.rail_left) ) {
+							
+						if(sprite.bitmap.y  < 
+						   myDraw.rail_left.y + (myDraw.rail_left.height / 2) ) {
+							this.hit_left = true;
+						}
+						
+						
+					}
+					if (this.collisionBlock(sprite.bitmap, myDraw.rail_right) ) {
+							
+						if(sprite.bitmap.y  < 
+						   myDraw.rail_right.y + (myDraw.rail_right.height / 2) ) {
+							this.hit_right = true;
+						}
+						
+						
+					}
+					if (this.collisionBlock(sprite.bitmap, myDraw.rail_top) ) {
+						this.hit_top = true;
+						if (this.hit_plunger_bottom) {
+							this.hit_smoosh_top = true;
+						}
+						//this.examineHit(myBlocks[ii].bitmap, myDraw.rail_top);
+					}
+					if (this.collisionBlock(sprite.bitmap, myDraw.rail_bottom) ) {
+						this.hit_bottom = true;
+						if (this.hit_plunger_top) {
+							this.hit_smoosh_bottom = true;
+						}
+						//this.examineHit(myBlocks[ii].bitmap, myDraw.rail_bottom);
+					}
+				}
+		}
+		
 		function handleGetObject():void {
 			
 			if (dropping_activity || getting_activity) return;
 			getting_activity = true;
-			if (this.myTempGets.length > 0) this.myGame.myHeldObject = this.myTempGets[0];
-			this.myGame.myHeldObject.active = false;
-			this.myGame.myHeldObject.visible = false;
+			if (this.myTempGets.length > 0) {
 			
+				this.myGame.myHeldObject = this.myTempGets[0];
+				this.myGame.myHeldObject.active = false;
+				this.myGame.myHeldObject.visible = false;
 			
+			}
 			return;
 		}
 		

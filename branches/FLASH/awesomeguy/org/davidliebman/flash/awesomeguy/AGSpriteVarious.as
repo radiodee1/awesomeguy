@@ -52,7 +52,36 @@
 				case AGMode.S_PLUNGER:
 					this.updatePlunger();
 				break;
-				
+				case AGMode.S_DOOR_BLUE:
+					this.bitmap = new Bitmap( 
+									myMode.myRes[AGResources.NAME_DOOR_BLUE_PNG].bitmapData.clone());
+			
+				break;
+				case AGMode.S_DOOR_GREEN:
+					this.bitmap = new Bitmap( 
+									myMode.myRes[AGResources.NAME_DOOR_GREEN_PNG].bitmapData.clone());
+			
+				break;
+				case AGMode.S_DOOR_RED:
+					this.bitmap = new Bitmap( 
+									myMode.myRes[AGResources.NAME_DOOR_RED_PNG].bitmapData.clone());
+			
+				break;
+				case AGMode.S_KEY_BLUE:
+					this.bitmap = new Bitmap( 
+									myMode.myRes[AGResources.NAME_KEY_BLUE_PNG].bitmapData.clone());
+			
+				break;
+				case AGMode.S_KEY_GREEN:
+					this.bitmap = new Bitmap( 
+									myMode.myRes[AGResources.NAME_KEY_GREEN_PNG].bitmapData.clone());
+			
+				break;
+				case AGMode.S_KEY_RED:
+					this.bitmap = new Bitmap( 
+									myMode.myRes[AGResources.NAME_KEY_RED_PNG].bitmapData.clone());
+			
+				break;
 			}
 		}
 

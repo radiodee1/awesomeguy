@@ -146,6 +146,10 @@
 	public static var NAME_KEYSMALL_GREEN_PNG:int =94;
 	public static var NAME_KEYSMALL_RED_PNG:int =95;
 	
+	public static var NAME_DOOR_BLUE_PNG:int =96;
+	public static var NAME_DOOR_GREEN_PNG:int =97;
+	public static var NAME_DOOR_RED_PNG:int =98;
+
 
 	var res00:Array = new Array (R_XML, "xml/01awesomeguy.xml");
 	var res01:Array = new Array (R_BITMAP, "bitmap/test2.png");
@@ -259,6 +263,10 @@
 	var res93:Array = new Array(R_BITMAP, "bitmap/keysmall_blue.png");
 	var res94:Array = new Array(R_BITMAP, "bitmap/keysmall_green.png");
 	var res95:Array = new Array(R_BITMAP, "bitmap/keysmall_red.png");
+
+	var res96:Array = new Array(R_BITMAP, "bitmap/door_blue.png");
+	var res97:Array = new Array(R_BITMAP, "bitmap/door_green.png");
+	var res98:Array = new Array(R_BITMAP, "bitmap/door_red.png");
 
 
 	var i:int = 0;
@@ -399,6 +407,10 @@
 			neededRes.push(res93);
 			neededRes.push(res94);
 			neededRes.push(res95);
+
+			neededRes.push(res96);
+			neededRes.push(res97);
+			neededRes.push(res98);
 
 
 			importRes();
