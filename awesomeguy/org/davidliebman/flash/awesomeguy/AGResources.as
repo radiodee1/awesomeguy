@@ -138,6 +138,13 @@
 	public static var NAME_G_STEPR7_PNG:int =87;
 	public static var NAME_G_STEPR8_PNG:int =88;
 
+	public static var NAME_GUNSMALL_PNG:int =89;
+	public static var NAME_KEY_BLUE_PNG:int =90;
+	public static var NAME_KEY_GREEN_PNG:int =91;
+	public static var NAME_KEY_RED_PNG:int =92;
+	public static var NAME_KEYSMALL_BLUE_PNG:int =93;
+	public static var NAME_KEYSMALL_GREEN_PNG:int =94;
+	public static var NAME_KEYSMALL_RED_PNG:int =95;
 	
 
 	var res00:Array = new Array (R_XML, "xml/01awesomeguy.xml");
@@ -244,6 +251,14 @@
 	var res86:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr6.png");
 	var res87:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr7.png");
 	var res88:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr8.png");
+
+	var res89:Array = new Array(R_BITMAP_WBLACK, "bitmap/gunsmall.png");
+	var res90:Array = new Array(R_BITMAP_WBLACK, "bitmap/key_blue.png");
+	var res91:Array = new Array(R_BITMAP_WBLACK, "bitmap/key_green.png");
+	var res92:Array = new Array(R_BITMAP_WBLACK, "bitmap/key_red.png");
+	var res93:Array = new Array(R_BITMAP_WBLACK, "bitmap/keysmall_blue.png");
+	var res94:Array = new Array(R_BITMAP_WBLACK, "bitmap/keysmall_green.png");
+	var res95:Array = new Array(R_BITMAP_WBLACK, "bitmap/keysmall_red.png");
 
 
 	var i:int = 0;
@@ -376,6 +391,15 @@
 			neededRes.push(res86);
 			neededRes.push(res87);
 			neededRes.push(res88);
+
+			neededRes.push(res89);
+			neededRes.push(res90);
+			neededRes.push(res91);
+			neededRes.push(res92);
+			neededRes.push(res93);
+			neededRes.push(res94);
+			neededRes.push(res95);
+
 
 			importRes();
 		}
