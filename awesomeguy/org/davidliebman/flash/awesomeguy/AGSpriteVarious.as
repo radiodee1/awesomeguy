@@ -9,6 +9,7 @@
 		public function AGSpriteVarious(mymode:AGMode, kind:int) {
 			super(mymode, kind);
 			// constructor code
+			if (kind == AGMode.S_GUN) quality_0 = 20; // initial num of bullets!! 
 		}
 
 		public override  function updateSprite():void {

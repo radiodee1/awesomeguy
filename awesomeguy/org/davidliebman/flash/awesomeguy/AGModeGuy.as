@@ -52,8 +52,7 @@
 		public var animate_plunger:AGSprite;
 
 		public var jump_count:int = 0;
-		public var shoot_count:int = 0; // shoot button
-		public var bullet_count:int = 0; // number of bullets in gun
+		public var shoot_count:int = 0; // shoot button (not num of bullets!!)
 		public var key_for_maze:Boolean = false;
 		public var starting_pos_timer:Boolean = false;
 		public var dropping_activity:Boolean = false;
@@ -908,12 +907,15 @@
 				//myGuy.quality_0 = AGModeGuy.GUY_FALL;
 				this.jump_count = 10;
 			}
-			if (K_SHOOT && this.shoot_count <= 0) {
+			if (K_SHOOT && this.shoot_count <= 0 ) { //
 				myGuy.animate = 0;
 				myGuy.quality_0 = AGModeGuy.GUY_PUNCH;
+				//this.myGame.myHeldObject.quality_0 = 3;
 				this.shoot_count = 3;
 			}
-			if (K_SHOOT && this.bullet_count > 1) {
+			if (K_SHOOT &&  this.myGame.myHeldObject != null && 
+				this.myGame.myHeldObject.sprite_type == AGMode.S_GUN  && 
+				this.myGame.myHeldObject.quality_0 >1) {//) {
 				//this.fireButton();
 				myGuy.quality_0 = AGModeGuy.GUY_SHOOT;
 			}
@@ -927,7 +929,10 @@
 			var  ii:int, jj:int, kk:int, ll:int, add:int;
 			var flag:Boolean = false;
 			
-			if (this.K_SHOOT && this.bullet_count > 0 ) { // using shift key
+			if (this.myGame.myHeldObject == null || 
+				this.myGame.myHeldObject.sprite_type != AGMode.S_GUN  ) return; 
+			
+			if (this.K_SHOOT && this.myGame.myHeldObject.quality_0 > 0 ) { // using shift key
 				
 				if (myTimer[AGMode.TIMER_08].timerDone()){ 
 					
@@ -938,7 +943,8 @@
 						
 							this.myGuy.animate = 1;
 							this.addTorpedo(ii, xpos, ypos);
-							this.bullet_count --;
+							this.myGame.myHeldObject.quality_0 --;
+							//this.bullet_count --;
 							
 							flag = true;
 						} 
@@ -1433,10 +1439,6 @@
 							case AGMode.S_GUN:
 								if (myGuy.quality_0 != AGModeGuy.GUY_CROUCH) break;
 								if (dropping_activity) break;
-								sprite.active = false;
-								sprite.visible = false;
-								this.bullet_count = 20;
-								//this.myGame.myHeldObject = sprite;
 								
 								this.myTempGets.push(sprite);
 							break;
