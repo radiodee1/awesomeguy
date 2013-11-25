@@ -15,8 +15,8 @@
 	public var keycodeRight:int = 39;
 	public var keycodeUp:int = 38;
 	public var keycodeDown:int = 40;
-	public var keycodeShoot:int = 16;
-	public var keycodeJump:int = 32;
+	public var keycodeShoot:int = 90;// z 16 shift ;
+	public var keycodeJump:int = 88;// x 32 space ;
 	public var keycodePause:int = 80;
 	public var keycodeRestart:int = 82;
 	public var keycodeQuiet:int = 81;
