@@ -81,7 +81,11 @@
 			//this.gamePlanetTot = int(tree.planet.length());
 			
 			this.gamePlanetTot = AGGame.MAGIC_NUMBER_PLANETS;
-			
+			var myXML:XMLDocument = myRes[AGResources.NAME_AWESOMEGUY_XML];
+			var tree:XML = new XML(myXML);
+			//trace(tree.planets);
+			this.gamePlanetTot = int(tree.planets.toString());
+
 			this.loadXML();
 			//this.startAGGame();
 		}
