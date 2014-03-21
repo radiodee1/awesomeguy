@@ -151,7 +151,7 @@
 	public static var NAME_DOOR_RED_PNG:int =98;
 
 
-	var res00:Array = new Array (R_XML, "xml/01awesomeguy.xml");
+	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
 	var res01:Array = new Array (R_BITMAP, "bitmap/test2.png");
 	var res02:Array = new Array (R_BITMAP, "bitmap/agtiles1.png");
 	var res03:Array = new Array (R_BITMAP, "bitmap/agtiles2.png");
