@@ -5,6 +5,6 @@
 
 = Details =
 
-Add your content here.  Format your content with:
+These two blog posts:
   * See this link: [http://android-awesomeguy.blogspot.com/2013/04/opengl-10-part-1-simple-android-games.html]
   * And this link: [http://android-awesomeguy.blogspot.com/2013/04/opengl-10-part-2-simple-android-games.html]
