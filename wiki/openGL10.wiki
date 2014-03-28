@@ -1,4 +1,4 @@
-#summary This page directs you to resources that explain Open GL 1.0
+#summary This page directs you to resources that explain some Open GL 1.0 techniques
 
 = Simple OpenGL 1.0 for Android Games =
 
