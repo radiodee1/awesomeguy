@@ -81,8 +81,8 @@
 		public override function launchNextPhase():void {
 			var resources:AGResources = new AGResources(myScreen, this, keys);
 			trace("next phase...");
-			//keys[this.keycodeDown].setValBool(true);
-			//keys[this.keycodeDown].setValBool(false);
+			keys[this.keycodeAny].setValBool(true);
+			keys[this.keycodeAny].setValBool(false);
 
 		}
 

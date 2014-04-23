@@ -285,7 +285,11 @@
 			setKeys();
 			//if (myGame.gamePaused) return;			
 			
-			myStage.removeChildren();
+			//myStage.removeChildren();
+			
+			while(myStage.numChildren > 0) {
+				myStage.removeChildAt(0);
+			}
 			
 			if (myGame.gameChallenge > challenges) {
 				game_end_level = true;
