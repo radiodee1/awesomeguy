@@ -29,6 +29,13 @@
 		public function AGButtonGroup(mystage:Stage) {
 			// constructor code
 			super(mystage);
+			mystage.align = flash.display.StageAlign.TOP;
+			mystage.displayState = flash.display.StageDisplayState.FULL_SCREEN;
+			mystage.scaleMode = flash.display.StageScaleMode.EXACT_FIT;
+			//trace(mystage.width, mystage.height);
+			//mystage.height = 480;
+			//mystage.scaleX = mystage.scaleY;
+			
 			keys = new Array();
 			for(var x:int = 0; x <= keycodeAny; x ++) {
 				if (x == keycodeQuiet) {
