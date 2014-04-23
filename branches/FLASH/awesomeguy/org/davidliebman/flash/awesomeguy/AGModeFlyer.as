@@ -103,6 +103,9 @@
 			radarscreen.y = SCREEN_HEIGHT;
 			myStage.addChild(radarscreen);
 			
+			//trace(myStage.width, myStage.height);
+
+			
 		}
 		
 		public override function doOnce():void {
