@@ -9,7 +9,8 @@
 	
 	public class AGModeFlyer extends AGMode{
 
-		
+		public var stageHelper:AGStageHelper = new AGStageHelper();
+
 		public var flyerrings:AGSprite ;
 		public var flyerastrogate:AGSprite ;
 		
@@ -66,6 +67,7 @@
 			myScreenBG = new Bitmap (new BitmapData (SCREEN_WIDTH, SCREEN_HEIGHT , false, alert_color));
 			myScreenBG.x = 0;
 			myScreenBG.y = 0;
+			//myScreenBG.scrollRect = new Rectangle(0,0,512, (512 * 3/4));
 			myStage.addChild(myScreenBG);
 			
 			var screenframe:Bitmap= new Bitmap (new BitmapData (SCREEN_WIDTH, 64, false, 0x66666666));
@@ -84,6 +86,7 @@
 
 			drawScoreWords();
 			this.showKeys(this.myGame.gameKeys);
+			//myShape.scrollRect = new Rectangle(0,0,512, (512 * 3/4));
 			myStage.addChild(myShape);
 			//
 			fireButton();
@@ -95,12 +98,14 @@
 			
 			screenframe.x = 0;
 			screenframe.y = SCREEN_HEIGHT;
+			screenframe.scrollRect = new Rectangle(0,0,512, (512 * 3/4));
 			myStage.addChild(screenframe);
 			
 			drawRadarPing(radar, radarscreen ,xpos,ypos,AGMode.PING_FLYER,0xffffffff);
 			
 			radarscreen.x = 64;
 			radarscreen.y = SCREEN_HEIGHT;
+			//radarscreen.scrollRect = new Rectangle(0,0,512, (512 * 3/4));
 			myStage.addChild(radarscreen);
 			
 			//trace(myStage.width, myStage.height);
@@ -967,7 +972,7 @@
 			var  i:int,j:int,k:int,l:int,m:int, zz:int;
 			
 			var baseX:int, baseY:int;//, startX, startY;
-			
+			var mystage:Sprite = new Sprite();
 			
 			var TILE_WIDTH:int = 16;
 			var TILE_HEIGHT:int = 16;
@@ -1003,7 +1008,8 @@
 							
 							square.bitmap.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
 							square.bitmap.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
-							myStage.addChild(square.bitmap);
+							//square.bitmap.scrollRect = new Rectangle(0,0,512, (512 * 3/4));
+							mystage.addChild(square.bitmap);
 							if (myInvisible[i][j] + mapcheat == AGModeFlyer.B_BLOCK) this.myBlocks.push(square);
 							if (myInvisible[i][j] + mapcheat == AGModeFlyer.B_GOAL) addVarious(j,i,AGMode.S_GOAL);
 
@@ -1033,7 +1039,8 @@
 							//	scrollx , scrolly, PAINT_TRANSPARENT, 0);
 							square.bitmap.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
 							square.bitmap.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
-							myStage.addChild(square.bitmap);
+							//square.bitmap.scrollRect = new Rectangle(0,0,512, (512 * 3/4));
+							mystage.addChild(square.bitmap);
 							if (myInvisible[i][j] + mapcheat == AGModeFlyer.B_BLOCK) this.myBlocks.push(square);
 							if (myInvisible[i][j] + mapcheat == AGModeFlyer.B_GOAL) addVarious(j,i,AGMode.S_GOAL);
 
@@ -1058,7 +1065,9 @@
 							//	scrollx , scrolly, PAINT_TRANSPARENT, 0);
 							square.bitmap.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
 							square.bitmap.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
-							myStage.addChild(square.bitmap);
+							
+							mystage.addChild(square.bitmap);
+							//myStage.scrollRect = new Rectangle(0,0,512, (512 * 3/4));
 							if (myInvisible[i][j] + mapcheat == AGModeFlyer.B_BLOCK) this.myBlocks.push(square);
 							if (myInvisible[i][j] + mapcheat == AGModeFlyer.B_GOAL) addVarious(j,i,AGMode.S_GOAL);
 
@@ -1071,7 +1080,8 @@
 					
 				}
 			}
-			
+			mystage.scrollRect = new Rectangle(0,0,512, (512 * 3/4));
+			myStage.addChild(mystage);
 			return ;
 		}
 		

@@ -1,5 +1,6 @@
 ﻿package  org.davidliebman.flash.awesomeguy {
 	import flash.display.*;
+	import flash.geom.Rectangle;
 	
 	public class AGDrawFlyer extends AGDraw {
 		var TILE_HEIGHT:int = 16;
@@ -26,7 +27,10 @@
 		public override function drawBasicSprite(sprite:AGSprite, kind:int):void {
 			
 			try {
+				stageHelper = new Sprite();
 				drawRes(sprite, sprite.x, sprite.y, sprite.facingRight, kind, sprite.animate);
+				stageHelper.scrollRect = new Rectangle(0,0,512, (512 * 3/4));
+				myStage.addChild(stageHelper);
 			}
 			catch(err:Error) {
 				trace("null pointer error??");
@@ -78,7 +82,7 @@
 									myRes[AGResources.NAME_MONSTER_R0_PNG].bitmapData.clone());
 								sprite.bitmap.x = sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
-								myStage.addChild(sprite.bitmap);
+								stageHelper.addChild(sprite.bitmap);
 		
 							}
 							else if (z == 1 ) {
@@ -87,7 +91,7 @@
 									myRes[AGResources.NAME_MONSTER_R1_PNG].bitmapData.clone());//
 								sprite.bitmap.x = sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
-								myStage.addChild(sprite.bitmap);
+								stageHelper.addChild(sprite.bitmap);
 							}
 						}
 						else if (!sprite.facingRight == true) {
@@ -97,7 +101,7 @@
 									myRes[AGResources.NAME_MONSTER_L0_PNG].bitmapData.clone());//
 								sprite.bitmap.x = sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
-								myStage.addChild(sprite.bitmap);
+								stageHelper.addChild(sprite.bitmap);
 							}
 							else if (z == 1) {
 		
@@ -105,7 +109,7 @@
 									myRes[AGResources.NAME_MONSTER_L1_PNG].bitmapData.clone());//
 								sprite.bitmap.x = sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
-								myStage.addChild(sprite.bitmap);
+								stageHelper.addChild(sprite.bitmap);
 							}
 						}
 					}
@@ -118,7 +122,7 @@
 									myRes[AGResources.NAME_MONSTER_R0_PNG].bitmapData.clone());//
 								sprite.bitmap.x = (myMode.myHoriz * 16 ) + sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
-								myStage.addChild(sprite.bitmap);
+								stageHelper.addChild(sprite.bitmap);
 							}
 							else if (z == 1 ) {
 		
@@ -126,7 +130,7 @@
 									myRes[AGResources.NAME_MONSTER_R1_PNG].bitmapData.clone());//
 								sprite.bitmap.x = (myMode.myHoriz * 16 ) + sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
-								myStage.addChild(sprite.bitmap);
+								stageHelper.addChild(sprite.bitmap);
 							}
 						}
 						else if (!sprite.facingRight == true) {
@@ -136,7 +140,7 @@
 									myRes[AGResources.NAME_MONSTER_L0_PNG].bitmapData.clone());//
 								sprite.bitmap.x = (myMode.myHoriz * 16 ) + sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
-								myStage.addChild(sprite.bitmap);
+								stageHelper.addChild(sprite.bitmap);
 							}
 							else if (z == 1 ) {
 		
@@ -144,7 +148,7 @@
 									myRes[AGResources.NAME_MONSTER_L1_PNG].bitmapData.clone());//
 								sprite.bitmap.x = (myMode.myHoriz * 16 ) + sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
-								myStage.addChild(sprite.bitmap);
+								stageHelper.addChild(sprite.bitmap);
 							}
 						}
 					}
@@ -180,12 +184,12 @@
 								//
 				  }
 					
-					myStage.addChild(sprite.bitmap);
+					stageHelper.addChild(sprite.bitmap);
 					
 				break;
 				case AGMode.D_LINE_1:
 				
-					myStage.addChild(sprite.shape);
+					stageHelper.addChild(sprite.shape);
 				break;
 				
 				case AGMode.D_BUBBLE_1:
@@ -201,11 +205,11 @@
 					
 					if (sprite.active == true && sprite != null && sprite.bitmap != null) {
 					//trace("before");
-						myStage.addChild(sprite.bitmap);
+						stageHelper.addChild(sprite.bitmap);
 					//trace("after");
 					}
 					
-					//myStage.addChild(sprite.bitmap);
+					//stageHelper.addChild(sprite.bitmap);
 				break;
 				case AGMode.D_RING:
 					if (scrollx < sprite.x + (16)) {
@@ -217,11 +221,11 @@
 					sprite.bitmap.y = sprite.y - scrolly;
 					if (sprite.active == true && sprite != null && sprite.bitmap != null) {
 					//trace("before");
-						myStage.addChild(sprite.bitmap);
+						stageHelper.addChild(sprite.bitmap);
 					//trace("after");
 					}
 					
-					//myStage.addChild(sprite.bitmap);
+					//stageHelper.addChild(sprite.bitmap);
 				break;
 				
 				case AGMode.D_TORPEDO:
@@ -240,11 +244,11 @@
 					sprite.bitmap.y = sprite.y - scrolly + AGMode.LASER_GUN;
 					if (sprite.active == true && sprite != null && sprite.bitmap != null) {
 					//trace("before");
-						myStage.addChild(sprite.bitmap);
+						stageHelper.addChild(sprite.bitmap);
 					//trace("after");
 					}
 					
-					//myStage.addChild(sprite.bitmap);
+					//stageHelper.addChild(sprite.bitmap);
 					
 					//sprite.pruneSprite();
 				break;
@@ -266,10 +270,10 @@
 						sprite.bitmap.x = sprite.x - scrollx  + (myMode.myHoriz * 16) ;
 					}
 					sprite.bitmap.y = sprite.y - scrolly ;
-					//myStage.addChild(sprite.bitmap);
+					//stageHelper.addChild(sprite.bitmap);
 					if (sprite.active == true && sprite != null && sprite.bitmap != null) {
 					//trace("before");
-						myStage.addChild(sprite.bitmap);
+						stageHelper.addChild(sprite.bitmap);
 					//trace("after");
 					}
 					
@@ -293,7 +297,7 @@
 						sprite.bitmap.x = sprite.x - scrollx  + (myMode.myHoriz * 16) ;
 					}
 					sprite.bitmap.y = sprite.y - scrolly ;
-					myStage.addChild(sprite.bitmap);
+					stageHelper.addChild(sprite.bitmap);
 					
 				break;
 				case AGMode.D_EXPLOSION_SPRITE:
@@ -384,10 +388,10 @@
 					
 					sprite.bitmap.x = x - scrollx + add;
 					sprite.bitmap.y = y - scrolly;
-					//myStage.addChild(sprite.bitmap);
+					//stageHelper.addChild(sprite.bitmap);
 					if (sprite.active == true && sprite != null && sprite.bitmap != null) {
 					//trace("before");
-						myStage.addChild(sprite.bitmap);
+						stageHelper.addChild(sprite.bitmap);
 					//trace("after");
 					}
 					
@@ -472,7 +476,7 @@
 						
 						if ( bits != null) {
 							//trace("before");
-							myStage.addChild(bits);
+							stageHelper.addChild(bits);
 							//trace("after");
 						}
 						//
@@ -490,10 +494,10 @@
 						sprite.bitmap.x = sprite.x - scrollx  + (myMode.myHoriz * 16);
 					}
 					sprite.bitmap.y = sprite.y - scrolly;
-					//myStage.addChild(sprite.bitmap);
+					//stageHelper.addChild(sprite.bitmap);
 					if (sprite.active == true && sprite != null && sprite.bitmap != null) {
 					//trace("before");
-						myStage.addChild(sprite.bitmap);
+						stageHelper.addChild(sprite.bitmap);
 					//trace("after");
 					}
 					
@@ -530,11 +534,11 @@
 						sprite.bitmap.x = sprite.x - scrollx  + (myMode.myHoriz * 16) ;
 					}
 					sprite.bitmap.y = sprite.y - scrolly - ( 7 * 16) ;
-					//myStage.addChild(sprite.bitmap);
+					//stageHelper.addChild(sprite.bitmap);
 					
 					if (sprite.active == true && sprite != null && sprite.bitmap != null) {
 					//trace("before");
-						myStage.addChild(sprite.bitmap);
+						stageHelper.addChild(sprite.bitmap);
 					//trace("after");
 					}
 					
@@ -632,7 +636,7 @@
 						sprite.bitmap.y = y - scrolly;
 						if (sprite.active == true && sprite != null && sprite.bitmap != null) {
 						//trace("before");
-							myStage.addChild(sprite.bitmap);
+							stageHelper.addChild(sprite.bitmap);
 						//trace("after");
 						}
 						
@@ -703,7 +707,7 @@
 					sprite.bitmap.y = yy - scrolly;
 					if (sprite.active == true  ) {
 						//trace("before");
-						myStage.addChild(sprite.bitmap);
+						stageHelper.addChild(sprite.bitmap);
 						//trace("after");
 					}
 					myMode.flyersprite = sprite.bitmap;
@@ -726,7 +730,7 @@
 			sprite.bitmap.y = yy - scrolly;
 			if (sprite.active == true && sprite != null && sprite.bitmap != null) {
 				//trace("before");
-				myStage.addChild(sprite.bitmap);
+				stageHelper.addChild(sprite.bitmap);
 				//trace("after");
 			}
 		}
@@ -743,7 +747,7 @@
 			sprite.bitmap.y = yy - scrolly;
 			if (sprite.active == true && sprite != null && sprite.bitmap != null) {
 				//trace("before");
-				myStage.addChild(sprite.bitmap);
+				stageHelper.addChild(sprite.bitmap);
 				//trace("after");
 			}
 
