@@ -1,6 +1,7 @@
 ﻿package org.davidliebman.flash.awesomeguy {
 	import flash.display.Bitmap;
 	import flash.display.*;
+	import flash.geom.Rectangle;
 	
 	public class AGDraw {
 
@@ -8,6 +9,8 @@
 		public var myRes:Array;// sprites and picture resources
 		public var myStage:Stage;// primary bitmap that holds rock tiles
 		public var myBackground:Bitmap;// secondary bitmap for bubbles etc.
+
+		public var stageHelper:Sprite = new Sprite();
 
 		public var rail_left:Bitmap;
 		public var rail_right:Bitmap;

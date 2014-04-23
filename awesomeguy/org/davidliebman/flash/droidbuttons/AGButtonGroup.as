@@ -3,6 +3,7 @@
 	import flash.events.KeyboardEvent;
 	import flash.events.*;
 	import org.davidliebman.flash.awesomeguy.*;
+	import flash.geom.Rectangle;
 	
 	public class AGButtonGroup extends AGKeys {
 
@@ -30,8 +31,12 @@
 			// constructor code
 			super(mystage);
 			mystage.align = flash.display.StageAlign.TOP;
-			mystage.displayState = flash.display.StageDisplayState.FULL_SCREEN;
 			mystage.scaleMode = flash.display.StageScaleMode.EXACT_FIT;
+			//mystage.fullScreenSourceRect = new Rectangle(0,0, 512, (512* 3/4));
+			//mystage.displayState = flash.display.StageDisplayState.FULL_SCREEN;
+			
+			//mystage.fullScreenWidth = 512;
+			//mystage.fullScreenHeight = (512 * 3/4);
 			//trace(mystage.width, mystage.height);
 			//mystage.height = 480;
 			//mystage.scaleX = mystage.scaleY;
