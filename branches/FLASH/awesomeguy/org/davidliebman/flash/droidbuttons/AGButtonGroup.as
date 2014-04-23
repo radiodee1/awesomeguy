@@ -42,7 +42,7 @@
 
 			this.addEventListener(Event.ADDED_TO_STAGE, setCallbacks);
 
-			//launchNextPhase();
+			
 		}
 
 		public override function setCallbacks(e:Event):void {
@@ -81,9 +81,10 @@
 		public override function launchNextPhase():void {
 			var resources:AGResources = new AGResources(myScreen, this, keys);
 			trace("next phase...");
+			
 			keys[this.keycodeAny].setValBool(true);
 			keys[this.keycodeAny].setValBool(false);
-
+			
 		}
 
 	}
