@@ -3,6 +3,7 @@
 	import flash.events.KeyboardEvent;
 	import flash.events.*;
 	import org.davidliebman.flash.awesomeguy.*;
+	import org.davidliebman.flash.droidbuttons.*;
 	import flash.geom.Rectangle;
 	
 	public class AGButtonGroup extends AGKeys {
@@ -41,6 +42,7 @@
 			//mystage.height = 480;
 			//mystage.scaleX = mystage.scaleY;
 			
+			prefix = "";//"app:/";
 			keys = new Array();
 			for(var x:int = 0; x <= keycodeAny; x ++) {
 				if (x == keycodeQuiet) {
@@ -91,7 +93,7 @@
 		
 
 		public override function launchNextPhase():void {
-			var resources:AGResources = new AGResources(myScreen, this, keys);
+			var resources:AGButtonResources = new AGButtonResources(myScreen, this, keys);
 			trace("next phase...");
 			
 			keys[this.keycodeAny].setValBool(true);
