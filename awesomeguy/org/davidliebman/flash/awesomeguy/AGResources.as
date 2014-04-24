@@ -10,21 +10,22 @@
 	import flash.geom.*;
 	import fl.motion.Color;
 	import flash.text.*;
+	//import flash.filesystem.*;
 	
 	public class AGResources {
 
-	var textField:TextField = new TextField();
-	var format:TextFormat = new TextFormat();
+	public var textField:TextField = new TextField();
+	public var format:TextFormat = new TextFormat();
 
-	var myStage:Stage;
-	var neededRes:Array = new Array();
+	public var myStage:Stage;
+	public var neededRes:Array = new Array();
 	
-	var loader:Loader = new Loader();
-	var uloader:URLLoader = new URLLoader();
+	public var loader:Loader = new Loader();
+	public var uloader:URLLoader = new URLLoader();
 	//var myButtons:Array;
-	var myKeyStage:AGKeys;
-	var myKeys:Array;
-	var myRes:Array = new Array();
+	public var myKeyStage:AGKeys;
+	public var myKeys:Array;
+	public var myRes:Array = new Array();
 
 	public static var R_SPRITE:int = 1;
 	public static var R_SOUND:int = 2;
@@ -151,124 +152,124 @@
 	public static var NAME_DOOR_RED_PNG:int =98;
 
 
-	var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
-	var res01:Array = new Array (R_BITMAP, "bitmap/test2.png");
-	var res02:Array = new Array (R_BITMAP, "bitmap/agtiles1.png");
-	var res03:Array = new Array (R_BITMAP, "bitmap/agtiles2.png");
-	var res04:Array = new Array (R_BITMAP, "bitmap/agtiles3.png");
-	var res05:Array = new Array (R_BITMAP, "bitmap/agtiles4.png");
+	public var res00:Array = new Array (R_XML, "xml/awesomeguy.xml");
+	public var res01:Array = new Array (R_BITMAP, "bitmap/test2.png");
+	public var res02:Array = new Array (R_BITMAP, "bitmap/agtiles1.png");
+	public var res03:Array = new Array (R_BITMAP, "bitmap/agtiles2.png");
+	public var res04:Array = new Array (R_BITMAP, "bitmap/agtiles3.png");
+	public var res05:Array = new Array (R_BITMAP, "bitmap/agtiles4.png");
 	
-	var res06:Array = new Array (R_BITMAP, "bitmap/flyer_l0.png");
-	var res07:Array = new Array (R_BITMAP, "bitmap/flyer_l1.png");
-	var res08:Array = new Array (R_BITMAP, "bitmap/flyer_r0.png");
-	var res09:Array = new Array (R_BITMAP, "bitmap/flyer_r1.png");
+	public var res06:Array = new Array (R_BITMAP, "bitmap/flyer_l0.png");
+	public var res07:Array = new Array (R_BITMAP, "bitmap/flyer_l1.png");
+	public var res08:Array = new Array (R_BITMAP, "bitmap/flyer_r0.png");
+	public var res09:Array = new Array (R_BITMAP, "bitmap/flyer_r1.png");
 	
-	var res10:Array = new Array (R_BITMAP, "bitmap/monster_l0.png");
-	var res11:Array = new Array (R_BITMAP, "bitmap/monster_l1.png");
-	var res12:Array = new Array (R_BITMAP, "bitmap/monster_r0.png");
-	var res13:Array = new Array (R_BITMAP, "bitmap/monster_r1.png");
+	public var res10:Array = new Array (R_BITMAP, "bitmap/monster_l0.png");
+	public var res11:Array = new Array (R_BITMAP, "bitmap/monster_l1.png");
+	public var res12:Array = new Array (R_BITMAP, "bitmap/monster_r0.png");
+	public var res13:Array = new Array (R_BITMAP, "bitmap/monster_r1.png");
 
-	var res14:Array = new Array (R_SOUND, "sound/boom.mp3");
-	var res15:Array = new Array (R_SOUND, "sound/enter_1.mp3");
-	var res16:Array = new Array (R_SOUND, "sound/enter_2.mp3");
-	var res17:Array = new Array (R_SOUND, "sound/enter_3.mp3");
-	var res18:Array = new Array (R_SOUND, "sound/enter_4.mp3");
-	var res19:Array = new Array (R_SOUND, "sound/explosion.mp3");
-	var res20:Array = new Array (R_SOUND, "sound/explosion_big.mp3");
-	var res21:Array = new Array (R_SOUND, "sound/goal.mp3");
-	var res22:Array = new Array (R_SOUND, "sound/ow.mp3");
-	var res23:Array = new Array (R_SOUND, "sound/prize.mp3");
+	public var res14:Array = new Array (R_SOUND, "sound/boom.mp3");
+	public var res15:Array = new Array (R_SOUND, "sound/enter_1.mp3");
+	public var res16:Array = new Array (R_SOUND, "sound/enter_2.mp3");
+	public var res17:Array = new Array (R_SOUND, "sound/enter_3.mp3");
+	public var res18:Array = new Array (R_SOUND, "sound/enter_4.mp3");
+	public var res19:Array = new Array (R_SOUND, "sound/explosion.mp3");
+	public var res20:Array = new Array (R_SOUND, "sound/explosion_big.mp3");
+	public var res21:Array = new Array (R_SOUND, "sound/goal.mp3");
+	public var res22:Array = new Array (R_SOUND, "sound/ow.mp3");
+	public var res23:Array = new Array (R_SOUND, "sound/prize.mp3");
 
-	var res24:Array = new Array (R_BITMAP, "bitmap/explosion_a.png");
-	var res25:Array = new Array (R_BITMAP, "bitmap/explosion_b.png");
-	var res26:Array = new Array (R_BITMAP, "bitmap/explosion_c.png");
-	var res27:Array = new Array (R_BITMAP, "bitmap/explosion_d.png");
-	var res28:Array = new Array (R_BITMAP, "bitmap/explosion_e.png");
-	var res29:Array = new Array (R_BITMAP, "bitmap/explosion_f.png");
-	var res30:Array = new Array (R_BITMAP, "bitmap/explosion_g.png");
-	var res31:Array = new Array (R_BITMAP, "bitmap/explosion_h.png");
+	public var res24:Array = new Array (R_BITMAP, "bitmap/explosion_a.png");
+	public var res25:Array = new Array (R_BITMAP, "bitmap/explosion_b.png");
+	public var res26:Array = new Array (R_BITMAP, "bitmap/explosion_c.png");
+	public var res27:Array = new Array (R_BITMAP, "bitmap/explosion_d.png");
+	public var res28:Array = new Array (R_BITMAP, "bitmap/explosion_e.png");
+	public var res29:Array = new Array (R_BITMAP, "bitmap/explosion_f.png");
+	public var res30:Array = new Array (R_BITMAP, "bitmap/explosion_g.png");
+	public var res31:Array = new Array (R_BITMAP, "bitmap/explosion_h.png");
 	
-	var res32:Array = new Array (R_BITMAP, "bitmap/cloud.png");
-	var res33:Array = new Array (R_BITMAP, "bitmap/inv2_l.png");
-	var res34:Array = new Array (R_BITMAP, "bitmap/inv2_r.png");
-	var res35:Array = new Array (R_BITMAP, "bitmap/rollee_a.png");
-	var res36:Array = new Array (R_BITMAP, "bitmap/rollee_b.png");
+	public var res32:Array = new Array (R_BITMAP, "bitmap/cloud.png");
+	public var res33:Array = new Array (R_BITMAP, "bitmap/inv2_l.png");
+	public var res34:Array = new Array (R_BITMAP, "bitmap/inv2_r.png");
+	public var res35:Array = new Array (R_BITMAP, "bitmap/rollee_a.png");
+	public var res36:Array = new Array (R_BITMAP, "bitmap/rollee_b.png");
 	
-	var res37:Array = new Array (R_BITMAP, "bitmap/flyer_white_l.png");
-	var res38:Array = new Array (R_BITMAP, "bitmap/flyer_white_r.png");
-	var res39:Array = new Array (R_BITMAP, "bitmap/start_pause.png");
+	public var res37:Array = new Array (R_BITMAP, "bitmap/flyer_white_l.png");
+	public var res38:Array = new Array (R_BITMAP, "bitmap/flyer_white_r.png");
+	public var res39:Array = new Array (R_BITMAP, "bitmap/start_pause.png");
 	
-	var res40:Array = new Array (R_BITMAP_WBLACK, "bitmap/pyramiddoor0.png");
-	var res41:Array = new Array (R_BITMAP_WBLACK, "bitmap/pyramiddoor1.png");
-	var res42:Array = new Array (R_BITMAP_WBLACK, "bitmap/pyramiddoor2.png");
-	var res43:Array = new Array (R_BITMAP_WBLACK, "bitmap/pyramiddoor3.png");
-	var res44:Array = new Array (R_BITMAP_WBLACK, "bitmap/pyramiddoor4.png");
+	public var res40:Array = new Array (R_BITMAP_WBLACK, "bitmap/pyramiddoor0.png");
+	public var res41:Array = new Array (R_BITMAP_WBLACK, "bitmap/pyramiddoor1.png");
+	public var res42:Array = new Array (R_BITMAP_WBLACK, "bitmap/pyramiddoor2.png");
+	public var res43:Array = new Array (R_BITMAP_WBLACK, "bitmap/pyramiddoor3.png");
+	public var res44:Array = new Array (R_BITMAP_WBLACK, "bitmap/pyramiddoor4.png");
 	
-	var res45:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_climb1.png");
-	var res46:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_climb2.png");
-	var res47:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_punchl1.png");
-	var res48:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_punchl2.png");
-	var res49:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_punchr1.png");
-	var res50:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_punchr2.png");
-	var res51:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl1.png");
-	var res52:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl2.png");
-	var res53:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr1.png");
-	var res54:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr2.png");
+	public var res45:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_climb1.png");
+	public var res46:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_climb2.png");
+	public var res47:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_punchl1.png");
+	public var res48:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_punchl2.png");
+	public var res49:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_punchr1.png");
+	public var res50:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_punchr2.png");
+	public var res51:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl1.png");
+	public var res52:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl2.png");
+	public var res53:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr1.png");
+	public var res54:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr2.png");
 	
-	var res55:Array = new Array(R_BITMAP_WBLACK, "bitmap/crawler_l1.png");
-	var res56:Array = new Array(R_BITMAP_WBLACK, "bitmap/crawler_l2.png");
-	var res57:Array = new Array(R_BITMAP_WBLACK, "bitmap/crawler_r1.png");
-	var res58:Array = new Array(R_BITMAP_WBLACK, "bitmap/crawler_r2.png");
+	public var res55:Array = new Array(R_BITMAP_WBLACK, "bitmap/crawler_l1.png");
+	public var res56:Array = new Array(R_BITMAP_WBLACK, "bitmap/crawler_l2.png");
+	public var res57:Array = new Array(R_BITMAP_WBLACK, "bitmap/crawler_r1.png");
+	public var res58:Array = new Array(R_BITMAP_WBLACK, "bitmap/crawler_r2.png");
 
-	var res59:Array = new Array(R_BITMAP_WBLACK, "bitmap/gater_punch_l1.png");
-	var res60:Array = new Array(R_BITMAP_WBLACK, "bitmap/gater_punch_l2.png");
-	var res61:Array = new Array(R_BITMAP_WBLACK, "bitmap/gater_punch_r1.png");
-	var res62:Array = new Array(R_BITMAP_WBLACK, "bitmap/gater_punch_r2.png");
-	var res63:Array = new Array(R_BITMAP_WBLACK, "bitmap/bunker.png");
-	var res64:Array = new Array(R_BITMAP, "bitmap/astrogate.png");
-	var res65:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl3.png");
-	var res66:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr3.png");
+	public var res59:Array = new Array(R_BITMAP_WBLACK, "bitmap/gater_punch_l1.png");
+	public var res60:Array = new Array(R_BITMAP_WBLACK, "bitmap/gater_punch_l2.png");
+	public var res61:Array = new Array(R_BITMAP_WBLACK, "bitmap/gater_punch_r1.png");
+	public var res62:Array = new Array(R_BITMAP_WBLACK, "bitmap/gater_punch_r2.png");
+	public var res63:Array = new Array(R_BITMAP_WBLACK, "bitmap/bunker.png");
+	public var res64:Array = new Array(R_BITMAP, "bitmap/astrogate.png");
+	public var res65:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl3.png");
+	public var res66:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr3.png");
 
-	var res67:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_shootl1.png");
-	var res68:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_shootl2.png");
-	var res69:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_shootr1.png");
-	var res70:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_shootr2.png");
+	public var res67:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_shootl1.png");
+	public var res68:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_shootl2.png");
+	public var res69:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_shootr1.png");
+	public var res70:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_shootr2.png");
 
-	var res71:Array = new Array(R_BITMAP_WBLACK, "bitmap/platform.png");
-	var res72:Array = new Array(R_BITMAP_WBLACK, "bitmap/arrow_d.png");
-	var res73:Array = new Array(R_BITMAP_WBLACK, "bitmap/arrow_l.png");
-	var res74:Array = new Array(R_BITMAP_WBLACK, "bitmap/arrow_r.png");
-	var res75:Array = new Array(R_BITMAP_WBLACK, "bitmap/arrow_u.png");
-	var res76:Array = new Array(R_BITMAP_WBLACK, "bitmap/start_controls.png");
+	public var res71:Array = new Array(R_BITMAP_WBLACK, "bitmap/platform.png");
+	public var res72:Array = new Array(R_BITMAP_WBLACK, "bitmap/arrow_d.png");
+	public var res73:Array = new Array(R_BITMAP_WBLACK, "bitmap/arrow_l.png");
+	public var res74:Array = new Array(R_BITMAP_WBLACK, "bitmap/arrow_r.png");
+	public var res75:Array = new Array(R_BITMAP_WBLACK, "bitmap/arrow_u.png");
+	public var res76:Array = new Array(R_BITMAP_WBLACK, "bitmap/start_controls.png");
 
-	var res77:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_crouchl1.png");
-	var res78:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_crouchr1.png");
+	public var res77:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_crouchl1.png");
+	public var res78:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_crouchr1.png");
 
-	var res79:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl4.png");
-	var res80:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl5.png");
-	var res81:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl6.png");
-	var res82:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl7.png");
-	var res83:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl8.png");
+	public var res79:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl4.png");
+	public var res80:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl5.png");
+	public var res81:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl6.png");
+	public var res82:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl7.png");
+	public var res83:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepl8.png");
 
-	var res84:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr4.png");
-	var res85:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr5.png");
-	var res86:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr6.png");
-	var res87:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr7.png");
-	var res88:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr8.png");
+	public var res84:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr4.png");
+	public var res85:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr5.png");
+	public var res86:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr6.png");
+	public var res87:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr7.png");
+	public var res88:Array = new Array(R_BITMAP_WBLACK, "bitmap/g_stepr8.png");
 
-	var res89:Array = new Array(R_BITMAP, "bitmap/gunsmall.png");
-	var res90:Array = new Array(R_BITMAP, "bitmap/key_blue.png");
-	var res91:Array = new Array(R_BITMAP, "bitmap/key_green.png");
-	var res92:Array = new Array(R_BITMAP, "bitmap/key_red.png");
-	var res93:Array = new Array(R_BITMAP, "bitmap/keysmall_blue.png");
-	var res94:Array = new Array(R_BITMAP, "bitmap/keysmall_green.png");
-	var res95:Array = new Array(R_BITMAP, "bitmap/keysmall_red.png");
+	public var res89:Array = new Array(R_BITMAP, "bitmap/gunsmall.png");
+	public var res90:Array = new Array(R_BITMAP, "bitmap/key_blue.png");
+	public var res91:Array = new Array(R_BITMAP, "bitmap/key_green.png");
+	public var res92:Array = new Array(R_BITMAP, "bitmap/key_red.png");
+	public var res93:Array = new Array(R_BITMAP, "bitmap/keysmall_blue.png");
+	public var res94:Array = new Array(R_BITMAP, "bitmap/keysmall_green.png");
+	public var res95:Array = new Array(R_BITMAP, "bitmap/keysmall_red.png");
 
-	var res96:Array = new Array(R_BITMAP, "bitmap/door_blue.png");
-	var res97:Array = new Array(R_BITMAP, "bitmap/door_green.png");
-	var res98:Array = new Array(R_BITMAP, "bitmap/door_red.png");
+	public var res96:Array = new Array(R_BITMAP, "bitmap/door_blue.png");
+	public var res97:Array = new Array(R_BITMAP, "bitmap/door_green.png");
+	public var res98:Array = new Array(R_BITMAP, "bitmap/door_red.png");
 
-
+	public var startMessage:String = new String("loading....");
 	var i:int = 0;
 		
 	var r_url:String = "";
@@ -290,9 +291,11 @@
 			i = 0;
 			myRes = new Array();
 			
+			
 			this.format.color = 0x00ffffff;
 			this.format.font = "Courier";
 			this.format.bold = true;
+			this.textField.width = 1000;
 			this.textField.x = 10;
 			this.textField.y = 10;
 			this.textField.text = "loading...";
@@ -428,18 +431,34 @@
 		
 		public function getRes(resType:int, resUrl:String) {
 
+			startMessage += ".";
+			this.format.color = 0x00ffffff;
+			this.format.font = "Courier";
+			this.format.bold = true;
+			this.textField.width = 1000;
+			this.textField.x = 10;
+			this.textField.y = 10;
+			this.textField.text = startMessage;
+			this.textField.setTextFormat(this.format);
+			
+			//var myFile:File;// = new File();
 
-			r_url = resUrl;
+			
+			resUrl = this.myKeyStage.prefix + resUrl;
+			//myFile = new File(resUrl);
+			r_url = resUrl;//myFile.url;//resUrl;
 			r_type = resType;
+			
+			//myFile = new File(r_url);
 			
 			switch(r_type) {
 				case AGResources.R_SPRITE:
 				case AGResources.R_BITMAP:
 				case AGResources.R_BITMAP_WBLACK:
-				
+					loader.load(new URLRequest(r_url));
+
 					loader.contentLoaderInfo.addEventListener(Event.COMPLETE, finishRes);
 					
-					loader.load(new URLRequest(r_url));
 					
 				break;
 				////////////////////////////////////
@@ -451,9 +470,10 @@
 				break;
 				////////////////////////////////////
 				case AGResources.R_XML:
+					//uloader.load(new URLRequest(r_url));
 					uloader.addEventListener(Event.COMPLETE, finishRes);
 					uloader.load(new URLRequest(r_url));
-					
+
 				break;
 				
 				

@@ -6,10 +6,9 @@
 	
 	public class AGKeys extends Sprite {
 	
+	public var prefix:String = new String("");
 	
 	var keys:Array = new Array();
-
-	
 
 	public var keycodeLeft:int = 37;
 	public var keycodeRight:int = 39;
