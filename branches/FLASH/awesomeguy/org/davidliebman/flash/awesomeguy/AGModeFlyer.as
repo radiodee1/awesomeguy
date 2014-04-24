@@ -9,7 +9,6 @@
 	
 	public class AGModeFlyer extends AGMode{
 
-		public var stageHelper:AGStageHelper = new AGStageHelper();
 
 		public var flyerrings:AGSprite ;
 		public var flyerastrogate:AGSprite ;

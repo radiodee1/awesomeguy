@@ -5,6 +5,7 @@
 	import flash.geom.Point;
 	import flash.xml.XMLDocument;
 	import flash.display.Shape;
+	import flash.display.Sprite;
 	
 	public class AGModeGuy extends AGMode{
 
@@ -669,7 +670,8 @@
 			var  i:int,j:int,k:int,l:int,m:int, zz:int;
 			
 			var baseX:int, baseY:int;//, startX, startY;
-			
+			var mystage:Sprite = new Sprite();
+
 			
 			var TILE_WIDTH:int = 64;
 			var TILE_HEIGHT:int = 64;
@@ -706,7 +708,7 @@
 							
 							square.bitmap.x = new Number ((j * TILE_WIDTH ) - scrollBGX);
 							square.bitmap.y = new Number ((i * TILE_HEIGHT) - scrollBGY);
-							myStage.addChild(square.bitmap);
+							mystage.addChild(square.bitmap);
 							if (myInvisible[i][j] + mapcheat == AGModeGuy.B_BLOCK) {
 								this.myBlocks.push(square);
 								
@@ -728,7 +730,8 @@
 					
 				}
 			}
-			
+			mystage.scrollRect = new Rectangle(0,0,512, (512 * 3/4));
+			myStage.addChild(mystage);
 			return ;
 		}
 		public override function scrollBackground():void {
