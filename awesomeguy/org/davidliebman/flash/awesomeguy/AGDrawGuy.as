@@ -2,6 +2,8 @@
 	import flash.display.Bitmap;
 	import flash.display.Stage;
 	import flash.display.BitmapData;
+	import flash.display.Sprite;
+	import flash.geom.Rectangle;
 	
 	public class AGDrawGuy extends AGDraw{
 		var biteffect:AGBitEffect = new AGBitEffect();
@@ -29,7 +31,10 @@
 		}
 
 		public override function drawBasicSprite(sprite:AGSprite, kind:int):void {
+			stageHelper = new Sprite();
 			drawRes(sprite, sprite.x, sprite.y, sprite.facingRight, kind, sprite.animate);
+			stageHelper.scrollRect = new Rectangle(0,0,512, (512 * 3/4));
+			myStage.addChild(stageHelper);
 		}
 
 		public override function drawRes(sprite:AGSprite, xx:int, yy:int, facingRight:Boolean, kind:int, animate:int):void {
@@ -186,7 +191,7 @@
 					tempMap.x = sprite.bitmap.x;
 					tempMap.y = sprite.bitmap.y;
 					
-					if (sprite.active == true) myStage.addChild(tempMap);//(sprite.bitmap);
+					if (sprite.active == true) stageHelper.addChild(tempMap);//(sprite.bitmap);
 					myMode.flyersprite = sprite.bitmap;
 					
 				break;
@@ -268,7 +273,7 @@
 									myRes[AGResources.NAME_CRAWLER_R1_PNG].bitmapData.clone());
 								sprite.bitmap.x = sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly + ycheat;
-								myStage.addChild(sprite.bitmap);
+								stageHelper.addChild(sprite.bitmap);
 		
 							}
 							else if (z == 1 ) {
@@ -277,7 +282,7 @@
 									myRes[AGResources.NAME_CRAWLER_R2_PNG].bitmapData.clone());//
 								sprite.bitmap.x = sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
-								myStage.addChild(sprite.bitmap);
+								stageHelper.addChild(sprite.bitmap);
 							}
 						}
 						else if (!sprite.facingRight == true) {
@@ -287,7 +292,7 @@
 									myRes[AGResources.NAME_CRAWLER_L1_PNG].bitmapData.clone());//
 								sprite.bitmap.x = sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly + ycheat;
-								myStage.addChild(sprite.bitmap);
+								stageHelper.addChild(sprite.bitmap);
 							}
 							else if (z == 1) {
 		
@@ -295,7 +300,7 @@
 									myRes[AGResources.NAME_CRAWLER_L2_PNG].bitmapData.clone());//
 								sprite.bitmap.x = sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly;
-								myStage.addChild(sprite.bitmap);
+								stageHelper.addChild(sprite.bitmap);
 							}
 						}
 					}
@@ -314,7 +319,7 @@
 									myRes[AGResources.NAME_GATOR_PUNCH_R1_PNG].bitmapData.clone());
 								sprite.bitmap.x = sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly + ycheat;
-								myStage.addChild(sprite.bitmap);
+								stageHelper.addChild(sprite.bitmap);
 		
 							}
 							else if (z == 1 ) {
@@ -323,7 +328,7 @@
 									myRes[AGResources.NAME_GATOR_PUNCH_R2_PNG].bitmapData.clone());//
 								sprite.bitmap.x = sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly + ycheat;
-								myStage.addChild(sprite.bitmap);
+								stageHelper.addChild(sprite.bitmap);
 							}
 						}
 						else if (!sprite.facingRight == true) {
@@ -333,7 +338,7 @@
 									myRes[AGResources.NAME_GATOR_PUNCH_L1_PNG].bitmapData.clone());//
 								sprite.bitmap.x = sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly + ycheat;
-								myStage.addChild(sprite.bitmap);
+								stageHelper.addChild(sprite.bitmap);
 							}
 							else if (z == 1) {
 		
@@ -341,7 +346,7 @@
 									myRes[AGResources.NAME_GATOR_PUNCH_L2_PNG].bitmapData.clone());//
 								sprite.bitmap.x = sprite.x - scrollx;
 								sprite.bitmap.y = sprite.y - scrolly + ycheat;
-								myStage.addChild(sprite.bitmap);
+								stageHelper.addChild(sprite.bitmap);
 							}
 						}
 					}
@@ -354,7 +359,7 @@
 		public function drawKey() {
 			sprite.bitmap.x = sprite.x - scrollx;
 			sprite.bitmap.y = sprite.y - scrolly ;
-			myStage.addChild(sprite.bitmap);
+			stageHelper.addChild(sprite.bitmap);
 			
 		}
 
@@ -366,7 +371,7 @@
 			sprite.bitmap.y = sprite.y - scrolly;
 			if (sprite.active == true && sprite != null && sprite.bitmap != null) {
 			//trace("before");
-				myStage.addChild(sprite.bitmap);
+				stageHelper.addChild(sprite.bitmap);
 			
 			}//if
 					
@@ -380,7 +385,7 @@
 			sprite.bitmap.y = sprite.y - scrolly;
 			if (sprite.active == true && sprite != null && sprite.bitmap != null) {
 			//trace("before");
-				myStage.addChild(sprite.bitmap);
+				stageHelper.addChild(sprite.bitmap);
 			
 			}//if
 		}
@@ -402,7 +407,7 @@
 			sprite.bitmap.y = sprite.y - scrolly + 50;
 			if (sprite.active == true && sprite != null && sprite.bitmap != null) {
 			
-				myStage.addChild(sprite.bitmap);
+				stageHelper.addChild(sprite.bitmap);
 			
 			}
 		}
