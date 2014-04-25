@@ -42,7 +42,7 @@
 			//mystage.height = 480;
 			//mystage.scaleX = mystage.scaleY;
 			
-			prefix = "";//"app:/";
+			prefix = "awesomeguy/";//"app:/";
 			keys = new Array();
 			for(var x:int = 0; x <= keycodeAny; x ++) {
 				if (x == keycodeQuiet) {
