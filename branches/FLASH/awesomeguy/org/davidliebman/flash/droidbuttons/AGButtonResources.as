@@ -16,6 +16,7 @@
 	import flash.text.*;
 	import flash.utils.ByteArray;
 	import flash.filesystem.*;
+	import flash.events.IOErrorEvent;
 	
 	public class AGButtonResources extends AGResources {
 	
@@ -91,10 +92,11 @@
 				break;
 				////////////////////////////////////
 				case AGResources.R_XML:
-					myFileStream.addEventListener(Event.COMPLETE, finishRes);
-					myFileStream.openAsync(r_file, FileMode.READ);
-					//uloader.addEventListener(Event.COMPLETE, finishRes);
-					//uloader.load(new URLRequest(r_url));
+					//myFileStream.addEventListener(IOErrorEvent.IO_ERROR, handleError);
+					//myFileStream.addEventListener(Event.COMPLETE, finishRes);
+					//myFileStream.openAsync(r_file, FileMode.READ);
+					uloader.addEventListener(Event.COMPLETE, finishRes);
+					uloader.load(new URLRequest(r_url));
 
 				break;
 				
@@ -148,6 +150,7 @@
 				//xml
 					
 					this.myFileStream.readBytes(bytes);
+					
 					loader.loadBytes(bytes);
 					loader.contentLoaderInfo.addEventListener(Event.COMPLETE, xmlComplete);
 					
@@ -155,7 +158,7 @@
 						r_xml = new XMLDocument();
 						//trace("r_xml");
 						r_xml.ignoreWhite = true;
-						//r_xml.parseXML(loader.content);
+						r_xml.parseXML(e.target.data);
 						//trace(r_xml);
 						myRes.push(r_xml);
 						trace(r_xml, "some value ------------");
@@ -166,6 +169,9 @@
 			}
 			i ++;
 			this.importRes();
+		}
+		public function handleError(e:IOErrorEvent):void {
+			trace("IO error", e.toString());
 		}
 		
 		public override function launchNextPhase():void {
