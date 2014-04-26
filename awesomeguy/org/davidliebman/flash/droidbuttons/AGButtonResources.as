@@ -100,125 +100,125 @@
 		public override function importRes():void {
 			
 			this.neededRes = new Array();
-	
-	[Embed("/xml/awesomeguy.xml", mimeType="application/octet-stream")]  var   res00:Class;
-	[Embed("/bitmap/test2.png")]  var   res01:Class;
-	
-	[Embed("/bitmap/agtiles1.png")]  var   res02:Class;
-	[Embed("/bitmap/agtiles2.png")]  var   res03:Class;
-	[Embed("/bitmap/agtiles3.png")]  var   res04:Class;
-	[Embed("/bitmap/agtiles4.png")]  var   res05:Class;
-	
-	[Embed("/bitmap/flyer_l0.png")]  var   res06:Class;
-	[Embed("/bitmap/flyer_l1.png")]  var   res07:Class;
-	[Embed("/bitmap/flyer_r0.png")]  var   res08:Class;
-	[Embed("/bitmap/flyer_r1.png")]  var   res09:Class;
-	
-	[Embed("/bitmap/monster_l0.png")]  var   res10:Class;
-	[Embed("/bitmap/monster_l1.png")]  var   res11:Class;
-	[Embed("/bitmap/monster_r0.png")]  var   res12:Class;
-	[Embed("/bitmap/monster_r1.png")]  var   res13:Class;
-
-	[Embed("/sound/boom.mp3")]  var   res14:Class;
-	[Embed("/sound/enter_1.mp3")]  var   res15:Class;
-	[Embed("/sound/enter_2.mp3")]  var   res16:Class;
-	[Embed("/sound/enter_3.mp3")]  var   res17:Class;
-	[Embed("/sound/enter_4.mp3")]  var   res18:Class;
-	[Embed("/sound/explosion.mp3")]  var   res19:Class;
-	[Embed("/sound/explosion_big.mp3")]  var   res20:Class;
-	[Embed("/sound/goal.mp3")]  var   res21:Class;
-	[Embed("/sound/ow.mp3")]  var   res22:Class;
-	[Embed("/sound/prize.mp3")]  var   res23:Class;
-
-	[Embed("/bitmap/explosion_a.png")]  var   res24:Class;
-	[Embed("/bitmap/explosion_b.png")]  var   res25:Class;
-	[Embed("/bitmap/explosion_c.png")]  var   res26:Class;
-	[Embed("/bitmap/explosion_d.png")]  var   res27:Class;
-	[Embed("/bitmap/explosion_e.png")]  var   res28:Class;
-	[Embed("/bitmap/explosion_f.png")]  var   res29:Class;
-	[Embed("/bitmap/explosion_g.png")]  var   res30:Class;
-	[Embed("/bitmap/explosion_h.png")]  var   res31:Class;
-	
-	[Embed("/bitmap/cloud.png")]  var   res32:Class;
-	[Embed("/bitmap/inv2_l.png")]  var   res33:Class;
-	[Embed("/bitmap/inv2_r.png")]  var   res34:Class;
-	[Embed("/bitmap/rollee_a.png")]  var   res35:Class;
-	[Embed("/bitmap/rollee_b.png")]  var   res36:Class;
-	
-	[Embed("/bitmap/flyer_white_l.png")]  var   res37:Class;
-	[Embed("/bitmap/flyer_white_r.png")]  var   res38:Class;
-	[Embed("/bitmap/start_pause.png")]  var   res39:Class;
-	
-	[Embed("/bitmap/pyramiddoor0.png")]  var   res40:Class;
-	[Embed("/bitmap/pyramiddoor1.png")]  var   res41:Class;
-	[Embed("/bitmap/pyramiddoor2.png")]  var   res42:Class;
-	[Embed("/bitmap/pyramiddoor3.png")]  var   res43:Class;
-	[Embed("/bitmap/pyramiddoor4.png")]  var   res44:Class;
-	
-	[Embed("/bitmap/g_climb1.png")]  var   res45:Class;
-	[Embed("/bitmap/g_climb2.png")]  var   res46:Class;
-	[Embed("/bitmap/g_punchl1.png")]  var   res47:Class;
-	[Embed("/bitmap/g_punchl2.png")]  var   res48:Class;
-	[Embed("/bitmap/g_punchr1.png")]  var   res49:Class;
-	[Embed("/bitmap/g_punchr2.png")]  var   res50:Class;
-	[Embed("/bitmap/g_stepl1.png")]  var   res51:Class;
-	[Embed("/bitmap/g_stepl2.png")]  var   res52:Class;
-	[Embed("/bitmap/g_stepr1.png")]  var   res53:Class;
-	[Embed("/bitmap/g_stepr2.png")]  var   res54:Class;
-	
-	[Embed("/bitmap/crawler_l1.png")]  var   res55:Class;
-	[Embed("/bitmap/crawler_l2.png")]  var   res56:Class;
-	[Embed("/bitmap/crawler_r1.png")]  var   res57:Class;
-	[Embed("/bitmap/crawler_r2.png")]  var   res58:Class;
-
-	[Embed("/bitmap/gater_punch_l1.png")]  var   res59:Class;
-	[Embed("/bitmap/gater_punch_l2.png")]  var   res60:Class;
-	[Embed("/bitmap/gater_punch_r1.png")]  var   res61:Class;
-	[Embed("/bitmap/gater_punch_r2.png")]  var   res62:Class;
-	[Embed("/bitmap/bunker.png")]  var   res63:Class;
-	[Embed("/bitmap/astrogate.png")]  var   res64:Class;
-	[Embed("/bitmap/g_stepl3.png")]  var   res65:Class;
-	[Embed("/bitmap/g_stepr3.png")]  var   res66:Class;
-
-	[Embed("/bitmap/g_shootl1.png")]  var   res67:Class;
-	[Embed("/bitmap/g_shootl2.png")]  var   res68:Class;
-	[Embed("/bitmap/g_shootr1.png")]  var   res69:Class;
-	[Embed("/bitmap/g_shootr2.png")]  var   res70:Class;
-
-	[Embed("/bitmap/platform.png")]  var   res71:Class;
-	[Embed("/bitmap/arrow_d.png")]  var   res72:Class;
-	[Embed("/bitmap/arrow_l.png")]  var   res73:Class;
-	[Embed("/bitmap/arrow_r.png")]  var   res74:Class;
-	[Embed("/bitmap/arrow_u.png")]  var   res75:Class;
-	[Embed("/bitmap/start_controls.png")]  var   res76:Class;
-
-	[Embed("/bitmap/g_crouchl1.png")]  var   res77:Class;
-	[Embed("/bitmap/g_crouchr1.png")]  var   res78:Class;
-
-	[Embed("/bitmap/g_stepl4.png")]  var   res79:Class;
-	[Embed("/bitmap/g_stepl5.png")]  var   res80:Class;
-	[Embed("/bitmap/g_stepl6.png")]  var   res81:Class;
-	[Embed("/bitmap/g_stepl7.png")]  var   res82:Class;
-	[Embed("/bitmap/g_stepl8.png")]  var   res83:Class;
-
-	[Embed("/bitmap/g_stepr4.png")]  var   res84:Class;
-	[Embed("/bitmap/g_stepr5.png")]  var   res85:Class;
-	[Embed("/bitmap/g_stepr6.png")]  var   res86:Class;
-	[Embed("/bitmap/g_stepr7.png")]  var   res87:Class;
-	[Embed("/bitmap/g_stepr8.png")]  var   res88:Class;
-
-	[Embed("/bitmap/gunsmall.png")]  var   res89:Class;
-	[Embed("/bitmap/key_blue.png")]  var   res90:Class;
-	[Embed("/bitmap/key_green.png")]  var   res91:Class;
-	[Embed("/bitmap/key_red.png")]  var   res92:Class;
-	[Embed("/bitmap/keysmall_blue.png")]  var   res93:Class;
-	[Embed("/bitmap/keysmall_green.png")]  var   res94:Class;
-	[Embed("/bitmap/keysmall_red.png")]  var   res95:Class;
-
-	[Embed("/bitmap/door_blue.png")]  var   res96:Class;
-	[Embed("/bitmap/door_green.png")]  var   res97:Class;
-	[Embed("/bitmap/door_red.png")]  var   res98:Class;
-	
+			
+			[Embed("/xml/awesomeguy.xml", mimeType="application/octet-stream")]  var   res00:Class;
+			[Embed("/bitmap/test2.png")]  var   res01:Class;
+			
+			[Embed("/bitmap/agtiles1.png")]  var   res02:Class;
+			[Embed("/bitmap/agtiles2.png")]  var   res03:Class;
+			[Embed("/bitmap/agtiles3.png")]  var   res04:Class;
+			[Embed("/bitmap/agtiles4.png")]  var   res05:Class;
+			
+			[Embed("/bitmap/flyer_l0.png")]  var   res06:Class;
+			[Embed("/bitmap/flyer_l1.png")]  var   res07:Class;
+			[Embed("/bitmap/flyer_r0.png")]  var   res08:Class;
+			[Embed("/bitmap/flyer_r1.png")]  var   res09:Class;
+			
+			[Embed("/bitmap/monster_l0.png")]  var   res10:Class;
+			[Embed("/bitmap/monster_l1.png")]  var   res11:Class;
+			[Embed("/bitmap/monster_r0.png")]  var   res12:Class;
+			[Embed("/bitmap/monster_r1.png")]  var   res13:Class;
+		
+			[Embed("/sound/boom.mp3")]  var   res14:Class;
+			[Embed("/sound/enter_1.mp3")]  var   res15:Class;
+			[Embed("/sound/enter_2.mp3")]  var   res16:Class;
+			[Embed("/sound/enter_3.mp3")]  var   res17:Class;
+			[Embed("/sound/enter_4.mp3")]  var   res18:Class;
+			[Embed("/sound/explosion.mp3")]  var   res19:Class;
+			[Embed("/sound/explosion_big.mp3")]  var   res20:Class;
+			[Embed("/sound/goal.mp3")]  var   res21:Class;
+			[Embed("/sound/ow.mp3")]  var   res22:Class;
+			[Embed("/sound/prize.mp3")]  var   res23:Class;
+		
+			[Embed("/bitmap/explosion_a.png")]  var   res24:Class;
+			[Embed("/bitmap/explosion_b.png")]  var   res25:Class;
+			[Embed("/bitmap/explosion_c.png")]  var   res26:Class;
+			[Embed("/bitmap/explosion_d.png")]  var   res27:Class;
+			[Embed("/bitmap/explosion_e.png")]  var   res28:Class;
+			[Embed("/bitmap/explosion_f.png")]  var   res29:Class;
+			[Embed("/bitmap/explosion_g.png")]  var   res30:Class;
+			[Embed("/bitmap/explosion_h.png")]  var   res31:Class;
+			
+			[Embed("/bitmap/cloud.png")]  var   res32:Class;
+			[Embed("/bitmap/inv2_l.png")]  var   res33:Class;
+			[Embed("/bitmap/inv2_r.png")]  var   res34:Class;
+			[Embed("/bitmap/rollee_a.png")]  var   res35:Class;
+			[Embed("/bitmap/rollee_b.png")]  var   res36:Class;
+			
+			[Embed("/bitmap/flyer_white_l.png")]  var   res37:Class;
+			[Embed("/bitmap/flyer_white_r.png")]  var   res38:Class;
+			[Embed("/bitmap/start_pause.png")]  var   res39:Class;
+			
+			[Embed("/bitmap/pyramiddoor0.png")]  var   res40:Class;
+			[Embed("/bitmap/pyramiddoor1.png")]  var   res41:Class;
+			[Embed("/bitmap/pyramiddoor2.png")]  var   res42:Class;
+			[Embed("/bitmap/pyramiddoor3.png")]  var   res43:Class;
+			[Embed("/bitmap/pyramiddoor4.png")]  var   res44:Class;
+			
+			[Embed("/bitmap/g_climb1.png")]  var   res45:Class;
+			[Embed("/bitmap/g_climb2.png")]  var   res46:Class;
+			[Embed("/bitmap/g_punchl1.png")]  var   res47:Class;
+			[Embed("/bitmap/g_punchl2.png")]  var   res48:Class;
+			[Embed("/bitmap/g_punchr1.png")]  var   res49:Class;
+			[Embed("/bitmap/g_punchr2.png")]  var   res50:Class;
+			[Embed("/bitmap/g_stepl1.png")]  var   res51:Class;
+			[Embed("/bitmap/g_stepl2.png")]  var   res52:Class;
+			[Embed("/bitmap/g_stepr1.png")]  var   res53:Class;
+			[Embed("/bitmap/g_stepr2.png")]  var   res54:Class;
+			
+			[Embed("/bitmap/crawler_l1.png")]  var   res55:Class;
+			[Embed("/bitmap/crawler_l2.png")]  var   res56:Class;
+			[Embed("/bitmap/crawler_r1.png")]  var   res57:Class;
+			[Embed("/bitmap/crawler_r2.png")]  var   res58:Class;
+		
+			[Embed("/bitmap/gater_punch_l1.png")]  var   res59:Class;
+			[Embed("/bitmap/gater_punch_l2.png")]  var   res60:Class;
+			[Embed("/bitmap/gater_punch_r1.png")]  var   res61:Class;
+			[Embed("/bitmap/gater_punch_r2.png")]  var   res62:Class;
+			[Embed("/bitmap/bunker.png")]  var   res63:Class;
+			[Embed("/bitmap/astrogate.png")]  var   res64:Class;
+			[Embed("/bitmap/g_stepl3.png")]  var   res65:Class;
+			[Embed("/bitmap/g_stepr3.png")]  var   res66:Class;
+		
+			[Embed("/bitmap/g_shootl1.png")]  var   res67:Class;
+			[Embed("/bitmap/g_shootl2.png")]  var   res68:Class;
+			[Embed("/bitmap/g_shootr1.png")]  var   res69:Class;
+			[Embed("/bitmap/g_shootr2.png")]  var   res70:Class;
+		
+			[Embed("/bitmap/platform.png")]  var   res71:Class;
+			[Embed("/bitmap/arrow_d.png")]  var   res72:Class;
+			[Embed("/bitmap/arrow_l.png")]  var   res73:Class;
+			[Embed("/bitmap/arrow_r.png")]  var   res74:Class;
+			[Embed("/bitmap/arrow_u.png")]  var   res75:Class;
+			[Embed("/bitmap/start_controls.png")]  var   res76:Class;
+		
+			[Embed("/bitmap/g_crouchl1.png")]  var   res77:Class;
+			[Embed("/bitmap/g_crouchr1.png")]  var   res78:Class;
+		
+			[Embed("/bitmap/g_stepl4.png")]  var   res79:Class;
+			[Embed("/bitmap/g_stepl5.png")]  var   res80:Class;
+			[Embed("/bitmap/g_stepl6.png")]  var   res81:Class;
+			[Embed("/bitmap/g_stepl7.png")]  var   res82:Class;
+			[Embed("/bitmap/g_stepl8.png")]  var   res83:Class;
+		
+			[Embed("/bitmap/g_stepr4.png")]  var   res84:Class;
+			[Embed("/bitmap/g_stepr5.png")]  var   res85:Class;
+			[Embed("/bitmap/g_stepr6.png")]  var   res86:Class;
+			[Embed("/bitmap/g_stepr7.png")]  var   res87:Class;
+			[Embed("/bitmap/g_stepr8.png")]  var   res88:Class;
+		
+			[Embed("/bitmap/gunsmall.png")]  var   res89:Class;
+			[Embed("/bitmap/key_blue.png")]  var   res90:Class;
+			[Embed("/bitmap/key_green.png")]  var   res91:Class;
+			[Embed("/bitmap/key_red.png")]  var   res92:Class;
+			[Embed("/bitmap/keysmall_blue.png")]  var   res93:Class;
+			[Embed("/bitmap/keysmall_green.png")]  var   res94:Class;
+			[Embed("/bitmap/keysmall_red.png")]  var   res95:Class;
+		
+			[Embed("/bitmap/door_blue.png")]  var   res96:Class;
+			[Embed("/bitmap/door_green.png")]  var   res97:Class;
+			[Embed("/bitmap/door_red.png")]  var   res98:Class;
+			
 			
 			// list resources needed...
 			neededRes.push( new Array ( new res00(), R_XML));
@@ -357,47 +357,9 @@
 			this.textField.setTextFormat(this.format);
 			
 			
-			//var myFile:File ;//= new File().resolvePath("")]  var   res00:Class;
-			
-			//resUrl = this.myKeyStage.prefix + resUrl;
-			//myFile = File.applicationDirectory;//new File(resUrl);
-			//r_file = myFile.resolvePath(resUrl);
-			//r_url = myFile.resolvePath(resUrl).url;//resUrl;
 			r_type = resType;
 			finishResEmbed(resUrl);
-			//myFile = new File(r_url);
-			/*
-			switch(r_type) {
-				case AGResources.R_SPRITE:
-				case AGResources.R_BITMAP:
-				case AGResources.R_BITMAP_WBLACK:
-					loader.load(new URLRequest(r_url));
-
-					loader.contentLoaderInfo.addEventListener(Event.COMPLETE, finishRes);
-					
-					
-				break;
-				////////////////////////////////////
-				case AGResources.R_SOUND:
-					r_sound = new Sound();
-					r_sound.load( new URLRequest(r_url));
-					r_sound.addEventListener(Event.COMPLETE, finishRes);
-					
-				break;
-				////////////////////////////////////
-				case AGResources.R_XML:
-					//myFileStream.addEventListener(IOErrorEvent.IO_ERROR, handleError);
-					//myFileStream.addEventListener(Event.COMPLETE, finishRes);
-					//myFileStream.openAsync(r_file, FileMode.READ);
-					uloader.addEventListener(Event.COMPLETE, finishRes);
-					uloader.load(new URLRequest(r_url));
-
-				break;
-				
-				
-			}
-
-			*/
+			
 		
 		}
 		public function finishResEmbed(e:Object):void {
@@ -470,10 +432,6 @@
 			i ++;
 			importRes();
 		}
-		
-		//public function handleError(e:IOErrorEvent):void {
-		//	trace("IO error", e.toString(), 00));
-		//}
 		
 		public override function launchNextPhase():void {
 			trace("really done android");//]  var   res00:Class;
