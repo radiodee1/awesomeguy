@@ -21,13 +21,36 @@
 	
 	
 	
-	public class AGButtonResources extends AGResources {
+	public class AGButtonResources {// extends AGResources {
 	
 	
+	public var textField:TextField = new TextField();
+	public var format:TextFormat = new TextFormat();
+
+	public var myStage:Stage;
+	public var neededRes:Array = new Array();
+	
+	public var loader:Loader = new Loader();
+	public var uloader:URLLoader = new URLLoader();
+	//var myButtons:Array;
+	public var myKeyStage:AGKeys;
+	public var myKeys:Array;
+	public var myRes:Array = new Array();
+
+	public static var R_SPRITE:int = 1;
+	public static var R_SOUND:int = 2;
+	public static var R_XML:int = 3;
+	public static var R_BITMAP:int = 4;
+	public static var R_BITMAP_WBLACK:int = 5;
+	
+		
 	
 	var bytes:ByteArray = new ByteArray();
 	var myFileStream:FileStream = new FileStream();
 	var r_file:File = new File();
+
+	public var startMessage:String = new String("loading....");
+
 
 	var i:int = 0;
 		
@@ -164,14 +187,14 @@
 	[Embed("bitmap/door_green.png")]  var   res97:Class;
 	[Embed("bitmap/door_red.png")]  var   res98:Class;
 	*/
-			
+
 			myStage = mystage;
 			//myButtons = buttons;
 			myKeyStage = keystage;
 			myKeys = keys;
 			i = 0;
 			myRes = new Array();
-			
+			neededRes = new Array();
 			
 			this.format.color = 0x00ffffff;
 			this.format.font = "Courier";
@@ -298,20 +321,20 @@
 			neededRes.push( new Array ( new res98(), R_BITMAP));
 			*/
 
-			importRes();
+			importResEmbed();
 		}
 		
-		public override function importRes():void {
+		public function importResEmbed():void {
 			if (this.i >= this.neededRes.length) {
 				launchNextPhase();
 			}
 			else {
 				
-				getRes(neededRes[i][1], neededRes[i][0]);
+				getResEmbed(neededRes[i][1], neededRes[i][0]);
 			}
 		}
 		
-		public override function getRes(resType:int, resUrl:Object) {
+		public function getResEmbed(resType:int, resUrl:Object) {
 
 			startMessage += ".";
 			this.format.color = 0x00ffffff;
@@ -331,7 +354,7 @@
 			//r_file = myFile.resolvePath(resUrl);
 			//r_url = myFile.resolvePath(resUrl).url;//resUrl;
 			r_type = resType;
-			this.finishRes(resType);
+			finishResEmbed(resType);
 			//myFile = new File(r_url);
 			/*
 			switch(r_type) {
@@ -367,7 +390,7 @@
 			*/
 		
 		}
-		public override function finishRes(e:Object):void {
+		public function finishResEmbed(e:Object):void {
 		
 			//
 			switch (r_type) {
@@ -430,14 +453,14 @@
 				
 			}
 			i ++;
-			this.importRes();
+			importResEmbed();
 		}
 		
 		//public function handleError(e:IOErrorEvent):void {
 		//	trace("IO error", e.toString(), 00));
 		//}
 		
-		public override function launchNextPhase():void {
+		public function launchNextPhase():void {
 			trace("really done android");//]  var   res00:Class;
 			
 			var game:AGGame = new AGGame(myStage, myKeyStage, myKeys, myRes);
