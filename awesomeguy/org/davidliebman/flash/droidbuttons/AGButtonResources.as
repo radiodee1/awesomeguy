@@ -3,7 +3,7 @@
 	
 	
 	import org.davidliebman.flash.awesomeguy.*;
-	import flash.filesystem.File;
+	//import flash.filesystem.File;
 	import flash.display.*;
 	import flash.net.URLLoader;
 	import flash.events.Event;
@@ -16,7 +16,7 @@
 	import fl.motion.Color;
 	import flash.text.*;
 	import flash.utils.ByteArray;
-	import flash.filesystem.*;
+	//import flash.filesystem.*;
 	import flash.events.IOErrorEvent;
 	
 	
@@ -46,8 +46,8 @@
 		
 	
 	var bytes:ByteArray = new ByteArray();
-	var myFileStream:FileStream = new FileStream();
-	var r_file:File = new File();
+	//var myFileStream:FileStream = new FileStream();
+	//var r_file:File = new File();
 
 	//public var startMessage:String = new String("loading....");
 
@@ -357,14 +357,14 @@
 			this.textField.setTextFormat(this.format);
 			
 			
-			var myFile:File ;//= new File().resolvePath("")]  var   res00:Class;
+			//var myFile:File ;//= new File().resolvePath("")]  var   res00:Class;
 			
 			//resUrl = this.myKeyStage.prefix + resUrl;
 			//myFile = File.applicationDirectory;//new File(resUrl);
 			//r_file = myFile.resolvePath(resUrl);
 			//r_url = myFile.resolvePath(resUrl).url;//resUrl;
 			r_type = resType;
-			finishResEmbed(resType);
+			finishResEmbed(resUrl);
 			//myFile = new File(r_url);
 			/*
 			switch(r_type) {
@@ -416,7 +416,8 @@
 					myRes.push(r_sprite);
 				break;
 				case AGResources.R_BITMAP:
-					r_bitmap = Bitmap(LoaderInfo(e.target).content);
+					//r_bitmap = Bitmap(LoaderInfo(e.target).content);
+					r_bitmap = Bitmap(e);
 					var bitmapdata1:BitmapData = r_bitmap.bitmapData;
 					var bitmapdata2:BitmapData = new BitmapData(r_bitmap.width, r_bitmap.height, true, 0x000000ff);
 					//switch black to alpha
@@ -430,13 +431,17 @@
 					myRes.push(r_bitmap);
 				break;
 				case AGResources.R_BITMAP_WBLACK:
-					r_bitmap = Bitmap(LoaderInfo(e.target).content);
+					//r_bitmap = Bitmap(LoaderInfo(e.target).content);
+					r_bitmap = Bitmap(e);
 					myRes.push(r_bitmap);
 				break;
 				
 				case AGResources.R_SOUND:
 				//sound
-					
+					r_sound = Sound(e);
+					//r_sound.load( new URLRequest(r_url));
+					//r_sound.load(e);
+					//r_sound.addEventListener(Event.COMPLETE, finishRes);
 					myRes.push(new AGSound(r_sound, myKeys[myKeyStage.keycodeQuiet]));
 					
 				break;
