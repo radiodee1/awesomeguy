@@ -21,9 +21,9 @@
 	
 	
 	
-	public class AGButtonResources {// extends AGResources {
+	public class AGButtonResources extends AGResources {
 	
-	
+	/*
 	public var textField:TextField = new TextField();
 	public var format:TextFormat = new TextFormat();
 
@@ -42,14 +42,14 @@
 	public static var R_XML:int = 3;
 	public static var R_BITMAP:int = 4;
 	public static var R_BITMAP_WBLACK:int = 5;
-	
+	*/
 		
 	
 	var bytes:ByteArray = new ByteArray();
 	var myFileStream:FileStream = new FileStream();
 	var r_file:File = new File();
 
-	public var startMessage:String = new String("loading....");
+	//public var startMessage:String = new String("loading....");
 
 
 	var i:int = 0;
@@ -63,9 +63,41 @@
 	var r_xml:XMLDocument = new XMLDocument();
 	var r_bitmap:Bitmap = new Bitmap();
 
+	
 		public function AGButtonResources(mystage:Stage, keystage:AGKeys, keys:Array) {
-			//super(mystage, keystage, keys);
 			//  var  ructor code
+			
+			
+
+			myStage = mystage;
+			//myButtons = buttons;
+			myKeyStage = keystage;
+			myKeys = keys;
+			i = 0;
+			myRes = new Array();
+			neededRes = new Array();
+			
+			format = new TextFormat();
+			textField = new TextField();
+			
+			this.format.color = 0x00ffffff;
+			this.format.font = "Courier";
+			this.format.bold = true;
+			this.textField.width = 1000;
+			this.textField.x = 10;
+			this.textField.y = 10;
+			this.textField.text = "loading...";
+			this.textField.setTextFormat(this.format);
+			myStage.addChild(this.textField);
+			
+			super(mystage, keystage, keys);
+
+			
+
+			//importResEmbed();
+		}
+		
+		public override function importRes():void {
 			
 			
 	
@@ -187,24 +219,6 @@
 	[Embed("bitmap/door_green.png")]  var   res97:Class;
 	[Embed("bitmap/door_red.png")]  var   res98:Class;
 	*/
-
-			myStage = mystage;
-			//myButtons = buttons;
-			myKeyStage = keystage;
-			myKeys = keys;
-			i = 0;
-			myRes = new Array();
-			neededRes = new Array();
-			
-			this.format.color = 0x00ffffff;
-			this.format.font = "Courier";
-			this.format.bold = true;
-			this.textField.width = 1000;
-			this.textField.x = 10;
-			this.textField.y = 10;
-			this.textField.text = "loading...";
-			this.textField.setTextFormat(this.format);
-			myStage.addChild(this.textField);
 			
 			// list resources needed...
 			neededRes.push( new Array ( new res00(), R_XML));
@@ -320,11 +334,7 @@
 			neededRes.push( new Array ( new res97(), R_BITMAP));
 			neededRes.push( new Array ( new res98(), R_BITMAP));
 			*/
-
-			importResEmbed();
-		}
-		
-		public function importResEmbed():void {
+			
 			if (this.i >= this.neededRes.length) {
 				launchNextPhase();
 			}
@@ -453,14 +463,14 @@
 				
 			}
 			i ++;
-			importResEmbed();
+			importRes();
 		}
 		
 		//public function handleError(e:IOErrorEvent):void {
 		//	trace("IO error", e.toString(), 00));
 		//}
 		
-		public function launchNextPhase():void {
+		public override function launchNextPhase():void {
 			trace("really done android");//]  var   res00:Class;
 			
 			var game:AGGame = new AGGame(myStage, myKeyStage, myKeys, myRes);
