@@ -138,6 +138,8 @@
 			load_after_start = after_start;
 			myStage.removeEventListener(Event.ENTER_FRAME, setKeys);
 			
+			/* THIS SECTION NEEDED FOR WEBSITE DEPLOYMENT */
+			/*
 			var path:String = new String("xml/");
 			var padding:String = new String("00");
 			var number:String = new String(this.gamePlanet.toString());
@@ -150,6 +152,21 @@
 			uloader.addEventListener(Event.COMPLETE, finishLoadXML);
 			trace(title_s);
 			uloader.load( new URLRequest(title_s));
+			*/
+			
+			/* THIS SECTION NEEDED FOR ANDROID DEPLOYMENT */
+			trace("xml/00");
+			[Embed("/xml/00awesomeguy.xml", mimeType="application/octet-stream")]  var   res00:Class;
+			var r_xml:XMLDocument = new XMLDocument();
+					//
+			r_xml.ignoreWhite = true;
+			r_xml.parseXML((new res00()).toString());
+			this.gameXML = r_xml;
+			
+			myStage.addEventListener(Event.ENTER_FRAME, setKeys );
+			
+			this.startAGGame();
+			/* END SPECIAL SECTION */
 		}
 		
 		public function finishLoadXML(e:Event):void {
