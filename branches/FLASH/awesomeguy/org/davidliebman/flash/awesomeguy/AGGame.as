@@ -508,7 +508,7 @@
 				modeObj = controls;
 			}
 			
-			if (true ) modeObj.innerGameLoop();
+			if (gameMode != MODE_PAUSE && gameMode != MODE_START ) modeObj.innerGameLoop();
 		}
 	}
 	
