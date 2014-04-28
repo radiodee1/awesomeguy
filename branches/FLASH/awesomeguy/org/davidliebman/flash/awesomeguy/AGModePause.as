@@ -41,7 +41,7 @@
 		}
 		
 		public function touchHandler(evt:TouchEvent):void {
-			trace("right3");
+			//trace("right3");
 			//this.myGame.gameMode = AGGame.MODE_FLYER;
 			this.myGame.myModeStack.push(AGGame.MODE_FLYER);
 			this.myGame.doAnimation();
