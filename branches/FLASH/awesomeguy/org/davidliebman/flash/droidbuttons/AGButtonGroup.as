@@ -41,8 +41,8 @@
 			//trace(mystage.width, mystage.height);
 			//mystage.height = 480;
 			//mystage.scaleX = mystage.scaleY;
-			
-			prefix = "awesomeguy/";//"app:/";
+			this.build_type = "android";
+			//prefix = "awesomeguy/";//"app:/";
 			keys = new Array();
 			for(var x:int = 0; x <= keycodeAny; x ++) {
 				if (x == keycodeQuiet) {
@@ -65,6 +65,8 @@
 			myScreen.addEventListener(KeyboardEvent.KEY_UP, keyboardUpHandler);
 			myScreen.removeEventListener(Event.ADDED_TO_STAGE, setCallbacks);
 			//trace("callbacks...");
+			this.placeButtons();
+			
 			launchNextPhase();
 		}
 		
@@ -96,8 +98,29 @@
 			var resources:AGButtonResources = new AGButtonResources(myScreen, this, keys);
 			trace("next phase...");
 			
-			keys[this.keycodeAny].setValBool(true);
-			keys[this.keycodeAny].setValBool(false);
+			
+			//keys[this.keycodeAny].setValBool(true);
+			//keys[this.keycodeAny].setValBool(false);
+			
+		}
+		
+		public function placeButtons():void {
+			//myScreen is global!!
+			var size:int = 512/8;
+			var square:BitmapData = new BitmapData(size, size, false, 0xff0000);
+			
+			var buttonUp:Bitmap = new Bitmap(square);
+			var buttonDown:Bitmap = new Bitmap(square);
+			var buttonLeft:Bitmap = new Bitmap(square);
+			var buttonRight:Bitmap = new Bitmap(square);
+			
+			var buttonA:Bitmap = new Bitmap(square);
+			var buttonB:Bitmap = new Bitmap(square);
+			
+			buttonA.x = 0;//(512 - size)/2;
+			buttonA.y = 0;//((512 * 3/4) - size) /2;
+			
+			myScreen.addChild(buttonA);
 			
 		}
 

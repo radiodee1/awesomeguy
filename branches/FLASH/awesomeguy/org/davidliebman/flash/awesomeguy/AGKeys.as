@@ -7,7 +7,7 @@
 	public class AGKeys extends Sprite {
 	
 	public var prefix:String = new String("");
-	
+	public var build_type:String = new String("");
 	var keys:Array = new Array();
 
 	public var keycodeLeft:int = 37;
@@ -38,7 +38,7 @@
 			myScreen = mystage;
 			this.addEventListener(Event.ADDED_TO_STAGE, setCallbacks);
 			//setCallbacks();
-			
+			this.build_type = "web";
 			//trace("constructor...");
 		}
 		
