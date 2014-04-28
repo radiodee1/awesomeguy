@@ -188,6 +188,9 @@
 	var startingx:int = xpos;
 	var startingy:int = ypos;
 	
+	//AI
+	public var ai:AGai ;// = new AGai();
+	
 	//game progress variables
 	public var game_death:Boolean = false;
 	public var game_over:Boolean = false;
