@@ -143,7 +143,9 @@
 			radarscreen.x = 64;
 			radarscreen.y = SCREEN_HEIGHT;
 			myStage.addChild(radarscreen);
-
+			
+			this.ai.drawMap();
+			
 			if (!this.animate_only) this.detectMovement();
 
 			this.physicsAdjustments();
