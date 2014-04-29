@@ -87,6 +87,8 @@
 			this.game_start = true;
 			this.flyersprite = new Bitmap();
 			this.agflyer = new AGSprite( this, 0);
+			
+			this.ai = new AGai();
 		}
 		
 		public override function componentsInOrder():void {
@@ -197,6 +199,7 @@
 			prepRings() ;
 			prepSpecialXml();
 			//prepRingSprites();
+			this.ai.setValues(this.myInvisible, this.myStage, this);
 			this.prepTilesToSprites();
 						
 			if (this.game_reset_start  || this.game_start) {
