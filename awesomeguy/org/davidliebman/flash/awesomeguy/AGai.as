@@ -154,7 +154,7 @@
 					
 						
 						
-						if(  myVisible[i][j] != 0  ) {// && myVisible[i][j] != AGModeGuy.B_GOAL  ) { //is tile blank??
+						if(  myVisible[i][j] != 0  || this.invisibleChutes[i][j] != 0) {// && myVisible[i][j] != AGModeGuy.B_GOAL  ) { //is tile blank??
 							//trace(myVisible[i][j]);
 							square = new AGSprite(this.myGame ,AGMode.S_BLOCK);
 							square.bitmap = this.myGame.cutTile(  this.myGame.myRes[AGResources.NAME_TILES1_PNG], 
