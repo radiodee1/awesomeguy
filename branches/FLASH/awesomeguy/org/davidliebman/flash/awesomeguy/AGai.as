@@ -41,6 +41,16 @@
 			var k:int = 0;
 			var tempArray:Array;// = new Array();
 			
+			//make empty grid for chutes
+			for (i = 0; i < this.myInvisible.length; i ++) {
+				tempArray = new Array();
+				for (j = 0; j < this.myInvisible[i].length; j ++) {
+					tempArray.push(0);
+				}
+				this.invisibleChutes.push(tempArray);
+			}
+			
+			//platforms
 			for (i = 0; i < myInvisible.length; i ++) {
 				tempArray = new Array();
 				for (j = 0; j < myInvisible[i].length; j ++) {
@@ -54,47 +64,48 @@
 								this.myInvisible[i-1][j] != AGModeGuy.B_BLOCK) {
 							k = 1;
 						}
+						
 					}
-					//detect ladders
-					if (i < this.myInvisible.length && i > 0 && this.myInvisible[i][j] == AGModeGuy.B_LADDER) {
-						k = 1;
-					}
+					
 					//build array parts
 					tempArray.push(k);
 				}
 				this.invisibleDots.push(tempArray);
 			}
 			
-			//make empty grid for chutes
-			for (i = 0; i < this.myInvisible.length; i ++) {
-				tempArray = new Array();
-				for (j = 0; j < this.myInvisible[i].length; j ++) {
-					tempArray.push(0);
-				}
-				this.invisibleChutes.push(tempArray);
-			}
 			
 			// detect chutes.
 			for (i = 0; i < this.myInvisible.length; i ++) {
 				//
 				for (j = 0; j < this.myInvisible[i].length; j ++) {
-					k = 0;
+					//k = 0;
 					//detect a platform...
-					if ( i < this.myInvisible.length -1 && this.myInvisible[i+1][j] == AGModeGuy.B_BLOCK) {
-						if (i > 0  && this.myInvisible[i][j] == 0 && this.myInvisible[i-1][j] == 0) {
-							//k = 1;
-							// do nothing...
+					if (this.invisibleDots[i][j] == 1 ) {
+						if (j < this.invisibleDots[i].length - 1 && this.invisibleDots[i][j+1] != 1 && 
+								this.myInvisible[i][j] != AGModeGuy.B_LADDER && 
+								this.myInvisible[i+1][j] != AGModeGuy.B_LADDER) {
+							this.followChutes(j+ 1,i);
+						}
+						if (j > 0 && this.invisibleDots[i][j-1] != 1 && 
+								this.myInvisible[i][j] != AGModeGuy.B_LADDER && 
+								this.myInvisible[i+1][j] != AGModeGuy.B_LADDER) {
+							this.followChutes(j-1, i);
 						}
 					}
-					else { //not a platform
-						if (j < this.myInvisible[i].length - 1 && j > 0 && 
-								i < this.myInvisible.length - 1 && i > 0 &&
-								(this.myInvisible[i+1][j + 1] == AGModeGuy.B_BLOCK || 
-								this.myInvisible[i+1][j - 1] == AGModeGuy.B_BLOCK ) ) {
-							this.followChutes(i,j);
-						}
+					
+				}
+			}
+			
+			for (i = 0; i < this.myInvisible.length; i ++) {
+				//
+				for (j = 0; j < this.myInvisible[i].length; j ++) {
+					
+					//detect ladders
+					if (i < this.myInvisible.length && i > 0 && this.myInvisible[i][j] == AGModeGuy.B_LADDER) {
+						//k = 1;
+						this.invisibleDots[i][j] = 1;
 					}
-					//tempArray.push(k);
+					
 				}
 			}
 			
@@ -109,7 +120,9 @@
 				if (this.myInvisible[i][xblock] == AGModeGuy.B_SPACE) {
 					this.invisibleChutes[i][xblock] = 1;
 				}
-				else return;
+				else if (this.myInvisible[i][xblock] == AGModeGuy.B_BLOCK){
+					return;
+				}
 			}
 		}
 		
