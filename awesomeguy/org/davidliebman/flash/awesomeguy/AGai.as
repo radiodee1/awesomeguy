@@ -129,20 +129,27 @@
 				while(k < this.invisibleDots[i].length) {
 					startx = 0;
 					endx = 0;
-					l = k;
+					//l = k;
 					if (this.invisibleDots[i][k] != 0 ) {
 						
-						if(this.isEndNode(l,i) || this.invisibleDots[i][k + 1] == 0){
+						if(this.isEndNode(k,i) || this.invisibleDots[i][k + 1] == 0){
 							//record a horizontal edge
 							startx = l;
 							endx = k;
-							var edge:Array = this.makeCoordinateListingHorizontal(startx,endx,i,false);
-							this.edgesFromDots.push(edge);
+							if (l != k) {
+								var edge:Array = this.makeCoordinateListingHorizontal(startx,endx,i,false);
+								this.edgesFromDots.push(edge);
+							}
 							l = k;
 						}
+						//l ++;
+					}
+					else {
 						l ++;
 					}
 					k ++;
+					
+
 				}
 				
 				
@@ -229,7 +236,7 @@
 		}
 		
 		public function drawMap():void {
-			//this.drawMapSquares();
+			this.drawMapSquares();
 			this.drawMapEdges();
 		}
 		
