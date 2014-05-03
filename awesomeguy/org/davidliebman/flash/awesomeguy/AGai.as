@@ -14,6 +14,7 @@
 		public var invisibleDots:Array;
 		public var invisibleChutes:Array;
 		public var edgesFromDots:Array;
+		public var nodesFromDots:Array;
 
 		public static var MONSTER_GATOR:int = 1;
 		public static var MONSTER_CLIMBER:int = 2;
@@ -22,17 +23,22 @@
 		public static var COORDINATES_BLOCKS:int = 1;
 		public static var COORDINATES_PIXELS:int = 2;
 
-		public static var POS_EDGENAME:int=0;
-		public static var POS_STARTX:int = 1;
-		public static var POS_STARTY:int= 2;
-		public static var POS_STOPX:int = 3;
-		public static var POS_STOPY:int = 4;
-		public static var POS_DIST:int = 5;
-		public static var POS_CALCDIST:int = 6;
-		public static var POS_VISITED:int = 7;
-		public static var POS_TOPY:int = 8;
-		public static var POS_ISJUMP:int = 9;
+		public static var EPOS_EDGENAME:int=0;
+		public static var EPOS_NODESTART:int = 1;
+		public static var EPOS_NODEEND:int= 2;
+		public static var EPOS_STARTX:int = 3;
+		public static var EPOS_STARTY:int= 4;
+		public static var EPOS_STOPX:int = 5;
+		public static var EPOS_STOPY:int = 6;
+		public static var EPOS_DIST:int = 7;
+		public static var EPOS_TOPY:int = 8;
+		public static var EPOS_ISJUMP:int = 9;
 		
+		public static var NPOS_NODENAME:int = 0;
+		public static var NPOS_COORDX:int = 1;
+		public static var NPOS_COORDY:int = 2;
+		public static var NPOS_CALCDIST:int = 3;
+		public static var NPOS_VISITED:int = 4;
 
 		public function AGai() {
 			// constructor code
@@ -50,6 +56,7 @@
 			this.invisibleChutes = new Array();
 			this.invisibleDots = new Array();
 			this.edgesFromDots = new Array();
+			this.nodesFromDots = new Array();
 			
 			var i:int = 0;
 			var j:int = 0;
@@ -118,7 +125,7 @@
 			}
 			/////
 			// horizontal edges
-			var k:int = 0;
+			
 			var l:int = 0;
 			var startx:int = 0;
 			var endx:int = 0;
@@ -137,12 +144,54 @@
 							startx = l;
 							endx = k;
 							if (l != k) {
-								var edge:Array = this.makeCoordinateListingHorizontal(startx,endx,i,false);
-								this.edgesFromDots.push(edge);
+								//var edge:Array = 
+								this.makeCoordinateListingHorizontal(startx,endx,i,false);
+								//this.edgesFromDots.push(edge);
 							}
 							l = k;
 						}
-						//l ++;
+						
+					}
+					else {
+						l ++;
+					}
+					k ++;
+					
+
+				}
+				
+				
+			}
+			
+			/////
+			// vertical edges
+			
+			//var l:int = 0;
+			var starty:int = 0;
+			var endy:int = 0;
+			if (this.invisibleDots.length == 0) return;
+			
+			for (i = 0; i < this.invisibleDots[0].length; i ++) {
+				
+				k = 0;
+				l = 0;
+				while(k < this.invisibleDots.length) {
+					starty = 0;
+					endy = 0;
+					
+					if (this.invisibleDots[k][i] != 0 ) {
+						
+						if(this.isEndNode(i,k) ){//|| this.invisibleDots[i][k + 1] == 0){
+							//record a vert edge
+							starty = l;
+							endy = k;
+							if (l != k) {
+								
+								this.makeCoordinateListingVertical(starty,endy,i,false);
+							}
+							l = k;
+						}
+						
 					}
 					else {
 						l ++;
@@ -169,34 +218,78 @@
 				}
 			}
 		}
-		
-		public function makeEdgeName(startx:int, starty:int, endx:int, endy:int):String {
-			return new String("EDGENAME:"+startx+","+starty+","+endx+","+endy);
+		public function makeNodeName(x:int, y:int):String {
+			return new String("NODENAME:" + x +"," + y);
 		}
 		
-		public function makeCoordinateListingHorizontal(startx:int, endx:int, ylevel:int, isJump:Boolean):Array {
+		
+		public function makeEdgeName(startx:int, starty:int, endx:int, endy:int):String {
+			return new String("EDGENAME:"+startx+","+starty+":"+endx+","+endy);
+		}
+		
+		public function makeCoordinateListingHorizontal(startx:int, endx:int, ylevel:int, isJump:Boolean):void{
+			
+			// put edges in list
 			var edgename:String = this.makeEdgeName(startx,ylevel,endx,ylevel);
-			trace(edgename);
-			return new Array(edgename, // edge name
+			
+			var nodenamestart:String = this.makeNodeName(startx, ylevel);
+			var nodenamestop:String = this.makeNodeName(endx, ylevel);
+
+			var temp:Array = new Array(edgename, // edge name
+							 nodenamestart, // nodename a
+							 nodenamestop, // node name b
 							 startx , ylevel, // start x,y
 							 endx , ylevel ,  // end x,y
 							 Math.abs(endx - startx ), // dist
-							 -1, // infinity for calculated dist
-							 false, // visited??
 							 ylevel, // height of highest part of segment
 							 isJump);  // is jump segment??
+			this.edgesFromDots.push(temp);
+			
+			this.makeCoordinateListingNodes(startx,ylevel);
+			this.makeCoordinateListingNodes(endx,ylevel);
+			
 		}
 		
-		public function makeCoordinateListingVertical(starty:int, endy:int, xlevel:int, isJump:Boolean):Array {
+		public function makeCoordinateListingNodes(x:int, y:int):void {
+			var i:int = 0;
+			var listed:Boolean = false;
+			
+			var nodename:String = this.makeNodeName(x, y);
+
+			// put nodes in list... NO REPEATS
+			for (i = 0; i < this.nodesFromDots.length; i ++) {
+				if (nodename == this.nodesFromDots[i][NPOS_NODENAME]) {
+					listed = true;
+				}
+			}
+			var node:Array = new Array( nodename, // node name
+										x, //node x
+										y, //node y
+										-1, // D distance (infinity)
+										false); //visited?
+			if (!listed) this.nodesFromDots.push(node);
+		}
+		
+		public function makeCoordinateListingVertical(starty:int, endy:int, xlevel:int, isJump:Boolean):void {
+			// put edges in list
 			var edgename:String = this.makeEdgeName(xlevel,starty,xlevel,endy);
-			return new Array(edgename, // edge name
+			
+			var nodenamestart:String = this.makeNodeName(xlevel, starty);
+			var nodenamestop:String = this.makeNodeName(xlevel, endy);
+
+			var temp:Array = new Array(edgename, // edge name
+							 nodenamestart, // nodename a
+							 nodenamestop, // node name b
 							 xlevel , starty, // start x,y
-							 xlevel, endy ,  // end x,y
+							 xlevel , endy ,  // end x,y
 							 Math.abs(endy - starty ), // dist
-							 -1, // infinity for calculated dist
-							 false, // visited??
-							 Math.min(endy,starty), // height of highest part of segment
-							 isJump);  // is jump segment??		
+							 starty, // height of highest part of segment
+							 isJump);  // is jump segment??
+			this.edgesFromDots.push(temp);
+			
+			this.makeCoordinateListingNodes(xlevel,starty);
+			this.makeCoordinateListingNodes(xlevel,endy);
+						
 		}
 		
 		/* CHECK IF END NODE */
@@ -337,14 +430,14 @@
 			/* draw background */
 			baseX = this.myGame.scrollBGX / TILE_WIDTH;
 			baseY = this.myGame.scrollBGY / TILE_HEIGHT;
-			var myVisible:Array = this.invisibleDots;
+			//var myVisible:Array = this.invisibleDots;
 			
 			for(i = 0; i < this.edgesFromDots.length; i ++) {
 				
-				xstart  = this.edgesFromDots[i][POS_STARTX] - this.myGame.scrollBGX;
-				ystart  = this.edgesFromDots[i][POS_STARTY] - this.myGame.scrollBGY;
-				xend  = this.edgesFromDots[i][POS_STOPX] - this.myGame.scrollBGX;
-				yend  = this.edgesFromDots[i][POS_STOPY] - this.myGame.scrollBGY;
+				xstart  = this.edgesFromDots[i][EPOS_STARTX] * TILE_WIDTH - this.myGame.scrollBGX;
+				ystart  = this.edgesFromDots[i][EPOS_STARTY] * TILE_HEIGHT - this.myGame.scrollBGY;
+				xend  = this.edgesFromDots[i][EPOS_STOPX] * TILE_WIDTH - this.myGame.scrollBGX;
+				yend  = this.edgesFromDots[i][EPOS_STOPY] * TILE_HEIGHT- this.myGame.scrollBGY;
 				
 				var shape:Shape = new Shape();
 				shape.graphics.lineStyle(4,0xff0000,1);
@@ -353,40 +446,7 @@
 				
 				mystage.addChild(shape);
 			}
-			/*
-			for ( j = baseX - 1 ; j < baseX + tilesWidthMeasurement + 3; j++) { //32
-				for ( i = baseY - 1 ; i < baseY + tilesHeightMeasurement + 3; i ++ ) { //24
-					
-					if (i >= 0 && j >= 0  && i < LONG_MAP_V && j < LONG_MAP_H) { 
-					
-						
-						
-						if(  myVisible[i][j] != 0  || this.invisibleChutes[i][j] != 0) {// && myVisible[i][j] != AGModeGuy.B_GOAL  ) { //is tile blank??
-							//trace(myVisible[i][j]);
-							square = new AGSprite(this.myGame ,AGMode.S_BLOCK);
-							square.bitmap = this.myGame.cutTile(  this.myGame.myRes[AGResources.NAME_TILES1_PNG], 
-									AGModeGuy.B_BIGPRIZE - 4 ,
-									AGMode.TILE_BOT);
-							
-							
-							square.bitmap.x = new Number ((j * TILE_WIDTH ) - this.myGame.scrollBGX);
-							square.bitmap.y = new Number ((i * TILE_HEIGHT) - this.myGame.scrollBGY);
-							mystage.addChild(square.bitmap);
-							
-							
-							
-						}
-						
-						
-		
-					} // if i,j > 0, etc...
-				
-					//////////////////////////////////////////
-					
-					
-				}
-			}
-			*/
+			
 			mystage.scrollRect = new Rectangle(0,0,512, (512 * 3/4));
 			this.myScreen.addChild(mystage);
 			return ;
