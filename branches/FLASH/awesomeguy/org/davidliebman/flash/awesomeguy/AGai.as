@@ -117,8 +117,9 @@
 			for (i = 0; i < this.myInvisible.length; i ++) {
 				for (j = 0; j < this.myInvisible[i].length; j ++) {
 					//detect ladders
-					if (i < this.myInvisible.length && i > 0 && this.myInvisible[i][j] == AGModeGuy.B_LADDER) {
-						//k = 1;
+					if (i < this.myInvisible.length && i > 0 && 
+						this.myInvisible[i][j] == AGModeGuy.B_LADDER) {
+						
 						this.invisibleDots[i][j] = 1;
 					}
 				}
@@ -137,16 +138,18 @@
 					startx = 0;
 					endx = 0;
 					//l = k;
-					if (this.invisibleDots[i][k] != 0 ) {
+					if ((this.invisibleDots[i][k] != 0 || this.invisibleChutes[i][k] != 0)){
 						
-						if(this.isEndNode(k,i) || this.invisibleDots[i][k + 1] == 0){
+						
+						if((this.isEndNodeBasic(k,i, this.invisibleDots) || this.isEndNodeHoriz(k,i)) && 
+						   this.myInvisible[i][k] != AGModeGuy.B_LADDER){
 							//record a horizontal edge
 							startx = l;
 							endx = k;
 							if (l != k) {
-								//var edge:Array = 
+								//
 								this.makeCoordinateListingHorizontal(startx,endx,i,false);
-								//this.edgesFromDots.push(edge);
+								
 							}
 							l = k;
 						}
@@ -181,13 +184,54 @@
 					
 					if (this.invisibleDots[k][i] != 0 ) {
 						
-						if(this.isEndNode(i,k) ){//|| this.invisibleDots[i][k + 1] == 0){
+						if(this.isEndNodeBasic(i,k, this.invisibleDots) ){//
 							//record a vert edge
 							starty = l;
 							endy = k;
 							if (l != k) {
 								
 								this.makeCoordinateListingVertical(starty,endy,i,false);
+							}
+							l = k;
+						}
+						
+					}
+					else {
+						l ++;
+					}
+					k ++;
+					
+
+				}
+				
+				
+			}
+			
+			/////
+			// vertical edges chutes
+			
+			//var l:int = 0;
+			var starty:int = 0;
+			var endy:int = 0;
+			if (this.invisibleChutes.length == 0) return;
+			
+			for (i = 0; i < this.invisibleChutes[0].length; i ++) {
+				
+				k = 0;
+				l = 0;
+				while(k < this.invisibleChutes.length) {
+					starty = 0;
+					endy = 0;
+					
+					if (this.invisibleChutes[k][i] != 0 ) {
+						
+						if(this.isEndNodeChute(i,k)  ){//
+							//record a vert edge
+							starty = l;
+							endy = k;
+							if (l != k) {
+								
+								this.makeCoordinateListingVertical(starty,endy,i,true);
 							}
 							l = k;
 						}
@@ -292,28 +336,108 @@
 						
 		}
 		
-		/* CHECK IF END NODE */
-		public function isEndNode(xblock:int, yblock:int):Boolean {
+		public function isEndNodeHoriz(x:int, y:int):Boolean {
 			var value:Boolean = true;
-			if (yblock == 0 || yblock == this.invisibleDots.length || 
-				xblock == 0 || xblock == this.invisibleDots[0].length) return true;
-			
 			var connections:int = 0;
-			if (this.invisibleDots[yblock - 1][xblock] == 1 && //up
-				this.invisibleDots[yblock ][xblock + 1] == 1 //right
+			if (y == 0 || y == this.invisibleDots.length || 
+				x == 0 || x == this.invisibleDots[0].length) return true;
+				
+			// what to do if next to a chute
+			if ((this.invisibleDots[y][x] == 1 && 
+				this.invisibleDots[y][x+ 1] == 0 &&
+				this.invisibleChutes[y][x+ 1] != 1 ) //||
+				 //this.myInvisible[y+1][x] == AGModeGuy.B_LADDER
 				) {
 				connections ++;
 			}
-			if (this.invisibleDots[yblock ][xblock + 1] == 1 && // right
-				this.invisibleDots[yblock + 1][xblock] == 1) { // down
+			if ((this.invisibleDots[y][x] == 1 && 
+				this.invisibleDots[y][x - 1] == 0 &&
+				this.invisibleChutes[y][x -1] != 1) //||
+				 //this.myInvisible[y+1][x] == AGModeGuy.B_LADDER
+				) {
 				connections ++;
 			}
-			if (this.invisibleDots[yblock][xblock - 1] == 1 && // left
-				this.invisibleDots[yblock - 1][xblock] == 1) { //up
+			/////////////////////////
+			//what to do if next to a chute
+			if ((this.invisibleDots[y][x - 1] == 1 && //
+				this.invisibleChutes[y][x] == 1) &&
+				this.invisibleChutes[y][x+ 1] != 1
+				) {
 				connections ++;
 			}
-			if (this.invisibleDots[yblock + 1][xblock] == 1 && // down
-				this.invisibleDots[yblock ][xblock - 1] == 1) { // left
+			if ((this.invisibleDots[y][x +1] == 1 && //
+				this.invisibleChutes[y][x] == 1) &&
+				this.invisibleChutes[y][x -1] != 1
+				) {
+				connections ++;
+			}
+			/////////////////////////
+			
+			if ( this.myInvisible[y][x] != AGModeGuy.B_LADDER && 
+				this.myInvisible[y+1][x] == AGModeGuy.B_LADDER ) {
+				connections ++;
+				
+			}
+			/*
+			if ((this.invisibleDots[y][x +1] == 1 ) 
+				) {
+				connections ++;
+			}
+			*/
+			if (connections == 0) value = false;
+			
+			return value;
+		}
+		
+		
+		
+		public function isEndNodeChute(x:int, y:int):Boolean {
+			var value:Boolean = true;
+			var connections:int = 0;
+			if (y == 0 || y == this.invisibleChutes.length || 
+				x == 0 || x == this.invisibleChutes[0].length) return true;
+				
+			// 
+			if (this.invisibleChutes[y][x] == 1 && 
+				this.invisibleChutes[y-1][x] == 0 //&&
+				
+				) {
+				connections ++;
+			}
+			if (this.invisibleChutes[y][x] == 1 && 
+				this.invisibleChutes[y+1][x] == 0// &&
+				
+				) {
+				connections ++;
+			}		
+			//does path not turn?
+			if (connections == 0) value = false;
+			
+			return value;
+		}
+		
+		/* CHECK IF END NODE */
+		public function isEndNodeBasic(xblock:int, yblock:int, invisible:Array):Boolean {
+			var value:Boolean = true;
+			if (yblock == 0 || yblock == invisible.length || 
+				xblock == 0 || xblock == invisible[0].length) return true;
+			
+			var connections:int = 0;
+			if (invisible[yblock - 1][xblock] == 1 && //up
+				invisible[yblock ][xblock + 1] == 1 //right
+				) {
+				connections ++;
+			}
+			if (invisible[yblock ][xblock + 1] == 1 && // right
+				invisible[yblock + 1][xblock] == 1) { // down
+				connections ++;
+			}
+			if (invisible[yblock][xblock - 1] == 1 && // left
+				invisible[yblock - 1][xblock] == 1) { //up
+				connections ++;
+			}
+			if (invisible[yblock + 1][xblock] == 1 && // down
+				invisible[yblock ][xblock - 1] == 1) { // left
 				connections ++;
 			}
 			
@@ -331,6 +455,7 @@
 		public function drawMap():void {
 			this.drawMapSquares();
 			this.drawMapEdges();
+			this.drawMapNodes();
 		}
 		
 		/* THIS IS DONE FOR DEVELOPMENT ONLY */
@@ -404,7 +529,7 @@
 		public function drawMapEdges():void {
 			var  i:int,j:int,k:int,l:int,m:int, zz:int;
 			
-			var baseX:int, baseY:int;//, startX, startY;
+			//var baseX:int, baseY:int;//, startX, startY;
 			var mystage:Sprite = new Sprite();
 			
 			
@@ -418,7 +543,7 @@
 			var LONG_MAP_V:int = 	this.myGame.myVert;//	this.myVert;
 			//animate = newBG + 1;
 			//var animate:int = 0;
-			var myBlocks:Array = new Array();
+			//var myBlocks:Array = new Array();
 			
 			
 			//var square:AGSprite;
@@ -427,22 +552,60 @@
 			var xend:int;
 			var yend:int;
 		
-			/* draw background */
-			baseX = this.myGame.scrollBGX / TILE_WIDTH;
-			baseY = this.myGame.scrollBGY / TILE_HEIGHT;
-			//var myVisible:Array = this.invisibleDots;
 			
+			var cheat:int = TILE_WIDTH /2;
+
 			for(i = 0; i < this.edgesFromDots.length; i ++) {
-				
-				xstart  = this.edgesFromDots[i][EPOS_STARTX] * TILE_WIDTH - this.myGame.scrollBGX;
-				ystart  = this.edgesFromDots[i][EPOS_STARTY] * TILE_HEIGHT - this.myGame.scrollBGY;
-				xend  = this.edgesFromDots[i][EPOS_STOPX] * TILE_WIDTH - this.myGame.scrollBGX;
-				yend  = this.edgesFromDots[i][EPOS_STOPY] * TILE_HEIGHT- this.myGame.scrollBGY;
+				xstart  = this.edgesFromDots[i][EPOS_STARTX] * TILE_WIDTH - this.myGame.scrollBGX + cheat;
+				ystart  = this.edgesFromDots[i][EPOS_STARTY] * TILE_HEIGHT - this.myGame.scrollBGY + cheat;
+				xend  = this.edgesFromDots[i][EPOS_STOPX] * TILE_WIDTH - this.myGame.scrollBGX + cheat;
+				yend  = this.edgesFromDots[i][EPOS_STOPY] * TILE_HEIGHT- this.myGame.scrollBGY + cheat;
 				
 				var shape:Shape = new Shape();
 				shape.graphics.lineStyle(4,0xff0000,1);
 				shape.graphics.moveTo(xstart,ystart);
 				shape.graphics.lineTo(xend,yend);
+				
+				mystage.addChild(shape);
+			}
+			
+			mystage.scrollRect = new Rectangle(0,0,512, (512 * 3/4));
+			this.myScreen.addChild(mystage);
+			return ;
+		}
+		
+		public function drawMapNodes():void {
+			var  i:int,j:int,k:int,l:int,m:int, zz:int;
+			
+			//var baseX:int, baseY:int;//, startX, startY;
+			var mystage:Sprite = new Sprite();
+			
+			
+			var TILE_WIDTH:int = 64;
+			var TILE_HEIGHT:int = 64;
+			
+			var tilesWidthMeasurement:int =   32;
+			var tilesHeightMeasurement:int =  24;//
+			
+			var LONG_MAP_H:int =	this.myGame.myHoriz;
+			var LONG_MAP_V:int = 	this.myGame.myVert;//	this.myVert;
+			
+			
+			//var square:AGSprite;
+			var xstart:int;
+			var ystart:int;
+			
+			var cheat:int = TILE_WIDTH /2;
+
+			for(i = 0; i < this.nodesFromDots.length; i ++) {
+				xstart  = this.nodesFromDots[i][AGai.NPOS_COORDX] * TILE_WIDTH - this.myGame.scrollBGX + cheat;
+				ystart  = this.nodesFromDots[i][AGai.NPOS_COORDY] * TILE_HEIGHT - this.myGame.scrollBGY + cheat;
+				
+				
+				var shape:Shape = new Shape();
+				shape.graphics.lineStyle(20,0x00ff00,1);
+				shape.graphics.moveTo(xstart - 10,ystart);
+				shape.graphics.lineTo(xstart + 20,ystart);
 				
 				mystage.addChild(shape);
 			}
