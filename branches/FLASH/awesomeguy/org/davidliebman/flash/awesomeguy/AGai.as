@@ -16,6 +16,8 @@
 		public var edgesFromDots:Array;
 		public var nodesFromDots:Array;
 
+		public static var START_DISTANCE:int = 1000;
+		
 		public static var MONSTER_GATOR:int = 1;
 		public static var MONSTER_CLIMBER:int = 2;
 		public static var MONSTER_FLYER:int = 3;
@@ -33,12 +35,15 @@
 		public static var EPOS_DIST:int = 7;
 		public static var EPOS_TOPY:int = 8;
 		public static var EPOS_ISJUMP:int = 9;
+		public static var EPOS_NODESTARTINDEX:int = 10;
+		public static var EPOS_NODEENDINDEX:int = 11;
 		
 		public static var NPOS_NODENAME:int = 0;
 		public static var NPOS_COORDX:int = 1;
 		public static var NPOS_COORDY:int = 2;
 		public static var NPOS_CALCDIST:int = 3;
 		public static var NPOS_VISITED:int = 4;
+		public static var NPOS_PREVIOUS:int = 5;
 
 		public function AGai() {
 			// constructor code
@@ -172,80 +177,111 @@
 			//var l:int = 0;
 			var starty:int = 0;
 			var endy:int = 0;
-			if (this.invisibleDots.length == 0) return;
-			
-			for (i = 0; i < this.invisibleDots[0].length; i ++) {
+			if (this.invisibleDots.length != 0) {//return;
 				
-				k = 0;
-				l = 0;
-				while(k < this.invisibleDots.length) {
-					starty = 0;
-					endy = 0;
+				for (i = 0; i < this.invisibleDots[0].length; i ++) {
 					
-					if (this.invisibleDots[k][i] != 0 ) {
+					k = 0;
+					l = 0;
+					while(k < this.invisibleDots.length) {
+						starty = 0;
+						endy = 0;
 						
-						if(this.isEndNodeBasic(i,k, this.invisibleDots) ){//
-							//record a vert edge
-							starty = l;
-							endy = k;
-							if (l != k) {
-								
-								this.makeCoordinateListingVertical(starty,endy,i,false);
+						if (this.invisibleDots[k][i] != 0 ) {
+							
+							if(this.isEndNodeBasic(i,k, this.invisibleDots) ){//
+								//record a vert edge
+								starty = l;
+								endy = k;
+								if (l != k) {
+									
+									this.makeCoordinateListingVertical(starty,endy,i,false);
+								}
+								l = k;
 							}
-							l = k;
+							
 						}
+						else {
+							l ++;
+						}
+						k ++;
 						
+	
 					}
-					else {
-						l ++;
-					}
-					k ++;
 					
-
+					
 				}
-				
-				
 			}
-			
 			/////
 			// vertical edges chutes
 			
 			//var l:int = 0;
-			var starty:int = 0;
-			var endy:int = 0;
-			if (this.invisibleChutes.length == 0) return;
+			//var starty:int = 0;
+			//var endy:int = 0;
+			if (this.invisibleChutes.length != 0) {// return;
 			
-			for (i = 0; i < this.invisibleChutes[0].length; i ++) {
-				
-				k = 0;
-				l = 0;
-				while(k < this.invisibleChutes.length) {
-					starty = 0;
-					endy = 0;
+				for (i = 0; i < this.invisibleChutes[0].length; i ++) {
 					
-					if (this.invisibleChutes[k][i] != 0 ) {
+					k = 0;
+					l = 0;
+					while(k < this.invisibleChutes.length) {
+						starty = 0;
+						endy = 0;
 						
-						if(this.isEndNodeChute(i,k)  ){//
-							//record a vert edge
-							starty = l;
-							endy = k;
-							if (l != k) {
-								
-								this.makeCoordinateListingVertical(starty,endy,i,true);
+						if (this.invisibleChutes[k][i] != 0 ) {
+							
+							if(this.isEndNodeChute(i,k)  ){//
+								//record a vert edge
+								starty = l;
+								endy = k;
+								if (l != k) {
+									
+									this.makeCoordinateListingVertical(starty,endy,i,true);
+								}
+								l = k;
 							}
-							l = k;
+							
 						}
+						else {
+							l ++;
+						}
+						k ++;
+						
+	
+					}
+					
+					
+				}
+			}
+			////
+			// set index of nodes in edge array
+			var edgenamestart:String = new String() ;
+			var edgenameend:String  = new String();
+			
+			
+			for (i = 0; i < this.nodesFromDots.length; i ++) {
+				for (j = 0; j < this.edgesFromDots.length; j ++) {
+					
+					edgenamestart = this.makeNodeName(
+						this.edgesFromDots[j][AGai.EPOS_STARTX], 
+						this.edgesFromDots[j][AGai.EPOS_STARTY]);
+						
+					edgenameend = this.makeNodeName(
+						this.edgesFromDots[j][AGai.EPOS_STOPX], 
+						this.edgesFromDots[j][AGai.EPOS_STOPY]);
+						
+						
+					if (edgenamestart == 
+						this.nodesFromDots[i][AGai.NPOS_NODENAME]) {
+						this.edgesFromDots[j][AGai.EPOS_NODESTARTINDEX] = i;
 						
 					}
-					else {
-						l ++;
+					else if(edgenameend ==
+						  this.nodesFromDots[i][AGai.NPOS_NODENAME]) {
+						this.edgesFromDots[j][AGai.EPOS_NODEENDINDEX] = i;
+						
 					}
-					k ++;
-					
-
 				}
-				
-				
 			}
 			
 		}
@@ -286,7 +322,10 @@
 							 endx , ylevel ,  // end x,y
 							 Math.abs(endx - startx ), // dist
 							 ylevel, // height of highest part of segment
-							 isJump);  // is jump segment??
+							 isJump,
+							 0,
+							 0
+							 );  // is jump segment??
 			this.edgesFromDots.push(temp);
 			
 			this.makeCoordinateListingNodes(startx,ylevel);
@@ -309,8 +348,9 @@
 			var node:Array = new Array( nodename, // node name
 										x, //node x
 										y, //node y
-										-1, // D distance (infinity)
-										false); //visited?
+										START_DISTANCE, // D distance (infinity)
+										false, //visited?
+										-1); //previous...
 			if (!listed) this.nodesFromDots.push(node);
 		}
 		
@@ -328,7 +368,9 @@
 							 xlevel , endy ,  // end x,y
 							 Math.abs(endy - starty ), // dist
 							 starty, // height of highest part of segment
-							 isJump);  // is jump segment??
+							 isJump,
+							 0,
+							 0);  // is jump segment??
 			this.edgesFromDots.push(temp);
 			
 			this.makeCoordinateListingNodes(xlevel,starty);
@@ -449,7 +491,128 @@
 		
 		/* THIS IS DONE BEFORE EACH REDRAW OF THE SCREEN */
 		public function doCalculation(mymonstertype:int, coordinateType:int ,startingX:int, startingY:int, endingX:int, endingY:int) {
+			var TILE_WIDTH:int = 64;
+			var TILE_HEIGHT:int = 64;
 			
+			switch (coordinateType) {
+				case AGai.COORDINATES_PIXELS:
+				
+				break;
+				case AGai.COORDINATES_BLOCKS:
+					startingX = startingX * TILE_WIDTH;
+					startingY = startingY * TILE_HEIGHT;
+					endingX = endingX * TILE_WIDTH;
+					endingY = endingY * TILE_HEIGHT;
+					
+				break;
+			}
+			
+			var nodenumstart:int = this.getStartNodeNum(startingX, startingY, true);
+			var nodenumend:int = this.getStopNodeNum(endingX, endingY, true);
+			
+			this.nodesFromDots[nodenumstart][AGai.NPOS_CALCDIST] = 0;
+			
+			var i:int = nodenumstart;
+			while(! this.isListEmpty()) {
+				i = this.smallestDistanceNode();
+				this.nodesFromDots[i][AGai.NPOS_VISITED] = true;
+				if (this.nodesFromDots[i][AGai.NPOS_CALCDIST] == AGai.START_DISTANCE) {
+					//return
+					return;
+				}
+			}
+		}
+		
+		private function isListEmpty():Boolean {
+			var value:Boolean = true;
+			var i:int = 0;
+			for (i = 0; i < this.nodesFromDots.length; i ++) {
+				if (this.nodesFromDots[i][AGai.NPOS_VISITED] == false ){
+					value = false;
+				}
+			}
+			
+			return value;
+		}
+		
+		private function smallestDistanceNode():int {
+			var value:int = 0;
+			var i:int = 0; // for loop index
+			var j:int = 0; // for loop calc-dist
+			var k:int = AGai.START_DISTANCE; // lowest dist
+			var l:int = 0; // value output
+			for (i = 0; i < this.nodesFromDots.length; i ++) {
+				j = this.nodesFromDots[i][AGai.NPOS_CALCDIST];
+				if (j < k) {
+					k = j;
+					l = i;
+				}
+			}
+			value = l;
+			return value;
+		}
+		
+		private function getNodeNeighbor(node:int):int {
+			var value:int = node;
+			var i:int = 0;
+			var j:int = 0;
+			for (i = 0; i < this.edgesFromDots.length; i ++) {
+				if ( true ){
+					if (this.edgesFromDots[i][AGai.EPOS_NODESTART] == 
+						this.nodesFromDots[node][AGai.NPOS_NODENAME]) {
+							
+						value = this.edgesFromDots[i][AGai.EPOS_NODEENDINDEX];
+						
+					}
+					else if (this.edgesFromDots[i][AGai.EPOS_NODEEND] == 
+							 this.nodesFromDots[node][AGai.NPOS_NODENAME]) {
+								 
+						value = this.edgesFromDots[i][AGai.EPOS_NODESTARTINDEX];
+						
+					}
+					
+				}
+				
+			}
+			
+			return value;
+			//return 0;
+		}
+		
+		private function getNodeNeighborList(node:int):Array {
+			var value:int = node;
+			var list:Array = new Array();
+			var i:int = 0;
+			var j:int = 0;
+			for (i = 0; i < this.edgesFromDots.length; i ++) {
+				if ( true ){
+					if (this.edgesFromDots[i][AGai.EPOS_NODESTART] == 
+						this.nodesFromDots[node][AGai.NPOS_NODENAME]) {
+							
+						value = this.edgesFromDots[i][AGai.EPOS_NODEENDINDEX];
+						list.push(value);
+					}
+					else if (this.edgesFromDots[i][AGai.EPOS_NODEEND] == 
+							 this.nodesFromDots[node][AGai.NPOS_NODENAME]) {
+								 
+						value = this.edgesFromDots[i][AGai.EPOS_NODESTARTINDEX];
+						list.push(value);
+					}
+					
+				}
+				
+			}
+			return list;
+		}
+		
+		public function getStartNodeNum(x:int, y:int, newnode:Boolean):int {
+			// if newnode is true, add new node if necessary
+			return 0;
+		}
+		
+		public function getStopNodeNum(x:int, y:int, newnode:Boolean):int {
+			// if newnode is true, add new node and edges if necessary.
+			return 3;
 		}
 		
 		public function drawMap():void {
