@@ -432,7 +432,7 @@
 				) {
 				connections ++;
 			}
-			/////////////////////////
+			////
 			
 			if ( this.myInvisible[y][x] != AGModeGuy.B_LADDER && 
 				this.myInvisible[y+1][x] == AGModeGuy.B_LADDER ) {
@@ -559,7 +559,9 @@
 				//
 				q_list = this.getNodeNeighborList(i);
 				
-				if (q_list.length == 1) {
+				if (q_list.length == 1 && 
+						this.nodesFromDots[q_list[0]][AGai.NPOS_CALCDIST] == AGai.START_DISTANCE && 
+						false) { // this doesn't work...
 					this.node_index_end = i;
 					this.createHint();
 					return;
@@ -682,9 +684,9 @@
 			trace("====");
 			var i:int = this.node_index_end;
 			while (i != this.node_index_start && i != -1) {
-				trace(i);
 				i = this.nodesFromDots[i][AGai.NPOS_PREVIOUS];
-				
+				trace(i, this.nodesFromDots[i][AGai.NPOS_NODENAME]);
+
 			}
 			trace ("done dijkstra");
 		}
@@ -699,7 +701,7 @@
 		
 		public function getStopNodeNum(x:int, y:int, newnode:Boolean):int {
 			// if newnode is true, add new node and edges if necessary.
-			return 7;
+			return 4;
 		}
 		
 		public function drawMap():void {
