@@ -117,13 +117,14 @@
 			updateSprites();
 			drawAnimatedSprites();
 			drawRadarRock();
-
 			//
 			if (!this.animate_only_death && !this.animate_only) {
 				myGuy.x = xpos;
 				myGuy.y = ypos;
 			}
-			
+
+			this.ai.doCalculation(AGai.MONSTER_CLIMBER,AGai.COORDINATES_PIXELS,0,0,myGuy.x,myGuy.y);
+
 			drawScoreWords();
 			showKeys(this.myGame.gameKeys);
 			this.showHeldObject();
