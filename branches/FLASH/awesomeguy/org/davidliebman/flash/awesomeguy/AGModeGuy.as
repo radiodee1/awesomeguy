@@ -122,7 +122,8 @@
 				myGuy.x = xpos;
 				myGuy.y = ypos;
 			}
-			this.ai.doCalculation(AGai.MONSTER_CLIMBER,
+			
+			if (false) this.ai.doCalculation(AGai.MONSTER_CLIMBER,
 								  AGai.COORDINATES_PIXELS,
 								  0,0,
 								  myGuy.x,myGuy.y);
@@ -208,7 +209,11 @@
 			this.ai.setValues(this.myInvisible, this.myStage, this);
 			this.prepTilesToSprites();
 						
-			
+			if (true) this.ai.doCalculation(AGai.MONSTER_CLIMBER,
+								  AGai.COORDINATES_PIXELS,
+								  0,0,
+								  myGuy.x,myGuy.y);
+
 						
 			if (this.game_reset_start  || this.game_start) {
 				radar_start = xpos - scrollBGX;
