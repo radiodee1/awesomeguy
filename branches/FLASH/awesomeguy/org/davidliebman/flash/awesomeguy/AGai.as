@@ -531,16 +531,18 @@
 			var k:int = 0;
 			var alt:int = 0;
 			
-			while(! this.isListEmpty()) {
+			while(! this.isListEmpty() ) {
 				i = this.smallestDistanceNode();
+				trace("i",i);
 				this.nodesFromDots[i][AGai.NPOS_VISITED] = true;
+				
 				if (this.nodesFromDots[i][AGai.NPOS_CALCDIST] == AGai.START_DISTANCE) {
 					//
 					return;
 				}
 				//
 				q_list = this.getNodeNeighborList(i);
-				for each (var j in q_list) {
+				for each (j in q_list) {
 					trace(j);
 					
 					k = this.getEdgeFromNodeIndeces(i,j)[AGai.EPOS_DIST];
@@ -628,12 +630,14 @@
 							
 						value = this.edgesFromDots[i][AGai.EPOS_NODEENDINDEX];
 						list.push(value);
+						trace("nodestart", i);
 					}
 					else if (this.edgesFromDots[i][AGai.EPOS_NODEEND] == 
 							 this.nodesFromDots[node][AGai.NPOS_NODENAME]) {
 								 
 						value = this.edgesFromDots[i][AGai.EPOS_NODESTARTINDEX];
 						list.push(value);
+						trace("nodeend",i);
 					}
 					
 				}
