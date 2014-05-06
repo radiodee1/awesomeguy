@@ -25,6 +25,10 @@
 		public var hint_x:int = 0;
 		public var hint_y:int = 0;
 		
+		public var set_values_called:Boolean = false;
+		public var node_index_start:int = 0;
+		public var node_index_end:int = 0;
+		
 		public static var START_DISTANCE:int = 1000;
 		
 		public static var MONSTER_GATOR:int = 1;
@@ -60,11 +64,13 @@
 			// constructor code
 			// do nothing...
 			this.invisibleDots = new Array();
-			
+			this.set_values_called = false;
 		}
 		
 		/* THIS IS DONE ONCE AT THE BEGINNING OF THE LEVEL */
 		public function setValues(myinvisible:Array, myscreen:Stage, game:AGMode):void {
+			this.set_values_called = true;
+			
 			myInvisible = myinvisible;
 			myScreen = myscreen;
 			myGame = game;
@@ -502,10 +508,15 @@
 			return value;
 		}
 		
+		/////////////////////////////////////////////////////////////////
+		
 		/* THIS IS DONE BEFORE EACH REDRAW OF THE SCREEN */
-		public function doCalculation(mymonstertype:int, coordinateType:int ,startingX:int, startingY:int, endingX:int, endingY:int) {
+		public function doCalculation(mymonstertype:int, coordinateType:int ,startingX:int, startingY:int, endingX:int, endingY:int):void {
 			var TILE_WIDTH:int = 64;
 			var TILE_HEIGHT:int = 64;
+			
+			
+			if (! this.set_values_called) return;
 			
 			switch (coordinateType) {
 				case AGai.COORDINATES_PIXELS:
@@ -530,22 +541,35 @@
 			var q_list:Array = new Array();
 			var k:int = 0;
 			var alt:int = 0;
+			var edge:Array = new Array();
 			
 			while(! this.isListEmpty() ) {
 				i = this.smallestDistanceNode();
-				trace("i",i);
+				trace("i:",i);
 				this.nodesFromDots[i][AGai.NPOS_VISITED] = true;
 				
-				if (this.nodesFromDots[i][AGai.NPOS_CALCDIST] == AGai.START_DISTANCE) {
-					//
+				
+				if (this.nodesFromDots[i][AGai.NPOS_CALCDIST] == AGai.START_DISTANCE ||
+						i == nodenumend) {
+							
+					this.node_index_end = i;
+					this.createHint();
 					return;
 				}
 				//
 				q_list = this.getNodeNeighborList(i);
+				
+				if (q_list.length == 1) {
+					this.node_index_end = i;
+					this.createHint();
+					return;
+				}
+				//trace("size:", q_list.length);
 				for each (j in q_list) {
-					trace(j);
+					trace("neighbor:",j);
 					
-					k = this.getEdgeFromNodeIndeces(i,j)[AGai.EPOS_DIST];
+					edge = this.getEdgeFromNodeIndeces(i,j);
+					k = edge[AGai.EPOS_DIST];
 					alt = k + this.nodesFromDots[i][AGai.NPOS_CALCDIST];
 					
 					if (alt < this.nodesFromDots[j][AGai.NPOS_CALCDIST]) {
@@ -560,14 +584,16 @@
 		}
 		
 		private function isListEmpty():Boolean {
-			var value:Boolean = true;
+			var value:Boolean = false;
 			var i:int = 0;
+			var j:int = 0;
 			for (i = 0; i < this.nodesFromDots.length; i ++) {
-				if (this.nodesFromDots[i][AGai.NPOS_VISITED] == false ){
-					value = false;
+				if (this.nodesFromDots[i][AGai.NPOS_VISITED] == true ){
+					//value = true;
+					j ++;
 				}
 			}
-			
+			if (j == this.nodesFromDots.length ) value = true;
 			return value;
 		}
 		
@@ -577,44 +603,23 @@
 			var j:int = 0; // for loop calc-dist
 			var k:int = AGai.START_DISTANCE; // lowest dist
 			var l:int = 0; // value output
+			
+			
+			
 			for (i = 0; i < this.nodesFromDots.length; i ++) {
-				j = this.nodesFromDots[i][AGai.NPOS_CALCDIST];
-				if (j < k) {
-					k = j;
-					l = i;
+				if (!this.nodesFromDots[i][AGai.NPOS_VISITED]) {
+					j = this.nodesFromDots[i][AGai.NPOS_CALCDIST];
+					if (j < k) {
+						k = j;
+						l = i;
+						trace(k);
+					}
 				}
 			}
 			value = l;
 			return value;
 		}
-		/*
-		private function getNodeNeighbor(node:int):int {
-			var value:int = node;
-			var i:int = 0;
-			var j:int = 0;
-			for (i = 0; i < this.edgesFromDots.length; i ++) {
-				if ( true ){
-					if (this.edgesFromDots[i][AGai.EPOS_NODESTART] == 
-						this.nodesFromDots[node][AGai.NPOS_NODENAME]) {
-							
-						value = this.edgesFromDots[i][AGai.EPOS_NODEENDINDEX];
-						
-					}
-					else if (this.edgesFromDots[i][AGai.EPOS_NODEEND] == 
-							 this.nodesFromDots[node][AGai.NPOS_NODENAME]) {
-								 
-						value = this.edgesFromDots[i][AGai.EPOS_NODESTARTINDEX];
-						
-					}
-					
-				}
-				
-			}
-			
-			return value;
-			//return 0;
-		}
-		*/
+		
 		
 		private function getNodeNeighborList(node:int):Array {
 			var value:int = node;
@@ -623,21 +628,21 @@
 			var j:int = 0;
 			for (i = 0; i < this.edgesFromDots.length; i ++) {
 				if ( !this.edgesFromDots[i][AGai.EPOS_ISJUMP] || 
-					this.edgesFromDots[i][AGai.EPOS_TOPY] <= this.monstery ){
+					this.edgesFromDots[i][AGai.EPOS_TOPY] >= this.monstery ){
 						
 					if (this.edgesFromDots[i][AGai.EPOS_NODESTART] == 
 						this.nodesFromDots[node][AGai.NPOS_NODENAME]) {
 							
 						value = this.edgesFromDots[i][AGai.EPOS_NODEENDINDEX];
 						list.push(value);
-						trace("nodestart", i);
+						trace("edge-end", i);
 					}
 					else if (this.edgesFromDots[i][AGai.EPOS_NODEEND] == 
 							 this.nodesFromDots[node][AGai.NPOS_NODENAME]) {
 								 
 						value = this.edgesFromDots[i][AGai.EPOS_NODESTARTINDEX];
 						list.push(value);
-						trace("nodeend",i);
+						trace("edge-end",i);
 					}
 					
 				}
@@ -673,14 +678,28 @@
 			return value;
 		}
 		
+		private function createHint():void {
+			trace("====");
+			var i:int = this.node_index_end;
+			while (i != this.node_index_start && i != -1) {
+				trace(i);
+				i = this.nodesFromDots[i][AGai.NPOS_PREVIOUS];
+				
+			}
+			trace ("done dijkstra");
+		}
+		
 		public function getStartNodeNum(x:int, y:int, newnode:Boolean):int {
+			var value:int = 0;
+			this.node_index_end = 0;
+			this.node_index_start = value;
 			// if newnode is true, add new node if necessary
-			return 0;
+			return value;
 		}
 		
 		public function getStopNodeNum(x:int, y:int, newnode:Boolean):int {
 			// if newnode is true, add new node and edges if necessary.
-			return 3;
+			return 7;
 		}
 		
 		public function drawMap():void {
