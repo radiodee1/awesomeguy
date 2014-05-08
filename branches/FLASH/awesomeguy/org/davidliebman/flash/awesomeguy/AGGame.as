@@ -4,6 +4,7 @@
 	import flash.xml.XMLDocument;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
+	import flash.system.Worker;
 	
 	public class AGGame {
 
@@ -75,6 +76,7 @@
 			
 			controls = new AGModeControls();
 			controls.setValues(myStage,myKeys,myRes,this);
+			
 			
 			//var myXml:XMLDocument = new XMLDocument(myRes[AGResources.NAME_AWESOMEGUY_XML]);
 			//var tree:XML = new XML(myXml);
@@ -188,7 +190,8 @@
 		}
 
 		public function setKeys(e:Event) {
-			
+			if (! Worker.current.isPrimordial ) return;
+
 			setKeyValues(myKeys[myKeyStage.keycodeLeft].getValBool(),myKeys[myKeyStage.keycodeRight].getValBool(),
 						 myKeys[myKeyStage.keycodeUp].getValBool(),myKeys[myKeyStage.keycodeDown].getValBool(),
 						 myKeys[myKeyStage.keycodeShoot].getValBool(),myKeys[myKeyStage.keycodeJump].getValBool(),
@@ -220,6 +223,7 @@
 		}
 		
 		public function doAnimation() {
+			
 			//var current:int = 0;
 			this.gameMode = this.myModeStack[this.myModeStack.length - 1];
 			

@@ -3,13 +3,23 @@
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
 	import flash.display.Shape;
-	
+	import flash.system.MessageChannel;
+	import flash.system.Worker;
+	import flash.system.WorkerDomain;
+	import flash.events.Event;
+	import flash.utils.ByteArray;
 	
 	/* THIS AI IS REALLY ONLY FOR MAZE LEVELS */
-	public class AGai {
+	public class AGai  extends Sprite{
+		
+		public var mainToWorker:MessageChannel;
+		public var workerToMain:MessageChannel;
+		public var worker:Worker;
+		
 		public var myInvisible:Array;
 		public var myScreen:Stage;
 		public var myGame:AGMode;
+		public var myKeyStage:AGKeys;
 
 		public var invisibleDots:Array;
 		public var invisibleChutes:Array;
@@ -59,12 +69,51 @@
 		public static var NPOS_VISITED:int = 4;
 		public static var NPOS_PREVIOUS:int = 5;
 		public static var NPOS_TEMPFLAG:int = 6;
+		
+		public static var MESSAGE_START:String = "start";
+		public static var MESSAGE_STOP:String = "stop";
+		public static var MESSAGE_CLEAR:String = "clear";
+		public static var MESSAGE_HORIZONTAL:String = "horizontal";
+		public static var MESSAGE_VERTICAL:String = "vertical";
 
 		public function AGai() {
 			// constructor code
 			// do nothing...
-			this.invisibleDots = new Array();
-			this.set_values_called = false;
+			//this.myKeyStage = mykeys;
+			
+			
+			if (Worker.current.isPrimordial) {
+				var swfBytes:ByteArray = this.loaderInfo.bytes;
+				
+				worker = WorkerDomain.current.createWorker( swfBytes );
+				mainToWorker = Worker.current.createMessageChannel(worker);
+				workerToMain = worker.createMessageChannel(Worker.current);
+				
+				worker.setSharedProperty("mainToWorker", mainToWorker);
+				worker.setSharedProperty("workerToMain", workerToMain);
+				
+				//workerToMain.addEventListener(Event.CHANNEL_MESSAGE, onWorkerToMain);
+				
+				//worker.start();
+			}
+			else {
+				this.set_values_called = false;
+
+				mainToWorker = Worker.current.getSharedProperty("mainToWorker");
+				workerToMain = Worker.current.getSharedProperty("workerToMain");
+				
+				mainToWorker.addEventListener("mainToWorker", onMainToWorker);
+			}
+			
+			
+		}
+		
+		public function onWorkerToMain(e:Event):void {
+			
+		}
+		
+		public function onMainToWorker(e:Event):void {
+			
 		}
 		
 		/* THIS IS DONE ONCE AT THE BEGINNING OF THE LEVEL */
@@ -74,6 +123,16 @@
 			myInvisible = myinvisible;
 			myScreen = myscreen;
 			myGame = game;
+			
+			this.setupGraph();
+		}
+		
+		public function sendInvisibleMap():void {
+			
+		}
+		
+		public function setupGraph( ):void {
+			//this.myInvisible = myinvisible;
 			
 			this.invisibleChutes = new Array();
 			this.invisibleDots = new Array();

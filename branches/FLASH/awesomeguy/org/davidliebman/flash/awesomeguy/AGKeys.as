@@ -2,9 +2,16 @@
 	import flash.display.*;
 	import flash.events.KeyboardEvent;
 	import flash.events.*;
+	import flash.system.MessageChannel;
+	import flash.system.WorkerDomain;
+	import flash.system.Worker;
 	//import flash.text.TextField;
 	
 	public class AGKeys extends Sprite {
+	
+	public var mainToWorker:MessageChannel;
+	public var workerToMain:MessageChannel;
+	public var worker:Worker;
 	
 	public var prefix:String = new String("");
 	public var build_type:String = new String("");

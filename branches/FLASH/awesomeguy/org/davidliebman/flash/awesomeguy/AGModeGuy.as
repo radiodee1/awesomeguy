@@ -88,7 +88,6 @@
 			this.flyersprite = new Bitmap();
 			this.agflyer = new AGSprite( this, 0);
 			
-			this.ai = new AGai();
 		}
 		
 		public override function componentsInOrder():void {
@@ -122,12 +121,12 @@
 				myGuy.x = xpos;
 				myGuy.y = ypos;
 			}
-			
+			/*
 			if (false) this.ai.doCalculation(AGai.MONSTER_CLIMBER,
 								  AGai.COORDINATES_PIXELS,
 								  0,0,
 								  myGuy.x,myGuy.y);
-
+			*/
 			
 			drawScoreWords();
 			showKeys(this.myGame.gameKeys);
@@ -149,7 +148,7 @@
 			radarscreen.y = SCREEN_HEIGHT;
 			myStage.addChild(radarscreen);
 			
-			this.ai.drawMap();
+			//this.ai.drawMap();
 			
 			if (!this.animate_only) this.detectMovement();
 
@@ -166,6 +165,9 @@
 			myGuy.active = true;
 			myGuy.visible = true;
 			myGuy.quality_0 = AGModeGuy.GUY_STEP;
+
+			//this.ai = new AGai();
+
 
 			this.flyersprite = myGuy.bitmap;
 			
@@ -206,14 +208,15 @@
 			prepRings() ;
 			prepSpecialXml();
 			//prepRingSprites();
-			this.ai.setValues(this.myInvisible, this.myStage, this);
+			//this.ai.setValues(this.myInvisible, this.myStage, this);
 			this.prepTilesToSprites();
 						
-			if (true) this.ai.doCalculation(AGai.MONSTER_CLIMBER,
+			/*
+			if (false) this.ai.doCalculation(AGai.MONSTER_CLIMBER,
 								  AGai.COORDINATES_PIXELS,
 								  0,0,
 								  myGuy.x,myGuy.y);
-
+			*/
 						
 			if (this.game_reset_start  || this.game_start) {
 				radar_start = xpos - scrollBGX;
