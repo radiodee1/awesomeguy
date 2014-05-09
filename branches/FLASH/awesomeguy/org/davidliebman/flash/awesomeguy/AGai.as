@@ -83,6 +83,12 @@
 			
 			
 			if (Worker.current.isPrimordial) {
+				
+				//this.addEventListener(Event.COMPLETE, onAddedToStage);
+				this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+				/*
+				trace(this.loaderInfo);
+				
 				var swfBytes:ByteArray = this.loaderInfo.bytes;
 				
 				worker = WorkerDomain.current.createWorker( swfBytes );
@@ -95,6 +101,7 @@
 				//workerToMain.addEventListener(Event.CHANNEL_MESSAGE, onWorkerToMain);
 				
 				//worker.start();
+				*/
 			}
 			else {
 				this.set_values_called = false;
@@ -106,6 +113,28 @@
 			}
 			
 			
+		}
+		
+		public function onAddedToStage(e:Event):void {
+			//if (!Worker.current.isPrimordial) return;
+			
+			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			
+			trace(this.loaderInfo);
+				
+			var swfBytes:ByteArray = this.loaderInfo.bytes;
+			
+			worker = WorkerDomain.current.createWorker( swfBytes );
+			
+			//mainToWorker = Worker.current.createMessageChannel(worker);
+			//workerToMain = worker.createMessageChannel(Worker.current);
+			
+			//worker.setSharedProperty("mainToWorker", mainToWorker);
+			//worker.setSharedProperty("workerToMain", workerToMain);
+			
+			//workerToMain.addEventListener(Event.CHANNEL_MESSAGE, onWorkerToMain);
+			
+			worker.start();
 		}
 		
 		public function onWorkerToMain(e:Event):void {
