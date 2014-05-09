@@ -84,8 +84,8 @@
 			
 			if (Worker.current.isPrimordial) {
 				
-				//this.addEventListener(Event.COMPLETE, onAddedToStage);
 				this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+				//this.loaderInfo.addEventListener(Event.COMPLETE, onAddedToStage);
 				/*
 				trace(this.loaderInfo);
 				
@@ -116,15 +116,22 @@
 		}
 		
 		public function onAddedToStage(e:Event):void {
+				this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+				this.loaderInfo.addEventListener(Event.COMPLETE, onLoadedComplete);
+		}
+		
+		public function onLoadedComplete(e:Event):void {
 			//if (!Worker.current.isPrimordial) return;
 			
-			this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			this.loaderInfo.removeEventListener(Event.COMPLETE, onLoadedComplete);
 			
 			trace(this.loaderInfo);
 				
 			var swfBytes:ByteArray = this.loaderInfo.bytes;
 			
 			worker = WorkerDomain.current.createWorker( swfBytes );
+			
+			trace(worker);
 			
 			//mainToWorker = Worker.current.createMessageChannel(worker);
 			//workerToMain = worker.createMessageChannel(Worker.current);
