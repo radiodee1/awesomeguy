@@ -11,7 +11,7 @@
 
 		var myGuy:AGSpriteGuy;
 
-		var ai:AGai;// = new AGai();
+		var ai:AGai;
 
 		static var GUY_CLIMB:int = 1;
 		static var GUY_PUNCH:int = 2;
@@ -214,12 +214,12 @@
 			
 			this.prepTilesToSprites();
 						
-			/*
-			if (false) this.ai.doCalculation(AGai.MONSTER_CLIMBER,
+			
+			if (true) this.ai.doCalculation(AGai.MONSTER_CLIMBER,
 								  AGai.COORDINATES_PIXELS,
 								  0,0,
 								  myGuy.x,myGuy.y);
-			*/
+			
 						
 			if (this.game_reset_start  || this.game_start) {
 				radar_start = xpos - scrollBGX;
