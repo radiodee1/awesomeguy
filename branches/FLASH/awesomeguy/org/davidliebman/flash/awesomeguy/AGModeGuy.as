@@ -11,6 +11,8 @@
 
 		var myGuy:AGSpriteGuy;
 
+		var ai:AGai;// = new AGai();
+
 		static var GUY_CLIMB:int = 1;
 		static var GUY_PUNCH:int = 2;
 		static var GUY_STEP:int = 3;
@@ -166,7 +168,7 @@
 			myGuy.visible = true;
 			myGuy.quality_0 = AGModeGuy.GUY_STEP;
 
-			//this.ai = new AGai();
+			this.ai = new AGai();
 
 
 			this.flyersprite = myGuy.bitmap;
@@ -208,7 +210,8 @@
 			prepRings() ;
 			prepSpecialXml();
 			//prepRingSprites();
-			//this.ai.setValues(this.myInvisible, this.myStage, this);
+			this.ai.setValues(this.myInvisible, this.myStage, this);
+			
 			this.prepTilesToSprites();
 						
 			/*
