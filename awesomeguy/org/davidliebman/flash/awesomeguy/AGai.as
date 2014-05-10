@@ -624,8 +624,14 @@
 				break;
 			}
 			this.node_index_end = -1;
+			
 			nodenumstart = this.getStartNodeNum(startingX, startingY, true);
 			nodenumend = this.getStopNodeNum(endingX, endingY, true);
+			
+			if (this.nodenumstart >= this.nodesFromDots.length) {
+				//this.nodenumstart = 0; // this doesn't make sense!!
+				return;
+			}
 			
 			this.nodesFromDots[nodenumstart][AGai.NPOS_CALCDIST] = 0;
 			
@@ -789,7 +795,7 @@
 		}
 		
 		public function getStartNodeNum(x:int, y:int, newnode:Boolean):int {
-			var value:int = 1;
+			var value:int = 100;
 			//this.node_index_end = 0;
 			this.node_index_start = value;
 			// if newnode is true, add new node if necessary
