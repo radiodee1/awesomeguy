@@ -61,6 +61,7 @@
 		public static var EPOS_NODESTARTINDEX:int = 10;
 		public static var EPOS_NODEENDINDEX:int = 11;
 		public static var EPOS_TEMPFLAG:int = 12;
+		public static var EPOS_ISHORIZONTAL:int = 13;
 		
 		public static var NPOS_NODENAME:int = 0;
 		public static var NPOS_COORDX:int = 1;
@@ -169,7 +170,7 @@
 		
 		public function setupGraph( ):void {
 			//this.myInvisible = myinvisible;
-			trace("setupGraph");
+			
 			this.invisibleChutes = new Array();
 			this.invisibleDots = new Array();
 			this.edgesFromDots = new Array();
@@ -435,13 +436,43 @@
 							 isJump,// is jump segment??
 							 0, // edge A index in node array
 							 0, // edge B index in node array
-							 false // is temp flag set??
+							 false, // is temp flag set??
+							 true // is-horizontal??
 							 );  
 			this.edgesFromDots.push(temp);
 			
 			this.makeCoordinateListingNodes(startx,ylevel);
 			this.makeCoordinateListingNodes(endx,ylevel);
 			
+		}
+		
+		
+		
+		public function makeCoordinateListingVertical(starty:int, endy:int, xlevel:int, isJump:Boolean):void {
+			// put edges in list
+			var edgename:String = this.makeEdgeName(xlevel,starty,xlevel,endy);
+			
+			var nodenamestart:String = this.makeNodeName(xlevel, starty);
+			var nodenamestop:String = this.makeNodeName(xlevel, endy);
+
+			var temp:Array = new Array(edgename, // edge name
+							 nodenamestart, // nodename a
+							 nodenamestop, // node name b
+							 xlevel , starty, // start x,y
+							 xlevel , endy ,  // end x,y
+							 Math.abs(endy - starty ), // dist
+							 starty, // height of highest part of segment
+							 isJump, // is jump segment??
+							 0, // edge A node index number
+							 0, // edge B node index number
+							 false, // is temp flag set??
+							 false // is-horizontal??
+							 );  
+			this.edgesFromDots.push(temp);
+			
+			this.makeCoordinateListingNodes(xlevel,starty);
+			this.makeCoordinateListingNodes(xlevel,endy);
+						
 		}
 		
 		public function makeCoordinateListingNodes(x:int, y:int):void {
@@ -464,32 +495,6 @@
 										-1, // previous....
 										false); // is node temp flag set??
 			if (!listed) this.nodesFromDots.push(node);
-		}
-		
-		public function makeCoordinateListingVertical(starty:int, endy:int, xlevel:int, isJump:Boolean):void {
-			// put edges in list
-			var edgename:String = this.makeEdgeName(xlevel,starty,xlevel,endy);
-			
-			var nodenamestart:String = this.makeNodeName(xlevel, starty);
-			var nodenamestop:String = this.makeNodeName(xlevel, endy);
-
-			var temp:Array = new Array(edgename, // edge name
-							 nodenamestart, // nodename a
-							 nodenamestop, // node name b
-							 xlevel , starty, // start x,y
-							 xlevel , endy ,  // end x,y
-							 Math.abs(endy - starty ), // dist
-							 starty, // height of highest part of segment
-							 isJump, // is jump segment??
-							 0, // edge A node index number
-							 0, // edge B node index number
-							 false // is temp flag set??
-							 );  
-			this.edgesFromDots.push(temp);
-			
-			this.makeCoordinateListingNodes(xlevel,starty);
-			this.makeCoordinateListingNodes(xlevel,endy);
-						
 		}
 		
 		public function isEndNodeHoriz(x:int, y:int):Boolean {
@@ -695,7 +700,10 @@
 			
 			for (i = 0; i < this.nodesFromDots.length; i ++) {
 				if (!this.nodesFromDots[i][AGai.NPOS_VISITED]) {
-					if (default_l == -1) default_l = i;
+					if (default_l == -1) { 
+						default_l = i;
+						l = i;
+					}
 					j = this.nodesFromDots[i][AGai.NPOS_CALCDIST];
 					if (j < k) {
 						k = j;
@@ -771,12 +779,14 @@
 		}
 		
 		private function createHint():void {
+			if (this.node_index_end == -1 || this.node_index_start == -1 ||
+				this.nodesFromDots.length < this.node_index_end) return;
 			trace("====");
 			var i:int = this.node_index_end;
-			while (i != this.node_index_start && i != -1) {
+			while (i != this.node_index_start && i != -1 && i < this.nodesFromDots.length) {
 				i = this.nodesFromDots[i][AGai.NPOS_PREVIOUS];
-				trace(i, this.nodesFromDots[i][AGai.NPOS_NODENAME]);
-
+				if (i > -1) trace(i, this.nodesFromDots[i][AGai.NPOS_NODENAME]);
+				else trace(i);
 			}
 			trace ("done dijkstra");
 		}
@@ -791,7 +801,7 @@
 		
 		public function getStopNodeNum(x:int, y:int, newnode:Boolean):int {
 			// if newnode is true, add new node and edges if necessary.
-			return 4;
+			return 5;
 		}
 		
 		public function drawMap():void {
