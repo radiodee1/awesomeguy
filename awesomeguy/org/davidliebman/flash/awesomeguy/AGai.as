@@ -70,38 +70,28 @@
 		public static var NPOS_PREVIOUS:int = 5;
 		public static var NPOS_TEMPFLAG:int = 6;
 		
+		// MAYBE FOR PASSING MESSAGES TO A THREADED VERSION OF ai
 		public static var MESSAGE_START:String = "start";
 		public static var MESSAGE_STOP:String = "stop";
 		public static var MESSAGE_CLEAR:String = "clear";
 		public static var MESSAGE_HORIZONTAL:String = "horizontal";
 		public static var MESSAGE_VERTICAL:String = "vertical";
 
+		public static var ALG_NONE:int = -1;
+		public static var ALG_ZERO:int = 0;
+		public static var ALG_FINDEDGE_HORIZONTAL:int = 1;
+		public static var ALG_FINDEDGE_VERTICAL:int = 2;
+
+
 		public function AGai() {
 			// constructor code
 			// do nothing...
-			//this.myKeyStage = mykeys;
 			
-			
+			/*
 			if (Worker.current.isPrimordial) {
 				
 				this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-				//this.loaderInfo.addEventListener(Event.COMPLETE, onAddedToStage);
-				/*
-				trace(this.loaderInfo);
 				
-				var swfBytes:ByteArray = this.loaderInfo.bytes;
-				
-				worker = WorkerDomain.current.createWorker( swfBytes );
-				mainToWorker = Worker.current.createMessageChannel(worker);
-				workerToMain = worker.createMessageChannel(Worker.current);
-				
-				worker.setSharedProperty("mainToWorker", mainToWorker);
-				worker.setSharedProperty("workerToMain", workerToMain);
-				
-				//workerToMain.addEventListener(Event.CHANNEL_MESSAGE, onWorkerToMain);
-				
-				//worker.start();
-				*/
 			}
 			else {
 				this.set_values_called = false;
@@ -111,7 +101,7 @@
 				
 				mainToWorker.addEventListener("mainToWorker", onMainToWorker);
 			}
-			
+			*/
 			
 		}
 		
@@ -121,7 +111,6 @@
 		}
 		
 		public function onLoadedComplete(e:Event):void {
-			//if (!Worker.current.isPrimordial) return;
 			
 			this.loaderInfo.removeEventListener(Event.COMPLETE, onLoadedComplete);
 			
@@ -133,13 +122,13 @@
 			
 			trace(worker);
 			
-			//mainToWorker = Worker.current.createMessageChannel(worker);
-			//workerToMain = worker.createMessageChannel(Worker.current);
+			mainToWorker = Worker.current.createMessageChannel(worker);
+			workerToMain = worker.createMessageChannel(Worker.current);
 			
-			//worker.setSharedProperty("mainToWorker", mainToWorker);
-			//worker.setSharedProperty("workerToMain", workerToMain);
+			worker.setSharedProperty("mainToWorker", mainToWorker);
+			worker.setSharedProperty("workerToMain", workerToMain);
 			
-			//workerToMain.addEventListener(Event.CHANNEL_MESSAGE, onWorkerToMain);
+			workerToMain.addEventListener(Event.CHANNEL_MESSAGE, onWorkerToMain);
 			
 			worker.start();
 		}
