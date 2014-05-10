@@ -642,8 +642,7 @@
 				this.nodesFromDots[q_i][AGai.NPOS_VISITED] = true;
 				
 				
-				if (this.nodesFromDots[q_i][AGai.NPOS_CALCDIST] == AGai.START_DISTANCE ||
-						q_i == nodenumend) {
+				if (q_i == this.nodenumend ) {
 							
 					this.node_index_end = q_i;
 					this.createHint();
@@ -678,14 +677,14 @@
 		private function isListEmpty():Boolean {
 			var value:Boolean = true;
 			var i:int = 0;
-			//var j:int = 0;
+			
 			for (i = 0; i < this.nodesFromDots.length; i ++) {
 				if (this.nodesFromDots[i][AGai.NPOS_VISITED] == false ){
 					value = false;
-					//j ++;
+					
 				}
 			}
-			//if (j == this.nodesFromDots.length - 1 ) value = true;
+			
 			return value;
 		}
 		
@@ -695,7 +694,7 @@
 			var j:int = 0; // for loop calc-dist
 			var k:int = AGai.START_DISTANCE; // lowest dist
 			var l:int = 0;// this.nodenumstart; // value output
-			//var old_l:int = this.nodenumstart;
+			
 			var default_l:int = -1;
 			
 			for (i = 0; i < this.nodesFromDots.length; i ++) {
@@ -713,9 +712,7 @@
 				}
 			}
 			
-			if (l == q_i && this.nodesFromDots.length != 1 && false ) {
-				l = default_l;
-			}
+			
 			value = l;
 			return value;
 		}
@@ -804,6 +801,15 @@
 			return 5;
 		}
 		
+		public function getPixHintX():int {
+			return 0;
+		}
+		public function getPixHintY():int {
+			return 0;
+		}
+		
+		////////////////////////////////////////////////////
+		
 		public function drawMap():void {
 			this.drawMapSquares();
 			this.drawMapEdges();
@@ -865,9 +871,6 @@
 						
 		
 					} // if i,j > 0, etc...
-				
-					//////////////////////////////////////////
-					
 					
 				}
 			}
@@ -967,12 +970,7 @@
 			return ;
 		}
 		
-		public function getPixHintX():int {
-			return 0;
-		}
-		public function getPixHintY():int {
-			return 0;
-		}
+		
 		
 	}
 	
