@@ -12,6 +12,7 @@
 		var myGuy:AGSpriteGuy;
 
 		var ai:AGai;
+		var aiMonster:AGSpriteXMonster;
 
 		static var GUY_CLIMB:int = 1;
 		static var GUY_PUNCH:int = 2;
@@ -36,9 +37,10 @@
 		static var B_ONEUP:int = 19 ;
 		static var B_BIGPRIZE:int = 21 ;
 		static var B_PLATFORM:int = 18 ; 
-		// her start several block types that have no map icon!!
+		// here start several block types that have no map icon!!
 		static var B_PLUNGER:int = 19;
 		static var B_PLUNGER_MARKER:int = 20;
+		static var B_MONSTER_CLIMBER:int = 21;
 		
 		var TILEMAP_HEIGHT:int = 128 * 2;
 		var TILEMAP_WIDTH:int = 224 * 2;
@@ -125,7 +127,7 @@
 			}
 			
 			if (true) {
-				this.ai.setStartEnd(myGuy.x, myGuy.y, myGuy.x, myGuy.y);
+				//this.ai.setStartEnd(myGuy.x, myGuy.y, myGuy.x, myGuy.y);
 				this.ai.doCalc();
 			}
 			
@@ -454,6 +456,7 @@
 					if (k + mapcheat == AGModeGuy.B_KEY) this.addXVarious(j,i,AGMode.S_KEY);
 					if (k + mapcheat == AGModeGuy.B_GUN) this.addXVarious(j,i,AGMode.S_GUN);
 					if (k + mapcheat == AGModeGuy.B_GOAL) this.addXVarious(j,i,AGMode.S_XGOAL);
+					if (k + mapcheat == AGModeGuy.B_MONSTER_CLIMBER) this.addXVarious(j, i, AGMode.S_XMONSTER_CLIMBER);
 				}
 			}
 		}
@@ -652,6 +655,10 @@
 						mySprite[i].sprite_type == AGMode.S_KEY_GREEN || 
 						mySprite[i].sprite_type == AGMode.S_KEY_RED) {
 						myDraw.drawBasicSprite(mySprite[i], D_EXIT);
+					}
+					if (mySprite[i].sprite_type == AGMode.S_XMONSTER_CLIMBER) {
+						this.ai.setStartEnd(mySprite[i].x, mySprite[i].y, myGuy.x, myGuy.y);
+
 					}
 				}
 				

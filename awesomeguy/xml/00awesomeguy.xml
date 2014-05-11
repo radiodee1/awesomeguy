@@ -854,6 +854,7 @@
 <block>XML_TEXT_PLANET_AFTER_COMPLETE,2</block>
 <block>XML_PLANET_ASTROGATE, 100, 15</block>
 <block>XML_TEST</block>
+<block>XML_TEST</block>
 </special>
 <text>
 <message number="1">find a maze!!</message>
@@ -1071,6 +1072,7 @@
 <block>XML_MAZE_PLUNGER_START, 4, 13 </block>
 <block>XML_MAZE_PLUNGER_MARKER, 4, 10</block>
 <block>XML_MAZE_KEY_DOOR_COMBO, XML_MAZE_COLOR_RED,2, 6, 11,5</block>
+<block>XML_REPLACE_INVISIBLE, 3, 30, 21</block>
 </special>
 </maze>
 <maze number="2">

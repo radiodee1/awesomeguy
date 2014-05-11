@@ -94,6 +94,7 @@
 	static var S_DOOR_RED:int = 43;
 	static var S_DOOR_GREEN:int = 44;
 	static var S_DOOR_BLUE:int = 45;
+	static var S_XMONSTER_CLIMBER:int = 46;
 	
 	
 	//draw enumeration
