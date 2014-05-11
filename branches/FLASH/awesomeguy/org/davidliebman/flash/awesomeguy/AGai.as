@@ -90,6 +90,8 @@
 		public static var ALG_FINDEDGE_END_VERTICAL:int = 4;
 		public static var ALG_FINDEDGE_START_HORIZONTAL:int = 5;
 		public static var ALG_FINDEDGE_START_VERTICAL:int = 6;
+		public static var ALG_MAKE_NODES_AND_EDGES_HORIZONTAL:int = 7;
+		public static var ALG_MAKE_NODES_AND_EDGES_VERTICAL:int = 8;
 		
 		public var q_startedge_vert = 0;
 		public var q_startedge_hor = 0;
@@ -438,7 +440,7 @@
 			return new String("EDGENAME:"+startx+","+starty+":"+endx+","+endy);
 		}
 		
-		public function makeCoordinateListingHorizontal(startx:int, endx:int, ylevel:int, isJump:Boolean):void{
+		public function makeCoordinateListingHorizontal(startx:int, endx:int, ylevel:int, isJump:Boolean, isTemp:Boolean = false):void{
 			
 			// put edges in list
 			var edgename:String = this.makeEdgeName(startx,ylevel,endx,ylevel);
@@ -456,7 +458,7 @@
 							 isJump,// is jump segment??
 							 0, // edge A index in node array
 							 0, // edge B index in node array
-							 false, // is temp flag set??
+							 isTemp,//false, // is temp flag set??
 							 true // is-horizontal??
 							 );  
 			this.edgesFromDots.push(temp);
@@ -468,7 +470,7 @@
 		
 		
 		
-		public function makeCoordinateListingVertical(starty:int, endy:int, xlevel:int, isJump:Boolean):void {
+		public function makeCoordinateListingVertical(starty:int, endy:int, xlevel:int, isJump:Boolean, isTemp:Boolean = false):void {
 			// put edges in list
 			var edgename:String = this.makeEdgeName(xlevel,starty,xlevel,endy);
 			
@@ -485,7 +487,7 @@
 							 isJump, // is jump segment??
 							 0, // edge A node index number
 							 0, // edge B node index number
-							 false, // is temp flag set??
+							 isTemp,//false, // is temp flag set??
 							 false // is-horizontal??
 							 );  
 			this.edgesFromDots.push(temp);
@@ -495,16 +497,17 @@
 						
 		}
 		
-		public function makeCoordinateListingNodes(x:int, y:int):void {
+		public function makeCoordinateListingNodes(x:int, y:int):int {
 			var i:int = 0;
 			var listed:Boolean = false;
-			
+			var listed_index:int = -1;
 			var nodename:String = this.makeNodeName(x, y);
 
 			// put nodes in list... NO REPEATS
 			for (i = 0; i < this.nodesFromDots.length; i ++) {
 				if (nodename == this.nodesFromDots[i][NPOS_NODENAME]) {
 					listed = true;
+					listed_index = i;
 				}
 			}
 			var node:Array = new Array( nodename, // node name
@@ -514,7 +517,13 @@
 										false, //visited?
 										-1, // previous....
 										false); // is node temp flag set??
-			if (!listed) this.nodesFromDots.push(node);
+			if (!listed) {
+				this.nodesFromDots.push(node);
+				return this.nodesFromDots.length;
+			}
+			else {
+				return listed_index;
+			}
 		}
 		
 		public function isEndNodeHoriz(x:int, y:int):Boolean {
@@ -677,6 +686,7 @@
 					this.alg_state ++;
 				break;
 				case AGai.ALG_FINDEDGE_END_HORIZONTAL:
+					found = -1;
 					for (i = 0; i < this.edgesFromDots.length; i ++) {
 						if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == true) {
 							if (this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH < this.endingX &&
@@ -693,6 +703,7 @@
 				break;
 				case AGai.ALG_FINDEDGE_END_VERTICAL:
 					// alg_find ending vert edge...
+					found = -1;
 					for (i = 0; i < this.edgesFromDots.length; i ++) {
 						if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == false) {
 							if (this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT < this.endingY &&
@@ -708,6 +719,7 @@
 				break;
 				case AGai.ALG_FINDEDGE_START_HORIZONTAL:
 					// alg_find starting horiz edge...
+					found = -1;
 					for (i = 0; i < this.edgesFromDots.length; i ++) {
 						if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == true) {
 							if (this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH < this.startingX &&
@@ -723,6 +735,7 @@
 				break;
 				case AGai.ALG_FINDEDGE_START_VERTICAL:
 					// alg_find starting vert edge...
+					found = -1;
 					for (i = 0; i < this.edgesFromDots.length; i ++) {
 						if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == false) {
 							if (this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT < this.startingY &&
@@ -796,6 +809,7 @@
 			this.q_endedge_hor = found;
 			
 			// alg_find ending vert edge...
+			found = -1;
 			for (i = 0; i < this.edgesFromDots.length; i ++) {
 				if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == false) {
 					if (this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT < this.endingY &&
@@ -808,6 +822,7 @@
 			}
 			this.q_endedge_vert = found;
 			// alg_find starting horiz edge...
+			found = -1;
 			for (i = 0; i < this.edgesFromDots.length; i ++) {
 				if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == true) {
 					if (this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH < this.startingX &&
@@ -820,6 +835,7 @@
 			}
 			this.q_startedge_hor = found;
 			// alg_find starting vert edge...
+			found = -1;
 			for (i = 0; i < this.edgesFromDots.length; i ++) {
 				if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == false) {
 					if (this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT < this.startingY &&
