@@ -406,12 +406,12 @@
 				
 				if (tempArray[0] == AG.XML_REPLACE_INVISIBLE) { // this is a 
 					if(true) {
-						myInvisible[int(tempArray[2])][int(tempArray[1])] = int (tempArray[3]);
+						myInvisible[int(tempArray[2])][int(tempArray[1])] = int (tempArray[3]) - mapcheat;
 					}
 				}
 				if (tempArray[0] == AG.XML_REPLACE_VISIBLE) { // this is a 
 					if(true) {
-						myVisible[int(tempArray[2])][int(tempArray[1])] = int (tempArray[3]);
+						myVisible[int(tempArray[2])][int(tempArray[1])] = int (tempArray[3]) - levelcheat;
 					}
 				}
 				if (tempArray[0] == AG.XML_MAZE_DOOR_SPRITE) { // this is a 

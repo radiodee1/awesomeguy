@@ -646,6 +646,7 @@
 			}
 			
 			var i:int = 0;
+			var found:int = -1;
 
 			//trace(this.alg_state);
 			switch(this.alg_state) {
@@ -676,20 +677,64 @@
 					this.alg_state ++;
 				break;
 				case AGai.ALG_FINDEDGE_END_HORIZONTAL:
-					var foundh:int = -1;
 					for (i = 0; i < this.edgesFromDots.length; i ++) {
 						if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == true) {
 							if (this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH < this.endingX &&
 								this.edgesFromDots[i][AGai.EPOS_STOPX] * this.TILE_WIDTH > this.endingX &&
 								this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT - (this.TILE_HEIGHT / 2) < this.endingY &&
 								this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT + (this.TILE_HEIGHT / 2) > this.endingY) {
-								foundh = i;
+								found = i;
 							}
 						}
 					}
-					this.q_endedge_hor = foundh;
+					this.q_endedge_hor = found;
 					this.alg_state ++;
 				
+				break;
+				case AGai.ALG_FINDEDGE_END_VERTICAL:
+					// alg_find ending vert edge...
+					for (i = 0; i < this.edgesFromDots.length; i ++) {
+						if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == false) {
+							if (this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT < this.endingY &&
+								this.edgesFromDots[i][AGai.EPOS_STOPY] * this.TILE_HEIGHT > this.endingY &&
+								this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH - (this.TILE_WIDTH / 2) < this.endingX &&
+								this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH + (this.TILE_WIDTH / 2) > this.endingX) {
+								found = i;
+							}
+						}
+					}
+					this.q_endedge_vert = found;
+					this.alg_state ++;
+				break;
+				case AGai.ALG_FINDEDGE_START_HORIZONTAL:
+					// alg_find starting horiz edge...
+					for (i = 0; i < this.edgesFromDots.length; i ++) {
+						if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == true) {
+							if (this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH < this.startingX &&
+								this.edgesFromDots[i][AGai.EPOS_STOPX] * this.TILE_WIDTH > this.startingX &&
+								this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT - (this.TILE_HEIGHT / 2) < this.startingY &&
+								this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT + (this.TILE_HEIGHT / 2) > this.startingY) {
+								found = i;
+							}
+						}
+					}
+					this.q_startedge_hor = found;
+					this.alg_state ++;
+				break;
+				case AGai.ALG_FINDEDGE_START_VERTICAL:
+					// alg_find starting vert edge...
+					for (i = 0; i < this.edgesFromDots.length; i ++) {
+						if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == false) {
+							if (this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT < this.startingY &&
+								this.edgesFromDots[i][AGai.EPOS_STOPY] * this.TILE_HEIGHT > this.startingY &&
+								this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH - (this.TILE_WIDTH / 2) < this.startingX &&
+								this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH + (this.TILE_WIDTH / 2) > this.startingX) {
+								found = i;
+							}
+						}
+					}
+					this.q_startedge_vert = found;
+					this.alg_state ++;
 				break;
 				
 				default:
@@ -737,20 +782,62 @@
 				}
 			}
 			// alg_find ending horizontal edge...
-			var foundh:int = -1;
+			var found:int = -1;
 			for (i = 0; i < this.edgesFromDots.length; i ++) {
 				if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == true) {
 					if (this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH < this.endingX &&
 						this.edgesFromDots[i][AGai.EPOS_STOPX] * this.TILE_WIDTH > this.endingX &&
 						this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT - (this.TILE_HEIGHT / 2) < this.endingY &&
 						this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT + (this.TILE_HEIGHT / 2) > this.endingY) {
-						foundh = i;
+						found = i;
 					}
 				}
 			}
+			this.q_endedge_hor = found;
 			
+			// alg_find ending vert edge...
+			for (i = 0; i < this.edgesFromDots.length; i ++) {
+				if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == false) {
+					if (this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT < this.endingY &&
+						this.edgesFromDots[i][AGai.EPOS_STOPY] * this.TILE_HEIGHT > this.endingY &&
+						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH - (this.TILE_WIDTH / 2) < this.endingX &&
+						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH + (this.TILE_WIDTH / 2) > this.endingX) {
+						found = i;
+					}
+				}
+			}
+			this.q_endedge_vert = found;
+			// alg_find starting horiz edge...
+			for (i = 0; i < this.edgesFromDots.length; i ++) {
+				if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == true) {
+					if (this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH < this.startingX &&
+						this.edgesFromDots[i][AGai.EPOS_STOPX] * this.TILE_WIDTH > this.startingX &&
+						this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT - (this.TILE_HEIGHT / 2) < this.startingY &&
+						this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT + (this.TILE_HEIGHT / 2) > this.startingY) {
+						found = i;
+					}
+				}
+			}
+			this.q_startedge_hor = found;
+			// alg_find starting vert edge...
+			for (i = 0; i < this.edgesFromDots.length; i ++) {
+				if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == false) {
+					if (this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT < this.startingY &&
+						this.edgesFromDots[i][AGai.EPOS_STOPY] * this.TILE_HEIGHT > this.startingY &&
+						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH - (this.TILE_WIDTH / 2) < this.startingX &&
+						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH + (this.TILE_WIDTH / 2) > this.startingX) {
+						found = i;
+					}
+				}
+			}
+			this.q_startedge_vert = found;
+			
+			
+			///////////////////////////
 			
 			this.node_index_end = -1;
+			
+			
 			
 			nodenumstart = this.getStartNodeNum(startingX, startingY, true);
 			nodenumend = this.getStopNodeNum(endingX, endingY, true);
