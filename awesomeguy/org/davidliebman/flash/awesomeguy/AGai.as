@@ -90,8 +90,8 @@
 		public static var ALG_FINDEDGE_END_VERTICAL:int = 4;
 		public static var ALG_FINDEDGE_START_HORIZONTAL:int = 5;
 		public static var ALG_FINDEDGE_START_VERTICAL:int = 6;
-		public static var ALG_MAKE_NODES_AND_EDGES_HORIZONTAL:int = 7;
-		public static var ALG_MAKE_NODES_AND_EDGES_VERTICAL:int = 8;
+		public static var ALG_MAKE_NODES_AND_EDGES_START_HORIZONTAL:int = 7;
+		public static var ALG_MAKE_NODES_AND_EDGES_START_VERTICAL:int = 8;
 		
 		public var q_startedge_vert = 0;
 		public var q_startedge_hor = 0;
@@ -440,9 +440,11 @@
 			return new String("EDGENAME:"+startx+","+starty+":"+endx+","+endy);
 		}
 		
-		public function makeCoordinateListingHorizontal(startx:int, endx:int, ylevel:int, isJump:Boolean, isTemp:Boolean = false):void{
+		public function makeCoordinateListingHorizontal(startx:int, endx:int, ylevel:int, isJump:Boolean, isTemp:Boolean = false):Array{
 			
 			// put edges in list
+			var values:Array = new Array();
+			
 			var edgename:String = this.makeEdgeName(startx,ylevel,endx,ylevel);
 			
 			var nodenamestart:String = this.makeNodeName(startx, ylevel);
@@ -463,15 +465,17 @@
 							 );  
 			this.edgesFromDots.push(temp);
 			
-			this.makeCoordinateListingNodes(startx,ylevel);
-			this.makeCoordinateListingNodes(endx,ylevel);
-			
+			values.push(this.makeCoordinateListingNodes(startx,ylevel));
+			values.push(this.makeCoordinateListingNodes(endx,ylevel));
+			return values;
 		}
 		
 		
 		
-		public function makeCoordinateListingVertical(starty:int, endy:int, xlevel:int, isJump:Boolean, isTemp:Boolean = false):void {
+		public function makeCoordinateListingVertical(starty:int, endy:int, xlevel:int, isJump:Boolean, isTemp:Boolean = false):Array {
 			// put edges in list
+			var values:Array = new Array();
+			
 			var edgename:String = this.makeEdgeName(xlevel,starty,xlevel,endy);
 			
 			var nodenamestart:String = this.makeNodeName(xlevel, starty);
@@ -492,9 +496,9 @@
 							 );  
 			this.edgesFromDots.push(temp);
 			
-			this.makeCoordinateListingNodes(xlevel,starty);
-			this.makeCoordinateListingNodes(xlevel,endy);
-						
+			values.push(this.makeCoordinateListingNodes(xlevel,starty));
+			values.push(this.makeCoordinateListingNodes(xlevel,endy));
+			return values;
 		}
 		
 		public function makeCoordinateListingNodes(x:int, y:int):int {
@@ -656,8 +660,10 @@
 			
 			var i:int = 0;
 			var found:int = -1;
+			var pair1:Array;
+			var pair2:Array;
 
-			//trace(this.alg_state);
+			trace(this.q_startedge_hor, this.q_startedge_vert, this.q_endedge_hor, this.q_endedge_vert);
 			switch(this.alg_state) {
 				case AGai.ALG_NONE:
 					//do nothing...
@@ -747,6 +753,30 @@
 						}
 					}
 					this.q_startedge_vert = found;
+					this.alg_state ++;
+				break;
+				case AGai.ALG_MAKE_NODES_AND_EDGES_START_HORIZONTAL:
+					found = -1;
+					if (this.q_startedge_hor != -1) {
+						pair1 = this.makeCoordinateListingHorizontal(
+								this.edgesFromDots[this.q_startedge_hor][AGai.EPOS_STARTX],
+								this.startingX/this.TILE_WIDTH, 
+								this.edgesFromDots[this.q_startedge_hor][AGai.EPOS_STARTY],
+								false, true);
+						pair2 = this.makeCoordinateListingHorizontal(
+								this.startingX/ this.TILE_WIDTH,
+								this.edgesFromDots[this.q_startedge_hor][AGai.EPOS_STOPX],
+								this.edgesFromDots[this.q_startedge_hor][AGai.EPOS_STARTY],
+								false, true);
+						if (pair1[0] == pair2[0]) {
+							found = pair1[0];
+						}
+						else {
+							found = pair1[1];
+						}
+					}
+					this.nodenumstart = found;
+					
 					this.alg_state ++;
 				break;
 				
