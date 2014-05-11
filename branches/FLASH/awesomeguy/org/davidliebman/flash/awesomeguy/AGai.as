@@ -80,8 +80,17 @@
 
 		public static var ALG_NONE:int = -1;
 		public static var ALG_ZERO:int = 0;
-		public static var ALG_FINDEDGE_HORIZONTAL:int = 1;
-		public static var ALG_FINDEDGE_VERTICAL:int = 2;
+		public static var ALG_REMOVE_TEMP_A:int = 1;
+		public static var ALG_REMOVE_TEMP_B:int = 2;
+		public static var ALG_FINDEDGE_END_HORIZONTAL:int = 3;
+		public static var ALG_FINDEDGE_END_VERTICAL:int = 4;
+		public static var ALG_FINDEDGE_START_HORIZONTAL:int = 5;
+		public static var ALG_FINDEDGE_START_VERTICAL:int = 6;
+		
+		public var q_startedge_vert = 0;
+		public var q_startedge_hor = 0;
+		public var q_endedge_vert = 0;
+		public var q_endedge_hor = 0;
 
 		public var q_i:int = 0;//
 		public var q_j:int = 0;
@@ -623,6 +632,22 @@
 					
 				break;
 			}
+			
+			// alg_remove temp... A
+			var i:int = 0;
+			for (i = 0; i < this.edgesFromDots.length; i ++) {
+				if (this.edgesFromDots[i][AGai.EPOS_TEMPFLAG] == true) {
+					this.edgesFromDots.slice(i,1);
+				}
+			}
+			
+			// alg_remove temp... B
+			for (i = 0; i < this.nodesFromDots.length; i ++) {
+				if (this.nodesFromDots[i][AGai.NPOS_TEMPFLAG] == true) {
+					this.nodesFromDots.slice(i, 1);
+				}
+			}
+			//
 			this.node_index_end = -1;
 			
 			nodenumstart = this.getStartNodeNum(startingX, startingY, true);
