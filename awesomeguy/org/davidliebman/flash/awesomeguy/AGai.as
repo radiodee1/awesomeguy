@@ -78,6 +78,10 @@
 		public static var MESSAGE_HORIZONTAL:String = "horizontal";
 		public static var MESSAGE_VERTICAL:String = "vertical";
 
+		public var alg_state:int = -1;
+		public var alg_count:int = 0;
+		public static var COUNT_ALG:int = 120;
+		
 		public static var ALG_NONE:int = -1;
 		public static var ALG_ZERO:int = 0;
 		public static var ALG_REMOVE_TEMP_A:int = 1;
@@ -98,6 +102,12 @@
 		public var q_k:int = 0;
 		public var q_alt:int = 0;
 		public var q_edge:Array = new Array();
+
+		// ACTUAL SCREEN COORDINATES
+		public var startingX:int = 0;
+		public var startingY:int = 0;
+		public var endingX:int = 0;
+		public var endingY:int = 0;
 
 		public var nodenumstart:int = 0;//
 		public var nodenumend:int = 0;//
@@ -162,6 +172,10 @@
 			
 		}
 		
+		public function sendInvisibleMap():void {
+			
+		}
+		
 		/* THIS IS DONE ONCE AT THE BEGINNING OF THE LEVEL */
 		public function setValues(myinvisible:Array, myscreen:Stage, game:AGMode):void {
 			this.set_values_called = true;
@@ -173,12 +187,9 @@
 			this.setupGraph();
 		}
 		
-		public function sendInvisibleMap():void {
-			
-		}
-		
 		public function setupGraph( ):void {
 			//this.myInvisible = myinvisible;
+			this.alg_count = 0;
 			
 			this.invisibleChutes = new Array();
 			this.invisibleDots = new Array();
@@ -614,7 +625,81 @@
 		
 		/////////////////////////////////////////////////////////////////
 		
+		public function setStartEnd(startX:int, startY:int, endX:int, endY:int):void {
+			
+			if(this.alg_state > AGai.ALG_ZERO || this.alg_count != AGai.COUNT_ALG) return;
+			this.startingX = startX; // monster
+			this.startingY = startY;
+			this.endingX = endX; // guy
+			this.endingY = endY;
+			this.alg_state = AGai.ALG_ZERO;
+		}
+		
 		/* THIS IS DONE BEFORE EACH REDRAW OF THE SCREEN */
+		
+		public function doCalc() {
+			
+			this.alg_count ++;
+			if (this.alg_count > AGai.COUNT_ALG) { //120
+				this.alg_count = 0;
+				this.alg_state = AGai.ALG_ZERO;
+			}
+			
+			var i:int = 0;
+
+			//trace(this.alg_state);
+			switch(this.alg_state) {
+				case AGai.ALG_NONE:
+					//do nothing...
+				break;
+				case AGai.ALG_ZERO:
+					//start everything...
+					for (i = 0; i < this.nodesFromDots.length; i ++) {
+						this.nodesFromDots[i][AGai.NPOS_VISITED] = false;
+					}
+					this.alg_state ++;
+				break;
+				case AGai.ALG_REMOVE_TEMP_A:
+					for (i = 0; i < this.edgesFromDots.length; i ++) {
+						if (this.edgesFromDots[i][AGai.EPOS_TEMPFLAG] == true) {
+							this.edgesFromDots.slice(i,1);
+						}
+					}
+					this.alg_state ++;
+				break;
+				case AGai.ALG_REMOVE_TEMP_B:
+					for (i = 0; i < this.nodesFromDots.length; i ++) {
+						if (this.nodesFromDots[i][AGai.NPOS_TEMPFLAG] == true) {
+							this.nodesFromDots.slice(i, 1);
+						}
+					}
+					this.alg_state ++;
+				break;
+				case AGai.ALG_FINDEDGE_END_HORIZONTAL:
+					var foundh:int = -1;
+					for (i = 0; i < this.edgesFromDots.length; i ++) {
+						if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == true) {
+							if (this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH < this.endingX &&
+								this.edgesFromDots[i][AGai.EPOS_STOPX] * this.TILE_WIDTH > this.endingX &&
+								this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT - (this.TILE_HEIGHT / 2) < this.endingY &&
+								this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT + (this.TILE_HEIGHT / 2) > this.endingY) {
+								foundh = i;
+							}
+						}
+					}
+					this.q_endedge_hor = foundh;
+					this.alg_state ++;
+				
+				break;
+				
+				default:
+					//what to do here?
+					this.alg_state = AGai.ALG_ZERO;
+				break;
+			}
+		}
+		
+		
 		public function doCalculation(mymonstertype:int, coordinateType:int ,startingX:int, startingY:int, endingX:int, endingY:int):void {
 			
 			if (! this.set_values_called || this.myInvisible.length == 0 ||
@@ -632,9 +717,13 @@
 					
 				break;
 			}
-			
-			// alg_remove temp... A
 			var i:int = 0;
+
+			// alg_zero : remove visited flag
+			for (i = 0; i < this.nodesFromDots.length; i ++) {
+				this.nodesFromDots[i][AGai.NPOS_VISITED] = false;
+			}
+			// alg_remove temp... A
 			for (i = 0; i < this.edgesFromDots.length; i ++) {
 				if (this.edgesFromDots[i][AGai.EPOS_TEMPFLAG] == true) {
 					this.edgesFromDots.slice(i,1);
@@ -647,7 +736,20 @@
 					this.nodesFromDots.slice(i, 1);
 				}
 			}
-			//
+			// alg_find ending horizontal edge...
+			var foundh:int = -1;
+			for (i = 0; i < this.edgesFromDots.length; i ++) {
+				if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == true) {
+					if (this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH < this.endingX &&
+						this.edgesFromDots[i][AGai.EPOS_STOPX] * this.TILE_WIDTH > this.endingX &&
+						this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT - (this.TILE_HEIGHT / 2) < this.endingY &&
+						this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT + (this.TILE_HEIGHT / 2) > this.endingY) {
+						foundh = i;
+					}
+				}
+			}
+			
+			
 			this.node_index_end = -1;
 			
 			nodenumstart = this.getStartNodeNum(startingX, startingY, true);
@@ -820,7 +922,7 @@
 		}
 		
 		public function getStartNodeNum(x:int, y:int, newnode:Boolean):int {
-			var value:int = 100;
+			var value:int = 0;
 			//this.node_index_end = 0;
 			this.node_index_start = value;
 			// if newnode is true, add new node if necessary

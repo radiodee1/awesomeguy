@@ -123,12 +123,11 @@
 				myGuy.x = xpos;
 				myGuy.y = ypos;
 			}
-			/*
-			if (false) this.ai.doCalculation(AGai.MONSTER_CLIMBER,
-								  AGai.COORDINATES_PIXELS,
-								  0,0,
-								  myGuy.x,myGuy.y);
-			*/
+			
+			if (true) {
+				this.ai.setStartEnd(myGuy.x, myGuy.y, myGuy.x, myGuy.y);
+				this.ai.doCalc();
+			}
 			
 			drawScoreWords();
 			showKeys(this.myGame.gameKeys);
@@ -211,6 +210,7 @@
 			prepSpecialXml();
 			//prepRingSprites();
 			this.ai.setValues(this.myInvisible, this.myStage, this);
+			this.ai.alg_state = AGai.ALG_ZERO;
 			
 			this.prepTilesToSprites();
 						
