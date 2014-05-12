@@ -35,6 +35,9 @@
 		public var hint_x:int = 0;
 		public var hint_y:int = 0;
 		
+		public static var MOVE_X:int = 3;
+		public static var MOVE_Y:int = 3;
+		
 		public var set_values_called:Boolean = false;
 		public var node_index_start:int = 0;
 		public var node_index_end:int = 0;
@@ -94,6 +97,12 @@
 		public static var ALG_MAKE_NODES_AND_EDGES_START_VERTICAL:int = 8;
 		public static var ALG_MAKE_NODES_AND_EDGES_END_HORIZONTAL:int = 9;
 		public static var ALG_MAKE_NODES_AND_EDGES_END_VERTICAL:int = 10;
+		public static var ALG_FIRST_HINT:int = 11;
+		public static var ALG_START_DIJKSTRA:int = 12;
+		public static var ALG_DIJKSTRA_LOOP_A:int = 13;
+		public static var ALG_DIJKSTRA_LOOP_B:int = 14;
+		public static var ALG_DIJKSTRA_LOOP_NEIGHBOR_LIST:int = 15;
+		
 		
 		public var q_startedge_vert = 0;
 		public var q_startedge_hor = 0;
@@ -106,6 +115,7 @@
 		public var q_k:int = 0;
 		public var q_alt:int = 0;
 		public var q_edge:Array = new Array();
+		public var q_hint:Boolean = false;
 
 		// ACTUAL SCREEN COORDINATES
 		public var startingX:int = 0;
@@ -526,7 +536,7 @@
 										); 
 			if (!listed) {
 				this.nodesFromDots.push(node);
-				return this.nodesFromDots.length;
+				return this.nodesFromDots.length -1;
 			}
 			else {
 				return listed_index;
@@ -665,8 +675,10 @@
 			var found:int = -1;
 			var pair1:Array;
 			var pair2:Array;
-			trace(this.nodesFromDots.length);
+			
+			trace("S:" + this.nodenumstart, "E:"+ this.nodenumend);
 			trace(this.q_startedge_hor, this.q_startedge_vert, this.q_endedge_hor, this.q_endedge_vert);
+			
 			switch(this.alg_state) {
 				case AGai.ALG_NONE:
 					//do nothing...
@@ -675,16 +687,18 @@
 					//start everything...
 					for (i = 0; i < this.nodesFromDots.length; i ++) {
 						this.nodesFromDots[i][AGai.NPOS_VISITED] = false;
+						this.nodesFromDots[i][AGai.NPOS_CALCDIST] = AGai.START_DISTANCE;
 					}
 					
 					this.alg_state ++;
 				break;
 				case AGai.ALG_REMOVE_TEMP_A:
 					for (i = 0; i < this.edgesFromDots.length; i ++) {
+						
 						if (this.edgesFromDots[i][AGai.EPOS_TEMPFLAG] == true) {
-							this.edgesFromDots.slice(i, this.edgesFromDots.length);
-							this.alg_state ++;
-							trace("trim edges");
+							this.edgesFromDots = this.edgesFromDots.slice(0,i );//
+							//
+							//
 							break;
 						}
 					}
@@ -692,10 +706,11 @@
 				break;
 				case AGai.ALG_REMOVE_TEMP_B:
 					for (i = 0; i < this.nodesFromDots.length; i ++) {
+						//
 						if (this.nodesFromDots[i][AGai.NPOS_TEMPFLAG] == true) {
-							this.nodesFromDots.slice(i, this.nodesFromDots.length);
-							this.alg_state ++;
-							trace("trim nodes");
+							this.nodesFromDots = this.nodesFromDots.slice(0,i );//
+							//
+							//
 							break;
 						}
 					}
@@ -775,11 +790,11 @@
 					if (this.q_startedge_hor != -1) {
 						pair1 = this.makeCoordinateListingHorizontal(
 								this.edgesFromDots[this.q_startedge_hor][AGai.EPOS_STARTX],
-								this.startingX/this.TILE_WIDTH, 
+								Math.floor(this.startingX/this.TILE_WIDTH), 
 								this.edgesFromDots[this.q_startedge_hor][AGai.EPOS_STARTY],
 								false, true);
 						pair2 = this.makeCoordinateListingHorizontal(
-								this.startingX/ this.TILE_WIDTH,
+								Math.floor(this.startingX/ this.TILE_WIDTH),
 								this.edgesFromDots[this.q_startedge_hor][AGai.EPOS_STOPX],
 								this.edgesFromDots[this.q_startedge_hor][AGai.EPOS_STARTY],
 								false, true);
@@ -790,6 +805,7 @@
 							found = pair1[1];
 						}
 					}
+					
 					this.nodenumstart = found;
 					
 					this.alg_state ++;
@@ -799,11 +815,11 @@
 					if (this.q_startedge_vert != -1 && this.q_startedge_hor == -1) {
 						pair1 = this.makeCoordinateListingVertical(
 								this.edgesFromDots[this.q_startedge_vert][AGai.EPOS_STARTY],
-								this.startingY / this.TILE_WIDTH, 
+								Math.floor(this.startingY / this.TILE_WIDTH), 
 								this.edgesFromDots[this.q_startedge_vert][AGai.EPOS_STARTX],
 								false, true);
 						pair2 = this.makeCoordinateListingVertical(
-								this.startingY / this.TILE_WIDTH,
+								Math.floor(this.startingY / this.TILE_WIDTH),
 								this.edgesFromDots[this.q_startedge_vert][AGai.EPOS_STOPY],
 								this.edgesFromDots[this.q_startedge_vert][AGai.EPOS_STARTX],
 								false, true);
@@ -826,11 +842,11 @@
 					if (this.q_endedge_hor != -1) {
 						pair1 = this.makeCoordinateListingHorizontal(
 								this.edgesFromDots[this.q_endedge_hor][AGai.EPOS_STARTX],
-								this.endingX/this.TILE_WIDTH, 
+								Math.floor(this.endingX/this.TILE_WIDTH), 
 								this.edgesFromDots[this.q_endedge_hor][AGai.EPOS_STARTY],
 								false, true);
 						pair2 = this.makeCoordinateListingHorizontal(
-								this.endingX/ this.TILE_WIDTH,
+								Math.floor(this.endingX/ this.TILE_WIDTH),
 								this.edgesFromDots[this.q_endedge_hor][AGai.EPOS_STOPX],
 								this.edgesFromDots[this.q_endedge_hor][AGai.EPOS_STARTY],
 								false, true);
@@ -851,11 +867,11 @@
 					if (this.q_endedge_vert != -1 && this.q_endedge_hor == -1) {
 						pair1 = this.makeCoordinateListingVertical(
 								this.edgesFromDots[this.q_endedge_vert][AGai.EPOS_STARTY],
-								this.endingY / this.TILE_WIDTH, 
+								Math.floor(this.endingY / this.TILE_WIDTH), 
 								this.edgesFromDots[this.q_endedge_vert][AGai.EPOS_STARTX],
 								false, true);
 						pair2 = this.makeCoordinateListingVertical(
-								this.endingY / this.TILE_WIDTH,
+								Math.floor(this.endingY / this.TILE_WIDTH),
 								this.edgesFromDots[this.q_endedge_vert][AGai.EPOS_STOPY],
 								this.edgesFromDots[this.q_endedge_vert][AGai.EPOS_STARTX],
 								false, true);
@@ -869,6 +885,61 @@
 					if (this.q_startedge_hor == -1 && found != -1) {
 						this.nodenumend = found;
 					}
+					this.alg_state ++;
+				break;
+				case AGai.ALG_FIRST_HINT:
+					if (this.guyx < this.startingX) {
+						this.hint_x = - AGai.MOVE_X;
+					}
+					else {
+						this.hint_x = AGai.MOVE_X;
+					}
+					if (this.guyy < this.startingY) {
+						this.hint_y = - AGai.MOVE_Y;
+					}
+					else {
+						this.hint_y = AGai.MOVE_Y;
+					}
+					this.alg_state ++;
+				break;
+				case AGai.ALG_START_DIJKSTRA:
+					this.node_index_end = -1;
+					
+					if (this.nodenumstart >= this.nodesFromDots.length ||
+						this.nodenumstart == -1) {
+						//this.nodenumstart = 0; // this doesn't make sense!!
+						return;
+					}
+					
+					this.nodesFromDots[nodenumstart][AGai.NPOS_CALCDIST] = 0;
+					
+					q_i = nodenumstart;
+					q_j = 0;
+					q_list = new Array();
+					q_k = 0;
+					q_alt = 0;
+					q_edge = new Array();
+					q_hint = false;
+					
+					this.alg_state ++;
+				break;
+				case AGai.ALG_DIJKSTRA_LOOP_A:
+					q_i = this.smallestDistanceNode();
+					trace("i:",q_i);
+					this.nodesFromDots[q_i][AGai.NPOS_VISITED] = true;
+				
+					if (q_i == this.nodenumend ) {
+							
+						this.node_index_end = q_i;
+						//this.createHint();
+						this.q_hint = true;
+						return;
+					}
+					this.alg_state ++;
+				break;
+				
+				case AGai.ALG_DIJKSTRA_LOOP_B:
+				
 					this.alg_state ++;
 				break;
 				
@@ -899,76 +970,7 @@
 			}
 			var i:int = 0;
 
-			// alg_zero : remove visited flag
-			for (i = 0; i < this.nodesFromDots.length; i ++) {
-				this.nodesFromDots[i][AGai.NPOS_VISITED] = false;
-			}
-			// alg_remove temp... A
-			for (i = 0; i < this.edgesFromDots.length; i ++) {
-				if (this.edgesFromDots[i][AGai.EPOS_TEMPFLAG] == true) {
-					this.edgesFromDots.slice(i,1);
-				}
-			}
 			
-			// alg_remove temp... B
-			for (i = 0; i < this.nodesFromDots.length; i ++) {
-				if (this.nodesFromDots[i][AGai.NPOS_TEMPFLAG] == true) {
-					this.nodesFromDots.slice(i, 1);
-				}
-			}
-			// alg_find ending horizontal edge...
-			var found:int = -1;
-			for (i = 0; i < this.edgesFromDots.length; i ++) {
-				if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == true) {
-					if (this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH < this.endingX &&
-						this.edgesFromDots[i][AGai.EPOS_STOPX] * this.TILE_WIDTH > this.endingX &&
-						this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT - (this.TILE_HEIGHT / 2) < this.endingY &&
-						this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT + (this.TILE_HEIGHT / 2) > this.endingY) {
-						found = i;
-					}
-				}
-			}
-			this.q_endedge_hor = found;
-			
-			// alg_find ending vert edge...
-			found = -1;
-			for (i = 0; i < this.edgesFromDots.length; i ++) {
-				if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == false) {
-					if (this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT < this.endingY &&
-						this.edgesFromDots[i][AGai.EPOS_STOPY] * this.TILE_HEIGHT > this.endingY &&
-						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH - (this.TILE_WIDTH / 2) < this.endingX &&
-						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH + (this.TILE_WIDTH / 2) > this.endingX) {
-						found = i;
-					}
-				}
-			}
-			this.q_endedge_vert = found;
-			// alg_find starting horiz edge...
-			found = -1;
-			for (i = 0; i < this.edgesFromDots.length; i ++) {
-				if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == true) {
-					if (this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH < this.startingX &&
-						this.edgesFromDots[i][AGai.EPOS_STOPX] * this.TILE_WIDTH > this.startingX &&
-						this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT - (this.TILE_HEIGHT / 2) < this.startingY &&
-						this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT + (this.TILE_HEIGHT / 2) > this.startingY) {
-						found = i;
-					}
-				}
-			}
-			this.q_startedge_hor = found;
-			// alg_find starting vert edge...
-			found = -1;
-			for (i = 0; i < this.edgesFromDots.length; i ++) {
-				if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == false) {
-					if (this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT < this.startingY &&
-						this.edgesFromDots[i][AGai.EPOS_STOPY] * this.TILE_HEIGHT > this.startingY &&
-						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH - (this.TILE_WIDTH / 2) < this.startingX &&
-						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH + (this.TILE_WIDTH / 2) > this.startingX) {
-						found = i;
-					}
-				}
-			}
-			this.q_startedge_vert = found;
 			
 			
 			///////////////////////////
@@ -1160,10 +1162,10 @@
 		}
 		
 		public function getPixHintX():int {
-			return 0;
+			return this.hint_x;
 		}
 		public function getPixHintY():int {
-			return 0;
+			return this.hint_y;
 		}
 		
 		////////////////////////////////////////////////////

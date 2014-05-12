@@ -128,6 +128,7 @@
 			
 			if (true) {
 				//this.ai.setStartEnd(myGuy.x, myGuy.y, myGuy.x, myGuy.y);
+				trace("before do-calc");
 				this.ai.doCalc();
 			}
 			
