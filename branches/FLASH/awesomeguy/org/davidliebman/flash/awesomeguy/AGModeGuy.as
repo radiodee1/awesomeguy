@@ -128,7 +128,7 @@
 			
 			if (true) {
 				//this.ai.setStartEnd(myGuy.x, myGuy.y, myGuy.x, myGuy.y);
-				trace("before do-calc");
+				//trace("before do-calc");
 				this.ai.doCalc();
 			}
 			
@@ -218,7 +218,7 @@
 			this.prepTilesToSprites();
 						
 			
-			if (true) this.ai.doCalculation(AGai.MONSTER_CLIMBER,
+			if (false) this.ai.doCalculation(AGai.MONSTER_CLIMBER,
 								  AGai.COORDINATES_PIXELS,
 								  0,0,
 								  myGuy.x,myGuy.y);
