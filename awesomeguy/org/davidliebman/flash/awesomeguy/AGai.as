@@ -83,7 +83,7 @@
 
 		public var alg_state:int = -1;
 		public var alg_count:int = 0;
-		public static var COUNT_ALG:int = 120;
+		public static var COUNT_ALG:int = 1200;
 		
 		public static var ALG_NONE:int = -1;
 		public static var ALG_ZERO:int = 0;
@@ -101,8 +101,12 @@
 		public static var ALG_START_DIJKSTRA:int = 12;
 		public static var ALG_DIJKSTRA_LOOP_A:int = 13;
 		public static var ALG_DIJKSTRA_LOOP_B:int = 14;
-		public static var ALG_DIJKSTRA_LOOP_NEIGHBOR_LIST:int = 15;
-		
+		public static var ALG_DIJKSTRA_LOOP_NEIGHBOR_LIST_A:int = 15;
+		public static var ALG_DIJKSTRA_LOOP_NEIGHBOR_LIST_B:int = 16;
+		public static var ALG_DIJKSTRA_LOOP_CLOSE:int = 17;
+		public static var ALG_SECOND_HINT_A:int = 18;
+		public static var ALG_SECOND_HINT_B:int = 19;
+		public static var ALG_NON_DIJKSTRA:int = 20;
 		
 		public var q_startedge_vert = 0;
 		public var q_startedge_hor = 0;
@@ -116,6 +120,7 @@
 		public var q_alt:int = 0;
 		public var q_edge:Array = new Array();
 		public var q_hint:Boolean = false;
+		public var q_list_index:int = 0;
 
 		// ACTUAL SCREEN COORDINATES
 		public var startingX:int = 0;
@@ -676,8 +681,8 @@
 			var pair1:Array;
 			var pair2:Array;
 			
-			trace("S:" + this.nodenumstart, "E:"+ this.nodenumend);
-			trace(this.q_startedge_hor, this.q_startedge_vert, this.q_endedge_hor, this.q_endedge_vert);
+			//trace("S:" + this.nodenumstart, "E:"+ this.nodenumend);
+			//trace(this.q_startedge_hor, this.q_startedge_vert, this.q_endedge_hor, this.q_endedge_vert);
 			
 			switch(this.alg_state) {
 				case AGai.ALG_NONE:
@@ -925,7 +930,7 @@
 				break;
 				case AGai.ALG_DIJKSTRA_LOOP_A:
 					q_i = this.smallestDistanceNode();
-					trace("i:",q_i);
+					//trace("i:",q_i);
 					this.nodesFromDots[q_i][AGai.NPOS_VISITED] = true;
 				
 					if (q_i == this.nodenumend ) {
@@ -933,15 +938,73 @@
 						this.node_index_end = q_i;
 						//this.createHint();
 						this.q_hint = true;
+						this.alg_state = AGai.ALG_SECOND_HINT_A;
 						return;
 					}
 					this.alg_state ++;
 				break;
 				
 				case AGai.ALG_DIJKSTRA_LOOP_B:
-				
+					q_list = this.getNodeNeighborList(q_i);
+					this.q_list_index = 0;
 					this.alg_state ++;
 				break;
+				
+				case AGai.ALG_DIJKSTRA_LOOP_NEIGHBOR_LIST_A:
+					//
+					this.q_j = this.q_list[this.q_list_index];
+					q_edge = this.getEdgeFromNodeIndeces(q_i,q_j);
+					trace(this.q_j);
+					this.alg_state ++;
+				break;
+				
+				case AGai.ALG_DIJKSTRA_LOOP_NEIGHBOR_LIST_B:
+					q_k = q_edge[AGai.EPOS_DIST];
+					q_alt = q_k + this.nodesFromDots[q_i][AGai.NPOS_CALCDIST];
+					
+					if (q_alt < this.nodesFromDots[q_j][AGai.NPOS_CALCDIST]) {
+						this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] = q_alt;
+						this.nodesFromDots[q_j][AGai.NPOS_PREVIOUS] = q_i;
+						// heap reorder j
+					}
+					
+					if (this.q_list_index < this.q_list.length) {
+						this.q_list_index ++;
+						this.alg_state = AGai.ALG_DIJKSTRA_LOOP_NEIGHBOR_LIST_A;
+					}
+					else {
+						this.alg_state ++;
+					}
+				break;
+				
+				case AGai.ALG_DIJKSTRA_LOOP_CLOSE:
+					if (!this.isListEmpty()) {
+						this.alg_state = AGai.ALG_DIJKSTRA_LOOP_A;
+					}
+					else {
+						if (this.node_index_end == -1) {
+							// what to do if no path??
+							trace("no path");
+						}
+						
+						this.alg_state ++;
+					}
+				break;
+				case AGai.ALG_SECOND_HINT_A:
+					// set REAL hint
+					trace("second hint");
+					this.createHint();
+					this.alg_state ++;
+				break;
+				
+				case AGai.ALG_SECOND_HINT_B:
+					this.alg_state = AGai.ALG_ZERO;
+				break;
+				
+				case AGai.ALG_NON_DIJKSTRA:
+				
+				break;
+				
 				
 				default:
 					//what to do here?
@@ -1067,7 +1130,7 @@
 					if (j < k) {
 						k = j;
 						l = i;
-						trace(k);
+						//trace(k);
 					}
 				}
 			}
@@ -1092,14 +1155,14 @@
 							
 						value = this.edgesFromDots[i][AGai.EPOS_NODEENDINDEX];
 						list.push(value);
-						trace("edge-end", i);
+						//trace("edge-end", i);
 					}
 					else if (this.edgesFromDots[i][AGai.EPOS_NODEEND] == 
 							 this.nodesFromDots[node][AGai.NPOS_NODENAME]) {
 								 
 						value = this.edgesFromDots[i][AGai.EPOS_NODESTARTINDEX];
 						list.push(value);
-						trace("edge-end",i);
+						//trace("edge-end",i);
 					}
 					
 				}
