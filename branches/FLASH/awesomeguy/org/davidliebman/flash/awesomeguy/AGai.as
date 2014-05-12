@@ -640,12 +640,12 @@
 		
 		public function setStartEnd(startX:int, startY:int, endX:int, endY:int):void {
 			
-			if(this.alg_state > AGai.ALG_ZERO || this.alg_count != AGai.COUNT_ALG) return;
+			
 			this.startingX = startX; // monster
 			this.startingY = startY;
 			this.endingX = endX; // guy
 			this.endingY = endY;
-			this.alg_state = AGai.ALG_ZERO;
+			//this.alg_state = AGai.ALG_ZERO;
 		}
 		
 		/* THIS IS DONE BEFORE EACH REDRAW OF THE SCREEN */
@@ -662,7 +662,7 @@
 			var found:int = -1;
 			var pair1:Array;
 			var pair2:Array;
-
+			trace(this.startingX, this.startingY, this.endingX, this.endingY);
 			trace(this.q_startedge_hor, this.q_startedge_vert, this.q_endedge_hor, this.q_endedge_vert);
 			switch(this.alg_state) {
 				case AGai.ALG_NONE:
@@ -697,7 +697,7 @@
 						if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == true) {
 							if (this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH < this.endingX &&
 								this.edgesFromDots[i][AGai.EPOS_STOPX] * this.TILE_WIDTH > this.endingX &&
-								this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT - (this.TILE_HEIGHT / 2) < this.endingY &&
+								this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT - (this.TILE_HEIGHT * 3 / 2) < this.endingY &&
 								this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT + (this.TILE_HEIGHT / 2) > this.endingY) {
 								found = i;
 							}
@@ -730,7 +730,7 @@
 						if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == true) {
 							if (this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH < this.startingX &&
 								this.edgesFromDots[i][AGai.EPOS_STOPX] * this.TILE_WIDTH > this.startingX &&
-								this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT - (this.TILE_HEIGHT / 2) < this.startingY &&
+								this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT - (this.TILE_HEIGHT * 3 / 2) < this.startingY &&
 								this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT + (this.TILE_HEIGHT / 2) > this.startingY) {
 								found = i;
 							}
