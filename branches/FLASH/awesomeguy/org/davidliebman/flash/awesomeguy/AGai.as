@@ -467,8 +467,8 @@
 							 );  
 			this.edgesFromDots.push(temp);
 			
-			values.push(this.makeCoordinateListingNodes(startx,ylevel));
-			values.push(this.makeCoordinateListingNodes(endx,ylevel));
+			values.push(this.makeCoordinateListingNodes(startx,ylevel, isTemp));
+			values.push(this.makeCoordinateListingNodes(endx,ylevel, isTemp));
 			return values;
 		}
 		
@@ -498,12 +498,12 @@
 							 );  
 			this.edgesFromDots.push(temp);
 			
-			values.push(this.makeCoordinateListingNodes(xlevel,starty));
-			values.push(this.makeCoordinateListingNodes(xlevel,endy));
+			values.push(this.makeCoordinateListingNodes(xlevel,starty, isTemp));
+			values.push(this.makeCoordinateListingNodes(xlevel,endy, isTemp));
 			return values;
 		}
 		
-		public function makeCoordinateListingNodes(x:int, y:int):int {
+		public function makeCoordinateListingNodes(x:int, y:int, isTemp:Boolean = false):int {
 			var i:int = 0;
 			var listed:Boolean = false;
 			var listed_index:int = -1;
@@ -522,7 +522,8 @@
 										START_DISTANCE, // D distance (infinity)
 										false, //visited?
 										-1, // previous....
-										false); // is node temp flag set??
+										isTemp // is node temp flag set??
+										); 
 			if (!listed) {
 				this.nodesFromDots.push(node);
 				return this.nodesFromDots.length;
@@ -664,7 +665,7 @@
 			var found:int = -1;
 			var pair1:Array;
 			var pair2:Array;
-			trace(this.startingX, this.startingY, this.endingX, this.endingY);
+			trace(this.nodesFromDots.length);
 			trace(this.q_startedge_hor, this.q_startedge_vert, this.q_endedge_hor, this.q_endedge_vert);
 			switch(this.alg_state) {
 				case AGai.ALG_NONE:
@@ -683,6 +684,7 @@
 						if (this.edgesFromDots[i][AGai.EPOS_TEMPFLAG] == true) {
 							this.edgesFromDots.slice(i, this.edgesFromDots.length);
 							this.alg_state ++;
+							trace("trim edges");
 							break;
 						}
 					}
@@ -693,9 +695,11 @@
 						if (this.nodesFromDots[i][AGai.NPOS_TEMPFLAG] == true) {
 							this.nodesFromDots.slice(i, this.nodesFromDots.length);
 							this.alg_state ++;
+							trace("trim nodes");
 							break;
 						}
 					}
+					
 					this.alg_state ++;
 				break;
 				case AGai.ALG_FINDEDGE_END_HORIZONTAL:
