@@ -152,7 +152,7 @@
 			radarscreen.y = SCREEN_HEIGHT;
 			myStage.addChild(radarscreen);
 			
-			//this.ai.drawMap();
+			this.ai.drawMap();
 			
 			if (!this.animate_only) this.detectMovement();
 
