@@ -120,6 +120,7 @@
 		public var q_alt:int = 0;
 		public var q_edge:Array = new Array();
 		public var q_hint:Boolean = false;
+		public var q_hint_list:Array = new Array();
 		public var q_list_index:int = 0;
 
 		// ACTUAL SCREEN COORDINATES
@@ -803,6 +804,8 @@
 								this.edgesFromDots[this.q_startedge_hor][AGai.EPOS_STOPX],
 								this.edgesFromDots[this.q_startedge_hor][AGai.EPOS_STARTY],
 								false, true);
+						trace(1,"pair1", pair1, "pair2", pair2);
+
 						if (pair1[0] == pair2[0]) {
 							found = pair1[0];
 						}
@@ -812,7 +815,7 @@
 					}
 					
 					this.nodenumstart = found;
-					
+					trace("start node",this.nodenumstart);
 					this.alg_state ++;
 				break;
 				case AGai.ALG_MAKE_NODES_AND_EDGES_START_VERTICAL:
@@ -828,6 +831,8 @@
 								this.edgesFromDots[this.q_startedge_vert][AGai.EPOS_STOPY],
 								this.edgesFromDots[this.q_startedge_vert][AGai.EPOS_STARTX],
 								false, true);
+						trace(2,"pair1", pair1, "pair2", pair2);
+
 						if (pair1[0] == pair2[0]) {
 							found = pair1[0];
 						}
@@ -838,6 +843,7 @@
 					if (this.q_startedge_hor == -1 && found != -1) {
 						this.nodenumstart = found;
 					}
+					trace("start node", this.nodenumstart);
 					this.alg_state ++;
 					
 				break;
@@ -855,6 +861,8 @@
 								this.edgesFromDots[this.q_endedge_hor][AGai.EPOS_STOPX],
 								this.edgesFromDots[this.q_endedge_hor][AGai.EPOS_STARTY],
 								false, true);
+						trace(3,"pair1", pair1, "pair2", pair2);
+
 						if (pair1[0] == pair2[0]) {
 							found = pair1[0];
 						}
@@ -863,7 +871,7 @@
 						}
 					}
 					this.nodenumend = found;
-					
+					trace("end node", this.nodenumend);
 					this.alg_state ++;
 				
 				break;
@@ -880,6 +888,8 @@
 								this.edgesFromDots[this.q_endedge_vert][AGai.EPOS_STOPY],
 								this.edgesFromDots[this.q_endedge_vert][AGai.EPOS_STARTX],
 								false, true);
+						trace(4,"pair1", pair1, "pair2", pair2);
+
 						if (pair1[0] == pair2[0]) {
 							found = pair1[0];
 						}
@@ -887,9 +897,10 @@
 							found = pair1[1];
 						}
 					}
-					if (this.q_startedge_hor == -1 && found != -1) {
+					if (this.q_endedge_hor == -1 && found != -1) {
 						this.nodenumend = found;
 					}
+					trace("end node", this.nodenumend);
 					this.alg_state ++;
 				break;
 				case AGai.ALG_FIRST_HINT:
@@ -937,7 +948,7 @@
 							
 						this.node_index_end = q_i;
 						//this.createHint();
-						this.q_hint = true;
+						//this.q_hint = true;
 						this.alg_state = AGai.ALG_SECOND_HINT_A;
 						return;
 					}
@@ -953,8 +964,10 @@
 				case AGai.ALG_DIJKSTRA_LOOP_NEIGHBOR_LIST_A:
 					//
 					this.q_j = this.q_list[this.q_list_index];
+					trace("neighbor:",q_j);
+
 					q_edge = this.getEdgeFromNodeIndeces(q_i,q_j);
-					trace(this.q_j);
+					//trace(this.q_j);
 					this.alg_state ++;
 				break;
 				
@@ -978,13 +991,16 @@
 				break;
 				
 				case AGai.ALG_DIJKSTRA_LOOP_CLOSE:
+					trace("----");
 					if (!this.isListEmpty()) {
+						
 						this.alg_state = AGai.ALG_DIJKSTRA_LOOP_A;
 					}
 					else {
 						if (this.node_index_end == -1) {
 							// what to do if no path??
 							trace("no path");
+							this.alg_state ++;// skip second hint!!
 						}
 						
 						this.alg_state ++;
@@ -993,7 +1009,7 @@
 				case AGai.ALG_SECOND_HINT_A:
 					// set REAL hint
 					trace("second hint");
-					this.createHint();
+					this.q_hint_list = this.createHint();
 					this.alg_state ++;
 				break;
 				
@@ -1154,15 +1170,21 @@
 						this.nodesFromDots[node][AGai.NPOS_NODENAME]) {
 							
 						value = this.edgesFromDots[i][AGai.EPOS_NODEENDINDEX];
-						list.push(value);
-						//trace("edge-end", i);
+						
+						if (this.nodesFromDots[value][AGai.NPOS_VISITED] == false) {
+							list.push(value);
+						}
+						
+						
 					}
 					else if (this.edgesFromDots[i][AGai.EPOS_NODEEND] == 
 							 this.nodesFromDots[node][AGai.NPOS_NODENAME]) {
 								 
 						value = this.edgesFromDots[i][AGai.EPOS_NODESTARTINDEX];
-						list.push(value);
-						//trace("edge-end",i);
+						if (this.nodesFromDots[value][AGai.NPOS_VISITED] == false) {
+							list.push(value);
+						}
+						
 					}
 					
 				}
@@ -1198,17 +1220,26 @@
 			return value;
 		}
 		
-		private function createHint():void {
+		private function createHint():Array {
 			if (this.node_index_end == -1 || this.node_index_start == -1 ||
-				this.nodesFromDots.length < this.node_index_end) return;
+				this.nodesFromDots.length < this.node_index_end) return new Array(this.node_index_end);
+				
 			trace("====");
+			
+			var list:Array = new Array();
 			var i:int = this.node_index_end;
+			list.push(i);
+			trace(i, this.nodesFromDots[i][AGai.NPOS_NODENAME]);
 			while (i != this.node_index_start && i != -1 && i < this.nodesFromDots.length) {
 				i = this.nodesFromDots[i][AGai.NPOS_PREVIOUS];
-				if (i > -1) trace(i, this.nodesFromDots[i][AGai.NPOS_NODENAME]);
+				if (i > -1) {
+					list.push(i);
+					trace(i, this.nodesFromDots[i][AGai.NPOS_NODENAME]);
+				}
 				else trace(i);
 			}
 			trace ("done dijkstra");
+			return list;
 		}
 		
 		public function getStartNodeNum(x:int, y:int, newnode:Boolean):int {
@@ -1234,9 +1265,10 @@
 		////////////////////////////////////////////////////
 		
 		public function drawMap():void {
-			this.drawMapSquares();
-			this.drawMapEdges();
-			this.drawMapNodes();
+			//this.drawMapSquares();
+			//this.drawMapEdges();
+			//this.drawMapNodes();
+			this.drawMapMonster();
 		}
 		
 		/* THIS IS DONE FOR DEVELOPMENT ONLY */
@@ -1319,12 +1351,7 @@
 			
 			var LONG_MAP_H:int =	this.myGame.myHoriz;
 			var LONG_MAP_V:int = 	this.myGame.myVert;//	this.myVert;
-			//animate = newBG + 1;
-			//var animate:int = 0;
-			//var myBlocks:Array = new Array();
 			
-			
-			//var square:AGSprite;
 			var xstart:int;
 			var ystart:int;
 			var xend:int;
@@ -1393,6 +1420,77 @@
 			return ;
 		}
 		
+		public function drawMapMonster():void {
+			var  i:int,j:int,k:int,l:int,m:int, zz:int;
+			
+			var mystage:Sprite = new Sprite();
+			
+			var TILE_WIDTH:int = 64;
+			var TILE_HEIGHT:int = 64;
+			
+			var tilesWidthMeasurement:int =   32;
+			var tilesHeightMeasurement:int =  24;//
+			
+			var LONG_MAP_H:int =	this.myGame.myHoriz;
+			var LONG_MAP_V:int = 	this.myGame.myVert;//	this.myVert;
+			
+			
+			//var square:AGSprite;
+			var xstart:int;
+			var ystart:int;
+			var xend:int;
+			var yend:int;
+			var shape:Shape = new Shape();
+
+			var cheat:int = TILE_WIDTH /2;
+
+			//trace("list",this.q_hint_list);
+			if (this.q_hint_list.length > 0 && this.nodenumstart != -1 && this.nodenumend != -1) {
+			
+				
+				j = this.q_hint_list[0];
+				if (j > -1 && j < this.nodesFromDots.length) {
+					xstart  = this.nodesFromDots[j][AGai.NPOS_COORDX] * TILE_WIDTH - 
+						this.myGame.scrollBGX + cheat;
+					ystart  = this.nodesFromDots[j][AGai.NPOS_COORDY] * TILE_HEIGHT - 
+						this.myGame.scrollBGY + cheat;
+						
+					shape.graphics.lineStyle(4,0xff0000,1);
+					shape.graphics.moveTo(xstart,ystart);
+				}
+				//
+				for each (i in this.q_hint_list) {
+					if (i > 0 && i < this.nodesFromDots.length) {
+						
+						xend  = this.nodesFromDots[i][AGai.NPOS_COORDX] * TILE_WIDTH - 
+							this.myGame.scrollBGX + cheat;
+						yend  = this.nodesFromDots[i][AGai.NPOS_COORDY] * TILE_HEIGHT - 
+							this.myGame.scrollBGY + cheat;
+					
+					
+						shape.graphics.lineTo(xend,yend);
+					}
+					
+					mystage.addChild(shape);
+				}
+
+			}
+			xstart  = this.startingX - this.myGame.scrollBGX + cheat;
+			ystart  = this.startingY - this.myGame.scrollBGY + cheat;
+			
+			
+			//var shape:Shape = new Shape();
+			shape.graphics.lineStyle(20,0x00ff00,1);
+			shape.graphics.moveTo(xstart - 10,ystart);
+			shape.graphics.lineTo(xstart + 20,ystart);
+			
+			mystage.addChild(shape);
+			
+			
+			mystage.scrollRect = new Rectangle(0,0,512, (512 * 3/4));
+			this.myScreen.addChild(mystage);
+			return ;
+		}
 		
 		
 	}
