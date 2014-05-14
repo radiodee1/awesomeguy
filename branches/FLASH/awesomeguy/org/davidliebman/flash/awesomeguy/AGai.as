@@ -903,7 +903,7 @@
 							found = pair1[1];
 						}
 					}
-					if (this.q_endedge_hor == -1 && found != -1) {
+					if ( found != -1) {
 						this.nodenumend = found;
 					}
 					trace("end node", this.nodenumend);
@@ -934,10 +934,10 @@
 					if (this.nodenumstart >= this.nodesFromDots.length ||
 						this.nodenumstart == -1) {
 						//this.nodenumstart = 0; // this doesn't make sense!!
-						return;
+						//return;
 					}
 					
-					this.nodesFromDots[nodenumstart][AGai.NPOS_CALCDIST] = 0;
+					this.nodesFromDots[this.nodenumstart][AGai.NPOS_CALCDIST] = 0;
 					
 					q_i = 0;
 					q_j = 0;
@@ -960,7 +960,7 @@
 						break;
 					}
 				
-					if (q_i == this.nodenumstart){//MISLABLED!! this.nodenumend ) {
+					if (q_i == this.nodenumend ) {
 							
 						this.node_index_end = q_i;
 						//this.createHint();
@@ -1009,7 +1009,7 @@
 					if (q_alt < this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] && this.q_list.length > 0) {
 						this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] = q_alt;
 						this.nodesFromDots[q_j][AGai.NPOS_PREVIOUS] = q_i;
-						//this.nodesFromDots[q_i][AGai.NPOS_PREVIOUS] = q_j;
+						trace("previous:",this.nodesFromDots[q_i][AGai.NPOS_PREVIOUS] );
 						// heap reorder j
 					}
 					
@@ -1044,8 +1044,8 @@
 				break;
 				case AGai.ALG_SECOND_HINT_A:
 					// set REAL hint
-					trace("second hint");
 					this.q_hint_list = this.createHint();
+					trace("second hint", this.q_hint_list.length);
 					
 					this.alg_state ++;
 				break;
@@ -1190,8 +1190,8 @@
 		}
 		
 		private function createHint():Array {
-			if (this.node_index_end == -1 || this.node_index_start == -1 ||
-				this.nodesFromDots.length < this.node_index_end) return new Array();
+			//if (this.node_index_end == -1 || this.node_index_start == -1 ||
+			//	this.nodesFromDots.length < this.node_index_end) return new Array();
 				
 			trace("====");
 			
