@@ -1196,7 +1196,7 @@
 			trace("====");
 			
 			var list:Array = new Array();
-			var i:int = this.node_index_end; 
+			var i:int = this.q_i;//this.node_index_end; 
 			list.push(i);
 			trace(i, this.nodesFromDots[i][AGai.NPOS_NODENAME]);
 			while (i != this.nodenumend && i != -1 && i < this.nodesFromDots.length) {
