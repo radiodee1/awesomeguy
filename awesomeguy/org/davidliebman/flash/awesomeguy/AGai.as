@@ -946,7 +946,7 @@
 					
 					this.nodesFromDots[nodenumstart][AGai.NPOS_CALCDIST] = 0;
 					
-					q_i = nodenumstart;
+					q_i = 0;
 					q_j = 0;
 					q_list = new Array();
 					q_k = 0;
@@ -959,13 +959,20 @@
 				case AGai.ALG_DIJKSTRA_LOOP_A:
 					q_i = this.smallestDistanceNode();
 					trace("i:",q_i, "node start", this.nodenumstart );
+					
 					this.nodesFromDots[q_i][AGai.NPOS_VISITED] = true;
 				
-					if (q_i == this.nodenumend ) {
+					if (this.nodesFromDots[q_i][AGai.NPOS_CALCDIST] == AGai.START_DISTANCE) {
+						this.alg_state = AGai.ALG_SECOND_HINT_A;
+						break;
+					}
+				
+					if (q_i == this.nodenumstart){//MISLABLED!! this.nodenumend ) {
 							
 						this.node_index_end = q_i;
 						//this.createHint();
 						//this.q_hint = true;
+						this.q_list_index = 0;
 						this.alg_state = AGai.ALG_SECOND_HINT_A;
 						break;
 						//return;
@@ -983,6 +990,7 @@
 				case AGai.ALG_DIJKSTRA_LOOP_NEIGHBOR_LIST_A:
 					//
 					this.q_j = this.q_list[this.q_list_index];
+					trace(this.q_j);
 					if (this.q_list.length > 0) {
 						trace(this.nodesFromDots[this.q_i][AGai.NPOS_NODENAME],
 							  "neighbor:",q_j, this.nodesFromDots[this.q_j][AGai.NPOS_NODENAME]);
@@ -995,12 +1003,20 @@
 				break;
 				
 				case AGai.ALG_DIJKSTRA_LOOP_NEIGHBOR_LIST_B:
-					q_k = q_edge[AGai.EPOS_DIST];
+					if (q_edge.length != 0) { 
+				
+						q_k = q_edge[AGai.EPOS_DIST];
+					}
+					else {
+						q_k = AGai.START_DISTANCE;
+					}
+					
 					q_alt = q_k + this.nodesFromDots[q_i][AGai.NPOS_CALCDIST];
 					
 					if (q_alt < this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] && this.q_list.length > 0) {
 						this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] = q_alt;
 						this.nodesFromDots[q_j][AGai.NPOS_PREVIOUS] = q_i;
+						//this.nodesFromDots[q_i][AGai.NPOS_PREVIOUS] = q_j;
 						// heap reorder j
 					}
 					
@@ -1067,88 +1083,7 @@
 		}
 		
 		
-		public function doCalculation(mymonstertype:int, coordinateType:int ,startingX:int, startingY:int, endingX:int, endingY:int):void {
-			
-			if (! this.set_values_called || this.myInvisible.length == 0 ||
-				this.edgesFromDots.length == 0 || this.nodesFromDots.length == 0) return;
-			
-			switch (coordinateType) {
-				case AGai.COORDINATES_PIXELS:
-				
-				break;
-				case AGai.COORDINATES_BLOCKS:
-					startingX = startingX * TILE_WIDTH;
-					startingY = startingY * TILE_HEIGHT;
-					endingX = endingX * TILE_WIDTH;
-					endingY = endingY * TILE_HEIGHT;
-					
-				break;
-			}
-			var i:int = 0;
-
-			
-			
-			
-			///////////////////////////
-			
-			this.node_index_end = -1;
-			
-			
-			
-			//nodenumstart = this.getStartNodeNum(startingX, startingY, true);
-			//nodenumend = this.getStopNodeNum(endingX, endingY, true);
-			
-			if (this.nodenumstart >= this.nodesFromDots.length) {
-				//this.nodenumstart = 0; // this doesn't make sense!!
-				return;
-			}
-			
-			this.nodesFromDots[nodenumstart][AGai.NPOS_CALCDIST] = 0;
-			
-			q_i = nodenumstart;
-			q_j = 0;
-			q_list = new Array();
-			q_k = 0;
-			q_alt = 0;
-			q_edge = new Array();
-			
-			while(! this.isListEmpty() ) {
-				q_i = this.smallestDistanceNode();
-				trace("i:",q_i);
-				this.nodesFromDots[q_i][AGai.NPOS_VISITED] = true;
-				
-				
-				if (q_i == this.nodenumend ) {
-							
-					this.node_index_end = q_i;
-					this.createHint();
-					return;
-				}
-				//
-				q_list = this.getNodeNeighborList(q_i);
-				
-				
-				//trace("size:", q_list.length);
-				for each (q_j in q_list) {
-					trace("neighbor:",q_j);
-					
-					q_edge = this.getEdgeFromNodeIndeces(q_i,q_j);
-					q_k = q_edge[AGai.EPOS_DIST];
-					q_alt = q_k + this.nodesFromDots[q_i][AGai.NPOS_CALCDIST];
-					
-					if (q_alt < this.nodesFromDots[q_j][AGai.NPOS_CALCDIST]) {
-						this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] = q_alt;
-						this.nodesFromDots[q_j][AGai.NPOS_PREVIOUS] = q_i;
-						// heap reorder j
-					}
-					
-				}
-				trace("----");
-			}
-			if (this.node_index_end == -1) {
-				trace("no path");
-			}
-		}
+		
 		
 		private function isListEmpty():Boolean {
 			var value:Boolean = true;
@@ -1243,7 +1178,7 @@
 												   a_array[AGai.NPOS_COORDX], 
 												   a_array[AGai.NPOS_COORDY]);
 			var i:int;
-			var j:int;
+			var j:int = -1;
 			var value:Array = new Array();
 			for(i = 0; i < this.edgesFromDots.length; i ++){
 				if (this.edgesFromDots[i][AGai.EPOS_EDGENAME] == ab_name) {
@@ -1253,7 +1188,11 @@
 					j = i;
 				}
 			}
-			value = this.edgesFromDots[j];
+			if (j == -1) { 
+				value = new Array();//this.edgesFromDots[0];
+				trace("ERROR");
+			}
+			else value = this.edgesFromDots[j];
 			return value;
 		}
 		
@@ -1264,10 +1203,11 @@
 			trace("====");
 			
 			var list:Array = new Array();
-			var i:int = this.node_index_end;
+			var i:int = this.node_index_end; 
 			list.push(i);
 			trace(i, this.nodesFromDots[i][AGai.NPOS_NODENAME]);
 			while (i != this.node_index_start && i != -1 && i < this.nodesFromDots.length) {
+			//while (i != -1) {
 				i = this.nodesFromDots[i][AGai.NPOS_PREVIOUS];
 				if (i > -1) {
 					list.push(i);
@@ -1303,7 +1243,7 @@
 		
 		public function drawMap():void {
 			//this.drawMapSquares();
-			//this.drawMapEdges();
+			this.drawMapEdges();
 			//this.drawMapNodes();
 			this.drawMapMonster();
 		}
@@ -1398,13 +1338,18 @@
 			var cheat:int = TILE_WIDTH /2;
 
 			for(i = 0; i < this.edgesFromDots.length; i ++) {
+				
+				if (this.edgesFromDots[i][AGai.EPOS_TEMPFLAG] == false) {
+					continue;
+				}
+				
 				xstart  = this.edgesFromDots[i][EPOS_STARTX] * TILE_WIDTH - this.myGame.scrollBGX + cheat;
 				ystart  = this.edgesFromDots[i][EPOS_STARTY] * TILE_HEIGHT - this.myGame.scrollBGY + cheat;
 				xend  = this.edgesFromDots[i][EPOS_STOPX] * TILE_WIDTH - this.myGame.scrollBGX + cheat;
 				yend  = this.edgesFromDots[i][EPOS_STOPY] * TILE_HEIGHT- this.myGame.scrollBGY + cheat;
 				
 				var shape:Shape = new Shape();
-				shape.graphics.lineStyle(4,0xff0000,1);
+				shape.graphics.lineStyle(4,0x0000ff,1);
 				shape.graphics.moveTo(xstart,ystart);
 				shape.graphics.lineTo(xend,yend);
 				
@@ -1497,7 +1442,9 @@
 					shape.graphics.moveTo(xstart,ystart);
 				}
 				//
-				for each (i in this.q_hint_list) {
+				for (m = 0; m< this.q_hint_list.length; m ++) {
+					i = this.q_hint_list[m];
+					//for each (i in this.q_hint_list) {
 					if (i > 0 && i < this.q_hint_nodes.length) {
 						
 						xend  = this.q_hint_nodes[i][AGai.NPOS_COORDX] * TILE_WIDTH - 
