@@ -74,13 +74,6 @@
 		public static var NPOS_PREVIOUS:int = 5;
 		public static var NPOS_TEMPFLAG:int = 6;
 		
-		// MAYBE FOR PASSING MESSAGES TO A THREADED VERSION OF ai
-		public static var MESSAGE_START:String = "start";
-		public static var MESSAGE_STOP:String = "stop";
-		public static var MESSAGE_CLEAR:String = "clear";
-		public static var MESSAGE_HORIZONTAL:String = "horizontal";
-		public static var MESSAGE_VERTICAL:String = "vertical";
-
 		public var alg_state:int = -1;
 		public var alg_count:int = 0;
 		public static var COUNT_ALG:int = 1200;
@@ -1206,7 +1199,7 @@
 			var i:int = this.node_index_end; 
 			list.push(i);
 			trace(i, this.nodesFromDots[i][AGai.NPOS_NODENAME]);
-			while (i != this.node_index_start && i != -1 && i < this.nodesFromDots.length) {
+			while (i != this.nodenumend && i != -1 && i < this.nodesFromDots.length) {
 			//while (i != -1) {
 				i = this.nodesFromDots[i][AGai.NPOS_PREVIOUS];
 				if (i > -1) {
