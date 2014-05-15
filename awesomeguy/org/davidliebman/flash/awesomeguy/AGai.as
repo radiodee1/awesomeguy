@@ -821,12 +821,12 @@
 					}
 					
 					this.nodenumstart = found;
-					trace("start node",this.nodenumstart);
+					trace("start node",this.nodesFromDots[this.nodenumstart]);
 					this.alg_state ++;
 				break;
 				case AGai.ALG_MAKE_NODES_AND_EDGES_START_VERTICAL:
 					found = -1;
-					if (this.q_startedge_vert != -1 && this.q_startedge_hor == -1) {
+					if (this.q_startedge_vert != -1 ){//&& this.q_startedge_hor == -1) {
 						pair1 = this.makeCoordinateListingVertical(
 								this.edgesFromDots[this.q_startedge_vert][AGai.EPOS_STARTY],
 								Math.floor(this.monstery / this.TILE_WIDTH), 
@@ -849,7 +849,7 @@
 					if (this.q_startedge_hor == -1 && found != -1) {
 						this.nodenumstart = found;
 					}
-					trace("start node", this.nodenumstart);
+					trace("start node", this.nodesFromDots[ this.nodenumstart]);
 					this.alg_state ++;
 					
 				break;
@@ -877,7 +877,7 @@
 						}
 					}
 					this.nodenumend = found;
-					trace("end node", this.nodenumend);
+					trace("end node",this.nodesFromDots[ this.nodenumend]);
 					this.alg_state ++;
 				
 				break;
@@ -895,7 +895,7 @@
 								this.edgesFromDots[this.q_endedge_vert][AGai.EPOS_STARTX],
 								false, true);
 						trace(4,"pair1", pair1, "pair2", pair2);
-
+						
 						if (pair1[0] == pair2[0]) {
 							found = pair1[0];
 						}
@@ -906,7 +906,7 @@
 					if ( found != -1) {
 						this.nodenumend = found;
 					}
-					trace("end node", this.nodenumend);
+					trace("end node --", this.nodesFromDots[this.nodenumend]);
 					this.alg_state ++;
 				break;
 				case AGai.ALG_FIRST_HINT:
@@ -937,8 +937,10 @@
 						//return;
 					}
 					
-					this.nodesFromDots[this.nodenumstart][AGai.NPOS_CALCDIST] = 0;
+					this.nodesFromDots[this.nodenumstart][AGai.NPOS_CALCDIST] =  0;
 					
+					trace("test nodes 1 --- ", this.nodesFromDots[this.nodenumstart]);
+					trace("test nodes 2 --- ", this.nodesFromDots[this.nodenumend]);
 					q_i = 0;
 					q_j = 0;
 					q_list = new Array();
@@ -951,14 +953,10 @@
 				break;
 				case AGai.ALG_DIJKSTRA_LOOP_A:
 					q_i = this.smallestDistanceNode();
-					trace("i:",q_i, "node start", this.nodenumstart );
+					trace("i:",q_i, "node start", this.nodenumstart, 
+						  "calc-dist",this.nodesFromDots[q_i][AGai.NPOS_CALCDIST] );
 					
 					this.nodesFromDots[q_i][AGai.NPOS_VISITED] = true;
-				
-					//if (this.nodesFromDots[q_i][AGai.NPOS_CALCDIST] == AGai.START_DISTANCE) {
-					//	this.alg_state = AGai.ALG_SECOND_HINT_A;
-					//	break;
-					//}
 				
 					if (q_i == this.nodenumend ) {
 							
@@ -970,11 +968,19 @@
 						break;
 						//return;
 					}
+					
+					//if (this.nodesFromDots[q_i][AGai.NPOS_CALCDIST] >= AGai.START_DISTANCE) {
+					//	this.alg_state = AGai.ALG_SECOND_HINT_A;
+					//	break;
+					//}
+					
 					this.alg_state ++;
 				break;
 				
 				case AGai.ALG_DIJKSTRA_LOOP_B:
 					q_list = this.getNodeNeighborList(q_i);
+					
+					trace("length", q_list.length);
 					
 					this.q_list_index = 0;
 					this.alg_state ++;
@@ -991,7 +997,9 @@
 					else trace("skipping");
 					
 					q_edge = this.getEdgeFromNodeIndeces(q_i,q_j);
-					//trace(this.q_j);
+					
+					trace(this.q_edge," --edge--");
+					
 					this.alg_state ++;
 				break;
 				
@@ -999,26 +1007,28 @@
 					if (q_edge.length != 0) { 
 				
 						q_k = q_edge[AGai.EPOS_DIST];
-					}
-					else {
-						q_k = AGai.START_DISTANCE;
-					}
 					
-					q_alt = q_k + this.nodesFromDots[q_i][AGai.NPOS_CALCDIST];
 					
-					if (q_alt < this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] && this.q_list.length > 0) {
-						this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] = q_alt;
-						this.nodesFromDots[q_j][AGai.NPOS_PREVIOUS] = q_i;
-						trace("previous:",this.nodesFromDots[q_i][AGai.NPOS_PREVIOUS] );
-						// heap reorder j
+						q_alt = q_k + this.nodesFromDots[q_i][AGai.NPOS_CALCDIST];
+						
+						trace("edge dist",q_k, "new dist" , q_alt, "length", this.q_list.length);
+	
+						if (q_alt <= this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] ){// was q_j  //&& this.q_list.length > 0) {
+							this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] = q_alt;
+							this.nodesFromDots[q_j][AGai.NPOS_PREVIOUS] = q_i;
+							trace("previous:",this.nodesFromDots[q_i][AGai.NPOS_PREVIOUS] );
+							// heap reorder j
+						}
+					
 					}
-					
 					if (this.q_list_index < this.q_list.length -1) {
 						this.q_list_index ++;
 						this.alg_state = AGai.ALG_DIJKSTRA_LOOP_NEIGHBOR_LIST_A;
 						break;
 					}
 					else {
+						this.q_list_index = 0;
+						this.q_list = new Array();
 						this.alg_state ++;
 					}
 				break;
@@ -1028,6 +1038,7 @@
 					if (!this.isListEmpty()) {
 						
 						this.alg_state = AGai.ALG_DIJKSTRA_LOOP_A;
+						break;
 					}
 					else {
 						if (this.node_index_end == -1) {
@@ -1039,7 +1050,7 @@
 							break;
 						}
 						
-						this.alg_state ++;
+						this.alg_state = AGai.ALG_SECOND_HINT_A;
 					}
 				break;
 				case AGai.ALG_SECOND_HINT_A:
@@ -1116,8 +1127,9 @@
 				}
 			}
 			
-			
 			value = l;
+			trace ("smallest node:", value);
+
 			return value;
 		}
 		
@@ -1236,7 +1248,7 @@
 		
 		public function drawMap():void {
 			//this.drawMapSquares();
-			this.drawMapEdges();
+			//this.drawMapEdges();//---
 			//this.drawMapNodes();
 			this.drawMapMonster();
 		}
