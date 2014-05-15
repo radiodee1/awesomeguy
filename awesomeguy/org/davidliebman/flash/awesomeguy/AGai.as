@@ -955,10 +955,10 @@
 					
 					this.nodesFromDots[q_i][AGai.NPOS_VISITED] = true;
 				
-					if (this.nodesFromDots[q_i][AGai.NPOS_CALCDIST] == AGai.START_DISTANCE) {
-						this.alg_state = AGai.ALG_SECOND_HINT_A;
-						break;
-					}
+					//if (this.nodesFromDots[q_i][AGai.NPOS_CALCDIST] == AGai.START_DISTANCE) {
+					//	this.alg_state = AGai.ALG_SECOND_HINT_A;
+					//	break;
+					//}
 				
 					if (q_i == this.nodenumend ) {
 							
@@ -983,7 +983,7 @@
 				case AGai.ALG_DIJKSTRA_LOOP_NEIGHBOR_LIST_A:
 					//
 					this.q_j = this.q_list[this.q_list_index];
-					trace(this.q_j);
+					trace(this.q_j, "<-");
 					if (this.q_list.length > 0) {
 						trace(this.nodesFromDots[this.q_i][AGai.NPOS_NODENAME],
 							  "neighbor:",q_j, this.nodesFromDots[this.q_j][AGai.NPOS_NODENAME]);
@@ -1123,7 +1123,7 @@
 		
 		
 		private function getNodeNeighborList(node:int):Array {
-			var value:int = node;
+			var value:int = -1;//node;
 			var list:Array = new Array();
 			var i:int = 0;
 			var j:int = 0;
