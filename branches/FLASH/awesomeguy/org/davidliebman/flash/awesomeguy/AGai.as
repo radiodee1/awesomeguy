@@ -735,6 +735,13 @@
 					
 					trace("monster and guy");
 					trace(this.monsterx / 64, this.monstery/64, this.guyx/64, this.guyy/64);
+					
+					this.q_endedge_hor = -1;
+					this.q_endedge_vert = -1;
+					
+					this.q_startedge_hor = -1;
+					this.q_startedge_vert = -1;
+					
 					this.alg_state ++;
 				break;
 				case AGai.ALG_REMOVE_TEMP_A:
@@ -978,8 +985,9 @@
 					
 					this.nodesFromDots[this.nodenumstart][AGai.NPOS_CALCDIST] =  0;
 					
-					trace("test nodes 1 --- ", this.nodesFromDots[this.nodenumstart]);
-					trace("test nodes 2 --- ", this.nodesFromDots[this.nodenumend]);
+					//trace("test nodes 1 --- ", this.nodesFromDots[this.nodenumstart]);
+					//trace("test nodes 2 --- ", this.nodesFromDots[this.nodenumend]);
+					
 					q_i = 0;
 					q_j = 0;
 					q_list = new Array();
@@ -1277,8 +1285,8 @@
 			
 			var list:Array = new Array();
 			var i:int = this.node_index_end; 
-			list.push(i);
-			trace(i, this.nodesFromDots[i][AGai.NPOS_NODENAME]);
+			//list.push(i);
+			//trace(i, this.nodesFromDots[i][AGai.NPOS_NODENAME]);
 			while (i != this.nodenumstart && i != -1 && i < this.nodesFromDots.length) {
 			//while (i != -1) {
 				i = this.nodesFromDots[i][AGai.NPOS_PREVIOUS];
@@ -1523,7 +1531,7 @@
 				for (m = 0; m< this.q_hint_list.length; m ++) {
 					i = this.q_hint_list[m];
 					//for each (i in this.q_hint_list) {
-					if (i > 0 && i < this.q_hint_nodes.length) {
+					if (i > -1 && i < this.q_hint_nodes.length) {
 						
 						xend  = this.q_hint_nodes[i][AGai.NPOS_COORDX] * TILE_WIDTH - 
 							this.myGame.scrollBGX + cheat;
@@ -1550,7 +1558,7 @@
 			mystage.addChild(shape);
 			
 			
-			mystage.scrollRect = new Rectangle(0,0,512, (512 * 3/4));
+			mystage.scrollRect = new Rectangle(0,0,512, (512 * 3/4) - 64);
 			this.myScreen.addChild(mystage);
 			return ;
 		}
