@@ -494,8 +494,8 @@
 					this.edgesFromDots[j][AGai.EPOS_NODEENDINDEX] = i;
 					
 				}
-				
 			}
+
 			return 0;
 		}
 		
@@ -895,6 +895,8 @@
 					for (i = 0; i < this.edgesFromDots.length; i ++) {
 						if (this.edgesFromDots[i][AGai.EPOS_TEMPFLAG] == true) {
 							this.connectNodeEdgeIndices(i);
+							trace(this.edgesFromDots[i]);
+
 						}
 					}
 					
@@ -942,7 +944,7 @@
 					if (this.nodesFromDots[q_i][AGai.NPOS_CALCDIST] >= AGai.START_DISTANCE) {
 						trace("distance too long");
 						
-						this.alg_state = AGai.ALG_DIJKSTRA_LOOP_CLOSE;
+						this.alg_state = AGai.ALG_SECOND_HINT_A;
 						break;
 					}
 					
@@ -964,8 +966,8 @@
 					this.q_j = this.q_list[this.q_list_index];
 					trace(this.q_j, "<- q_j");
 					if (this.q_list.length > 0) {
-						trace(this.nodesFromDots[this.q_i][AGai.NPOS_NODENAME],
-							  "neighbor:",q_j, this.nodesFromDots[this.q_j][AGai.NPOS_NODENAME]);
+						//trace(this.nodesFromDots[this.q_i][AGai.NPOS_NODENAME],
+						//	  "neighbor:",q_j, this.nodesFromDots[this.q_j][AGai.NPOS_NODENAME]);
 						
 						q_edge = this.getEdgeFromNodeIndeces(q_i,q_j);
 
@@ -986,11 +988,11 @@
 						
 						trace("edge dist",q_k, "new dist" , q_alt, "length", this.q_list.length);
 	
-						if (q_alt < this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] ){// was q_j  //&& this.q_list.length > 0) {
+						if (q_alt <= this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] ){// was q_j  //&& this.q_list.length > 0) {
 							this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] = q_alt;
 							this.nodesFromDots[q_j][AGai.NPOS_PREVIOUS] = q_i;
-							trace("previous:",this.nodesFromDots[q_i][AGai.NPOS_PREVIOUS],
-								  this.nodenumend, this.nodenumstart);
+							//trace("previous:",this.nodesFromDots[q_i][AGai.NPOS_PREVIOUS],
+							//	  this.nodenumend, this.nodenumstart);
 
 							// heap reorder j
 						}
@@ -1095,7 +1097,7 @@
 						default_l = i;
 						//l = i;
 					}
-					if (j <= k) {
+					if (j < k) {
 						k = j;
 						l = i;
 						//trace(k);
@@ -1150,13 +1152,13 @@
 				}
 				
 			}
-			for (i = 0; i < this.edgesFromDots.length; i ++) {
-				trace(i,"start",this.edgesFromDots[i][AGai.EPOS_NODESTARTINDEX],
-					  "end", this.edgesFromDots[i][AGai.EPOS_NODEENDINDEX] ,
-					  this.edgesFromDots[i][AGai.EPOS_DIST]);
-				trace(i,"start",this.edgesFromDots[i][AGai.EPOS_NODESTART],
-					  "end", this.edgesFromDots[i][AGai.EPOS_NODEEND] );
-			}
+			//for (i = 0; i < this.edgesFromDots.length; i ++) {
+			//	trace(i,"start",this.edgesFromDots[i][AGai.EPOS_NODESTARTINDEX],
+			//		  "end", this.edgesFromDots[i][AGai.EPOS_NODEENDINDEX] ,
+			//		  this.edgesFromDots[i][AGai.EPOS_DIST]);
+			//	trace(i,"start",this.edgesFromDots[i][AGai.EPOS_NODESTART],
+			//		  "end", this.edgesFromDots[i][AGai.EPOS_NODEEND] );
+			//}
 			
 			trace("leading up: length", list.length);
 			
@@ -1195,9 +1197,7 @@
 		}
 		
 		private function createHint():Array {
-			//if (this.node_index_end == -1 || this.node_index_start == -1 ||
-			//	this.nodesFromDots.length < this.node_index_end) return new Array();
-				
+			
 			trace("====");
 			
 			var list:Array = new Array();
@@ -1431,7 +1431,7 @@
 
 
 			//trace("qlist",this.q_hint_nodes.length, this.nodenumstart,this.nodenumend);
-			if (this.q_hint_list.length > 0 && this.nodenumstart != -1 && this.nodenumend != -1) {
+			if (this.q_hint_list.length > 1 && this.nodenumstart != -1 && this.nodenumend != -1) {
 			
 				
 				j = this.q_hint_list[0];
@@ -1444,6 +1444,7 @@
 					shape.graphics.lineStyle(4,0xff0000,1);
 					shape.graphics.moveTo(xstart,ystart);
 				}
+				//else return;
 				//
 				for (m = 0; m< this.q_hint_list.length; m ++) {
 					i = this.q_hint_list[m];
