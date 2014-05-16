@@ -658,7 +658,7 @@
 						myDraw.drawBasicSprite(mySprite[i], D_EXIT);
 					}
 					if (mySprite[i].sprite_type == AGMode.S_XMONSTER_CLIMBER) {
-						this.ai.setStartEnd(mySprite[i].x, mySprite[i].y, myGuy.x, myGuy.y);
+						this.ai.setStartEnd(mySprite[i].x, mySprite[i].y, xpos, ypos);
 
 					}
 				}
