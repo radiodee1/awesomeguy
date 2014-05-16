@@ -996,7 +996,9 @@
 						  "calc-dist",this.nodesFromDots[q_i][AGai.NPOS_CALCDIST] );
 					
 					this.nodesFromDots[q_i][AGai.NPOS_VISITED] = true;
-				
+					
+					this.node_index_end = q_i;
+					
 					if (q_i == this.nodenumend ) {
 							
 						this.node_index_end = q_i;
@@ -1010,6 +1012,7 @@
 					
 					if (this.nodesFromDots[q_i][AGai.NPOS_CALCDIST] >= AGai.START_DISTANCE) {
 						trace("distance too long");
+						
 						this.alg_state = AGai.ALG_SECOND_HINT_A;
 						break;
 					}
@@ -1058,7 +1061,7 @@
 						
 						trace("edge dist",q_k, "new dist" , q_alt, "length", this.q_list.length);
 	
-						if (q_alt < this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] ){// was q_j  //&& this.q_list.length > 0) {
+						if (q_alt <= this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] ){// was q_j  //&& this.q_list.length > 0) {
 							this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] = q_alt;
 							this.nodesFromDots[q_j][AGai.NPOS_PREVIOUS] = q_i;
 							trace("previous:",this.nodesFromDots[q_i][AGai.NPOS_PREVIOUS] );
@@ -1195,7 +1198,7 @@
 			var i:int = 0;
 			var j:int = 0;
 			for (i = 0; i < this.edgesFromDots.length; i ++) {
-				if ( !this.edgesFromDots[i][AGai.EPOS_ISJUMP] &&// || 
+				if ( !this.edgesFromDots[i][AGai.EPOS_ISJUMP]  || 
 					this.edgesFromDots[i][AGai.EPOS_TOPY] >= this.monstery ){
 						
 					if (this.edgesFromDots[i][AGai.EPOS_NODESTART] == 
@@ -1229,6 +1232,8 @@
 				trace(i,"start",this.edgesFromDots[i][AGai.EPOS_NODESTART],
 					  "end", this.edgesFromDots[i][AGai.EPOS_NODEEND] );
 			}
+			
+			trace("leading up: length", list.length);
 			
 			return list;
 		}
@@ -1271,10 +1276,10 @@
 			trace("====");
 			
 			var list:Array = new Array();
-			var i:int = this.q_i;//this.node_index_end; 
+			var i:int = this.node_index_end; 
 			list.push(i);
 			trace(i, this.nodesFromDots[i][AGai.NPOS_NODENAME]);
-			while (i != this.nodenumend && i != -1 && i < this.nodesFromDots.length) {
+			while (i != this.nodenumstart && i != -1 && i < this.nodesFromDots.length) {
 			//while (i != -1) {
 				i = this.nodesFromDots[i][AGai.NPOS_PREVIOUS];
 				if (i > -1) {
