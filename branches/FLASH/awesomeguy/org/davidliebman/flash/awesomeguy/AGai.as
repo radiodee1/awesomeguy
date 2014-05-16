@@ -543,6 +543,38 @@
 			}
 		}
 		
+		public function connectNodeEdgeIndices(j:int):int {
+			var i:int = 0;
+			var edgenameend:String ;
+			var edgenamestart:String ;
+			
+			for (i = 0; i < this.nodesFromDots.length; i ++) {
+				//for (j = 0; j < this.edgesFromDots.length; j ++) {
+					
+					edgenamestart = this.makeNodeName(
+						this.edgesFromDots[j][AGai.EPOS_STARTX], 
+						this.edgesFromDots[j][AGai.EPOS_STARTY]);
+						
+					edgenameend = this.makeNodeName(
+						this.edgesFromDots[j][AGai.EPOS_STOPX], 
+						this.edgesFromDots[j][AGai.EPOS_STOPY]);
+						
+						
+					if (edgenamestart == 
+						this.nodesFromDots[i][AGai.NPOS_NODENAME]) {
+						this.edgesFromDots[j][AGai.EPOS_NODESTARTINDEX] = i;
+						
+					}
+					else if(edgenameend ==
+						  this.nodesFromDots[i][AGai.NPOS_NODENAME]) {
+						this.edgesFromDots[j][AGai.EPOS_NODEENDINDEX] = i;
+						
+					}
+				//}
+			}
+			return 0;
+		}
+		
 		public function isEndNodeHoriz(x:int, y:int):Boolean {
 			var value:Boolean = true;
 			var connections:int = 0;
@@ -932,6 +964,12 @@
 				case AGai.ALG_START_DIJKSTRA:
 					this.node_index_end = -1;
 					
+					for (i = 0; i < this.edgesFromDots.length; i ++) {
+						if (this.edgesFromDots[i][AGai.EPOS_TEMPFLAG] == true) {
+							this.connectNodeEdgeIndices(i);
+						}
+					}
+					
 					if (this.nodenumstart >= this.nodesFromDots.length ||
 						this.nodenumstart == -1) {
 						//this.nodenumstart = 0; // this doesn't make sense!!
@@ -1144,7 +1182,7 @@
 			value = l;
 			trace ("smallest node:", value);
 			for (i = 0; i < this.nodesFromDots.length; i ++) {
-				trace ("calc-dist",this.nodesFromDots[i][AGai.NPOS_CALCDIST] ,"visited",
+				trace (i,"calc-dist",this.nodesFromDots[i][AGai.NPOS_CALCDIST] ,"visited",
 					   this.nodesFromDots[i][AGai.NPOS_VISITED]);
 			}
 			return value;
@@ -1185,9 +1223,10 @@
 				
 			}
 			for (i = 0; i < this.edgesFromDots.length; i ++) {
-				trace("start",this.edgesFromDots[i][AGai.EPOS_NODESTARTINDEX],
-					  "end", this.edgesFromDots[i][AGai.EPOS_NODEENDINDEX] );
-				trace("start",this.edgesFromDots[i][AGai.EPOS_NODESTART],
+				trace(i,"start",this.edgesFromDots[i][AGai.EPOS_NODESTARTINDEX],
+					  "end", this.edgesFromDots[i][AGai.EPOS_NODEENDINDEX] ,
+					  this.edgesFromDots[i][AGai.EPOS_DIST]);
+				trace(i,"start",this.edgesFromDots[i][AGai.EPOS_NODESTART],
 					  "end", this.edgesFromDots[i][AGai.EPOS_NODEEND] );
 			}
 			
