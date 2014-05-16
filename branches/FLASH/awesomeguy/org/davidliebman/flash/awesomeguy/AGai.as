@@ -401,34 +401,11 @@
 			}
 			////
 			// set index of nodes in edge array
-			var edgenamestart:String = new String() ;
-			var edgenameend:String  = new String();
 			
-			
-			for (i = 0; i < this.nodesFromDots.length; i ++) {
-				for (j = 0; j < this.edgesFromDots.length; j ++) {
-					
-					edgenamestart = this.makeNodeName(
-						this.edgesFromDots[j][AGai.EPOS_STARTX], 
-						this.edgesFromDots[j][AGai.EPOS_STARTY]);
-						
-					edgenameend = this.makeNodeName(
-						this.edgesFromDots[j][AGai.EPOS_STOPX], 
-						this.edgesFromDots[j][AGai.EPOS_STOPY]);
-						
-						
-					if (edgenamestart == 
-						this.nodesFromDots[i][AGai.NPOS_NODENAME]) {
-						this.edgesFromDots[j][AGai.EPOS_NODESTARTINDEX] = i;
-						
-					}
-					else if(edgenameend ==
-						  this.nodesFromDots[i][AGai.NPOS_NODENAME]) {
-						this.edgesFromDots[j][AGai.EPOS_NODEENDINDEX] = i;
-						
-					}
-				}
+			for (i = 0; i < this.edgesFromDots.length; i ++) {
+				this.connectNodeEdgeIndices(i);
 			}
+			
 			this.alg_state = AGai.ALG_ZERO;
 		}
 		
