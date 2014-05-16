@@ -702,6 +702,7 @@
 					this.monstery = this.startingY;
 					
 					trace("monster and guy");
+					trace(this.monsterx / 64, this.monstery/64, this.guyx/64, this.guyy/64);
 					this.alg_state ++;
 				break;
 				case AGai.ALG_REMOVE_TEMP_A:
@@ -969,10 +970,11 @@
 						//return;
 					}
 					
-					//if (this.nodesFromDots[q_i][AGai.NPOS_CALCDIST] >= AGai.START_DISTANCE) {
-					//	this.alg_state = AGai.ALG_SECOND_HINT_A;
-					//	break;
-					//}
+					if (this.nodesFromDots[q_i][AGai.NPOS_CALCDIST] >= AGai.START_DISTANCE) {
+						trace("distance too long");
+						this.alg_state = AGai.ALG_SECOND_HINT_A;
+						break;
+					}
 					
 					this.alg_state ++;
 				break;
@@ -989,27 +991,31 @@
 				
 				case AGai.ALG_DIJKSTRA_LOOP_NEIGHBOR_LIST_A:
 					//
-					this.q_j = this.q_list.pop();//this.q_list[this.q_list_index];
+					this.q_j = this.q_list[this.q_list_index];
 					trace(this.q_j, "<- q_j");
 					if (this.q_list.length > 0) {
 						trace(this.nodesFromDots[this.q_i][AGai.NPOS_NODENAME],
 							  "neighbor:",q_j, this.nodesFromDots[this.q_j][AGai.NPOS_NODENAME]);
+						
+						q_edge = this.getEdgeFromNodeIndeces(q_i,q_j);
+						trace(this.q_edge," --edge--");
+
+
 					}
-					else trace("skipping");
+					else { 
+						trace("skipping");
+					}
 					
-					q_edge = this.getEdgeFromNodeIndeces(q_i,q_j);
-					
-					trace(this.q_edge," --edge--");
 					
 					this.alg_state ++;
 				break;
 				
 				case AGai.ALG_DIJKSTRA_LOOP_NEIGHBOR_LIST_B:
-					if (q_edge.length != 0 || true) { 
+					if (q_list.length != 0 ) { 
 				
 						q_k = q_edge[AGai.EPOS_DIST];
 					
-					
+						
 						q_alt = q_k + this.nodesFromDots[q_i][AGai.NPOS_CALCDIST];
 						
 						trace("edge dist",q_k, "new dist" , q_alt, "length", this.q_list.length);
@@ -1138,14 +1144,15 @@
 			value = l;
 			trace ("smallest node:", value);
 			for (i = 0; i < this.nodesFromDots.length; i ++) {
-				trace ("calc-dist",this.nodesFromDots[i][AGai.NPOS_CALCDIST]);
+				trace ("calc-dist",this.nodesFromDots[i][AGai.NPOS_CALCDIST] ,"visited",
+					   this.nodesFromDots[i][AGai.NPOS_VISITED]);
 			}
 			return value;
 		}
 		
 		
 		private function getNodeNeighborList(node:int):Array {
-			var value:int = -1;//node;
+			var val:int = -1;//node;
 			var list:Array = new Array();
 			var i:int = 0;
 			var j:int = 0;
@@ -1156,10 +1163,10 @@
 					if (this.edgesFromDots[i][AGai.EPOS_NODESTART] == 
 						this.nodesFromDots[node][AGai.NPOS_NODENAME]) {
 						
-						value = this.edgesFromDots[i][AGai.EPOS_NODEENDINDEX];
+						val = this.edgesFromDots[i][AGai.EPOS_NODEENDINDEX];
 						
-						if (this.nodesFromDots[value][AGai.NPOS_VISITED] == false) {
-							list.push(value);
+						if (this.nodesFromDots[val][AGai.NPOS_VISITED] == false) {
+							list.push(val);
 						}
 						
 						
@@ -1167,9 +1174,9 @@
 					else if (this.edgesFromDots[i][AGai.EPOS_NODEEND] == 
 							 this.nodesFromDots[node][AGai.NPOS_NODENAME]) {
 								 
-						value = this.edgesFromDots[i][AGai.EPOS_NODESTARTINDEX];
-						if (this.nodesFromDots[value][AGai.NPOS_VISITED] == false) {
-							list.push(value);
+						val = this.edgesFromDots[i][AGai.EPOS_NODESTARTINDEX];
+						if (this.nodesFromDots[val][AGai.NPOS_VISITED] == false) {
+							list.push(val);
 						}
 						
 					}
@@ -1177,6 +1184,13 @@
 				}
 				
 			}
+			for (i = 0; i < this.edgesFromDots.length; i ++) {
+				trace("start",this.edgesFromDots[i][AGai.EPOS_NODESTARTINDEX],
+					  "end", this.edgesFromDots[i][AGai.EPOS_NODEENDINDEX] );
+				trace("start",this.edgesFromDots[i][AGai.EPOS_NODESTART],
+					  "end", this.edgesFromDots[i][AGai.EPOS_NODEEND] );
+			}
+			
 			return list;
 		}
 		
