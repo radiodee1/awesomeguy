@@ -979,7 +979,8 @@
 				
 				case AGai.ALG_DIJKSTRA_LOOP_B:
 					q_list = this.getNodeNeighborList(q_i);
-					
+					//this.nodesFromDots[q_i][AGai.NPOS_VISITED] = true;
+
 					trace("length", q_list.length);
 					
 					this.q_list_index = 0;
@@ -988,8 +989,8 @@
 				
 				case AGai.ALG_DIJKSTRA_LOOP_NEIGHBOR_LIST_A:
 					//
-					this.q_j = this.q_list[this.q_list_index];
-					trace(this.q_j, "<-");
+					this.q_j = this.q_list.pop();//this.q_list[this.q_list_index];
+					trace(this.q_j, "<- q_j");
 					if (this.q_list.length > 0) {
 						trace(this.nodesFromDots[this.q_i][AGai.NPOS_NODENAME],
 							  "neighbor:",q_j, this.nodesFromDots[this.q_j][AGai.NPOS_NODENAME]);
@@ -1004,7 +1005,7 @@
 				break;
 				
 				case AGai.ALG_DIJKSTRA_LOOP_NEIGHBOR_LIST_B:
-					if (q_edge.length != 0) { 
+					if (q_edge.length != 0 || true) { 
 				
 						q_k = q_edge[AGai.EPOS_DIST];
 					
@@ -1013,10 +1014,12 @@
 						
 						trace("edge dist",q_k, "new dist" , q_alt, "length", this.q_list.length);
 	
-						if (q_alt <= this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] ){// was q_j  //&& this.q_list.length > 0) {
+						if (q_alt < this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] ){// was q_j  //&& this.q_list.length > 0) {
 							this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] = q_alt;
 							this.nodesFromDots[q_j][AGai.NPOS_PREVIOUS] = q_i;
 							trace("previous:",this.nodesFromDots[q_i][AGai.NPOS_PREVIOUS] );
+							//this.nodesFromDots[q_i][AGai.NPOS_VISITED] = true;
+
 							// heap reorder j
 						}
 					
@@ -1114,12 +1117,13 @@
 			
 			for (i = 0; i < this.nodesFromDots.length; i ++) {
 				if (!this.nodesFromDots[i][AGai.NPOS_VISITED]) {
+					j = this.nodesFromDots[i][AGai.NPOS_CALCDIST];
+					
 					if (default_l == -1) { 
 						default_l = i;
-						l = i;
+						//l = i;
 					}
-					j = this.nodesFromDots[i][AGai.NPOS_CALCDIST];
-					if (j < k) {
+					if (j <= k) {
 						k = j;
 						l = i;
 						//trace(k);
@@ -1127,9 +1131,15 @@
 				}
 			}
 			
+			if (k == AGai.START_DISTANCE) {
+				l = default_l;
+			}
+			
 			value = l;
 			trace ("smallest node:", value);
-
+			for (i = 0; i < this.nodesFromDots.length; i ++) {
+				trace ("calc-dist",this.nodesFromDots[i][AGai.NPOS_CALCDIST]);
+			}
 			return value;
 		}
 		
@@ -1140,7 +1150,7 @@
 			var i:int = 0;
 			var j:int = 0;
 			for (i = 0; i < this.edgesFromDots.length; i ++) {
-				if ( !this.edgesFromDots[i][AGai.EPOS_ISJUMP] || 
+				if ( !this.edgesFromDots[i][AGai.EPOS_ISJUMP] &&// || 
 					this.edgesFromDots[i][AGai.EPOS_TOPY] >= this.monstery ){
 						
 					if (this.edgesFromDots[i][AGai.EPOS_NODESTART] == 
@@ -1219,6 +1229,11 @@
 					trace(i, this.nodesFromDots[i][AGai.NPOS_NODENAME]);
 				}
 				else trace(i);
+			}
+			
+			trace ("hint analysis");
+			for (i = 0; i < this.nodesFromDots.length; i ++) {
+				trace ("hint stuff", this.nodesFromDots[i][AGai.NPOS_PREVIOUS]);
 			}
 			trace ("done dijkstra");
 			return list;
