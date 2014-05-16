@@ -923,7 +923,7 @@
 				break;
 				case AGai.ALG_MAKE_NODES_AND_EDGES_END_VERTICAL:
 					found = -1;
-					if (this.q_endedge_vert != -1 ){//&& this.q_endedge_hor == -1) {
+					if (this.q_endedge_vert != -1 && this.q_endedge_hor == -1) {
 						pair1 = this.makeCoordinateListingVertical(
 								this.edgesFromDots[this.q_endedge_vert][AGai.EPOS_STARTY],
 								Math.floor(this.guyy / this.TILE_WIDTH), 
@@ -1018,12 +1018,14 @@
 						//return;
 					}
 					
+					
 					if (this.nodesFromDots[q_i][AGai.NPOS_CALCDIST] >= AGai.START_DISTANCE) {
 						trace("distance too long");
 						
 						this.alg_state = AGai.ALG_SECOND_HINT_A;
 						break;
 					}
+					
 					
 					this.alg_state ++;
 				break;
@@ -1069,10 +1071,11 @@
 						
 						trace("edge dist",q_k, "new dist" , q_alt, "length", this.q_list.length);
 	
-						if (q_alt <= this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] ){// was q_j  //&& this.q_list.length > 0) {
+						if (q_alt < this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] ){// was q_j  //&& this.q_list.length > 0) {
 							this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] = q_alt;
 							this.nodesFromDots[q_j][AGai.NPOS_PREVIOUS] = q_i;
-							trace("previous:",this.nodesFromDots[q_i][AGai.NPOS_PREVIOUS] );
+							trace("previous:",this.nodesFromDots[q_i][AGai.NPOS_PREVIOUS],
+								  this.nodenumend, this.nodenumstart);
 							//this.nodesFromDots[q_i][AGai.NPOS_VISITED] = true;
 
 							// heap reorder j
@@ -1207,7 +1210,7 @@
 			var j:int = 0;
 			for (i = 0; i < this.edgesFromDots.length; i ++) {
 				if ( !this.edgesFromDots[i][AGai.EPOS_ISJUMP]  || 
-					this.edgesFromDots[i][AGai.EPOS_TOPY] >= this.monstery ){
+					this.edgesFromDots[i][AGai.EPOS_TOPY] >= this.monstery  || true){
 						
 					if (this.edgesFromDots[i][AGai.EPOS_NODESTART] == 
 						this.nodesFromDots[node][AGai.NPOS_NODENAME]) {
