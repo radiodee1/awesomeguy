@@ -923,12 +923,10 @@
 				break;
 				case AGai.ALG_DIJKSTRA_LOOP_A:
 					q_i = this.smallestDistanceNode();
-					trace("i:",q_i, "node start", this.nodenumstart, 
-						  "calc-dist",this.nodesFromDots[q_i][AGai.NPOS_CALCDIST] );
 					
 					this.nodesFromDots[q_i][AGai.NPOS_VISITED] = true;
 					
-					this.node_index_end = q_i;
+					//this.node_index_end = q_i;
 					
 					if (q_i == this.nodenumend ) {
 							
@@ -971,9 +969,7 @@
 						
 						q_edge = this.getEdgeFromNodeIndeces(q_i,q_j);
 
-
 					}
-					
 					
 					this.alg_state ++;
 				break;
@@ -1133,7 +1129,7 @@
 						
 						val = this.edgesFromDots[i][AGai.EPOS_NODEENDINDEX];
 						
-						if (this.nodesFromDots[val][AGai.NPOS_VISITED] == false) {
+						if (this.nodesFromDots[val][AGai.NPOS_VISITED] == false ){//|| true) {
 							list.push(val);
 						}
 						
@@ -1143,7 +1139,7 @@
 							 this.nodesFromDots[node][AGai.NPOS_NODENAME]) {
 								 
 						val = this.edgesFromDots[i][AGai.EPOS_NODESTARTINDEX];
-						if (this.nodesFromDots[val][AGai.NPOS_VISITED] == false) {
+						if (this.nodesFromDots[val][AGai.NPOS_VISITED] == false ){//|| true) {
 							list.push(val);
 						}
 						
@@ -1152,13 +1148,14 @@
 				}
 				
 			}
-			//for (i = 0; i < this.edgesFromDots.length; i ++) {
-			//	trace(i,"start",this.edgesFromDots[i][AGai.EPOS_NODESTARTINDEX],
-			//		  "end", this.edgesFromDots[i][AGai.EPOS_NODEENDINDEX] ,
-			//		  this.edgesFromDots[i][AGai.EPOS_DIST]);
+			for (i = 0; i < this.edgesFromDots.length; i ++) {
+				trace(i,"start",this.edgesFromDots[i][AGai.EPOS_NODESTART],
+					  "end", this.edgesFromDots[i][AGai.EPOS_NODEEND] ,
+					  "dist", this.edgesFromDots[i][AGai.EPOS_DIST] ,
+					  this.edgesFromDots[i][AGai.EPOS_TEMPFLAG]);
 			//	trace(i,"start",this.edgesFromDots[i][AGai.EPOS_NODESTART],
 			//		  "end", this.edgesFromDots[i][AGai.EPOS_NODEEND] );
-			//}
+			}
 			
 			trace("leading up: length", list.length);
 			
