@@ -132,64 +132,10 @@
 			// constructor code
 			// do nothing...
 			
-			/*
-			if (Worker.current.isPrimordial) {
-				
-				this.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-				
-			}
-			else {
-				this.set_values_called = false;
-
-				mainToWorker = Worker.current.getSharedProperty("mainToWorker");
-				workerToMain = Worker.current.getSharedProperty("workerToMain");
-				
-				mainToWorker.addEventListener("mainToWorker", onMainToWorker);
-			}
-			*/
 			
-		}
-		/*
-		public function onAddedToStage(e:Event):void {
-				this.removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-				this.loaderInfo.addEventListener(Event.COMPLETE, onLoadedComplete);
-		}
-		
-		public function onLoadedComplete(e:Event):void {
-			
-			this.loaderInfo.removeEventListener(Event.COMPLETE, onLoadedComplete);
-			
-			trace(this.loaderInfo);
-				
-			var swfBytes:ByteArray = this.loaderInfo.bytes;
-			
-			worker = WorkerDomain.current.createWorker( swfBytes );
-			
-			trace(worker);
-			
-			mainToWorker = Worker.current.createMessageChannel(worker);
-			workerToMain = worker.createMessageChannel(Worker.current);
-			
-			worker.setSharedProperty("mainToWorker", mainToWorker);
-			worker.setSharedProperty("workerToMain", workerToMain);
-			
-			workerToMain.addEventListener(Event.CHANNEL_MESSAGE, onWorkerToMain);
-			
-			worker.start();
-		}
-		
-		public function onWorkerToMain(e:Event):void {
 			
 		}
 		
-		public function onMainToWorker(e:Event):void {
-			
-		}
-		
-		public function sendInvisibleMap():void {
-			
-		}
-		*/
 		
 		/* THIS IS DONE ONCE AT THE BEGINNING OF THE LEVEL */
 		public function setValues(myinvisible:Array, myscreen:Stage, game:AGMode):void {
@@ -677,7 +623,7 @@
 		public function doCalc() {
 			
 			this.alg_count ++;
-			if (this.alg_count > AGai.COUNT_ALG) { //1200
+			if (this.alg_count > AGai.COUNT_ALG && false) { //1200
 				this.alg_count = 0;
 				this.alg_state = AGai.ALG_ZERO;
 			}
@@ -688,8 +634,6 @@
 			var pair2:Array;
 			var tempArray:Array = new Array();
 			var j:int = 0;
-			//trace("S:" + this.nodenumstart, "E:"+ this.nodenumend);
-			//trace(this.q_startedge_hor, this.q_startedge_vert, this.q_endedge_hor, this.q_endedge_vert);
 			
 			switch(this.alg_state) {
 				case AGai.ALG_NONE:
@@ -1101,7 +1045,7 @@
 						}
 						this.q_hint_nodes.push(tempArray);
 					}
-				
+					this.alg_count =0;
 					this.alg_state = AGai.ALG_ZERO;
 				break;
 				
