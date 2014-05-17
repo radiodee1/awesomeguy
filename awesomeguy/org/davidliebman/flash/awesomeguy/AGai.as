@@ -240,8 +240,10 @@
 					if ((this.invisibleDots[i][k] != 0 || this.invisibleChutes[i][k] != 0)){
 						
 						
-						if((this.isEndNodeBasic(k,i, this.invisibleDots) || this.isEndNodeHoriz(k,i)) && 
-						   this.myInvisible[i][k] != AGModeGuy.B_LADDER){
+						if(((this.isEndNodeBasic(k,i, this.invisibleDots) || this.isEndNodeHoriz(k,i)) && 
+							(this.myInvisible[i][k] != AGModeGuy.B_LADDER) || 
+						   (this.myInvisible[i][k] == AGModeGuy.B_LADDER && 
+							this.myInvisible[i+1][k] == AGModeGuy.B_BLOCK))){
 							//record a horizontal edge
 							startx = l;
 							endx = k;
@@ -345,6 +347,9 @@
 					
 				}
 			}
+			
+			
+			
 			////
 			// set index of nodes in edge array
 			
@@ -442,12 +447,13 @@
 			var listed:Boolean = false;
 			var listed_index:int = -1;
 			var nodename:String = this.makeNodeName(x, y);
-
+			//var j:int = 0;
 			// put nodes in list... NO REPEATS
 			for (i = 0; i < this.nodesFromDots.length; i ++) {
 				if (nodename == this.nodesFromDots[i][NPOS_NODENAME]) {
 					listed = true;
 					listed_index = i;
+					//j++;
 				}
 			}
 			var node:Array = new Array( nodename, // node name
@@ -458,6 +464,7 @@
 										-1, // previous....
 										isTemp // is node temp flag set??
 										); 
+			
 			if (!listed) {
 				this.nodesFromDots.push(node);
 				return this.nodesFromDots.length -1;
@@ -895,7 +902,7 @@
 					for (i = 0; i < this.edgesFromDots.length; i ++) {
 						if (this.edgesFromDots[i][AGai.EPOS_TEMPFLAG] == true) {
 							this.connectNodeEdgeIndices(i);
-							trace(this.edgesFromDots[i]);
+							//trace(this.edgesFromDots[i]);
 
 						}
 					}
