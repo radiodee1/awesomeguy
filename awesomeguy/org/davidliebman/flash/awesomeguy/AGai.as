@@ -1436,7 +1436,9 @@
 			
 				
 				j = this.q_hint_list[0];
-				if (j > -1 && j < this.q_hint_nodes.length) {
+				if (j > -1 && j < this.q_hint_nodes.length && 
+						this.nodenumend != -1 && this.nodenumend < this.q_hint_nodes.length) {
+							
 					xstart  = this.q_hint_nodes[this.nodenumend][AGai.NPOS_COORDX] * TILE_WIDTH - 
 						this.myGame.scrollBGX + cheat;
 					ystart  = this.q_hint_nodes[this.nodenumend][AGai.NPOS_COORDY] * TILE_HEIGHT - 
