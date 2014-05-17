@@ -661,8 +661,8 @@
 					this.monsterx = this.startingX;
 					this.monstery = this.startingY;
 					
-					trace("monster and guy");
-					trace(this.monsterx / 64, this.monstery/64, this.guyx/64, this.guyy/64);
+					//trace("monster and guy");
+					//trace(this.monsterx / 64, this.monstery/64, this.guyx/64, this.guyy/64);
 					
 					this.q_endedge_hor = -1;
 					this.q_endedge_vert = -1;
@@ -778,7 +778,7 @@
 								this.edgesFromDots[this.q_startedge_hor][AGai.EPOS_STOPX],
 								this.edgesFromDots[this.q_startedge_hor][AGai.EPOS_STARTY],
 								false, true);
-						trace(1,"pair1", pair1, "pair2", pair2);
+						//trace(1,"pair1", pair1, "pair2", pair2);
 						
 						if (pair1[0] == pair2[0]) {
 							found = pair1[0];
@@ -789,7 +789,7 @@
 					}
 					
 					this.nodenumstart = found;
-					trace("start node",this.nodesFromDots[this.nodenumstart]);
+					//trace("start node",this.nodesFromDots[this.nodenumstart]);
 					this.alg_state ++;
 				break;
 				case AGai.ALG_MAKE_NODES_AND_EDGES_START_VERTICAL:
@@ -805,7 +805,7 @@
 								this.edgesFromDots[this.q_startedge_vert][AGai.EPOS_STOPY],
 								this.edgesFromDots[this.q_startedge_vert][AGai.EPOS_STARTX],
 								false, true);
-						trace(2,"pair2", pair1, "pair2", pair2);
+						//trace(2,"pair2", pair1, "pair2", pair2);
 
 						if (pair1[0] == pair2[0]) {
 							found = pair1[0];
@@ -817,7 +817,7 @@
 					if (this.q_startedge_hor == -1 && found != -1) {
 						this.nodenumstart = found;
 					}
-					trace("start node", this.nodesFromDots[ this.nodenumstart]);
+					//trace("start node", this.nodesFromDots[ this.nodenumstart]);
 					this.alg_state ++;
 					
 				break;
@@ -835,7 +835,7 @@
 								this.edgesFromDots[this.q_endedge_hor][AGai.EPOS_STOPX],
 								this.edgesFromDots[this.q_endedge_hor][AGai.EPOS_STARTY],
 								false, true);
-						trace(3,"pair3", pair1, "pair2", pair2);
+						//trace(3,"pair3", pair1, "pair2", pair2);
 
 						if (pair1[0] == pair2[0]) {
 							found = pair1[0];
@@ -845,7 +845,7 @@
 						}
 					}
 					this.nodenumend = found;
-					trace("end node",this.nodesFromDots[ this.nodenumend]);
+					//trace("end node",this.nodesFromDots[ this.nodenumend]);
 					this.alg_state ++;
 				
 				break;
@@ -862,7 +862,7 @@
 								this.edgesFromDots[this.q_endedge_vert][AGai.EPOS_STOPY],
 								this.edgesFromDots[this.q_endedge_vert][AGai.EPOS_STARTX],
 								false, true);
-						trace(4,"pair4", pair1, "pair2", pair2);
+						//trace(4,"pair4", pair1, "pair2", pair2);
 						
 						if (pair1[0] == pair2[0]) {
 							found = pair1[0];
@@ -874,7 +874,7 @@
 					if ( found != -1) {
 						this.nodenumend = found;
 					}
-					trace("end node --", this.nodesFromDots[this.nodenumend]);
+					//trace("end node --", this.nodesFromDots[this.nodenumend]);
 					this.alg_state ++;
 				break;
 				case AGai.ALG_FIRST_HINT:
@@ -907,11 +907,7 @@
 						}
 					}
 					
-					if (this.nodenumstart >= this.nodesFromDots.length ||
-						this.nodenumstart == -1) {
-						//this.nodenumstart = 0; // this doesn't make sense!!
-						//return;
-					}
+					
 					
 					this.nodesFromDots[this.nodenumstart][AGai.NPOS_CALCDIST] =  0;
 					
@@ -947,7 +943,7 @@
 					
 					
 					if (this.nodesFromDots[q_i][AGai.NPOS_CALCDIST] >= AGai.START_DISTANCE) {
-						trace("distance too long");
+						//trace("distance too long");
 						
 						this.alg_state = AGai.ALG_SECOND_HINT_A;
 						break;
@@ -960,7 +956,7 @@
 				case AGai.ALG_DIJKSTRA_LOOP_B:
 					q_list = this.getNodeNeighborList(q_i);
 
-					trace("length", q_list.length);
+					//trace("length", q_list.length);
 					
 					this.q_list_index = 0;
 					this.alg_state ++;
@@ -969,7 +965,8 @@
 				case AGai.ALG_DIJKSTRA_LOOP_NEIGHBOR_LIST_A:
 					//
 					this.q_j = this.q_list[this.q_list_index];
-					trace(this.q_j, "<- q_j");
+					
+					//trace(this.q_j, "<- q_j");
 					if (this.q_list.length > 0) {
 						//trace(this.nodesFromDots[this.q_i][AGai.NPOS_NODENAME],
 						//	  "neighbor:",q_j, this.nodesFromDots[this.q_j][AGai.NPOS_NODENAME]);
@@ -989,7 +986,7 @@
 						
 						q_alt = q_k + this.nodesFromDots[q_i][AGai.NPOS_CALCDIST];
 						
-						trace("edge dist",q_k, "new dist" , q_alt, "length", this.q_list.length);
+						//trace("edge dist",q_k, "new dist" , q_alt, "length", this.q_list.length);
 	
 						if (q_alt <= this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] ){// was q_j  //&& this.q_list.length > 0) {
 							this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] = q_alt;
@@ -1014,7 +1011,7 @@
 				break;
 				
 				case AGai.ALG_DIJKSTRA_LOOP_CLOSE:
-					trace("----");
+					//trace("----");
 					if (!this.isListEmpty()) {
 						
 						this.alg_state = AGai.ALG_DIJKSTRA_LOOP_A;
@@ -1023,8 +1020,8 @@
 					else {
 						if (this.node_index_end == -1) {
 							// what to do if no path??
-							trace("====");
-							trace("no path");
+							//trace("====");
+							//trace("no path");
 							//this.alg_state ++;// skip second hint!!
 							this.alg_state = AGai.ALG_ZERO;
 							break;
@@ -1036,7 +1033,7 @@
 				case AGai.ALG_SECOND_HINT_A:
 					// set REAL hint
 					this.q_hint_list = this.createHint();
-					trace("second hint", this.q_hint_list.length);
+					//trace("second hint", this.q_hint_list.length);
 					
 					this.alg_state ++;
 				break;
@@ -1113,11 +1110,11 @@
 			}
 			
 			value = l;
-			trace ("smallest node:", value);
-			for (i = 0; i < this.nodesFromDots.length; i ++) {
-				trace (i,"calc-dist",this.nodesFromDots[i][AGai.NPOS_CALCDIST] ,"visited",
-					   this.nodesFromDots[i][AGai.NPOS_VISITED]);
-			}
+			//trace ("smallest node:", value);
+			//for (i = 0; i < this.nodesFromDots.length; i ++) {
+			//	trace (i,"calc-dist",this.nodesFromDots[i][AGai.NPOS_CALCDIST] ,"visited",
+			//		   this.nodesFromDots[i][AGai.NPOS_VISITED]);
+			//}
 			return value;
 		}
 		
@@ -1155,16 +1152,16 @@
 				}
 				
 			}
-			for (i = 0; i < this.edgesFromDots.length; i ++) {
-				trace(i,"start",this.edgesFromDots[i][AGai.EPOS_NODESTART],
-					  "end", this.edgesFromDots[i][AGai.EPOS_NODEEND] ,
-					  "dist", this.edgesFromDots[i][AGai.EPOS_DIST] ,
-					  this.edgesFromDots[i][AGai.EPOS_TEMPFLAG]);
+			//for (i = 0; i < this.edgesFromDots.length; i ++) {
+			//	trace(i,"start",this.edgesFromDots[i][AGai.EPOS_NODESTART],
+			//		  "end", this.edgesFromDots[i][AGai.EPOS_NODEEND] ,
+			//		  "dist", this.edgesFromDots[i][AGai.EPOS_DIST] ,
+			//		  this.edgesFromDots[i][AGai.EPOS_TEMPFLAG]);
 			//	trace(i,"start",this.edgesFromDots[i][AGai.EPOS_NODESTART],
 			//		  "end", this.edgesFromDots[i][AGai.EPOS_NODEEND] );
-			}
+			//}
 			
-			trace("leading up: length", list.length);
+			//trace("leading up: length", list.length);
 			
 			return list;
 		}
@@ -1194,7 +1191,7 @@
 			}
 			if (j == -1) { 
 				value = new Array();//this.edgesFromDots[0];
-				trace("ERROR");
+				//trace("ERROR");
 			}
 			else value = this.edgesFromDots[j];
 			return value;
@@ -1202,7 +1199,7 @@
 		
 		private function createHint():Array {
 			
-			trace("====");
+			//trace("====");
 			
 			var list:Array = new Array();
 			var i:int = this.nodenumend;// this.node_index_end; 
@@ -1213,19 +1210,19 @@
 				i = this.nodesFromDots[i][AGai.NPOS_PREVIOUS];
 				if (i > -1) {
 					list.push(i);
-					trace(i, this.nodesFromDots[i][AGai.NPOS_NODENAME]);
+					//trace(i, this.nodesFromDots[i][AGai.NPOS_NODENAME]);
 				}
-				else trace(i);
+				//else trace(i);
 			}
 			
-			trace ("hint analysis");
-			for (i = 0; i < this.nodesFromDots.length; i ++) {
-				trace ("hint stuff", this.nodesFromDots[i][AGai.NPOS_PREVIOUS]);
-			}
-			trace ("done dijkstra");
+			//trace ("hint analysis");
+			//for (i = 0; i < this.nodesFromDots.length; i ++) {
+			//	trace ("hint stuff", this.nodesFromDots[i][AGai.NPOS_PREVIOUS]);
+			//}
+			//trace ("done dijkstra");
 			return list;
 		}
-		
+		/*
 		public function getStartNodeNum(x:int, y:int, newnode:Boolean):int {
 			var value:int = 0;
 			//this.node_index_end = 0;
@@ -1238,7 +1235,7 @@
 			// if newnode is true, add new node and edges if necessary.
 			return 5;
 		}
-		
+		*/
 		public function getPixHintX():int {
 			return this.hint_x;
 		}
