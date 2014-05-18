@@ -629,6 +629,7 @@
 			
 		}
 		
+		
 		public function distanceIsShort(a:Bitmap, b:Bitmap):Boolean {
 			var r:Boolean = false;
 			var dist:int = 128;

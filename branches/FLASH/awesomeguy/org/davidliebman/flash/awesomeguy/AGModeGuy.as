@@ -93,7 +93,7 @@
 			this.flyersprite = new Bitmap();
 			this.agflyer = new AGSprite( this, 0);
 			
-			
+			this.myPhysics = new AGPhysicsGuy(this.myStage, this);
 			
 		}
 		
@@ -659,6 +659,7 @@
 					if (mySprite[i].sprite_type == AGMode.S_XMONSTER_CLIMBER) {
 						mySprite[i].x += this.ai.getPixHintX();
 						mySprite[i].y += this.ai.getPixHintY();
+						this.myPhysics.applyGravity(myInvisible, mySprite[i], this.myDrawai);
 						this.ai.setStartEnd(mySprite[i].x, mySprite[i].y, xpos, ypos);
 						this.myDrawai.drawBasicSprite(mySprite[i], AGMode.D_XMONSTER_CLIMBER);
 						
