@@ -83,6 +83,11 @@
 									myMode.myRes[AGResources.NAME_KEY_RED_PNG].bitmapData.clone());
 			
 				break;
+				case AGMode.S_BLOCK:
+					//just for collision testing... ??
+					//this.bitmap = this.myMode.cutTile(myMode.myRes[AGResources.NAME_TILES1_PNG], 
+					//								  AGModeGuy.B_BLOCK, AGMode.TILE_BOT);
+				break;
 			}
 		}
 
