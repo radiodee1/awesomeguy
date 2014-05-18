@@ -125,6 +125,7 @@
 	static var D_EXIT:int = 24;
 	static var D_ASTROGATE:int = 25;
 	static var D_PLATFORM:int = 26;
+	static var D_XMONSTER_CLIMBER:int = 27;
 	
 	//radar ping types
 	static var PING_FLYER:int = 0;

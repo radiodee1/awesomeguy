@@ -12,11 +12,6 @@
 	/* THIS AI IS REALLY ONLY FOR MAZE LEVELS */
 	public class AGai  extends Sprite{
 		
-		
-		//public var mainToWorker:MessageChannel;
-		//public var workerToMain:MessageChannel;
-		//public var worker:Worker;
-		
 		public var myInvisible:Array;
 		public var myScreen:Stage;
 		public var myGame:AGMode;
@@ -663,9 +658,6 @@
 					this.monsterx = this.startingX;
 					this.monstery = this.startingY;
 					
-					//trace("monster and guy");
-					//trace(this.monsterx / 64, this.monstery/64, this.guyx/64, this.guyy/64);
-					
 					this.q_endedge_hor = -1;
 					this.q_endedge_vert = -1;
 					
@@ -820,6 +812,12 @@
 						this.nodenumstart = found;
 					}
 					//trace("start node", this.nodesFromDots[ this.nodenumstart]);
+					
+					if (this.nodenumstart < 0) {
+						this.alg_state = AGai.ALG_ZERO;
+						break;
+					}
+					
 					this.alg_state ++;
 					
 				break;
@@ -911,15 +909,7 @@
 						}
 					}
 					
-					if (this.nodenumstart < 0) {
-						this.alg_state = AGai.ALG_ZERO;
-						break;
-					}
-					
 					this.nodesFromDots[this.nodenumstart][AGai.NPOS_CALCDIST] =  0;
-					
-					//trace("test nodes 1 --- ", this.nodesFromDots[this.nodenumstart]);
-					//trace("test nodes 2 --- ", this.nodesFromDots[this.nodenumend]);
 					
 					q_i = 0;
 					q_j = 0;
@@ -1117,11 +1107,7 @@
 			}
 			
 			value = l;
-			//trace ("smallest node:", value);
-			//for (i = 0; i < this.nodesFromDots.length; i ++) {
-			//	trace (i,"calc-dist",this.nodesFromDots[i][AGai.NPOS_CALCDIST] ,"visited",
-			//		   this.nodesFromDots[i][AGai.NPOS_VISITED]);
-			//}
+			
 			return value;
 		}
 		
@@ -1195,13 +1181,10 @@
 		}
 		
 		private function createHint():Array {
-			
-			//trace("====");
-			
+						
 			var list:Array = new Array();
 			var i:int = this.nodenumend;// this.node_index_end; 
-			//list.push(i);
-			//trace(i, this.nodesFromDots[i][AGai.NPOS_NODENAME]);
+
 			while (i != this.nodenumstart && i != -1 && i < this.nodesFromDots.length) {
 			//while (i != -1) {
 				i = this.nodesFromDots[i][AGai.NPOS_PREVIOUS];
@@ -1285,8 +1268,8 @@
 		
 		public function drawMap():void {
 			//this.drawMapSquares();
-			this.drawMapEdges();//---
-			this.drawMapNodes();
+			//this.drawMapEdges();//---
+			//this.drawMapNodes();
 			this.drawMapMonster();
 		}
 		
@@ -1485,7 +1468,7 @@
 					shape.graphics.lineStyle(4,0xff0000,1);
 					shape.graphics.moveTo(xstart,ystart);
 				}
-				//else return;
+				// 
 				//
 				for (m = 0; m< this.q_hint_list.length; m ++) {
 					i = this.q_hint_list[m];
