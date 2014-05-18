@@ -1272,6 +1272,9 @@
 			return this.hint_x;
 		}
 		public function getPixHintY():int {
+			var a:int ;
+			var b:int ;
+			
 			if (this.q_endedge_vert != -1) {
 				if (this.guyy < this.startingY) {
 					this.hint_y = - AGai.MOVE_Y;
