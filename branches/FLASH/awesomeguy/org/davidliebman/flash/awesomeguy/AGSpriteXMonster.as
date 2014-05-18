@@ -23,7 +23,7 @@
 			
 			
 			//for each monster...
-			if( true) {
+			if( this.sprite_type == AGMode.S_XMONSTER || this.sprite_type == AGMode.S_XMONSTER_STAND) {
 				
 					//if (i == 5) return;
 					if ( true) {

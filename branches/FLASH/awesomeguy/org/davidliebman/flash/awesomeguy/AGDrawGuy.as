@@ -355,7 +355,7 @@
 					}
 				}
 				
-			if (kind == AGMode.D_XMONSTER_CLIMBER) {
+			if (sprite.sprite_type == AGMode.D_XMONSTER_CLIMBER) {
 				this.guywidth = this.sprite.bitmap.width;
 				this.guyheight = this.sprite.bitmap.height;
 				this.makeRails(sprite);
