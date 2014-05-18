@@ -23,6 +23,7 @@
 		
 	var myStage:Stage;
 	//var myButtons:Array;
+	var myPhysics:AGPhysics;
 	var myKeys:Array;
 	var myRes:Array;
 	var myBlocks:Array; 
