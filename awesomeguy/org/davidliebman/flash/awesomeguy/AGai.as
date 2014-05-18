@@ -31,8 +31,8 @@
 		public var hint_x:int = 0;
 		public var hint_y:int = 0;
 		
-		public static var MOVE_X:int = 3;
-		public static var MOVE_Y:int = 3;
+		public static var MOVE_X:int = 15;
+		public static var MOVE_Y:int = 15;
 		
 		public var set_values_called:Boolean = false;
 		public var node_index_start:int = 0;
