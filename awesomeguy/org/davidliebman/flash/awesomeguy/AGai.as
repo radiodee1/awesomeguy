@@ -1159,16 +1159,6 @@
 				}
 				
 			}
-			//for (i = 0; i < this.edgesFromDots.length; i ++) {
-			//	trace(i,"start",this.edgesFromDots[i][AGai.EPOS_NODESTART],
-			//		  "end", this.edgesFromDots[i][AGai.EPOS_NODEEND] ,
-			//		  "dist", this.edgesFromDots[i][AGai.EPOS_DIST] ,
-			//		  this.edgesFromDots[i][AGai.EPOS_TEMPFLAG]);
-			//	trace(i,"start",this.edgesFromDots[i][AGai.EPOS_NODESTART],
-			//		  "end", this.edgesFromDots[i][AGai.EPOS_NODEEND] );
-			//}
-			
-			//trace("leading up: length", list.length);
 			
 			return list;
 		}
@@ -1222,27 +1212,10 @@
 				//else trace(i);
 			}
 			
-			//trace ("hint analysis");
-			//for (i = 0; i < this.nodesFromDots.length; i ++) {
-			//	trace ("hint stuff", this.nodesFromDots[i][AGai.NPOS_PREVIOUS]);
-			//}
-			//trace ("done dijkstra");
+			
 			return list;
 		}
-		/*
-		public function getStartNodeNum(x:int, y:int, newnode:Boolean):int {
-			var value:int = 0;
-			//this.node_index_end = 0;
-			this.node_index_start = value;
-			// if newnode is true, add new node if necessary
-			return value;
-		}
 		
-		public function getStopNodeNum(x:int, y:int, newnode:Boolean):int {
-			// if newnode is true, add new node and edges if necessary.
-			return 5;
-		}
-		*/
 		public function getPixHintX():int {
 			var a:int ;
 			var b:int ;
