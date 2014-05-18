@@ -879,20 +879,22 @@
 					this.alg_state ++;
 				break;
 				case AGai.ALG_FIRST_HINT:
-					if (this.q_endedge_hor != -1) {
-						if (this.guyx < this.startingX ) {
-							this.hint_x = - AGai.MOVE_X;
+					if(this.q_hint_nodes.length < 2) {
+						if (this.q_endedge_hor != -1) {
+							if (this.guyx < this.startingX ) {
+								this.hint_x = - AGai.MOVE_X;
+							}
+							else {
+								this.hint_x = AGai.MOVE_X;
+							}
 						}
-						else {
-							this.hint_x = AGai.MOVE_X;
-						}
-					}
-					if (this.q_endedge_vert != -1) {
-						if (this.guyy < this.startingY) {
-							this.hint_y = - AGai.MOVE_Y;
-						}
-						else {
-							this.hint_y = AGai.MOVE_Y;
+						if (this.q_endedge_vert != -1) {
+							if (this.guyy < this.startingY) {
+								this.hint_y = - AGai.MOVE_Y;
+							}
+							else {
+								this.hint_y = AGai.MOVE_Y;
+							}
 						}
 					}
 					this.alg_state ++;
