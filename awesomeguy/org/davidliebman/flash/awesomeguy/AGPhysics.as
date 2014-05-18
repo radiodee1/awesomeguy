@@ -13,7 +13,7 @@
 			// constructor code
 		}
 		
-		public function applyGravity(myinvisible:Array, sprite:AGSprite, mydraw:AGDraw) {
+		public function applyGravity(myinvisible:Array, sprite:AGSprite, mydraw:AGDraw, x:int = 0, y:int = 0) {
 			
 		}
 		

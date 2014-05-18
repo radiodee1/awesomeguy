@@ -456,7 +456,7 @@
 					if (k + mapcheat == AGModeGuy.B_KEY) this.addXVarious(j,i,AGMode.S_KEY);
 					if (k + mapcheat == AGModeGuy.B_GUN) this.addXVarious(j,i,AGMode.S_GUN);
 					if (k + mapcheat == AGModeGuy.B_GOAL) this.addXVarious(j,i,AGMode.S_XGOAL);
-					if (k + mapcheat == AGModeGuy.B_MONSTER_CLIMBER) this.addXVarious(j, i, AGMode.S_XMONSTER_CLIMBER);
+					if (k + mapcheat == AGModeGuy.B_MONSTER_CLIMBER) this.addXMonster(j, i,0, AGMode.S_XMONSTER_CLIMBER);
 				}
 			}
 		}
@@ -493,8 +493,10 @@
 			//return temp;
 		}
 		
-		public function addXMonster(monster_x:int, monster_y:int,  monster_animate:int):void {
-			var mon:AGSpriteXMonster = new AGSpriteXMonster(this,AGMode.S_XMONSTER);
+		public function addXMonster(monster_x:int, monster_y:int,  monster_animate:int, kind:int = -1 ):void {
+			if (kind == -1) kind = AGMode.S_XMONSTER;
+			//else trace(kind);
+			var mon:AGSpriteXMonster = new AGSpriteXMonster(this,kind);//AGMode.S_XMONSTER);
 			mon.x = monster_x * TILE_WIDTH;
 			mon.y = monster_y * TILE_HEIGHT;
 			mon.animate = monster_animate;
@@ -508,7 +510,7 @@
 			mon.leftBB = 0;
 			mon.rightBB = 16 * 2;
 		
-			mon.sprite_type = S_XMONSTER;
+			mon.sprite_type =kind;// S_XMONSTER;
 			
 			sprite_num ++;
 			monster_num = sprite_num;
@@ -659,7 +661,8 @@
 					if (mySprite[i].sprite_type == AGMode.S_XMONSTER_CLIMBER) {
 						mySprite[i].x += this.ai.getPixHintX();
 						mySprite[i].y += this.ai.getPixHintY();
-						this.myPhysics.applyGravity(myInvisible, mySprite[i], this.myDrawai);
+						this.myPhysics.applyGravity(myInvisible, mySprite[i], this.myDrawai, 
+													this.ai.getPixHintX(), this.ai.getPixHintY());
 						this.ai.setStartEnd(mySprite[i].x, mySprite[i].y, xpos, ypos);
 						this.myDrawai.drawBasicSprite(mySprite[i], AGMode.D_XMONSTER_CLIMBER);
 						
