@@ -3,18 +3,19 @@
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
 	import flash.display.Shape;
-	import flash.system.MessageChannel;
-	import flash.system.Worker;
-	import flash.system.WorkerDomain;
+	//import flash.system.MessageChannel;
+	//import flash.system.Worker;
+	//import flash.system.WorkerDomain;
 	import flash.events.Event;
 	import flash.utils.ByteArray;
 	
 	/* THIS AI IS REALLY ONLY FOR MAZE LEVELS */
 	public class AGai  extends Sprite{
 		
-		public var mainToWorker:MessageChannel;
-		public var workerToMain:MessageChannel;
-		public var worker:Worker;
+		
+		//public var mainToWorker:MessageChannel;
+		//public var workerToMain:MessageChannel;
+		//public var worker:Worker;
 		
 		public var myInvisible:Array;
 		public var myScreen:Stage;
@@ -1237,9 +1238,64 @@
 		}
 		*/
 		public function getPixHintX():int {
+			var a:int ;
+			var b:int ;
+			
+			if (this.q_endedge_hor != -1) {
+				if (this.guyx < this.startingX ) {
+					this.hint_x = - AGai.MOVE_X;
+				}
+				else {
+					this.hint_x = AGai.MOVE_X;
+				}
+			}
+			if (this.q_hint_list.length > 2) {
+				a = this.q_hint_list[0];
+				b = this.q_hint_list[1];
+				if (this.q_hint_nodes[a][AGai.NPOS_COORDY] == 
+					this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
+					if (this.q_hint_nodes[a][AGai.NPOS_COORDX] > this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
+						this.hint_x = - AGai.MOVE_X;
+					}
+					else {
+						this.hint_x = AGai.MOVE_X;
+					}
+				}
+				else if (this.q_hint_nodes[a][AGai.NPOS_COORDX] == 
+						 this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
+					this.hint_x = 0;
+				}
+				
+			}
 			return this.hint_x;
 		}
 		public function getPixHintY():int {
+			if (this.q_endedge_vert != -1) {
+				if (this.guyy < this.startingY) {
+					this.hint_y = - AGai.MOVE_Y;
+				}
+				else {
+					this.hint_y = AGai.MOVE_Y;
+				}
+			}
+			if (this.q_hint_list.length > 2) {
+				a = this.q_hint_list[0];
+				b = this.q_hint_list[1];
+				if (this.q_hint_nodes[a][AGai.NPOS_COORDX] == 
+					this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
+					if (this.q_hint_nodes[a][AGai.NPOS_COORDY] > this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
+						this.hint_y = - AGai.MOVE_Y;
+					}
+					else {
+						this.hint_y = AGai.MOVE_Y;
+					}
+				}
+				else if (this.q_hint_nodes[a][AGai.NPOS_COORDY] == 
+						 this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
+					this.hint_y = 0;
+				}
+				
+			}
 			return this.hint_y;
 		}
 		
