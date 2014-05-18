@@ -12,7 +12,8 @@
 		var myGuy:AGSpriteGuy;
 
 		var ai:AGai;
-		var aiMonster:AGSpriteXMonster;
+		var myDrawai:AGDraw;
+		//var aiMonster:AGSpriteXMonster;
 
 		static var GUY_CLIMB:int = 1;
 		static var GUY_PUNCH:int = 2;
@@ -91,6 +92,8 @@
 			this.game_start = true;
 			this.flyersprite = new Bitmap();
 			this.agflyer = new AGSprite( this, 0);
+			
+			
 			
 		}
 		
@@ -171,6 +174,7 @@
 			myGuy.visible = true;
 			myGuy.quality_0 = AGModeGuy.GUY_STEP;
 
+			this.myDrawai = new AGDrawGuy(this, myRes, myStage, myScreenBG);
 			this.ai = new AGai();
 
 
@@ -656,7 +660,8 @@
 						mySprite[i].x += this.ai.getPixHintX();
 						mySprite[i].y += this.ai.getPixHintY();
 						this.ai.setStartEnd(mySprite[i].x, mySprite[i].y, xpos, ypos);
-
+						this.myDrawai.drawBasicSprite(mySprite[i], AGMode.D_XMONSTER_CLIMBER);
+						
 					}
 				}
 				

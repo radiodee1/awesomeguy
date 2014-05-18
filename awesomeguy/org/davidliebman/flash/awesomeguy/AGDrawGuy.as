@@ -18,8 +18,8 @@
 		
 		var sprite:AGSprite;
 		
-		var scrollx:int;// = myMode.scrollBGX;
-		var scrolly:int;// = myMode.scrollBGY;
+		var scrollx:int;
+		var scrolly:int;
 		
 		var guywidth:int;
 		var guyheight:int;
@@ -31,6 +31,7 @@
 		}
 
 		public override function drawBasicSprite(sprite:AGSprite, kind:int):void {
+			this.sprite = sprite;
 			stageHelper = new Sprite();
 			drawRes(sprite, sprite.x, sprite.y, sprite.facingRight, kind, sprite.animate);
 			stageHelper.scrollRect = new Rectangle(0,0,512, (512 * 3/4));
@@ -196,7 +197,8 @@
 					
 				break;
 				case AGMode.D_XMONSTER:
-					drawXMonster();
+				case AGMode.D_XMONSTER_CLIMBER:
+					drawXMonster(kind);
 				break;
 				case AGMode.D_KEY:
 					drawKey();
@@ -252,7 +254,7 @@
 			
 		}
 		
-		public function drawXMonster():void {
+		public function drawXMonster(kind:int):void {
 				var anim_speed:int = 5;
 				var add:int, add_radar:int, z:int;
 
@@ -263,7 +265,8 @@
 				else z = 0;
 				
 		
-				if(sprite.visible == true && sprite.sprite_type == AGMode.S_XMONSTER) {
+				if(sprite.visible == true && (sprite.sprite_type == AGMode.S_XMONSTER ||
+											  sprite.sprite_type == AGMode.S_XMONSTER_CLIMBER)) {
 					if ( true ) {
 						//trace (sprite.animate);
 						if(sprite.facingRight == true) {
@@ -352,6 +355,11 @@
 					}
 				}
 				
+			if (kind == AGMode.D_XMONSTER_CLIMBER) {
+				this.guywidth = this.sprite.bitmap.width;
+				this.guyheight = this.sprite.bitmap.height;
+				this.makeRails(sprite);
+			}
 			//trace("draw xmonster");
 			return;
 		}

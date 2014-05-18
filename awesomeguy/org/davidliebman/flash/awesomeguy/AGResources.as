@@ -441,6 +441,10 @@
 			this.textField.text = startMessage;
 			this.textField.setTextFormat(this.format);
 			
+			if ((i % 40) == 0) {
+				startMessage += "\r";
+			}
+			
 			//var myFile:File;// = new File();
 
 			
