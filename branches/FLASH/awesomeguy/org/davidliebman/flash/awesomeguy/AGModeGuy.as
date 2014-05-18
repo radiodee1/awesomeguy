@@ -116,6 +116,11 @@
 			myGuy.updateSprite()
 			myDraw.drawBasicSprite(myGuy, D_GUY);
 			
+			if (true) {
+				
+				this.ai.doCalc();
+			}
+			
 			drawLevelTiles();
 			updateSprites();
 			drawAnimatedSprites();
@@ -126,11 +131,7 @@
 				myGuy.y = ypos;
 			}
 			
-			if (true) {
-				//this.ai.setStartEnd(myGuy.x, myGuy.y, myGuy.x, myGuy.y);
-				//trace("before do-calc");
-				this.ai.doCalc();
-			}
+			
 			
 			drawScoreWords();
 			showKeys(this.myGame.gameKeys);
@@ -217,12 +218,6 @@
 			
 			this.prepTilesToSprites();
 						
-			
-			if (false) this.ai.doCalculation(AGai.MONSTER_CLIMBER,
-								  AGai.COORDINATES_PIXELS,
-								  0,0,
-								  myGuy.x,myGuy.y);
-			
 						
 			if (this.game_reset_start  || this.game_start) {
 				radar_start = xpos - scrollBGX;
@@ -658,6 +653,8 @@
 						myDraw.drawBasicSprite(mySprite[i], D_EXIT);
 					}
 					if (mySprite[i].sprite_type == AGMode.S_XMONSTER_CLIMBER) {
+						mySprite[i].x += this.ai.getPixHintX();
+						mySprite[i].y += this.ai.getPixHintY();
 						this.ai.setStartEnd(mySprite[i].x, mySprite[i].y, xpos, ypos);
 
 					}

@@ -22,10 +22,10 @@
 		public var myGame:AGMode;
 		public var myKeyStage:AGKeys;
 
-		public var invisibleDots:Array;
-		public var invisibleChutes:Array;
-		public var edgesFromDots:Array;
-		public var nodesFromDots:Array;
+		public var invisibleDots:Array = new Array();
+		public var invisibleChutes:Array = new Array();
+		public var edgesFromDots:Array = new Array();
+		public var nodesFromDots:Array = new Array();
 		
 		public var monsterx:int;
 		public var monstery:int;
@@ -636,6 +636,7 @@
 				this.alg_state = AGai.ALG_ZERO;
 			}
 			
+			
 			var i:int = 0;
 			var found:int = -1;
 			var pair1:Array;
@@ -910,7 +911,10 @@
 						}
 					}
 					
-					
+					if (this.nodenumstart < 0) {
+						this.alg_state = AGai.ALG_ZERO;
+						break;
+					}
 					
 					this.nodesFromDots[this.nodenumstart][AGai.NPOS_CALCDIST] =  0;
 					
