@@ -659,11 +659,11 @@
 						myDraw.drawBasicSprite(mySprite[i], D_EXIT);
 					}
 					if (mySprite[i].sprite_type == AGMode.S_XMONSTER_CLIMBER) {
-						mySprite[i].x += this.ai.getPixHintX();
-						mySprite[i].y += this.ai.getPixHintY();
+						//mySprite[i].x += this.ai.getPixHintX();
+						//mySprite[i].y += this.ai.getPixHintY();
 						this.myDrawai.drawBasicSprite(mySprite[i], AGMode.D_XMONSTER_CLIMBER);						
-						this.myPhysics.applyGravity(myInvisible, mySprite[i], this.myDrawai, 
-													this.ai.getPixHintX(), this.ai.getPixHintY());
+						this.myPhysics.applyGravity(myInvisible, mySprite[i], this.myDrawai,0,0); 
+													//this.ai.getPixHintX(), this.ai.getPixHintY());
 						this.ai.setStartEnd(mySprite[i].x, mySprite[i].y, xpos, ypos);
 						
 					}
