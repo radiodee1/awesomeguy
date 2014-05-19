@@ -1270,7 +1270,7 @@
 			//this.drawMapSquares();
 			//this.drawMapEdges();//---
 			//this.drawMapNodes();
-			this.drawMapMonster();
+			//this.drawMapMonster();
 		}
 		
 		/* THIS IS DONE FOR DEVELOPMENT ONLY */

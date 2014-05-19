@@ -177,13 +177,16 @@
 						break;
 					}
 					
+					trace("setup");
 					
+					//if (sprite.sprite_type != AGMode.S_XMONSTER_CLIMBER) {
 					sprite.bitmap.x =  xx - scrollx + guyx;
 					sprite.bitmap.y = yy - scrolly + guyy;
 					this.guywidth = sprite.bitmap.width;
 					this.guyheight = sprite.bitmap.height;
 					makeRails(sprite);
-					
+					//}
+				
 					var tempMap:Bitmap = sprite.bitmap;
 					
 					if (this.biteffect_enable && sprite.active) {
@@ -194,7 +197,7 @@
 					
 					if (sprite.active == true) stageHelper.addChild(tempMap);//(sprite.bitmap);
 					myMode.flyersprite = sprite.bitmap;
-					
+					//}
 				break;
 				case AGMode.D_XMONSTER:
 				case AGMode.D_XMONSTER_CLIMBER:
@@ -221,9 +224,15 @@
 			}
 			
 		}
-		public function makeRails(sprite:AGSprite):void {
+		public function makeRails(asprite:AGSprite):void {
 			var vertical:BitmapData = new BitmapData(2,guyheight - AGModeGuy.Y_MOVE,true,0x00ff0000);
 			var horizontal:BitmapData = new BitmapData(guywidth - AGModeGuy.X_MOVE, 2,true,0x00ff0000);
+			
+			if (sprite.sprite_type == AGMode.S_XMONSTER_CLIMBER) {
+				//var vertical:BitmapData = new BitmapData(2,guyheight - AGModeGuy.Y_MOVE,true,0xffff0000);
+				//var horizontal:BitmapData = new BitmapData(guywidth - AGModeGuy.X_MOVE, 2,true,0xffff0000);
+			
+			}
 			
 			this.rail_bottom = new Bitmap(horizontal);
 			this.rail_top = new Bitmap(horizontal);
@@ -231,21 +240,21 @@
 			this.rail_right = new Bitmap(vertical);
 			this.rail_low_bottom = new Bitmap(horizontal);
 			
-			this.rail_bottom.x = sprite.bitmap.x + (AGModeGuy.X_MOVE/ 2) ;
-			this.rail_bottom.y = sprite.bitmap.y + sprite.bitmap.height +  (AGModeGuy.Y_MOVE/2);
+			this.rail_bottom.x = asprite.bitmap.x + (AGModeGuy.X_MOVE/ 2) ;
+			this.rail_bottom.y = asprite.bitmap.y + asprite.bitmap.height +  (AGModeGuy.Y_MOVE/2);
 			
-			this.rail_low_bottom.x = sprite.bitmap.x + (AGModeGuy.X_MOVE/ 2) ;
-			this.rail_low_bottom.y = sprite.bitmap.y + sprite.bitmap.height +  (AGModeGuy.Y_MOVE *2);
+			this.rail_low_bottom.x = asprite.bitmap.x + (AGModeGuy.X_MOVE/ 2) ;
+			this.rail_low_bottom.y = asprite.bitmap.y + asprite.bitmap.height +  (AGModeGuy.Y_MOVE *2);
 			
 			
-			this.rail_left.x = sprite.bitmap.x - (AGModeGuy.X_MOVE/2);
-			this.rail_left.y = sprite.bitmap.y + (AGModeGuy.Y_MOVE/ 2);
+			this.rail_left.x = asprite.bitmap.x - (AGModeGuy.X_MOVE/2);
+			this.rail_left.y = asprite.bitmap.y + (AGModeGuy.Y_MOVE/ 2);
 			
-			this.rail_right.x = sprite.bitmap.x + sprite.bitmap.width + (AGModeGuy.X_MOVE/2);
-			this.rail_right.y = sprite.bitmap.y + (AGModeGuy.Y_MOVE/2) ;
+			this.rail_right.x = asprite.bitmap.x + asprite.bitmap.width + (AGModeGuy.X_MOVE/2);
+			this.rail_right.y = asprite.bitmap.y + (AGModeGuy.Y_MOVE/2) ;
 			
-			this.rail_top.x = sprite.bitmap.x + (AGModeGuy.X_MOVE/2);
-			this.rail_top.y = sprite.bitmap.y - ( AGModeGuy.Y_MOVE/2);
+			this.rail_top.x = asprite.bitmap.x + (AGModeGuy.X_MOVE/2);
+			this.rail_top.y = asprite.bitmap.y - ( AGModeGuy.Y_MOVE/2);
 			
 			myStage.addChild(this.rail_bottom);
 			myStage.addChild(this.rail_left);
