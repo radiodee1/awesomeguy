@@ -5,6 +5,8 @@
 	
 	public class AGPhysicsGuy extends AGPhysics {
 
+		
+
 		public override function AGPhysicsGuy(mystage:Stage, mymode:AGMode) {
 			super(mystage, mymode);
 			// constructor code
@@ -17,29 +19,39 @@
 			//y += 5;
 			
 			
-			//trace(mydraw.rail_bottom.bitmapData.rect);
+			//trace(mydraw.rail_bottom.bitmapData.rect, mydraw.rail_bottom.x, mydraw.rail_bottom.y);
+			if (myinvisible.length < 1 ) return;
 			
 			if (yblock +1 >= myinvisible.length || xblock >= myinvisible[0].length || 
 				yblock < 0 || xblock < 0) {
+					
+				sprite.y -= yy;
+				sprite.x -= xx;
 				trace("exit");
 				return;
 			}
-			if (this.collisionTile(sprite.bitmap, xblock, yblock +1) ){// && 
+			if (this.collisionTile(myinvisible, mydraw.rail_bottom, mydraw.rail_bottom.x /64, mydraw.rail_bottom.y/64 ) ){// && 
 				//myinvisible[yblock + 1][xblock] == AGModeGuy.B_BLOCK) {
-				trace(myinvisible[yblock][xblock]);
+				//trace(myinvisible[yblock][xblock]);
 					
 				if (yy > 0) {
 					sprite.y -= (yy + 3 );
 					trace ("up");
 				}
 				else if (yy == 0){
-					sprite.y -= 3;
+					sprite.y -= 4;
 				}
 				else if (yy < 0 ){// && this.collisionTile(sprite.bitmap, xblock, yblock -1 )) {
 					sprite.y += Math.abs(yy);
 					trace("stop up");
 				}
-			} else if (this.collisionTile(sprite.bitmap, xblock, yblock -1 )) {
+			}
+			else  {
+				if (yy == 0) {
+					sprite.y += 3;
+				}
+			} 
+			if (this.collisionTile(myinvisible,mydraw.rail_top, mydraw.rail_top.x/64, mydraw.rail_top.y/64 )) {
 				if (yy > 0) {
 					sprite.y += (yy);
 					trace ("down");
@@ -50,25 +62,27 @@
 			}
 			
 		}
-		public function collisionTile(a:Bitmap, x:Number, y:Number):Boolean {
-			var b:AGSprite = new AGSpriteVarious(myMode,AGMode.S_BLOCK);
-			b.x =int( x *64);
-			b.y = int (y *64);
-			return this.collisionSprite(a, b);//false;
+		public function collisionTile(myinvisible:Array, a:Bitmap, x:Number, y:Number):Boolean {
+			if (y >= myinvisible.length || y < 0 || x >= myinvisible[0].length || x < 0) {
+				trace("bounds");
+				return false;
+			}
+			if (myinvisible[int(y)][int(x)] != AGModeGuy.B_BLOCK) {
+				trace("block type");
+				return false;
+			}
+			var arect:Rectangle = a.getBounds(this.myMode.myStage);
+			var brect:Rectangle =  new Rectangle(int(x ),int(y ), 64,64);//
+
+			var res:Boolean = arect.intersects(brect);
+			trace(res);
+			return res;
+			
 		}
 		
 		public function collisionSprite( a:Bitmap, b:AGSprite ):Boolean {
 			
-			if (a == null || b == null ) return false;
-			trace ("something");
-			var arect:Rectangle = a.getBounds(this.myMode.myStage);
-			trace (arect);
-			var brect:Rectangle =  new Rectangle(int(b.x ),int(b.y ), 64,64);//b.getBounds(myStage);
-			var apt:Point = new Point(a.x, a.y);
-			var bpt:Point = new Point(b.x, b.y);
-			var res:Boolean = arect.intersects(brect);
-			trace(res);
-			return res;//arect.intersects(brect);//a.bitmapData.hitTest(apt,0,b.bitmap.bitmapData,bpt,0);
+			return false;
 			
 		}
 
