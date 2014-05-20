@@ -2,6 +2,8 @@
 	import flash.display.Sprite;
 	import flash.display.Bitmap;
 	import flash.display.Shape;
+	import flash.display.Stage;
+	import flash.display.BitmapData;
 	
 	public class AGSprite  {
 		
@@ -26,6 +28,11 @@
 			public var endline_x:int, endline_y:int;
 			public var quality_0:int, quality_1:int, quality_2:int, quality_3:int;
 			
+			public var rail_left:Bitmap;
+			public var rail_right:Bitmap;
+			public var rail_top:Bitmap;
+			public var rail_bottom:Bitmap;
+			public var rail_low_bottom:Bitmap;
 		
 		public function AGSprite(mymode:AGMode, type:int) {
 			myMode = mymode;
@@ -66,6 +73,58 @@
 		
 		public function pruneSprite():void {
 			//
+		}
+		
+		public function makeRails(asprite:AGSprite):void {
+			
+			if (asprite.bitmap == null) return;
+			
+			var guyheight:int = asprite.bitmap.bitmapData.height;
+			var guywidth:int = asprite.bitmap.bitmapData.width;
+			
+			var vertical:BitmapData = new BitmapData(2,guyheight - AGModeGuy.Y_MOVE,true,0x00ff0000);
+			var horizontal:BitmapData = new BitmapData(guywidth - AGModeGuy.X_MOVE, 2,true,0x00ff0000);
+			
+			if (asprite.sprite_type == AGMode.S_XMONSTER_CLIMBER) {
+				//var vertical:BitmapData = new BitmapData(2,guyheight - AGModeGuy.Y_MOVE,true,0xffff0000);
+				//var horizontal:BitmapData = new BitmapData(guywidth - AGModeGuy.X_MOVE, 2,true,0xffff0000);
+			
+			}
+			
+			this.rail_bottom = new Bitmap(horizontal);
+			this.rail_top = new Bitmap(horizontal);
+			this.rail_left = new Bitmap(vertical);
+			this.rail_right = new Bitmap(vertical);
+			this.rail_low_bottom = new Bitmap(horizontal);
+			
+			this.rail_bottom.x = asprite.bitmap.x + (AGModeGuy.X_MOVE/ 2) ;
+			this.rail_bottom.y = asprite.bitmap.y + asprite.bitmap.height +  (AGModeGuy.Y_MOVE/2);
+			
+			this.rail_low_bottom.x = asprite.bitmap.x + (AGModeGuy.X_MOVE/ 2) ;
+			this.rail_low_bottom.y = asprite.bitmap.y + asprite.bitmap.height +  (AGModeGuy.Y_MOVE *2);
+			
+			
+			this.rail_left.x = asprite.bitmap.x - (AGModeGuy.X_MOVE/2);
+			this.rail_left.y = asprite.bitmap.y + (AGModeGuy.Y_MOVE/ 2);
+			
+			this.rail_right.x = asprite.bitmap.x + asprite.bitmap.width + (AGModeGuy.X_MOVE/2);
+			this.rail_right.y = asprite.bitmap.y + (AGModeGuy.Y_MOVE/2) ;
+			
+			this.rail_top.x = asprite.bitmap.x + (AGModeGuy.X_MOVE/2);
+			this.rail_top.y = asprite.bitmap.y - ( AGModeGuy.Y_MOVE/2);
+			
+			//myStage.addChild(this.rail_bottom);
+			//myStage.addChild(this.rail_left);
+			//myStage.addChild(this.rail_right);
+			//myStage.addChild(this.rail_top);
+			
+		}
+		
+		public function addRails(myStage:Stage) :void {
+			myStage.addChild(this.rail_bottom);
+			myStage.addChild(this.rail_left);
+			myStage.addChild(this.rail_right);
+			myStage.addChild(this.rail_top);
 		}
 	}
 	
