@@ -75,8 +75,8 @@
 			//
 		}
 		
-		public function makeRails(asprite:AGSprite):void {
-			
+		public function makeRails():void {
+			var asprite:AGSprite = this;
 			if (asprite.bitmap == null) return;
 			
 			var guyheight:int = asprite.bitmap.bitmapData.height;
