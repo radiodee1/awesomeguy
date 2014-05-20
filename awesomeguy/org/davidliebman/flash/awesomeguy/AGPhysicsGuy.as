@@ -37,24 +37,24 @@
 											(sprite.y /64)+ 1 );
 			
 			hit_bottom = this.collisionTile(myinvisible, 
-											mydraw.rail_bottom, 
-											mydraw.rail_bottom.x /64, 
-											mydraw.rail_bottom.y/64 );
+											sprite.rail_bottom, 
+											sprite.rail_bottom.x /64, 
+											sprite.rail_bottom.y/64 );
 											
 			hit_top = this.collisionTile(myinvisible, 
-										 mydraw.rail_top, 
-										 mydraw.rail_top.x /64, 
-										 mydraw.rail_top.y/64 );
+										 sprite.rail_top, 
+										 sprite.rail_top.x /64, 
+										 sprite.rail_top.y/64 );
 										 
 			hit_left = this.collisionTile(myinvisible, 
-										  mydraw.rail_left, 
-										  mydraw.rail_left.x /64, 
-										  mydraw.rail_left.y/64 );
+										  sprite.rail_left, 
+										  sprite.rail_left.x /64, 
+										  sprite.rail_left.y/64 );
 										  
 			hit_right = this.collisionTile(myinvisible, 
-										   mydraw.rail_right, 
-										   mydraw.rail_right.x /64, 
-										   mydraw.rail_right.y/64 );
+										   sprite.rail_right, 
+										   sprite.rail_right.x /64, 
+										   sprite.rail_right.y/64 );
 			hit_platform = false;// hit_bottom;							   
 			//hit_center = true;
 										

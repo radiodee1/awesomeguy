@@ -12,7 +12,7 @@
 		var myGuy:AGSpriteGuy;
 
 		var ai:AGai;
-		var myDrawai:AGDraw;
+		//var myDrawai:AGDraw;
 		//var aiMonster:AGSpriteXMonster;
 
 		static var GUY_CLIMB:int = 1;
@@ -174,7 +174,7 @@
 			myGuy.visible = true;
 			myGuy.quality_0 = AGModeGuy.GUY_STEP;
 
-			this.myDrawai = new AGDrawGuy(this, myRes, myStage, myScreenBG);
+			//this.myDrawai = new AGDrawGuy(this, myRes, myStage, myScreenBG);
 			this.ai = new AGai();
 
 
@@ -661,8 +661,8 @@
 					if (mySprite[i].sprite_type == AGMode.S_XMONSTER_CLIMBER) {
 						//mySprite[i].x += this.ai.getPixHintX();
 						//mySprite[i].y += this.ai.getPixHintY();
-						this.myDrawai.drawBasicSprite(mySprite[i], AGMode.D_XMONSTER_CLIMBER);						
-						this.myPhysics.applyGravity(myInvisible, mySprite[i], this.myDrawai,0,0); 
+						this.myDraw.drawBasicSprite(mySprite[i], AGMode.D_XMONSTER_CLIMBER);						
+						this.myPhysics.applyGravity(myInvisible, mySprite[i], this.myDraw,0,0); 
 													//this.ai.getPixHintX(), this.ai.getPixHintY());
 						this.ai.setStartEnd(mySprite[i].x, mySprite[i].y, xpos, ypos);
 						

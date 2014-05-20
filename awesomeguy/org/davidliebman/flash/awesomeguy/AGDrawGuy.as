@@ -199,8 +199,10 @@
 					myMode.flyersprite = sprite.bitmap;
 					//}
 				break;
-				case AGMode.D_XMONSTER:
 				case AGMode.D_XMONSTER_CLIMBER:
+					this.drawXMonsterClimber();
+				break;
+				case AGMode.D_XMONSTER:
 					drawXMonster(kind);
 				break;
 				case AGMode.D_KEY:
@@ -364,11 +366,7 @@
 					}
 				}
 				
-			if (sprite.sprite_type == AGMode.S_XMONSTER_CLIMBER) {
-				this.guywidth = this.sprite.bitmap.width;
-				this.guyheight = this.sprite.bitmap.height;
-				this.makeRails(sprite);
-			}
+			
 			//trace("draw xmonster");
 			return;
 		}
@@ -427,6 +425,16 @@
 				stageHelper.addChild(sprite.bitmap);
 			
 			}
+		}
+		
+		public function drawXMonsterClimber() :void {
+			var ycheat:int = 17;
+			sprite.bitmap = new Bitmap( 
+				myRes[AGResources.NAME_GATOR_PUNCH_R1_PNG].bitmapData.clone());
+			sprite.bitmap.x = sprite.x - scrollx;
+			sprite.bitmap.y = sprite.y - scrolly + ycheat;
+			stageHelper.addChild(sprite.bitmap);
+			sprite.makeRails();
 		}
 		
 		public function setBitEffectEnable(xx:Boolean):void {
