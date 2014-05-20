@@ -123,8 +123,8 @@
 				return;
 			}
 			*/
-			sprite.x += xx;
-			sprite.y += yy;
+			//sprite.x += xx;
+			//sprite.y += yy;
 			
 		}
 		public function collisionTile(myinvisible:Array, a:Bitmap, x:Number, y:Number):Boolean {
