@@ -77,7 +77,11 @@
 		
 		public function makeRails():void {
 			var asprite:AGSprite = this;
-			if (asprite.bitmap == null) return;
+			if (asprite.bitmap == null) {
+				trace("no bitmap");
+				return;
+			}
+			//else trace("make rails");
 			
 			var guyheight:int = asprite.bitmap.bitmapData.height;
 			var guywidth:int = asprite.bitmap.bitmapData.width;
@@ -86,8 +90,9 @@
 			var horizontal:BitmapData = new BitmapData(guywidth - AGModeGuy.X_MOVE, 2,true,0x00ff0000);
 			
 			if (asprite.sprite_type == AGMode.S_XMONSTER_CLIMBER) {
-				//var vertical:BitmapData = new BitmapData(2,guyheight - AGModeGuy.Y_MOVE,true,0xffff0000);
-				//var horizontal:BitmapData = new BitmapData(guywidth - AGModeGuy.X_MOVE, 2,true,0xffff0000);
+				
+				var vertical:BitmapData = new BitmapData(2,guyheight - AGModeGuy.Y_MOVE,false,0xffff0000);
+				var horizontal:BitmapData = new BitmapData(guywidth - AGModeGuy.X_MOVE, 2,false,0xffff0000);
 			
 			}
 			
