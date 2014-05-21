@@ -38,10 +38,10 @@
 		static var B_ONEUP:int = 19 ;
 		static var B_BIGPRIZE:int = 21 ;
 		static var B_PLATFORM:int = 18 ; 
-		// here start several block types that have no map icon!!
-		static var B_PLUNGER:int = 19;
-		static var B_PLUNGER_MARKER:int = 20;
-		static var B_MONSTER_CLIMBER:int = 21;
+		// here start several block types that have no map icon!! higher than 28?
+		static var B_PLUNGER:int = 29;//19
+		static var B_PLUNGER_MARKER:int = 30;//20
+		static var B_MONSTER_CLIMBER:int = 31;//21
 		
 		var TILEMAP_HEIGHT:int = 128 * 2;
 		var TILEMAP_WIDTH:int = 224 * 2;
@@ -661,9 +661,12 @@
 					if (mySprite[i].sprite_type == AGMode.S_XMONSTER_CLIMBER) {
 						//mySprite[i].x += this.ai.getPixHintX();
 						//mySprite[i].y += this.ai.getPixHintY();
+						
 						this.myDraw.drawBasicSprite(mySprite[i], AGMode.D_XMONSTER_CLIMBER);						
-						this.myPhysics.applyGravity(myInvisible, mySprite[i], this.myDraw,0,0); 
-													//this.ai.getPixHintX(), this.ai.getPixHintY());
+						mySprite[i].makeRails();
+						mySprite[i].addRails(this.myStage);
+						this.myPhysics.applyGravity(myInvisible, mySprite[i], this.myDraw, 
+													this.ai.getPixHintX(), this.ai.getPixHintY());
 						this.ai.setStartEnd(mySprite[i].x, mySprite[i].y, xpos, ypos);
 						
 					}

@@ -428,7 +428,7 @@
 		}
 		
 		public function drawXMonsterClimber() :void {
-			var ycheat:int = -47;
+			var ycheat:int = -60;
 			sprite.bitmap = new Bitmap( 
 				myRes[AGResources.NAME_GATOR_PUNCH_R1_PNG].bitmapData.clone());
 			sprite.bitmap.x = sprite.x - scrollx;

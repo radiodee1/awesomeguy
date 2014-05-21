@@ -91,8 +91,8 @@
 			
 			if (asprite.sprite_type == AGMode.S_XMONSTER_CLIMBER) {
 				
-				var vertical:BitmapData = new BitmapData(2,guyheight - AGModeGuy.Y_MOVE,false,0xffff0000);
-				var horizontal:BitmapData = new BitmapData(guywidth - AGModeGuy.X_MOVE, 2,false,0xffff0000);
+				vertical = new BitmapData(2,guyheight - AGModeGuy.Y_MOVE,false,0xffff0000);
+				horizontal = new BitmapData(guywidth - AGModeGuy.X_MOVE, 2,false,0xffff0000);
 			
 			}
 			
