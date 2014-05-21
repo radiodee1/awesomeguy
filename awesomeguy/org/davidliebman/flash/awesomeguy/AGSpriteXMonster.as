@@ -23,8 +23,8 @@
 			
 			
 			//for each monster...
-			if( this.sprite_type == AGMode.S_XMONSTER || this.sprite_type == AGMode.S_XMONSTER_STAND ||
-			   this.sprite_type == AGMode.S_XMONSTER_CLIMBER) {
+			if( this.sprite_type == AGMode.S_XMONSTER || this.sprite_type == AGMode.S_XMONSTER_STAND ){//||
+			   //this.sprite_type == AGMode.S_XMONSTER_CLIMBER) {
 				
 					//if (i == 5) return;
 					if ( true) {
@@ -103,6 +103,10 @@
 				
 		
 			}
+			if (this.sprite_type == AGMode.S_XMONSTER_CLIMBER) {
+				this.visible = true;
+			}
+			
 			myMode.drawRadarPing(myMode.radar, 
 								 myMode.radarscreen, 
 								 this.x, this.y, 
