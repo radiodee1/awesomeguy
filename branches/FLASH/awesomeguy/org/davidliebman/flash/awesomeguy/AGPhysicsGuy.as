@@ -128,20 +128,20 @@
 			sprite.y += yblock;
 			
 		}
-		public function collisionTile(myinvisible:Array, a:Bitmap, x:int, y:int, blocktype:int = 0, message:String="NONE"):Boolean {
+		public function collisionTile(myinvisible:Array, a:Bitmap, xx:int, yy:int, blocktype:int = 0, message:String="NONE"):Boolean {
 			var mapcheat:int = 0;
 			
-			if (y >= myinvisible.length || y < 0 || x >= myinvisible[0].length || x < 0) {
+			if (yy >= myinvisible.length || yy < 0 || xx >= myinvisible[0].length || xx < 0) {
 				trace(message,"bounds false");
 				return false;
 			}
-			var k:int = myinvisible[y][x];
+			var k:int = myinvisible[yy][xx];
 			if (k == 0 || k + mapcheat != blocktype){//0){// AGModeGuy.B_BLOCK) {
 				trace(message,"block-type false", blocktype ,k + mapcheat);
 				return false;
 			}
 			var arect:Rectangle = a.getBounds(this.myMode.myStage);
-			var brect:Rectangle =  new Rectangle(int(x * 64),int(y *64), 64,64);//
+			var brect:Rectangle =  new Rectangle(int(xx * 64),int(yy *64), 64,64);//
 
 			trace(message,brect);
 			var res:Boolean = arect.intersects(brect);
