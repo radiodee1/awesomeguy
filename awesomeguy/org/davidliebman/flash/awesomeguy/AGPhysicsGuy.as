@@ -25,7 +25,6 @@
 			if (myinvisible.length < 1 ) return;
 			
 			
-			
 			hit_ladder = this.collisionTile(myinvisible, sprite.x/ 64, sprite.y/ 64,
 											sprite.bitmap, 
 											sprite.bitmap.x , 
@@ -39,28 +38,28 @@
 			
 			
 			hit_bottom = this.collisionTile(myinvisible, 
-										(sprite.rail_bottom.x //+ this.myMode.scrollBGX
+										(sprite.x //+ this.myMode.scrollBGX
 										 )/ 64, 
-										(sprite.rail_bottom.y //+ this.myMode.scrollBGY
+										(sprite.y //+ this.myMode.scrollBGY
 										 )/ 64 +1 ,
 											sprite.rail_bottom, 
 											sprite.rail_bottom.x , 
 											(sprite.rail_bottom.y ) ,AGModeGuy.B_BLOCK, "bottom");
 											
-			hit_top = this.collisionTile(myinvisible, sprite.x/ 64, sprite.y/ 64,
+			hit_top = this.collisionTile(myinvisible, sprite.x/ 64, sprite.y/ 64 - 1,
 										 sprite.rail_top, 
-										 sprite.bitmap.x , 
-										 (sprite.bitmap.y )  , AGModeGuy.B_BLOCK, "top");
+										 sprite.rail_top.x , 
+										 (sprite.rail_top.y )  , AGModeGuy.B_BLOCK, "top");
 										 
-			hit_left = this.collisionTile(myinvisible, sprite.x/ 64, sprite.y/ 64,
+			hit_left = this.collisionTile(myinvisible, sprite.x/ 64 -1, sprite.y/ 64,
 										  sprite.rail_left, 
-										  (sprite.bitmap.x ) , 
-										  sprite.bitmap.y , AGModeGuy.B_BLOCK, "left");
+										  (sprite.rail_left.x ) , 
+										  sprite.rail_left.y , AGModeGuy.B_BLOCK, "left");
 										  
-			hit_right = this.collisionTile(myinvisible, sprite.x/ 64, sprite.y/ 64,
+			hit_right = this.collisionTile(myinvisible, sprite.x/ 64 + 1, sprite.y/ 64,
 										   sprite.rail_right, 
-										   sprite.bitmap.x , 
-										   sprite.bitmap.y  , AGModeGuy.B_BLOCK, "right");
+										   sprite.rail_right.x , 
+										   sprite.rail_right.y  , AGModeGuy.B_BLOCK, "right");
 			hit_platform = false;// hit_bottom;							   
 			//hit_center = true;
 										
@@ -73,6 +72,8 @@
 			if (xx > 0) try_right = true;
 			else try_right = false;
 			
+			trace("input:", try_up, try_down, try_left, try_right);
+
 			xblock = 0;
 			yblock = 0;
 			
@@ -130,7 +131,7 @@
 			
 			if (!hit_bottom && !hit_ladder && !hit_center  ){//&& this.jump_count <= 0) {
 				yblock = AGModeGuy.Y_MOVE;
-				xblock = 0;
+				//xblock = 0;
 				trace(yblock , "down");
 			}
 			

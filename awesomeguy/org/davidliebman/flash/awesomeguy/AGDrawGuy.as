@@ -434,7 +434,7 @@
 			sprite.bitmap.x = sprite.x - scrollx;
 			sprite.bitmap.y = sprite.y - scrolly + ycheat;
 			stageHelper.addChild(sprite.bitmap);
-			//sprite.makeRails();
+			
 		}
 		
 		public function setBitEffectEnable(xx:Boolean):void {
