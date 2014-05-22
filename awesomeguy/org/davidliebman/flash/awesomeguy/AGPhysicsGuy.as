@@ -97,7 +97,7 @@
 				if (yblock < 0 || yblock == 0) yy = AGModeGuy.Y_MOVE/2;
 			}
 			else if ( hit_bottom && hit_center &&  !hit_top) {
-				yblock =  (-  AGModeGuy.Y_MOVE);
+				yblock =  -6;//(-  AGModeGuy.Y_MOVE);
 				trace("-6", AGModeGuy.Y_MOVE);
 						
 			}

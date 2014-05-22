@@ -659,8 +659,6 @@
 						myDraw.drawBasicSprite(mySprite[i], D_EXIT);
 					}
 					if (mySprite[i].sprite_type == AGMode.S_XMONSTER_CLIMBER) {
-						//mySprite[i].x += this.ai.getPixHintX();
-						//mySprite[i].y += this.ai.getPixHintY();
 						
 						this.myDraw.drawBasicSprite(mySprite[i], AGMode.D_XMONSTER_CLIMBER);						
 						mySprite[i].makeRails();
