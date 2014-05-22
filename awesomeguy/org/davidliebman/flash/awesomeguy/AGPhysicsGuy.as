@@ -129,9 +129,9 @@
 						
 			}
 			
-			if (!hit_bottom && !hit_ladder && !hit_center  ){//&& this.jump_count <= 0) {
+			if (!hit_bottom && !hit_ladder && !hit_center && try_down ){//&& this.jump_count <= 0) {
 				yblock = AGModeGuy.Y_MOVE;
-				//xblock = 0;
+				xblock = 0;
 				trace(yblock , "down");
 			}
 			
