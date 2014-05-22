@@ -16,7 +16,7 @@
 			//var y:int = sprite.y;
 			var xblock:int = 0;//x / 64;
 			var yblock:int = 0;//y / 64;
-			var mapcheat:int = 4;
+			var mapcheat:int = 0;
 			//y += 5;
 			var hit_top:Boolean, hit_bottom:Boolean, hit_left:Boolean, hit_right:Boolean , hit_ladder:Boolean;
 			
@@ -35,7 +35,7 @@
 											sprite.x /64, 
 											(sprite.y /64), AGModeGuy.B_BLOCK,( "center" + AGModeGuy.B_BLOCK));
 			
-			//trace("center", sprite.bitmap.getBounds(mydraw.myStage));
+			trace("bottom trace", sprite.rail_bottom.getBounds(mydraw.myStage));
 			
 			hit_bottom = this.collisionTile(myinvisible, 
 											sprite.rail_bottom, 
@@ -94,9 +94,9 @@
 			//}
 			if (hit_top && !hit_bottom) {
 				//this.jump_count = 0;
-				if (yblock < 0 || yblock == 0) yy = AGModeGuy.Y_MOVE;
+				if (yblock < 0 || yblock == 0) yy = AGModeGuy.Y_MOVE/2;
 			}
-			if ( hit_bottom && hit_center &&  !hit_top) {
+			else if ( hit_bottom && hit_center &&  !hit_top) {
 				yblock =  (-  AGModeGuy.Y_MOVE);
 				trace("-6", AGModeGuy.Y_MOVE);
 						
@@ -104,8 +104,9 @@
 			//if (hit_platform && hit_center && hit_bottom && !hit_top) {
 			//	yy = - 6;
 			//}
-			if (!hit_bottom && !hit_ladder && !hit_center  ){//&& this.jump_count <= 0) {
+			else if (!hit_bottom && !hit_ladder && !hit_center  ){//&& this.jump_count <= 0) {
 				yblock = AGModeGuy.Y_MOVE;
+				xblock = 0;
 				trace(yblock , "down");
 			}
 			
@@ -124,8 +125,8 @@
 				return;
 			}
 			*/
-			sprite.x += xblock;
-			sprite.y += yblock;
+			sprite.bitmap.x += xblock;
+			sprite.bitmap.y += yblock;
 			
 		}
 		public function collisionTile(myinvisible:Array, a:Bitmap, xx:int, yy:int, blocktype:int = 0, message:String="NONE"):Boolean {
