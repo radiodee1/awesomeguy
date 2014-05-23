@@ -566,7 +566,7 @@
 		}
 		
 		public function doTimers():void {
-			if (myTimer[AGMode.TIMER_00].timerDone() ){//&& myTimer[AGMode.TIMER_00].started ) {
+			if (myTimer[AGMode.TIMER_00].timerDone() ){
 				this.starting_pos_timer = true;
 			}
 			if (this.animate_only_death && ! myTimer[AGMode.TIMER_01].done && ! myTimer[AGMode.TIMER_01].started ) {
@@ -666,8 +666,8 @@
 						this.ai.setStartEnd(mySprite[i].bitmap.x, mySprite[i].bitmap.y, xpos, ypos);
 						
 						this.myPhysics.applyGravityAndLadders(myInvisible, mySprite[i], this.myDraw,
-													-5,0);
-													//this.ai.getPixHintX(), this.ai.getPixHintY());
+													//-5,0);
+													this.ai.getPixHintX(), this.ai.getPixHintY());
 						
 					}
 				}

@@ -3,9 +3,6 @@
 	import flash.display.Sprite;
 	import flash.geom.Rectangle;
 	import flash.display.Shape;
-	//import flash.system.MessageChannel;
-	//import flash.system.Worker;
-	//import flash.system.WorkerDomain;
 	import flash.events.Event;
 	import flash.utils.ByteArray;
 	

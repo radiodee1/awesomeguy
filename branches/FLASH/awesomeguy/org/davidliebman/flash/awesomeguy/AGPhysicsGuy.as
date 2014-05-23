@@ -78,7 +78,7 @@
 			yblock = 0;
 			
 			if ( try_left  ) {
-				if (!hit_left) xblock = - AGModeGuy.X_MOVE;
+				if (!hit_left) xblock = (- AGModeGuy.X_MOVE);
 				else if (!hit_right) xblock = int (AGModeGuy.X_MOVE / 1);
 				//myGuy.facingRight = false;
 				sprite.facingRight = false;
@@ -120,12 +120,12 @@
 			}
 			
 			if (hit_top && !hit_bottom) {
-				//this.jump_count = 0;
-				if (yblock < 0 || yblock == 0) yy = AGModeGuy.Y_MOVE/2;
+				
+				if (yblock < 0 || yblock == 0) yblock = AGModeGuy.Y_MOVE/2;
 			}
 			if ( hit_bottom && hit_center &&  !hit_top) {
 				yblock =  -6;//(-  AGModeGuy.Y_MOVE);
-				trace("-6", AGModeGuy.Y_MOVE);
+				trace("-6",- AGModeGuy.Y_MOVE);
 						
 			}
 			
@@ -136,7 +136,8 @@
 			}
 			
 			/////////////////
-			
+			sprite.x += xblock;
+			sprite.y += yblock;
 			sprite.bitmap.x += xblock;
 			sprite.bitmap.y += yblock;
 			
