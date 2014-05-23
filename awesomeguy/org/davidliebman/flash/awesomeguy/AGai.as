@@ -871,7 +871,7 @@
 					if ( found != -1) {
 						this.nodenumend = found;
 					}
-					//trace("end node --", this.nodesFromDots[this.nodenumend]);
+					//
 					this.alg_state ++;
 				break;
 				case AGai.ALG_FIRST_HINT:
