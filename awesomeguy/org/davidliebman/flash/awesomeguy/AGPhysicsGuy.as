@@ -72,7 +72,6 @@
 			if (xx > 0) try_right = true;
 			else try_right = false;
 			
-			trace("input:", try_up, try_down, try_left, try_right);
 
 			xblock = 0;
 			yblock = 0;
@@ -147,23 +146,23 @@
 			var mapcheat:int = 0;
 			var scrollx:int = this.myMode.scrollBGX;
 			var scrolly:int = this.myMode.scrollBGY;
-			trace(message,"coords", coordx, coordy);
+			//trace(message,"coords", coordx, coordy);
 			if (coordy >= myinvisible.length || coordy < 0 || coordx >= myinvisible[0].length || coordx < 0) {
-				trace(message,"bounds false");
+				//trace(message,"bounds false");
 				return false;
 			}
 			var k:int = myinvisible[coordy][coordx];
 			if (k == 0 || k + mapcheat != blocktype){
-				trace(message,"block-type false", blocktype ,k + mapcheat);
+				//trace(message,"block-type false", blocktype ,k + mapcheat);
 				return false;
 			}
 			var arect:Rectangle = a.getBounds(this.myMode.myStage);
 			var brect:Rectangle =  new Rectangle((xx ),(yy), 64,64);//
 
-			trace(message,arect,brect);
+			//trace(message,arect,brect);
 			var res:Boolean = arect.intersects(brect);
 			
-			trace(message,res);
+			//trace(message,res);
 			return res;
 			
 		}
