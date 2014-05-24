@@ -880,7 +880,7 @@
 				break;
 				case AGai.ALG_FIRST_HINT:
 					
-					if(this.q_hint_nodes.length < 2) {
+					if(this.q_hint_nodes.length < this.hint_nodecounter + 2) {
 						if (this.q_endedge_hor != -1) {
 							if (this.guyx < this.startingX ) {
 								this.hint_x = - AGai.MOVE_X;
@@ -900,7 +900,7 @@
 					}
 					if (this.nodenumend == -1 || this.nodenumstart == -1) {
 						this.alg_state = AGai.ALG_ZERO;
-						trace("back to zero");
+						
 						return;
 					}
 					this.alg_state ++;
@@ -960,20 +960,18 @@
 				case AGai.ALG_DIJKSTRA_LOOP_B:
 					q_list = this.getNodeNeighborList(q_i);
 
-					//trace("length", q_list.length);
+					
 					
 					this.q_list_index = 0;
 					this.alg_state ++;
 				break;
 				
 				case AGai.ALG_DIJKSTRA_LOOP_NEIGHBOR_LIST_A:
-					//
+					
 					this.q_j = this.q_list[this.q_list_index];
 					
-					//trace(this.q_j, "<- q_j");
+					
 					if (this.q_list.length > 0) {
-						//trace(this.nodesFromDots[this.q_i][AGai.NPOS_NODENAME],
-						//	  "neighbor:",q_j, this.nodesFromDots[this.q_j][AGai.NPOS_NODENAME]);
 						
 						q_edge = this.getEdgeFromNodeIndeces(q_i,q_j);
 
@@ -990,15 +988,12 @@
 						
 						q_alt = q_k + this.nodesFromDots[q_i][AGai.NPOS_CALCDIST];
 						
-						//trace("edge dist",q_k, "new dist" , q_alt, "length", this.q_list.length);
+						
 	
 						if (q_alt <= this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] ){// was q_j  //&& this.q_list.length > 0) {
 							this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] = q_alt;
 							this.nodesFromDots[q_j][AGai.NPOS_PREVIOUS] = q_i;
-							//trace("previous:",this.nodesFromDots[q_i][AGai.NPOS_PREVIOUS],
-							//	  this.nodenumend, this.nodenumstart);
-
-							// heap reorder j
+							
 						}
 					
 					}
@@ -1032,9 +1027,9 @@
 					}
 				break;
 				case AGai.ALG_SECOND_HINT_A:
-					// set REAL hint
+					
 					this.q_hint_list = this.createHint();
-					//trace("second hint", this.q_hint_list.length);
+					
 					
 					this.alg_state ++;
 				break;
@@ -1062,7 +1057,7 @@
 				
 				
 				default:
-					//what to do here?
+					
 					this.alg_state = AGai.ALG_ZERO;
 				break;
 			}
@@ -1081,7 +1076,7 @@
 					j ++;
 				}
 			}
-			//if (j == this.nodesFromDots.length - 1) value = false;
+			
 			return value;
 		}
 		
@@ -1194,15 +1189,17 @@
 			var i:int = this.nodenumend;// this.node_index_end; 
 
 			while (i != this.nodenumstart && i != -1 && i < this.nodesFromDots.length) {
-			//while (i != -1) {
+			
 				i = this.nodesFromDots[i][AGai.NPOS_PREVIOUS];
 				if (i > -1) {
 					list.push(i);
-					//trace(i, this.nodesFromDots[i][AGai.NPOS_NODENAME]);
+					
 				}
-				//else trace(i);
+				
 			}
+			//list.push(this.nodenumstart);
 			
+			//list.reverse();
 			
 			return list;
 		}
@@ -1211,24 +1208,19 @@
 			var a:int ;
 			var b:int ;
 			
-			if (this.q_endedge_hor != -1) {
-				if (this.guyx < this.startingX ) {
-					this.hint_x = - AGai.MOVE_X;
-				}
-				else {
-					this.hint_x = AGai.MOVE_X;
-				}
-			}
 			if (this.q_hint_list.length >= this.hint_nodecounter + 2) {
 				a = this.q_hint_list[0 + this.hint_nodecounter];
 				b = this.q_hint_list[1 + this.hint_nodecounter];
+				trace(a,b);
 				if (this.q_hint_nodes[a][AGai.NPOS_COORDY] == 
 					this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
-					if (this.q_hint_nodes[a][AGai.NPOS_COORDX] > this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
+					if (this.q_hint_nodes[a][AGai.NPOS_COORDX] < this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
 						this.hint_x = - AGai.MOVE_X;
+						trace("second left");
 					}
 					else {
 						this.hint_x = AGai.MOVE_X;
+						trace("second right");
 					}
 				}
 				else if (this.q_hint_nodes[a][AGai.NPOS_COORDX] == 
@@ -1237,30 +1229,34 @@
 				}
 				
 			}
+			else if (this.q_endedge_hor != -1) {
+				if (this.guyx < this.startingX ) {
+					this.hint_x = - AGai.MOVE_X;
+					trace("hint left");
+				}
+				else {
+					this.hint_x = AGai.MOVE_X;
+					trace("hint right");
+				}
+			}
 			return this.hint_x;
 		}
 		public function getPixHintY():int {
 			var a:int ;
 			var b:int ;
 			
-			if (this.q_endedge_vert != -1) {
-				if (this.guyy < this.startingY) {
-					this.hint_y = - AGai.MOVE_Y;
-				}
-				else {
-					this.hint_y = AGai.MOVE_Y;
-				}
-			}
 			if (this.q_hint_list.length >= this.hint_nodecounter + 2) {
 				a = this.q_hint_list[0 + this.hint_nodecounter];
 				b = this.q_hint_list[1 + this.hint_nodecounter];
 				if (this.q_hint_nodes[a][AGai.NPOS_COORDX] == 
 					this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
-					if (this.q_hint_nodes[a][AGai.NPOS_COORDY] > this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
+					if (this.q_hint_nodes[a][AGai.NPOS_COORDY] < this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
 						this.hint_y = - AGai.MOVE_Y;
+						trace("second up");
 					}
 					else {
 						this.hint_y = AGai.MOVE_Y;
+						trace("second down");
 					}
 				}
 				else if (this.q_hint_nodes[a][AGai.NPOS_COORDY] == 
@@ -1268,6 +1264,16 @@
 					this.hint_y = 0;
 				}
 				
+			}
+			else if (this.q_endedge_vert != -1) {
+				if (this.guyy < this.startingY) {
+					this.hint_y = - AGai.MOVE_Y;
+					trace("hint up");
+				}
+				else {
+					this.hint_y = AGai.MOVE_Y;
+					trace("hint down");
+				}
 			}
 			return this.hint_y;
 		}
@@ -1283,7 +1289,7 @@
 							this.startingX, this.startingY,
 							64,64);
 			if (arect.intersects(brect)) {
-				//trace("<==============");
+				trace("<==============");
 				this.hint_nodecounter ++;
 			}
 		}
