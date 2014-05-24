@@ -663,7 +663,7 @@
 						this.myDraw.drawBasicSprite(mySprite[i], AGMode.D_XMONSTER_CLIMBER);						
 						mySprite[i].makeRails();
 						mySprite[i].addRails(this.myStage);
-						this.ai.setStartEnd(mySprite[i].bitmap.x, mySprite[i].bitmap.y, xpos, ypos);
+						this.ai.setStartEnd(mySprite[i].x, mySprite[i].y, xpos, ypos);
 						
 						this.myPhysics.applyGravityAndLadders(myInvisible, mySprite[i], this.myDraw,
 													//-5,0);

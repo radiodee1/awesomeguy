@@ -177,7 +177,7 @@
 						break;
 					}
 					
-					trace("setup");
+					//trace("setup");
 					
 					//if (sprite.sprite_type != AGMode.S_XMONSTER_CLIMBER) {
 					sprite.bitmap.x =  xx - scrollx + guyx;

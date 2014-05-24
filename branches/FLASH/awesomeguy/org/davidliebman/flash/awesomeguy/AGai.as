@@ -879,6 +879,7 @@
 					this.alg_state ++;
 				break;
 				case AGai.ALG_FIRST_HINT:
+					
 					if(this.q_hint_nodes.length < 2) {
 						if (this.q_endedge_hor != -1) {
 							if (this.guyx < this.startingX ) {
@@ -897,6 +898,11 @@
 							}
 						}
 					}
+					if (this.nodenumend == -1 || this.nodenumstart == -1) {
+						this.alg_state = AGai.ALG_ZERO;
+						trace("back to zero");
+						return;
+					}
 					this.alg_state ++;
 				break;
 				case AGai.ALG_START_DIJKSTRA:
@@ -905,7 +911,7 @@
 					for (i = 0; i < this.edgesFromDots.length; i ++) {
 						if (this.edgesFromDots[i][AGai.EPOS_TEMPFLAG] == true) {
 							this.connectNodeEdgeIndices(i);
-							//trace(this.edgesFromDots[i]);
+							
 
 						}
 					}
@@ -927,7 +933,7 @@
 					
 					this.nodesFromDots[q_i][AGai.NPOS_VISITED] = true;
 					
-					//this.node_index_end = q_i;
+					
 					
 					if (q_i == this.nodenumend ) {
 							
@@ -936,12 +942,12 @@
 						this.q_list_index = 0;
 						this.alg_state = AGai.ALG_SECOND_HINT_A;
 						break;
-						//return;
+						
 					}
 					
 					
 					if (this.nodesFromDots[q_i][AGai.NPOS_CALCDIST] >= AGai.START_DISTANCE) {
-						//trace("distance too long");
+						
 						
 						this.alg_state = AGai.ALG_SECOND_HINT_A;
 						break;
@@ -1009,7 +1015,7 @@
 				break;
 				
 				case AGai.ALG_DIJKSTRA_LOOP_CLOSE:
-					//trace("----");
+					
 					if (!this.isListEmpty()) {
 						
 						this.alg_state = AGai.ALG_DIJKSTRA_LOOP_A;
@@ -1017,10 +1023,7 @@
 					}
 					else {
 						if (this.node_index_end == -1) {
-							// what to do if no path??
-							//trace("====");
-							//trace("no path");
-							//this.alg_state ++;// skip second hint!!
+							
 							this.alg_state = AGai.ALG_ZERO;
 							break;
 						}
@@ -1493,7 +1496,7 @@
 				//
 				for (m = 0; m< this.q_hint_list.length; m ++) {
 					i = this.q_hint_list[m];
-					//for each (i in this.q_hint_list) {
+					
 					if (i > -1 && i < this.q_hint_nodes.length) {
 						
 						xend  = this.q_hint_nodes[i][AGai.NPOS_COORDX] * TILE_WIDTH - 

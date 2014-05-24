@@ -28,7 +28,7 @@
 			hit_ladder = this.collisionTile(myinvisible, sprite.x/ 64, sprite.y/ 64,
 											sprite.bitmap, 
 											sprite.bitmap.x , 
-											(sprite.bitmap.y ), AGModeGuy.B_LADDER,( "ladder" ));
+											(sprite.bitmap.y - 64), AGModeGuy.B_LADDER, "ladder" , 8);
 			
 			
 			hit_center = this.collisionTile(myinvisible,  sprite.x/ 64, sprite.y/ 64 +1 ,
@@ -125,14 +125,14 @@
 			}
 			if ( hit_bottom && hit_center &&  !hit_top) {
 				yblock =  -6;//(-  AGModeGuy.Y_MOVE);
-				trace("-6",- AGModeGuy.Y_MOVE);
+				//trace("-6",- AGModeGuy.Y_MOVE);
 						
 			}
 			
 			if (!hit_bottom && !hit_ladder && !hit_center && try_down ){//&& this.jump_count <= 0) {
 				yblock = int(AGModeGuy.Y_MOVE/q);
 				xblock = 0;
-				trace(yblock , "down");
+				//trace(yblock , "down");
 			}
 			
 			/////////////////
@@ -142,7 +142,7 @@
 			sprite.bitmap.y += yblock;
 			
 		}
-		public function collisionTile(myinvisible:Array,coordx:int, coordy:int, a:Bitmap, xx:int, yy:int, blocktype:int = 0, message:String="NONE"):Boolean {
+		public function collisionTile(myinvisible:Array,coordx:int, coordy:int, a:Bitmap, xx:int, yy:int, blocktype:int = 0, message:String="NONE", size:int = 64):Boolean {
 			var mapcheat:int = 0;
 			var scrollx:int = this.myMode.scrollBGX;
 			var scrolly:int = this.myMode.scrollBGY;
@@ -157,7 +157,7 @@
 				return false;
 			}
 			var arect:Rectangle = a.getBounds(this.myMode.myStage);
-			var brect:Rectangle =  new Rectangle((xx ),(yy), 64,64);//
+			var brect:Rectangle =  new Rectangle((xx ),(yy), size,size);//
 
 			//trace(message,arect,brect);
 			var res:Boolean = arect.intersects(brect);
