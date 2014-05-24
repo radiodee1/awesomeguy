@@ -76,27 +76,28 @@
 
 			xblock = 0;
 			yblock = 0;
+			var q:int = 3;
 			
 			if ( try_left  ) {
-				if (!hit_left) xblock = (- AGModeGuy.X_MOVE);
-				else if (!hit_right) xblock = int (AGModeGuy.X_MOVE / 1);
+				if (!hit_left) xblock = int (- AGModeGuy.X_MOVE/q);
+				else if (!hit_right) xblock = int (AGModeGuy.X_MOVE / q);
 				//myGuy.facingRight = false;
 				sprite.facingRight = false;
 				
 			}
 			if ( try_right ) {
-				if (!hit_right) xblock = + AGModeGuy.X_MOVE;
-				else if (!hit_left) xblock = - int (AGModeGuy.X_MOVE / 1);
+				if (!hit_right) xblock = int(+ AGModeGuy.X_MOVE/q);
+				else if (!hit_left) xblock = - int (AGModeGuy.X_MOVE / q);
 				//myGuy.facingRight = true;
 				sprite.facingRight = true;
 				
 			}
 			
 			if (try_down) {
-				if (!hit_bottom) yblock = + AGModeGuy.Y_MOVE;
-				else if (!hit_top) yblock = - AGModeGuy.Y_MOVE;
+				if (!hit_bottom) yblock = + int(AGModeGuy.Y_MOVE/q);
+				else if (!hit_top) yblock = int(- AGModeGuy.Y_MOVE/q);
 				if (hit_ladder && !hit_bottom) {
-					yblock =  AGModeGuy.Y_MOVE;
+					yblock =  int(AGModeGuy.Y_MOVE/q);
 					//if(!hit_bottom) myGuy.quality_0 = AGModeGuy.GUY_CLIMB;
 				}
 				if (!hit_ladder && hit_bottom) {
@@ -107,7 +108,7 @@
 			}
 			if (try_up) {
 				if (hit_ladder) {
-					yblock = - AGModeGuy.Y_MOVE;
+					yblock = int ( - AGModeGuy.Y_MOVE/q);
 					//if(!hit_bottom) myGuy.quality_0 = AGModeGuy.GUY_CLIMB;
 				}
 			}
@@ -121,7 +122,7 @@
 			
 			if (hit_top && !hit_bottom) {
 				
-				if (yblock < 0 || yblock == 0) yblock = AGModeGuy.Y_MOVE/2;
+				if (yblock < 0 || yblock == 0) yblock = int( AGModeGuy.Y_MOVE/(q*2));
 			}
 			if ( hit_bottom && hit_center &&  !hit_top) {
 				yblock =  -6;//(-  AGModeGuy.Y_MOVE);
@@ -130,7 +131,7 @@
 			}
 			
 			if (!hit_bottom && !hit_ladder && !hit_center && try_down ){//&& this.jump_count <= 0) {
-				yblock = AGModeGuy.Y_MOVE;
+				yblock = int(AGModeGuy.Y_MOVE/q);
 				xblock = 0;
 				trace(yblock , "down");
 			}
