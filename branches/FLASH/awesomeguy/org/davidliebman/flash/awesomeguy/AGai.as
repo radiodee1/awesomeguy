@@ -121,6 +121,10 @@
 		public var TILE_WIDTH:int = 64;
 		public var TILE_HEIGHT:int = 64;
 
+		public var hint_nodenumstart:int = 0;
+		public var hint_nodenumend:int = 0;
+		public var hint_nodecounter:int = 0;
+
 		public function AGai() {
 			// constructor code
 			// do nothing...
@@ -615,7 +619,7 @@
 			this.endingX = endX; // guy
 			this.endingY = endY;
 			
-			
+			this.advanceNodecounter();
 		}
 		
 		/* THIS IS DONE BEFORE EACH REDRAW OF THE SCREEN */
@@ -1041,6 +1045,10 @@
 						}
 						this.q_hint_nodes.push(tempArray);
 					}
+					this.hint_nodecounter = 0;
+					this.hint_nodenumend = this.nodenumend;
+					this.hint_nodenumstart = this.nodenumstart;
+					
 					this.alg_count =0;
 					this.alg_state = AGai.ALG_ZERO;
 				break;
@@ -1208,9 +1216,9 @@
 					this.hint_x = AGai.MOVE_X;
 				}
 			}
-			if (this.q_hint_list.length > 2) {
-				a = this.q_hint_list[0];
-				b = this.q_hint_list[1];
+			if (this.q_hint_list.length >= this.hint_nodecounter + 2) {
+				a = this.q_hint_list[0 + this.hint_nodecounter];
+				b = this.q_hint_list[1 + this.hint_nodecounter];
 				if (this.q_hint_nodes[a][AGai.NPOS_COORDY] == 
 					this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
 					if (this.q_hint_nodes[a][AGai.NPOS_COORDX] > this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
@@ -1240,9 +1248,9 @@
 					this.hint_y = AGai.MOVE_Y;
 				}
 			}
-			if (this.q_hint_list.length > 2) {
-				a = this.q_hint_list[0];
-				b = this.q_hint_list[1];
+			if (this.q_hint_list.length >= this.hint_nodecounter + 2) {
+				a = this.q_hint_list[0 + this.hint_nodecounter];
+				b = this.q_hint_list[1 + this.hint_nodecounter];
 				if (this.q_hint_nodes[a][AGai.NPOS_COORDX] == 
 					this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
 					if (this.q_hint_nodes[a][AGai.NPOS_COORDY] > this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
@@ -1261,13 +1269,28 @@
 			return this.hint_y;
 		}
 		
+		public function advanceNodecounter():void {
+			if (this.q_hint_list.length < this.hint_nodecounter +1) return;
+			var a:int = this.q_hint_list[this.hint_nodecounter + 1];
+			var arect:Rectangle = new Rectangle(
+							this.q_hint_nodes[a][AGai.NPOS_COORDX],
+							this.q_hint_nodes[a][AGai.NPOS_COORDY], 
+							64, 64);
+			var brect:Rectangle = new Rectangle(
+							this.startingX, this.startingY,
+							64,64);
+			if (arect.intersects(brect)) {
+				this.hint_nodecounter ++;
+			}
+		}
+		
 		////////////////////////////////////////////////////
 		
 		public function drawMap():void {
 			//this.drawMapSquares();
 			//this.drawMapEdges();//---
 			//this.drawMapNodes();
-			//this.drawMapMonster();
+			this.drawMapMonster();
 		}
 		
 		/* THIS IS DONE FOR DEVELOPMENT ONLY */
