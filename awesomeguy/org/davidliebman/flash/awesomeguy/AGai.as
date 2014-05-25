@@ -1311,7 +1311,7 @@
 			switch (this.hint_direction_enum) {
 				case AGai.ENUM_HORIZONTAL_LEFT:
 				arect = new Rectangle(
-							(this.q_hint_nodes[a][AGai.NPOS_COORDX] *64) - (64/2),
+							(this.q_hint_nodes[a][AGai.NPOS_COORDX] *64) - (64/1),
 							(this.q_hint_nodes[a][AGai.NPOS_COORDY] *64) + (64/2), 
 							16, 16 );
 				break;
