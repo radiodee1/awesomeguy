@@ -1187,9 +1187,12 @@
 						
 			var list:Array = new Array();
 			var i:int = this.nodenumend;// this.node_index_end; 
+			var j:int = 0;
+			list.push(i);
+			while ( i != -1 && j < this.nodesFromDots.length) {
+				j ++;
+				//trace (this.nodesFromDots[i][AGai.NPOS_NODENAME]);
 
-			while (i != this.nodenumstart && i != -1 && i < this.nodesFromDots.length) {
-			
 				i = this.nodesFromDots[i][AGai.NPOS_PREVIOUS];
 				if (i > -1) {
 					list.push(i);
@@ -1198,8 +1201,8 @@
 				
 			}
 			//list.push(this.nodenumstart);
-			
-			//list.reverse();
+			//trace("--------------");
+			list.reverse();
 			
 			return list;
 		}
@@ -1214,7 +1217,7 @@
 				trace(a,b);
 				if (this.q_hint_nodes[a][AGai.NPOS_COORDY] == 
 					this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
-					if (this.q_hint_nodes[a][AGai.NPOS_COORDX] < this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
+					if (this.q_hint_nodes[a][AGai.NPOS_COORDX] > this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
 						this.hint_x = - AGai.MOVE_X;
 						trace("second left");
 					}
@@ -1250,7 +1253,7 @@
 				b = this.q_hint_list[1 + this.hint_nodecounter];
 				if (this.q_hint_nodes[a][AGai.NPOS_COORDX] == 
 					this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
-					if (this.q_hint_nodes[a][AGai.NPOS_COORDY] < this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
+					if (this.q_hint_nodes[a][AGai.NPOS_COORDY] > this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
 						this.hint_y = - AGai.MOVE_Y;
 						trace("second up");
 					}
@@ -1279,7 +1282,7 @@
 		}
 		
 		public function advanceNodecounter():void {
-			if (this.q_hint_list.length < this.hint_nodecounter +1) return;
+			if (this.q_hint_list.length <= this.hint_nodecounter +1) return;
 			var a:int = this.q_hint_list[this.hint_nodecounter + 1];
 			var arect:Rectangle = new Rectangle(
 							this.q_hint_nodes[a][AGai.NPOS_COORDX] *64,
@@ -1500,7 +1503,7 @@
 				}
 				// 
 				//
-				for (m = 0; m< this.q_hint_list.length; m ++) {
+				for (m = 1; m< this.q_hint_list.length; m ++) {
 					i = this.q_hint_list[m];
 					
 					if (i > -1 && i < this.q_hint_nodes.length) {
@@ -1522,7 +1525,7 @@
 			ystart  = this.startingY - this.myGame.scrollBGY + cheat;
 			
 			
-			//var shape:Shape = new Shape();
+			//draw green monster dot.
 			shape.graphics.lineStyle(20,0x00ff00,1);
 			shape.graphics.moveTo(xstart - 10,ystart);
 			shape.graphics.lineTo(xstart + 20,ystart);
