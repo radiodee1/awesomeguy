@@ -1254,6 +1254,8 @@
 					trace("hint right");
 				}
 			}
+			else this.hint_x = 0;
+			
 			return this.hint_x;
 		}
 		public function getPixHintY():int {
@@ -1295,6 +1297,8 @@
 					trace("hint down");
 				}
 			}
+			else this.hint_y = 0;
+			
 			return this.hint_y;
 		}
 		
@@ -1340,12 +1344,7 @@
 							16, 16 );
 				break;
 			}
-			/*
-			var arect:Rectangle = new Rectangle(
-							(this.q_hint_nodes[a][AGai.NPOS_COORDX] *64) + (64/2),
-							(this.q_hint_nodes[a][AGai.NPOS_COORDY] *64) + (64/2), 
-							16, 16 );
-			*/
+			
 			var brect:Rectangle = new Rectangle(
 							this.startingX, this.startingY,
 							64,64);
