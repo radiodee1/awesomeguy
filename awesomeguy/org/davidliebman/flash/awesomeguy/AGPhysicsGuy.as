@@ -135,6 +135,11 @@
 				//trace(yblock , "down");
 			}
 			
+			if (!hit_bottom && !hit_ladder && !hit_center) {
+				yblock = int(AGModeGuy.Y_MOVE/q);
+				xblock = 0;
+			}
+			
 			/////////////////
 			sprite.x += xblock;
 			sprite.y += yblock;
