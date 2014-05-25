@@ -125,6 +125,8 @@
 		public var hint_nodenumend:int = 0;
 		public var hint_nodecounter:int = 0;
 
+		public var hint_auto:Boolean = false;
+		
 		public function AGai() {
 			// constructor code
 			// do nothing...
@@ -881,7 +883,7 @@
 				case AGai.ALG_FIRST_HINT:
 					
 					if(this.q_hint_nodes.length < this.hint_nodecounter + 2) {
-						if (this.q_endedge_hor != -1) {
+						if (this.q_endedge_hor != -1 && this.hint_auto) {
 							if (this.guyx < this.startingX ) {
 								this.hint_x = - AGai.MOVE_X;
 							}
@@ -1193,7 +1195,7 @@
 			while ( i != -1 && j < this.nodesFromDots.length - 1) {
 				j ++;
 				//trace (this.nodesFromDots[i][AGai.NPOS_NODENAME]);
-				if (i > -1) {
+				if (i > -1 && i < this.nodesFromDots.length) {
 				i = this.nodesFromDots[i][AGai.NPOS_PREVIOUS];
 					list.push(i);
 					
@@ -1201,7 +1203,7 @@
 				
 			}
 			//list.push(this.nodenumstart);
-			//trace("--------------");
+			trace("--change map");
 			list.reverse();
 			
 			return list;
@@ -1233,7 +1235,7 @@
 				}
 				
 			}
-			else if (this.q_endedge_hor != -1) {
+			else if (this.q_endedge_hor != -1 && this.hint_auto) {
 				if (this.guyx < this.startingX ) {
 					this.hint_x = - AGai.MOVE_X;
 					trace("hint left");
@@ -1271,7 +1273,7 @@
 				}
 				
 			}
-			else if (this.q_endedge_vert != -1) {
+			else if (this.q_endedge_vert != -1 && this.hint_auto) {
 				if (this.guyy < this.startingY) {
 					this.hint_y = - AGai.MOVE_Y;
 					trace("hint up");
@@ -1287,19 +1289,20 @@
 		public function advanceNodecounter():void {
 			if (this.q_hint_list.length < this.hint_nodecounter +1 ) return;
 			var a:int = this.q_hint_list[this.hint_nodecounter + 1];
-			if (a < 0 || a > this.q_hint_nodes.length) { 
-				//this.hint_nodecounter ++;
+			if (a < 0 || a >= this.q_hint_nodes.length) { 
+				this.hint_nodecounter ++;
+				trace("<", a);
 				return;
 			}
 			var arect:Rectangle = new Rectangle(
-							(this.q_hint_nodes[a][AGai.NPOS_COORDX] *64) + (64/2),
-							(this.q_hint_nodes[a][AGai.NPOS_COORDY] *64) - (64/2), 
+							(this.q_hint_nodes[a][AGai.NPOS_COORDX] *64),// + (64/2),
+							(this.q_hint_nodes[a][AGai.NPOS_COORDY] *64),// - (64/2), 
 							16, 16 );
 			var brect:Rectangle = new Rectangle(
 							this.startingX, this.startingY,
 							64,64);
 			if (arect.intersects(brect)) {
-				trace("<==============");
+				trace("<==============", this.q_hint_nodes[a][AGai.NPOS_NODENAME]);
 				this.hint_nodecounter ++;
 			}
 		}

@@ -28,7 +28,7 @@
 			hit_ladder = this.collisionTile(myinvisible, sprite.x/ 64, sprite.y/ 64,
 											sprite.bitmap, 
 											sprite.bitmap.x , 
-											(sprite.bitmap.y - 64), AGModeGuy.B_LADDER, "ladder", 8 );
+											(sprite.bitmap.y - 64), AGModeGuy.B_LADDER, "ladder");//, 8 );
 			
 			
 			hit_center = this.collisionTile(myinvisible,  sprite.x/ 64, sprite.y/ 64 +1 ,
