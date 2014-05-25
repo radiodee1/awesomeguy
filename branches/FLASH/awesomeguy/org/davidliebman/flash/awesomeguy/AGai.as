@@ -1043,7 +1043,7 @@
 						}
 						this.q_hint_nodes.push(tempArray);
 					}
-					this.hint_nodecounter = 0;
+					this.hint_nodecounter = 1;
 					this.hint_nodenumend = this.nodenumend;
 					this.hint_nodenumstart = this.nodenumstart;
 					
@@ -1188,13 +1188,13 @@
 			var list:Array = new Array();
 			var i:int = this.nodenumend;// this.node_index_end; 
 			var j:int = 0;
-			list.push(i);
-			while ( i != -1 && j < this.nodesFromDots.length) {
+			if (i != -1) list.push(i);
+			if (this.nodesFromDots == null || i == -1) return list;
+			while ( i != -1 && j < this.nodesFromDots.length - 1) {
 				j ++;
 				//trace (this.nodesFromDots[i][AGai.NPOS_NODENAME]);
-
-				i = this.nodesFromDots[i][AGai.NPOS_PREVIOUS];
 				if (i > -1) {
+				i = this.nodesFromDots[i][AGai.NPOS_PREVIOUS];
 					list.push(i);
 					
 				}
@@ -1214,7 +1214,8 @@
 			if (this.q_hint_list.length >= this.hint_nodecounter + 2) {
 				a = this.q_hint_list[0 + this.hint_nodecounter];
 				b = this.q_hint_list[1 + this.hint_nodecounter];
-				trace(a,b);
+				if (a == -1 || b == -1) return 0;
+				trace("lr",this.q_hint_nodes[a][AGai.NPOS_NODENAME],this.q_hint_nodes[b][AGai.NPOS_NODENAME]);
 				if (this.q_hint_nodes[a][AGai.NPOS_COORDY] == 
 					this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
 					if (this.q_hint_nodes[a][AGai.NPOS_COORDX] > this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
@@ -1251,6 +1252,8 @@
 			if (this.q_hint_list.length >= this.hint_nodecounter + 2) {
 				a = this.q_hint_list[0 + this.hint_nodecounter];
 				b = this.q_hint_list[1 + this.hint_nodecounter];
+				if (a == -1 || b == -1) return 0;
+				trace("ud",this.q_hint_nodes[a][AGai.NPOS_NODENAME],this.q_hint_nodes[b][AGai.NPOS_NODENAME]);
 				if (this.q_hint_nodes[a][AGai.NPOS_COORDX] == 
 					this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
 					if (this.q_hint_nodes[a][AGai.NPOS_COORDY] > this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
@@ -1282,11 +1285,15 @@
 		}
 		
 		public function advanceNodecounter():void {
-			if (this.q_hint_list.length <= this.hint_nodecounter +1) return;
+			if (this.q_hint_list.length < this.hint_nodecounter +1 ) return;
 			var a:int = this.q_hint_list[this.hint_nodecounter + 1];
+			if (a < 0 || a > this.q_hint_nodes.length) { 
+				//this.hint_nodecounter ++;
+				return;
+			}
 			var arect:Rectangle = new Rectangle(
-							this.q_hint_nodes[a][AGai.NPOS_COORDX] *64,
-							(this.q_hint_nodes[a][AGai.NPOS_COORDY] *64) - (64), 
+							(this.q_hint_nodes[a][AGai.NPOS_COORDX] *64) + (64/2),
+							(this.q_hint_nodes[a][AGai.NPOS_COORDY] *64) - (64/2), 
 							16, 16 );
 			var brect:Rectangle = new Rectangle(
 							this.startingX, this.startingY,
@@ -1488,14 +1495,14 @@
 			//trace("qlist",this.q_hint_nodes.length, this.nodenumstart,this.nodenumend);
 			if (this.q_hint_list.length > 1 && this.nodenumstart != -1 && this.nodenumend != -1) {
 			
-				
-				j = this.q_hint_list[0];
+				var startdrawing:int = 1;
+				j = this.q_hint_list[startdrawing];
 				if (j > -1 && j < this.q_hint_nodes.length && 
 						this.nodenumend != -1 && this.nodenumend < this.q_hint_nodes.length) {
 							
-					xstart  = this.q_hint_nodes[this.nodenumend][AGai.NPOS_COORDX] * TILE_WIDTH - 
+					xstart  = this.q_hint_nodes[j][AGai.NPOS_COORDX] * TILE_WIDTH - 
 						this.myGame.scrollBGX + cheat;
-					ystart  = this.q_hint_nodes[this.nodenumend][AGai.NPOS_COORDY] * TILE_HEIGHT - 
+					ystart  = this.q_hint_nodes[j][AGai.NPOS_COORDY] * TILE_HEIGHT - 
 						this.myGame.scrollBGY + cheat;
 						
 					shape.graphics.lineStyle(4,0xff0000,1);
@@ -1503,7 +1510,7 @@
 				}
 				// 
 				//
-				for (m = 1; m< this.q_hint_list.length; m ++) {
+				for (m = startdrawing; m< this.q_hint_list.length ; m ++) {
 					i = this.q_hint_list[m];
 					
 					if (i > -1 && i < this.q_hint_nodes.length) {
