@@ -25,10 +25,10 @@
 			if (myinvisible.length < 1 ) return;
 			
 			
-			hit_ladder = this.collisionTile(myinvisible, sprite.x/ 64, sprite.y/ 64,
+			hit_ladder = this.collisionTile(myinvisible, sprite.x/ 64, (sprite.y/ 64 ) + 1,
 											sprite.bitmap, 
 											sprite.bitmap.x , 
-											(sprite.bitmap.y - 64), AGModeGuy.B_LADDER, "ladder");//, 8 );
+											(sprite.bitmap.y  + 64), AGModeGuy.B_LADDER, "ladder");//, 8 );
 			
 			
 			hit_center = this.collisionTile(myinvisible,  sprite.x/ 64, sprite.y/ 64 +1 ,
@@ -97,6 +97,7 @@
 				else if (!hit_top) yblock = int(- AGModeGuy.Y_MOVE/q);
 				if (hit_ladder && !hit_bottom) {
 					yblock =  int(AGModeGuy.Y_MOVE/q);
+					trace("should sink");
 					//if(!hit_bottom) myGuy.quality_0 = AGModeGuy.GUY_CLIMB;
 				}
 				if (!hit_ladder && hit_bottom) {
