@@ -1034,15 +1034,9 @@
 						this.alg_state = AGai.ALG_SECOND_HINT_A;
 					}
 				break;
-				case AGai.ALG_SECOND_HINT_A:
-					
-					this.q_hint_list = this.createHint();
-					
-					
-					this.alg_state ++;
-				break;
 				
-				case AGai.ALG_SECOND_HINT_B:
+				
+				case AGai.ALG_SECOND_HINT_A:
 					this.q_hint_nodes = new Array();
 					for(i = 0; i < this.nodesFromDots.length; i ++) {
 						tempArray = new Array();
@@ -1051,14 +1045,23 @@
 						}
 						this.q_hint_nodes.push(tempArray);
 					}
+					
+					//this.alg_state = AGai.ALG_ZERO;
+					this.alg_state ++;
+				break;
+				case AGai.ALG_SECOND_HINT_B:
+					
+					this.q_hint_list = this.createHint();
+					
 					this.hint_nodecounter = 1;
 					this.hint_nodenumend = this.nodenumend;
 					this.hint_nodenumstart = this.nodenumstart;
 					
 					this.alg_count =0;
+					
+					//this.alg_state ++;
 					this.alg_state = AGai.ALG_ZERO;
 				break;
-				
 				case AGai.ALG_NON_DIJKSTRA:
 				
 				break;
