@@ -51,6 +51,9 @@
 		public static var XML_MAZE_COLOR_BLUE:String = "XML_MAZE_COLOR_BLUE";
 		// used in XML_MAZE_KEY_DOOR_COMBO as color-enum
 		
+		public static var XML_MAZE_MONSTER_SPEED:String = "XML_MAZE_MONSTER_SPEED";
+		//followed by small integer (0,1,2,3)
+		
 		public static var XML_TEST:String = "XML_TEST";
 
 		public static var XML_TEXT_TIME_BEFORE_START:String = "XML_TEXT_TIME_BEFORE_START";

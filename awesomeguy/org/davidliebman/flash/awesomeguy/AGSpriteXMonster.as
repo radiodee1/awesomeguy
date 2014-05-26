@@ -5,6 +5,13 @@
 		public function AGSpriteXMonster(mymode:AGMode, kind:int) {
 			super(mymode,kind);
 			// constructor code
+			
+			if (this.sprite_type == AGMode.S_XMONSTER_CLIMBER) {
+				this.ai = new AGai();
+				this.myPhysics = new AGPhysicsSprite(this.myMode.myStage, this.myMode);
+				this.ai.setValues(this.myMode.myInvisible, this.myMode.myStage, this.myMode);
+				
+			}
 		}
 
 		public override function updateSprite():void {
@@ -104,7 +111,15 @@
 		
 			}
 			if (this.sprite_type == AGMode.S_XMONSTER_CLIMBER) {
-				this.visible = true;
+				//this.visible = true;
+				this.makeRails();
+				this.addRails(this.myMode.myStage);
+				this.ai.setStartEnd(x, y, this.myMode.xpos, this.myMode.ypos);
+						
+				this.myPhysics.applyGravityAndLadders(this.myMode.myInvisible, this, 
+											this.ai.getPixHintX(), this.ai.getPixHintY());
+				this.ai.drawMap();
+						
 			}
 			
 			myMode.drawRadarPing(myMode.radar, 

@@ -67,7 +67,7 @@
 		public static var NPOS_PREVIOUS:int = 5;
 		public static var NPOS_TEMPFLAG:int = 6;
 		
-		public var alg_state:int = -1;
+		public var alg_state:int = 0;
 		public var alg_count:int = 0;
 		public static var COUNT_ALG:int = 1200;
 		
@@ -619,13 +619,18 @@
 		
 		/////////////////////////////////////////////////////////////////
 		
-		public function setStartEnd(startX:int, startY:int, endX:int, endY:int):void {
-			
+		public function setStartEnd(startX:int, startY:int, endX:int, endY:int, speed:int = 1):void {
+			var i:int = 0;
 			
 			this.startingX = startX; // monster
 			this.startingY = startY;
 			this.endingX = endX; // guy
 			this.endingY = endY;
+			
+			for (i = 0; i < speed; i ++) {
+				this.doCalc();
+				
+			}
 			
 			this.advanceNodecounter();
 		}

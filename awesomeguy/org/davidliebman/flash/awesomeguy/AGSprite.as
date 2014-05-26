@@ -11,7 +11,9 @@
 			static var TILEMAP_WIDTH:int = 224 * 2;
 			static var TILE_HEIGHT:int = 16;
 			static var TILE_WIDTH:int = 16;
-	
+			
+			public var ai:AGai;
+			public var myPhysics:AGPhysics;
 		
 			var timer:AGTimer = new AGTimer();
 			var myMode:AGMode;
@@ -126,6 +128,11 @@
 		}
 		
 		public function addRails(myStage:Stage) :void {
+			if (this.bitmap == null) {
+				trace("no bitmap");
+				return;
+			}
+			
 			myStage.addChild(this.rail_bottom);
 			myStage.addChild(this.rail_left);
 			myStage.addChild(this.rail_right);
