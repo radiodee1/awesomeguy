@@ -93,7 +93,7 @@
 			this.flyersprite = new Bitmap();
 			this.agflyer = new AGSprite( this, 0);
 			
-			this.myPhysics = new AGPhysicsGuy(this.myStage, this);
+			//this.myPhysics = new AGPhysicsGuy(this.myStage, this);
 			
 		}
 		
@@ -119,10 +119,7 @@
 			myGuy.updateSprite()
 			myDraw.drawBasicSprite(myGuy, D_GUY);
 			
-			if (true) {
-				
-				this.ai.doCalc();
-			}
+			
 			
 			drawLevelTiles();
 			updateSprites();
@@ -156,7 +153,7 @@
 			radarscreen.y = SCREEN_HEIGHT;
 			myStage.addChild(radarscreen);
 			
-			this.ai.drawMap();
+			//this.ai.drawMap();
 			
 			if (!this.animate_only) this.detectMovement();
 
@@ -216,9 +213,6 @@
 			prepTiles() ;
 			prepRings() ;
 			prepSpecialXml();
-			//prepRingSprites();
-			this.ai.setValues(this.myInvisible, this.myStage, this);
-			this.ai.alg_state = AGai.ALG_ZERO;
 			
 			this.prepTilesToSprites();
 						
@@ -488,9 +482,7 @@
 			temp.sprite_link = link;
 			// add it to the sprite list
 			mySprite.push(temp);
-			//this.myBlocks.push(temp);
-			//myChallenge[ myGame.gameChallenge].total_rings ++;
-			//return temp;
+			
 		}
 		
 		public function addXMonster(monster_x:int, monster_y:int,  monster_animate:int, kind:int = -1 ):void {
@@ -661,6 +653,7 @@
 					if (mySprite[i].sprite_type == AGMode.S_XMONSTER_CLIMBER) {
 						
 						this.myDraw.drawBasicSprite(mySprite[i], AGMode.D_XMONSTER_CLIMBER);						
+						/*
 						mySprite[i].makeRails();
 						mySprite[i].addRails(this.myStage);
 						this.ai.setStartEnd(mySprite[i].x, mySprite[i].y, xpos, ypos);
@@ -668,7 +661,7 @@
 						this.myPhysics.applyGravityAndLadders(myInvisible, mySprite[i], this.myDraw,
 													//-5,0);
 													this.ai.getPixHintX(), this.ai.getPixHintY());
-						
+						*/
 					}
 				}
 				
