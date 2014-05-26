@@ -3,26 +3,34 @@
 	import flash.display.Bitmap;
 	import flash.display.Stage;
 	
-	public class AGPhysicsGuy extends AGPhysics {
+	public class AGPhysicsSprite extends AGPhysics {
 
 		
 
-		public override function AGPhysicsGuy(mystage:Stage, mymode:AGMode) {
+		public override function AGPhysicsSprite(mystage:Stage, mymode:AGMode) {
 			super(mystage, mymode);
 			// constructor code
 		}
-		public override function applyGravityAndLadders(myinvisible:Array, sprite:AGSprite, mydraw:AGDraw, xx:int = 0, yy:int = 0) {
+		public override function applyGravityAndLadders(myinvisible:Array, sprite:AGSprite, xx:int = 0, yy:int = 0) {
 			var xblock:int = 0;
 			var yblock:int = 0;
 			var mapcheat:int = 0;
 			//y += 5;
-			var hit_top:Boolean, hit_bottom:Boolean, hit_left:Boolean, hit_right:Boolean , hit_ladder:Boolean;
+			var hit_top:Boolean, 
+				hit_bottom:Boolean, 
+				hit_left:Boolean, 
+				hit_right:Boolean , 
+				hit_ladder:Boolean;
 			
-			var hit_platform:Boolean, hit_center:Boolean;
+			var hit_platform:Boolean, 
+				hit_center:Boolean;
 			
-			var try_up:Boolean, try_down:Boolean, try_left:Boolean, try_right:Boolean;
+			var try_up:Boolean, 
+				try_down:Boolean, 
+				try_left:Boolean, 
+				try_right:Boolean;
 			
-			if (myinvisible.length < 1 ) return;
+			if (myinvisible.length < 1 || sprite.bitmap == null) return;
 			
 			
 			hit_ladder = this.collisionTile(myinvisible, sprite.x/ 64, (sprite.y/ 64 ) + 1,
@@ -152,6 +160,11 @@
 			var mapcheat:int = 0;
 			var scrollx:int = this.myMode.scrollBGX;
 			var scrolly:int = this.myMode.scrollBGY;
+			
+			if (a == null) {
+				//trace("still no bitmap");
+				return false;
+			}
 			//trace(message,"coords", coordx, coordy);
 			if (coordy >= myinvisible.length || coordy < 0 || coordx >= myinvisible[0].length || coordx < 0) {
 				//trace(message,"bounds false");
