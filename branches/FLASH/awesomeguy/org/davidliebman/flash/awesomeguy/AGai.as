@@ -125,6 +125,9 @@
 		public var hint_nodenumend:int = 0;
 		public var hint_nodecounter:int = 0;
 
+		public var hint_last_x:int = 0;
+		public var hint_last_y:int = 0;
+
 		public var hint_auto:Boolean = false;
 		public var hint_direction_enum:int = 0;
 		
@@ -631,7 +634,7 @@
 				this.doCalc();
 				
 			}
-			
+			//trace(speed, "speed");
 			this.advanceNodecounter();
 		}
 		
@@ -1237,6 +1240,7 @@
 					
 					if (this.q_hint_nodes[a][AGai.NPOS_COORDX] > this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
 						this.hint_x = - AGai.MOVE_X;
+						
 						this.hint_direction_enum = AGai.ENUM_HORIZONTAL_LEFT;
 						trace("second left");
 					}
@@ -1245,6 +1249,7 @@
 						this.hint_direction_enum = AGai.ENUM_HORIZONTAL_RIGHT;
 						trace("second right");
 					}
+					this.hint_last_x = this.hint_x;
 				}
 				else if (this.q_hint_nodes[a][AGai.NPOS_COORDX] == 
 						 this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
@@ -1262,7 +1267,7 @@
 					trace("hint right");
 				}
 			}
-			else this.hint_x = 0;
+			else this.hint_x = this.hint_last_x;
 			
 			return this.hint_x;
 		}
@@ -1288,6 +1293,7 @@
 						this.hint_direction_enum = AGai.ENUM_VERTICAL_DOWN;
 						trace("second down");
 					}
+					this.hint_last_y = this.hint_y;
 				}
 				else if (this.q_hint_nodes[a][AGai.NPOS_COORDY] == 
 						 this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
@@ -1305,7 +1311,7 @@
 					trace("hint down");
 				}
 			}
-			else this.hint_y = 0;
+			else this.hint_y = this.hint_last_y;
 			
 			return this.hint_y;
 		}
@@ -1324,26 +1330,26 @@
 				case AGai.ENUM_HORIZONTAL_LEFT:
 				arect = new Rectangle(
 							(this.q_hint_nodes[a][AGai.NPOS_COORDX] *64) - (64/1),
-							(this.q_hint_nodes[a][AGai.NPOS_COORDY] *64) + (64/2), 
-							16, 16 );
+							(this.q_hint_nodes[a][AGai.NPOS_COORDY] *64),// + (64/2), 
+							64, 64 );
 				break;
 				case AGai.ENUM_HORIZONTAL_RIGHT:
 				arect = new Rectangle(
 							(this.q_hint_nodes[a][AGai.NPOS_COORDX] *64) + (64/1),
-							(this.q_hint_nodes[a][AGai.NPOS_COORDY] *64) + (64/2), 
-							16, 16 );
+							(this.q_hint_nodes[a][AGai.NPOS_COORDY] *64),// + (64/2), 
+							64, 64 );
 				break;
 				case AGai.ENUM_VERTICAL_DOWN:
 				arect = new Rectangle(
-							(this.q_hint_nodes[a][AGai.NPOS_COORDX] *64) + (64/2),
-							(this.q_hint_nodes[a][AGai.NPOS_COORDY] *64) + (64/2), 
-							16, 16 );
+							(this.q_hint_nodes[a][AGai.NPOS_COORDX] *64),// + (64/2),
+							(this.q_hint_nodes[a][AGai.NPOS_COORDY] *64),// + (64/2), 
+							64, 64 );
 				break;
 				case AGai.ENUM_VERTICAL_UP:
 				arect = new Rectangle(
-							(this.q_hint_nodes[a][AGai.NPOS_COORDX] *64) + (64/2),
-							(this.q_hint_nodes[a][AGai.NPOS_COORDY] *64) + (64/2), 
-							16, 16 );
+							(this.q_hint_nodes[a][AGai.NPOS_COORDX] *64),// + (64/2),
+							(this.q_hint_nodes[a][AGai.NPOS_COORDY] *64) - (64/1), 
+							64, 64 );
 				break;
 				default:
 				arect = new Rectangle(
