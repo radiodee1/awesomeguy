@@ -58,6 +58,8 @@
 		public static var EPOS_NODEENDINDEX:int = 11;
 		public static var EPOS_TEMPFLAG:int = 12;
 		public static var EPOS_ISHORIZONTAL:int = 13;
+		public static var EPOS_DIRECTION_X:int = 14;
+		public static var EPOS_DIRECTION_Y:int = 15;
 		
 		public static var NPOS_NODENAME:int = 0;
 		public static var NPOS_COORDX:int = 1;
@@ -138,6 +140,10 @@
 		public static var ENUM_VERTICAL:int = 5;
 		public static var ENUM_HORIZONTAL:int = 6;
 		
+		public static var ALLOW_X:int = 1;
+		public static var ALLOW_Y:int = 2;
+		public static var ALLOW_BOTH:int = 3;
+		
 		public static var FOLLOW_UNSET:int = -1;
 		public static var FOLLOW_START:int = 1;
 		public static var FOLLOW_APPROACH_TURN:int = 2;
@@ -148,6 +154,7 @@
 		
 		public var follow_enum:int = -1;
 		public var orient_enum:int = -1;
+		public var allow_enum:int = 1;
 		
 		public function AGai() {
 			// constructor code
@@ -420,8 +427,9 @@
 							 0, // edge A index in node array
 							 0, // edge B index in node array
 							 isTemp,//false, // is temp flag set??
-							 true // is-horizontal??
-							 );  
+							 true, // is-horizontal??
+							 0,// x direction
+							 0); // y direction
 			this.edgesFromDots.push(temp);
 			
 			values.push(this.makeCoordinateListingNodes(startx,ylevel, isTemp));
@@ -451,8 +459,9 @@
 							 0, // edge A node index number
 							 0, // edge B node index number
 							 isTemp,//false, // is temp flag set??
-							 false // is-horizontal??
-							 );  
+							 false, // is-horizontal??
+							 0, // x direction
+							 0);  // y direction
 			this.edgesFromDots.push(temp);
 			
 			values.push(this.makeCoordinateListingNodes(xlevel,starty, isTemp));
@@ -1279,18 +1288,21 @@
 						64,64);
 						
 				if (this.q_hint_nodes[a][AGai.NPOS_COORDY] == 
-					this.q_hint_nodes[b][AGai.NPOS_COORDY] ){
+					this.q_hint_nodes[b][AGai.NPOS_COORDY] &&
+					this.allow_enum == AGai.ALLOW_X){
 					//(monsterrect.intersects(brect) 
 					//&& this.follow_enum == AGai.FOLLOW_APPROACH_TURN 
 					//&& this.monstery /64 == this.q_hint_nodes[a][AGai.NPOS_COORDY]
 					//) 
 					//|| this.follow_enum == AGai.FOLLOW_APPROACH_TURN_CLOSE
 					//) {
-						
+					
+					/*
 					if (this.orient_enum == AGai.ENUM_VERTICAL) {
 						this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
 
 					}
+					*/
 					
 					if (this.q_hint_nodes[a][AGai.NPOS_COORDX] > 
 						this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
@@ -1309,7 +1321,8 @@
 					this.hint_last_x = this.hint_x;
 				}
 				
-				if ( monsterrect.intersects(brect) ) { 
+				if ( monsterrect.intersects(brect) 
+					&& this.allow_enum == AGai.ALLOW_BOTH) { 
 				
 					this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
 					if (this.q_hint_nodes[a][AGai.NPOS_COORDX] > 
@@ -1329,8 +1342,8 @@
 					this.hint_last_x = this.hint_x;
 				}
 			}
-			else if (this.q_endedge_hor != -1 && this.hint_auto) {
-				if (this.guyx < this.startingX ) {
+			if (this.q_endedge_hor != -1 || this.hint_auto) {
+				if (this.guyx < this.monsterx ) {
 					this.hint_x = - AGai.MOVE_X;
 					//trace("hint left");
 				}
@@ -1358,17 +1371,20 @@
 						64,64);
 
 				if (this.q_hint_nodes[a][AGai.NPOS_COORDX] == 
-					this.q_hint_nodes[b][AGai.NPOS_COORDX] ) { 
+					this.q_hint_nodes[b][AGai.NPOS_COORDX] 
+					&& this.allow_enum == AGai.ALLOW_Y) { 
 					//|| (monsterrect.intersects(brect) 
 					//&& this.follow_enum == AGai.FOLLOW_APPROACH_TURN 
 					//&& this.monsterx / 64 == this.q_hint_nodes[a][AGai.NPOS_COORDX]
 					//) 
 					//|| this.follow_enum == AGai.FOLLOW_APPROACH_TURN_CLOSE
 					//) {
+					/*
 					if (this.orient_enum == AGai.ENUM_HORIZONTAL){
 						this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
 
 					}
+					*/
 					
 					if (this.q_hint_nodes[a][AGai.NPOS_COORDY] > 
 						this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
@@ -1385,7 +1401,8 @@
 					this.hint_last_y = this.hint_y;
 				}
 				
-				if (monsterrect.intersects(brect) ){ 
+				if (monsterrect.intersects(brect) 
+					&& this.allow_enum == AGai.ALLOW_BOTH){ 
 				
 					this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
 					if (this.q_hint_nodes[a][AGai.NPOS_COORDY] > 
@@ -1404,8 +1421,8 @@
 				}
 				
 			}
-			else if (this.q_endedge_vert != -1 && this.hint_auto) {
-				if (this.guyy < this.startingY) {
+			if (this.q_endedge_vert != -1 || this.hint_auto) {
+				if (this.guyy < this.monstery) {
 					this.hint_y = - AGai.MOVE_Y;
 					//trace("hint up");
 				}
@@ -1447,7 +1464,7 @@
 			}
 			
 			
-			if ((this.follow_enum == AGai.FOLLOW_APPROACH_TURN_CLOSE && ! arect.intersects(brect))
+			if ((this.follow_enum == AGai.FOLLOW_APPROACH_TURN_CLOSE )//&& ! arect.intersects(brect))
 				|| this.follow_enum == AGai.FOLLOW_LEAVE_TURN) {
 				this.hint_nodecounter ++;
 				this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
@@ -1456,12 +1473,18 @@
 			
 			if (this.q_hint_nodes[a][AGai.NPOS_COORDY] == this.q_hint_nodes[zero][AGai.NPOS_COORDY]) {
 				this.orient_enum = AGai.ENUM_HORIZONTAL;
+				this.allow_enum = AGai.ALLOW_X;
+				this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
 			}
 			else if (this.q_hint_nodes[a][AGai.NPOS_COORDX] == this.q_hint_nodes[zero][AGai.NPOS_COORDX]) {
 				this.orient_enum = AGai.ENUM_VERTICAL;
+				this.allow_enum = AGai.ALLOW_Y;
+				this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
 			}
 			else {
 				//
+				this.allow_enum = AGai.ALLOW_BOTH;
+				this.follow_enum = AGai.FOLLOW_LEAVE_TURN;
 			}
 			
 			

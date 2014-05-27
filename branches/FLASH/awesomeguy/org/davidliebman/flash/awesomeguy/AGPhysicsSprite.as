@@ -34,12 +34,12 @@
 			if (myinvisible.length < 1 || sprite.bitmap == null) return;
 			
 			
-			hit_ladder = this.collisionTile(myinvisible, sprite.x/ 64, (sprite.y/ 64 ) + 1,
+			hit_ladder = this.collisionTile(myinvisible, sprite.x/ 64, (sprite.y/ 64 ) ,//+ 1,
 											sprite.bitmap, 
 											sprite.bitmap.x , 
 											(sprite.bitmap.y  + 64), AGModeGuy.B_LADDER, "ladder");//, 8 );
 			
-			hit_ladder_low = this.collisionTile(myinvisible, sprite.x/ 64, (sprite.y/ 64 ) + 1,
+			hit_ladder_low = this.collisionTile(myinvisible, sprite.x/ 64, (sprite.y/ 64 ),// + 1,
 											sprite.bitmap, 
 											sprite.bitmap.x , 
 											(sprite.bitmap.y  + 64), AGModeGuy.B_LADDER, "ladder");//, 8 );
@@ -121,7 +121,7 @@
 				}
 			}
 			if (try_up) {
-				if (hit_ladder || hit_ladder_low ) {
+				if (hit_ladder ){//|| hit_ladder_low ) {
 					yblock = int ( -   AGModeGuy.Y_MOVE/q)  ;
 					trace("start");
 					//if(!hit_bottom) myGuy.quality_0 = AGModeGuy.GUY_CLIMB;
@@ -146,7 +146,7 @@
 				trace('c');
 			}
 			
-			if (!hit_bottom && !hit_ladder && !hit_center && try_down ){//&& this.jump_count <= 0) {
+			if (!hit_bottom && !hit_ladder && !hit_center){// && try_down ){//&& this.jump_count <= 0) {
 				yblock = int(AGModeGuy.Y_MOVE/q);
 				xblock = 0;
 				trace('d');
