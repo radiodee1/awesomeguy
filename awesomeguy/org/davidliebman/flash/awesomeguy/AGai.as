@@ -136,12 +136,19 @@
 		public static var ENUM_HORIZONTAL_RIGHT:int = 3;
 		public static var ENUM_VERTICAL_DOWN:int = 4;
 		
+		public static var FOLLOW_UNSET:int = -1;
+		public static var FOLLOW_START:int = 1;
+		public static var FOLLOW_APPROACH_TURN:int = 2;
+		public static var FOLLOW_APPROACH_TURN_CLOSE:int = 3;
+		public static var FOLLOW_LEAVE_TURN_CLOSE:int = 4;
+		public static var FOLLOW_LEAVE_TURN:int = 5;
+		public static var FOLLOW_TURN_COMPLETE:int = 6;
+		
+		public var follow_enum:int = -1;
+		
 		public function AGai() {
 			// constructor code
 			// do nothing...
-			
-			
-			
 		}
 		
 		
@@ -524,14 +531,12 @@
 			if ((this.invisibleDots[y][x] == 1 && 
 				this.invisibleDots[y][x+ 1] == 0 &&
 				this.invisibleChutes[y][x+ 1] != 1 ) //||
-				 //this.myInvisible[y+1][x] == AGModeGuy.B_LADDER
 				) {
 				connections ++;
 			}
 			if ((this.invisibleDots[y][x] == 1 && 
 				this.invisibleDots[y][x - 1] == 0 &&
 				this.invisibleChutes[y][x -1] != 1) //||
-				 //this.myInvisible[y+1][x] == AGModeGuy.B_LADDER
 				) {
 				connections ++;
 			}
@@ -635,6 +640,7 @@
 				
 			}
 			//trace(speed, "speed");
+			//this.setFollowEnum();
 			this.advanceNodecounter();
 		}
 		
@@ -1061,7 +1067,7 @@
 					
 					this.q_hint_list = this.createHint();
 					
-					this.hint_nodecounter = 1;
+					//this.hint_nodecounter = 1;
 					this.hint_nodenumend = this.nodenumend;
 					this.hint_nodenumstart = this.nodenumstart;
 					
@@ -1104,7 +1110,7 @@
 			var i:int = 0; // for loop index
 			var j:int = 0; // for loop calc-dist
 			var k:int = AGai.START_DISTANCE; // lowest dist
-			var l:int = 0;// this.nodenumstart; // value output
+			var l:int = 0;//  value output
 			
 			var default_l:int = -1;
 			
@@ -1114,7 +1120,7 @@
 					
 					if (default_l == -1) { 
 						default_l = i;
-						//l = i;
+						
 					}
 					if (j < k) {
 						k = j;
@@ -1135,7 +1141,7 @@
 		
 		
 		private function getNodeNeighborList(node:int):Array {
-			var val:int = -1;//node;
+			var val:int = -1;
 			var list:Array = new Array();
 			var i:int = 0;
 			var j:int = 0;
@@ -1205,25 +1211,55 @@
 		private function createHint():Array {
 						
 			var list:Array = new Array();
-			var i:int = this.nodenumend;// this.node_index_end; 
+			var i:int = this.nodenumend;
 			var j:int = 0;
-			if (i != -1) list.push(i);
+			//if (i != -1) list.push(i);
 			if (this.nodesFromDots == null || i == -1) return list;
 			while ( i != -1 && j < this.nodesFromDots.length - 1) {
 				j ++;
-				//trace (this.nodesFromDots[i][AGai.NPOS_NODENAME]);
+				
 				if (i > -1 && i < this.nodesFromDots.length) {
 				i = this.nodesFromDots[i][AGai.NPOS_PREVIOUS];
-					list.push(i);
+					if (i != this.nodenumstart || true) {
+						list.push(i);
+					}
 					
 				}
 				
 			}
-			//list.push(this.nodenumstart);
+			
 			trace("--change map");
 			list.reverse();
 			
+			this.hint_nodecounter = 1;
+			this.follow_enum = AGai.FOLLOW_START;
+			
 			return list;
+		}
+		
+		public function setFollowEnum():void {
+			var a:int ;
+			var b:int ;
+			var c:int ;
+			if (this.q_hint_list.length >= this.hint_nodecounter + 3) {
+				a = this.q_hint_list[0 + this.hint_nodecounter];
+				b = this.q_hint_list[1 + this.hint_nodecounter];
+				c = this.q_hint_list[2 + this.hint_nodecounter];
+				if (a == -1 || b == -1 || c == -1) {
+					return;
+				}
+				var ax:int = this.q_hint_nodes[a][AGai.NPOS_COORDX] * 64;
+				var ay:int = this.q_hint_nodes[a][AGai.NPOS_COORDY] * 64;
+				var bx:int = this.q_hint_nodes[b][AGai.NPOS_COORDX] * 64;
+				var by:int = this.q_hint_nodes[b][AGai.NPOS_COORDY] * 64;
+				var cx:int = this.q_hint_nodes[c][AGai.NPOS_COORDX] * 64;
+				var cy:int = this.q_hint_nodes[c][AGai.NPOS_COORDY] * 64;
+				var arect:Rectangle = new Rectangle(ax, ay, 64, 64);
+				var brect:Rectangle = new Rectangle(bx, by, 64, 64);
+				var crect:Rectangle = new Rectangle(cx, cy, 64, 64);
+				var monsterrect:Rectangle = new Rectangle(this.monsterx, this.monstery, 64,64);
+			}
+			
 		}
 		
 		public function getPixHintX():int {
@@ -1234,11 +1270,24 @@
 				a = this.q_hint_list[0 + this.hint_nodecounter];
 				b = this.q_hint_list[1 + this.hint_nodecounter];
 				if (a == -1 || b == -1) return 0;
-				trace("lr",this.q_hint_nodes[a][AGai.NPOS_NODENAME],this.q_hint_nodes[b][AGai.NPOS_NODENAME]);
+				var monsterrect:Rectangle = new Rectangle(this.monsterx, this.monstery, 32, 64 );
+				var brect:Rectangle = new Rectangle(this.q_hint_nodes[b][AGai.NPOS_COORDX] * 64,
+						this.q_hint_nodes[b][AGai.NPOS_COORDY] * 64,
+						64,64);
+						
 				if (this.q_hint_nodes[a][AGai.NPOS_COORDY] == 
-					this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
+					this.q_hint_nodes[b][AGai.NPOS_COORDY] ){
+					//(monsterrect.intersects(brect) 
+					//&& this.follow_enum == AGai.FOLLOW_APPROACH_TURN 
+					//&& this.monstery /64 == this.q_hint_nodes[a][AGai.NPOS_COORDY]
+					//) 
+					//|| this.follow_enum == AGai.FOLLOW_APPROACH_TURN_CLOSE
+					//) {
 					
-					if (this.q_hint_nodes[a][AGai.NPOS_COORDX] > this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
+					
+					if (this.q_hint_nodes[a][AGai.NPOS_COORDX] > 
+						this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
+						
 						this.hint_x = - AGai.MOVE_X;
 						
 						this.hint_direction_enum = AGai.ENUM_HORIZONTAL_LEFT;
@@ -1249,28 +1298,45 @@
 						this.hint_direction_enum = AGai.ENUM_HORIZONTAL_RIGHT;
 						trace("second right");
 					}
+					
 					this.hint_last_x = this.hint_x;
 				}
-				else if (this.q_hint_nodes[a][AGai.NPOS_COORDX] == 
-						 this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
-					this.hint_x = 0;
-				}
 				
+				if ( monsterrect.intersects(brect) ) { 
+				
+					this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
+					if (this.q_hint_nodes[a][AGai.NPOS_COORDX] > 
+						this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
+						
+						this.hint_x = - AGai.MOVE_X;
+						
+						this.hint_direction_enum = AGai.ENUM_HORIZONTAL_LEFT;
+						trace("second left");
+					}
+					else {
+						this.hint_x = AGai.MOVE_X;
+						this.hint_direction_enum = AGai.ENUM_HORIZONTAL_RIGHT;
+						trace("second right");
+					}
+					
+					this.hint_last_x = this.hint_x;
+				}
 			}
 			else if (this.q_endedge_hor != -1 && this.hint_auto) {
 				if (this.guyx < this.startingX ) {
 					this.hint_x = - AGai.MOVE_X;
-					trace("hint left");
+					//trace("hint left");
 				}
 				else {
 					this.hint_x = AGai.MOVE_X;
-					trace("hint right");
+					//trace("hint right");
 				}
 			}
 			else this.hint_x = this.hint_last_x;
 			
 			return this.hint_x;
 		}
+		
 		public function getPixHintY():int {
 			var a:int ;
 			var b:int ;
@@ -1279,11 +1345,23 @@
 				a = this.q_hint_list[0 + this.hint_nodecounter];
 				b = this.q_hint_list[1 + this.hint_nodecounter];
 				if (a == -1 || b == -1) return 0;
-				trace("ud",this.q_hint_nodes[a][AGai.NPOS_NODENAME],this.q_hint_nodes[b][AGai.NPOS_NODENAME]);
+				var monsterrect:Rectangle = new Rectangle(this.monsterx, this.monstery, 64, 64);
+				var brect:Rectangle = new Rectangle(this.q_hint_nodes[b][AGai.NPOS_COORDX] * 64,
+						this.q_hint_nodes[b][AGai.NPOS_COORDY] * 64,
+						64,64);
+
 				if (this.q_hint_nodes[a][AGai.NPOS_COORDX] == 
-					this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
+					this.q_hint_nodes[b][AGai.NPOS_COORDX] ) { 
+					//|| (monsterrect.intersects(brect) 
+					//&& this.follow_enum == AGai.FOLLOW_APPROACH_TURN 
+					//&& this.monsterx / 64 == this.q_hint_nodes[a][AGai.NPOS_COORDX]
+					//) 
+					//|| this.follow_enum == AGai.FOLLOW_APPROACH_TURN_CLOSE
+					//) {
 					
-					if (this.q_hint_nodes[a][AGai.NPOS_COORDY] > this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
+					if (this.q_hint_nodes[a][AGai.NPOS_COORDY] > 
+						this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
+						
 						this.hint_y = - AGai.MOVE_Y;
 						this.hint_direction_enum = AGai.ENUM_VERTICAL_UP;
 						trace("second up");
@@ -1295,20 +1373,34 @@
 					}
 					this.hint_last_y = this.hint_y;
 				}
-				else if (this.q_hint_nodes[a][AGai.NPOS_COORDY] == 
-						 this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
-					this.hint_y = 0;
+				
+				if (monsterrect.intersects(brect) ){ 
+				
+					this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
+					if (this.q_hint_nodes[a][AGai.NPOS_COORDY] > 
+						this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
+						
+						this.hint_y = - AGai.MOVE_Y;
+						this.hint_direction_enum = AGai.ENUM_VERTICAL_UP;
+						trace("second up");
+					}
+					else {
+						this.hint_y = AGai.MOVE_Y;
+						this.hint_direction_enum = AGai.ENUM_VERTICAL_DOWN;
+						trace("second down");
+					}
+					this.hint_last_y = this.hint_y;
 				}
 				
 			}
 			else if (this.q_endedge_vert != -1 && this.hint_auto) {
 				if (this.guyy < this.startingY) {
 					this.hint_y = - AGai.MOVE_Y;
-					trace("hint up");
+					//trace("hint up");
 				}
 				else {
 					this.hint_y = AGai.MOVE_Y;
-					trace("hint down");
+					//trace("hint down");
 				}
 			}
 			else this.hint_y = this.hint_last_y;
@@ -1317,54 +1409,37 @@
 		}
 		
 		public function advanceNodecounter():void {
-			if (this.q_hint_list.length < this.hint_nodecounter +1 ) return;
-			var a:int = this.q_hint_list[this.hint_nodecounter + 1];
+			var num:int = 1;
+			if (this.q_hint_list.length < this.hint_nodecounter + num ) return;
+			var a:int = this.q_hint_list[this.hint_nodecounter + num];
 			if (a < 0 || a >= this.q_hint_nodes.length) { 
-				this.hint_nodecounter ++;
+				//this.hint_nodecounter ++;
 				trace("<", a);
 				return;
 			}
 			var arect:Rectangle;
+			//this.hint_direction_enum = AGai.ENUM_VERTICAL_DOWN;// for testing!!
 			
-			switch (this.hint_direction_enum) {
-				case AGai.ENUM_HORIZONTAL_LEFT:
-				arect = new Rectangle(
-							(this.q_hint_nodes[a][AGai.NPOS_COORDX] *64) - (64/1),
-							(this.q_hint_nodes[a][AGai.NPOS_COORDY] *64),// + (64/2), 
-							64, 64 );
-				break;
-				case AGai.ENUM_HORIZONTAL_RIGHT:
-				arect = new Rectangle(
-							(this.q_hint_nodes[a][AGai.NPOS_COORDX] *64) + (64/1),
-							(this.q_hint_nodes[a][AGai.NPOS_COORDY] *64),// + (64/2), 
-							64, 64 );
-				break;
-				case AGai.ENUM_VERTICAL_DOWN:
-				arect = new Rectangle(
+			
+			arect = new Rectangle(
 							(this.q_hint_nodes[a][AGai.NPOS_COORDX] *64),// + (64/2),
 							(this.q_hint_nodes[a][AGai.NPOS_COORDY] *64),// + (64/2), 
-							64, 64 );
-				break;
-				case AGai.ENUM_VERTICAL_UP:
-				arect = new Rectangle(
-							(this.q_hint_nodes[a][AGai.NPOS_COORDX] *64),// + (64/2),
-							(this.q_hint_nodes[a][AGai.NPOS_COORDY] *64) - (64/1), 
-							64, 64 );
-				break;
-				default:
-				arect = new Rectangle(
-							(this.q_hint_nodes[a][AGai.NPOS_COORDX] *64) + (64/2),
-							(this.q_hint_nodes[a][AGai.NPOS_COORDY] *64) + (64/2), 
 							16, 16 );
-				break;
-			}
 			
 			var brect:Rectangle = new Rectangle(
-							this.startingX, this.startingY,
-							64,64);
+							this.monsterx, this.monstery,
+							64,64 *2);
 			if (arect.intersects(brect)) {
-				trace("<==============", this.q_hint_nodes[a][AGai.NPOS_NODENAME]);
+				
+				//this.hint_nodecounter ++;
+			}
+			
+			
+			if ((this.follow_enum == AGai.FOLLOW_APPROACH_TURN_CLOSE && ! arect.intersects(brect))
+				|| this.follow_enum == AGai.FOLLOW_LEAVE_TURN) {
 				this.hint_nodecounter ++;
+				this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
+				trace("<==", this.q_hint_nodes[a][AGai.NPOS_NODENAME]);
 			}
 		}
 		

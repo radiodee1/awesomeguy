@@ -102,9 +102,7 @@
 						//swap monsters
 						if (this.visible && visibility == show) this.visible = true;// TRUE;
 						
-						//drawBasicSprite(i, D_GATOR);
-					
-						//myDraw.drawBasicSprite(mySprite[i], D_GATOR);
+						
 					}
 					
 				
