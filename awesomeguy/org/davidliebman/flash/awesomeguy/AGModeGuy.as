@@ -51,6 +51,8 @@
 		var myHorizontal:int = 0;
 		var myVertical:int = 0;
 		
+		public var myAISpeed:int = 1;
+		
 		public static var X_MOVE = 10 * 2;
 		public static var Y_MOVE = 10 * 2;
 
@@ -356,6 +358,10 @@
 					tempCharArray = tempString.split(" ");
 					tempString = tempCharArray.join("");
 					tempArray[j] = tempString;
+				}
+				
+				if (tempArray[0] == AG.XML_MAZE_MONSTER_SPEED) {
+					this.myAISpeed = int(tempArray[1]);
 				}
 				
 				if (tempArray[0] == AG.XML_TEXT_MAZE_AFTER_COMPLETE) {
