@@ -1440,7 +1440,7 @@
 			var num:int = 1;
 			if (this.q_hint_list.length < this.hint_nodecounter + num ) return;
 			var a:int = this.q_hint_list[this.hint_nodecounter + num];
-			var zero:int = this.q_hint_list[this.hint_nodecounter + 0];
+			var zero:int = this.q_hint_list[this.hint_nodecounter + num - 1];
 			if (a < 0 || a >= this.q_hint_nodes.length) { 
 				//this.hint_nodecounter ++;
 				trace("<", a);
