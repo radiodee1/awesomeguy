@@ -1236,9 +1236,9 @@
 			
 			var awidth:int = this.mySprite.bitmap.width;
 			var aheight:int = this.mySprite.bitmap.height;
-			var ax:int = this.guyx + ( awidth / 2) - 4;
-			var ay:int = this.guyy;// + ( aheight / 2);
-			var arect:Rectangle = new Rectangle(ax, ay, 8, aheight);//awidth, aheight);
+			var ax:int = this.monsterx;// +( awidth / 2) - 4;
+			var ay:int = this.monstery;// + ( aheight / 2);
+			var arect:Rectangle = new Rectangle(ax, ay, awidth, aheight);//awidth, aheight);
 			
 			var brect:Rectangle;
 			
@@ -1248,7 +1248,11 @@
 			else {
 				brect = new Rectangle((x) + 32,(y ) + 32, 8, 8);
 			}
-			return arect.intersects(brect);
+			var value:Boolean = arect.intersects(brect);
+			
+			if (value) trace ( "hit");
+			
+			return value;// arect.intersects(brect);
 		}
 		
 		private function createHint():Array {
@@ -1573,6 +1577,8 @@
 					) {
 				this.allow_enum = AGai.ALLOW_BOTH;
 				this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
+				this.hint_y = 0;
+				this.hint_x = 0;
 			}
 			
 			if ((this.follow_enum == AGai.FOLLOW_APPROACH_TURN_CLOSE && 
