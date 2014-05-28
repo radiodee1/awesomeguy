@@ -1334,70 +1334,6 @@
 			
 			return this.hint_x;
 			
-			if (this.q_hint_list.length >= this.hint_nodecounter + 2) {
-				a = this.q_hint_list[0 + this.hint_nodecounter];
-				b = this.q_hint_list[1 + this.hint_nodecounter];
-				if (a == -1 || b == -1) return 0;
-				//var monsterrect:Rectangle = new Rectangle(this.monsterx, this.monstery, 64, 64 );
-				//var brect:Rectangle = new Rectangle(this.q_hint_nodes[b][AGai.NPOS_COORDX] * 64,
-				//		this.q_hint_nodes[b][AGai.NPOS_COORDY] * 64,
-				//		64,64);
-						
-				if (this.q_hint_nodes[a][AGai.NPOS_COORDY] == 
-					this.q_hint_nodes[b][AGai.NPOS_COORDY] 
-					//&& this.allow_enum == AGai.ALLOW_X
-					){
-					
-					
-					/*
-					if (this.orient_enum == AGai.ENUM_VERTICAL) {
-						this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
-
-					}
-					*/
-					
-					if (this.q_hint_nodes[a][AGai.NPOS_COORDX] > 
-						this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
-						
-						this.hint_x = - AGai.MOVE_X;
-						
-						this.hint_direction_enum = AGai.ENUM_HORIZONTAL_LEFT;
-						trace("second left");
-					}
-					else {
-						this.hint_x = AGai.MOVE_X;
-						this.hint_direction_enum = AGai.ENUM_HORIZONTAL_RIGHT;
-						trace("second right");
-					}
-					
-					this.hint_last_x = this.hint_x;
-				}
-				
-				if ( this.isHitCenter(this.q_hint_nodes[b][AGai.NPOS_COORDX], this.q_hint_nodes[b][AGai.NPOS_COORDY]) 
-					//monsterrect.intersects(brect) 
-					//&& this.allow_enum == AGai.ALLOW_BOTH
-					) { 
-				
-					this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
-					
-					
-					if (this.q_hint_nodes[a][AGai.NPOS_COORDX] > 
-						this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
-						
-						this.hint_x = - AGai.MOVE_X;
-						
-						this.hint_direction_enum = AGai.ENUM_HORIZONTAL_LEFT;
-						trace("third left");
-					}
-					else {
-						this.hint_x = AGai.MOVE_X;
-						this.hint_direction_enum = AGai.ENUM_HORIZONTAL_RIGHT;
-						trace("third right");
-					}
-					
-					this.hint_last_x = this.hint_x;
-				}
-			}
 			if (this.q_endedge_hor != -1 && this.hint_auto) {
 				if (this.guyx < this.monsterx ) {
 					this.hint_x = - AGai.MOVE_X;
@@ -1418,66 +1354,7 @@
 			var b:int ;
 			return this.hint_y;
 			
-			if (this.q_hint_list.length >= this.hint_nodecounter + 2) {
-				a = this.q_hint_list[0 + this.hint_nodecounter];
-				b = this.q_hint_list[1 + this.hint_nodecounter];
-				if (a == -1 || b == -1) return 0;
-				//var monsterrect:Rectangle = new Rectangle(this.monsterx, this.monstery, 64, 64);
-				//var brect:Rectangle = new Rectangle(this.q_hint_nodes[b][AGai.NPOS_COORDX] * 64,
-				//		this.q_hint_nodes[b][AGai.NPOS_COORDY] * 64,
-				//		64,64);
-
-				if (this.q_hint_nodes[a][AGai.NPOS_COORDX] == 
-					this.q_hint_nodes[b][AGai.NPOS_COORDX] 
-					//&& this.allow_enum == AGai.ALLOW_Y
-					) { 
-					
-					/*
-					if (this.orient_enum == AGai.ENUM_HORIZONTAL){
-						this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
-
-					}
-					*/
-					
-					if (this.q_hint_nodes[a][AGai.NPOS_COORDY] > 
-						this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
-						
-						this.hint_y = - AGai.MOVE_Y;
-						this.hint_direction_enum = AGai.ENUM_VERTICAL_UP;
-						trace("second up");
-					}
-					else {
-						this.hint_y = AGai.MOVE_Y;
-						this.hint_direction_enum = AGai.ENUM_VERTICAL_DOWN;
-						trace("second down");
-					}
-					this.hint_last_y = this.hint_y;
-				}
-				
-				if (this.isHitCenter(this.q_hint_nodes[b][AGai.NPOS_COORDX], this.q_hint_nodes[b][AGai.NPOS_COORDY]) 
-					//monsterrect.intersects(brect) 
-					//&& this.allow_enum == AGai.ALLOW_BOTH
-					){ 
-				
-					this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
-					
-					
-					if (this.q_hint_nodes[a][AGai.NPOS_COORDY] > 
-						this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
-						
-						this.hint_y = - AGai.MOVE_Y;
-						this.hint_direction_enum = AGai.ENUM_VERTICAL_UP;
-						trace("third up");
-					}
-					else {
-						this.hint_y = AGai.MOVE_Y;
-						this.hint_direction_enum = AGai.ENUM_VERTICAL_DOWN;
-						trace("third down");
-					}
-					this.hint_last_y = this.hint_y;
-				}
-				
-			}
+			
 			if (this.q_endedge_vert != -1 && this.hint_auto) {
 				if (this.guyy < this.monstery) {
 					this.hint_y = - AGai.MOVE_Y;
