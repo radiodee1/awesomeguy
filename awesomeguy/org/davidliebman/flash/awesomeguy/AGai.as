@@ -7,7 +7,7 @@
 	import flash.utils.ByteArray;
 	
 	/* THIS AI IS REALLY ONLY FOR MAZE LEVELS */
-	public class AGai {// extends Sprite{
+	public class AGai {
 		
 		public var myInvisible:Array;
 		public var myScreen:Stage;
@@ -658,6 +658,7 @@
 			//trace(speed, "speed");
 			//this.setFollowEnum();
 			this.advanceNodecounter();
+			this.startNewsegment();
 		}
 		
 		/* THIS IS DONE BEFORE EACH REDRAW OF THE SCREEN */
@@ -1094,7 +1095,7 @@
 				break;
 				case AGai.ALG_SECOND_HINT_C:
 				
-					this.createHintEdges();
+					//this.createHintEdges();
 				break;
 				
 				case AGai.ALG_NON_DIJKSTRA:
@@ -1280,13 +1281,14 @@
 			list.reverse();
 			
 			this.hint_nodecounter = 1;
-			this.follow_enum = AGai.FOLLOW_START;
+			this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
 			
 			return list;
 		}
 		
+		/*
 		public function createHintEdges():void {
-			/*
+			
 			var k:int = 0;
 			var nodeenda:int;
 			var nodeendb:int;
@@ -1325,10 +1327,10 @@
 				// else if y == y
 				
 			}
-			*/
+			
 			return;// value;
 		}
-		
+		*/
 		
 		
 		public function getPixHintX():int {
@@ -1402,12 +1404,14 @@
 						this.hint_direction_enum = AGai.ENUM_HORIZONTAL_LEFT;
 						trace("fourth left");
 					}
-					else {
+					else if (this.q_hint_nodes[zero][AGai.NPOS_COORDX] <= 
+						this.q_hint_nodes[a][AGai.NPOS_COORDX]) {
+							
 						this.hint_x = AGai.MOVE_X;
 						this.hint_direction_enum = AGai.ENUM_HORIZONTAL_RIGHT;
 						trace("fourth right");
 					}
-					this.hint_last_x = this.hint_x;
+					//this.hint_last_x = this.hint_x;
 				}
 				if (this.q_hint_nodes[zero][AGai.NPOS_COORDX] == 
 					this.q_hint_nodes[a][AGai.NPOS_COORDX] 
@@ -1421,12 +1425,14 @@
 						this.hint_direction_enum = AGai.ENUM_VERTICAL_UP;
 						trace("fourth up");
 					}
-					else {
+					else if (this.q_hint_nodes[zero][AGai.NPOS_COORDY] <= 
+						this.q_hint_nodes[a][AGai.NPOS_COORDY]  ) {
+							
 						this.hint_y = AGai.MOVE_Y;
 						this.hint_direction_enum = AGai.ENUM_VERTICAL_DOWN;
 						trace("fourth down");
 					}
-					this.hint_last_y = this.hint_y;
+					//this.hint_last_y = this.hint_y;
 				}
 			}
 			///////
@@ -1438,13 +1444,18 @@
 				this.hint_nodecounter ++;
 				this.allow_enum = AGai.ALLOW_BOTH;
 				this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
-				//this.hint_y = 0;
-				//this.hint_x = 0;
-				this.hint_timer_counter = 0;
+				this.hint_y = 0;
+				this.hint_x = 0;
+				//this.hint_timer_counter = 0;
 				trace("<==", this.q_hint_nodes[zero][AGai.NPOS_NODENAME],"to",
 					  this.q_hint_nodes[a][AGai.NPOS_NODENAME]);
 				return;// this line is crucial...
 			}
+			
+			
+		}
+		
+		public function startNewsegment():void {
 			///////
 			// start new directions
 			if (this.follow_enum == AGai.FOLLOW_APPROACH_TURN_CLOSE) {
@@ -1472,7 +1483,6 @@
 					break;
 				}
 			}
-			
 		}
 		
 		////////////////////////////////////////////////////
