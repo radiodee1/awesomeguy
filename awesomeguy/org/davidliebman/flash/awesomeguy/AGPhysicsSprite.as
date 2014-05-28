@@ -37,7 +37,8 @@
 			hit_ladder = this.collisionTile(myinvisible, sprite.x/ 64, (sprite.y/ 64 ) ,//+ 1,
 											sprite.bitmap, 
 											sprite.bitmap.x , 
-											(sprite.bitmap.y  + 64), AGModeGuy.B_LADDER, "ladder");//, 8 );
+											(sprite.bitmap.y  ),//+ 64), 
+											AGModeGuy.B_LADDER, "ladder");//, 8 );
 			
 			hit_ladder_low = this.collisionTile(myinvisible, sprite.x/ 64, (sprite.y/ 64 ),// + 1,
 											sprite.bitmap, 
@@ -122,7 +123,7 @@
 			}
 			if (try_up) {
 				if (hit_ladder ){//|| hit_ladder_low ) {
-					yblock = int ( -   AGModeGuy.Y_MOVE/q)  ;
+					yblock = int ( -   AGModeGuy.Y_MOVE/q) *2  ;
 					trace("start");
 					//if(!hit_bottom) myGuy.quality_0 = AGModeGuy.GUY_CLIMB;
 				}
