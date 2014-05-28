@@ -1382,7 +1382,8 @@
 				trace("<", a);
 				return;
 			}
-			
+			this.hint_x = 0;
+			this.hint_y = 0;
 			///////
 			if (this.follow_enum != AGai.FOLLOW_APPROACH_TURN_CLOSE) {
 				if (this.q_hint_nodes[zero][AGai.NPOS_COORDY] == 
@@ -1433,8 +1434,8 @@
 				this.hint_nodecounter ++;
 				this.allow_enum = AGai.ALLOW_BOTH;
 				this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
-				this.hint_y = 0;
-				this.hint_x = 0;
+				//this.hint_y = 0;
+				//this.hint_x = 0;
 				trace("<==", this.q_hint_nodes[zero][AGai.NPOS_NODENAME],"to",
 					  this.q_hint_nodes[a][AGai.NPOS_NODENAME]);
 				return;
