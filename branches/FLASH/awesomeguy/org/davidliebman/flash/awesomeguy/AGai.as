@@ -1326,30 +1326,7 @@
 			return;// value;
 		}
 		
-		public function setFollowEnum():void {
-			var a:int ;
-			var b:int ;
-			var c:int ;
-			if (this.q_hint_list.length >= this.hint_nodecounter + 3) {
-				a = this.q_hint_list[0 + this.hint_nodecounter];
-				b = this.q_hint_list[1 + this.hint_nodecounter];
-				c = this.q_hint_list[2 + this.hint_nodecounter];
-				if (a == -1 || b == -1 || c == -1) {
-					return;
-				}
-				var ax:int = this.q_hint_nodes[a][AGai.NPOS_COORDX] * 64;
-				var ay:int = this.q_hint_nodes[a][AGai.NPOS_COORDY] * 64;
-				var bx:int = this.q_hint_nodes[b][AGai.NPOS_COORDX] * 64;
-				var by:int = this.q_hint_nodes[b][AGai.NPOS_COORDY] * 64;
-				var cx:int = this.q_hint_nodes[c][AGai.NPOS_COORDX] * 64;
-				var cy:int = this.q_hint_nodes[c][AGai.NPOS_COORDY] * 64;
-				var arect:Rectangle = new Rectangle(ax, ay, 64, 64);
-				var brect:Rectangle = new Rectangle(bx, by, 64, 64);
-				var crect:Rectangle = new Rectangle(cx, cy, 64, 64);
-				var monsterrect:Rectangle = new Rectangle(this.monsterx, this.monstery, 64,64);
-			}
-			
-		}
+		
 		
 		public function getPixHintX():int {
 			var a:int ;
@@ -1530,6 +1507,7 @@
 			}
 			
 			///////
+			if (this.follow_enum != AGai.FOLLOW_APPROACH_TURN_CLOSE) {
 				if (this.q_hint_nodes[zero][AGai.NPOS_COORDY] == 
 					this.q_hint_nodes[a][AGai.NPOS_COORDY] 
 					|| this.allow_enum == AGai.ALLOW_BOTH
@@ -1568,7 +1546,7 @@
 					}
 					this.hint_last_y = this.hint_y;
 				}
-				
+			}
 			///////
 			
 			if ( this.isHitCenter(this.q_hint_nodes[a][AGai.NPOS_COORDX], 
@@ -1579,6 +1557,7 @@
 				this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
 				this.hint_y = 0;
 				this.hint_x = 0;
+				return;
 			}
 			
 			if ((this.follow_enum == AGai.FOLLOW_APPROACH_TURN_CLOSE && 
@@ -1589,6 +1568,7 @@
 					
 				this.hint_nodecounter ++;
 				this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
+				
 				if (this.hint_nodecounter + 1 > this.q_hint_nodes.length) { 
 					trace("<==");
 					return;
