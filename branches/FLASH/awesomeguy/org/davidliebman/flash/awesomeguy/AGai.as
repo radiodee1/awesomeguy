@@ -134,6 +134,7 @@
 
 		public var hint_auto:Boolean = false;
 		public var hint_direction_enum:int = 0;
+		public var hint_timer_counter:int = 0;
 		
 		public static var ENUM_HORIZONTAL_LEFT:int = 1;
 		public static var ENUM_VERTICAL_UP:int = 2;
@@ -1285,6 +1286,7 @@
 		}
 		
 		public function createHintEdges():void {
+			/*
 			var k:int = 0;
 			var nodeenda:int;
 			var nodeendb:int;
@@ -1323,6 +1325,7 @@
 				// else if y == y
 				
 			}
+			*/
 			return;// value;
 		}
 		
@@ -1385,6 +1388,7 @@
 			this.hint_x = 0;
 			this.hint_y = 0;
 			///////
+			// simple follow path...
 			if (this.follow_enum != AGai.FOLLOW_APPROACH_TURN_CLOSE) {
 				if (this.q_hint_nodes[zero][AGai.NPOS_COORDY] == 
 					this.q_hint_nodes[a][AGai.NPOS_COORDY] 
@@ -1426,7 +1430,7 @@
 				}
 			}
 			///////
-			
+			// stop here??
 			if ( this.isHitCenter(this.q_hint_nodes[a][AGai.NPOS_COORDX], 
 					this.q_hint_nodes[a][AGai.NPOS_COORDY]) 
 					
@@ -1434,15 +1438,40 @@
 				this.hint_nodecounter ++;
 				this.allow_enum = AGai.ALLOW_BOTH;
 				this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
-				this.hint_y = 0;
-				this.hint_x = 0;
+				//this.hint_y = 0;
+				//this.hint_x = 0;
+				this.hint_timer_counter = 0;
 				trace("<==", this.q_hint_nodes[zero][AGai.NPOS_NODENAME],"to",
 					  this.q_hint_nodes[a][AGai.NPOS_NODENAME]);
-				return;
+				return;// this line is crucial...
 			}
-			
-			
-			
+			///////
+			// start new directions
+			if (this.follow_enum == AGai.FOLLOW_APPROACH_TURN_CLOSE) {
+				//this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
+				trace("at turn");
+				this.hint_timer_counter ++;
+				switch(this.hint_direction_enum) {
+					case AGai.ENUM_HORIZONTAL_LEFT:
+						this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
+					break;
+					case AGai.ENUM_HORIZONTAL_RIGHT:
+						this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
+					break;
+					case AGai.ENUM_VERTICAL_DOWN:
+						this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
+					break;
+					case AGai.ENUM_VERTICAL_UP:
+						this.hint_y = - AGai.MOVE_Y;
+						if (this.hint_timer_counter > 30) { 
+							this.hint_timer_counter = 0;  
+							this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
+							return;
+						}
+						trace("timer",this.hint_timer_counter);
+					break;
+				}
+			}
 			
 		}
 		
