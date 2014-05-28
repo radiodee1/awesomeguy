@@ -1430,32 +1430,17 @@
 					this.q_hint_nodes[a][AGai.NPOS_COORDY]) 
 					
 					) {
+				this.hint_nodecounter ++;
 				this.allow_enum = AGai.ALLOW_BOTH;
 				this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
 				this.hint_y = 0;
 				this.hint_x = 0;
+				trace("<==", this.q_hint_nodes[zero][AGai.NPOS_NODENAME],"to",
+					  this.q_hint_nodes[a][AGai.NPOS_NODENAME]);
 				return;
 			}
 			
-			if ((this.follow_enum == AGai.FOLLOW_APPROACH_TURN_CLOSE && 
-				! this.isHitCenter(this.q_hint_nodes[a][AGai.NPOS_COORDX], this.q_hint_nodes[a][AGai.NPOS_COORDY]) 
-				)
-				
-				|| this.follow_enum == AGai.FOLLOW_LEAVE_TURN) {
-					
-				this.hint_nodecounter ++;
-				this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
-				
-				if (this.hint_nodecounter + 1 > this.q_hint_nodes.length) { 
-					trace("<==");
-					return;
-				}
-				a = this.q_hint_list[this.hint_nodecounter + 1];
-				zero = this.q_hint_list[this.hint_nodecounter + 0];
 			
-				trace("<==", this.q_hint_nodes[zero][AGai.NPOS_NODENAME],"to",
-					  this.q_hint_nodes[a][AGai.NPOS_NODENAME]);
-			}
 			
 			
 		}
