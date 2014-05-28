@@ -1290,12 +1290,7 @@
 				if (this.q_hint_nodes[a][AGai.NPOS_COORDY] == 
 					this.q_hint_nodes[b][AGai.NPOS_COORDY] &&
 					this.allow_enum == AGai.ALLOW_X){
-					//(monsterrect.intersects(brect) 
-					//&& this.follow_enum == AGai.FOLLOW_APPROACH_TURN 
-					//&& this.monstery /64 == this.q_hint_nodes[a][AGai.NPOS_COORDY]
-					//) 
-					//|| this.follow_enum == AGai.FOLLOW_APPROACH_TURN_CLOSE
-					//) {
+					
 					
 					/*
 					if (this.orient_enum == AGai.ENUM_VERTICAL) {
@@ -1322,7 +1317,8 @@
 				}
 				
 				if ( monsterrect.intersects(brect) 
-					&& this.allow_enum == AGai.ALLOW_BOTH) { 
+					//&& this.allow_enum == AGai.ALLOW_BOTH
+					) { 
 				
 					this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
 					if (this.q_hint_nodes[a][AGai.NPOS_COORDX] > 
@@ -1342,7 +1338,7 @@
 					this.hint_last_x = this.hint_x;
 				}
 			}
-			if (this.q_endedge_hor != -1 || this.hint_auto) {
+			if (this.q_endedge_hor != -1 && this.hint_auto) {
 				if (this.guyx < this.monsterx ) {
 					this.hint_x = - AGai.MOVE_X;
 					//trace("hint left");
@@ -1373,12 +1369,7 @@
 				if (this.q_hint_nodes[a][AGai.NPOS_COORDX] == 
 					this.q_hint_nodes[b][AGai.NPOS_COORDX] 
 					&& this.allow_enum == AGai.ALLOW_Y) { 
-					//|| (monsterrect.intersects(brect) 
-					//&& this.follow_enum == AGai.FOLLOW_APPROACH_TURN 
-					//&& this.monsterx / 64 == this.q_hint_nodes[a][AGai.NPOS_COORDX]
-					//) 
-					//|| this.follow_enum == AGai.FOLLOW_APPROACH_TURN_CLOSE
-					//) {
+					
 					/*
 					if (this.orient_enum == AGai.ENUM_HORIZONTAL){
 						this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
@@ -1402,7 +1393,8 @@
 				}
 				
 				if (monsterrect.intersects(brect) 
-					&& this.allow_enum == AGai.ALLOW_BOTH){ 
+					//&& this.allow_enum == AGai.ALLOW_BOTH
+					){ 
 				
 					this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
 					if (this.q_hint_nodes[a][AGai.NPOS_COORDY] > 
@@ -1421,7 +1413,7 @@
 				}
 				
 			}
-			if (this.q_endedge_vert != -1 || this.hint_auto) {
+			if (this.q_endedge_vert != -1 && this.hint_auto) {
 				if (this.guyy < this.monstery) {
 					this.hint_y = - AGai.MOVE_Y;
 					//trace("hint up");
@@ -1438,7 +1430,7 @@
 		
 		public function advanceNodecounter():void {
 			var num:int = 1;
-			if (this.q_hint_list.length < this.hint_nodecounter + num ) return;
+			if (this.q_hint_list.length < this.hint_nodecounter + num || num -1 < 0) return;
 			var a:int = this.q_hint_list[this.hint_nodecounter + num];
 			var zero:int = this.q_hint_list[this.hint_nodecounter + num - 1];
 			if (a < 0 || a >= this.q_hint_nodes.length) { 
@@ -1463,6 +1455,9 @@
 				//this.hint_nodecounter ++;
 			}
 			
+			if (arect.intersects(brect)) {
+				this.allow_enum = AGai.ALLOW_BOTH;
+			}
 			
 			if ((this.follow_enum == AGai.FOLLOW_APPROACH_TURN_CLOSE )//&& ! arect.intersects(brect))
 				|| this.follow_enum == AGai.FOLLOW_LEAVE_TURN) {
@@ -1484,7 +1479,8 @@
 			else {
 				//
 				this.allow_enum = AGai.ALLOW_BOTH;
-				this.follow_enum = AGai.FOLLOW_LEAVE_TURN;
+				this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
+				
 			}
 			
 			
