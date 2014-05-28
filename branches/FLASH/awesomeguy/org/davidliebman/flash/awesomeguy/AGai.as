@@ -1463,7 +1463,7 @@
 				|| this.follow_enum == AGai.FOLLOW_LEAVE_TURN) {
 				this.hint_nodecounter ++;
 				this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
-				trace("<==", this.q_hint_nodes[a][AGai.NPOS_NODENAME]);
+				trace("<==", this.q_hint_nodes[zero][AGai.NPOS_NODENAME]);
 			}
 			
 			if (this.q_hint_nodes[a][AGai.NPOS_COORDY] == this.q_hint_nodes[zero][AGai.NPOS_COORDY]) {
