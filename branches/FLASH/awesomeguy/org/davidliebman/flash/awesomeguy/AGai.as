@@ -7,12 +7,13 @@
 	import flash.utils.ByteArray;
 	
 	/* THIS AI IS REALLY ONLY FOR MAZE LEVELS */
-	public class AGai  extends Sprite{
+	public class AGai {// extends Sprite{
 		
 		public var myInvisible:Array;
 		public var myScreen:Stage;
 		public var myGame:AGMode;
 		public var myKeyStage:AGKeys;
+		public var mySprite:AGSprite;
 
 		public var invisibleDots:Array = new Array();
 		public var invisibleChutes:Array = new Array();
@@ -164,12 +165,13 @@
 		
 		
 		/* THIS IS DONE ONCE AT THE BEGINNING OF THE LEVEL */
-		public function setValues(myinvisible:Array, myscreen:Stage, game:AGMode):void {
+		public function setValues(myinvisible:Array, myscreen:Stage, game:AGMode, sprite:AGSprite):void {
 			this.set_values_called = true;
 			
 			myInvisible = myinvisible;
 			myScreen = myscreen;
 			myGame = game;
+			mySprite = sprite;
 			
 			this.setupGraph();
 		}
@@ -1226,19 +1228,42 @@
 			return value;
 		}
 		
+		/////////////////////////////////////////////////////////
+		
+		public function isHitCenter(x:int, y:int, graphnode:Boolean = true):Boolean {
+			
+			if (this.mySprite.bitmap == null) return false;
+			
+			var awidth:int = this.mySprite.bitmap.width;
+			var aheight:int = this.mySprite.bitmap.height;
+			var ax:int = this.guyx + ( awidth / 2) - 4;
+			var ay:int = this.guyy;// + ( aheight / 2);
+			var arect:Rectangle = new Rectangle(ax, ay, 8, aheight);//awidth, aheight);
+			
+			var brect:Rectangle;
+			
+			if(graphnode) {
+				brect = new Rectangle((x*64) + 32,(y * 64) + 32, 8, 8);
+			}
+			else {
+				brect = new Rectangle((x) + 32,(y ) + 32, 8, 8);
+			}
+			return arect.intersects(brect);
+		}
+		
 		private function createHint():Array {
 						
 			var list:Array = new Array();
 			var i:int = this.nodenumend;
 			var j:int = 0;
-			//if (i != -1) list.push(i);
+			if (i != -1) list.push(i);
 			if (this.nodesFromDots == null || i == -1) return list;
 			while ( i != -1 && j < this.nodesFromDots.length - 1) {
 				j ++;
 				
 				if (i > -1 && i < this.nodesFromDots.length) {
 				i = this.nodesFromDots[i][AGai.NPOS_PREVIOUS];
-					if (i != this.nodenumstart || true) {
+					if (i != this.nodenumstart || true ) {
 						list.push(i);
 					}
 					
@@ -1255,8 +1280,10 @@
 			return list;
 		}
 		
-		public static createHintEdges():void {
+		public function createHintEdges():void {
 			var k:int = 0;
+			var nodeenda:int;
+			var nodeendb:int;
 			for(k = 0; k < this.q_hint_list.length - 1; k ++) {
 				nodeenda = k;
 				nodeendb = k + 1;
@@ -1324,18 +1351,21 @@
 			var a:int ;
 			var b:int ;
 			
+			return this.hint_x;
+			
 			if (this.q_hint_list.length >= this.hint_nodecounter + 2) {
 				a = this.q_hint_list[0 + this.hint_nodecounter];
 				b = this.q_hint_list[1 + this.hint_nodecounter];
 				if (a == -1 || b == -1) return 0;
-				var monsterrect:Rectangle = new Rectangle(this.monsterx, this.monstery, 64, 64 );
-				var brect:Rectangle = new Rectangle(this.q_hint_nodes[b][AGai.NPOS_COORDX] * 64,
-						this.q_hint_nodes[b][AGai.NPOS_COORDY] * 64,
-						64,64);
+				//var monsterrect:Rectangle = new Rectangle(this.monsterx, this.monstery, 64, 64 );
+				//var brect:Rectangle = new Rectangle(this.q_hint_nodes[b][AGai.NPOS_COORDX] * 64,
+				//		this.q_hint_nodes[b][AGai.NPOS_COORDY] * 64,
+				//		64,64);
 						
 				if (this.q_hint_nodes[a][AGai.NPOS_COORDY] == 
-					this.q_hint_nodes[b][AGai.NPOS_COORDY] &&
-					this.allow_enum == AGai.ALLOW_X){
+					this.q_hint_nodes[b][AGai.NPOS_COORDY] 
+					//&& this.allow_enum == AGai.ALLOW_X
+					){
 					
 					
 					/*
@@ -1362,11 +1392,14 @@
 					this.hint_last_x = this.hint_x;
 				}
 				
-				if ( monsterrect.intersects(brect) 
+				if ( this.isHitCenter(this.q_hint_nodes[b][AGai.NPOS_COORDX], this.q_hint_nodes[b][AGai.NPOS_COORDY]) 
+					//monsterrect.intersects(brect) 
 					//&& this.allow_enum == AGai.ALLOW_BOTH
 					) { 
 				
 					this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
+					
+					
 					if (this.q_hint_nodes[a][AGai.NPOS_COORDX] > 
 						this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
 						
@@ -1402,19 +1435,21 @@
 		public function getPixHintY():int {
 			var a:int ;
 			var b:int ;
+			return this.hint_y;
 			
 			if (this.q_hint_list.length >= this.hint_nodecounter + 2) {
 				a = this.q_hint_list[0 + this.hint_nodecounter];
 				b = this.q_hint_list[1 + this.hint_nodecounter];
 				if (a == -1 || b == -1) return 0;
-				var monsterrect:Rectangle = new Rectangle(this.monsterx, this.monstery, 64, 64);
-				var brect:Rectangle = new Rectangle(this.q_hint_nodes[b][AGai.NPOS_COORDX] * 64,
-						this.q_hint_nodes[b][AGai.NPOS_COORDY] * 64,
-						64,64);
+				//var monsterrect:Rectangle = new Rectangle(this.monsterx, this.monstery, 64, 64);
+				//var brect:Rectangle = new Rectangle(this.q_hint_nodes[b][AGai.NPOS_COORDX] * 64,
+				//		this.q_hint_nodes[b][AGai.NPOS_COORDY] * 64,
+				//		64,64);
 
 				if (this.q_hint_nodes[a][AGai.NPOS_COORDX] == 
 					this.q_hint_nodes[b][AGai.NPOS_COORDX] 
-					&& this.allow_enum == AGai.ALLOW_Y) { 
+					//&& this.allow_enum == AGai.ALLOW_Y
+					) { 
 					
 					/*
 					if (this.orient_enum == AGai.ENUM_HORIZONTAL){
@@ -1438,11 +1473,14 @@
 					this.hint_last_y = this.hint_y;
 				}
 				
-				if (monsterrect.intersects(brect) 
+				if (this.isHitCenter(this.q_hint_nodes[b][AGai.NPOS_COORDX], this.q_hint_nodes[b][AGai.NPOS_COORDY]) 
+					//monsterrect.intersects(brect) 
 					//&& this.allow_enum == AGai.ALLOW_BOTH
 					){ 
 				
 					this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
+					
+					
 					if (this.q_hint_nodes[a][AGai.NPOS_COORDY] > 
 						this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
 						
@@ -1475,59 +1513,85 @@
 		}
 		
 		public function advanceNodecounter():void {
-			var num:int = 1;
-			if (this.q_hint_list.length < this.hint_nodecounter + num || num -1 < 0) return;
-			var a:int = this.q_hint_list[this.hint_nodecounter + num];
-			var zero:int = this.q_hint_list[this.hint_nodecounter + num - 1];
+			
+			if (this.q_hint_list.length < this.hint_nodecounter + 1 ) return;
+			
+			var a:int = this.q_hint_list[this.hint_nodecounter + 1];
+			var zero:int = this.q_hint_list[this.hint_nodecounter + 0];
+			
 			if (a < 0 || a >= this.q_hint_nodes.length) { 
 				//this.hint_nodecounter ++;
 				trace("<", a);
 				return;
 			}
-			var arect:Rectangle;
-			//this.hint_direction_enum = AGai.ENUM_VERTICAL_DOWN;// for testing!!
 			
-			
-			arect = new Rectangle(
-							(this.q_hint_nodes[a][AGai.NPOS_COORDX] *64),// + (64/2),
-							(this.q_hint_nodes[a][AGai.NPOS_COORDY] *64),// + (64/2), 
-							64, 64 );
-			
-			var brect:Rectangle = new Rectangle(
-							this.monsterx, this.monstery,
-							64,64 );
-			if (arect.intersects(brect)) {
+			///////
+				if (this.q_hint_nodes[zero][AGai.NPOS_COORDY] == 
+					this.q_hint_nodes[a][AGai.NPOS_COORDY] 
+					|| this.allow_enum == AGai.ALLOW_BOTH
+					) { 
+					
+					if (this.q_hint_nodes[zero][AGai.NPOS_COORDX] > 
+						this.q_hint_nodes[a][AGai.NPOS_COORDX]) {
+						
+						this.hint_x = - AGai.MOVE_X;
+						this.hint_direction_enum = AGai.ENUM_HORIZONTAL_LEFT;
+						trace("fourth left");
+					}
+					else {
+						this.hint_x = AGai.MOVE_X;
+						this.hint_direction_enum = AGai.ENUM_HORIZONTAL_RIGHT;
+						trace("fourth right");
+					}
+					this.hint_last_x = this.hint_x;
+				}
+				if (this.q_hint_nodes[zero][AGai.NPOS_COORDX] == 
+					this.q_hint_nodes[a][AGai.NPOS_COORDX] 
+					|| this.allow_enum == AGai.ALLOW_BOTH
+					) { 
+					
+					if (this.q_hint_nodes[zero][AGai.NPOS_COORDY] > 
+						this.q_hint_nodes[a][AGai.NPOS_COORDY]) {
+						
+						this.hint_y = - AGai.MOVE_Y;
+						this.hint_direction_enum = AGai.ENUM_VERTICAL_UP;
+						trace("fourth up");
+					}
+					else {
+						this.hint_y = AGai.MOVE_Y;
+						this.hint_direction_enum = AGai.ENUM_VERTICAL_DOWN;
+						trace("fourth down");
+					}
+					this.hint_last_y = this.hint_y;
+				}
 				
-				//this.hint_nodecounter ++;
-			}
+			///////
 			
-			if (arect.intersects(brect)) {
-				this.allow_enum = AGai.ALLOW_BOTH;
-			}
-			
-			if ((this.follow_enum == AGai.FOLLOW_APPROACH_TURN_CLOSE && ! arect.intersects(brect))
-				|| this.follow_enum == AGai.FOLLOW_LEAVE_TURN) {
-				this.hint_nodecounter ++;
-				this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
-				trace("<==", this.q_hint_nodes[zero][AGai.NPOS_NODENAME],"to",
-					  this.q_hint_nodes[a][AGai.NPOS_NODENAME]);
-			}
-			
-			if (this.q_hint_nodes[a][AGai.NPOS_COORDY] == this.q_hint_nodes[zero][AGai.NPOS_COORDY]) {
-				this.orient_enum = AGai.ENUM_HORIZONTAL;
-				this.allow_enum = AGai.ALLOW_X;
-				this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
-			}
-			else if (this.q_hint_nodes[a][AGai.NPOS_COORDX] == this.q_hint_nodes[zero][AGai.NPOS_COORDX]) {
-				this.orient_enum = AGai.ENUM_VERTICAL;
-				this.allow_enum = AGai.ALLOW_Y;
-				this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
-			}
-			else {
-				//
+			if ( this.isHitCenter(this.q_hint_nodes[a][AGai.NPOS_COORDX], 
+					this.q_hint_nodes[a][AGai.NPOS_COORDY]) 
+					
+					) {
 				this.allow_enum = AGai.ALLOW_BOTH;
 				this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
+			}
+			
+			if ((this.follow_enum == AGai.FOLLOW_APPROACH_TURN_CLOSE && 
+				! this.isHitCenter(this.q_hint_nodes[a][AGai.NPOS_COORDX], this.q_hint_nodes[a][AGai.NPOS_COORDY]) 
+				)
 				
+				|| this.follow_enum == AGai.FOLLOW_LEAVE_TURN) {
+					
+				this.hint_nodecounter ++;
+				this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
+				if (this.hint_nodecounter + 1 > this.q_hint_nodes.length) { 
+					trace("<==");
+					return;
+				}
+				a = this.q_hint_list[this.hint_nodecounter + 1];
+				zero = this.q_hint_list[this.hint_nodecounter + 0];
+			
+				trace("<==", this.q_hint_nodes[zero][AGai.NPOS_NODENAME],"to",
+					  this.q_hint_nodes[a][AGai.NPOS_NODENAME]);
 			}
 			
 			
