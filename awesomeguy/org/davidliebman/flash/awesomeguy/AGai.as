@@ -94,7 +94,8 @@
 		public static var ALG_DIJKSTRA_LOOP_CLOSE:int = 17;
 		public static var ALG_SECOND_HINT_A:int = 18;
 		public static var ALG_SECOND_HINT_B:int = 19;
-		public static var ALG_NON_DIJKSTRA:int = 20;
+		public static var ALG_SECOND_HINT_C:int = 20;
+		public static var ALG_NON_DIJKSTRA:int = 21;
 		
 		public var q_startedge_vert = 0;
 		public var q_startedge_hor = 0;
@@ -1088,6 +1089,11 @@
 					//this.alg_state ++;
 					this.alg_state = AGai.ALG_ZERO;
 				break;
+				case AGai.ALG_SECOND_HINT_C:
+				
+					this.createHintEdges();
+				break;
+				
 				case AGai.ALG_NON_DIJKSTRA:
 				
 				break;
@@ -1249,6 +1255,46 @@
 			return list;
 		}
 		
+		public static createHintEdges():void {
+			var k:int = 0;
+			for(k = 0; k < this.q_hint_list.length - 1; k ++) {
+				nodeenda = k;
+				nodeendb = k + 1;
+			
+				var a_array:Array = this.nodesFromDots[nodeenda];
+				var b_array:Array = this.nodesFromDots[nodeendb];
+				var ab_name:String = this.makeEdgeName(a_array[AGai.NPOS_COORDX],
+													   a_array[AGai.NPOS_COORDY],
+													   b_array[AGai.NPOS_COORDX], 
+													   b_array[AGai.NPOS_COORDY]);
+													   
+				var ba_name:String = this.makeEdgeName(b_array[AGai.NPOS_COORDX],
+													   b_array[AGai.NPOS_COORDY],
+													   a_array[AGai.NPOS_COORDX], 
+													   a_array[AGai.NPOS_COORDY]);
+				var i:int;
+				var j:int = -1;
+				var value:Array = new Array();
+				for(i = 0; i < this.edgesFromDots.length; i ++){
+					if (this.edgesFromDots[i][AGai.EPOS_EDGENAME] == ab_name) {
+						j = i;
+					}
+					else if(this.edgesFromDots[i][AGai.EPOS_EDGENAME] == ba_name) {
+						j = i;
+					}
+				}
+				if (j == -1) { 
+					value = new Array();//this.edgesFromDots[0];
+					//trace("ERROR");
+				}
+				else value = this.edgesFromDots[j];
+				//if x ==x
+				// else if y == y
+				
+			}
+			return;// value;
+		}
+		
 		public function setFollowEnum():void {
 			var a:int ;
 			var b:int ;
@@ -1282,7 +1328,7 @@
 				a = this.q_hint_list[0 + this.hint_nodecounter];
 				b = this.q_hint_list[1 + this.hint_nodecounter];
 				if (a == -1 || b == -1) return 0;
-				var monsterrect:Rectangle = new Rectangle(this.monsterx, this.monstery, 32, 64 );
+				var monsterrect:Rectangle = new Rectangle(this.monsterx, this.monstery, 64, 64 );
 				var brect:Rectangle = new Rectangle(this.q_hint_nodes[b][AGai.NPOS_COORDX] * 64,
 						this.q_hint_nodes[b][AGai.NPOS_COORDY] * 64,
 						64,64);
@@ -1459,11 +1505,12 @@
 				this.allow_enum = AGai.ALLOW_BOTH;
 			}
 			
-			if ((this.follow_enum == AGai.FOLLOW_APPROACH_TURN_CLOSE )//&& ! arect.intersects(brect))
+			if ((this.follow_enum == AGai.FOLLOW_APPROACH_TURN_CLOSE && ! arect.intersects(brect))
 				|| this.follow_enum == AGai.FOLLOW_LEAVE_TURN) {
 				this.hint_nodecounter ++;
 				this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
-				trace("<==", this.q_hint_nodes[zero][AGai.NPOS_NODENAME]);
+				trace("<==", this.q_hint_nodes[zero][AGai.NPOS_NODENAME],"to",
+					  this.q_hint_nodes[a][AGai.NPOS_NODENAME]);
 			}
 			
 			if (this.q_hint_nodes[a][AGai.NPOS_COORDY] == this.q_hint_nodes[zero][AGai.NPOS_COORDY]) {
