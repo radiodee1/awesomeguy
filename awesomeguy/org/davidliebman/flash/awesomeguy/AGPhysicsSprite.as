@@ -38,7 +38,7 @@
 											sprite.bitmap, 
 											sprite.bitmap.x , 
 											(sprite.bitmap.y  ),//+ 64), 
-											AGModeGuy.B_LADDER, "ladder");//, 8 );
+											AGModeGuy.B_LADDER, "ladder" );//, 64, 128);
 			
 			
 			
@@ -157,7 +157,14 @@
 				xblock = 0;
 				trace('e');
 			}
-			
+			if (try_up) {
+				if (hit_ladder  ){//|| hit_ladder_low ) {
+					yblock = int ( -   AGModeGuy.Y_MOVE/q) *2  ;
+					xblock = 0;
+					trace("start");
+					//if(!hit_bottom) myGuy.quality_0 = AGModeGuy.GUY_CLIMB;
+				}
+			}
 			/////////////////
 			sprite.x += xblock;
 			sprite.y += yblock;
@@ -165,7 +172,7 @@
 			sprite.bitmap.y += yblock;
 			
 		}
-		public function collisionTile(myinvisible:Array,coordx:int, coordy:int, a:Bitmap, xx:int, yy:int, blocktype:int = 0, message:String="NONE", size:int = 64):Boolean {
+		public function collisionTile(myinvisible:Array,coordx:int, coordy:int, a:Bitmap, xx:int, yy:int, blocktype:int = 0, message:String="NONE", size:int = 64, sizey:int = 64):Boolean {
 			var mapcheat:int = 0;
 			var scrollx:int = this.myMode.scrollBGX;
 			var scrolly:int = this.myMode.scrollBGY;
@@ -185,7 +192,7 @@
 				return false;
 			}
 			var arect:Rectangle = a.getBounds(this.myMode.myStage);
-			var brect:Rectangle =  new Rectangle((xx ),(yy), size,size);//
+			var brect:Rectangle =  new Rectangle((xx ),(yy), size,sizey);//
 
 			//trace(message,arect,brect);
 			var res:Boolean = arect.intersects(brect);
