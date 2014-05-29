@@ -118,7 +118,7 @@
 				}
 			}
 			if (try_up) {
-				if (hit_ladder ){//|| hit_ladder_low ) {
+				if (hit_ladder || true ){//|| hit_ladder_low ) {
 					yblock = int ( -   AGModeGuy.Y_MOVE/q) *2  ;
 					xblock = 0;
 					trace("start");
