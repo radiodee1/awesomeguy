@@ -1392,6 +1392,7 @@
 				trace("<", a);
 				return;
 			}
+			
 			this.hint_x = 0;
 			this.hint_y = 0;
 			///////
@@ -1409,7 +1410,7 @@
 						this.hint_direction_enum = AGai.ENUM_HORIZONTAL_LEFT;
 						trace("fourth left");
 					}
-					else if (this.q_hint_nodes[zero][AGai.NPOS_COORDX] <= 
+					else if (this.q_hint_nodes[zero][AGai.NPOS_COORDX] < 
 						this.q_hint_nodes[a][AGai.NPOS_COORDX]) {
 							
 						this.hint_x = AGai.MOVE_X;
@@ -1430,7 +1431,7 @@
 						this.hint_direction_enum = AGai.ENUM_VERTICAL_UP;
 						trace("fourth up");
 					}
-					else if (this.q_hint_nodes[zero][AGai.NPOS_COORDY] <= 
+					else if (this.q_hint_nodes[zero][AGai.NPOS_COORDY] < 
 						this.q_hint_nodes[a][AGai.NPOS_COORDY]  ) {
 							
 						this.hint_y = AGai.MOVE_Y;
@@ -1455,7 +1456,7 @@
 				this.latch_a = true;
 				trace("<==", this.q_hint_nodes[zero][AGai.NPOS_NODENAME],"to",
 					  this.q_hint_nodes[a][AGai.NPOS_NODENAME]);
-				return;// this line is crucial...
+				//return;// this line is crucial...?
 			}
 			
 			if (this.latch_a && !this.isHitCenter(this.q_hint_nodes[a][AGai.NPOS_COORDX], 
@@ -1463,6 +1464,7 @@
 					 ) {
 				this.latch_b = true;
 				this.latch_a = false;
+				trace("leave center");
 			}
 			
 		}
@@ -1473,33 +1475,34 @@
 			
 			///////
 			// start new directions
-			if (this.latch_b) {
+			if (this.latch_a) {
 				//this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
 				trace("at turn");
+				this.allow_enum = AGai.ALLOW_BOTH;
 				this.hint_timer_counter ++;
 				switch(this.hint_direction_enum) {
 					case AGai.ENUM_HORIZONTAL_LEFT:
 						this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
-						this.latch_b = false;
-						//this.hint_nodecounter ++;
+						this.latch_a = false;
+						this.hint_nodecounter ++;
 					break;
 					case AGai.ENUM_HORIZONTAL_RIGHT:
 						this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
-						this.latch_b = false;
-						//this.hint_nodecounter ++;
+						this.latch_a = false;
+						this.hint_nodecounter ++;
 					break;
 					case AGai.ENUM_VERTICAL_DOWN:
 						this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
-						this.latch_b = false;
-						//this.hint_nodecounter ++;
+						this.latch_a = false;
+						this.hint_nodecounter ++;
 					break;
 					case AGai.ENUM_VERTICAL_UP:
 						this.hint_y = - AGai.MOVE_Y;
 						if (this.hint_timer_counter > 30) { 
 							this.hint_timer_counter = 0;  
 							this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
-							this.latch_b = false;
-							//this.hint_nodecounter ++;
+							this.latch_a = false;
+							this.hint_nodecounter ++;
 							return;
 						}
 						trace("timer",this.hint_timer_counter);
