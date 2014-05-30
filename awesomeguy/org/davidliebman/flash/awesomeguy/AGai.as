@@ -114,6 +114,7 @@
 		public var q_hint_list:Array = new Array();
 		public var q_list_index:int = 0;
 		public var q_hint_nodes:Array = new Array();
+		public var q_hint_edges:Array = new Array();
 
 		// ACTUAL SCREEN COORDINATES
 		public var startingX:int = 0;
@@ -1077,13 +1078,15 @@
 						
 						q_alt = q_k + this.nodesFromDots[q_i][AGai.NPOS_CALCDIST];
 						
-						
+						q_edge[AGai.EPOS_DIRECTION_X] = this.getEdgeDirectionX(q_i, q_j);
 	
 						if (q_alt <= this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] ){// was q_j  //&& this.q_list.length > 0) {
 							this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] = q_alt;
 							this.nodesFromDots[q_j][AGai.NPOS_PREVIOUS] = q_i;
-							this.q_edge[AGai.EPOS_DIRECTION_X] = this.getEdgeDirectionX(q_i, q_j);
-							this.q_edge[AGai.EPOS_DIRECTION_Y] = this.getEdgeDirectionY(q_i, q_j);
+							var index:int = this.getEdgeIndecesFromNodeIndeces(q_i, q_j);
+							trace('index', index);
+							this.edgesFromDots[index][AGai.EPOS_DIRECTION_X] = 10;//this.getEdgeDirectionX(q_i, q_j);
+							this.edgesFromDots[index][AGai.EPOS_DIRECTION_Y] = 10;//this.getEdgeDirectionY(q_i, q_j);
 						}
 					
 					}
@@ -1119,13 +1122,36 @@
 				
 				
 				case AGai.ALG_SECOND_HINT_A:
-					this.q_hint_nodes = new Array();
-					for(i = 0; i < this.nodesFromDots.length; i ++) {
-						tempArray = new Array();
-						for (j = 0; j < this.nodesFromDots[i].length; j ++) {
-							tempArray.push(this.nodesFromDots[i][j]);
+					if (this.myMultiFlag) {
+						/*
+						this.q_hint_edges = new Array();
+						for(i = 0; i < this.edgesFromDots.length; i ++) {
+							tempArray = new Array();
+							for (j = 0; j < this.edgesFromDots[i].length; j ++) {
+								tempArray.push(this.edgesFromDots[i][j]);
+							}
+							this.q_hint_edges.push(tempArray);
 						}
-						this.q_hint_nodes.push(tempArray);
+						*/
+					}
+					else {
+						this.q_hint_nodes = new Array();
+						for(i = 0; i < this.nodesFromDots.length; i ++) {
+							tempArray = new Array();
+							for (j = 0; j < this.nodesFromDots[i].length; j ++) {
+								tempArray.push(this.nodesFromDots[i][j]);
+							}
+							this.q_hint_nodes.push(tempArray);
+						}
+					}
+				
+					this.q_hint_edges = new Array();
+					for(i = 0; i < this.edgesFromDots.length; i ++) {
+						tempArray = new Array();
+						for (j = 0; j < this.edgesFromDots[i].length; j ++) {
+							tempArray.push(this.edgesFromDots[i][j]);
+						}
+						this.q_hint_edges.push(tempArray);
 					}
 					
 					//this.alg_state = AGai.ALG_ZERO;
@@ -1250,7 +1276,7 @@
 			return list;
 		}
 		
-		private function getEdgeFromNodeIndeces(nodeenda:int, nodeendb:int):Array {
+		private function getEdgeIndecesFromNodeIndeces(nodeenda:int, nodeendb:int):int {
 			var a_array:Array = this.nodesFromDots[nodeenda];
 			var b_array:Array = this.nodesFromDots[nodeendb];
 			var ab_name:String = this.makeEdgeName(a_array[AGai.NPOS_COORDX],
@@ -1273,6 +1299,17 @@
 					j = i;
 				}
 			}
+			
+			return j;
+		}
+		
+		private function getEdgeFromNodeIndeces(nodeenda:int, nodeendb:int):Array {
+			
+			var j:int = -1;
+			var value:Array = new Array();
+			
+			j = this.getEdgeIndecesFromNodeIndeces(nodeenda, nodeendb);
+			
 			if (j == -1) { 
 				value = new Array();//this.edgesFromDots[0];
 				//trace("ERROR");
@@ -1372,23 +1409,61 @@
 		public function findAndFollowEdge() :void {
 			var found:int = 0;
 			var i:int = 0;
-			// alg_find starting vert edge...
-			found = -1;
-			for (i = 0; i < this.edgesFromDots.length; i ++) {
-				if (true) {
-					if (this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT < this.monstery &&
-						this.edgesFromDots[i][AGai.EPOS_STOPY] * this.TILE_HEIGHT > this.monstery &&
-						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH - (this.TILE_WIDTH / 2) < this.monsterx &&
-						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH + (this.TILE_WIDTH / 2) > this.monsterx) {
-						found = i;
-						
-						
-						this.hint_x = this.edgesFromDots[i][AGai.EPOS_DIRECTION_X];
-						this.hint_y = this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y];
-					}
-				}
+			var j:int = 0;
+			//
+			var somex:int = 0;
+			var somey:int = 0;
+			
+			if (!this.myMultiFlag) {
+				somex = this.monsterx;
+				somey = this.monstery;
+			}
+			else {
+				somex = this.guyx;
+				somey = this.guyy;
 			}
 			
+			found = -1;
+			for (i = 0; i < this.q_hint_edges.length; i ++) {
+				if (true) {
+					if (this.q_hint_edges[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT < somey &&
+						this.q_hint_edges[i][AGai.EPOS_STOPY] * this.TILE_HEIGHT > somey &&
+						this.q_hint_edges[i][AGai.EPOS_STARTX] * this.TILE_WIDTH - (this.TILE_WIDTH / 2) < somex &&
+						this.q_hint_edges[i][AGai.EPOS_STARTX] * this.TILE_WIDTH + (this.TILE_WIDTH / 2) > somex) {
+						found = i;
+						j++;
+						if (this.q_endedge_vert == found || true) {
+							trace("endedge vert", found);
+						}
+						this.hint_x = this.q_hint_edges[i][AGai.EPOS_DIRECTION_X];
+						this.hint_y = this.q_hint_edges[i][AGai.EPOS_DIRECTION_Y];
+					}
+					if (this.q_hint_edges[i][AGai.EPOS_STARTX] * this.TILE_HEIGHT < somex &&
+						this.q_hint_edges[i][AGai.EPOS_STOPX] * this.TILE_HEIGHT > somex &&
+						this.q_hint_edges[i][AGai.EPOS_STARTY] * this.TILE_WIDTH - (this.TILE_WIDTH / 2) < somey &&
+						this.q_hint_edges[i][AGai.EPOS_STARTY] * this.TILE_WIDTH + (this.TILE_WIDTH / 2) > somey) {
+						found = i;
+						j++;
+						if (this.q_endedge_hor == found || true) {
+							trace("endedge hor", found);
+						}
+						this.hint_x = this.q_hint_edges[i][AGai.EPOS_DIRECTION_X];
+						this.hint_y = this.q_hint_edges[i][AGai.EPOS_DIRECTION_Y];
+					}
+					trace( i, this.q_hint_edges[i][AGai.EPOS_EDGENAME], this.nodenumend, this.nodenumstart
+						,"j="+j, this.q_hint_edges[i][AGai.EPOS_NODEENDINDEX] , 
+						this.q_hint_edges[i][AGai.EPOS_NODESTARTINDEX]);
+					
+				}
+			}
+			if (found == -1) {
+				trace("none found");
+			}
+			else {
+				trace("found", found, this.q_hint_edges[found][AGai.EPOS_DIRECTION_X], 
+					   this.q_hint_edges[found][AGai.EPOS_DIRECTION_Y]);
+				trace("edges num", this.q_hint_edges.length);
+			}
 		}
 		
 		public function isHitCenter(x:int, y:int, graphnode:Boolean = true, width:int = 8, height:int = 8):Boolean {
