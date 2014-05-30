@@ -1239,19 +1239,22 @@
 		
 		public function isHitCenter(x:int, y:int, graphnode:Boolean = true, width:int = 8, height:int = 8):Boolean {
 			
-			if (this.mySprite.bitmap == null) return false;
-			
+			if (this.mySprite.bitmap == null){ 
+				trace("no bitmap here");
+				return false;
+			}
 			var awidth:int = this.mySprite.bitmap.width;
 			var aheight:int = this.mySprite.bitmap.height;
+			var drop:int = aheight - 32;
 			var ax:int = this.monsterx;// +( awidth / 2) - 4;
 			var ay:int = this.monstery;// + ( aheight / 2);
-			var arect:Rectangle = new Rectangle(ax, ay, awidth, aheight);//awidth, aheight);
+			var arect:Rectangle = new Rectangle(ax, ay + drop, awidth, 32);//aheight );//awidth, aheight);
 			
 			var brect:Rectangle;
 			
 			if(graphnode) {
-				brect = new Rectangle((x*64) + 32,(y * 64) + 32, 8, 8);
-				//brect = new Rectangle((x*64) ,(y * 64) , 64, 64);
+				//brect = new Rectangle((x*64) + 32,(y * 64) + 32, 8, 8);
+				brect = new Rectangle((x*64) ,(y * 64) , 64, 64);
 			}
 			else {
 				brect = new Rectangle((x) + 32,(y ) + 32, width, height);
@@ -1447,16 +1450,15 @@
 			if ( this.isHitCenter(this.q_hint_nodes[a][AGai.NPOS_COORDX], 
 					this.q_hint_nodes[a][AGai.NPOS_COORDY]) 
 					) {
-				//this.hint_nodecounter ++;
 				this.allow_enum = AGai.ALLOW_BOTH;
 				this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
-				//this.hint_y = 0;
-				//this.hint_x = 0;
+				this.hint_y = 0;
+				this.hint_x = 0;
 				//this.hint_timer_counter = 0;
 				//this.latch_a = true;
 				//this.latch_b = false;
 				//this.latch_c = false;
-				this.hint_nodecounter ++
+				//this.hint_nodecounter ++
 				trace("<== counter", this.q_hint_nodes[zero][AGai.NPOS_NODENAME],"to",
 					  this.q_hint_nodes[a][AGai.NPOS_NODENAME]);
 				return;// this line is crucial...?
