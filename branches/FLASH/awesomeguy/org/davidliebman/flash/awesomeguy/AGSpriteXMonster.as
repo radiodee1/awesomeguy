@@ -9,7 +9,7 @@
 			if (this.sprite_type == AGMode.S_XMONSTER_CLIMBER) {
 				this.ai = new AGai();
 				this.myPhysics = new AGPhysicsSprite(this.myMode.myStage, this.myMode);
-				this.ai.setValues(this.myMode.myInvisible, this.myMode.myStage, this.myMode);//, this);
+				this.ai.setValues(this.myMode.myInvisible, this.myMode.myStage, this.myMode, false);//, this);
 				
 			}
 		}
