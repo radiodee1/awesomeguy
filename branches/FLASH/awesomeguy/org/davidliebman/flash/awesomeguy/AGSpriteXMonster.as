@@ -9,7 +9,7 @@
 			if (this.sprite_type == AGMode.S_XMONSTER_CLIMBER) {
 				this.ai = new AGai();
 				this.myPhysics = new AGPhysicsSprite(this.myMode.myStage, this.myMode);
-				this.ai.setValues(this.myMode.myInvisible, this.myMode.myStage, this.myMode, this);
+				this.ai.setValues(this.myMode.myInvisible, this.myMode.myStage, this.myMode);//, this);
 				
 			}
 		}
@@ -113,7 +113,7 @@
 				this.makeRails();
 				this.addRails(this.myMode.myStage);
 				this.ai.setStartEnd(x, y, this.myMode.xpos, this.myMode.ypos, 
-								AGModeGuy(this.myMode).myAISpeed);
+								AGModeGuy(this.myMode).myAISpeed, this);
 						
 				this.myPhysics.applyGravityAndLadders(this.myMode.myInvisible, this, 
 											this.ai.getPixHintX(), this.ai.getPixHintY());

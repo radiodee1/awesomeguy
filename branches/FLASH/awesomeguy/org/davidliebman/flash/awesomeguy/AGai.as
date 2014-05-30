@@ -14,6 +14,7 @@
 		public var myGame:AGMode;
 		public var myKeyStage:AGKeys;
 		public var mySprite:AGSprite;
+		public var myMultiFlag:Boolean;
 
 		public var invisibleDots:Array = new Array();
 		public var invisibleChutes:Array = new Array();
@@ -171,13 +172,13 @@
 		
 		
 		/* THIS IS DONE ONCE AT THE BEGINNING OF THE LEVEL */
-		public function setValues(myinvisible:Array, myscreen:Stage, game:AGMode, sprite:AGSprite):void {
+		public function setValues(myinvisible:Array, myscreen:Stage, game:AGMode, multi:Boolean = false):void{
 			this.set_values_called = true;
 			
 			myInvisible = myinvisible;
 			myScreen = myscreen;
 			myGame = game;
-			mySprite = sprite;
+			myMultiFlag = multi;
 			
 			this.setupGraph();
 		}
@@ -648,22 +649,33 @@
 		
 		/////////////////////////////////////////////////////////////////
 		
-		public function setStartEnd(startX:int, startY:int, endX:int, endY:int, speed:int = 1):void {
+		public function setStartEnd(startX:int, startY:int, endX:int, endY:int, speed:int = 1, sprite:AGSprite = null):void {
 			var i:int = 0;
+			
 			
 			this.startingX = startX; // monster
 			this.startingY = startY;
 			this.endingX = endX; // guy
 			this.endingY = endY;
 			
+			
+			
+			if (sprite != null) {
+				this.mySprite = sprite;
+			}
+			
 			for (i = 0; i < speed; i ++) {
 				this.doCalc();
 				
 			}
-			//trace(speed, "speed");
-			//this.setFollowEnum();
-			this.advanceNodecounter();
-			this.startNewsegment();
+			
+			if (!this.myMultiFlag) {
+				this.advanceNodecounter();
+				this.startNewsegment();
+			}
+			else {
+				
+			}
 		}
 		
 		/* THIS IS DONE BEFORE EACH REDRAW OF THE SCREEN */
@@ -693,15 +705,25 @@
 					for (i = 0; i < this.nodesFromDots.length; i ++) {
 						this.nodesFromDots[i][AGai.NPOS_VISITED] = false;
 						this.nodesFromDots[i][AGai.NPOS_CALCDIST] = AGai.START_DISTANCE;
+						
 					}
 					this.nodenumend = -1;
 					this.nodenumstart = -1;
 					
-					this.guyx = this.endingX;
-					this.guyy = this.endingY;
+					if (this.myMultiFlag) {
+						this.guyx = this.endingX;
+						this.guyy = this.endingY;
 			
-					this.monsterx = this.startingX;
-					this.monstery = this.startingY;
+						this.monsterx = this.startingX;
+						this.monstery = this.startingY;
+					}
+					else {
+						this.monsterx = this.endingX;
+						this.monstery = this.endingY;
+						
+						this.guyx = this.startingX;
+						this.guyy = this.startingY;
+					}
 					
 					this.q_endedge_hor = -1;
 					this.q_endedge_vert = -1;
@@ -737,6 +759,12 @@
 					this.alg_state ++;
 				break;
 				case AGai.ALG_FINDEDGE_END_HORIZONTAL:
+				
+					if (this.myMultiFlag) {
+						this.alg_state ++;
+						break;
+					}
+				
 					found = -1;
 					for (i = 0; i < this.edgesFromDots.length; i ++) {
 						if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == true && 
@@ -755,6 +783,10 @@
 				break;
 				case AGai.ALG_FINDEDGE_END_VERTICAL:
 					// alg_find ending vert edge...
+					if (this.myMultiFlag) {
+						this.alg_state ++;
+						break;
+					}
 					found = -1;
 					for (i = 0; i < this.edgesFromDots.length; i ++) {
 						if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == false && 
@@ -868,6 +900,11 @@
 				break;
 				
 				case AGai.ALG_MAKE_NODES_AND_EDGES_END_HORIZONTAL:
+					if (this.myMultiFlag) {
+						this.alg_state ++;
+						break;
+					}
+				
 					found = -1;
 					if (this.q_endedge_hor != -1 ) {
 						pair1 = this.makeCoordinateListingHorizontal(
@@ -895,6 +932,10 @@
 				
 				break;
 				case AGai.ALG_MAKE_NODES_AND_EDGES_END_VERTICAL:
+					if (this.myMultiFlag) {
+						this.alg_state ++;
+						break;
+					}
 					found = -1;
 					if (this.q_endedge_vert != -1 ) {
 						pair1 = this.makeCoordinateListingVertical(
@@ -979,7 +1020,7 @@
 					
 					
 					
-					if (q_i == this.nodenumend ) {
+					if (q_i == this.nodenumend && !this.myMultiFlag) {
 							
 						this.node_index_end = q_i;
 						
@@ -1037,7 +1078,8 @@
 						if (q_alt <= this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] ){// was q_j  //&& this.q_list.length > 0) {
 							this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] = q_alt;
 							this.nodesFromDots[q_j][AGai.NPOS_PREVIOUS] = q_i;
-							
+							this.q_edge[AGai.EPOS_DIRECTION_X] = 0;
+							this.q_edge[AGai.EPOS_DIRECTION_Y] = 0;
 						}
 					
 					}
