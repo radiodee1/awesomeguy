@@ -670,12 +670,14 @@
 			}
 			
 			if (!this.myMultiFlag) {
-				this.advanceNodecounter();
+				//this.advanceNodecounter();
 				this.startNewsegment();
 			}
 			else {
 				
 			}
+			this.findAndFollowEdge();
+			
 		}
 		
 		/* THIS IS DONE BEFORE EACH REDRAW OF THE SCREEN */
@@ -1293,6 +1295,8 @@
 				trace("bad y in x direction");
 				return value;
 			}
+			else trace("good x");
+			
 			a = this.nodesFromDots[nodea][AGai.NPOS_COORDX];
 			b = this.nodesFromDots[nodeb][AGai.NPOS_COORDX];
 			
@@ -1333,6 +1337,8 @@
 				trace("bad x in y direction");
 				return value;
 			}
+			else trace("good y");
+			
 			a = this.nodesFromDots[nodea][AGai.NPOS_COORDY];
 			b = this.nodesFromDots[nodeb][AGai.NPOS_COORDY];
 			
@@ -1359,7 +1365,31 @@
 			return value;
 		}
 		
+		
 		/////////////////////////////////////////////////////////
+		
+		
+		public function findAndFollowEdge() :void {
+			var found:int = 0;
+			var i:int = 0;
+			// alg_find starting vert edge...
+			found = -1;
+			for (i = 0; i < this.edgesFromDots.length; i ++) {
+				if (true) {
+					if (this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT < this.monstery &&
+						this.edgesFromDots[i][AGai.EPOS_STOPY] * this.TILE_HEIGHT > this.monstery &&
+						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH - (this.TILE_WIDTH / 2) < this.monsterx &&
+						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH + (this.TILE_WIDTH / 2) > this.monsterx) {
+						found = i;
+						
+						
+						this.hint_x = this.edgesFromDots[i][AGai.EPOS_DIRECTION_X];
+						this.hint_y = this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y];
+					}
+				}
+			}
+			
+		}
 		
 		public function isHitCenter(x:int, y:int, graphnode:Boolean = true, width:int = 8, height:int = 8):Boolean {
 			
