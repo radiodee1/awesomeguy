@@ -710,7 +710,7 @@
 					this.nodenumend = -1;
 					this.nodenumstart = -1;
 					
-					if (this.myMultiFlag) {
+					if (!this.myMultiFlag) {
 						this.guyx = this.endingX;
 						this.guyy = this.endingY;
 			
@@ -983,6 +983,7 @@
 							}
 						}
 					}
+					
 					if (this.nodenumend == -1 || this.nodenumstart == -1) {
 						this.alg_state = AGai.ALG_ZERO;
 						
@@ -1021,7 +1022,7 @@
 					
 					
 					if (q_i == this.nodenumend && !this.myMultiFlag) {
-							
+						
 						this.node_index_end = q_i;
 						
 						this.q_list_index = 0;
@@ -1031,7 +1032,8 @@
 					}
 					
 					
-					if (this.nodesFromDots[q_i][AGai.NPOS_CALCDIST] >= AGai.START_DISTANCE) {
+					if (this.nodesFromDots[q_i][AGai.NPOS_CALCDIST] >= AGai.START_DISTANCE
+						&& !this.myMultiFlag) {
 						
 						
 						this.alg_state = AGai.ALG_SECOND_HINT_A;
@@ -1131,7 +1133,7 @@
 					
 					this.q_hint_list = this.createHint();
 					
-					//this.hint_nodecounter = 1;
+					this.hint_nodecounter = 1;
 					this.hint_nodenumend = this.nodenumend;
 					this.hint_nodenumstart = this.nodenumstart;
 					
@@ -1277,6 +1279,14 @@
 			return value;
 		}
 		
+		public function getEdgeDirectionX(nodea:int, nodeb:int) : int {
+			return 0;
+		}
+		
+		public function getEdgeDirectionY(nodea:int, nodeb:int) : int {
+			return 0;
+		}
+		
 		/////////////////////////////////////////////////////////
 		
 		public function isHitCenter(x:int, y:int, graphnode:Boolean = true, width:int = 8, height:int = 8):Boolean {
@@ -1390,7 +1400,7 @@
 			var b:int ;
 			
 			return this.hint_x;
-			
+			/*
 			if (this.q_endedge_hor != -1 && this.hint_auto) {
 				if (this.guyx < this.monsterx ) {
 					this.hint_x = - AGai.MOVE_X;
@@ -1404,6 +1414,7 @@
 			else this.hint_x = this.hint_last_x;
 			
 			return this.hint_x;
+			*/
 		}
 		
 		public function getPixHintY():int {
@@ -1411,7 +1422,7 @@
 			var b:int ;
 			return this.hint_y;
 			
-			
+			/*
 			if (this.q_endedge_vert != -1 && this.hint_auto) {
 				if (this.guyy < this.monstery) {
 					this.hint_y = - AGai.MOVE_Y;
@@ -1425,6 +1436,7 @@
 			else this.hint_y = this.hint_last_y;
 			
 			return this.hint_y;
+			*/
 		}
 		
 		public function advanceNodecounter():void {
@@ -1493,8 +1505,8 @@
 			if ( this.isHitCenter(this.q_hint_nodes[a][AGai.NPOS_COORDX], 
 					this.q_hint_nodes[a][AGai.NPOS_COORDY]) 
 					) {
-				this.allow_enum = AGai.ALLOW_BOTH;
-				this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
+				//this.allow_enum = AGai.ALLOW_BOTH;
+				//this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
 				//this.hint_y = 0;
 				//this.hint_x = 0;
 				//this.hint_timer_counter = 0;

@@ -90,14 +90,14 @@
 			
 			if ( try_left  ) {
 				if (!hit_left) xblock = int (- AGModeGuy.X_MOVE/q);
-				else if (!hit_right) xblock = int (AGModeGuy.X_MOVE / q);
+				//else if (!hit_right) xblock = int (AGModeGuy.X_MOVE / q);
 				//myGuy.facingRight = false;
 				sprite.facingRight = false;
 				
 			}
 			if ( try_right ) {
 				if (!hit_right) xblock = int(+ AGModeGuy.X_MOVE/q);
-				else if (!hit_left) xblock = - int (AGModeGuy.X_MOVE / q);
+				//else if (!hit_left) xblock = - int (AGModeGuy.X_MOVE / q);
 				//myGuy.facingRight = true;
 				sprite.facingRight = true;
 				
