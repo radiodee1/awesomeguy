@@ -1080,8 +1080,8 @@
 						if (q_alt <= this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] ){// was q_j  //&& this.q_list.length > 0) {
 							this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] = q_alt;
 							this.nodesFromDots[q_j][AGai.NPOS_PREVIOUS] = q_i;
-							this.q_edge[AGai.EPOS_DIRECTION_X] = 0;
-							this.q_edge[AGai.EPOS_DIRECTION_Y] = 0;
+							this.q_edge[AGai.EPOS_DIRECTION_X] = this.getEdgeDirectionX(q_i, q_j);
+							this.q_edge[AGai.EPOS_DIRECTION_Y] = this.getEdgeDirectionY(q_i, q_j);
 						}
 					
 					}
@@ -1280,11 +1280,83 @@
 		}
 		
 		public function getEdgeDirectionX(nodea:int, nodeb:int) : int {
-			return 0;
+			var value:int = 0;
+			if (nodea < 0 || nodea>=this.nodesFromDots.length || 
+				nodeb < 0 || nodeb>=this.nodesFromDots.length ) {
+				return value;
+			}
+			
+			var a:int = this.nodesFromDots[nodea][AGai.NPOS_COORDY];
+			var b:int = this.nodesFromDots[nodeb][AGai.NPOS_COORDY];
+			
+			if (a != b) {
+				trace("bad y in x direction");
+				return value;
+			}
+			a = this.nodesFromDots[nodea][AGai.NPOS_COORDX];
+			b = this.nodesFromDots[nodeb][AGai.NPOS_COORDX];
+			
+			
+			if (this.myMultiFlag) {
+				if (a>b) {
+					value = - AGai.MOVE_X;
+				}
+				else if (b>a){
+					value = AGai.MOVE_X;
+				}
+				else return 0;
+			}
+			else {
+				if (a>b) {
+					value = AGai.MOVE_X;
+				}
+				else if (b>a){
+					value = - AGai.MOVE_X;
+				}
+				else return 0;
+			}
+			
+			return value;
 		}
 		
 		public function getEdgeDirectionY(nodea:int, nodeb:int) : int {
-			return 0;
+			var value:int = 0;
+			if (nodea < 0 || nodea>=this.nodesFromDots.length || 
+				nodeb < 0 || nodeb>=this.nodesFromDots.length ) {
+				return value;
+			}
+			
+			var a:int = this.nodesFromDots[nodea][AGai.NPOS_COORDX];
+			var b:int = this.nodesFromDots[nodeb][AGai.NPOS_COORDX];
+			
+			if (a != b) {
+				trace("bad x in y direction");
+				return value;
+			}
+			a = this.nodesFromDots[nodea][AGai.NPOS_COORDY];
+			b = this.nodesFromDots[nodeb][AGai.NPOS_COORDY];
+			
+			
+			if (this.myMultiFlag) {
+				if (a>b) {
+					value = - AGai.MOVE_Y;
+				}
+				else if (b>a){
+					value = AGai.MOVE_Y;
+				}
+				else return 0;
+			}
+			else {
+				if (a>b) {
+					value = AGai.MOVE_Y;
+				}
+				else if (b>a){
+					value = - AGai.MOVE_Y;
+				}
+				else return 0;
+			}
+			
+			return value;
 		}
 		
 		/////////////////////////////////////////////////////////
