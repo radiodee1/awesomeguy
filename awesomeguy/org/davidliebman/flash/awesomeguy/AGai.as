@@ -1245,10 +1245,10 @@
 			}
 			var awidth:int = this.mySprite.bitmap.width;
 			var aheight:int = this.mySprite.bitmap.height;
-			var drop:int = aheight - 32;
+			var drop:int = aheight - 64;
 			var ax:int = this.monsterx;// +( awidth / 2) - 4;
 			var ay:int = this.monstery;// + ( aheight / 2);
-			var arect:Rectangle = new Rectangle(ax, ay + drop, awidth, 32);//aheight );//awidth, aheight);
+			var arect:Rectangle = new Rectangle(ax, ay + drop, awidth, 64);//aheight );//awidth, aheight);
 			
 			var brect:Rectangle;
 			
@@ -1290,6 +1290,7 @@
 			list.reverse();
 			
 			this.hint_nodecounter = 1;
+			this.latch_a = false;
 			this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
 			
 			return list;
@@ -1401,7 +1402,7 @@
 			this.hint_y = 0;
 			///////
 			// simple follow path...
-			if (this.follow_enum != AGai.FOLLOW_APPROACH_TURN_CLOSE && !this.latch_a || true) {
+			if (this.follow_enum != AGai.FOLLOW_APPROACH_TURN_CLOSE && !this.latch_a ) {
 				if (this.q_hint_nodes[zero][AGai.NPOS_COORDY] == 
 					this.q_hint_nodes[a][AGai.NPOS_COORDY] 
 					|| this.allow_enum == AGai.ALLOW_BOTH
@@ -1452,10 +1453,10 @@
 					) {
 				this.allow_enum = AGai.ALLOW_BOTH;
 				this.follow_enum = AGai.FOLLOW_APPROACH_TURN_CLOSE;
-				this.hint_y = 0;
-				this.hint_x = 0;
+				//this.hint_y = 0;
+				//this.hint_x = 0;
 				//this.hint_timer_counter = 0;
-				//this.latch_a = true;
+				this.latch_a = true;
 				//this.latch_b = false;
 				//this.latch_c = false;
 				//this.hint_nodecounter ++
@@ -1471,64 +1472,12 @@
 					  this.q_hint_nodes[a][AGai.NPOS_NODENAME]);
 				//return;// this line is crucial...?
 			}
-			if (this.latch_a && this.latch_b == false ){//!this.isHitCenter(this.q_hint_nodes[a][AGai.NPOS_COORDX], 
-					//this.q_hint_nodes[a][AGai.NPOS_COORDY]) 
-					 //) {
-				this.latch_b = true;
-				//this.latch_a = false;
-				this.latch_c = true;
-				trace("latch");
-			}
-			if (( this.latch_a)&& this.q_hint_list.length < this.hint_nodecounter + 3) {
-				var b:int = this.q_hint_list[this.hint_nodecounter + 2];
-				if (this.q_hint_nodes[a][AGai.NPOS_COORDY] == 
-					this.q_hint_nodes[b][AGai.NPOS_COORDY] 
-					//|| this.allow_enum == AGai.ALLOW_BOTH
-					) { 
-					
-					if (this.q_hint_nodes[a][AGai.NPOS_COORDX] > 
-						this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
-						
-						this.hint_x = - AGai.MOVE_X;
-						//this.hint_direction_enum = AGai.ENUM_HORIZONTAL_LEFT;
-						trace("fifth left");
-					}
-					else if (this.q_hint_nodes[a][AGai.NPOS_COORDX] < 
-						this.q_hint_nodes[b][AGai.NPOS_COORDX]) {
-							
-						this.hint_x = AGai.MOVE_X;
-						//this.hint_direction_enum = AGai.ENUM_HORIZONTAL_RIGHT;
-						trace("fifth right");
-					}
-					//this.hint_last_x = this.hint_x;
-				}
-				if (this.q_hint_nodes[a][AGai.NPOS_COORDX] == 
-					this.q_hint_nodes[b][AGai.NPOS_COORDX] 
-					//|| this.allow_enum == AGai.ALLOW_BOTH
-					) { 
-					
-					if (this.q_hint_nodes[a][AGai.NPOS_COORDY] > 
-						this.q_hint_nodes[b][AGai.NPOS_COORDY]) {
-						
-						this.hint_y = - AGai.MOVE_Y;
-						//this.hint_direction_enum = AGai.ENUM_VERTICAL_UP;
-						trace("fifth up");
-					}
-					else if (this.q_hint_nodes[a][AGai.NPOS_COORDY] < 
-						this.q_hint_nodes[b][AGai.NPOS_COORDY]  ) {
-							
-						this.hint_y = AGai.MOVE_Y;
-						//this.hint_direction_enum = AGai.ENUM_VERTICAL_DOWN;
-						trace("fifth down");
-					}
-					//this.hint_last_y = this.hint_y;
-				}
-			}
+			
 			////
 		}
 		
 		public function startNewsegment():void {
-			
+			/*
 			///////
 			// start new directions
 			if (this.latch_a && false) {
@@ -1597,6 +1546,7 @@
 					break;
 				}
 			}
+			*/
 		}
 		
 		////////////////////////////////////////////////////
