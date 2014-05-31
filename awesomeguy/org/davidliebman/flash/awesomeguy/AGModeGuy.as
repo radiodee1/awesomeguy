@@ -12,8 +12,7 @@
 		var myGuy:AGSpriteGuy;
 
 		var ai:AGai;
-		//var myDrawai:AGDraw;
-		//var aiMonster:AGSpriteXMonster;
+		
 
 		static var GUY_CLIMB:int = 1;
 		static var GUY_PUNCH:int = 2;
@@ -133,7 +132,12 @@
 				myGuy.y = ypos;
 			}
 			
-			
+			if (this.myAISpeed >=1) {
+				for(var i:int = 0; i < this.myAISpeed; i ++) {
+					ai.doCalc();
+					//trace("do calc");
+				}
+			}
 			
 			drawScoreWords();
 			showKeys(this.myGame.gameKeys);
@@ -173,9 +177,8 @@
 			myGuy.visible = true;
 			myGuy.quality_0 = AGModeGuy.GUY_STEP;
 
-			//this.myDrawai = new AGDrawGuy(this, myRes, myStage, myScreenBG);
-			this.ai = new AGai();
-
+			
+			
 
 			this.flyersprite = myGuy.bitmap;
 			
@@ -215,6 +218,10 @@
 			prepTiles() ;
 			prepRings() ;
 			prepSpecialXml();
+			
+			if (this.myAISpeed >= 1) {
+				this.ai = new AGai();
+			}
 			
 			this.prepTilesToSprites();
 						
@@ -508,7 +515,12 @@
 			mon.leftBB = 0;
 			mon.rightBB = 16 * 2;
 		
-			mon.sprite_type =kind;// S_XMONSTER;
+			mon.sprite_type = kind;
+			
+			if (kind == AGMode.S_XMONSTER_CLIMBER) {
+				mon.ai = this.ai;//new AGai();
+				mon.ai.setValues(this.myInvisible,this.myStage, this, true);
+			}
 			
 			sprite_num ++;
 			monster_num = sprite_num;

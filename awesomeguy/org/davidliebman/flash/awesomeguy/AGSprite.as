@@ -80,7 +80,7 @@
 		public function makeRails():void {
 			var asprite:AGSprite = this;
 			if (asprite.bitmap == null) {
-				trace("no bitmap");
+				//trace("no bitmap");
 				return;
 			}
 			//else trace("make rails");

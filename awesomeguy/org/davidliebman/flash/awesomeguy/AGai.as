@@ -678,9 +678,11 @@
 			}
 			this.findAndFollowEdge();
 			
-			for (i = 0; i < speed; i ++) {
-				this.doCalc();
+			if (!this.myMultiFlag) {
+				for (i = 0; i < speed; i ++) {
+					this.doCalc();
 				
+				}
 			}
 		}
 		
