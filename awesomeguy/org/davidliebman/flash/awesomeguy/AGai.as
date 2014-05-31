@@ -1159,7 +1159,7 @@
 				break;
 				case AGai.ALG_SECOND_HINT_B:
 					
-					this.q_hint_list = this.createHint();
+					if (!this.myMultiFlag) this.q_hint_list = this.createHint();
 					
 					this.hint_nodecounter = 1;
 					this.hint_nodenumend = this.nodenumend;
@@ -1331,10 +1331,10 @@
 			var e:int = this.edgesFromDots[edge][AGai.EPOS_STARTX];
 			
 			if (a != b) {
-				trace("bad y in x direction");
+				//trace("bad y in x direction");
 				return value1;
 			}
-			else trace("good x");
+			//else trace("good x");
 			
 			a = this.nodesFromDots[nodea][AGai.NPOS_COORDX];
 			b = this.nodesFromDots[nodeb][AGai.NPOS_COORDX];
@@ -1377,10 +1377,10 @@
 			
 			
 			if (a != b) {
-				trace("bad x in y direction");
+				//trace("bad x in y direction");
 				return value1;
 			}
-			else trace("good y");
+			//else trace("good y");
 			
 			a = this.nodesFromDots[nodea][AGai.NPOS_COORDY];
 			b = this.nodesFromDots[nodeb][AGai.NPOS_COORDY];
@@ -1561,11 +1561,11 @@
 			if (this.hint_x == 0 && this.hint_auto) {
 				if (this.guyx < this.monsterx ) {
 					this.hint_x = - AGai.MOVE_X;
-					trace("hint left");
+					//trace("hint left");
 				}
 				else {
 					this.hint_x = AGai.MOVE_X;
-					trace("hint right");
+					//trace("hint right");
 				}
 			}
 			//else this.hint_x = this.hint_last_x;
@@ -1588,11 +1588,11 @@
 			if (this.hint_y == 0 && this.hint_auto) {
 				if (this.guyy < this.monstery) {
 					this.hint_y = - AGai.MOVE_Y;
-					trace("hint up");
+					//trace("hint up");
 				}
 				else {
 					this.hint_y = AGai.MOVE_Y;
-					trace("hint down");
+					//trace("hint down");
 				}
 			}
 			//else this.hint_y = this.hint_last_y;
