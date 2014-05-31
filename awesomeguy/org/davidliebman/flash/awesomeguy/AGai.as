@@ -764,10 +764,7 @@
 				break;
 				case AGai.ALG_FINDEDGE_END_HORIZONTAL:
 				
-					if (this.myMultiFlag && false) {
-						this.alg_state ++;
-						break;
-					}
+					
 				
 					found = -1;
 					for (i = 0; i < this.edgesFromDots.length; i ++) {
@@ -787,10 +784,7 @@
 				break;
 				case AGai.ALG_FINDEDGE_END_VERTICAL:
 					// alg_find ending vert edge...
-					if (this.myMultiFlag && false) {
-						this.alg_state ++;
-						break;
-					}
+					
 					found = -1;
 					for (i = 0; i < this.edgesFromDots.length; i ++) {
 						if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == false && 
@@ -808,6 +802,10 @@
 				break;
 				case AGai.ALG_FINDEDGE_START_HORIZONTAL:
 					// alg_find starting horiz edge...
+					if (this.myMultiFlag ) {
+						this.alg_state ++;
+						break;
+					}
 					found = -1;
 					for (i = 0; i < this.edgesFromDots.length; i ++) {
 						if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == true && 
@@ -825,6 +823,10 @@
 				break;
 				case AGai.ALG_FINDEDGE_START_VERTICAL:
 					// alg_find starting vert edge...
+					if (this.myMultiFlag ) {
+						this.alg_state ++;
+						break;
+					}
 					found = -1;
 					for (i = 0; i < this.edgesFromDots.length; i ++) {
 						if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == false && 
@@ -1412,8 +1414,8 @@
 				somey = this.monstery;
 			}
 			else {
-				somex = this.guyx;
-				somey = this.guyy;
+				somex = this.startingX;
+				somey = this.startingY;
 			}
 			
 			found = -1;
@@ -1426,7 +1428,7 @@
 						//found = i;
 						j++;
 						if (0 != this.edgesFromDots[i][AGai.EPOS_DIRECTION_X] ||
-							0 != this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y]) {
+							0 != this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y] || true) {
 							found = i;
 							trace("vert");
 							//this.hint_x = this.edgesFromDots[i][AGai.EPOS_DIRECTION_X];
@@ -1440,7 +1442,7 @@
 						//found = i;
 						j++;
 						if (0 != this.edgesFromDots[i][AGai.EPOS_DIRECTION_X] ||
-							0 != this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y]) {
+							0 != this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y] || true) {
 							found = i;
 							trace("hor");
 							//this.hint_x = this.edgesFromDots[i][AGai.EPOS_DIRECTION_X];
