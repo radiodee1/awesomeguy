@@ -1075,22 +1075,17 @@
 				break;
 				
 				case AGai.ALG_DIJKSTRA_LOOP_NEIGHBOR_LIST_B:
-					if (q_list.length > 0 ) { 
+					if (q_list.length > 0 && this.q_edge_indeces >=0 ) { 
 				
 						q_k = this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIST];
 					
 						
 						q_alt = q_k + this.nodesFromDots[q_i][AGai.NPOS_CALCDIST];
 						
-						//q_edge[AGai.EPOS_DIRECTION_X] = this.getEdgeDirectionX(q_i, q_j);
 						
 						if (q_alt <= this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] ){// was q_j 
 							this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] = q_alt;
 							this.nodesFromDots[q_j][AGai.NPOS_PREVIOUS] = q_i;
-							
-							//var index:int = this.getEdgeIndecesFromNodeIndeces(q_i, q_j);
-							//trace('index', index);
-							//trace(index, q_edge[AGai.EPOS_EDGENAME], "connect");
 							
 							this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIRECTION_X] = this.getEdgeDirectionX(q_i, q_j);
 							this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIRECTION_Y] = this.getEdgeDirectionY(q_i, q_j);
@@ -1328,7 +1323,7 @@
 			b = this.nodesFromDots[nodeb][AGai.NPOS_COORDX];
 			
 			
-			if (this.myMultiFlag) {
+			if (!this.myMultiFlag) {
 				if (a>b) {
 					value1 = - AGai.MOVE_X;
 				}
@@ -1370,7 +1365,7 @@
 			b = this.nodesFromDots[nodeb][AGai.NPOS_COORDY];
 			
 			
-			if (this.myMultiFlag) {
+			if (!this.myMultiFlag) {
 				if (a>b) {
 					value1 = - AGai.MOVE_Y;
 				}
@@ -1453,7 +1448,7 @@
 				}
 			}
 			if (found == -1) {
-				//trace("none found");
+				trace("none found");
 			}
 			else {
 				this.hint_x = this.edgesFromDots[found][AGai.EPOS_DIRECTION_X];
