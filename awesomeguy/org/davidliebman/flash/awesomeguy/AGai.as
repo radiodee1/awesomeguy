@@ -765,7 +765,10 @@
 					this.alg_state ++;
 				break;
 				case AGai.ALG_FINDEDGE_END_HORIZONTAL:
-				
+					if (this.myMultiFlag && false ) {
+						this.alg_state ++;
+						break;
+					}
 					
 				
 					found = -1;
@@ -786,7 +789,10 @@
 				break;
 				case AGai.ALG_FINDEDGE_END_VERTICAL:
 					// alg_find ending vert edge...
-					
+					if (this.myMultiFlag && false ) {
+						this.alg_state ++;
+						break;
+					}
 					found = -1;
 					for (i = 0; i < this.edgesFromDots.length; i ++) {
 						if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == false && 
@@ -1137,7 +1143,8 @@
 				
 				case AGai.ALG_SECOND_HINT_A:
 					if (this.myMultiFlag) {
-						
+						this.alg_state = AGai.ALG_ZERO;
+						break;
 					}
 					else {
 						this.q_hint_nodes = new Array();
