@@ -137,6 +137,7 @@
 		public var hint_auto:Boolean = true;
 		public var hint_direction_enum:int = 0;
 		public var hint_timer_counter:int = 0;
+		public var hint_edge_found:int = -1;
 		
 		public static var ENUM_HORIZONTAL_LEFT:int = 1;
 		public static var ENUM_VERTICAL_UP:int = 2;
@@ -1007,8 +1008,12 @@
 					if (!this.myMultiFlag ) {
 						this.nodesFromDots[this.nodenumstart][AGai.NPOS_CALCDIST] =  0;
 					}
-					else {
+					else if (this.nodenumend != -1) {
 						this.nodesFromDots[this.nodenumend][AGai.NPOS_CALCDIST] = 0;
+					}
+					else if (this.nodenumend == -1) {
+						this.alg_state = AGai.ALG_ZERO;
+						break;
 					}
 					
 					q_i = 0;
@@ -1082,13 +1087,14 @@
 						
 						q_alt = q_k + this.nodesFromDots[q_i][AGai.NPOS_CALCDIST];
 						
-						
+						this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIRECTION_X] = this.getEdgeDirectionX(q_i, q_j);
+						this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIRECTION_Y] = this.getEdgeDirectionY(q_i, q_j);
+							
 						if (q_alt <= this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] ){// was q_j 
 							this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] = q_alt;
 							this.nodesFromDots[q_j][AGai.NPOS_PREVIOUS] = q_i;
 							
-							this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIRECTION_X] = this.getEdgeDirectionX(q_i, q_j);
-							this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIRECTION_Y] = this.getEdgeDirectionY(q_i, q_j);
+							
 						}
 					
 					}
@@ -1323,8 +1329,8 @@
 			b = this.nodesFromDots[nodeb][AGai.NPOS_COORDX];
 			
 			
-			if (!this.myMultiFlag) {
-				if (a>b) {
+			if (!this.myMultiFlag || true) {
+				if (a>b ) {
 					value1 = - AGai.MOVE_X;
 				}
 				else if (b>a){
@@ -1332,8 +1338,9 @@
 				}
 				else return 0;
 			}
+			/*
 			else {
-				if (a>b) {
+				if (a>b ) {
 					value1 = AGai.MOVE_X;
 				}
 				else if (b>a){
@@ -1341,7 +1348,7 @@
 				}
 				else return 0;
 			}
-			
+			*/
 			return value1;
 		}
 		
@@ -1365,8 +1372,8 @@
 			b = this.nodesFromDots[nodeb][AGai.NPOS_COORDY];
 			
 			
-			if (!this.myMultiFlag) {
-				if (a>b) {
+			if (!this.myMultiFlag || true) {
+				if (a>b ) {
 					value1 = - AGai.MOVE_Y;
 				}
 				else if (b>a){
@@ -1374,8 +1381,9 @@
 				}
 				else return 0;
 			}
+			/*
 			else {
-				if (a>b) {
+				if (a>b ) {
 					value1 = AGai.MOVE_Y;
 				}
 				else if (b>a){
@@ -1383,7 +1391,7 @@
 				}
 				else return 0;
 			}
-			
+			*/
 			return value1;
 		}
 		
@@ -1426,7 +1434,7 @@
 						}
 					}
 					if (this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_HEIGHT <= somex &&
-						this.edgesFromDots[i][AGai.EPOS_STOPX] * this.TILE_HEIGHT >= somex &&
+						this.edgesFromDots[i][AGai.EPOS_STOPX] * this.TILE_HEIGHT + this.TILE_WIDTH >= somex &&
 						this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_WIDTH - (this.TILE_WIDTH / 2) <= somey &&
 						this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_WIDTH + (this.TILE_WIDTH / 2) >= somey) {
 						//found = i;
@@ -1453,6 +1461,8 @@
 			else {
 				this.hint_x = this.edgesFromDots[found][AGai.EPOS_DIRECTION_X];
 				this.hint_y = this.edgesFromDots[found][AGai.EPOS_DIRECTION_Y];
+				
+				this.hint_edge_found = found;
 				
 				trace("found", found, this.edgesFromDots[found][AGai.EPOS_DIRECTION_X], 
 					   this.edgesFromDots[found][AGai.EPOS_DIRECTION_Y]);
@@ -1529,6 +1539,9 @@
 			var b:int ;
 			
 			//return this.hint_x;
+			if ( this.hint_edge_found < 0 || 
+				this.hint_edge_found >= this.edgesFromDots.length ) return this.hint_last_x;
+			if ( !this.edgesFromDots[this.hint_edge_found][AGai.EPOS_ISHORIZONTAL]) return 0;
 			
 			if (this.hint_x == 0 && this.hint_auto) {
 				if (this.guyx < this.monsterx ) {
@@ -1540,7 +1553,7 @@
 					trace("hint right");
 				}
 			}
-			else this.hint_x = this.hint_last_x;
+			//else this.hint_x = this.hint_last_x;
 			
 			return this.hint_x;
 			
@@ -1550,6 +1563,9 @@
 			var a:int ;
 			var b:int ;
 			//return this.hint_y;
+			if ( this.hint_edge_found < 0 || 
+				this.hint_edge_found >= this.edgesFromDots.length ) return this.hint_last_y ;
+			if ( this.edgesFromDots[this.hint_edge_found][AGai.EPOS_ISHORIZONTAL]) return 0;
 			
 			
 			if (this.hint_y == 0 && this.hint_auto) {
@@ -1562,7 +1578,7 @@
 					trace("hint down");
 				}
 			}
-			else this.hint_y = this.hint_last_y;
+			//else this.hint_y = this.hint_last_y;
 			
 			return this.hint_y;
 			
@@ -1660,76 +1676,7 @@
 		}
 		
 		public function startNewsegment():void {
-			/*
-			///////
-			// start new directions
-			if (this.latch_a && false) {
-				//this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
-				trace("at turn");
-				this.allow_enum = AGai.ALLOW_BOTH;
-				this.hint_timer_counter ++;
-				switch(this.hint_direction_enum) {
-					case AGai.ENUM_HORIZONTAL_LEFT:
-						this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
-						this.hint_x = - AGai.MOVE_X;
-						if (this.hint_timer_counter > 30) { 
-							this.hint_timer_counter = 0;  
-							this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
-							this.latch_a = false;
-							this.latch_b = false;
-							this.latch_c = false;
-							this.hint_nodecounter ++;
-							return;
-						}
-						//this.latch_a = false;
-						//this.hint_nodecounter ++;
-					break;
-					case AGai.ENUM_HORIZONTAL_RIGHT:
-						this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
-						//this.latch_a = false;
-						this.hint_x = AGai.MOVE_X;
-						if (this.hint_timer_counter > 30) { 
-							this.hint_timer_counter = 0;  
-							this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
-							this.latch_a = false;
-							this.latch_b = false;
-							this.latch_c = false;
-							this.hint_nodecounter ++;
-							return;
-						}
-						//this.hint_nodecounter ++;
-					break;
-					case AGai.ENUM_VERTICAL_DOWN:
-						this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
-						//this.latch_a = false;
-						this.hint_y = AGai.MOVE_Y;
-						if (this.hint_timer_counter > 30) { 
-							this.hint_timer_counter = 0;  
-							this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
-							this.latch_a = false;
-							this.latch_b = false;
-							this.latch_c = false;
-							this.hint_nodecounter ++;
-							return;
-						}
-						//this.hint_nodecounter ++;
-					break;
-					case AGai.ENUM_VERTICAL_UP:
-						this.hint_y = - AGai.MOVE_Y;
-						if (this.hint_timer_counter > 30) { 
-							this.hint_timer_counter = 0;  
-							this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
-							this.latch_a = false;
-							this.latch_b = false;
-							this.latch_c = false;
-							this.hint_nodecounter ++;
-							return;
-						}
-						trace("timer",this.hint_timer_counter);
-					break;
-				}
-			}
-			*/
+			
 		}
 		
 		////////////////////////////////////////////////////
