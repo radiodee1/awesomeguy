@@ -1473,10 +1473,10 @@
 				this.hint_y = this.edgesFromDots[found][AGai.EPOS_DIRECTION_Y];
 				
 				this.hint_edge_found = found;
-				
+				/*
 				trace("found", found, this.edgesFromDots[found][AGai.EPOS_DIRECTION_X], 
 					   this.edgesFromDots[found][AGai.EPOS_DIRECTION_Y]);
-				/*
+				
 				trace("edges num", this.edgesFromDots.length);
 				*/
 			}
@@ -1700,7 +1700,7 @@
 			//this.drawMapSquares();
 			//this.drawMapEdges();//---
 			//this.drawMapNodes();
-			this.drawMapMonster();
+			//this.drawMapMonster();
 		}
 		
 		/* THIS IS DONE FOR DEVELOPMENT ONLY */

@@ -118,7 +118,6 @@
 				else if (!hit_top) yblock = int(- AGModeGuy.Y_MOVE/q);
 				if (hit_ladder && !hit_bottom) {
 					yblock =  int(AGModeGuy.Y_MOVE/q);
-					trace("should sink");
 					//if(!hit_bottom) myGuy.quality_0 = AGModeGuy.GUY_CLIMB;
 				}
 				if (!hit_ladder && hit_bottom) {
@@ -131,7 +130,6 @@
 				if (hit_ladder || true ){//|| hit_ladder_low ) {
 					yblock = int ( -   AGModeGuy.Y_MOVE/q) *2  ;
 					xblock = 0;
-					trace("start");
 					//if(!hit_bottom) myGuy.quality_0 = AGModeGuy.GUY_CLIMB;
 				}
 			}
@@ -141,37 +139,31 @@
 			
 			if (!hit_ladder && try_down && hit_bottom) {
 				yblock = 0;
-				trace('a');
 			}
 			
 			if (hit_top && !hit_bottom && !hit_ladder) {
-				trace('b');
 				yblock = int( AGModeGuy.Y_MOVE/(q*2));
 			}
 			if ( hit_bottom && hit_center &&  !hit_top && !hit_ladder) {
 				yblock =  -6;//(-  AGModeGuy.Y_MOVE);
 				
 				//trace("-6",- AGModeGuy.Y_MOVE);
-				trace('c');
 			}
 			
 			if (!hit_bottom && !hit_ladder && !hit_center){// && try_down ){//&& this.jump_count <= 0) {
 				yblock = int(AGModeGuy.Y_MOVE/q);
 				xblock = 0;
-				trace('d');
 				//trace(yblock , "down");
 			}
 			
 			if (!hit_bottom && !hit_ladder && !hit_center && !try_up) {
 				yblock = int(AGModeGuy.Y_MOVE/q);
 				xblock = 0;
-				trace('e');
 			}
 			if (try_up) {
 				if (hit_ladder  ){//|| hit_ladder_low ) {
 					yblock = int ( -   AGModeGuy.Y_MOVE/q) *2  ;
 					xblock = 0;
-					trace("start");
 					//if(!hit_bottom) myGuy.quality_0 = AGModeGuy.GUY_CLIMB;
 				}
 			}
