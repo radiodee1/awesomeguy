@@ -1076,7 +1076,6 @@
 					
 					if (this.q_list.length > 0) {
 						
-						//q_edge = this.getEdgeFromNodeIndeces(q_i,q_j);
 						this.q_edge_indeces = this.getEdgeIndecesFromNodeIndeces(q_i, q_j);
 					}
 					
@@ -1091,9 +1090,7 @@
 						
 						q_alt = q_k + this.nodesFromDots[q_i][AGai.NPOS_CALCDIST];
 						
-						//this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIRECTION_X] = this.getEdgeDirectionX(q_i, q_j, this.q_edge_indeces);
-						//this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIRECTION_Y] = this.getEdgeDirectionY(q_i, q_j, this.q_edge_indeces);
-							
+						
 						if (q_alt <= this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] ){// was q_j 
 							this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] = q_alt;
 							this.nodesFromDots[q_j][AGai.NPOS_PREVIOUS] = q_i;
