@@ -114,7 +114,7 @@
 		public var q_hint_list:Array = new Array();
 		public var q_list_index:int = 0;
 		public var q_hint_nodes:Array = new Array();
-		//public var edgesFromDots:Array = new Array();
+		public var q_edge_indeces:int = 0;
 
 		// ACTUAL SCREEN COORDINATES
 		public var startingX:int = 0;
@@ -1067,17 +1067,17 @@
 					
 					if (this.q_list.length > 0) {
 						
-						q_edge = this.getEdgeFromNodeIndeces(q_i,q_j);
-
+						//q_edge = this.getEdgeFromNodeIndeces(q_i,q_j);
+						this.q_edge_indeces = this.getEdgeIndecesFromNodeIndeces(q_i, q_j);
 					}
 					
 					this.alg_state ++;
 				break;
 				
 				case AGai.ALG_DIJKSTRA_LOOP_NEIGHBOR_LIST_B:
-					if (q_list.length != 0 ) { 
+					if (q_list.length > 0 ) { 
 				
-						q_k = q_edge[AGai.EPOS_DIST];
+						q_k = this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIST];
 					
 						
 						q_alt = q_k + this.nodesFromDots[q_i][AGai.NPOS_CALCDIST];
@@ -1088,12 +1088,12 @@
 							this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] = q_alt;
 							this.nodesFromDots[q_j][AGai.NPOS_PREVIOUS] = q_i;
 							
-							var index:int = this.getEdgeIndecesFromNodeIndeces(q_i, q_j);
+							//var index:int = this.getEdgeIndecesFromNodeIndeces(q_i, q_j);
 							//trace('index', index);
 							//trace(index, q_edge[AGai.EPOS_EDGENAME], "connect");
 							
-							this.edgesFromDots[index][AGai.EPOS_DIRECTION_X] = this.getEdgeDirectionX(q_i, q_j);
-							this.edgesFromDots[index][AGai.EPOS_DIRECTION_Y] = this.getEdgeDirectionY(q_i, q_j);
+							this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIRECTION_X] = this.getEdgeDirectionX(q_i, q_j);
+							this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIRECTION_Y] = this.getEdgeDirectionY(q_i, q_j);
 						}
 					
 					}
@@ -1309,10 +1309,10 @@
 		}
 		
 		public function getEdgeDirectionX(nodea:int, nodeb:int) : int {
-			var value:int = 0;
+			var value1:int = 0;
 			if (nodea < 0 || nodea>=this.nodesFromDots.length || 
 				nodeb < 0 || nodeb>=this.nodesFromDots.length ) {
-				return value;
+				return value1;
 			}
 			
 			var a:int = this.nodesFromDots[nodea][AGai.NPOS_COORDY];
@@ -1320,7 +1320,7 @@
 			
 			if (a != b) {
 				trace("bad y in x direction");
-				return value;
+				return value1;
 			}
 			else trace("good x");
 			
@@ -1330,31 +1330,31 @@
 			
 			if (this.myMultiFlag) {
 				if (a>b) {
-					value = - AGai.MOVE_X;
+					value1 = - AGai.MOVE_X;
 				}
 				else if (b>a){
-					value = AGai.MOVE_X;
+					value1 = AGai.MOVE_X;
 				}
 				else return 0;
 			}
 			else {
 				if (a>b) {
-					value = AGai.MOVE_X;
+					value1 = AGai.MOVE_X;
 				}
 				else if (b>a){
-					value = - AGai.MOVE_X;
+					value1 = - AGai.MOVE_X;
 				}
 				else return 0;
 			}
 			
-			return value;
+			return value1;
 		}
 		
 		public function getEdgeDirectionY(nodea:int, nodeb:int) : int {
-			var value:int = 0;
+			var value1:int = 0;
 			if (nodea < 0 || nodea>=this.nodesFromDots.length || 
 				nodeb < 0 || nodeb>=this.nodesFromDots.length ) {
-				return value;
+				return value1;
 			}
 			
 			var a:int = this.nodesFromDots[nodea][AGai.NPOS_COORDX];
@@ -1362,7 +1362,7 @@
 			
 			if (a != b) {
 				trace("bad x in y direction");
-				return value;
+				return value1;
 			}
 			else trace("good y");
 			
@@ -1372,24 +1372,24 @@
 			
 			if (this.myMultiFlag) {
 				if (a>b) {
-					value = - AGai.MOVE_Y;
+					value1 = - AGai.MOVE_Y;
 				}
 				else if (b>a){
-					value = AGai.MOVE_Y;
+					value1 = AGai.MOVE_Y;
 				}
 				else return 0;
 			}
 			else {
 				if (a>b) {
-					value = AGai.MOVE_Y;
+					value1 = AGai.MOVE_Y;
 				}
 				else if (b>a){
-					value = - AGai.MOVE_Y;
+					value1 = - AGai.MOVE_Y;
 				}
 				else return 0;
 			}
 			
-			return value;
+			return value1;
 		}
 		
 		
@@ -1416,42 +1416,48 @@
 			found = -1;
 			for (i = 0; i < this.edgesFromDots.length; i ++) {
 				if (true) {
-					if (this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT < somey &&
-						this.edgesFromDots[i][AGai.EPOS_STOPY] * this.TILE_HEIGHT > somey &&
-						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH - (this.TILE_WIDTH / 2) < somex &&
-						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH + (this.TILE_WIDTH / 2) > somex) {
-						found = i;
+					if (this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT <= somey &&
+						this.edgesFromDots[i][AGai.EPOS_STOPY] * this.TILE_HEIGHT >= somey &&
+						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH - (this.TILE_WIDTH / 2) <= somex &&
+						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH + (this.TILE_WIDTH / 2) >= somex) {
+						//found = i;
 						j++;
-						if (this.q_endedge_vert == found || true) {
-							//trace("endedge vert", found);
+						if (0 != this.edgesFromDots[i][AGai.EPOS_DIRECTION_X] ||
+							0 != this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y]) {
+							found = i;
+							trace("vert");
+							//this.hint_x = this.edgesFromDots[i][AGai.EPOS_DIRECTION_X];
+							//this.hint_y = this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y];
 						}
-						this.hint_x = this.edgesFromDots[i][AGai.EPOS_DIRECTION_X];
-						this.hint_y = this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y];
 					}
-					if (this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_HEIGHT < somex &&
-						this.edgesFromDots[i][AGai.EPOS_STOPX] * this.TILE_HEIGHT > somex &&
-						this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_WIDTH - (this.TILE_WIDTH / 2) < somey &&
-						this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_WIDTH + (this.TILE_WIDTH / 2) > somey) {
-						found = i;
+					if (this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_HEIGHT <= somex &&
+						this.edgesFromDots[i][AGai.EPOS_STOPX] * this.TILE_HEIGHT >= somex &&
+						this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_WIDTH - (this.TILE_WIDTH / 2) <= somey &&
+						this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_WIDTH + (this.TILE_WIDTH / 2) >= somey) {
+						//found = i;
 						j++;
-						if (this.q_endedge_hor == found || true) {
-							//trace("endedge hor", found);
+						if (0 != this.edgesFromDots[i][AGai.EPOS_DIRECTION_X] ||
+							0 != this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y]) {
+							found = i;
+							trace("hor");
+							//this.hint_x = this.edgesFromDots[i][AGai.EPOS_DIRECTION_X];
+							//this.hint_y = this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y];
 						}
-						this.hint_x = this.edgesFromDots[i][AGai.EPOS_DIRECTION_X];
-						this.hint_y = this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y];
 					}
-					/*
+					
 					trace( i, this.edgesFromDots[i][AGai.EPOS_EDGENAME], this.nodenumend, this.nodenumstart
-						,"j="+j, this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y] , 
+						,"j="+j, this.edgesFromDots[i][AGai.EPOS_DIRECTION_X] , 
 						this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y],
 						this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL]);
-					*/
+					
 				}
 			}
 			if (found == -1) {
 				//trace("none found");
 			}
 			else {
+				this.hint_x = this.edgesFromDots[found][AGai.EPOS_DIRECTION_X];
+				this.hint_y = this.edgesFromDots[found][AGai.EPOS_DIRECTION_Y];
 				
 				trace("found", found, this.edgesFromDots[found][AGai.EPOS_DIRECTION_X], 
 					   this.edgesFromDots[found][AGai.EPOS_DIRECTION_Y]);
