@@ -62,6 +62,7 @@
 		public static var EPOS_ISHORIZONTAL:int = 13;
 		public static var EPOS_DIRECTION_X:int = 14;
 		public static var EPOS_DIRECTION_Y:int = 15;
+		public static var EPOS_VISITED:int = 16;
 		
 		public static var NPOS_NODENAME:int = 0;
 		public static var NPOS_COORDX:int = 1;
@@ -441,7 +442,8 @@
 							 isTemp,//false, // is temp flag set??
 							 true, // is-horizontal??
 							 0,// x direction
-							 0); // y direction
+							 0, // y direction
+							 false); // visited
 			this.edgesFromDots.push(temp);
 			
 			values.push(this.makeCoordinateListingNodes(startx,ylevel, isTemp));
@@ -473,7 +475,8 @@
 							 isTemp,//false, // is temp flag set??
 							 false, // is-horizontal??
 							 0, // x direction
-							 0);  // y direction
+							 0, // y dierction
+							 false);  // visited
 			this.edgesFromDots.push(temp);
 			
 			values.push(this.makeCoordinateListingNodes(xlevel,starty, isTemp));
@@ -666,11 +669,6 @@
 				this.mySprite = sprite;
 			}
 			
-			for (i = 0; i < speed; i ++) {
-				this.doCalc();
-				
-			}
-			
 			if (!this.myMultiFlag) {
 				//this.advanceNodecounter();
 				this.startNewsegment();
@@ -680,6 +678,10 @@
 			}
 			this.findAndFollowEdge();
 			
+			for (i = 0; i < speed; i ++) {
+				this.doCalc();
+				
+			}
 		}
 		
 		/* THIS IS DONE BEFORE EACH REDRAW OF THE SCREEN */
@@ -739,7 +741,7 @@
 				break;
 				case AGai.ALG_REMOVE_TEMP_A:
 					for (i = 0; i < this.edgesFromDots.length; i ++) {
-						
+						this.edgesFromDots[i][AGai.EPOS_VISITED] = false;
 						if (this.edgesFromDots[i][AGai.EPOS_TEMPFLAG] == true) {
 							this.edgesFromDots = this.edgesFromDots.slice(0,i );//
 							//
@@ -802,7 +804,7 @@
 				break;
 				case AGai.ALG_FINDEDGE_START_HORIZONTAL:
 					// alg_find starting horiz edge...
-					if (this.myMultiFlag ) {
+					if (this.myMultiFlag && false ) {
 						this.alg_state ++;
 						break;
 					}
@@ -823,7 +825,7 @@
 				break;
 				case AGai.ALG_FINDEDGE_START_VERTICAL:
 					// alg_find starting vert edge...
-					if (this.myMultiFlag ) {
+					if (this.myMultiFlag && false ) {
 						this.alg_state ++;
 						break;
 					}
@@ -896,7 +898,7 @@
 					}
 					//trace("start node", this.nodesFromDots[ this.nodenumstart]);
 					
-					if (this.nodenumstart < 0) {
+					if (this.nodenumstart < 0 && !this.myMultiFlag) {
 						this.alg_state = AGai.ALG_ZERO;
 						break;
 					}
@@ -1007,13 +1009,13 @@
 
 						}
 					}
-					if (!this.myMultiFlag ) {
+					if (!this.myMultiFlag  ) {
 						this.nodesFromDots[this.nodenumstart][AGai.NPOS_CALCDIST] =  0;
 					}
-					else if (this.nodenumend != -1) {
-						this.nodesFromDots[this.nodenumend][AGai.NPOS_CALCDIST] = 0;
+					else if (this.nodenumstart != -1) {
+						this.nodesFromDots[this.nodenumstart][AGai.NPOS_CALCDIST] = 0;
 					}
-					else if (this.nodenumend == -1) {
+					else if (this.nodenumstart == -1) {
 						this.alg_state = AGai.ALG_ZERO;
 						break;
 					}
@@ -1089,14 +1091,19 @@
 						
 						q_alt = q_k + this.nodesFromDots[q_i][AGai.NPOS_CALCDIST];
 						
-						this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIRECTION_X] = this.getEdgeDirectionX(q_i, q_j);
-						this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIRECTION_Y] = this.getEdgeDirectionY(q_i, q_j);
+						//this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIRECTION_X] = this.getEdgeDirectionX(q_i, q_j, this.q_edge_indeces);
+						//this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIRECTION_Y] = this.getEdgeDirectionY(q_i, q_j, this.q_edge_indeces);
 							
 						if (q_alt <= this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] ){// was q_j 
 							this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] = q_alt;
 							this.nodesFromDots[q_j][AGai.NPOS_PREVIOUS] = q_i;
 							
+							this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIRECTION_X] = 
+								this.getEdgeDirectionX(q_i, q_j, this.q_edge_indeces);
+							this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIRECTION_Y] = 
+								this.getEdgeDirectionY(q_i, q_j, this.q_edge_indeces);
 							
+							this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_VISITED] = true;
 						}
 					
 					}
@@ -1311,15 +1318,17 @@
 			return value;
 		}
 		
-		public function getEdgeDirectionX(nodea:int, nodeb:int) : int {
+		public function getEdgeDirectionX(nodea:int, nodeb:int, edge:int) : int {
 			var value1:int = 0;
 			if (nodea < 0 || nodea>=this.nodesFromDots.length || 
-				nodeb < 0 || nodeb>=this.nodesFromDots.length ) {
+				nodeb < 0 || nodeb>=this.nodesFromDots.length  ||
+				edge < 0 || edge >= this.edgesFromDots.length) {
 				return value1;
 			}
 			
 			var a:int = this.nodesFromDots[nodea][AGai.NPOS_COORDY];
 			var b:int = this.nodesFromDots[nodeb][AGai.NPOS_COORDY];
+			var e:int = this.edgesFromDots[edge][AGai.EPOS_STARTX];
 			
 			if (a != b) {
 				trace("bad y in x direction");
@@ -1331,7 +1340,7 @@
 			b = this.nodesFromDots[nodeb][AGai.NPOS_COORDX];
 			
 			
-			if (!this.myMultiFlag || true) {
+			if (!this.myMultiFlag ) {
 				if (a>b ) {
 					value1 = - AGai.MOVE_X;
 				}
@@ -1340,29 +1349,32 @@
 				}
 				else return 0;
 			}
-			/*
 			else {
-				if (a>b ) {
-					value1 = AGai.MOVE_X;
-				}
-				else if (b>a){
+				if (a<b ) {
 					value1 = - AGai.MOVE_X;
 				}
+				else if (a>b){
+					value1 = AGai.MOVE_X;
+				}
 				else return 0;
+				//if (a== e) value1 = value1 * -1;
 			}
-			*/
+			
 			return value1;
 		}
 		
-		public function getEdgeDirectionY(nodea:int, nodeb:int) : int {
+		public function getEdgeDirectionY(nodea:int, nodeb:int, edge:int) : int {
 			var value1:int = 0;
 			if (nodea < 0 || nodea>=this.nodesFromDots.length || 
-				nodeb < 0 || nodeb>=this.nodesFromDots.length ) {
+				nodeb < 0 || nodeb>=this.nodesFromDots.length ||
+				edge < 0 || edge >= this.edgesFromDots.length) {
 				return value1;
 			}
 			
 			var a:int = this.nodesFromDots[nodea][AGai.NPOS_COORDX];
 			var b:int = this.nodesFromDots[nodeb][AGai.NPOS_COORDX];
+			var e:int = this.edgesFromDots[edge][AGai.EPOS_STARTY];
+			
 			
 			if (a != b) {
 				trace("bad x in y direction");
@@ -1374,7 +1386,7 @@
 			b = this.nodesFromDots[nodeb][AGai.NPOS_COORDY];
 			
 			
-			if (!this.myMultiFlag || true) {
+			if (!this.myMultiFlag ) {
 				if (a>b ) {
 					value1 = - AGai.MOVE_Y;
 				}
@@ -1383,17 +1395,17 @@
 				}
 				else return 0;
 			}
-			/*
 			else {
-				if (a>b ) {
-					value1 = AGai.MOVE_Y;
-				}
-				else if (b>a){
+				if (a<b ) {
 					value1 = - AGai.MOVE_Y;
 				}
+				else if (b<a){
+					value1 = AGai.MOVE_Y;
+				}
 				else return 0;
+				//if (a== e) value1 = value1 * -1;
 			}
-			*/
+			
 			return value1;
 		}
 		
@@ -1428,11 +1440,10 @@
 						//found = i;
 						j++;
 						if (0 != this.edgesFromDots[i][AGai.EPOS_DIRECTION_X] ||
-							0 != this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y] || true) {
+							0 != this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y] ) {
 							found = i;
-							trace("vert");
-							//this.hint_x = this.edgesFromDots[i][AGai.EPOS_DIRECTION_X];
-							//this.hint_y = this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y];
+							//trace("vert");
+							
 						}
 					}
 					if (this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_HEIGHT <= somex &&
@@ -1442,23 +1453,23 @@
 						//found = i;
 						j++;
 						if (0 != this.edgesFromDots[i][AGai.EPOS_DIRECTION_X] ||
-							0 != this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y] || true) {
+							0 != this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y] ) {
 							found = i;
-							trace("hor");
-							//this.hint_x = this.edgesFromDots[i][AGai.EPOS_DIRECTION_X];
-							//this.hint_y = this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y];
+							//trace("hor");
+							
 						}
 					}
-					
+					/*
 					trace( i, this.edgesFromDots[i][AGai.EPOS_EDGENAME], this.nodenumend, this.nodenumstart
 						,"j="+j, this.edgesFromDots[i][AGai.EPOS_DIRECTION_X] , 
 						this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y],
-						this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL]);
-					
+						this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL],
+						"v="+this.edgesFromDots[i][AGai.EPOS_VISITED]);
+					*/
 				}
 			}
 			if (found == -1) {
-				trace("none found");
+				//trace("none found");
 			}
 			else {
 				this.hint_x = this.edgesFromDots[found][AGai.EPOS_DIRECTION_X];
@@ -1477,7 +1488,7 @@
 		public function isHitCenter(x:int, y:int, graphnode:Boolean = true, width:int = 8, height:int = 8):Boolean {
 			
 			if (this.mySprite.bitmap == null){ 
-				trace("no bitmap here");
+				//trace("no bitmap here");
 				return false;
 			}
 			var awidth:int = this.mySprite.bitmap.width;
@@ -1545,6 +1556,8 @@
 				this.hint_edge_found >= this.edgesFromDots.length ) return this.hint_last_x;
 			if ( !this.edgesFromDots[this.hint_edge_found][AGai.EPOS_ISHORIZONTAL]) return 0;
 			
+			this.hint_last_x = this.hint_x;
+			
 			if (this.hint_x == 0 && this.hint_auto) {
 				if (this.guyx < this.monsterx ) {
 					this.hint_x = - AGai.MOVE_X;
@@ -1556,6 +1569,7 @@
 				}
 			}
 			//else this.hint_x = this.hint_last_x;
+			
 			
 			return this.hint_x;
 			
@@ -1569,6 +1583,7 @@
 				this.hint_edge_found >= this.edgesFromDots.length ) return this.hint_last_y ;
 			if ( this.edgesFromDots[this.hint_edge_found][AGai.EPOS_ISHORIZONTAL]) return 0;
 			
+			this.hint_last_y = this.hint_y;
 			
 			if (this.hint_y == 0 && this.hint_auto) {
 				if (this.guyy < this.monstery) {
@@ -1581,6 +1596,7 @@
 				}
 			}
 			//else this.hint_y = this.hint_last_y;
+			
 			
 			return this.hint_y;
 			
