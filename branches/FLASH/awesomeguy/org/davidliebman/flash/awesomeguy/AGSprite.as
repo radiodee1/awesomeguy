@@ -90,13 +90,14 @@
 			
 			var vertical:BitmapData = new BitmapData(2,guyheight - AGModeGuy.Y_MOVE,true,0x00ff0000);
 			var horizontal:BitmapData = new BitmapData(guywidth - AGModeGuy.X_MOVE, 2,true,0x00ff0000);
-			
+			/*
 			if (asprite.sprite_type == AGMode.S_XMONSTER_CLIMBER) {
 				
 				vertical = new BitmapData(2,guyheight - AGModeGuy.Y_MOVE,false,0xffff0000);
 				horizontal = new BitmapData(guywidth - AGModeGuy.X_MOVE, 2,false,0xffff0000);
 			
 			}
+			*/
 			
 			this.rail_bottom = new Bitmap(horizontal);
 			this.rail_top = new Bitmap(horizontal);
