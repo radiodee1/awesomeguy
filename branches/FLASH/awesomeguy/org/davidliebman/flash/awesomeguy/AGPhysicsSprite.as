@@ -56,6 +56,15 @@
 											sprite.rail_bottom, 
 											sprite.rail_bottom.x , 
 											(sprite.rail_bottom.y ) ,AGModeGuy.B_BLOCK, "bottom");
+			
+			hit_ladder_low = this.collisionTile(myinvisible, 
+										(sprite.x //+ this.myMode.scrollBGX
+										 )/ 64, 
+										(sprite.y //+ this.myMode.scrollBGY
+										 )/ 64 +1 ,
+											sprite.rail_bottom, 
+											sprite.rail_bottom.x , 
+											(sprite.rail_bottom.y ) ,AGModeGuy.B_LADDER, "ladder-bottom");
 											
 			hit_top = this.collisionTile(myinvisible, sprite.x/ 64, sprite.y/ 64 - 1,
 										 sprite.rail_top, 
@@ -83,6 +92,7 @@
 			if (xx > 0) try_right = true;
 			else try_right = false;
 			
+			if (hit_ladder_low) hit_bottom = true;
 
 			xblock = 0;
 			yblock = 0;
