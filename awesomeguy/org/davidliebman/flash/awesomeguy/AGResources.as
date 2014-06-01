@@ -441,7 +441,7 @@
 			this.textField.text = startMessage;
 			this.textField.setTextFormat(this.format);
 			
-			if ((i % 40) == 0) {
+			if ((i % 50) == 0) {
 				startMessage += "\r";
 			}
 			
