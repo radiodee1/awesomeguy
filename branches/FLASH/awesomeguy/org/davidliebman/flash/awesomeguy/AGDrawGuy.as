@@ -429,9 +429,59 @@
 		
 		public function drawXMonsterClimber() :void {
 			var ycheat:int ;//= ;//-160;
-			sprite.bitmap = new Bitmap( 
-				myRes[AGResources.NAME_GATOR_PUNCH_R1_PNG].bitmapData.clone());
-			ycheat = - 60;//(sprite.bitmap.height ) * -1
+			var anim_speed:int = 5;
+			var add:int, add_radar:int, z:int;
+
+			sprite.animate ++;
+			if (sprite.animate > (anim_speed * 4) ) sprite.animate=0;
+			if (sprite.animate > anim_speed * 2) z = 1;
+			else z = 0;
+			ycheat = -60;
+					
+			if ( true ) {
+				//trace (sprite.animate);
+				if(sprite.facingRight == true) {
+					if(z == 0) {
+						
+						sprite.bitmap = new Bitmap( 
+							myRes[AGResources.NAME_GATOR_PUNCH_R1_PNG].bitmapData.clone());
+						sprite.bitmap.x = sprite.x - scrollx;
+						sprite.bitmap.y = sprite.y - scrolly + ycheat;
+						stageHelper.addChild(sprite.bitmap);
+
+					}
+					else if (z == 1 ) {
+						
+						sprite.bitmap = new Bitmap( 
+							myRes[AGResources.NAME_GATOR_PUNCH_R2_PNG].bitmapData.clone());//
+						sprite.bitmap.x = sprite.x - scrollx;
+						sprite.bitmap.y = sprite.y - scrolly + ycheat;
+						stageHelper.addChild(sprite.bitmap);
+					}
+				}
+				else if (!sprite.facingRight == true) {
+					if(z == 0) {
+
+						sprite.bitmap = new Bitmap( 
+							myRes[AGResources.NAME_GATOR_PUNCH_L1_PNG].bitmapData.clone());//
+						sprite.bitmap.x = sprite.x - scrollx;
+						sprite.bitmap.y = sprite.y - scrolly + ycheat;
+						stageHelper.addChild(sprite.bitmap);
+					}
+					else if (z == 1) {
+
+						sprite.bitmap = new Bitmap( 
+							myRes[AGResources.NAME_GATOR_PUNCH_L2_PNG].bitmapData.clone());//
+						sprite.bitmap.x = sprite.x - scrollx;
+						sprite.bitmap.y = sprite.y - scrolly + ycheat;
+						stageHelper.addChild(sprite.bitmap);
+					}
+				}
+			}
+			
+			//sprite.bitmap = new Bitmap( 
+			//	myRes[AGResources.NAME_GATOR_PUNCH_R1_PNG].bitmapData.clone());
+			//ycheat = - 60;//(sprite.bitmap.height ) * -1
 			sprite.bitmap.x = sprite.x - scrollx;
 			sprite.bitmap.y = sprite.y - scrolly + ycheat;
 			stageHelper.addChild(sprite.bitmap);

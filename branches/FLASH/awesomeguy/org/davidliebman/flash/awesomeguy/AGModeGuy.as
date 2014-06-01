@@ -120,7 +120,13 @@
 			myGuy.updateSprite()
 			myDraw.drawBasicSprite(myGuy, D_GUY);
 			
-			
+			var i:int = 0;
+			if (this.myAISpeed >=1) {
+				for(i = 0; i < this.myAISpeed; i ++) {
+					ai.doCalc();
+					trace("do calc", this.myAISpeed);
+				}
+			}
 			
 			drawLevelTiles();
 			updateSprites();
@@ -132,12 +138,7 @@
 				myGuy.y = ypos;
 			}
 			
-			if (this.myAISpeed >=1) {
-				for(var i:int = 0; i < this.myAISpeed; i ++) {
-					ai.doCalc();
-					//trace("do calc");
-				}
-			}
+			
 			
 			drawScoreWords();
 			showKeys(this.myGame.gameKeys);
@@ -518,8 +519,9 @@
 			mon.sprite_type = kind;
 			
 			if (kind == AGMode.S_XMONSTER_CLIMBER) {
-				mon.ai = this.ai;//new AGai();
+				mon.ai = this.ai;
 				mon.ai.setValues(this.myInvisible,this.myStage, this, true);
+				//mon.ai = this.ai;
 			}
 			
 			sprite_num ++;
@@ -542,9 +544,7 @@
 			// add it to the sprite list
 			mySprite.push(temp);
 			
-			//myTemp.push(temp);
-			//myChallenge[ myGame.gameChallenge].total_rings ++;
-			//return temp;
+			
 		}
 		
 		public function addTorpedo(ii:int, xx:int, yy:int):void {

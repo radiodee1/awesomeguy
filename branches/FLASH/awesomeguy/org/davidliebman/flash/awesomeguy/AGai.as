@@ -658,9 +658,9 @@
 			var i:int = 0;
 			
 			
-			this.startingX = startX; // monster
+			this.startingX = startX; // one end
 			this.startingY = startY;
-			this.endingX = endX; // guy
+			this.endingX = endX; // other end
 			this.endingY = endY;
 			
 			
@@ -676,6 +676,7 @@
 			else {
 				
 			}
+			
 			this.findAndFollowEdge();
 			
 			if (!this.myMultiFlag) {
@@ -980,6 +981,10 @@
 					this.alg_state ++;
 				break;
 				case AGai.ALG_FIRST_HINT:
+					if (this.myMultiFlag) {
+						this.alg_state = AGai.ALG_START_DIJKSTRA;
+						break;
+					}
 					
 					if(this.q_hint_nodes.length < this.hint_nodecounter + 2) {
 						if (this.q_endedge_hor != -1 && this.hint_auto) {
@@ -1098,16 +1103,21 @@
 						
 						q_alt = q_k + this.nodesFromDots[q_i][AGai.NPOS_CALCDIST];
 						
+						this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIRECTION_X] = 
+							this.getEdgeDirectionX(q_i, q_j, this.q_edge_indeces);
+						this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIRECTION_Y] = 
+							this.getEdgeDirectionY(q_i, q_j, this.q_edge_indeces);
 						
 						if (q_alt <= this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] ){// was q_j 
 							this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] = q_alt;
 							this.nodesFromDots[q_j][AGai.NPOS_PREVIOUS] = q_i;
 							
+							/*
 							this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIRECTION_X] = 
 								this.getEdgeDirectionX(q_i, q_j, this.q_edge_indeces);
 							this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIRECTION_Y] = 
 								this.getEdgeDirectionY(q_i, q_j, this.q_edge_indeces);
-							
+							*/
 							this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_VISITED] = true;
 						}
 					
@@ -1145,7 +1155,7 @@
 				
 				case AGai.ALG_SECOND_HINT_A:
 					if (this.myMultiFlag) {
-						this.alg_state = AGai.ALG_ZERO;
+						this.alg_state = AGai.ALG_SECOND_HINT_B;
 						break;
 					}
 					else {
@@ -1251,8 +1261,8 @@
 			var i:int = 0;
 			var j:int = 0;
 			for (i = 0; i < this.edgesFromDots.length; i ++) {
-				if ( !this.edgesFromDots[i][AGai.EPOS_ISJUMP]  || 
-					this.edgesFromDots[i][AGai.EPOS_TOPY] >= this.monstery  ){
+				if ( !this.edgesFromDots[i][AGai.EPOS_ISJUMP] ){// || 
+					//this.edgesFromDots[i][AGai.EPOS_TOPY] >= this.monstery  ){
 						
 					if (this.edgesFromDots[i][AGai.EPOS_NODESTART] == 
 						this.nodesFromDots[node][AGai.NPOS_NODENAME]) {
@@ -1442,36 +1452,34 @@
 					if (this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT <= somey &&
 						this.edgesFromDots[i][AGai.EPOS_STOPY] * this.TILE_HEIGHT >= somey &&
 						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH - (this.TILE_WIDTH / 2) <= somex &&
-						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH + (this.TILE_WIDTH / 2) >= somex) {
+						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH + (this.TILE_WIDTH / 2) >= somex //&&
+						//!this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL]
+						) {
 						//found = i;
 						j++;
 						if (0 != this.edgesFromDots[i][AGai.EPOS_DIRECTION_X] ||
 							0 != this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y] ) {
 							found = i;
 							//trace("vert");
-							
+							//this.hint_y = this.edgesFromDots[found][AGai.EPOS_DIRECTION_Y];
 						}
 					}
-					if (this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_HEIGHT <= somex &&
+					if (this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_HEIGHT  <= somex &&
 						this.edgesFromDots[i][AGai.EPOS_STOPX] * this.TILE_HEIGHT + this.TILE_WIDTH >= somex &&
 						this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_WIDTH - (this.TILE_WIDTH / 2) <= somey &&
-						this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_WIDTH + (this.TILE_WIDTH / 2) >= somey) {
+						this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_WIDTH + (this.TILE_WIDTH / 2) >= somey //&&
+						//this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL]
+						) {
 						//found = i;
 						j++;
 						if (0 != this.edgesFromDots[i][AGai.EPOS_DIRECTION_X] ||
 							0 != this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y] ) {
 							found = i;
 							//trace("hor");
-							
+							//this.hint_x = this.edgesFromDots[found][AGai.EPOS_DIRECTION_X];
 						}
 					}
-					/*
-					trace( i, this.edgesFromDots[i][AGai.EPOS_EDGENAME], this.nodenumend, this.nodenumstart
-						,"j="+j, this.edgesFromDots[i][AGai.EPOS_DIRECTION_X] , 
-						this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y],
-						this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL],
-						"v="+this.edgesFromDots[i][AGai.EPOS_VISITED]);
-					*/
+					
 				}
 			}
 			if (found == -1) {
@@ -1482,13 +1490,9 @@
 				this.hint_y = this.edgesFromDots[found][AGai.EPOS_DIRECTION_Y];
 				
 				this.hint_edge_found = found;
-				/*
-				trace("found", found, this.edgesFromDots[found][AGai.EPOS_DIRECTION_X], 
-					   this.edgesFromDots[found][AGai.EPOS_DIRECTION_Y]);
 				
-				trace("edges num", this.edgesFromDots.length);
-				*/
 			}
+			trace(found, this.hint_x, this.hint_y);
 		}
 		
 		public function isHitCenter(x:int, y:int, graphnode:Boolean = true, width:int = 8, height:int = 8):Boolean {
@@ -1556,7 +1560,7 @@
 		public function getPixHintX():int {
 			var a:int ;
 			var b:int ;
-			
+			//this.findAndFollowEdge();
 			//return this.hint_x;
 			if ( this.hint_edge_found < 0 || 
 				this.hint_edge_found >= this.edgesFromDots.length ) return this.hint_last_x;

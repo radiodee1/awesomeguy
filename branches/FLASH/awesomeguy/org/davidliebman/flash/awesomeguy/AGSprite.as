@@ -121,16 +121,13 @@
 			this.rail_top.x = asprite.bitmap.x + (AGModeGuy.X_MOVE/2);
 			this.rail_top.y = asprite.bitmap.y - ( AGModeGuy.Y_MOVE/2);
 			
-			//myStage.addChild(this.rail_bottom);
-			//myStage.addChild(this.rail_left);
-			//myStage.addChild(this.rail_right);
-			//myStage.addChild(this.rail_top);
+			
 			
 		}
 		
 		public function addRails(myStage:Stage) :void {
 			if (this.bitmap == null) {
-				trace("no bitmap");
+				//trace("no bitmap");
 				return;
 			}
 			
