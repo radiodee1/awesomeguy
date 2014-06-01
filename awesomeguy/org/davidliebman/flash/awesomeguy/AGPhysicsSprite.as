@@ -184,7 +184,7 @@
 				//trace("-6",- AGModeGuy.Y_MOVE);
 			}
 			
-			if (!hit_bottom && !hit_ladder && !hit_center){// && ( !hit_ladder_right && !hit_ladder_left )){// && try_down ){//&& this.jump_count <= 0) {
+			if (!hit_bottom && !hit_ladder && !hit_center ){// && !hit_ladder_low && !try_up){// 
 				yblock = int(AGModeGuy.Y_MOVE/q);
 				xblock = 0;
 				//trace(yblock , "down");
@@ -194,15 +194,15 @@
 				yblock = int(AGModeGuy.Y_MOVE/q);
 				xblock = 0;
 			}
-			
+			/*
 			if (try_up) {
-				if (hit_ladder_core ){// || hit_ladder_low ) {
+				if (hit_ladder_core || true ){// || hit_ladder_low ) {
 					yblock = int ( -   AGModeGuy.Y_MOVE/q) ;//*2  ;
 					xblock = 0;
 					//if(!hit_bottom) myGuy.quality_0 = AGModeGuy.GUY_CLIMB;
 				}
 			}
-			
+			*/
 			/////////////////
 			//trace("physics", xblock, yblock);
 			

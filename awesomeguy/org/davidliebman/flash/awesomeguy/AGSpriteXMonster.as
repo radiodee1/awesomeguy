@@ -111,7 +111,7 @@
 				//this.visible = true;
 				this.makeRails();
 				this.addRails(this.myMode.myStage);
-				this.ai.setStartEnd(x, y, this.myMode.xpos, this.myMode.ypos, 0, this);
+				this.ai.setStartEnd(x, y, this.myMode.xpos, this.myMode.ypos, 0, null);
 						
 				this.myPhysics.applyGravityAndLadders(this.myMode.myInvisible, this, 
 											this.ai.getPixHintX(), this.ai.getPixHintY());
