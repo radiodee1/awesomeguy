@@ -1449,8 +1449,8 @@
 			found = -1;
 			for (i = 0; i < this.edgesFromDots.length; i ++) {
 				if (true) {
-					if (this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT <= somey &&
-						this.edgesFromDots[i][AGai.EPOS_STOPY] * this.TILE_HEIGHT >= somey &&
+					if (this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT - this.TILE_HEIGHT <= somey &&
+						this.edgesFromDots[i][AGai.EPOS_STOPY] * this.TILE_HEIGHT + this.TILE_HEIGHT >= somey &&
 						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH - (this.TILE_WIDTH / 2) <= somex &&
 						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH + (this.TILE_WIDTH / 2) >= somex //&&
 						//!this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL]
@@ -1461,7 +1461,7 @@
 							0 != this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y] ) {
 							found = i;
 							//trace("vert");
-							//this.hint_y = this.edgesFromDots[found][AGai.EPOS_DIRECTION_Y];
+							this.hint_y = this.edgesFromDots[found][AGai.EPOS_DIRECTION_Y];
 						}
 					}
 					if (this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_HEIGHT  <= somex &&
@@ -1476,7 +1476,7 @@
 							0 != this.edgesFromDots[i][AGai.EPOS_DIRECTION_Y] ) {
 							found = i;
 							//trace("hor");
-							//this.hint_x = this.edgesFromDots[found][AGai.EPOS_DIRECTION_X];
+							this.hint_x = this.edgesFromDots[found][AGai.EPOS_DIRECTION_X];
 						}
 					}
 					
@@ -1486,13 +1486,13 @@
 				//trace("none found");
 			}
 			else {
-				this.hint_x = this.edgesFromDots[found][AGai.EPOS_DIRECTION_X];
-				this.hint_y = this.edgesFromDots[found][AGai.EPOS_DIRECTION_Y];
+				//this.hint_x = this.edgesFromDots[found][AGai.EPOS_DIRECTION_X];
+				//this.hint_y = this.edgesFromDots[found][AGai.EPOS_DIRECTION_Y];
 				
 				this.hint_edge_found = found;
 				
 			}
-			trace(found, this.hint_x, this.hint_y);
+			trace(found, "j="+j,this.hint_x, this.hint_y);
 		}
 		
 		public function isHitCenter(x:int, y:int, graphnode:Boolean = true, width:int = 8, height:int = 8):Boolean {

@@ -166,7 +166,7 @@
 			if (!hit_bottom && !hit_ladder && !hit_center){// && ( !hit_ladder_right && !hit_ladder_left )){// && try_down ){//&& this.jump_count <= 0) {
 				yblock = int(AGModeGuy.Y_MOVE/q);
 				xblock = 0;
-				trace(yblock , "down");
+				//trace(yblock , "down");
 			}
 			
 			if (!hit_bottom && !hit_ladder && !hit_center && !try_up) {
@@ -183,7 +183,7 @@
 			}
 			*/
 			/////////////////
-			trace("physics", xblock, yblock);
+			//trace("physics", xblock, yblock);
 			
 			asprite.x += xblock;
 			asprite.y += yblock;
