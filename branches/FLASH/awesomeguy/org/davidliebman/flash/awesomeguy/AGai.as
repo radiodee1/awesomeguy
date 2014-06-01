@@ -1588,6 +1588,7 @@
 		public function getPixHintY():int {
 			var a:int ;
 			var b:int ;
+			//this.findAndFollowEdge();
 			//return this.hint_y;
 			if ( this.hint_edge_found < 0 || 
 				this.hint_edge_found >= this.edgesFromDots.length ) return this.hint_last_y ;
