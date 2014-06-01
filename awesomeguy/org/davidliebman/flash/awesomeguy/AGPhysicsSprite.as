@@ -26,7 +26,10 @@
 				hit_ladder_left:Boolean;
 			
 			var hit_platform:Boolean, 
-				hit_center:Boolean;
+				hit_center:Boolean,
+				hit_bottom_low:Boolean;
+				
+			var hit_ladder_core:Boolean;
 			
 			var try_up:Boolean, 
 				try_down:Boolean, 
@@ -49,6 +52,12 @@
 											asprite.bitmap.x , 
 											(asprite.bitmap.y ), AGModeGuy.B_BLOCK,( "center" ));
 			
+			hit_ladder_core = this.collisionTile(myinvisible,  asprite.x/ 64, asprite.y/ 64,// +1 ,
+											asprite.rail_center_core, 
+											asprite.rail_center_core.x , 
+											(asprite.rail_center_core.y ), AGModeGuy.B_LADDER,( "center" ));
+			
+			
 			
 			hit_bottom = this.collisionTile(myinvisible, 
 										(asprite.x //+ this.myMode.scrollBGX
@@ -58,6 +67,15 @@
 											asprite.rail_bottom, 
 											asprite.rail_bottom.x , 
 											(asprite.rail_bottom.y ) ,AGModeGuy.B_BLOCK, "bottom");
+			
+			hit_bottom_low = this.collisionTile(myinvisible, 
+										(asprite.x //+ this.myMode.scrollBGX
+										 )/ 64, 
+										(asprite.y //+ this.myMode.scrollBGY
+										 )/ 64 +1 ,
+											asprite.rail_low_bottom, 
+											asprite.rail_low_bottom.x , 
+											(asprite.rail_low_bottom.y ) ,AGModeGuy.B_BLOCK, "bottom");
 			
 			hit_ladder_low = this.collisionTile(myinvisible, 
 										(asprite.x //+ this.myMode.scrollBGX
@@ -104,6 +122,9 @@
 			if (xx > 0) try_right = true;
 			else try_right = false;
 			
+			hit_ladder = hit_ladder_core;
+			hit_bottom = hit_bottom_low;
+			
 			if (hit_ladder_low) hit_bottom = true;
 
 			xblock = 0;
@@ -139,7 +160,7 @@
 				}
 			}
 			if (try_up) {
-				if (hit_ladder || true ){//|| hit_ladder_low ) {
+				if (hit_ladder_core || true ){//|| hit_ladder_low ) {
 					yblock =  -   AGModeGuy.Y_MOVE/q ;//*2  ;
 					trace(yblock, "yblock");
 					//xblock = 0;
@@ -173,15 +194,15 @@
 				yblock = int(AGModeGuy.Y_MOVE/q);
 				xblock = 0;
 			}
-			/*
+			
 			if (try_up) {
-				if (hit_ladder ){// || hit_ladder_low ) {
+				if (hit_ladder_core ){// || hit_ladder_low ) {
 					yblock = int ( -   AGModeGuy.Y_MOVE/q) ;//*2  ;
 					xblock = 0;
 					//if(!hit_bottom) myGuy.quality_0 = AGModeGuy.GUY_CLIMB;
 				}
 			}
-			*/
+			
 			/////////////////
 			//trace("physics", xblock, yblock);
 			

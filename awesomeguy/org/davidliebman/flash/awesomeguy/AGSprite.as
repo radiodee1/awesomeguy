@@ -35,6 +35,7 @@
 			public var rail_top:Bitmap;
 			public var rail_bottom:Bitmap;
 			public var rail_low_bottom:Bitmap;
+			public var rail_center_core:Bitmap;
 		
 		public function AGSprite(mymode:AGMode, type:int) {
 			myMode = mymode;
@@ -104,6 +105,7 @@
 			this.rail_left = new Bitmap(vertical);
 			this.rail_right = new Bitmap(vertical);
 			this.rail_low_bottom = new Bitmap(horizontal);
+			this.rail_center_core = new Bitmap(vertical);
 			
 			this.rail_bottom.x = asprite.bitmap.x + (AGModeGuy.X_MOVE/ 2) ;
 			this.rail_bottom.y = asprite.bitmap.y + asprite.bitmap.height +  (AGModeGuy.Y_MOVE/2);
@@ -121,7 +123,8 @@
 			this.rail_top.x = asprite.bitmap.x + (AGModeGuy.X_MOVE/2);
 			this.rail_top.y = asprite.bitmap.y - ( AGModeGuy.Y_MOVE/2);
 			
-			
+			this.rail_center_core.x = asprite.bitmap.x + (asprite.bitmap.width/ 2);
+			this.rail_center_core.y = asprite.bitmap.y +  (AGModeGuy.X_MOVE/2);
 			
 		}
 		
@@ -135,6 +138,7 @@
 			myStage.addChild(this.rail_left);
 			myStage.addChild(this.rail_right);
 			myStage.addChild(this.rail_top);
+			myStage.addChild(this.rail_center_core);
 		}
 	}
 	
