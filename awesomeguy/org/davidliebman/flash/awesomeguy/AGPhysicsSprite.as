@@ -11,7 +11,8 @@
 			super(mystage, mymode);
 			// constructor code
 		}
-		public override function applyGravityAndLadders(myinvisible:Array, asprite:AGSprite, xx:int = 0, yy:int = 0) {
+		public override function applyGravityAndLadders(myinvisible:Array, asprite:AGSpriteXMonster, 
+														xx:int = 0, yy:int = 0) {
 			var xblock:int = 0;
 			var yblock:int = 0;
 			var mapcheat:int = 0;
@@ -55,7 +56,7 @@
 			hit_ladder_core = this.collisionTile(myinvisible,  asprite.x/ 64, asprite.y/ 64,// +1 ,
 											asprite.rail_center_core, 
 											asprite.rail_center_core.x , 
-											(asprite.rail_center_core.y ), AGModeGuy.B_LADDER,( "center" ));
+											(asprite.rail_center_core.y ), AGModeGuy.B_LADDER,( "ladder-center" ));
 			
 			
 			
@@ -75,7 +76,7 @@
 										 )/ 64 +1 ,
 											asprite.rail_low_bottom, 
 											asprite.rail_low_bottom.x , 
-											(asprite.rail_low_bottom.y ) ,AGModeGuy.B_BLOCK, "bottom");
+											(asprite.rail_low_bottom.y ) ,AGModeGuy.B_BLOCK, "low-bottom");
 			
 			hit_ladder_low = this.collisionTile(myinvisible, 
 										(asprite.x //+ this.myMode.scrollBGX
@@ -161,7 +162,7 @@
 			}
 			if (try_up) {
 				if (hit_ladder_core || true ){//|| hit_ladder_low ) {
-					yblock =  -   AGModeGuy.Y_MOVE/q ;//*2  ;
+					yblock =  -  int( AGModeGuy.Y_MOVE/q );//*2  ;
 					trace(yblock, "yblock");
 					//xblock = 0;
 					//if(!hit_bottom) myGuy.quality_0 = AGModeGuy.GUY_CLIMB;
@@ -212,7 +213,13 @@
 			asprite.bitmap.y += yblock;
 			
 		}
-		public function collisionTile(myinvisible:Array,coordx:int, coordy:int, a:Bitmap, xx:int, yy:int, blocktype:int = 0, message:String="NONE", size:int = 64, sizey:int = 64):Boolean {
+		public function collisionTile(myinvisible:Array,
+									  coordx:int, coordy:int, 
+									  a:Bitmap, 
+									  xx:int, yy:int, 
+									  blocktype:int = 0, 
+									  message:String="NONE", 
+									  size:int = 64, sizey:int = 64):Boolean {
 			var mapcheat:int = 0;
 			var scrollx:int = this.myMode.scrollBGX;
 			var scrolly:int = this.myMode.scrollBGY;

@@ -8,7 +8,7 @@
 			
 			if (this.sprite_type == AGMode.S_XMONSTER_CLIMBER) {
 				
-				this.myPhysics = new AGPhysicsSprite(this.myMode.myStage, this.myMode);
+				//this.myPhysics = new AGPhysicsSprite(this.myMode.myStage, this.myMode);
 				
 			}
 		}
@@ -30,7 +30,7 @@
 			
 			//for each monster...
 			if( this.sprite_type == AGMode.S_XMONSTER || this.sprite_type == AGMode.S_XMONSTER_STAND ){//||
-			   //this.sprite_type == AGMode.S_XMONSTER_CLIMBER) {
+			   
 				
 					//if (i == 5) return;
 					if ( true) {
@@ -109,14 +109,24 @@
 			}
 			if (this.sprite_type == AGMode.S_XMONSTER_CLIMBER) {
 				//this.visible = true;
+				
 				this.makeRails();
 				this.addRails(this.myMode.myStage);
-				this.ai.setStartEnd(x, y, this.myMode.xpos, this.myMode.ypos, 0, null);
+				
+				if (this.bitmap == null) return;
+				
+				this.ai.setStartEnd(this.x, this.y, this.myMode.xpos, this.myMode.ypos);//, 0, null);
+				
+				var somex:int = this.ai.getPixHintX();
+				var somey:int = this.ai.getPixHintY();
 						
-				this.myPhysics.applyGravityAndLadders(this.myMode.myInvisible, this, 
-											this.ai.getPixHintX(), this.ai.getPixHintY());
+				this.myPhysics.applyGravityAndLadders(this.myMode.myInvisible, this, somex,somey); 
+											//this.ai.getPixHintX(), this.ai.getPixHintY());
 				this.ai.drawMap();
-						
+				
+				//this.x = this.bitmap.x;
+				//this.y = this.bitmap.y;
+				
 			}
 			
 			myMode.drawRadarPing(myMode.radar, 
