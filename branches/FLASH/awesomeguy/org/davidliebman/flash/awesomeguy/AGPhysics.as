@@ -13,7 +13,7 @@
 			// constructor code
 		}
 		
-		public function applyGravityAndLadders(myinvisible:Array, sprite:AGSprite, x:int = 0, y:int = 0) {
+		public function applyGravityAndLadders(myinvisible:Array, sprite:AGSpriteXMonster, x:int = 0, y:int = 0) {
 			
 		}
 		

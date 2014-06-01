@@ -139,6 +139,7 @@
 			myStage.addChild(this.rail_right);
 			myStage.addChild(this.rail_top);
 			myStage.addChild(this.rail_center_core);
+			myStage.addChild(this.rail_low_bottom);
 		}
 	}
 	

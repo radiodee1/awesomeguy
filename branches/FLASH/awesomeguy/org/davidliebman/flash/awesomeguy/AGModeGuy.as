@@ -521,7 +521,7 @@
 			
 			if (kind == AGMode.S_XMONSTER_CLIMBER) {
 				mon.ai = this.ai;
-				//mon.myPhysics = new AGPhysics(this.myStage, this);
+				mon.myPhysics = new AGPhysicsSprite(this.myStage, this);
 				mon.ai.myMultiFlag = true;
 				
 				//mon.ai = this.ai;
