@@ -1074,7 +1074,8 @@
 <block>XML_MAZE_KEY_DOOR_COMBO, XML_MAZE_COLOR_RED,2, 6, 11,5</block>
 <block>XML_REPLACE_INVISIBLE, 7, 30, 31</block>
 <block>XML_REPLACE_INVISIBLE, 20, 30, 31</block>
-<block>XML_MAZE_MONSTER_SPEED, 1</block>
+<block>XML_REPLACE_INVISIBLE, 7, 5, 31</block>
+<block>XML_MAZE_MONSTER_SPEED, 3</block>
 </special>
 </maze>
 <maze number="2">
