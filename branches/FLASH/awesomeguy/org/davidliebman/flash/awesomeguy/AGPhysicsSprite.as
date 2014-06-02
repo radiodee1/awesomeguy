@@ -163,7 +163,7 @@
 			if (try_up) {
 				if (hit_ladder_core || true ){//|| hit_ladder_low ) {
 					yblock =  -  int( AGModeGuy.Y_MOVE/q );//*2  ;
-					trace(yblock, "yblock");
+					//trace(yblock, "yblock");
 					//xblock = 0;
 					//if(!hit_bottom) myGuy.quality_0 = AGModeGuy.GUY_CLIMB;
 				}

@@ -1108,7 +1108,7 @@
 						this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIRECTION_Y] = 
 							this.getEdgeDirectionY(q_i, q_j, this.q_edge_indeces);
 							
-						trace("q_alt", q_alt);
+						//trace("q_j", q_j);
 						
 						if (q_alt <= this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] ){// was q_j 
 							this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] = q_alt;
@@ -1494,7 +1494,7 @@
 				this.hint_edge_found = found;
 				
 			}
-			trace(found, "j="+j,this.hint_x, this.hint_y);
+			//trace(found, "j="+j,this.hint_x, this.hint_y);
 		}
 		
 		public function isHitCenter(x:int, y:int, graphnode:Boolean = true, width:int = 8, height:int = 8):Boolean {
