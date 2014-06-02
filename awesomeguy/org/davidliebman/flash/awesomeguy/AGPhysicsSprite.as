@@ -126,7 +126,7 @@
 			hit_ladder = hit_ladder_core;
 			hit_bottom = hit_bottom_low;
 			
-			if (hit_ladder_low) hit_bottom = true;
+			if (hit_ladder_low && !try_down) hit_bottom = true;
 
 			xblock = 0;
 			yblock = 0;
