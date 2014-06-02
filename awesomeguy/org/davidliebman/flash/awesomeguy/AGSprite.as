@@ -100,12 +100,12 @@
 			}
 			*/
 			
-			this.rail_bottom = new Bitmap(horizontal);
-			this.rail_top = new Bitmap(horizontal);
-			this.rail_left = new Bitmap(vertical);
-			this.rail_right = new Bitmap(vertical);
-			this.rail_low_bottom = new Bitmap(horizontal);
-			this.rail_center_core = new Bitmap(vertical);
+			this.rail_bottom = new Bitmap(horizontal.clone());
+			this.rail_top = new Bitmap(horizontal.clone());
+			this.rail_left = new Bitmap(vertical.clone());
+			this.rail_right = new Bitmap(vertical.clone());
+			this.rail_low_bottom = new Bitmap(horizontal.clone());
+			this.rail_center_core = new Bitmap(vertical.clone());
 			
 			this.rail_bottom.x = asprite.bitmap.x + (AGModeGuy.X_MOVE/ 2) ;
 			this.rail_bottom.y = asprite.bitmap.y + asprite.bitmap.height +  (AGModeGuy.Y_MOVE/2);
