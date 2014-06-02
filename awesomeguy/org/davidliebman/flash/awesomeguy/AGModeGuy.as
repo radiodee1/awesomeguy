@@ -124,7 +124,7 @@
 			if (this.myAISpeed >=1) {
 				for(i = 0; i < this.myAISpeed; i ++) {
 					ai.doCalc();
-					trace("do calc", this.myAISpeed);
+					//trace("do calc", this.myAISpeed);
 				}
 			}
 			
