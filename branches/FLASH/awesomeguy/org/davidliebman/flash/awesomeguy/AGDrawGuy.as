@@ -479,12 +479,10 @@
 				}
 			}
 			
-			//sprite.bitmap = new Bitmap( 
-			//	myRes[AGResources.NAME_GATOR_PUNCH_R1_PNG].bitmapData.clone());
-			//ycheat = - 60;//(sprite.bitmap.height ) * -1
+			
 			sprite.bitmap.x = sprite.x - scrollx;
 			sprite.bitmap.y = sprite.y - scrolly + ycheat;
-			stageHelper.addChild(sprite.bitmap);
+			//stageHelper.addChild(sprite.bitmap);
 			
 		}
 		
