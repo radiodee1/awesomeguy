@@ -480,8 +480,8 @@
 			}
 			
 			
-			sprite.bitmap.x = sprite.x - scrollx;
-			sprite.bitmap.y = sprite.y - scrolly + ycheat;
+			//sprite.bitmap.x = sprite.x - scrollx;
+			//sprite.bitmap.y = sprite.y - scrolly + ycheat;
 			//stageHelper.addChild(sprite.bitmap);
 			
 		}

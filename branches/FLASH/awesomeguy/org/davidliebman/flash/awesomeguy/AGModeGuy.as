@@ -1389,7 +1389,8 @@
 						}
 					}
 					if ((mySprite[ii].sprite_type == AGMode.S_XMONSTER ||
-						mySprite[ii].sprite_type == AGMode.S_XMONSTER_STAND)&&
+						mySprite[ii].sprite_type == AGMode.S_XMONSTER_STAND ||
+						mySprite[ii].sprite_type == AGMode.S_XMONSTER_CLIMBER)&&
 						mySprite[ii].active == true &&
 						this.collisionBlock(this.mySprite[ii].bitmap, myDraw.rail_bottom) &&
 						!this.collisionBlock(this.mySprite[ii].bitmap, myDraw.rail_left) &&
@@ -1476,6 +1477,7 @@
 							break;
 							case AGMode.S_XMONSTER:
 							case AGMode.S_XMONSTER_STAND:
+							case AGMode.S_XMONSTER_CLIMBER:
 								testPunch(myGuy, sprite);
 								if (!sprite.active) break;
 								//if (myGame.gameHealth <= 0) this.guyDeath();
@@ -1553,6 +1555,7 @@
 							case AGMode.S_GATOR:
 							case AGMode.S_XMONSTER:
 							case AGMode.S_XMONSTER_STAND:
+							case AGMode.S_XMONSTER_CLIMBER:
 								sprite.active = false;
 								myGame.gameScore += 10;
 							break;
@@ -1667,7 +1670,8 @@
 				var facingMonster:Boolean = false; 
 				
 				if (monster.sprite_type != AGMode.S_XMONSTER && 
-					monster.sprite_type != AGMode.S_XMONSTER_STAND) {
+					monster.sprite_type != AGMode.S_XMONSTER_STAND &&
+					monster.sprite_type != AGMode.S_XMONSTER_CLIMBER) {
 					return;
 				}
 			
