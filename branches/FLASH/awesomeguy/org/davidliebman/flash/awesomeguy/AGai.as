@@ -1107,6 +1107,8 @@
 							this.getEdgeDirectionX(q_i, q_j, this.q_edge_indeces);
 						this.edgesFromDots[this.q_edge_indeces][AGai.EPOS_DIRECTION_Y] = 
 							this.getEdgeDirectionY(q_i, q_j, this.q_edge_indeces);
+							
+						trace("q_alt", q_alt);
 						
 						if (q_alt <= this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] ){// was q_j 
 							this.nodesFromDots[q_j][AGai.NPOS_CALCDIST] = q_alt;
