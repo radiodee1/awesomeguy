@@ -848,10 +848,20 @@
 </invisible>
 </horizon>
 <challenges>
+<invaders>5,1,1,2,1,1,0,0 ,0,0,0,0,0,0,0,1</invaders>
 </challenges>
 <special>
+<block>XML_TEXT_PLANET_BEFORE_COMPLETE,1</block>
+<block>XML_TEXT_PLANET_AFTER_COMPLETE,2</block>
+<block>XML_PLANET_ASTROGATE, 100, 15</block>
 </special>
 <text>
+<message number="1">find a maze!!</message>
+<message number="2">go to astrogate!!</message>
+<message number="3">find an astrogate key!!</message>
+<message number="4">go back to ship!!</message>
 </text>
 <underground>
+</underground>
+</planet>
 </game>
