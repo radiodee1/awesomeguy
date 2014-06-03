@@ -37,7 +37,9 @@ public class AG20jFrameList extends javax.swing.JFrame {
         for (int j = 0; j < list.size(); j ++) {
             text = text.concat(list.get(j) + "\n");
         }
-        
+        if (text.isEmpty() && this.title.equalsIgnoreCase("challenge")) { 
+            text = "5,1,1,2,1,1,0,0 ,0,0,0,0,0,0,0,1";
+        }
         this.jEditorPane1.setText(text);
     }
 
