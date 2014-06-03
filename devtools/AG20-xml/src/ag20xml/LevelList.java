@@ -79,7 +79,7 @@ import java.util.ArrayList;
                         
                         this.l_text = 0;
                         this.countText(head, i, 0, Tree.TYPE_ABOVE_GROUND);
-                        if(this.l_text > 0 ) {
+                        if(this.l_text > 0 || true) {
                             Info text = this.interest;
                             this.listCaptureWithNum(this.mList.get(i).mTextMessage  ,this.mList.get(i).mTextNum , 
                                 text, i, 0, Tree.TYPE_ABOVE_GROUND, Tree.N_TEXT);
@@ -247,6 +247,13 @@ import java.util.ArrayList;
                         list.add(text);
                         System.out.println(text);
                     }
+                    /*
+                    if (z.list.size() == 0) {
+                        list.add("5,1,1,2,1,1,0,0 ,0,0,0,0,0,0,0,1");
+                        //nums.add(0);
+                        System.out.println("default text" + " " + 0);
+                    }
+                    */
                 }
                 public void listCaptureWithNum(ArrayList<String> list, ArrayList<Integer> nums, 
                         Info i, int planet, int maze, int type, String record) {
@@ -260,6 +267,13 @@ import java.util.ArrayList;
                         nums.add(number);
                         System.out.println(text + " " + number);
                     }
+                    /*
+                    if (z.list.size() == 0) {
+                        list.add("5,1,1,2,1,1,0,0 ,0,0,0,0,0,0,0,1");
+                        nums.add(1);
+                        System.out.println("default text" + " " + 0);
+                    }
+                    */
                 }
                 
                 ////////////////// SIMPLE FUNCTIONS HERE ////////////////
