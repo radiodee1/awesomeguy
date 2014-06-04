@@ -56,12 +56,13 @@ public class convert_tiles{
 	
 	public int myCheatNum = 0;
 	public boolean myWriteFileFlag = true;
+	public int myTokenCount = 0;
 	
 	public Hashtable<Integer, Integer> myDict ;
 	
 	public static void main(String[] args)  throws IOException {
 		if (args.length < 2) System.exit(0);
-		System.out.println(args[0]+" -- "+ args[1]);
+		//System.out.println(args[0]+" -- "+ args[1]);
 		convert_tiles ct = new convert_tiles();
 		
 		ct.myFileName = args[1];
@@ -91,30 +92,37 @@ public class convert_tiles{
 		this.myDict.put(438, convert_tiles.B_ONEUP);
 		this.myDict.put(437, convert_tiles.B_MARKER);
 		// all lines after this are added during the conversion.
-		//this.myDict.put(4, convert_tiles.B_START);
-		this.myDict.put(233, convert_tiles.B_TILES_PINK);
+		this.myDict.put(6, convert_tiles.B_START);
+		this.myDict.put(448, convert_tiles.B_PRIZE);
+		this.myDict.put(234, convert_tiles.B_TILES_PINK);
 		this.myDict.put(133, convert_tiles.B_TILES_PURPLE);
-		this.myDict.put(257, convert_tiles.B_LADDER); //ladder?
-		this.myDict.put(118, convert_tiles.B_TILES_PURPLE);
+		this.myDict.put(258, convert_tiles.B_LADDER); //ladder?
+		this.myDict.put(119, convert_tiles.B_TILES_PURPLE);
+		this.myDict.put(157, convert_tiles.B_TILES_PURPLE);
+		this.myDict.put(232, convert_tiles.B_TILES_PINK);
+		this.myDict.put(133, convert_tiles.B_TILES_PURPLE);
+		this.myDict.put(134, convert_tiles.B_TILES_PURPLE);
+		this.myDict.put(230, convert_tiles.B_TILES_PINK);
+		this.myDict.put(27, convert_tiles.B_TILES_PURPLE);
+		this.myDict.put(24, convert_tiles.B_TILES_PURPLE);
 		this.myDict.put(156, convert_tiles.B_TILES_PURPLE);
-		this.myDict.put(231, convert_tiles.B_TILES_PINK);
-		this.myDict.put(133, convert_tiles.B_TILES_PURPLE);
-		this.myDict.put(229, convert_tiles.B_TILES_PINK);
-		this.myDict.put(26, convert_tiles.B_TILES_GREEN);
-		this.myDict.put(23, convert_tiles.B_TILES_GREEN);
-		this.myDict.put(155, convert_tiles.B_TILES_PURPLE);
 	}
 	
 	public void convert_visible(String input){
+		this.myCheatNum = 1;
 		this.myInputList = this.inputAsList(input);
 		this.processList(this.myDict);
 		this.outputFromList("visible");
+		System.out.println("count: " + this.myTokenCount);
 	}
 	
 	public void convert_invisible(String input) {
+		this.myCheatNum = 0;
 		this.myInputList = this.inputAsList(input);
 		this.processList(this.myDict);
 		this.outputFromList("invisible");
+		System.out.println("count: " + this.myTokenCount);
+
 	}
 	
 	public ArrayList<String> inputAsList(String in){
@@ -162,11 +170,18 @@ public class convert_tiles{
 	public void processList(Hashtable<Integer, Integer> replaceList) {
 		//this.myOutputList = this.myInputList;
 		for(int x = 0; x < this.myInputList.size(); x ++){
-			this.processLine(this.myInputList.get(x), replaceList);
+			String line = this.processLine(this.myInputList.get(x), replaceList);
+			if (x < this.myInputList.size() - 1 && !line.endsWith(",") && !line.isEmpty()) {
+				line = line + ",";
+			}
+			if (!line.isEmpty()) {
+				
+				this.myOutputList.add(line);
+			}
 		}
 	}
 	
-	public void processLine(String in, Hashtable<Integer,Integer> list) {
+	public String processLine(String in, Hashtable<Integer,Integer> list) {
 		StringTokenizer st = new StringTokenizer(in,",");
 		String line = new String();
 		while (st.hasMoreTokens()) {
@@ -178,6 +193,7 @@ public class convert_tiles{
 				//System.out.println(num);
 				if (this.myDict.get(num) != null) {
 					line = line + " " + this.myDict.get(num);// + ",";
+					this.myTokenCount ++;
 					if (st.hasMoreTokens()) {
 						line = line + ",";
 					}
@@ -190,8 +206,9 @@ public class convert_tiles{
 				}
 			}
 		}
-		this.myOutputList.add(line);
+		//this.myOutputList.add(line);
 		//System.out.println(line);
+		return line;
 	}
 }
 
