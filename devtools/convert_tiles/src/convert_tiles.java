@@ -40,6 +40,7 @@ public class convert_tiles{
 	public static int  B_TILES_PINK = 2;
 	public static int  B_TILES_PURPLE = 8;
 	public static int  B_TILES_GREEN = 1;
+	public static int  B_TILES_LADDER = 14;
 	public static int  B_START_SERIES_PINK = -2;
 	public static int  B_START_SERIES_PURPLE = - 3;
 	public static int  B_START_SERIES_GREEN = -4;
@@ -96,7 +97,7 @@ public class convert_tiles{
 		this.myDict.put(448, convert_tiles.B_PRIZE);
 		this.myDict.put(234, convert_tiles.B_TILES_PINK);
 		this.myDict.put(133, convert_tiles.B_TILES_PURPLE);
-		this.myDict.put(258, convert_tiles.B_LADDER); //ladder?
+		this.myDict.put(258, convert_tiles.B_TILES_LADDER); //ladder?
 		this.myDict.put(119, convert_tiles.B_TILES_PURPLE);
 		this.myDict.put(157, convert_tiles.B_TILES_PURPLE);
 		this.myDict.put(232, convert_tiles.B_TILES_PINK);
