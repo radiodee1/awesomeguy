@@ -54,9 +54,8 @@ public class convert_tiles{
 	public ArrayList<String> myInputList = new ArrayList<String>();
 	public ArrayList<String> myOutputList = new ArrayList<String>();
 	
-	
-	//public ArrayList<String> myReplaceListVisible = new ArrayList<String>();
-	//public ArrayList<String> myReplaceListInvisible = new ArrayList<String>();
+	public int myCheatNum = 0;
+	public boolean myWriteFileFlag = true;
 	
 	public Hashtable<Integer, Integer> myDict ;
 	
@@ -91,18 +90,29 @@ public class convert_tiles{
 		this.myDict.put(439, convert_tiles.B_DEATH);
 		this.myDict.put(438, convert_tiles.B_ONEUP);
 		this.myDict.put(437, convert_tiles.B_MARKER);
+		// all lines after this are added during the conversion.
+		//this.myDict.put(4, convert_tiles.B_START);
+		this.myDict.put(233, convert_tiles.B_TILES_PINK);
+		this.myDict.put(133, convert_tiles.B_TILES_PURPLE);
+		this.myDict.put(257, convert_tiles.B_LADDER); //ladder?
+		this.myDict.put(118, convert_tiles.B_TILES_PURPLE);
+		this.myDict.put(156, convert_tiles.B_TILES_PURPLE);
+		this.myDict.put(231, convert_tiles.B_TILES_PINK);
+		this.myDict.put(133, convert_tiles.B_TILES_PURPLE);
+		this.myDict.put(229, convert_tiles.B_TILES_PINK);
+		this.myDict.put(26, convert_tiles.B_TILES_GREEN);
+		this.myDict.put(23, convert_tiles.B_TILES_GREEN);
+		this.myDict.put(155, convert_tiles.B_TILES_PURPLE);
 	}
 	
 	public void convert_visible(String input){
 		this.myInputList = this.inputAsList(input);
-		System.out.println("visible "+input);
 		this.processList(this.myDict);
 		this.outputFromList("visible");
 	}
 	
 	public void convert_invisible(String input) {
 		this.myInputList = this.inputAsList(input);
-		System.out.println("invisible "+ input);
 		this.processList(this.myDict);
 		this.outputFromList("invisible");
 	}
@@ -127,11 +137,11 @@ public class convert_tiles{
 	  
 	public void outputFromList(String label) {
 		this.myFileName = this.processName(this.myFileName);
-
+		if (this.myWriteFileFlag == false) return;
 		try {
-			this.writeSmallTextFile(this.myOutputList, this.myOutputPath + this.myFileName + "."+label + OUTPUT_FILE_NAME);
+			this.writeSmallTextFile(this.myOutputList, 
+					this.myOutputPath + this.myFileName + "."+label + OUTPUT_FILE_NAME);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -162,17 +172,26 @@ public class convert_tiles{
 		while (st.hasMoreTokens()) {
 			String temp = st.nextToken();
 			temp = temp.trim();
-			Integer num = new Integer(temp).intValue();
-			System.out.println(num);
-			if (this.myDict.get(num) != null) {
-				line = line + " " + this.myDict.get(num) + ",";
-				//System.out.println("found");
-			}
-			else {
-				//System.out.println("not found");
+			if (!temp.isEmpty()) {
+				Integer num = new Integer(temp).intValue() ;
+				if (num != 0) num = num + this.myCheatNum;
+				//System.out.println(num);
+				if (this.myDict.get(num) != null) {
+					line = line + " " + this.myDict.get(num);// + ",";
+					if (st.hasMoreTokens()) {
+						line = line + ",";
+					}
+					//System.out.println("found");
+				}
+				else {
+					this.myWriteFileFlag = false;
+					System.out.println("Not found: "+ temp);
+					
+				}
 			}
 		}
-		System.out.println(line);
+		this.myOutputList.add(line);
+		//System.out.println(line);
 	}
 }
 
