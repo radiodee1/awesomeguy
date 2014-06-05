@@ -180,6 +180,16 @@ public class convert_tiles{
 				this.myOutputList.add(line);
 			}
 		}
+		for (int x = 0; x < this.myOutputList.size(); x ++) {
+			if (x == this.myOutputList.size() - 1 ) {
+				String line = this.myOutputList.get(x);
+				if (line.endsWith(",")) {
+					int y = line.lastIndexOf(",");
+					line = line.substring(0, y);
+					this.myOutputList.set(x, line);
+				}
+			}
+		}
 	}
 	
 	public String processLine(String in, Hashtable<Integer,Integer> list) {
