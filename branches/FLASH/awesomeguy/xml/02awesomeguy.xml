@@ -1265,6 +1265,10 @@
 <challenges>
 </challenges>
 <special>
+<block>XML_MAZE_EXIT, 74, 2</block>
+<block>XML_TEXT_MAZE_BEFORE_COMPLETE, 3</block>
+<block>XML_TEXT_MAZE_AFTER_COMPLETE, 4</block>
+<block>XML_REPLACE_INVISIBLE, 70, 3, 27</block>
 </special>
 </maze>
 </underground>
