@@ -50,7 +50,7 @@
 		var myHorizontal:int = 0;
 		var myVertical:int = 0;
 		
-		public var myAISpeed:int = 1;
+		public var myAISpeed:int = 0;
 		
 		public static var X_MOVE = 10 * 2;
 		public static var Y_MOVE = 10 * 2;
