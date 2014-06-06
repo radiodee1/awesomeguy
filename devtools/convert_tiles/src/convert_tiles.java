@@ -95,18 +95,18 @@ public class convert_tiles{
 		// all lines after this are added during the conversion.
 		this.myDict.put(6, convert_tiles.B_START);
 		this.myDict.put(448, convert_tiles.B_PRIZE);
-		this.myDict.put(234, convert_tiles.B_TILES_PINK);
+		this.myDict.put(233, convert_tiles.B_TILES_PINK);
 		this.myDict.put(133, convert_tiles.B_TILES_PURPLE);
-		this.myDict.put(258, convert_tiles.B_TILES_LADDER); //ladder?
-		this.myDict.put(119, convert_tiles.B_TILES_PURPLE);
-		this.myDict.put(157, convert_tiles.B_TILES_PURPLE);
-		this.myDict.put(232, convert_tiles.B_TILES_PINK);
+		this.myDict.put(257, convert_tiles.B_TILES_LADDER); //ladder?
+		this.myDict.put(118, convert_tiles.B_TILES_PURPLE);
+		this.myDict.put(156, convert_tiles.B_TILES_PURPLE);
+		this.myDict.put(231, convert_tiles.B_TILES_PINK);
 		this.myDict.put(133, convert_tiles.B_TILES_PURPLE);
 		this.myDict.put(134, convert_tiles.B_TILES_PURPLE);
-		this.myDict.put(230, convert_tiles.B_TILES_PINK);
-		this.myDict.put(27, convert_tiles.B_TILES_PURPLE);
-		this.myDict.put(24, convert_tiles.B_TILES_PURPLE);
-		this.myDict.put(156, convert_tiles.B_TILES_PURPLE);
+		this.myDict.put(229, convert_tiles.B_TILES_PINK);
+		this.myDict.put(26, convert_tiles.B_TILES_PURPLE);
+		this.myDict.put(23, convert_tiles.B_TILES_PURPLE);
+		this.myDict.put(155, convert_tiles.B_TILES_PURPLE);
 		this.myDict.put(19, convert_tiles.B_TILES_PINK);
 		this.myDict.put(279, convert_tiles.B_TILES_PINK);
 		this.myDict.put(363, convert_tiles.B_TILES_PINK);
@@ -117,7 +117,7 @@ public class convert_tiles{
 	}
 	
 	public void convert_visible(String input){
-		this.myCheatNum = 1;
+		this.myCheatNum = 0;
 		this.myInputList = this.inputAsList(input);
 		this.processList(this.myDict);
 		this.outputFromList("visible");
