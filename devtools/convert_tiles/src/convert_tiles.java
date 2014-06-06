@@ -37,7 +37,7 @@ public class convert_tiles{
 	public static int  B_ONEUP = 19 ;
 	public static int  B_BIGPRIZE = 21 ;
 	public static int  B_PLATFORM = 18 ; 
-	public static int  B_TILES_PINK = 2;
+	public static int  B_TILES_PINK = 3;
 	public static int  B_TILES_PURPLE = 8;
 	public static int  B_TILES_GREEN = 1;
 	public static int  B_TILES_LADDER = 14;
@@ -107,6 +107,13 @@ public class convert_tiles{
 		this.myDict.put(27, convert_tiles.B_TILES_PURPLE);
 		this.myDict.put(24, convert_tiles.B_TILES_PURPLE);
 		this.myDict.put(156, convert_tiles.B_TILES_PURPLE);
+		this.myDict.put(19, convert_tiles.B_TILES_PINK);
+		this.myDict.put(279, convert_tiles.B_TILES_PINK);
+		this.myDict.put(363, convert_tiles.B_TILES_PINK);
+		this.myDict.put(342, convert_tiles.B_TILES_PINK);
+		this.myDict.put(263, convert_tiles.B_TILES_PINK);
+		this.myDict.put(350, convert_tiles.B_TILES_PINK);
+
 	}
 	
 	public void convert_visible(String input){
