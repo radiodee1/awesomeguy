@@ -1114,6 +1114,9 @@
 <block>XML_MAZE_PLATFORM_START, 24,21</block>
 <block>XML_MAZE_PLATFORM_MARKER, 10,5</block>
 <block>XML_MAZE_DOOR_SPRITE, 0,1</block>
+<block>XML_REPLACE_INVISIBLE, 7, 3, 16</block>
+<block>XML_REPLACE_INVISIBLE, 31, 24, 26</block>
+<block>XML_REPLACE_INVISIBLE, 27, 13, 24</block>
 </special>
 </maze>
 </underground>
