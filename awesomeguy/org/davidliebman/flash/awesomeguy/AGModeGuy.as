@@ -117,8 +117,8 @@
 			radarscreen = new Bitmap( new BitmapData(SCREEN_WIDTH - 128, 64,
 										false, 0x00000000));
 			addSprites();
-			myGuy.updateSprite()
-			myDraw.drawBasicSprite(myGuy, D_GUY);
+			//myGuy.updateSprite()
+			//myDraw.drawBasicSprite(myGuy, D_GUY);
 			
 			var i:int = 0;
 			if (this.myAISpeed >=1) {
@@ -129,6 +129,11 @@
 			}
 			
 			drawLevelTiles();
+			
+			myGuy.updateSprite()
+			myDraw.drawBasicSprite(myGuy, D_GUY);
+			
+			
 			updateSprites();
 			drawAnimatedSprites();
 			drawRadarRock();
