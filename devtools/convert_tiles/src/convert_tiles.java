@@ -39,7 +39,7 @@ public class convert_tiles{
 	public static int  B_PLATFORM = 18 ; 
 	public static int  B_TILES_PINK = 3;
 	public static int  B_TILES_PURPLE = 8;
-	public static int  B_TILES_GREEN = 1;
+	public static int  B_TILES_GREEN = 2;
 	public static int  B_TILES_LADDER = 14;
 	public static int  B_START_SERIES_PINK = -2;
 	public static int  B_START_SERIES_PURPLE = - 3;
