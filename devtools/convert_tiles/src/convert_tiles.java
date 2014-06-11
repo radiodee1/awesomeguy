@@ -113,6 +113,13 @@ public class convert_tiles{
 		this.myDict.put(342, convert_tiles.B_TILES_PINK);
 		this.myDict.put(263, convert_tiles.B_TILES_PINK);
 		this.myDict.put(350, convert_tiles.B_TILES_PINK);
+		this.myDict.put(2, convert_tiles.B_TILES_GREEN);
+		this.myDict.put(93, convert_tiles.B_TILES_GREEN);
+		this.myDict.put(165, convert_tiles.B_TILES_GREEN);
+		this.myDict.put(7, convert_tiles.B_TILES_GREEN);
+		this.myDict.put(181, convert_tiles.B_TILES_GREEN);
+		this.myDict.put(182, convert_tiles.B_TILES_GREEN);
+		this.myDict.put(126, convert_tiles.B_TILES_GREEN);
 
 	}
 	
