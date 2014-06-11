@@ -843,6 +843,11 @@
 <invaders>5,1,1,2,1,1,0,0 ,0,0,0,0,0,0,0,1</invaders>
 </challenges>
 <special>
+<block>XML_MAZE_ENTRANCE , 50,31, 31, XML_MAZE_START_REGULAR , 0, 0</block>
+<block>XML_TEXT_PLANET_BEFORE_COMPLETE,1</block>
+<block>XML_TEXT_PLANET_AFTER_COMPLETE,2</block>
+<block>XML_PLANET_ASTROGATE, 100, 15</block>
+<block>XML_TEST</block>
 </special>
 <text>
 <message number="1">find a maze!!</message>
@@ -1341,10 +1346,9 @@
 <challenges>
 </challenges>
 <special>
-<block>XML_MAZE_EXIT, 74, 2</block>
+<block>XML_MAZE_EXIT, 5, 5</block>
 <block>XML_TEXT_MAZE_BEFORE_COMPLETE, 3</block>
 <block>XML_TEXT_MAZE_AFTER_COMPLETE, 4</block>
-<block>XML_REPLACE_INVISIBLE, 70, 3, 27</block>
 </special>
 </maze>
 <maze number="32">
