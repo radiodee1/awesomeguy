@@ -843,7 +843,7 @@
 <invaders>5,1,1,2,1,1,0,0 ,0,0,0,0,0,0,0,1</invaders>
 </challenges>
 <special>
-<block>XML_MAZE_ENTRANCE , 50,31, 31, XML_MAZE_START_REGULAR , 0, 0</block>
+<block>XML_MAZE_ENTRANCE , 55,30, 31, XML_MAZE_START_REGULAR , 0, 0</block>
 <block>XML_TEXT_PLANET_BEFORE_COMPLETE,1</block>
 <block>XML_TEXT_PLANET_AFTER_COMPLETE,2</block>
 <block>XML_PLANET_ASTROGATE, 100, 15</block>
@@ -1346,7 +1346,7 @@
 <challenges>
 </challenges>
 <special>
-<block>XML_MAZE_EXIT, 5, 5</block>
+<block>XML_MAZE_EXIT, 88, 19</block>
 <block>XML_TEXT_MAZE_BEFORE_COMPLETE, 3</block>
 <block>XML_TEXT_MAZE_AFTER_COMPLETE, 4</block>
 <block>XML_REPLACE_INVISIBLE, 90, 22, 25</block>
@@ -1361,6 +1361,22 @@
 <block>XML_REPLACE_VISIBLE, 90, 27, 14</block>
 <block>XML_REPLACE_VISIBLE, 90, 28, 14</block>
 <block>XML_REPLACE_VISIBLE, 90, 29, 14</block>
+<block>XML_REPLACE_INVISIBLE, 91, 18, 25</block>
+<block>XML_REPLACE_INVISIBLE, 91, 19, 25</block>
+<block>XML_REPLACE_VISIBLE, 91, 18, 14</block>
+<block>XML_REPLACE_VISIBLE, 91, 19, 14</block>
+<block>XML_REPLACE_INVISIBLE, 90, 14, 25</block>
+<block>XML_REPLACE_INVISIBLE, 90, 15, 25</block>
+<block>XML_REPLACE_VISIBLE, 90, 14, 14</block>
+<block>XML_REPLACE_VISIBLE, 90, 15, 14</block>
+<block>XML_REPLACE_INVISIBLE, 78, 16, 25</block>
+<block>XML_REPLACE_INVISIBLE, 78, 17, 25</block>
+<block>XML_REPLACE_INVISIBLE, 78, 18, 25</block>
+<block>XML_REPLACE_VISIBLE, 78, 16, 14</block>
+<block>XML_REPLACE_VISIBLE, 78, 17, 14</block>
+<block>XML_REPLACE_VISIBLE, 78, 18, 14</block>
+<block>XML_REPLACE_INVISIBLE, 69, 10, 26</block>
+<block>XML_REPLACE_INVISIBLE, 86, 20, 27</block>
 </special>
 </maze>
 <maze number="32">
