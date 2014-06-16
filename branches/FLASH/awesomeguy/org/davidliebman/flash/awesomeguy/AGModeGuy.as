@@ -117,8 +117,6 @@
 			radarscreen = new Bitmap( new BitmapData(SCREEN_WIDTH - 128, 64,
 										false, 0x00000000));
 			addSprites();
-			//myGuy.updateSprite()
-			//myDraw.drawBasicSprite(myGuy, D_GUY);
 			
 			var i:int = 0;
 			if (this.myAISpeed >=1) {
@@ -725,8 +723,8 @@
 			var TILE_WIDTH:int = 64;
 			var TILE_HEIGHT:int = 64;
 			
-			var tilesWidthMeasurement:int =   32;
-			var tilesHeightMeasurement:int =  24;//
+			var tilesWidthMeasurement:int =  8;// 32;
+			var tilesHeightMeasurement:int = 6;// 24;//
 			
 			var LONG_MAP_H:int =	this.myHoriz;
 			var LONG_MAP_V:int =	this.myVert;
