@@ -269,7 +269,7 @@
 				var anim_speed:int = 5;
 				var add:int, add_radar:int, z:int;
 
-				var ycheat:int = 17;
+				var ycheat:int =0;//34;// 17;
 				sprite.animate ++;
 				if (sprite.animate > (anim_speed * 4) ) sprite.animate=0;
 				if (sprite.animate > anim_speed * 2) z = 1;
@@ -295,7 +295,7 @@
 								sprite.bitmap = new Bitmap( 
 									myRes[AGResources.NAME_CRAWLER_R2_PNG].bitmapData.clone());//
 								sprite.bitmap.x = sprite.x - scrollx;
-								sprite.bitmap.y = sprite.y - scrolly;
+								sprite.bitmap.y = sprite.y - scrolly + ycheat;
 								stageHelper.addChild(sprite.bitmap);
 							}
 						}
@@ -313,7 +313,7 @@
 								sprite.bitmap = new Bitmap( 
 									myRes[AGResources.NAME_CRAWLER_L2_PNG].bitmapData.clone());//
 								sprite.bitmap.x = sprite.x - scrollx;
-								sprite.bitmap.y = sprite.y - scrolly;
+								sprite.bitmap.y = sprite.y - scrolly + ycheat;
 								stageHelper.addChild(sprite.bitmap);
 							}
 						}
@@ -322,7 +322,7 @@
 				}
 				
 				else if (sprite.sprite_type == AGMode.S_XMONSTER_STAND) {
-					ycheat = -56;
+					ycheat = -28;
 					
 					if ( true ) {
 						//trace (sprite.animate);
@@ -406,6 +406,8 @@
 		}
 
 		public function drawTorpedo() {
+			var ycheat:int = 25;// 50;
+			
 			if (sprite == null || sprite.bitmap == null ) return;
 					
 			if (sprite.facingRight) sprite.quality_2 = myMode.spriteWidth;
@@ -419,7 +421,7 @@
 			
 			//sprite.bitmap.x = (sprite.x - scrollx ) - sprite.quality_2 ;
 			
-			sprite.bitmap.y = sprite.y - scrolly + 50;
+			sprite.bitmap.y = sprite.y - scrolly + ycheat;
 			if (sprite.active == true && sprite != null && sprite.bitmap != null) {
 			
 				stageHelper.addChild(sprite.bitmap);
@@ -436,7 +438,7 @@
 			if (sprite.animate > (anim_speed * 4) ) sprite.animate=0;
 			if (sprite.animate > anim_speed * 2) z = 1;
 			else z = 0;
-			ycheat = -60;
+			ycheat = -30;//-60;
 					
 			if ( true ) {
 				//trace (sprite.animate);
