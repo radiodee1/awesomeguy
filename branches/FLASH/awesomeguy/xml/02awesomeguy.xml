@@ -1271,6 +1271,7 @@
 <block>XML_TEXT_MAZE_BEFORE_COMPLETE, 3</block>
 <block>XML_TEXT_MAZE_AFTER_COMPLETE, 4</block>
 <block>XML_REPLACE_INVISIBLE, 70, 3, 27</block>
+<block>XML_REPLACE_INVISIBLE, 74, 3, 0</block>
 </special>
 </maze>
 <maze number="22">
