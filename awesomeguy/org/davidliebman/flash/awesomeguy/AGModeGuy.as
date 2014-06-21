@@ -1407,6 +1407,7 @@
 						mySprite[ii].sprite_type == AGMode.S_PLATFORM) {
 						this.hit_bottom = true;
 						this.hit_platform = true;
+						
 						xpos += mySprite[ii].quality_0;
 						this.scrollBGX += mySprite[ii].quality_0;
 					}
