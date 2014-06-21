@@ -5,7 +5,7 @@
 	
 	public class AGPhysicsSprite extends AGPhysics {
 
-		
+		var TILE_MEASURE:int = 32;
 
 		public override function AGPhysicsSprite(mystage:Stage, mymode:AGMode) {
 			super(mystage, mymode);
@@ -40,7 +40,7 @@
 			if (myinvisible.length < 1 || asprite.bitmap == null) return;
 			
 			
-			hit_ladder = this.collisionTile(myinvisible, asprite.x/ 64, (asprite.y/ 64 ) ,//+1
+			hit_ladder = this.collisionTile(myinvisible, asprite.x/ TILE_MEASURE, (asprite.y/ TILE_MEASURE ) ,//+1
 											asprite.bitmap, 
 											asprite.bitmap.x , 
 											(asprite.bitmap.y  ),//+ 64), 
@@ -48,12 +48,12 @@
 			
 			
 			
-			hit_center = this.collisionTile(myinvisible,  asprite.x/ 64, asprite.y/ 64,// +1 ,
+			hit_center = this.collisionTile(myinvisible,  asprite.x/ TILE_MEASURE, asprite.y/ TILE_MEASURE,// +1 ,
 											asprite.bitmap, 
 											asprite.bitmap.x , 
 											(asprite.bitmap.y ), AGModeGuy.B_BLOCK,( "center" ));
 			
-			hit_ladder_core = this.collisionTile(myinvisible,  asprite.x/ 64, asprite.y/ 64,// +1 ,
+			hit_ladder_core = this.collisionTile(myinvisible,  asprite.x/ TILE_MEASURE, asprite.y/ TILE_MEASURE,// +1 ,
 											asprite.rail_center_core, 
 											asprite.rail_center_core.x , 
 											(asprite.rail_center_core.y ), AGModeGuy.B_LADDER,( "ladder-center" ));
@@ -62,52 +62,52 @@
 			
 			hit_bottom = this.collisionTile(myinvisible, 
 										(asprite.x //+ this.myMode.scrollBGX
-										 )/ 64, 
+										 )/ TILE_MEASURE, 
 										(asprite.y //+ this.myMode.scrollBGY
-										 )/ 64 +1 ,
+										 )/ TILE_MEASURE +1 ,
 											asprite.rail_bottom, 
 											asprite.rail_bottom.x , 
 											(asprite.rail_bottom.y ) ,AGModeGuy.B_BLOCK, "bottom");
 			
 			hit_bottom_low = this.collisionTile(myinvisible, 
 										(asprite.x //+ this.myMode.scrollBGX
-										 )/ 64, 
+										 )/ TILE_MEASURE, 
 										(asprite.y //+ this.myMode.scrollBGY
-										 )/ 64 +1 ,
+										 )/ TILE_MEASURE +1 ,
 											asprite.rail_low_bottom, 
 											asprite.rail_low_bottom.x , 
 											(asprite.rail_low_bottom.y ) ,AGModeGuy.B_BLOCK, "low-bottom");
 			
 			hit_ladder_low = this.collisionTile(myinvisible, 
 										(asprite.x //+ this.myMode.scrollBGX
-										 )/ 64, 
+										 )/ TILE_MEASURE, 
 										(asprite.y //+ this.myMode.scrollBGY
-										 )/ 64 +1 ,
+										 )/ TILE_MEASURE +1 ,
 											asprite.rail_bottom, 
 											asprite.rail_bottom.x , 
 											(asprite.rail_bottom.y ) ,AGModeGuy.B_LADDER, "ladder-bottom");
 											
-			hit_top = this.collisionTile(myinvisible, asprite.x/ 64, asprite.y/ 64 - 1,
+			hit_top = this.collisionTile(myinvisible, asprite.x/ TILE_MEASURE, asprite.y/ TILE_MEASURE - 1,
 										 asprite.rail_top, 
 										 asprite.rail_top.x , 
 										 (asprite.rail_top.y )  , AGModeGuy.B_BLOCK, "top");
 										 
-			hit_left = this.collisionTile(myinvisible, asprite.x/ 64 -1, asprite.y/ 64,
+			hit_left = this.collisionTile(myinvisible, asprite.x/ TILE_MEASURE -1, asprite.y/ TILE_MEASURE,
 										  asprite.rail_left, 
 										  (asprite.rail_left.x ) , 
 										  asprite.rail_left.y , AGModeGuy.B_BLOCK, "left");
 										  
-			hit_right = this.collisionTile(myinvisible, asprite.x/ 64 + 1, asprite.y/ 64,
+			hit_right = this.collisionTile(myinvisible, asprite.x/ TILE_MEASURE + 1, asprite.y/ TILE_MEASURE,
 										   asprite.rail_right, 
 										   asprite.rail_right.x , 
 										   asprite.rail_right.y  , AGModeGuy.B_BLOCK, "right");
 										   
-			hit_ladder_left = this.collisionTile(myinvisible, asprite.x/ 64 -1, asprite.y/ 64,
+			hit_ladder_left = this.collisionTile(myinvisible, asprite.x/ TILE_MEASURE -1, asprite.y/ TILE_MEASURE,
 										  asprite.rail_left, 
 										  (asprite.rail_left.x ) , 
 										  asprite.rail_left.y , AGModeGuy.B_LADDER, "left");
 										  
-			hit_ladder_right = this.collisionTile(myinvisible, asprite.x/ 64 + 1, asprite.y/ 64,
+			hit_ladder_right = this.collisionTile(myinvisible, asprite.x/ TILE_MEASURE + 1, asprite.y/ TILE_MEASURE,
 										   asprite.rail_right, 
 										   asprite.rail_right.x , 
 										   asprite.rail_right.y  , AGModeGuy.B_LADDER, "right");
@@ -211,7 +211,7 @@
 									  xx:int, yy:int, 
 									  blocktype:int = 0, 
 									  message:String="NONE", 
-									  size:int = 64, sizey:int = 64):Boolean {
+									  size:int = 32, sizey:int = 32):Boolean {
 			var mapcheat:int = 0;
 			var scrollx:int = this.myMode.scrollBGX;
 			var scrolly:int = this.myMode.scrollBGY;

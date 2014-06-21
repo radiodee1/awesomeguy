@@ -52,8 +52,8 @@
 		
 		public var myAISpeed:int = 0;
 		
-		public static var X_MOVE = 10 * 2;
-		public static var Y_MOVE = 10 * 2;
+		public static var X_MOVE = 10 ;//* 2;
+		public static var Y_MOVE = 10 ;//* 2;
 
 		public var animate_return_to_planet:Boolean = false;
 		public var animate_plunger:AGSprite;
@@ -1091,11 +1091,11 @@
 					if (yy < 0 || yy == 0) yy = AGModeGuy.Y_MOVE;
 				}
 				if ( this.hit_bottom && this.hit_center &&  !this.hit_top) {
-					yy =  - 6;
+					yy =  - 3;// 6;
 							
 				}
 				if (this.hit_platform && this.hit_center && this.hit_bottom && !this.hit_top) {
-					yy = - 6;
+					yy = - 3;//6;
 				}
 				if (!this.hit_bottom && !this.hit_center && !this.hit_ladder && this.jump_count <= 0) {
 					yy = AGModeGuy.Y_MOVE;

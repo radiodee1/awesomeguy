@@ -125,8 +125,8 @@
 
 		public var nodenumstart:int = 0;//
 		public var nodenumend:int = 0;//
-		public var TILE_WIDTH:int = 64;
-		public var TILE_HEIGHT:int = 64;
+		public var TILE_WIDTH:int = 32;
+		public var TILE_HEIGHT:int = 32;
 
 		public var hint_nodenumstart:int = 0;
 		public var hint_nodenumend:int = 0;
@@ -1505,19 +1505,19 @@
 			}
 			var awidth:int = this.mySprite.bitmap.width;
 			var aheight:int = this.mySprite.bitmap.height;
-			var drop:int = aheight - 64;
+			var drop:int = aheight - this.TILE_HEIGHT;//64;
 			var ax:int = this.monsterx;// +( awidth / 2) - 4;
 			var ay:int = this.monstery;// + ( aheight / 2);
-			var arect:Rectangle = new Rectangle(ax, ay + drop, awidth, 64);//aheight );//awidth, aheight);
+			var arect:Rectangle = new Rectangle(ax, ay + drop, awidth, TILE_HEIGHT);//aheight );//awidth, aheight);
 			
 			var brect:Rectangle;
 			
 			if(graphnode) {
 				//brect = new Rectangle((x*64) + 32,(y * 64) + 32, 8, 8);
-				brect = new Rectangle((x*64) ,(y * 64) , 64, 64);
+				brect = new Rectangle((x*TILE_HEIGHT) ,(y * TILE_HEIGHT) , TILE_HEIGHT, TILE_HEIGHT);
 			}
 			else {
-				brect = new Rectangle((x) + 32,(y ) + 32, width, height);
+				brect = new Rectangle((x) + (TILE_HEIGHT/2),(y ) + (TILE_HEIGHT/2), width, height);
 			}
 			var value:Boolean = arect.intersects(brect);
 			
@@ -1728,8 +1728,8 @@
 			var mystage:Sprite = new Sprite();
 			
 			
-			var TILE_WIDTH:int = 64;
-			var TILE_HEIGHT:int = 64;
+			var TILE_WIDTH:int = 32;
+			var TILE_HEIGHT:int = 32;
 			
 			var tilesWidthMeasurement:int =   32;
 			var tilesHeightMeasurement:int =  24;//
@@ -1791,8 +1791,8 @@
 			var mystage:Sprite = new Sprite();
 			
 			
-			var TILE_WIDTH:int = 64;
-			var TILE_HEIGHT:int = 64;
+			var TILE_WIDTH:int = 32;
+			var TILE_HEIGHT:int = 32;
 			
 			var tilesWidthMeasurement:int =   32;
 			var tilesHeightMeasurement:int =  24;//
@@ -1839,8 +1839,8 @@
 			var mystage:Sprite = new Sprite();
 			
 			
-			var TILE_WIDTH:int = 64;
-			var TILE_HEIGHT:int = 64;
+			var TILE_WIDTH:int = 32;
+			var TILE_HEIGHT:int = 32;
 			
 			var tilesWidthMeasurement:int =   32;
 			var tilesHeightMeasurement:int =  24;//
@@ -1878,8 +1878,8 @@
 			
 			var mystage:Sprite = new Sprite();
 			
-			var TILE_WIDTH:int = 64;
-			var TILE_HEIGHT:int = 64;
+			var TILE_WIDTH:int = 32;
+			var TILE_HEIGHT:int = 32;
 			
 			var tilesWidthMeasurement:int =   32;
 			var tilesHeightMeasurement:int =  24;//
