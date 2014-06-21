@@ -22,8 +22,8 @@
 			var show:Boolean = false;
 			var visibility:Boolean = false;
 			//int index_num = 0;
-			var vert:int = 64;
-			var horiz:int = 64;
+			var vert:int = 32;//64;
+			var horiz:int = 32;//64;
 			var width:int = 2;
 			
 			

@@ -44,8 +44,8 @@
 		
 		var TILEMAP_HEIGHT:int = 128 * 2;
 		var TILEMAP_WIDTH:int = 224 * 2;
-		var TILE_HEIGHT:int = 64;
-		var TILE_WIDTH:int = 64;
+		var TILE_HEIGHT:int = 32;
+		var TILE_WIDTH:int = 32;
 		
 		var myHorizontal:int = 0;
 		var myVertical:int = 0;
@@ -488,8 +488,8 @@
 		public function addXVarious(xx:int, yy:int, type:int, link:int=0):void {
 			// create a various-type object
 			var temp:AGSpriteVarious = new AGSpriteVarious(this, type);// Sprite temp ;
-			temp.x =xx*64;
-			temp.y = yy *64;
+			temp.x =xx*32;
+			temp.y = yy *32;
 
 			temp.sprite_type = type;
 			temp.speed = 1;
@@ -539,8 +539,8 @@
 		public function addXRing(xx:int, yy:int):void {
 			// create a line-type object
 			var temp:AGSpriteXRing = new AGSpriteXRing(this, AGMode.S_RING);// Sprite temp ;
-			temp.x =xx*64;
-			temp.y = yy *64;
+			temp.x =xx*32;
+			temp.y = yy *32;
 
 			temp.sprite_type = S_RING;
 			temp.speed = 1;
@@ -720,11 +720,11 @@
 			var mystage:Sprite = new Sprite();
 
 			
-			var TILE_WIDTH:int = 64;
-			var TILE_HEIGHT:int = 64;
+			var TILE_WIDTH:int = 32;
+			var TILE_HEIGHT:int = 32;
 			
-			var tilesWidthMeasurement:int =  8;// 32;
-			var tilesHeightMeasurement:int = 6;// 24;//
+			var tilesWidthMeasurement:int =  16;//8;// 32;
+			var tilesHeightMeasurement:int = 12;//6;// 24;//
 			
 			var LONG_MAP_H:int =	this.myHoriz;
 			var LONG_MAP_V:int =	this.myVert;
@@ -783,8 +783,8 @@
 		}
 		public override function scrollBackground():void {
 			this.wrapHorizontal = false;
-			this.spriteWidth = 64;
-			this.spriteHeight = 128;
+			this.spriteWidth = 32;// 64;
+			this.spriteHeight = 64;//128;
 			
 			myField.top = 0;
 			myField.bottom = myVert * TILE_HEIGHT;
