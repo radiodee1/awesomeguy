@@ -1371,7 +1371,74 @@
 			this.hit_smoosh_top = false;
 			
 			this.myTempGets = new Array();
+			//////
 			
+			for (ii = 0; ii < myBlocks.length; ii ++) {
+				if (myBlocks[ii].bitmap != null && this.flyersprite != null) {
+					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_left) && 
+						myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
+							
+						if(myBlocks[ii].bitmap.y  < 
+						   myDraw.rail_left.y + (myDraw.rail_left.height / 2) ) {
+							this.hit_left = true;
+						}
+						
+						
+					}
+					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_right)&& 
+						myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
+							
+						if(myBlocks[ii].bitmap.y  < 
+						   myDraw.rail_right.y + (myDraw.rail_right.height / 2) ) {
+							this.hit_right = true;
+						}
+						
+						
+					}
+					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_top)&& 
+						myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
+						this.hit_top = true;
+						if (this.hit_plunger_bottom) {
+							this.hit_smoosh_top = true;
+						}
+						//this.examineHit(myBlocks[ii].bitmap, myDraw.rail_top);
+					}
+					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_bottom) && 
+						myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
+						this.hit_bottom = true;
+						if (this.hit_plunger_top) {
+							this.hit_smoosh_bottom = true;
+						}
+						//this.examineHit(myBlocks[ii].bitmap, myDraw.rail_bottom);
+					}
+				}
+				
+				if (myBlocks[ii].bitmap != null && this.flyersprite != null &&
+					collisionSimple(myBlocks[ii].bitmap, this.flyersprite)) {
+					//this.hittype = AGModeGuy.HIT_NONE;
+
+					if (myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
+						//examineHit(myBlocks[ii].bitmap, this.flyersprite);
+						this.hit_center = true;
+					}
+					
+					if (myBlocks[ii].sprite_type == AGMode.S_GOAL) {
+						//myGame.gameScore = myGame.gameScore + ( myChallenge[myGame.gameChallenge].total_held_rings * 20);
+						//myChallenge[myGame.gameChallenge].total_held_rings = 0;
+						is_blinking = true;
+						
+						//myTimer[ AGMode.TIMER_07] = new AGTimer(1.5);//.timerStart(3);
+					}
+					if (myBlocks[ii].sprite_type == AGMode.S_LADDER) {
+						this.hit_ladder = true;
+						//trace("ladder!");
+					}
+				}
+				
+				
+			}// end block
+			
+			//////
 			var ii:int;
 			for (ii = 0; ii < mySprite.length ; ii ++ ) {
 				if (mySprite[ii].bitmap != null && mySprite[ii].active ) {
@@ -1407,9 +1474,12 @@
 						mySprite[ii].sprite_type == AGMode.S_PLATFORM) {
 						this.hit_bottom = true;
 						this.hit_platform = true;
-						
-						xpos += mySprite[ii].quality_0;
-						this.scrollBGX += mySprite[ii].quality_0;
+						var change:int = mySprite[ii].quality_0;
+						if ((change > 0 && !this.hit_right)
+							|| (change < 0 && !this.hit_left)) {
+							xpos += change;//mySprite[ii].quality_0;
+							this.scrollBGX += change;// mySprite[ii].quality_0;
+						}
 					}
 					if (this.collisionBlock(mySprite[ii].bitmap, this.flyersprite) && 
 						mySprite[ii].sprite_type == AGMode.S_PLATFORM) {
@@ -1584,70 +1654,6 @@
 				}// for sprite
 			}//for torpedo
 			
-			for (ii = 0; ii < myBlocks.length; ii ++) {
-				if (myBlocks[ii].bitmap != null && this.flyersprite != null) {
-					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_left) && 
-						myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
-							
-						if(myBlocks[ii].bitmap.y  < 
-						   myDraw.rail_left.y + (myDraw.rail_left.height / 2) ) {
-							this.hit_left = true;
-						}
-						
-						
-					}
-					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_right)&& 
-						myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
-							
-						if(myBlocks[ii].bitmap.y  < 
-						   myDraw.rail_right.y + (myDraw.rail_right.height / 2) ) {
-							this.hit_right = true;
-						}
-						
-						
-					}
-					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_top)&& 
-						myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
-						this.hit_top = true;
-						if (this.hit_plunger_bottom) {
-							this.hit_smoosh_top = true;
-						}
-						//this.examineHit(myBlocks[ii].bitmap, myDraw.rail_top);
-					}
-					if (this.collisionBlock(myBlocks[ii].bitmap, myDraw.rail_bottom) && 
-						myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
-						this.hit_bottom = true;
-						if (this.hit_plunger_top) {
-							this.hit_smoosh_bottom = true;
-						}
-						//this.examineHit(myBlocks[ii].bitmap, myDraw.rail_bottom);
-					}
-				}
-				
-				if (myBlocks[ii].bitmap != null && this.flyersprite != null &&
-					collisionSimple(myBlocks[ii].bitmap, this.flyersprite)) {
-					//this.hittype = AGModeGuy.HIT_NONE;
-
-					if (myBlocks[ii].sprite_type == AGMode.S_BLOCK) {
-						//examineHit(myBlocks[ii].bitmap, this.flyersprite);
-						this.hit_center = true;
-					}
-					
-					if (myBlocks[ii].sprite_type == AGMode.S_GOAL) {
-						//myGame.gameScore = myGame.gameScore + ( myChallenge[myGame.gameChallenge].total_held_rings * 20);
-						//myChallenge[myGame.gameChallenge].total_held_rings = 0;
-						is_blinking = true;
-						
-						//myTimer[ AGMode.TIMER_07] = new AGTimer(1.5);//.timerStart(3);
-					}
-					if (myBlocks[ii].sprite_type == AGMode.S_LADDER) {
-						this.hit_ladder = true;
-						//trace("ladder!");
-					}
-				}
-				
-				
-			}
 			// test for smoosh-ing of guy under plunger
 			if (this.hit_smoosh_bottom || this.hit_smoosh_top) {
 				if (myGame.gameHealth > 15 ) {
