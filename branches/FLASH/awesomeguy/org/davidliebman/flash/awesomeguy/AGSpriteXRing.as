@@ -19,28 +19,28 @@
 								//cutTile(tiles_a, square, k - mapcheat);
 								this.bitmap = myMode.oldCutTile(  myMode.myRes[AGResources.NAME_TILES1_PNG], 
 									zz,//myInvisible[i][j] + mapcheat,
-									AGMode.TILE_BOT, 64, 64);
+									AGMode.TILE_BOT, 32, 32);
 							}
 							else if (animate == 2 || animate == 4 || animate == 6) {
 		
 								//cutTile(tiles_b, square, k - mapcheat);
 								this.bitmap = myMode.oldCutTile(  myMode.myRes[AGResources.NAME_TILES2_PNG], 
 									zz,//myInvisible[i][j] + mapcheat,
-									AGMode.TILE_BOT, 64, 64);
+									AGMode.TILE_BOT, 32, 32);
 							}
 							else if (animate == 3 || animate == 7) {
 		
 								//cutTile(tiles_c, square, k - mapcheat);
 								this.bitmap = myMode.oldCutTile(  myMode.myRes[AGResources.NAME_TILES3_PNG], 
 									zz,//myInvisible[i][j] + mapcheat,
-									AGMode.TILE_BOT, 64, 64);
+									AGMode.TILE_BOT, 32, 32);
 							}
 							else if (animate == 5) {
 		
 								//cutTile(tiles_d, square, k - mapcheat);
 								this.bitmap = myMode.oldCutTile(  myMode.myRes[AGResources.NAME_TILES4_PNG], 
 									zz,//myInvisible[i][j] + mapcheat,
-									AGMode.TILE_BOT, 64 , 64);
+									AGMode.TILE_BOT, 32 , 32);
 							}
 							
 			myMode.drawRadarPing(myMode.radar, 
