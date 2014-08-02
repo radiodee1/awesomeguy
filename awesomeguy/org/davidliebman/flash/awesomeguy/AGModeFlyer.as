@@ -1183,13 +1183,23 @@
 							break;
 							case AGMode.S_PYRAMID:
 							case AGMode.S_BUNKER:
+							
+								var pyramid:AGSpritePyramid = AGSpritePyramid(sprite);
+							
+								if (this.animate_return_to_planet || pyramid.toggle == pyramid.ENUM_SINK ||
+									xx != 0 || yy !=0 ) { 
+									this.animate_enter_maze = false;
+									this.animate_enter_maze_started = false;
+									is_touching_pyramid = false;
+									break;
+								}
 								is_touching_pyramid = true;
 								
 								myGame.gameScore = myGame.gameScore + ( myChallenge[myGame.gameChallenge].total_held_rings * 20);
 								myGame.gameHealth += ( myChallenge[myGame.gameChallenge].total_held_rings * 10);
 								myChallenge[myGame.gameChallenge].total_held_rings = 0;
 							
-								var pyramid:AGSpritePyramid = AGSpritePyramid(sprite);
+								//var pyramid:AGSpritePyramid = AGSpritePyramid(sprite);
 								this.animate_enter_maze_started = true;
 							
 								//if (pyramid.toggle == pyramid.ENUM_SINK ) break;
