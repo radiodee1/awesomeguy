@@ -1505,8 +1505,8 @@
 						this.hit_platform = true;
 						
 						if (!this.animate_only_death &&  !this.animate_only && !this.hit_smoosh_bottom && !this.hit_smoosh_top) {
-							if (mySprite[ii].quality_0 > 0) ypos += (Math.abs(mySprite[ii].quality_0) + 6);
-							if (mySprite[ii].quality_0 < 0) ypos -= (Math.abs(mySprite[ii].quality_0) - 6);
+							if (mySprite[ii].quality_0 > 0) ypos += (Math.abs(mySprite[ii].quality_0) + 0);//6);
+							if (mySprite[ii].quality_0 < 0) ypos -= (Math.abs(mySprite[ii].quality_0) - 0);//6);
 							//if (mySprite[ii].quality_0 < 0 || true) yy += (mySprite[ii].quality_0);
 							
 							this.scrollBGY += mySprite[ii].quality_0;
