@@ -77,20 +77,9 @@
 			controls = new AGModeControls();
 			controls.setValues(myStage,myKeys,myRes,this);
 			
-			
-			//var myXml:XMLDocument = new XMLDocument(myRes[AGResources.NAME_AWESOMEGUY_XML]);
-			//var tree:XML = new XML(myXml);
-			//this.gamePlanetTot = int(tree.planet.length());
-			
 			this.gamePlanetTot = AGGame.MAGIC_NUMBER_PLANETS;
 			
-			/*
-			// erase me!!
-			var myXML:XMLDocument = myRes[AGResources.NAME_AWESOMEGUY_XML];
-			var tree:XML = new XML(myXML);
-			//trace(tree.planets);
-			this.gamePlanetTot = int(tree.planets.toString());
-			*/
+			
 			this.gamePlanetTot = this.findNumberOfPlanets();
 			this.loadXML();
 			//this.startAGGame();
