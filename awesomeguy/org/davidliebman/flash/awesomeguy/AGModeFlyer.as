@@ -141,10 +141,7 @@
 			
 			fillChallenges();
 			
-			var myXml:XMLDocument =myGame.gameXML;// new XMLDocument(myRes[AGResources.NAME_AWESOMEGUY_XML]);
-			var tree:XML = new XML(myXml);
-			
-			planets = AGGame.MAGIC_NUMBER_PLANETS;
+			//planets = AGGame.MAGIC_NUMBER_PLANETS;
 			planets = myGame.findNumberOfPlanets();
 			challenges = myChallenge.length;
 			
