@@ -83,11 +83,15 @@
 			//this.gamePlanetTot = int(tree.planet.length());
 			
 			this.gamePlanetTot = AGGame.MAGIC_NUMBER_PLANETS;
+			
+			/*
+			// erase me!!
 			var myXML:XMLDocument = myRes[AGResources.NAME_AWESOMEGUY_XML];
 			var tree:XML = new XML(myXML);
 			//trace(tree.planets);
 			this.gamePlanetTot = int(tree.planets.toString());
-
+			*/
+			this.gamePlanetTot = this.findNumberOfPlanets();
 			this.loadXML();
 			//this.startAGGame();
 		}
@@ -189,6 +193,15 @@
 			
 			//trace("xml");
 			
+		}
+
+		public function findNumberOfPlanets():int {
+			var planets:int = AGGame.MAGIC_NUMBER_PLANETS;
+			var myXML:XMLDocument = myRes[AGResources.NAME_AWESOMEGUY_XML];
+			var tree:XML = new XML(myXML);
+			//trace(tree.planets);
+			planets = int(tree.planets.toString());
+			return planets;
 		}
 
 		public function setKeys(e:Event) {
