@@ -18,6 +18,8 @@
 			var visibility:Boolean = false;
 			//int index_num = 0;
 			
+
+			
 			var tileWidth:int = 16;
 			
 			
