@@ -439,7 +439,8 @@
 			if (sprite.animate > anim_speed * 2) z = 1;
 			else z = 0;
 			ycheat = -30;//-60;
-					
+			var punch_dist:int = 25;
+			
 			if ( true ) {
 				//trace (sprite.animate);
 				if(sprite.facingRight == true) {
@@ -474,7 +475,7 @@
 
 						sprite.bitmap = new Bitmap( 
 							myRes[AGResources.NAME_GATOR_PUNCH_L2_PNG].bitmapData.clone());//
-						sprite.bitmap.x = sprite.x - scrollx;
+						sprite.bitmap.x = sprite.x - scrollx - punch_dist;
 						sprite.bitmap.y = sprite.y - scrolly + ycheat;
 						stageHelper.addChild(sprite.bitmap);
 					}

@@ -160,6 +160,9 @@
 		public static var FOLLOW_LEAVE_TURN:int = 5;
 		public static var FOLLOW_TURN_COMPLETE:int = 6;
 		
+		public static var PATH_VERTICAL_WIDTH:int = 8;
+		public static var PATH_HORIZONTAL_HEIGHT:int = 32;
+		
 		public var follow_enum:int = -1;
 		public var orient_enum:int = -1;
 		public var allow_enum:int = 1;
@@ -779,9 +782,9 @@
 						if (this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL] == true && 
 							this.edgesFromDots[i][AGai.EPOS_TEMPFLAG] == false) {
 							if (this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH < this.guyx &&
-								this.edgesFromDots[i][AGai.EPOS_STOPX] * this.TILE_WIDTH > this.guyx &&
-								this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT - (this.TILE_HEIGHT * 3 / 2) < this.guyy &&
-								this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT + (this.TILE_HEIGHT / 2) > this.guyy) {
+								this.edgesFromDots[i][AGai.EPOS_STOPX] * this.TILE_WIDTH > this.guyx && 
+								this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT - (AGai.PATH_HORIZONTAL_HEIGHT * 3 / 2) < this.guyy &&
+								this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT + (AGai.PATH_HORIZONTAL_HEIGHT / 4) > this.guyy) {
 								found = i;
 							}
 						}
@@ -802,8 +805,8 @@
 							this.edgesFromDots[i][AGai.EPOS_TEMPFLAG] == false) {
 							if (this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT < this.guyy &&
 								this.edgesFromDots[i][AGai.EPOS_STOPY] * this.TILE_HEIGHT > this.guyy &&
-								this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH - (this.TILE_WIDTH / 2) < this.guyx &&
-								this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH + (this.TILE_WIDTH / 2) > this.guyx) {
+								this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH - (AGai.PATH_VERTICAL_WIDTH / 2) < this.guyx &&
+								this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH + (AGai.PATH_VERTICAL_WIDTH / 2) > this.guyx) {
 								found = i;
 							}
 						}
@@ -823,8 +826,8 @@
 							this.edgesFromDots[i][AGai.EPOS_TEMPFLAG] == false) {
 							if (this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH < this.monsterx &&
 								this.edgesFromDots[i][AGai.EPOS_STOPX] * this.TILE_WIDTH > this.monsterx &&
-								this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT - (this.TILE_HEIGHT * 3 / 2) < this.monstery &&
-								this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT + (this.TILE_HEIGHT / 2) > this.monstery) {
+								this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT - (AGai.PATH_HORIZONTAL_HEIGHT * 3 / 2) < this.monstery &&
+								this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT + (AGai.PATH_HORIZONTAL_HEIGHT / 4) > this.monstery) {
 								found = i;
 							}
 						}
@@ -844,8 +847,8 @@
 							this.edgesFromDots[i][AGai.EPOS_TEMPFLAG] == false) {
 							if (this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT < this.monstery &&
 								this.edgesFromDots[i][AGai.EPOS_STOPY] * this.TILE_HEIGHT > this.monstery &&
-								this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH - (this.TILE_WIDTH / 2) < this.monsterx &&
-								this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH + (this.TILE_WIDTH / 2) > this.monsterx) {
+								this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH - (AGai.PATH_VERTICAL_WIDTH / 2) < this.monsterx &&
+								this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH + (AGai.PATH_VERTICAL_WIDTH / 2) > this.monsterx) {
 								found = i;
 							}
 						}
@@ -1617,7 +1620,7 @@
 		
 		public function advanceNodecounter():void {
 			
-			if (this.q_hint_list.length < this.hint_nodecounter + 2 ) return;
+			if (this.q_hint_list.length < this.hint_nodecounter + 2 ) return; // + 2
 			
 			var a:int = this.q_hint_list[this.hint_nodecounter + 1];
 			var zero:int = this.q_hint_list[this.hint_nodecounter + 0];

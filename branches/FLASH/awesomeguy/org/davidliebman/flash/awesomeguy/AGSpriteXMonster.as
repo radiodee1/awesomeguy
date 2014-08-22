@@ -107,7 +107,7 @@
 				
 		
 			}
-			if (this.sprite_type == AGMode.S_XMONSTER_CLIMBER) {
+			else if (this.sprite_type == AGMode.S_XMONSTER_CLIMBER) {
 				//this.visible = true;
 				
 				this.makeRails();
@@ -119,7 +119,7 @@
 				
 				var somex:int = this.ai.getPixHintX();
 				var somey:int = this.ai.getPixHintY();
-						
+										
 				this.myPhysics.applyGravityAndLadders(this.myMode.myInvisible, this, somex,somey); 
 											//this.ai.getPixHintX(), this.ai.getPixHintY());
 				this.ai.drawMap();
