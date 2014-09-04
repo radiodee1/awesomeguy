@@ -1620,8 +1620,11 @@
 		
 		public function advanceNodecounter():void {
 			
-			if (this.q_hint_list.length < this.hint_nodecounter + 2 ) return; // + 2
-			
+			if (this.q_hint_list.length < this.hint_nodecounter + 2 ) {
+				// if we are at end of list:
+				this.advanceNodecounterEnd();
+				return; 
+			}
 			var a:int = this.q_hint_list[this.hint_nodecounter + 1];
 			var zero:int = this.q_hint_list[this.hint_nodecounter + 0];
 			
@@ -1707,6 +1710,10 @@
 			}
 			
 			////
+		}
+		
+		public function advanceNodecounterEnd():void {
+			
 		}
 		
 		public function startNewsegment():void {
