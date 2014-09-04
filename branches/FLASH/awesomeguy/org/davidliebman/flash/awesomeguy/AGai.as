@@ -989,7 +989,7 @@
 						break;
 					}
 					
-					if(this.q_hint_nodes.length < this.hint_nodecounter + 2) {
+					if(this.q_hint_nodes.length <= this.hint_nodecounter ){//+ 2) {
 						if (this.q_endedge_hor != -1 && this.hint_auto) {
 							if (this.guyx < this.startingX ) {
 								this.hint_x = - AGai.MOVE_X;
@@ -1182,7 +1182,7 @@
 					
 					if (!this.myMultiFlag) this.q_hint_list = this.createHint();
 					
-					this.hint_nodecounter = 1;
+					this.hint_nodecounter = 0;// 1;
 					this.hint_nodenumend = this.nodenumend;
 					this.hint_nodenumstart = this.nodenumstart;
 					
@@ -1341,6 +1341,7 @@
 		
 		public function getEdgeDirectionX(nodea:int, nodeb:int, edge:int) : int {
 			var value1:int = 0;
+			
 			if (nodea < 0 || nodea>=this.nodesFromDots.length || 
 				nodeb < 0 || nodeb>=this.nodesFromDots.length  ||
 				edge < 0 || edge >= this.edgesFromDots.length) {
@@ -1456,8 +1457,8 @@
 				if (true) {
 					if (this.edgesFromDots[i][AGai.EPOS_STARTY] * this.TILE_HEIGHT - this.TILE_HEIGHT <= somey &&
 						this.edgesFromDots[i][AGai.EPOS_STOPY] * this.TILE_HEIGHT + this.TILE_HEIGHT >= somey &&
-						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH - (this.TILE_WIDTH / 2) <= somex &&
-						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH + (this.TILE_WIDTH / 2) >= somex //&&
+						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH - (AGai.PATH_VERTICAL_WIDTH  / 2) <= somex &&
+						this.edgesFromDots[i][AGai.EPOS_STARTX] * this.TILE_WIDTH + (AGai.PATH_VERTICAL_WIDTH  / 2) >= somex //&&
 						//!this.edgesFromDots[i][AGai.EPOS_ISHORIZONTAL]
 						) {
 						//found = i;
@@ -1536,10 +1537,10 @@
 			var j:int = 0;
 			if (i != -1) list.push(i);
 			if (this.nodesFromDots == null || i == -1) return list;
-			while ( i != -1 && j < this.nodesFromDots.length - 1) {
+			while ( i != -1 && j <= this.nodesFromDots.length){// - 1) {
 				j ++;
 				
-				if (i > -1 && i < this.nodesFromDots.length) {
+				if (i > -1 && i <= this.nodesFromDots.length) {
 				i = this.nodesFromDots[i][AGai.NPOS_PREVIOUS];
 					if (i != this.nodenumstart || true ) {
 						list.push(i);
@@ -1552,7 +1553,7 @@
 			trace("--change map", list.length);
 			list.reverse();
 			
-			this.hint_nodecounter = 1;
+			this.hint_nodecounter = 0;//1;
 			this.latch_a = false;
 			this.follow_enum = AGai.FOLLOW_APPROACH_TURN;
 			
@@ -1569,6 +1570,8 @@
 			//return this.hint_x;
 			if ( this.hint_edge_found < 0 || 
 				this.hint_edge_found >= this.edgesFromDots.length ) return this.hint_last_x;
+				
+			//if (this.hint_x > 0 && this.hint_y > 0) return this.hint_x; 
 			if ( !this.edgesFromDots[this.hint_edge_found][AGai.EPOS_ISHORIZONTAL]) return 0;
 			
 			this.hint_last_x = this.hint_x;
@@ -1576,11 +1579,11 @@
 			if (this.hint_x == 0 && this.hint_auto) {
 				if (this.guyx < this.monsterx ) {
 					this.hint_x = - AGai.MOVE_X;
-					//trace("hint left");
+					trace("hint left");
 				}
 				else {
 					this.hint_x = AGai.MOVE_X;
-					//trace("hint right");
+					trace("hint right");
 				}
 			}
 			//else this.hint_x = this.hint_last_x;
@@ -1622,7 +1625,7 @@
 			
 			if (this.q_hint_list.length < this.hint_nodecounter + 2 ) {
 				// if we are at end of list:
-				this.advanceNodecounterEnd();
+				
 				return; 
 			}
 			var a:int = this.q_hint_list[this.hint_nodecounter + 1];
@@ -1713,7 +1716,8 @@
 		}
 		
 		public function advanceNodecounterEnd():void {
-			
+			trace("nodecounter", this.hint_nodecounter, "list-length", this.q_hint_list.length , 
+				  "nodes-length", this.q_hint_nodes.length);
 		}
 		
 		public function startNewsegment():void {
