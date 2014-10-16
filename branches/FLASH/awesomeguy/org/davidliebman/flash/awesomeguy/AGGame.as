@@ -27,6 +27,8 @@
 	var myKeyStage:AGKeys;
 	var myHeldObject:AGSprite;
 	
+	var myDebug:Boolean = false;//this permits MODE_CONTROLS screen.
+	
 	public static var MAGIC_NUMBER_PLANETS:int = 2;
 	
 	public static var MODE_FLYER:int = 0;
@@ -237,7 +239,7 @@
 					//controls = new AGModeControls();
 					//controls.setValues(myStage,myKeys,myRes,this);
 					
-					 if (K_CONTROLS  ) {
+					 if (K_CONTROLS && myDebug  ) {
 						this.myModeStack.push(AGGame.MODE_CONTROLS);
 						
 						
