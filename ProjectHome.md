@@ -1,0 +1,11 @@
+### Awesomeguy is a game for the android 2.1/2.2 phone platform. ###
+
+![http://1.bp.blogspot.com/_ePjwB9Y1PRg/TLXmyqcScUI/AAAAAAAAAAM/zvhfZc5IfJI/s1600/url_chart.png](http://1.bp.blogspot.com/_ePjwB9Y1PRg/TLXmyqcScUI/AAAAAAAAAAM/zvhfZc5IfJI/s1600/url_chart.png)
+
+_(Use your barcode reader and the barcode on this page to download the game from Android Market.)_
+
+The format of the Awesomeguy game is that of a simple 2D platform game, in some ways like the original “Donkey Kong” or “Super Mario Brothers”. The game was originally developed on the Nintendo DS as a homebrew game. The Nintendo DS version has two screens of 192x256 pixels each. During gameplay one of the screens was generally used as a splash screen. The game also makes use of four directional keys and one special key -- the 'jump' key.
+
+The android phone that the game was developed for had no "D-pad". For the android version, two separate View objects were required during regular game play. One View was for display of the game screen, the equivalent of the main screen from the Nintendo game, and the other View was the emulated "D-pad". The "D-pad" was emulated using TouchButtons on the touch screen and also an alternative where movement instructions were taken from the trackball. TouchButtons are extended Button objects. The DS version of the game uses several large int arrays for keeping track of the appearance of each level in the game. In order to port the levels to the android version, the same sort of array was used in the android code. In this way the android version can use the exact same level definition info. The android version also uses an ArrayList to keep track of sprite data, though sprites are not hardware supported in java. One ArrayList is used for all types of sprites. The DS version makes use of a set of four tiles that are used to paint the levels from the predefined level array on the game screen. The same tile set was used in the android version, but software was used to emulate the DS's hardware tiling system. For these reasons the android version of the game is slower to play than the homebrew DS version.
+
+The wiki on this project site is closely associated with the android Awesomeguy 1.0.0.20101113 release.
